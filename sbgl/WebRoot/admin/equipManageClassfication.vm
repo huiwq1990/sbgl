@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 设备管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="./css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="./css/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 9]>
+  <script src="./js/html5shiv.js"></script>
+  <script src="./js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+
+
+<script>
+	var classData = {};  //全部分类信息
+	var alterClassId;    //修改分类的id
+	var alterClassName;  //修改分类的name
+	var parentId;        //父分类id
+	var classSum;        //分类个数
+	//var _obj;            //select2全局对象
+	var cookie = { 
+  		//读取COOKIES,n为COOKIE名 
+   		Get:function(n){ 
+       		var re=new RegExp(n+'=([^;]*);?','gi');
+       	    var r=re.exec(document.cookie)||[];
+       	    return (r.length>1?r[1]:null)
+   		}
+	};
+</script>
+<script>
+	/*********************************************************************************
+	 *
+	 *修改分类信息
+	 *
+	 ********************************************************************************/
+	function modifyClass(id, pId, name, pName) {
+		alterClassId = id;
+		alterClassName = name;
+		parentId = pId;
+		
+		if(pId == 0) {
+			$("#modifyFaCategoryId").attr("disabled", true);
+		} else {
+			$("#modifyFaCategoryId").attr("disabled", false);
+		}
+		
+		$("#modifyFaCategoryId").select2("val", pId);
+		
+		$("#modifyCategoryName").val(name);
+		
+	}
+	
+	
+	function alterClass() {
+		//$("#modifyFaCategoryId").empty();
+		var newClassName = $("#modifyCategoryName").val() == "" ? alterClassName : $("#modifyCategoryName").val();
+		var parentClassId = $("#modifyFaCategoryId").val();
+		var userId=cookie.Get("id");
+		
+		if(alterClassName == newClassName && parentClassId == parentId) {
+			alert("并未做修改！");
+		} else {
+			var postData = {
+    			"equipClassforAltert.name": newClassName,
+    			"equipClassforAltert.classificationid": alterClassId,
+    			"equipClassforAltert.parentid": parentClassId,
+    			"equipClassforAltert.userid": userId
+    		};
+    		
+    		$.ajax({  
+    		    url: "alterClassification.do",  
+    		    type: "post",
+    		    data: postData,
+    		    success:function(data,textStatus,jq) {  
+    		    	console.log(data);
+    	        },  
+    		    error:function(data,textStatus,jq) {
+    				alert("修改分类失败！");
+    			}  
+    		});
+		}
+	}
+	
+	function undoAlterClass() {
+		//$("#modifyFaCategoryId").empty();
+	}
+	
+	/*********************************************************************************
+	 *
+	 *添加分类信息
+	 *
+	 ********************************************************************************/
+	 function addClass() {
+	 	var className = $("#inputCategoryName").val();
+		var pId = $("#inputFaCategoryId").val();
+		var userId = cookie.Get("id");
+		
+		if(className != "") {
+			var postData = {
+				"equipClassforAdd.parentid": pId,
+				"equipClassforAdd.name": className,
+				"equipClassforAdd.userid": userId
+			}
+			
+			$.ajax({  
+			    url: "addClassification.do",  
+			    type: "post",
+			    data: postData,
+			    success:function(data,textStatus,jq){  
+			    	console.log(data);
+		        },  
+			    error:function(data,textStatus,jq){alert("添加分类失败！");}  
+			});
+		} else {
+			alert("分类名称不能为空！");
+		}
+	 }
+</script>
+
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="http://google.com"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="#anotherAction">个人主页</a></li>
+          <li><a href="#">人脉</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">设置</a></li>
+        <li><a href="用户管理首页.html">用户</a></li>
+        <li class="active"><a href="设备管理首页.html">器材</a></li>
+        <li><a href="#">内容</a></li>
+      </ul>
+    </div>    
+    <ul class="account-wrap nav nav-pills pull-right">
+          <li class="notice dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">消息1</a></li>
+              <li><a href="#">消息2</a></li>
+            </ul>
+          </li>     
+          <li class="social dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="./img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+            <div class="dropdown-menu">
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img src="./img/photo.jpg" width="96" height="96" class="img-rounded">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+                  <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+                  <div class="setting"><a href="#">账户设置</a></div>
+                  <button class="btn btn-primary" type="button">查看个人主页</button>
+                </div>
+              </div>
+            </div>      
+          </li>
+        </ul>
+  </div>
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+      <ul class="nav nav-tabs">
+        <li><a href="设备预约首页.html">器材预约</a></li>
+        <li class="active"><a href="设备管理首页.html">器材管理</a></li>
+      </ul>
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">分类管理</div>
+              <div class="tips">在此页面下你可以添加新的设备分类，也可以管理现有设备分类。……</div>
+              <div class="operate-item pull-left">
+                <a href="#add-equip-category" class="btn btn-primary" data-toggle="modal" role="button">添加分类</a>
+                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+              </div>
+
+              <div class="page pull-right clearfix">
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="record"><strong>$!classSum</strong>条记录</li>
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">最新</a></li>
+                      <li><a href="#">最旧</a></li>
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+                  <ul>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+            </div><!--control-bar end-->
+            <div class="panel panel-default">
+
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="name">名称</th>
+                    <th class="f-category">父级分类</th>
+                    <th class="model-num">型号数量</th>
+                    <th class="equip-num">设备数量</th>
+                  </tr>
+                </thead>
+                <tbody>
+				  #foreach($clazz in $allClassCourse)
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>$!clazz.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button" onclick="modifyClass($!clazz.id, $!clazz.pId, '$!clazz.name', '$!clazz.pName')">修改</a></td>
+                    <td>$!clazz.pName</td>
+                    <td>$!clazz.equipCount</td>
+                    <td>$!clazz.modelCount</td>
+                  </tr>
+				  #end
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+
+      </div>
+      <!--equip-wrap end-->
+      <!--sidebar start-->
+      <div id="lside">
+        <form class="form-group">
+          <input type="text" class="form-control" placeholder="搜索设备">
+          <i class="icon-search"></i>
+        </form>
+        <div class="list-group">
+          <a href="equipManagerAdmin.do" class="list-group-item">设备管理</a>
+          <a href="equipManagerEquip.do" class="list-group-item">添加设备</a>
+          <a href="equipManagerModel.do" class="list-group-item">型号管理</a>
+          <a href="equipManagerClassfication.do" class="list-group-item active">分类管理</a>
+        </div>
+      </div>
+      <!--sidebar end-->
+
+</section>
+
+
+<!-- Modal -->
+<div id="add-equip-category" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">添加分类</h3>
+  </div>
+  <div class="modal-body">
+    <p>添加设备分类目录。</p>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="inputCategoryName" class="col-xs-3 control-label">分类名称</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="inputCategoryName" placeholder="设备类型（如：数字摄影机）">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputFaCategoryId" class="col-xs-3 control-label">所属父级分类</label>
+        <div class="col-xs-7">
+          <select class="select2 select-white form-control" id="inputFaCategoryId">
+            <option value=0>无</option>
+            #foreach($pClass in $allParent)
+				<option value=$!pClass.pId>$!pClass.pName</option>
+			#end
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary" onclick="addClass()">确 定</button>
+  </div>
+</div>       
+<div id="modify-equip-category" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">修改</h3>
+  </div>
+  <div class="modal-body">
+    <p>修改当前选定的设备分类目录。</p>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="modifyCategoryName" class="col-xs-3 control-label">分类名称</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="modifyCategoryName" placeholder="输入新的分类名称">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modifyFaCategoryId" class="col-xs-3 control-label">所属父级分类</label>
+        <div class="col-xs-7">
+          <select class="select2 select-white form-control" id="modifyFaCategoryId">
+			<option value=0>无</option>
+			#foreach($pClass in $allParent)
+				<option value=$!pClass.pId>$!pClass.pName</option>
+			#end
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true" onclick="undoAlterClass()">取 消</button>
+    <button class="btn btn-primary" onclick="alterClass()">确 定</button>
+  </div>
+</div>
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="./js/jquery.js"></script>
+<script src="./js/loader.min.js"></script>
+<script src="./js/select2.js"></script>
+<script src="./js/bootstrap-hover-dropdown.min.js"></script>
+<script src="./js/bfa.js"></script>
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+</body>
+</html>

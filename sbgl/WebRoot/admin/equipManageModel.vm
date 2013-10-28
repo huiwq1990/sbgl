@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 设备管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="./css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="./css/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 9]>
+  <script src="../js/html5shiv.js"></script>
+  <script src="../js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="http://google.com"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="#anotherAction">个人主页</a></li>
+          <li><a href="#">人脉</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">设置</a></li>
+        <li><a href="用户管理首页.html">用户</a></li>
+        <li class="active"><a href="设备管理首页.html">器材</a></li>
+        <li><a href="#">内容</a></li>
+      </ul>
+    </div>    
+    <ul class="account-wrap nav nav-pills pull-right">
+          <li class="notice dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">消息1</a></li>
+              <li><a href="#">消息2</a></li>
+            </ul>
+          </li>     
+          <li class="social dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="./img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+            <div class="dropdown-menu">
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img src="./img/photo.jpg" width="96" height="96" class="img-rounded">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+                  <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+                  <div class="setting"><a href="#">账户设置</a></div>
+                  <button class="btn btn-primary" type="button">查看个人主页</button>
+                </div>
+              </div>
+            </div>      
+          </li>
+        </ul>
+  </div>
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+      <ul class="nav nav-tabs">
+        <li><a href="设备预约首页.html">器材预约</a></li>
+        <li class="active"><a href="设备管理首页.html">器材管理</a></li>
+      </ul>
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">型号管理</div>
+			  <div class="tips">在此页面下管理设备型号。设备型号包含每种设备的基本信息，如设备名、设备图片、设备资料介绍等等。</div>
+              <div class="filter category-filter">
+                <select id="select-categories" style="width:130px" class="select2">
+                  <option value="0" data-foo="fa">全部分类</option>
+                  #foreach($clazz in $classForEquipAdd)
+    				#if($!clazz.isParent == '1')
+    					<optgroup label="$!clazz.name">
+    				#else
+    					<option value="$!clazz.id">$!clazz.name</option>
+    				#end
+    			 #end
+                </select>
+              </div>
+              <div class="operate-item pull-left">
+                <a href="#add-equip-model" class="btn btn-primary" data-toggle="modal" role="button">添加型号</a>
+                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+              </div>
+
+              <div class="page pull-right clearfix">
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="record">当前分类下有<strong>$!equipCourse.size()</strong>条记录</li>
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">最新</a></li>
+                      <li><a href="#">最旧</a></li>
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+                  <ul>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+            </div><!--control-bar end-->
+            <div class="panel panel-default">
+            
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="name">设备名称(型号)</th>
+                    <th class="categories">分类</th>
+                    <th class="stock">合作器材公司</th>
+                    <th class="describe">描述</th>
+                  </tr>
+                </thead>
+                <tbody>
+				#foreach($model in $equipCourse)
+                  <tr>
+				  #if($!model.showClass != 1)
+                    <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
+                    <td>$!model.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-name="$!model.name" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo">修改</a></td>
+                    <td>双塔影视</td>
+					<td>$!model.cName</td>
+                    <td>$!model.memo</td>
+				  #end
+                  </tr>
+                #end  
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+
+      </div>
+      <!--equip-wrap end-->
+
+      <!--sidebar start-->
+      <div id="lside">
+        <form class="form-group">
+          <input type="text" class="form-control" placeholder="搜索设备">
+          <i class="icon-search"></i>
+        </form>
+        <div class="list-group">
+          <a href="equipManagerAdmin.do" class="list-group-item">设备管理</a>
+          <a href="equipManagerEquip.do" class="list-group-item">添加设备</a>
+          <a href="equipManagerModel.do" class="list-group-item active">型号管理</a>
+          <a href="equipManagerClassfication.do" class="list-group-item">分类管理</a>
+        </div>
+        </div>
+      <!--sidebar end-->
+
+</section>
+
+
+<!-- Modal -->
+<div id="modify-model" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">修改</h3>
+  </div>
+  <div class="modal-body">
+    <p>这里是修改设备型号相关说明。</p>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="modifyEModelName" class="col-xs-3 control-label">型号名</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="modifyEModelName" placeholder="Arri Alexa Plus">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modifyEquipCategory" class="col-xs-3 control-label">分类</label>
+        <div class="col-xs-7">
+          <select class="select2 select-white form-control" id="modifyEquipCategory">
+            <option value="-1" data-foo="fa">无分类</option>
+			#foreach($clazz in $classForEquipAdd)
+				#if($!clazz.isParent == '1')
+					<optgroup label="$!clazz.name">
+				#else
+					<option value="$!clazz.id">$!clazz.name</option>
+				#end
+			#end
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modifyEDescribe" class="col-xs-3 control-label">描述</label>
+        <div class="col-xs-7">
+          <textarea class="form-control" id="modifyEDescribe" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modifyStock" class="col-xs-3 control-label">合作器材公司</label>
+        <div class="col-xs-7">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="modifyStock1" value="s1" checked> 双塔影视
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modifyEPic" class="col-xs-3 control-label">图片</label>
+        <div class="col-xs-7">
+          <span class="btn btn-white file-input-button">
+              <i class="icon-plus"></i>
+              <span>添加图片</span>
+              <input id="modifyEPic" type="file" name="files[]" multiple>
+          </span>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary" action-type="alterModel">确 定</button>
+  </div>
+</div>
+
+<div id="add-equip-model" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">添加设备型号</h3>
+  </div>
+  <div class="modal-body">
+    <p>这里是添加设备型号相关说明。</p>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="inputEModelName" class="col-xs-3 control-label">型号</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="inputEModelName" placeholder="设备型号（如：Arri Alexa Plus）">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputECategory" class="col-xs-3 control-label">分类</label>
+        <div class="col-xs-7">
+          <select class="select2 select-white form-control" id="inputECategory">
+            <option value="-1" data-foo="fa">无分类</option>
+			#foreach($clazz in $classForEquipAdd)
+				#if($!clazz.isParent == '1')
+					<optgroup label="$!clazz.name">
+				#else
+					<option value="$!clazz.id">$!clazz.name</option>
+				#end
+			#end
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputEDescribe" class="col-xs-3 control-label">描述</label>
+        <div class="col-xs-7">
+          <textarea class="form-control" id="inputEDescribe" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputStock" class="col-xs-3 control-label">合作器材公司</label>
+        <div class="col-xs-7">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="inputStock1" value="s1" checked> 双塔影视
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputEPic" class="col-xs-3 control-label">图片</label>
+        <div class="col-xs-7">
+          <span class="btn btn-white file-input-button">
+              <i class="icon-plus"></i>
+              <span>添加图片</span>
+              <input id="inputEPic" type="file" name="files[]" multiple>
+          </span>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary" action-type="addModel">确 定</button>
+  </div>
+</div>
+
+    <!-- javascript
+    ================================================== -->
+<script src="./js/jquery.js"></script>
+<script src="./js/loader.min.js"></script>
+<script src="./js/select2.js"></script>
+<script src="./js/bootstrap-hover-dropdown.min.js"></script>
+<script src="./js/bfa.js"></script>
+
+<!--[if lt IE 10]>
+  <script src="./js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+
+<script>
+	var cookie = { 
+  		//读取COOKIES,n为COOKIE名 
+   		Get:function(n){ 
+       		var re=new RegExp(n+'=([^;]*);?','gi');
+       	    var r=re.exec(document.cookie)||[];
+       	    return (r.length>1?r[1]:null)
+   		}
+	};
+	var modelNameForAlter;
+	var modelIdForAlter;
+	var modelCIdForAlter;
+	var modelMemoForAlter;
+
+	$("body").on("click", "button[action-type|=addModel]", function() {
+		var modelName = $("#inputEModelName").val();
+		var clazzId = $("#inputECategory").val();
+		var memo = $("#inputEDescribe").val();
+		//console.log("modelName " + modelName);
+		//console.log("clazzId" + clazzId);
+		var postData = {
+			"equipment.administrationid": cookie.Get("id"),
+			"equipment.equipmentname": modelName,
+			"equipment.classificationid": clazzId,
+			"equipment.equipmentdetail": memo
+		}
+	
+		$.ajax({  
+		    url: "addEquipModel.do",  
+		    type: "post",
+		    data: postData,
+		    success:function(data,textStatus,jq){  
+		    	console.log(data);
+	        },  
+		    error:function(data,textStatus,jq){alert("添加型号失败!");}  
+		});
+	})
+	
+	$("body").on("click", "a[action-type|=alterModelFillIn]", function() {
+		var myData = $(this).data();
+		$("#modifyEModelName").val(myData.name);
+		$("#modifyEquipCategory").select2("val", myData.cid);
+		$("#modifyEDescribe").val(myData.memo);
+		
+		modelNameForAlter = myData.name;
+		modelIdForAlter = myData.id;
+		modelCIdForAlter = myData.cid;
+		modelMemoForAlter = myData.memo;
+		
+		console.log("myData.name" + myData.name);
+		console.log("myData.cId" + myData.cid);
+		console.log("myData.memo" + myData.memo);
+	})
+	
+	$("body").on("click", "button[action-type|=alterModel]", function() {
+		var ename = $("#modifyEModelName").val();
+		var cidInput = $("#modifyEquipCategory").val();
+		var memo = $("#modifyEDescribe").val();
+		
+		if(ename == modelNameForAlter && modelCIdForAlter == cidInput && modelMemoForAlter == memo) {
+			alert("并未做修改！");
+		} else {
+			var postData = {
+				"equipment.equipmentid": modelIdForAlter,
+				"equipment.equipmentname": ename,
+				"equipment.classificationid": cidInput,
+				"equipment.equipmentdetail": memo
+			}
+			
+			$.ajax({  
+			    url:"altEquipModel.do",  
+			    type:"post",
+			    data:postData,
+			    success:function(data,textStatus,jq){  
+			    	console.log(data);
+		        },  
+			    error:function(data,textStatus,jq){alert("修改型号失败！");}  
+			});
+		}
+		
+	})
+</script>
+</body>
+</html>
