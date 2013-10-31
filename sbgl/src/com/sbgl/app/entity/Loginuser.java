@@ -1,43 +1,73 @@
 package com.sbgl.app.entity;
 
-import com.sbgl.app.dao.DaoAbs;
+import java.util.Date;
 
-public class Loginuser extends DaoAbs {
-	private Long id;
-	private String userId;
+/**
+ * Loginuser entity. @author MyEclipse Persistence Tools
+ */
+
+public class Loginuser extends com.sbgl.app.dao.DaoAbs implements
+		java.io.Serializable {
+
+	// Fields
+
+	private Integer id;
 	private String name;
-	private String password;
-	private String roletype;
-	
-	public String getName() {
-		return name;
+	private Date createtime;
+	private Integer status;
+
+	// Constructors
+
+	/** default constructor */
+	public Loginuser() {
 	}
+
+	/** minimal constructor */
+	public Loginuser(Integer id) {
+		this.id = id;
+	}
+
+	/** full constructor */
+	public Loginuser(Integer id, String name, Date createtime,
+			Integer status) {
+		this.id = id;
+		this.name = name;
+		this.createtime = createtime;
+		this.status = status;
+	}
+
+	// Property accessors
+
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getPassword() {
-		return password;
+
+	public Date getCreatetime() {
+		return this.createtime;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
 	}
-	public String getUserId() {
-		return userId;
+
+	public Integer getStatus() {
+		return this.status;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
-	public String getRoletype() {
-		return roletype;
-	}
-	public void setRoletype(String roletype) {
-		this.roletype = roletype;
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
+
 }

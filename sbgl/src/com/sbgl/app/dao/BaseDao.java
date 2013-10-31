@@ -6,6 +6,8 @@ import java.util.List;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
+import com.sbgl.util.Page;
+
 public interface BaseDao {
 	public <T> void saveEntity(T entity);
 	public <T> boolean deleteByProperty(String tableName,String propertyName,T propertyValue);
@@ -21,4 +23,7 @@ public interface BaseDao {
 	//获得主键
 	public Integer getCode(String codeType);
 
+
+	public <T> int getRowCount(java.lang.Class<T> entity);
+	public <T> List<T> selectByPage(java.lang.Class<T> entityClass, Page page);
 }

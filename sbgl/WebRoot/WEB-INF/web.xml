@@ -31,10 +31,25 @@
   		org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter
   	</filter-class>
   </filter>
+  
+  <!-- 登录拦截器 -->
+  <!--  
    <filter> 
 	    <filter-name>loginFilter</filter-name> 
 	    <filter-class>com.sbgl.app.actions.login.LoginFilter</filter-class> 
 	</filter> 
+	<filter-mapping> 
+	    <filter-name>loginFilter</filter-name> 
+	    <url-pattern>*.vm</url-pattern>   
+	</filter-mapping>
+	<filter-mapping> 
+	    <filter-name>loginFilter</filter-name> 
+	    <url-pattern>*.do</url-pattern> 
+	</filter-mapping>
+	
+	
+	-->
+	
   <display-name>Archetype Created Web Application</display-name> 
   <servlet>
     <servlet-name>velocity</servlet-name>
@@ -51,14 +66,7 @@
  	<servlet-name>velocity</servlet-name>
   	<url-pattern>*.vm</url-pattern>
   </servlet-mapping>
-	<filter-mapping> 
-	    <filter-name>loginFilter</filter-name> 
-	    <url-pattern>*.vm</url-pattern>   
-	</filter-mapping>
-	<filter-mapping> 
-	    <filter-name>loginFilter</filter-name> 
-	    <url-pattern>*.do</url-pattern> 
-	</filter-mapping>
+	
   <filter-mapping>
   	<filter-name>struts2</filter-name>
 	<url-pattern>/*</url-pattern>

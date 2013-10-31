@@ -1,6 +1,7 @@
 package com.sbgl.app.dao.impl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.entity.Maxno;
+import com.sbgl.util.Page;
 
 @Repository("baseDao")
 public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
@@ -183,5 +185,44 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 			reCode = maxno.getMaxno();
 		}
 		return reCode;
+	}
+	
+	  /***
+	   * 返回共有多少记录
+	   */
+	@Override
+	public <T> int getRowCount(java.lang.Class<T> entityClass){
+      //TODO Auto-generated method stub		
+		log.debug("正在查询");
+		List list = new ArrayList();
+      try {
+      	 list = this.getCurrentSession().createQuery("from "+entityClass.getName()+" as model ").list();        
+      	
+      } catch (RuntimeException re) {
+          log.error("查询失败", re);
+          throw re;
+          
+      }finally{
+      	return list.size();
+      }		
+	}
+	
+	
+	public <T> List<T> selectByPage(java.lang.Class<T> entityClass, Page page) {
+		// TODO Auto-generated method stub
+		log.debug("正在查询");
+		List list = new ArrayList();
+//		设置表记录数目
+		page.setTotalCount(getRowCount(entityClass));
+		try {
+	        String queryString = "from "+entityClass.getName()+" as a ";
+	         Query q = this.getCurrentSession().createQuery(queryString).setFirstResult(page.getStartNum()).setMaxResults(page.getPageSize());
+	         
+	         List l = q.list(); 
+			 return l;
+	      } catch (RuntimeException re) {
+	         log.error("查询失败", re);
+	         throw re;
+	      }
 	}
 }

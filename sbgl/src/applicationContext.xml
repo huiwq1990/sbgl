@@ -33,7 +33,7 @@
 		</property>
 		<property name="hibernateProperties">
             <props>
-            	<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+            	<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
             	<prop key="hibernate.show_sql">true</prop>
            		<prop key="hibernate.cglib.use_reflection_optimizer">true</prop> 
                 <prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</prop>  
