@@ -589,8 +589,10 @@ border-bottom: 2px solid #427FED !important;
 .wizard form { margin: 0; height: 100%; }
 .wizard .title { margin-top: 20px; line-height: 25px; }
 .wizard .form-actions { position: absolute; bottom: 0; left: 0; right: 0; height: 70px;  margin: 0; z-index: 100; }
-.wizard .item-name { float:left; padding-left:15px; width: 215px; height: 30px; line-height: 30px; overflow: hidden; margin-bottom: 10px;text-overflow: ellipsis; white-space: nowrap; }
+.wizard .row { margin-bottom: 10px; }
+.wizard .item-name { float:left; padding-left:15px; width: 215px; height: 30px; line-height: 30px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .wizard .item-ctrl { float:right; padding-right:15px; width: 115px; }
+.wizard .item-need-more { padding: 4px 55px 0 15px; text-align: right; clear: both; }
 .wizard .input-group .btn, #rent-bar .input-group .form-control { padding: 4px 6px; }
 .wizard .spinner .form-control { width: 36px; }
 .wizard .spinner-input { text-align: center; }
@@ -616,11 +618,11 @@ border-bottom: 2px solid #427FED !important;
 .wizard .steps .active { position: absolute; left: 0; -webkit-transition: all .5s ease-in-out; transition: all .5s ease-in-out; }
 .wizard .steps .complete { position: absolute; left: -300px; width: 0; height: 0; -webkit-transition: all .5s ease-in-out; transition: all .5s ease-in-out; }
 .wizard .step-content .media{ padding: 0; }
-.wizard .step-content .step-pane {
+.wizard .step-pane {
 	display: none;
 	padding-bottom: 20px;
 }
-.wizard .step-content .step-pane.active {
+.wizard .step-pane.active {
 	display: block;
 }
 
@@ -655,6 +657,90 @@ border-bottom: 2px solid #427FED !important;
 margin-left: 100px;
 }
 
+/* 预约 出库 ================================================= */
+.group-hover .media { padding: 8px 20px; margin: 0; }
+.group-hover .media:hover { background-color: #F5F9FC; }
+#admin .group-hover .media { cursor: pointer; }
+#admin .group-hover .media.selected { background-color: #F5F9FC; }
+#admin .group-name i { display: inline-block; width: 10px; }
+#admin .group-name a { color: #000; }
+#admin .group-name a:hover { text-decoration: none; }
+#admin .group-body .is-select > i { display: inline-block; width: 20px; padding-top: 2px; color: #489D00; }
+#admin .group-hd .group-select-all > i { display: inline-block; width: 20px; padding-top: 2px; color: #489D00; cursor: pointer; }
+.tt-hint {
+height: 30px;
+padding: 5px 8px;
+font-size: 13px;
+line-height: 1.4;
+background-color: white;
+border: 1px solid #D9D9D9;
+border-top-color: silver;
+border-radius: 0;
+-webkit-box-shadow: none;
+box-shadow: none;
+-webkit-transition: none;
+transition: none;
+}
+#admin .tt-dropdown-menu {
+  min-width: 140px;
+  padding: 0 0 6px 0;
+  margin: 1px 0 0;
+  list-style: none;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  *border-right-width: 2px;
+  *border-bottom-width: 2px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;  
+}
+
+
+.typeahead {
+  background-color: #fff;
+}
+
+.typeahead:focus {
+  border: 2px solid #0097cf;
+}
+
+.tt-query {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.tt-hint {
+  color: #999
+}
+
+.tt-suggestion {
+  padding: 3px 20px;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.tt-suggestion.tt-is-under-cursor {
+  color: #fff;
+  background-color: #F4F4F4;
+
+}
+
+.tt-suggestion p {
+  margin: 0;
+}
+
+/* 预约 入库 ================================================= */
+#admin .group-body .stock-in-status > i { width: 24px; margin-left: 8px; } 
+#admin .group-body .stock-in-status .stock-damaged { color: #DD4B39; }
+#admin .group-body .stock-in-status .stock-lost { color: #F89406; }
 
 /* 机房预约 ================================================= */
 .bookable {
@@ -672,15 +758,19 @@ margin-left: 100px;
 	top: 10px;
 	right: 10px;
 }
-#post-equip .time-step { width: 8%; text-align: left !important; vertical-align: middle; }
+#post-equip .time-slot { width: 8%; text-align: left !important; vertical-align: middle; }
 #post-equip .carousel-bar { margin-bottom: 6px; text-align: right; }
 #post-equip .equip-title { margin-top: 10px; }
 #post-equip .post-list-warp { float: left; margin-right: -400px; width: 100%; }
 #post-equip .post-list { display: block; margin-right: 400px; }
 #post-equip .post-sidebar-warp { float: right; width: 380px; }
+#post-sidebar #rent-list { padding-bottom: 20px; }
+#post-sidebar .media { padding: 0; }
 
-
-
+.group-hd .group-select-all,
+.group-hd .group-status { font-size: 14px; margin: 10px 0 10px 10px; }
+.group-hd .group-name { font-weight: bold; font-size: 14px; margin: 10px  10px 10px 0; }
+.group, .group-line { overflow: hidden; zoom: 1; }
 
 .control-bar { margin-bottom: 16px; }
 .control-bar .s-h { 
@@ -688,7 +778,6 @@ margin-left: 100px;
 	opacity: 0;
 	filter: alpha(opacity=0);
 }
-.control-bar .nav-tabs { border-bottom: 1px solid #C5C5C5; }
 .control-bar .nav-tabs > .active > a,
 .control-bar .nav-tabs > .active > a:hover, .control-bar .nav-tabs > .active > a:focus { 
 	background-color: transparent;
@@ -712,7 +801,8 @@ margin-left: 100px;
 	font-size: 14px;
 	margin-bottom: 10px;
 }
-.control-bar .pagination { margin: 0 0 0 10px; }
+
+.control-bar .pagination,
 .control-bar .page-index { margin: 0 0 0 10px; }
 .control-bar .page-index .record { padding-top: 6px; margin-right: 10px; }
 .page-index .dropdown-toggle .caret { color: #000; }
@@ -1124,9 +1214,21 @@ a.list-group-item:focus {
   border-bottom-color: #85c5e5;
 }
 
-#admin-wrap { float: right; margin: 0 0 0 -260px; width: 100%; height: 100%; }
-#admin-wrap #admin-content { display: block; margin-left: 260px; margin-right: 20px; }
-#admin #lside { width: 220px; }
+#admin {background-color: #FFF; }
+#admin #header-wrap { height: 45px; }
+#admin .site-nav .dropdown-menu { top: -1px !important; }
+#admin .nav-wrap { position: fixed !important; top: 0 !important; }
+#admin .account-wrap { position: fixed; right: 0; padding-right: 20px; z-index: 1001; text-align: left; }
+#admin .account-wrap a { outline: none; }
+#admin .account-wrap .social { margin-top: 8px; }
+#admin .account-wrap .social .caret { margin-top: 12px; }
+#admin #main-wrap {
+	padding: 30px 30px 0;
+	background-color: #FFF;
+}
+#admin-wrap { float: right; margin: 0 0 0 -240px; width: 100%; height: 100%; }
+#admin-wrap #admin-content { display: block; margin-left: 240px; }
+#admin #lside { position:static; width: 220px; }
 #lside .nav { 
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -1164,8 +1266,6 @@ a.list-group-item:focus {
 .table .id { width: 140px; }
 .table .categories { width: 140px; }
 .table .status { width: 80px; }
-.table .chk { margin: 2px 0 5px 0; }
-.table thead .chk { margin: 2px 0 4px 0; }
 .table .btn,
 .media-list .btn { 
 	margin: 0 0 3px 10px;
