@@ -3,9 +3,15 @@
 <struts>
 	 <package name="computerorderdetail" extends="admin">
 
-<!-- entity manage  -->
 		<!-- default entity manage action -->
     	<action name="manageComputerorderdetail" class="ComputerorderdetailAction" method="manageComputerorderdetail">
+        	<result name="success">/computer/computerorderdetailManage.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		
+<!-- entity info manage  -->
+		<!-- default entity manage action -->
+    	<action name="manageComputerorderdetailInfo" class="ComputerorderdetailAction" method="manageComputerorderdetailInfo">
         	<result name="success">/computer/computerorderdetailManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>

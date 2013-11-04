@@ -19,7 +19,7 @@
         <property name="computernumber" type="java.lang.Integer">
             <column name="computernumber" />
         </property>
-        <property name="createtime" type="java.sql.Timestamp">
+        <property name="createtime" type="java.util.Date">
             <column name="createtime"  />
         </property>
         <property name="status" type="java.lang.Integer">

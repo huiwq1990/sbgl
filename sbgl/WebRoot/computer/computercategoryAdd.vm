@@ -50,26 +50,32 @@
                     </div>
                   </div>
 		<div class="form-group">
-                    <label for="label_computercategory_name" class="col-lg-2 control-label">name</label>
+                    <label for="label_computercategory_parentcomputercategoryid" class="col-lg-2 control-label">parentcomputercategoryid</label>
                     <div class="col-lg-1">
+                     <input type="text" class="form-control" id="input_computercategory_parentcomputercategoryid" name="parentcomputercategoryid"  placeholder="parentcomputercategoryid">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="label_computercategory_name" class="col-lg-2 control-label">name</label>
+                    <div class="col-lg-2">
                      <input type="text" class="form-control" id="input_computercategory_name" name="name"  placeholder="name">
                     </div>
                   </div>
 		<div class="form-group">
                     <label for="label_computercategory_createtime" class="col-lg-2 control-label">createtime</label>
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                      <input type="text" class="form-control" id="input_computercategory_createtime" name="createtime"  placeholder="createtime">
                     </div>
                   </div>
 		<div class="form-group">
                     <label for="label_computercategory_createuserid" class="col-lg-2 control-label">createuserid</label>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computercategory_createuserid" name="createuserid"  placeholder="createuserid">
                     </div>
                   </div>
 		<div class="form-group">
                     <label for="label_computercategory_status" class="col-lg-2 control-label">status</label>
-                    <div class="col-lg-4">
+                    <div class="col-lg-5">
                      <input type="text" class="form-control" id="input_computercategory_status" name="status"  placeholder="status">
                     </div>
                   </div>

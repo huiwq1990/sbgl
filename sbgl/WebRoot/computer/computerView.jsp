@@ -75,13 +75,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
-                    <td>${computerModel.name}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computercategoryid<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
-                    <td>${computerModel.computercategoryid}</td>                    
+                    <td>computermodelid<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
+                    <td>${computerModel.computermodelid}</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>

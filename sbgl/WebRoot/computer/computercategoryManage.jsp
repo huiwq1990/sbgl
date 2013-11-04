@@ -69,10 +69,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
 
                     <th class="name">computercategoryid</th>
+                    <th class="name">computercategoryparentcomputercategoryid</th>
                     <th class="name">computercategoryname</th>
                     <th class="name">computercategorycreatetime</th>
                     <th class="name">computercategorycreateuserid</th>
                     <th class="name">computercategorystatus</th>
+                    <th class="name">parentcomputercategoryid</th>
+                    <th class="name">parentcomputercategoryparentcomputercategoryid</th>
+                    <th class="name">parentcomputercategoryname</th>
+                    <th class="name">parentcomputercategorycreatetime</th>
+                    <th class="name">parentcomputercategorycreateuserid</th>
+                    <th class="name">parentcomputercategorystatus</th>
                     <th class="name">loginuserid</th>
                     <th class="name">loginusername</th>
                     <th class="name">loginusercreatetime</th>
@@ -87,17 +94,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>                   
                                         <td>${ tempEntityFull.computercategoryid }</td>
+                                        <td>${ tempEntityFull.computercategoryparentcomputercategoryid }</td>
                                         <td>${ tempEntityFull.computercategoryname }</td>
                                         <td>${ tempEntityFull.computercategorycreatetime }</td>
                                         <td>${ tempEntityFull.computercategorycreateuserid }</td>
                                         <td>${ tempEntityFull.computercategorystatus }</td>
+                                        <td>${ tempEntityFull.parentcomputercategoryid }</td>
+                                        <td>${ tempEntityFull.parentcomputercategoryparentcomputercategoryid }</td>
+                                        <td>${ tempEntityFull.parentcomputercategoryname }</td>
+                                        <td>${ tempEntityFull.parentcomputercategorycreatetime }</td>
+                                        <td>${ tempEntityFull.parentcomputercategorycreateuserid }</td>
+                                        <td>${ tempEntityFull.parentcomputercategorystatus }</td>
                                         <td>${ tempEntityFull.loginuserid }</td>
                                         <td>${ tempEntityFull.loginusername }</td>
                                         <td>${ tempEntityFull.loginusercreatetime }</td>
                                         <td>${ tempEntityFull.loginuserstatus }</td>
                     					<td><a href="http://localhost:8080/sbgl/viewComputercategoryFull.action?id=${ tempEntityFull.computercategoryid }">查看</a></td> 
 					<td><a href="http://localhost:8080/sbgl/${entityDelActionName}.action?id=${ tempEntityFull.computercategoryid }">删除</a></td>			
-					<td><a href="http://localhost:8080/sbgl/viewComputercategoryFull.action?id=${ tempEntityFull.computercategoryid }">修改</a></td>
+					<td><a href="http://localhost:8080/sbgl/editComputercategory.action?id=${ tempEntityFull.computercategoryid }">修改</a></td>
                   </tr>
 				</s:iterator>               
            

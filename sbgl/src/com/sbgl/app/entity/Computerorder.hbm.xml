@@ -10,19 +10,22 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
+        <property name="number" type="java.lang.String">
+            <column name="number" length="12" />
+        </property>
         <property name="userid" type="java.lang.Integer">
             <column name="userid" />
         </property>
-        <property name="createtime" type="java.sql.Timestamp">
+        <property name="createtime" type="java.util.Date">
             <column name="createtime"  />
         </property>
         <property name="status" type="java.lang.Integer">
             <column name="status" />
         </property>
-        <property name="starttime" type="java.sql.Timestamp">
+        <property name="starttime" type="java.util.Date">
             <column name="starttime"  />
         </property>
-        <property name="endtime" type="java.sql.Timestamp">
+        <property name="endtime" type="java.util.Date">
             <column name="endtime"  />
         </property>
     </class>

@@ -58,6 +58,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                   </div>
 		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computercategoryparentcomputercategoryid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computercategoryparentcomputercategoryid" value="${computercategoryFull.computercategoryparentcomputercategoryid}">
+                    </div>
+                  </div>
+		<div class="form-group">
                     <label for="inputEquipId" class="col-lg-2 control-label">computercategoryname</label>
                     <div class="col-lg-4">
                       <input type="text" class="form-control" id="computercategoryname" value="${computercategoryFull.computercategoryname}">
@@ -79,6 +85,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label for="inputEquipId" class="col-lg-2 control-label">computercategorystatus</label>
                     <div class="col-lg-4">
                       <input type="text" class="form-control" id="computercategorystatus" value="${computercategoryFull.computercategorystatus}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">parentcomputercategoryid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="parentcomputercategoryid" value="${computercategoryFull.parentcomputercategoryid}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">parentcomputercategoryparentcomputercategoryid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="parentcomputercategoryparentcomputercategoryid" value="${computercategoryFull.parentcomputercategoryparentcomputercategoryid}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">parentcomputercategoryname</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="parentcomputercategoryname" value="${computercategoryFull.parentcomputercategoryname}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">parentcomputercategorycreatetime</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="parentcomputercategorycreatetime" value="${computercategoryFull.parentcomputercategorycreatetime}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">parentcomputercategorycreateuserid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="parentcomputercategorycreateuserid" value="${computercategoryFull.parentcomputercategorycreateuserid}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">parentcomputercategorystatus</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="parentcomputercategorystatus" value="${computercategoryFull.parentcomputercategorystatus}">
                     </div>
                   </div>
 		<div class="form-group">

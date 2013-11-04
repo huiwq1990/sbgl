@@ -1,4 +1,4 @@
-    ManyToOne;attrName=computercategoryid ;colName=computercategoryid;class=Computercategory;
+    ManyToOne;attrName=computermodelid ;colName=computermodelid;class=Computermodel;
     ManyToOne;attrName=createuserid ;colName=createuserid;class=Loginuser;
 //如果有多对一，则配置
 //OneToMany;attrName= ;colName=;class=;

@@ -12,6 +12,7 @@ public class Computerorder extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer id;
+	private String number;
 	private Integer userid;
 	private Date createtime;
 	private Integer status;
@@ -30,9 +31,11 @@ public class Computerorder extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Computerorder(Integer id, Integer userid, Date createtime,
-			Integer status, Date starttime, Date endtime) {
+	public Computerorder(Integer id, String number, Integer userid,
+			Date createtime, Integer status, Date starttime,
+			Date endtime) {
 		this.id = id;
+		this.number = number;
 		this.userid = userid;
 		this.createtime = createtime;
 		this.status = status;
@@ -48,6 +51,14 @@ public class Computerorder extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getNumber() {
+		return this.number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
 	public Integer getUserid() {

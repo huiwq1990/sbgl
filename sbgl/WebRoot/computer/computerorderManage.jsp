@@ -69,6 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
 
                     <th class="name">computerorderid</th>
+                    <th class="name">computerordernumber</th>
                     <th class="name">computerorderuserid</th>
                     <th class="name">computerordercreatetime</th>
                     <th class="name">computerorderstatus</th>
@@ -88,6 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>                   
                                         <td>${ tempEntityFull.computerorderid }</td>
+                                        <td>${ tempEntityFull.computerordernumber }</td>
                                         <td>${ tempEntityFull.computerorderuserid }</td>
                                         <td>${ tempEntityFull.computerordercreatetime }</td>
                                         <td>${ tempEntityFull.computerorderstatus }</td>
@@ -99,7 +101,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                         <td>${ tempEntityFull.loginuserstatus }</td>
                     					<td><a href="http://localhost:8080/sbgl/viewComputerorderFull.action?id=${ tempEntityFull.computerorderid }">查看</a></td> 
 					<td><a href="http://localhost:8080/sbgl/${entityDelActionName}.action?id=${ tempEntityFull.computerorderid }">删除</a></td>			
-					<td><a href="http://localhost:8080/sbgl/viewComputerorderFull.action?id=${ tempEntityFull.computerorderid }">修改</a></td>
+					<td><a href="http://localhost:8080/sbgl/editComputerorder.action?id=${ tempEntityFull.computerorderid }">修改</a></td>
                   </tr>
 				</s:iterator>               
            

@@ -12,6 +12,7 @@ public class Computercategory extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer id;
+	private Integer parentcomputercategoryid;
 	private String name;
 	private Date createtime;
 	private Integer createuserid;
@@ -29,9 +30,11 @@ public class Computercategory extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Computercategory(Integer id, String name, Date createtime,
-			Integer createuserid, Integer status) {
+	public Computercategory(Integer id, Integer parentcomputercategoryid,
+			String name, Date createtime, Integer createuserid,
+			Integer status) {
 		this.id = id;
+		this.parentcomputercategoryid = parentcomputercategoryid;
 		this.name = name;
 		this.createtime = createtime;
 		this.createuserid = createuserid;
@@ -46,6 +49,14 @@ public class Computercategory extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Integer getParentcomputercategoryid() {
+		return this.parentcomputercategoryid;
+	}
+
+	public void setParentcomputercategoryid(Integer parentcomputercategoryid) {
+		this.parentcomputercategoryid = parentcomputercategoryid;
 	}
 
 	public String getName() {

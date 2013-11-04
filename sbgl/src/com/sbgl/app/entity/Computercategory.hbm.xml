@@ -10,10 +10,13 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
+        <property name="parentcomputercategoryid" type="java.lang.Integer">
+            <column name="parentcomputercategoryid" />
+        </property>
         <property name="name" type="java.lang.String">
             <column name="name" length="100" />
         </property>
-        <property name="createtime" type="java.sql.Timestamp">
+        <property name="createtime" type="java.util.Date">
             <column name="createtime"  />
         </property>
         <property name="createuserid" type="java.lang.Integer">

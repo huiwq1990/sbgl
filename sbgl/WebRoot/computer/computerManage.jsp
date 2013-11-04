@@ -70,16 +70,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                     <th class="name">computerid</th>
                     <th class="name">computerserialnumber</th>
-                    <th class="name">computername</th>
-                    <th class="name">computercomputercategoryid</th>
+                    <th class="name">computercomputermodelid</th>
                     <th class="name">computercreatetime</th>
                     <th class="name">computercreateuserid</th>
                     <th class="name">computerstatus</th>
-                    <th class="name">computercategoryid</th>
-                    <th class="name">computercategoryname</th>
-                    <th class="name">computercategorycreatetime</th>
-                    <th class="name">computercategorycreateuserid</th>
-                    <th class="name">computercategorystatus</th>
+                    <th class="name">computermodelid</th>
+                    <th class="name">computermodelname</th>
+                    <th class="name">computermodelcomputercategoryid</th>
+                    <th class="name">computermodelpicpath</th>
+                    <th class="name">computermodelcreatetime</th>
+                    <th class="name">computermodelcreateuserid</th>
+                    <th class="name">computermodelstatus</th>
                     <th class="name">loginuserid</th>
                     <th class="name">loginusername</th>
                     <th class="name">loginusercreatetime</th>
@@ -95,23 +96,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>                   
                                         <td>${ tempEntityFull.computerid }</td>
                                         <td>${ tempEntityFull.computerserialnumber }</td>
-                                        <td>${ tempEntityFull.computername }</td>
-                                        <td>${ tempEntityFull.computercomputercategoryid }</td>
+                                        <td>${ tempEntityFull.computercomputermodelid }</td>
                                         <td>${ tempEntityFull.computercreatetime }</td>
                                         <td>${ tempEntityFull.computercreateuserid }</td>
                                         <td>${ tempEntityFull.computerstatus }</td>
-                                        <td>${ tempEntityFull.computercategoryid }</td>
-                                        <td>${ tempEntityFull.computercategoryname }</td>
-                                        <td>${ tempEntityFull.computercategorycreatetime }</td>
-                                        <td>${ tempEntityFull.computercategorycreateuserid }</td>
-                                        <td>${ tempEntityFull.computercategorystatus }</td>
+                                        <td>${ tempEntityFull.computermodelid }</td>
+                                        <td>${ tempEntityFull.computermodelname }</td>
+                                        <td>${ tempEntityFull.computermodelcomputercategoryid }</td>
+                                        <td>${ tempEntityFull.computermodelpicpath }</td>
+                                        <td>${ tempEntityFull.computermodelcreatetime }</td>
+                                        <td>${ tempEntityFull.computermodelcreateuserid }</td>
+                                        <td>${ tempEntityFull.computermodelstatus }</td>
                                         <td>${ tempEntityFull.loginuserid }</td>
                                         <td>${ tempEntityFull.loginusername }</td>
                                         <td>${ tempEntityFull.loginusercreatetime }</td>
                                         <td>${ tempEntityFull.loginuserstatus }</td>
                     					<td><a href="http://localhost:8080/sbgl/viewComputerFull.action?id=${ tempEntityFull.computerid }">查看</a></td> 
 					<td><a href="http://localhost:8080/sbgl/${entityDelActionName}.action?id=${ tempEntityFull.computerid }">删除</a></td>			
-					<td><a href="http://localhost:8080/sbgl/viewComputerFull.action?id=${ tempEntityFull.computerid }">修改</a></td>
+					<td><a href="http://localhost:8080/sbgl/editComputer.action?id=${ tempEntityFull.computerid }">修改</a></td>
                   </tr>
 				</s:iterator>               
            

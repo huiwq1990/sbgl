@@ -94,6 +94,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                   </div>
 		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computerordernumber</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computerordernumber" value="${computerorderdetailFull.computerordernumber}">
+                    </div>
+                  </div>
+		<div class="form-group">
                     <label for="inputEquipId" class="col-lg-2 control-label">computerorderuserid</label>
                     <div class="col-lg-4">
                       <input type="text" class="form-control" id="computerorderuserid" value="${computerorderdetailFull.computerorderuserid}">
@@ -136,15 +142,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                   </div>
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computername</label>
+                    <label for="inputEquipId" class="col-lg-2 control-label">computercomputermodelid</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computername" value="${computerorderdetailFull.computername}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computercomputercategoryid</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computercomputercategoryid" value="${computerorderdetailFull.computercomputercategoryid}">
+                      <input type="text" class="form-control" id="computercomputermodelid" value="${computerorderdetailFull.computercomputermodelid}">
                     </div>
                   </div>
 		<div class="form-group">

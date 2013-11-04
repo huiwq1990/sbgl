@@ -76,27 +76,32 @@ public class ComputerorderSpringTest {
 					
 									if(!datas[1].trim().equals("")){
 					 method = map.get(attrs[1]);
-																method.invoke(obj,Integer.valueOf(datas[1].trim()));
+																method.invoke(obj,String.valueOf(datas[1].trim()));
  										}
 					
 									if(!datas[2].trim().equals("")){
 					 method = map.get(attrs[2]);
-																method.invoke(obj,DateUtil.parseDate(datas[2].trim()));  
-										}
+																method.invoke(obj,Integer.valueOf(datas[2].trim()));
+ 										}
 					
 									if(!datas[3].trim().equals("")){
 					 method = map.get(attrs[3]);
-																method.invoke(obj,Integer.valueOf(datas[3].trim()));
- 										}
+																method.invoke(obj,DateUtil.parseDate(datas[3].trim()));  
+										}
 					
 									if(!datas[4].trim().equals("")){
 					 method = map.get(attrs[4]);
-																method.invoke(obj,DateUtil.parseDate(datas[4].trim()));  
-										}
+																method.invoke(obj,Integer.valueOf(datas[4].trim()));
+ 										}
 					
 									if(!datas[5].trim().equals("")){
 					 method = map.get(attrs[5]);
 																method.invoke(obj,DateUtil.parseDate(datas[5].trim()));  
+										}
+					
+									if(!datas[6].trim().equals("")){
+					 method = map.get(attrs[6]);
+																method.invoke(obj,DateUtil.parseDate(datas[6].trim()));  
 										}
 					
 								

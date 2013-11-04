@@ -4,6 +4,8 @@ function computercategoryFormToJson(){
 	//chang this below
 					"id" : $('#input_computercategory_id').val(),
 					
+					"parentcomputercategoryid" : $('#input_computercategory_parentcomputercategoryid').val(),
+					
 					"name" : $('#input_computercategory_name').val(),
 					
 					"createtime" : $('#input_computercategory_createtime').val(),

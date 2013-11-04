@@ -72,6 +72,13 @@
                     <th class="name">${attrName}</th>
                     <th class="name">${attrName}</th>
                     <th class="name">${attrName}</th>
+                    <th class="name">${attrName}</th>
+                    <th class="name">${attrName}</th>
+                    <th class="name">${attrName}</th>
+                    <th class="name">${attrName}</th>
+                    <th class="name">${attrName}</th>
+                    <th class="name">${attrName}</th>
+                    <th class="name">${attrName}</th>
                     <th class="name">View</th>
 				   <th class="name">Del</th>
 				   <th class="name">Edit</th>
@@ -85,6 +92,13 @@
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                    
                     <td>$!tempcomputercategory.${attrName}</td>
+                                        <td>$!tempcomputercategory.${attrName}</td>
+                                        <td>$!tempcomputercategory.${attrName}</td>
+                                        <td>$!tempcomputercategory.${attrName}</td>
+                                        <td>$!tempcomputercategory.${attrName}</td>
+                                        <td>$!tempcomputercategory.${attrName}</td>
+                                        <td>$!tempcomputercategory.${attrName}</td>
+                                        <td>$!tempcomputercategory.${attrName}</td>
                                         <td>$!tempcomputercategory.${attrName}</td>
                                         <td>$!tempcomputercategory.${attrName}</td>
                                         <td>$!tempcomputercategory.${attrName}</td>

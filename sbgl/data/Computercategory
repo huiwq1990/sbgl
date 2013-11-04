@@ -1,6 +1,6 @@
-id,name,createtime,createuserid,status
- , , , , 
- , , , , 
- , , , , 
- , , , , 
- , , , , 
+id,parentcomputercategoryid,name,createtime,createuserid,status
+ , , , , , 
+ , , , , , 
+ , , , , , 
+ , , , , , 
+ , , , , , 

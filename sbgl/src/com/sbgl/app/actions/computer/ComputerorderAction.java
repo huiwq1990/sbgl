@@ -46,9 +46,22 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	List<ComputerorderFull> computerorderFullList = new ArrayList<ComputerorderFull>();
 	private String logperfix = "exec method";		
 	Page page = new Page();
-			
-	//管理
+		
+	
+		//管理
 	public String manageComputerorder(){
+		log.info("exec action method:manageComputerorderFull");
+		
+		
+		computerorderFullList  = computerorderService.selectComputerorderFullAll();
+		for(int i = 0; i < computerorderFullList.size(); i++){
+		//	System.out.println("id="+computerorderFullList.get(i).getLoginusername());
+		}
+		return SUCCESS;
+	}	
+	
+	//管理
+	public String manageComputerorderInfo(){
 		log.info(logperfix +" manageComputerorder");
 		//Page page = new Page();
 		//if()
@@ -178,6 +191,7 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 												  								
 												  								
 												  								
+												  								
 								actionMsg = getText("viewComputerorderSuccess");
 			}else{
 				actionMsg = getText("viewComputerorderFail");
@@ -203,6 +217,7 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 				
 				
 //              选择能更改的属性，与界面一致	
+  				tempComputerorder.setNumber(computerorder.getNumber());
   				tempComputerorder.setUserid(computerorder.getUserid());
   				tempComputerorder.setCreatetime(computerorder.getCreatetime());
   				tempComputerorder.setStatus(computerorder.getStatus());

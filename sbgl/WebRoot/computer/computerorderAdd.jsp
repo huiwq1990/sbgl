@@ -58,6 +58,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                   </div>
 		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">number</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computerordernumber" name="number" placeholder="number">
+                    </div>
+                  </div>
+		<div class="form-group">
                     <label for="inputEquipId" class="col-lg-2 control-label">userid</label>
                     <div class="col-lg-4">
                       <input type="text" class="form-control" id="computerorderuserid" name="userid" placeholder="userid">

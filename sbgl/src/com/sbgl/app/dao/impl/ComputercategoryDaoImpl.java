@@ -46,7 +46,7 @@ public class ComputercategoryDaoImpl extends HibernateDaoSupport implements Comp
 //  根据实体id查询实体full	
 	@Override
 	public ComputercategoryFull selectComputercategoryFullById(Integer computercategoryId) {
-		final String  sql = "select a.id as computercategoryid, a.name as computercategoryname, a.createtime as computercategorycreatetime, a.createuserid as computercategorycreateuserid, a.status as computercategorystatus, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computercategory a  left join Loginuser b on a.createuserid=b.id " + "where a.id = "+computercategoryId;
+		final String  sql = "select a.id as computercategoryid, a.parentcomputercategoryid as computercategoryparentcomputercategoryid, a.name as computercategoryname, a.createtime as computercategorycreatetime, a.createuserid as computercategorycreateuserid, a.status as computercategorystatus, b.id as parentcomputercategoryid, b.parentcomputercategoryid as parentcomputercategoryparentcomputercategoryid, b.name as parentcomputercategoryname, b.createtime as parentcomputercategorycreatetime, b.createuserid as parentcomputercategorycreateuserid, b.status as parentcomputercategorystatus, c.id as loginuserid, c.name as loginusername, c.createtime as loginusercreatetime, c.status as loginuserstatus from Computercategory a  left join Computercategory b on a.parentcomputercategoryid=b.id left join Computercategory c on a.parentcomputercategoryid=c.id " + "where a.id = "+computercategoryId;
 		
 		List<ComputercategoryFull> computercategoryList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
@@ -69,7 +69,7 @@ public class ComputercategoryDaoImpl extends HibernateDaoSupport implements Comp
 /*
 	@Override
 	public List<ComputercategoryFull> selectComputercategoryFullByUserId(Integer userId) {
-		final String  sql = "select a.id as computercategoryid, a.name as computercategoryname, a.createtime as computercategorycreatetime, a.createuserid as computercategorycreateuserid, a.status as computercategorystatus, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computercategory a  left join Loginuser b on a.createuserid=b.id " + "where a.userid = "+userId;
+		final String  sql = "select a.id as computercategoryid, a.parentcomputercategoryid as computercategoryparentcomputercategoryid, a.name as computercategoryname, a.createtime as computercategorycreatetime, a.createuserid as computercategorycreateuserid, a.status as computercategorystatus, b.id as parentcomputercategoryid, b.parentcomputercategoryid as parentcomputercategoryparentcomputercategoryid, b.name as parentcomputercategoryname, b.createtime as parentcomputercategorycreatetime, b.createuserid as parentcomputercategorycreateuserid, b.status as parentcomputercategorystatus, c.id as loginuserid, c.name as loginusername, c.createtime as loginusercreatetime, c.status as loginuserstatus from Computercategory a  left join Computercategory b on a.parentcomputercategoryid=b.id left join Computercategory c on a.parentcomputercategoryid=c.id " + "where a.userid = "+userId;
 		
 		List<ComputercategoryFull> computercategoryList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
@@ -90,7 +90,7 @@ public class ComputercategoryDaoImpl extends HibernateDaoSupport implements Comp
 //	查询全部实体full
 	@Override
 	public List<ComputercategoryFull> selectComputercategoryFullAll() {
-	final String  sql = "select a.id as computercategoryid, a.name as computercategoryname, a.createtime as computercategorycreatetime, a.createuserid as computercategorycreateuserid, a.status as computercategorystatus, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computercategory a  left join Loginuser b on a.createuserid=b.id ";
+	final String  sql = "select a.id as computercategoryid, a.parentcomputercategoryid as computercategoryparentcomputercategoryid, a.name as computercategoryname, a.createtime as computercategorycreatetime, a.createuserid as computercategorycreateuserid, a.status as computercategorystatus, b.id as parentcomputercategoryid, b.parentcomputercategoryid as parentcomputercategoryparentcomputercategoryid, b.name as parentcomputercategoryname, b.createtime as parentcomputercategorycreatetime, b.createuserid as parentcomputercategorycreateuserid, b.status as parentcomputercategorystatus, c.id as loginuserid, c.name as loginusername, c.createtime as loginusercreatetime, c.status as loginuserstatus from Computercategory a  left join Computercategory b on a.parentcomputercategoryid=b.id left join Computercategory c on a.parentcomputercategoryid=c.id ";
 		
 		List<ComputercategoryFull> computercategoryList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
@@ -116,12 +116,20 @@ public class ComputercategoryDaoImpl extends HibernateDaoSupport implements Comp
 //  根据关联查询实体full
 
 	//根据关联查询实体 
+	public List<Computercategory> selectComputercategoryByComputercategoryId(Integer parentcomputercategoryid ){
+	
+		return null;
+	}
 	public List<Computercategory> selectComputercategoryByLoginuserId(Integer createuserid ){
 	
 		return null;
 	}
   
 
+	public List<ComputercategoryFull> selectComputercategoryFullByComputercategoryId(Integer parentcomputercategoryid ){
+	
+		return null;
+	}
 	public List<ComputercategoryFull> selectComputercategoryFullByLoginuserId(Integer createuserid ){
 	
 		return null;

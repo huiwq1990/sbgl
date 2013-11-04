@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,6 +36,7 @@
             <div class="control-bar clearfix">
              
 
+
               <div class="page pull-right clearfix">
                 <ul class="page-index nav nav-pills pull-left">
                   <li class="record"><strong>XX</strong>条记录</li>
@@ -61,39 +63,60 @@
                   <tr>
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
 
-                    <th class="name">id</th>
-                    <th class="name">serialnumber</th>
-                    <th class="name">name</th>
-                    <th class="name">computercategoryid</th>
-                    <th class="name">createtime</th>
-                    <th class="name">createuserid</th>
-                    <th class="name">status</th>
-                    <th class="name">View</th>
+
+             <th class="name">computerid</th>
+             <th class="name">computerserialnumber</th>
+             <th class="name">computercomputermodelid</th>
+             <th class="name">computercreatetime</th>
+             <th class="name">computercreateuserid</th>
+             <th class="name">computerstatus</th>
+             <th class="name">computermodelid</th>
+             <th class="name">computermodelname</th>
+             <th class="name">computermodelcomputercategoryid</th>
+             <th class="name">computermodelpicpath</th>
+             <th class="name">computermodelcreatetime</th>
+             <th class="name">computermodelcreateuserid</th>
+             <th class="name">computermodelstatus</th>
+             <th class="name">loginuserid</th>
+             <th class="name">loginusername</th>
+             <th class="name">loginusercreatetime</th>
+             <th class="name">loginuserstatus</th>
+					<th class="name">View</th>
 				   <th class="name">Del</th>
 				   <th class="name">Edit</th>
                   </tr>
                 </thead>
-                <tbody>
-                  
+                <tbody>					
+							
 
-#foreach($tempcomputer in $computerList)
+#foreach($tempcomputer in $computerFullList)
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                   
-                    <td>$!tempcomputer.id</td>
-                                        <td>$!tempcomputer.serialnumber</td>
-                                        <td>$!tempcomputer.name</td>
-                                        <td>$!tempcomputer.computercategoryid</td>
-                                        <td>$!tempcomputer.createtime</td>
-                                        <td>$!tempcomputer.createuserid</td>
-                                        <td>$!tempcomputer.status</td>
-                    					<td><a href="http://localhost:8080/sbgl/viewComputer.action?id=$tempcomputer.id">查看</a></td> 
-					<td><a href="http://localhost:8080/sbgl/deleteComputer.action?id=$tempcomputer.id">删除</a></td>			
-					<td><a href="http://localhost:8080/sbgl/editComputer.action?id=$tempcomputer.id">修改</a></td>
+  
+					                     <td>$!tempcomputer.computerid</td>
+                                        <td>$!tempcomputer.computerserialnumber</td>
+                                        <td>$!tempcomputer.computercomputermodelid</td>
+                                        <td>$!tempcomputer.computercreatetime</td>
+                                        <td>$!tempcomputer.computercreateuserid</td>
+                                        <td>$!tempcomputer.computerstatus</td>
+                                        <td>$!tempcomputer.computermodelid</td>
+                                        <td>$!tempcomputer.computermodelname</td>
+                                        <td>$!tempcomputer.computermodelcomputercategoryid</td>
+                                        <td>$!tempcomputer.computermodelpicpath</td>
+                                        <td>$!tempcomputer.computermodelcreatetime</td>
+                                        <td>$!tempcomputer.computermodelcreateuserid</td>
+                                        <td>$!tempcomputer.computermodelstatus</td>
+                                        <td>$!tempcomputer.loginuserid</td>
+                                        <td>$!tempcomputer.loginusername</td>
+                                        <td>$!tempcomputer.loginusercreatetime</td>
+                                        <td>$!tempcomputer.loginuserstatus</td>
+                    					<td><a href="http://localhost:8080/sbgl/viewComputerFull.action?id=$tempcomputer.id">查看</a></td> 
+					<td><a href="http://localhost:8080/sbgl/${entityFullDelActionName}.action?id=$tempcomputer.id">删除</a></td>			
+					<td><a href="http://localhost:8080/sbgl/editComputerFull.action?id=$tempcomputer.id">修改</a></td>
                  
                   </tr>
-#end             
-	               
+#end            
+           
                 </tbody>
               </table>
 
@@ -115,6 +138,9 @@
         </div>
       </div>
       <!--sidebar end-->
+
+</section>
+
 
 </section>
 

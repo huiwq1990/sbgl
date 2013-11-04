@@ -13,13 +13,10 @@
         <property name="serialnumber" type="java.lang.Integer">
             <column name="serialnumber" />
         </property>
-        <property name="name" type="java.lang.String">
-            <column name="name" length="100" />
+        <property name="computermodelid" type="java.lang.Integer">
+            <column name="computermodelid" />
         </property>
-        <property name="computercategoryid" type="java.lang.Integer">
-            <column name="computercategoryid" />
-        </property>
-        <property name="createtime" type="java.sql.Timestamp">
+        <property name="createtime" type="java.util.Date">
             <column name="createtime"  />
         </property>
         <property name="createuserid" type="java.lang.Integer">

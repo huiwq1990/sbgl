@@ -1,6 +1,6 @@
-id,serialnumber,name,computercategoryid,createtime,createuserid,status
- , , , , , , 
- , , , , , , 
- , , , , , , 
- , , , , , , 
- , , , , , , 
+id,serialnumber,computermodelid,createtime,createuserid,status
+ , , , , , 
+ , , , , , 
+ , , , , , 
+ , , , , , 
+ , , , , , 

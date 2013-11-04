@@ -69,6 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
 
                     <th class="name">computerorderid</th>
+                    <th class="name">computerordernumber</th>
                     <th class="name">computerorderuserid</th>
                     <th class="name">computerordercreatetime</th>
                     <th class="name">computerorderstatus</th>
@@ -88,6 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>                   
                                         <td>${ tempEntityFull.computerorderid }</td>
+                                        <td>${ tempEntityFull.computerordernumber }</td>
                                         <td>${ tempEntityFull.computerorderuserid }</td>
                                         <td>${ tempEntityFull.computerordercreatetime }</td>
                                         <td>${ tempEntityFull.computerorderstatus }</td>

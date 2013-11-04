@@ -69,6 +69,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>computercategoryparentcomputercategoryid</td>
+                    <td>${computercategoryFull.computercategoryparentcomputercategoryid}</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computercategoryname</td>
                     <td>${computercategoryFull.computercategoryname}</td>                    
                   </tr>               
@@ -86,6 +91,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computercategorystatus</td>
                     <td>${computercategoryFull.computercategorystatus}</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>parentcomputercategoryid</td>
+                    <td>${computercategoryFull.parentcomputercategoryid}</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>parentcomputercategoryparentcomputercategoryid</td>
+                    <td>${computercategoryFull.parentcomputercategoryparentcomputercategoryid}</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>parentcomputercategoryname</td>
+                    <td>${computercategoryFull.parentcomputercategoryname}</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>parentcomputercategorycreatetime</td>
+                    <td>${computercategoryFull.parentcomputercategorycreatetime}</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>parentcomputercategorycreateuserid</td>
+                    <td>${computercategoryFull.parentcomputercategorycreateuserid}</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>parentcomputercategorystatus</td>
+                    <td>${computercategoryFull.parentcomputercategorystatus}</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>

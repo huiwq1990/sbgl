@@ -13,6 +13,7 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 			private Date computerorderdetailcreatetime;
 			private Integer computerorderdetailstatus;
 			private Integer computerorderid;
+			private String computerordernumber;
 			private Integer computerorderuserid;
 			private Date computerordercreatetime;
 			private Integer computerorderstatus;
@@ -20,8 +21,7 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 			private Date computerorderendtime;
 			private Integer computerid;
 			private Integer computerserialnumber;
-			private String computername;
-			private Integer computercomputercategoryid;
+			private Integer computercomputermodelid;
 			private Date computercreatetime;
 			private Integer computercreateuserid;
 			private Integer computerstatus;
@@ -70,6 +70,12 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 		public Integer getComputerorderid(){		
 			return this.computerorderid;
 		}
+			public void setComputerordernumber(String computerordernumber){		
+			this.computerordernumber = computerordernumber;
+		}
+		public String getComputerordernumber(){		
+			return this.computerordernumber;
+		}
 			public void setComputerorderuserid(Integer computerorderuserid){		
 			this.computerorderuserid = computerorderuserid;
 		}
@@ -112,17 +118,11 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 		public Integer getComputerserialnumber(){		
 			return this.computerserialnumber;
 		}
-			public void setComputername(String computername){		
-			this.computername = computername;
+			public void setComputercomputermodelid(Integer computercomputermodelid){		
+			this.computercomputermodelid = computercomputermodelid;
 		}
-		public String getComputername(){		
-			return this.computername;
-		}
-			public void setComputercomputercategoryid(Integer computercomputercategoryid){		
-			this.computercomputercategoryid = computercomputercategoryid;
-		}
-		public Integer getComputercomputercategoryid(){		
-			return this.computercomputercategoryid;
+		public Integer getComputercomputermodelid(){		
+			return this.computercomputermodelid;
 		}
 			public void setComputercreatetime(Date computercreatetime){		
 			this.computercreatetime = computercreatetime;

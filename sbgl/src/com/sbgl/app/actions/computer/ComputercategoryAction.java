@@ -46,9 +46,22 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	List<ComputercategoryFull> computercategoryFullList = new ArrayList<ComputercategoryFull>();
 	private String logperfix = "exec method";		
 	Page page = new Page();
-			
-	//管理
+		
+	
+		//管理
 	public String manageComputercategory(){
+		log.info("exec action method:manageComputercategoryFull");
+		
+		
+		computercategoryFullList  = computercategoryService.selectComputercategoryFullAll();
+		for(int i = 0; i < computercategoryFullList.size(); i++){
+		//	System.out.println("id="+computercategoryFullList.get(i).getLoginusername());
+		}
+		return SUCCESS;
+	}	
+	
+	//管理
+	public String manageComputercategoryInfo(){
 		log.info(logperfix +" manageComputercategory");
 		//Page page = new Page();
 		//if()
@@ -177,6 +190,7 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 												  								
 												  								
 												  								
+												  								
 								actionMsg = getText("viewComputercategorySuccess");
 			}else{
 				actionMsg = getText("viewComputercategoryFail");
@@ -202,6 +216,7 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 				
 				
 //              选择能更改的属性，与界面一致	
+  				tempComputercategory.setParentcomputercategoryid(computercategory.getParentcomputercategoryid());
   				tempComputercategory.setName(computercategory.getName());
   				tempComputercategory.setCreatetime(computercategory.getCreatetime());
   				tempComputercategory.setCreateuserid(computercategory.getCreateuserid());
@@ -429,6 +444,21 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	}
 
 
+	//根据parentcomputercategoryid 查询实体
+	public String selectComputercategoryByComputercategoryId() {
+			//检查用户登录
+		Loginuser lu = (Loginuser)session.get("Loginuser");
+		if(lu==null || lu.getId()==null){
+			return "toLogin";
+		}
+		Integer userId = lu.getId();
+		
+		computercategoryList  = computercategoryService.selectComputercategoryAll();
+		for(int i = 0; i < computercategoryList.size(); i++){
+			System.out.println("id="+computercategoryList.get(i).getId());
+		}
+		return SUCCESS;
+	}
 	//根据createuserid 查询实体
 	public String selectComputercategoryByLoginuserId() {
 			//检查用户登录
@@ -441,6 +471,21 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 		computercategoryList  = computercategoryService.selectComputercategoryAll();
 		for(int i = 0; i < computercategoryList.size(); i++){
 			System.out.println("id="+computercategoryList.get(i).getId());
+		}
+		return SUCCESS;
+	}
+	//根据parentcomputercategoryid 查询实体full
+	public String selectComputercategoryFullByComputercategoryId() {
+				//检查用户登录
+		Loginuser lu = (Loginuser)session.get("Loginuser");
+		if(lu==null || lu.getId()==null){
+			return "toLogin";
+		}
+		Integer userId = lu.getId();
+		
+		computercategoryFullList  = computercategoryService.selectComputercategoryFullByComputercategoryId(userId);
+		for(int i = 0; i < computercategoryFullList.size(); i++){
+			//System.out.println("id="+computercategoryFullList.get(i).getLoginusername());
 		}
 		return SUCCESS;
 	}

@@ -7,6 +7,7 @@ import java.util.Date;
 
 public class ComputerorderFull extends DaoAbs implements java.io.Serializable {
 			private Integer computerorderid;
+			private String computerordernumber;
 			private Integer computerorderuserid;
 			private Date computerordercreatetime;
 			private Integer computerorderstatus;
@@ -24,6 +25,12 @@ public class ComputerorderFull extends DaoAbs implements java.io.Serializable {
 		}
 		public Integer getComputerorderid(){		
 			return this.computerorderid;
+		}
+			public void setComputerordernumber(String computerordernumber){		
+			this.computerordernumber = computerordernumber;
+		}
+		public String getComputerordernumber(){		
+			return this.computerordernumber;
 		}
 			public void setComputerorderuserid(Integer computerorderuserid){		
 			this.computerorderuserid = computerorderuserid;

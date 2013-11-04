@@ -69,6 +69,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>computerordernumber</td>
+                    <td>${computerorderFull.computerordernumber}</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computerorderuserid</td>
                     <td>${computerorderFull.computerorderuserid}</td>                    
                   </tr>               

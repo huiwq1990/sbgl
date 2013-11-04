@@ -50,32 +50,38 @@
                     </div>
                   </div>
 		<div class="form-group">
-                    <label for="label_computerorder_userid" class="col-lg-2 control-label">userid</label>
+                    <label for="label_computerorder_number" class="col-lg-2 control-label">number</label>
                     <div class="col-lg-1">
+                     <input type="text" class="form-control" id="input_computerorder_number" name="number"  placeholder="number">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="label_computerorder_userid" class="col-lg-2 control-label">userid</label>
+                    <div class="col-lg-2">
                      <input type="text" class="form-control" id="input_computerorder_userid" name="userid"  placeholder="userid">
                     </div>
                   </div>
 		<div class="form-group">
                     <label for="label_computerorder_createtime" class="col-lg-2 control-label">createtime</label>
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                      <input type="text" class="form-control" id="input_computerorder_createtime" name="createtime"  placeholder="createtime">
                     </div>
                   </div>
 		<div class="form-group">
                     <label for="label_computerorder_status" class="col-lg-2 control-label">status</label>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computerorder_status" name="status"  placeholder="status">
                     </div>
                   </div>
 		<div class="form-group">
                     <label for="label_computerorder_starttime" class="col-lg-2 control-label">starttime</label>
-                    <div class="col-lg-4">
+                    <div class="col-lg-5">
                      <input type="text" class="form-control" id="input_computerorder_starttime" name="starttime"  placeholder="starttime">
                     </div>
                   </div>
 		<div class="form-group">
                     <label for="label_computerorder_endtime" class="col-lg-2 control-label">endtime</label>
-                    <div class="col-lg-5">
+                    <div class="col-lg-6">
                      <input type="text" class="form-control" id="input_computerorder_endtime" name="endtime"  placeholder="endtime">
                     </div>
                   </div>

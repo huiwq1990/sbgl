@@ -53,6 +53,12 @@
                     </div>
                   </div>
 		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">parentcomputercategoryid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_computercategory_parentcomputercategoryid" value="$!{computercategoryModel.parentcomputercategoryid}">
+                    </div>
+                  </div>
+		<div class="form-group">
                     <label for="inputEquipId" class="col-lg-2 control-label">name</label>
                     <div class="col-lg-4">
                       <input type="text" class="form-control" id="input_computercategory_name" value="$!{computercategoryModel.name}">

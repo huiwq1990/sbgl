@@ -6,9 +6,7 @@ function computerFormToJson(){
 					
 					"serialnumber" : $('#input_computer_serialnumber').val(),
 					
-					"name" : $('#input_computer_name').val(),
-					
-					"computercategoryid" : $('#input_computer_computercategoryid').val(),
+					"computermodelid" : $('#input_computer_computermodelid').val(),
 					
 					"createtime" : $('#input_computer_createtime').val(),
 					

@@ -4,6 +4,8 @@ function computerorderFormToJson(){
 	//chang this below
 					"id" : $('#input_computerorder_id').val(),
 					
+					"number" : $('#input_computerorder_number').val(),
+					
 					"userid" : $('#input_computerorder_userid').val(),
 					
 					"createtime" : $('#input_computerorder_createtime').val(),

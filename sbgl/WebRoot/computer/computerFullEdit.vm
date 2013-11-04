@@ -87,13 +87,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computername</td>
-                    <td>${computerFull.computername}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computercomputercategoryid</td>
-                    <td>${computerFull.computercomputercategoryid}</td>                    
+                    <td>computercomputermodelid</td>
+                    <td>${computerFull.computercomputermodelid}</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
@@ -112,28 +107,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computercategoryid</td>
-                    <td>${computerFull.computercategoryid}</td>                    
+                    <td>computermodelid</td>
+                    <td>${computerFull.computermodelid}</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computercategoryname</td>
-                    <td>${computerFull.computercategoryname}</td>                    
+                    <td>computermodelname</td>
+                    <td>${computerFull.computermodelname}</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computercategorycreatetime</td>
-                    <td>${computerFull.computercategorycreatetime}</td>                    
+                    <td>computermodelcomputercategoryid</td>
+                    <td>${computerFull.computermodelcomputercategoryid}</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computercategorycreateuserid</td>
-                    <td>${computerFull.computercategorycreateuserid}</td>                    
+                    <td>computermodelpicpath</td>
+                    <td>${computerFull.computermodelpicpath}</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computercategorystatus</td>
-                    <td>${computerFull.computercategorystatus}</td>                    
+                    <td>computermodelcreatetime</td>
+                    <td>${computerFull.computermodelcreatetime}</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>computermodelcreateuserid</td>
+                    <td>${computerFull.computermodelcreateuserid}</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>computermodelstatus</td>
+                    <td>${computerFull.computermodelstatus}</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,6 +36,7 @@
             <div class="control-bar clearfix">
              
 
+
               <div class="page pull-right clearfix">
                 <ul class="page-index nav nav-pills pull-left">
                   <li class="record"><strong>XX</strong>条记录</li>
@@ -61,37 +63,64 @@
                   <tr>
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
 
-                    <th class="name">id</th>
-                    <th class="name">computerorderid</th>
-                    <th class="name">computerid</th>
-                    <th class="name">computernumber</th>
-                    <th class="name">createtime</th>
-                    <th class="name">status</th>
-                    <th class="name">View</th>
+
+             <th class="name">computerorderdetailid</th>
+             <th class="name">computerorderdetailcomputerorderid</th>
+             <th class="name">computerorderdetailcomputerid</th>
+             <th class="name">computerorderdetailcomputernumber</th>
+             <th class="name">computerorderdetailcreatetime</th>
+             <th class="name">computerorderdetailstatus</th>
+             <th class="name">computerorderid</th>
+             <th class="name">computerordernumber</th>
+             <th class="name">computerorderuserid</th>
+             <th class="name">computerordercreatetime</th>
+             <th class="name">computerorderstatus</th>
+             <th class="name">computerorderstarttime</th>
+             <th class="name">computerorderendtime</th>
+             <th class="name">computerid</th>
+             <th class="name">computerserialnumber</th>
+             <th class="name">computercomputermodelid</th>
+             <th class="name">computercreatetime</th>
+             <th class="name">computercreateuserid</th>
+             <th class="name">computerstatus</th>
+					<th class="name">View</th>
 				   <th class="name">Del</th>
 				   <th class="name">Edit</th>
                   </tr>
                 </thead>
-                <tbody>
-                  
+                <tbody>					
+							
 
-#foreach($tempcomputerorderdetail in $computerorderdetailList)
+#foreach($tempcomputerorderdetail in $computerorderdetailFullList)
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                   
-                    <td>$!tempcomputerorderdetail.id</td>
+  
+					                     <td>$!tempcomputerorderdetail.computerorderdetailid</td>
+                                        <td>$!tempcomputerorderdetail.computerorderdetailcomputerorderid</td>
+                                        <td>$!tempcomputerorderdetail.computerorderdetailcomputerid</td>
+                                        <td>$!tempcomputerorderdetail.computerorderdetailcomputernumber</td>
+                                        <td>$!tempcomputerorderdetail.computerorderdetailcreatetime</td>
+                                        <td>$!tempcomputerorderdetail.computerorderdetailstatus</td>
                                         <td>$!tempcomputerorderdetail.computerorderid</td>
+                                        <td>$!tempcomputerorderdetail.computerordernumber</td>
+                                        <td>$!tempcomputerorderdetail.computerorderuserid</td>
+                                        <td>$!tempcomputerorderdetail.computerordercreatetime</td>
+                                        <td>$!tempcomputerorderdetail.computerorderstatus</td>
+                                        <td>$!tempcomputerorderdetail.computerorderstarttime</td>
+                                        <td>$!tempcomputerorderdetail.computerorderendtime</td>
                                         <td>$!tempcomputerorderdetail.computerid</td>
-                                        <td>$!tempcomputerorderdetail.computernumber</td>
-                                        <td>$!tempcomputerorderdetail.createtime</td>
-                                        <td>$!tempcomputerorderdetail.status</td>
-                    					<td><a href="http://localhost:8080/sbgl/viewComputerorderdetail.action?id=$tempcomputerorderdetail.id">查看</a></td> 
-					<td><a href="http://localhost:8080/sbgl/deleteComputerorderdetail.action?id=$tempcomputerorderdetail.id">删除</a></td>			
-					<td><a href="http://localhost:8080/sbgl/editComputerorderdetail.action?id=$tempcomputerorderdetail.id">修改</a></td>
+                                        <td>$!tempcomputerorderdetail.computerserialnumber</td>
+                                        <td>$!tempcomputerorderdetail.computercomputermodelid</td>
+                                        <td>$!tempcomputerorderdetail.computercreatetime</td>
+                                        <td>$!tempcomputerorderdetail.computercreateuserid</td>
+                                        <td>$!tempcomputerorderdetail.computerstatus</td>
+                    					<td><a href="http://localhost:8080/sbgl/viewComputerorderdetailFull.action?id=$tempcomputerorderdetail.id">查看</a></td> 
+					<td><a href="http://localhost:8080/sbgl/${entityFullDelActionName}.action?id=$tempcomputerorderdetail.id">删除</a></td>			
+					<td><a href="http://localhost:8080/sbgl/editComputerorderdetailFull.action?id=$tempcomputerorderdetail.id">修改</a></td>
                  
                   </tr>
-#end             
-	               
+#end            
+           
                 </tbody>
               </table>
 
@@ -113,6 +142,9 @@
         </div>
       </div>
       <!--sidebar end-->
+
+</section>
+
 
 </section>
 

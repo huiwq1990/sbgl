@@ -64,15 +64,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                   </div>
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computername</label>
+                    <label for="inputEquipId" class="col-lg-2 control-label">computercomputermodelid</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computername" value="${computerFull.computername}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computercomputercategoryid</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computercomputercategoryid" value="${computerFull.computercomputercategoryid}">
+                      <input type="text" class="form-control" id="computercomputermodelid" value="${computerFull.computercomputermodelid}">
                     </div>
                   </div>
 		<div class="form-group">
@@ -94,33 +88,45 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                   </div>
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computercategoryid</label>
+                    <label for="inputEquipId" class="col-lg-2 control-label">computermodelid</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computercategoryid" value="${computerFull.computercategoryid}">
+                      <input type="text" class="form-control" id="computermodelid" value="${computerFull.computermodelid}">
                     </div>
                   </div>
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computercategoryname</label>
+                    <label for="inputEquipId" class="col-lg-2 control-label">computermodelname</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computercategoryname" value="${computerFull.computercategoryname}">
+                      <input type="text" class="form-control" id="computermodelname" value="${computerFull.computermodelname}">
                     </div>
                   </div>
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computercategorycreatetime</label>
+                    <label for="inputEquipId" class="col-lg-2 control-label">computermodelcomputercategoryid</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computercategorycreatetime" value="${computerFull.computercategorycreatetime}">
+                      <input type="text" class="form-control" id="computermodelcomputercategoryid" value="${computerFull.computermodelcomputercategoryid}">
                     </div>
                   </div>
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computercategorycreateuserid</label>
+                    <label for="inputEquipId" class="col-lg-2 control-label">computermodelpicpath</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computercategorycreateuserid" value="${computerFull.computercategorycreateuserid}">
+                      <input type="text" class="form-control" id="computermodelpicpath" value="${computerFull.computermodelpicpath}">
                     </div>
                   </div>
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computercategorystatus</label>
+                    <label for="inputEquipId" class="col-lg-2 control-label">computermodelcreatetime</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computercategorystatus" value="${computerFull.computercategorystatus}">
+                      <input type="text" class="form-control" id="computermodelcreatetime" value="${computerFull.computermodelcreatetime}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computermodelcreateuserid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computermodelcreateuserid" value="${computerFull.computermodelcreateuserid}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computermodelstatus</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computermodelstatus" value="${computerFull.computermodelstatus}">
                     </div>
                   </div>
 		<div class="form-group">

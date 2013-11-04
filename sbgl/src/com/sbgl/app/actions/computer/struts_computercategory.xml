@@ -3,9 +3,15 @@
 <struts>
 	 <package name="computercategory" extends="admin">
 
-<!-- entity manage  -->
 		<!-- default entity manage action -->
-    	<action name="manageComputercategory" class="ComputercategoryAction" method="manageComputercategory">
+    	<action name="manageComputercategory" class="ComputerPageAction" method="manageComputercategory">
+        	<result name="success">/computer/computercategoryManage.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		
+<!-- entity info manage  -->
+		<!-- default entity manage action -->
+    	<action name="manageComputercategoryInfo" class="ComputercategoryAction" method="manageComputercategoryInfo">
         	<result name="success">/computer/computercategoryManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>

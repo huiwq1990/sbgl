@@ -46,9 +46,22 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 	List<ComputerorderdetailFull> computerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
 	private String logperfix = "exec method";		
 	Page page = new Page();
-			
-	//管理
+		
+	
+		//管理
 	public String manageComputerorderdetail(){
+		log.info("exec action method:manageComputerorderdetailFull");
+		
+		
+		computerorderdetailFullList  = computerorderdetailService.selectComputerorderdetailFullAll();
+		for(int i = 0; i < computerorderdetailFullList.size(); i++){
+		//	System.out.println("id="+computerorderdetailFullList.get(i).getLoginusername());
+		}
+		return SUCCESS;
+	}	
+	
+	//管理
+	public String manageComputerorderdetailInfo(){
 		log.info(logperfix +" manageComputerorderdetail");
 		//Page page = new Page();
 		//if()

@@ -75,6 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <th class="name">computerorderdetailcreatetime</th>
                     <th class="name">computerorderdetailstatus</th>
                     <th class="name">computerorderid</th>
+                    <th class="name">computerordernumber</th>
                     <th class="name">computerorderuserid</th>
                     <th class="name">computerordercreatetime</th>
                     <th class="name">computerorderstatus</th>
@@ -82,8 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <th class="name">computerorderendtime</th>
                     <th class="name">computerid</th>
                     <th class="name">computerserialnumber</th>
-                    <th class="name">computername</th>
-                    <th class="name">computercomputercategoryid</th>
+                    <th class="name">computercomputermodelid</th>
                     <th class="name">computercreatetime</th>
                     <th class="name">computercreateuserid</th>
                     <th class="name">computerstatus</th>
@@ -103,6 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                         <td>${ tempEntityFull.computerorderdetailcreatetime }</td>
                                         <td>${ tempEntityFull.computerorderdetailstatus }</td>
                                         <td>${ tempEntityFull.computerorderid }</td>
+                                        <td>${ tempEntityFull.computerordernumber }</td>
                                         <td>${ tempEntityFull.computerorderuserid }</td>
                                         <td>${ tempEntityFull.computerordercreatetime }</td>
                                         <td>${ tempEntityFull.computerorderstatus }</td>
@@ -110,14 +111,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                         <td>${ tempEntityFull.computerorderendtime }</td>
                                         <td>${ tempEntityFull.computerid }</td>
                                         <td>${ tempEntityFull.computerserialnumber }</td>
-                                        <td>${ tempEntityFull.computername }</td>
-                                        <td>${ tempEntityFull.computercomputercategoryid }</td>
+                                        <td>${ tempEntityFull.computercomputermodelid }</td>
                                         <td>${ tempEntityFull.computercreatetime }</td>
                                         <td>${ tempEntityFull.computercreateuserid }</td>
                                         <td>${ tempEntityFull.computerstatus }</td>
                     					<td><a href="http://localhost:8080/sbgl/viewComputerorderdetailFull.action?id=${ tempEntityFull.computerorderdetailid }">查看</a></td> 
 					<td><a href="http://localhost:8080/sbgl/${entityDelActionName}.action?id=${ tempEntityFull.computerorderdetailid }">删除</a></td>			
-					<td><a href="http://localhost:8080/sbgl/viewComputerorderdetailFull.action?id=${ tempEntityFull.computerorderdetailid }">修改</a></td>
+					<td><a href="http://localhost:8080/sbgl/editComputerorderdetail.action?id=${ tempEntityFull.computerorderdetailid }">修改</a></td>
                   </tr>
 				</s:iterator>               
            

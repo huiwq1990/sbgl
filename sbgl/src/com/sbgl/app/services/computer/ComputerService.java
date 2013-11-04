@@ -39,10 +39,10 @@ public interface ComputerService{
 	public List<ComputerFull> selectComputerFullByPage(Page page);
 	
 //根据关联查询实体	
-	public List<Computer> selectComputerByComputercategoryId(Integer computercategoryid );
+	public List<Computer> selectComputerByComputermodelId(Integer computermodelid );
 	public List<Computer> selectComputerByLoginuserId(Integer createuserid );
 //根据关联查询实体full	
-	public List<ComputerFull> selectComputerFullByComputercategoryId(Integer computercategoryid );
+	public List<ComputerFull> selectComputerFullByComputermodelId(Integer computermodelid );
 	public List<ComputerFull> selectComputerFullByLoginuserId(Integer createuserid );
 
 		
