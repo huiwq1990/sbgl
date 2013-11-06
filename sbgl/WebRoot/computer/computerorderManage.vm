@@ -65,12 +65,10 @@
 
 
              <th class="name">computerorderid</th>
-             <th class="name">computerordernumber</th>
+             <th class="name">computerorderserialnumber</th>
              <th class="name">computerorderuserid</th>
              <th class="name">computerordercreatetime</th>
              <th class="name">computerorderstatus</th>
-             <th class="name">computerorderstarttime</th>
-             <th class="name">computerorderendtime</th>
              <th class="name">loginuserid</th>
              <th class="name">loginusername</th>
              <th class="name">loginusercreatetime</th>
@@ -88,12 +86,10 @@
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
   
 					                     <td>$!tempcomputerorder.computerorderid</td>
-                                        <td>$!tempcomputerorder.computerordernumber</td>
+                                        <td>$!tempcomputerorder.computerorderserialnumber</td>
                                         <td>$!tempcomputerorder.computerorderuserid</td>
                                         <td>$!tempcomputerorder.computerordercreatetime</td>
                                         <td>$!tempcomputerorder.computerorderstatus</td>
-                                        <td>$!tempcomputerorder.computerorderstarttime</td>
-                                        <td>$!tempcomputerorder.computerorderendtime</td>
                                         <td>$!tempcomputerorder.loginuserid</td>
                                         <td>$!tempcomputerorder.loginusername</td>
                                         <td>$!tempcomputerorder.loginusercreatetime</td>

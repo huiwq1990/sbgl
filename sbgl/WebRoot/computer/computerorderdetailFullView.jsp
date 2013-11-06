@@ -89,6 +89,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>computerorderdetailborrowday</td>
+                    <td>${computerorderdetailFull.computerorderdetailborrowday}</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>computerorderdetailborrowperiod</td>
+                    <td>${computerorderdetailFull.computerorderdetailborrowperiod}</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computerorderdetailstatus</td>
                     <td>${computerorderdetailFull.computerorderdetailstatus}</td>                    
                   </tr>               
@@ -99,8 +109,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerordernumber</td>
-                    <td>${computerorderdetailFull.computerordernumber}</td>                    
+                    <td>computerorderserialnumber</td>
+                    <td>${computerorderdetailFull.computerorderserialnumber}</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
@@ -116,16 +126,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computerorderstatus</td>
                     <td>${computerorderdetailFull.computerorderstatus}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderstarttime</td>
-                    <td>${computerorderdetailFull.computerorderstarttime}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderendtime</td>
-                    <td>${computerorderdetailFull.computerorderendtime}</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>

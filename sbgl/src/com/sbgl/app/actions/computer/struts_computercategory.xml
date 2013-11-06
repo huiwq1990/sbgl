@@ -4,7 +4,7 @@
 	 <package name="computercategory" extends="admin">
 
 		<!-- default entity manage action -->
-    	<action name="manageComputercategory" class="ComputerPageAction" method="manageComputercategory">
+    	<action name="manageComputercategory" class="Entity" method="manageComputercategory">
         	<result name="success">/computer/computercategoryManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>

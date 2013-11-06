@@ -28,7 +28,7 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 	//http://blog.csdn.net/softimes/article/details/7008875 实体添加时需要配置hibernate
 	@Override
 	public void addComputerorder(Computerorder computerorder){
-	//	computerorder.setId(baseDao.getCode("Computerorder"));
+		computerorder.setId(baseDao.getCode("Computerorder"));
 		baseDao.saveEntity(computerorder);		
 	}
 
@@ -43,7 +43,10 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 	public int deleteComputerorder(Integer computerorderId){
 		Computerorder computerorder = new Computerorder();
 		computerorder.setId(computerorderId);
-		return computerorderDao.deleteEntity(computerorderId);		
+		//return computerorderDao.deleteEntity(computerorderId);	
+		//baseDao.deleteEntityById(Computerorder.class,computerorderId);
+		baseDao.deleteEntity(computerorder);
+		return 1;
 	}
 
 //  根据实体删除实体

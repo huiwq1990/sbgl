@@ -16,6 +16,8 @@ public class Computerorderdetail extends com.sbgl.app.dao.DaoAbs implements
 	private Integer computerid;
 	private Integer computernumber;
 	private Date createtime;
+	private Date borrowday;
+	private Integer borrowperiod;
 	private Integer status;
 
 	// Constructors
@@ -32,12 +34,14 @@ public class Computerorderdetail extends com.sbgl.app.dao.DaoAbs implements
 	/** full constructor */
 	public Computerorderdetail(Integer id, Integer computerorderid,
 			Integer computerid, Integer computernumber, Date createtime,
-			Integer status) {
+			Date borrowday, Integer borrowperiod, Integer status) {
 		this.id = id;
 		this.computerorderid = computerorderid;
 		this.computerid = computerid;
 		this.computernumber = computernumber;
 		this.createtime = createtime;
+		this.borrowday = borrowday;
+		this.borrowperiod = borrowperiod;
 		this.status = status;
 	}
 
@@ -81,6 +85,22 @@ public class Computerorderdetail extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setCreatetime(Date createtime) {
 		this.createtime = createtime;
+	}
+
+	public Date getBorrowday() {
+		return this.borrowday;
+	}
+
+	public void setBorrowday(Date borrowday) {
+		this.borrowday = borrowday;
+	}
+
+	public Integer getBorrowperiod() {
+		return this.borrowperiod;
+	}
+
+	public void setBorrowperiod(Integer borrowperiod) {
+		this.borrowperiod = borrowperiod;
 	}
 
 	public Integer getStatus() {

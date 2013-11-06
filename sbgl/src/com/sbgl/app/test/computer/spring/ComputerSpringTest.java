@@ -14,12 +14,11 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 
 
-
 import com.sbgl.app.entity.Computer;
 import com.sbgl.app.entity.ComputerFull;
 import com.sbgl.app.services.computer.ComputerService;
 import com.sbgl.util.*;
-//import com.sbgl.app.services.common.CommonService;
+import com.sbgl.app.services.common.*;
 
 public class ComputerSpringTest {
 
@@ -36,7 +35,7 @@ public class ComputerSpringTest {
 
 	}
 	
-	/*
+	
 //初始化数据库 将数据库中数据删除 添加新的数据
 	public static void intTable() {
 		ApplicationContext cxt = new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
@@ -59,7 +58,7 @@ public class ComputerSpringTest {
 			HashMap<String, Method> map = ReflectUtil.ConverBean(Computer.class);
 			Object obj;
 			List<String> dataList = new ArrayList<String>();
-			File f = new File( "data/Computer");
+			File f = new File( "D:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computer");
 			dataList = FileUtils.readLines(f);
 			String[] attrs = dataList.get(0).split(",");
 			for(int i=1; i < dataList.size();i++){
@@ -76,7 +75,7 @@ public class ComputerSpringTest {
 					
 									if(!datas[1].trim().equals("")){
 					 method = map.get(attrs[1]);
-																method.invoke(obj,Integer.valueOf(datas[1].trim()));
+																method.invoke(obj,String.valueOf(datas[1].trim()));
  										}
 					
 									if(!datas[2].trim().equals("")){
@@ -106,7 +105,7 @@ public class ComputerSpringTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}*/
+	}
 	
 	public static void addComputer(){
 

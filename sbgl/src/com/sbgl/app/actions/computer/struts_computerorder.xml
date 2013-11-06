@@ -4,7 +4,7 @@
 	 <package name="computerorder" extends="admin">
 
 		<!-- default entity manage action -->
-    	<action name="manageComputerorder" class="ComputerorderAction" method="manageComputerorder">
+    	<action name="manageComputerorder" class="Entity" method="manageComputerorder">
         	<result name="success">/computer/computerorderManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>

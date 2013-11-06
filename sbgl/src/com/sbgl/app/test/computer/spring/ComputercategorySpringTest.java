@@ -14,12 +14,11 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 
 
-
 import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.ComputercategoryFull;
 import com.sbgl.app.services.computer.ComputercategoryService;
 import com.sbgl.util.*;
-//import com.sbgl.app.services.common.CommonService;
+import com.sbgl.app.services.common.*;
 
 public class ComputercategorySpringTest {
 
@@ -36,7 +35,7 @@ public class ComputercategorySpringTest {
 
 	}
 	
-	/*
+	
 //初始化数据库 将数据库中数据删除 添加新的数据
 	public static void intTable() {
 		ApplicationContext cxt = new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
@@ -59,7 +58,7 @@ public class ComputercategorySpringTest {
 			HashMap<String, Method> map = ReflectUtil.ConverBean(Computercategory.class);
 			Object obj;
 			List<String> dataList = new ArrayList<String>();
-			File f = new File( "data/Computercategory");
+			File f = new File( "D:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computercategory");
 			dataList = FileUtils.readLines(f);
 			String[] attrs = dataList.get(0).split(",");
 			for(int i=1; i < dataList.size();i++){
@@ -106,7 +105,7 @@ public class ComputercategorySpringTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}*/
+	}
 	
 	public static void addComputercategory(){
 

@@ -12,6 +12,8 @@ public interface BaseDao {
 	public <T> void saveEntity(T entity);
 	public <T> boolean deleteByProperty(String tableName,String propertyName,T propertyValue);
 	public <T> void deleteEntity(T entity);
+	public <T> void deleteEntityById(java.lang.Class<T> entityClass, Serializable id) ;
+	
 	public <T> void updateEntity(T entity);
 	public <T> List<T> getAllEntity (java.lang.Class<T> entityClass);
 	public <T> T getEntityById(java.lang.Class<T> entityClass,Serializable id);

@@ -69,14 +69,14 @@
              <th class="name">computerorderdetailcomputerid</th>
              <th class="name">computerorderdetailcomputernumber</th>
              <th class="name">computerorderdetailcreatetime</th>
+             <th class="name">computerorderdetailborrowday</th>
+             <th class="name">computerorderdetailborrowperiod</th>
              <th class="name">computerorderdetailstatus</th>
              <th class="name">computerorderid</th>
-             <th class="name">computerordernumber</th>
+             <th class="name">computerorderserialnumber</th>
              <th class="name">computerorderuserid</th>
              <th class="name">computerordercreatetime</th>
              <th class="name">computerorderstatus</th>
-             <th class="name">computerorderstarttime</th>
-             <th class="name">computerorderendtime</th>
              <th class="name">computerid</th>
              <th class="name">computerserialnumber</th>
              <th class="name">computercomputermodelid</th>
@@ -100,14 +100,14 @@
                                         <td>$!tempcomputerorderdetail.computerorderdetailcomputerid</td>
                                         <td>$!tempcomputerorderdetail.computerorderdetailcomputernumber</td>
                                         <td>$!tempcomputerorderdetail.computerorderdetailcreatetime</td>
+                                        <td>$!tempcomputerorderdetail.computerorderdetailborrowday</td>
+                                        <td>$!tempcomputerorderdetail.computerorderdetailborrowperiod</td>
                                         <td>$!tempcomputerorderdetail.computerorderdetailstatus</td>
                                         <td>$!tempcomputerorderdetail.computerorderid</td>
-                                        <td>$!tempcomputerorderdetail.computerordernumber</td>
+                                        <td>$!tempcomputerorderdetail.computerorderserialnumber</td>
                                         <td>$!tempcomputerorderdetail.computerorderuserid</td>
                                         <td>$!tempcomputerorderdetail.computerordercreatetime</td>
                                         <td>$!tempcomputerorderdetail.computerorderstatus</td>
-                                        <td>$!tempcomputerorderdetail.computerorderstarttime</td>
-                                        <td>$!tempcomputerorderdetail.computerorderendtime</td>
                                         <td>$!tempcomputerorderdetail.computerid</td>
                                         <td>$!tempcomputerorderdetail.computerserialnumber</td>
                                         <td>$!tempcomputerorderdetail.computercomputermodelid</td>

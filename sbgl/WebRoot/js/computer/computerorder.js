@@ -4,17 +4,13 @@ function computerorderFormToJson(){
 	//chang this below
 					"id" : $('#input_computerorder_id').val(),
 					
-					"number" : $('#input_computerorder_number').val(),
+					"serialnumber" : $('#input_computerorder_serialnumber').val(),
 					
 					"userid" : $('#input_computerorder_userid').val(),
 					
 					"createtime" : $('#input_computerorder_createtime').val(),
 					
-					"status" : $('#input_computerorder_status').val(),
-					
-					"starttime" : $('#input_computerorder_starttime').val(),
-					
-					"endtime" : $('#input_computerorder_endtime').val()
+					"status" : $('#input_computerorder_status').val()
 					
 
 	};

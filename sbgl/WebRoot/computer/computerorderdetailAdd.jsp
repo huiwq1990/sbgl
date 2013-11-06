@@ -82,6 +82,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                   </div>
 		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">borrowday</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computerorderdetailborrowday" name="borrowday" placeholder="borrowday">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">borrowperiod</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computerorderdetailborrowperiod" name="borrowperiod" placeholder="borrowperiod">
+                    </div>
+                  </div>
+		<div class="form-group">
                     <label for="inputEquipId" class="col-lg-2 control-label">status</label>
                     <div class="col-lg-4">
                       <input type="text" class="form-control" id="computerorderdetailstatus" name="status" placeholder="status">

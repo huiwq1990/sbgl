@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class ComputerFull extends DaoAbs implements java.io.Serializable {
 			private Integer computerid;
-			private Integer computerserialnumber;
+			private String computerserialnumber;
 			private Integer computercomputermodelid;
 			private Date computercreatetime;
 			private Integer computercreateuserid;
@@ -21,7 +21,7 @@ public class ComputerFull extends DaoAbs implements java.io.Serializable {
 			private Integer computermodelstatus;
 			private Integer loginuserid;
 			private String loginusername;
-			private Date loginusercreatetime;
+			private Timestamp loginusercreatetime;
 			private Integer loginuserstatus;
 		
 	
@@ -32,10 +32,10 @@ public class ComputerFull extends DaoAbs implements java.io.Serializable {
 		public Integer getComputerid(){		
 			return this.computerid;
 		}
-			public void setComputerserialnumber(Integer computerserialnumber){		
+			public void setComputerserialnumber(String computerserialnumber){		
 			this.computerserialnumber = computerserialnumber;
 		}
-		public Integer getComputerserialnumber(){		
+		public String getComputerserialnumber(){		
 			return this.computerserialnumber;
 		}
 			public void setComputercomputermodelid(Integer computercomputermodelid){		
@@ -116,10 +116,10 @@ public class ComputerFull extends DaoAbs implements java.io.Serializable {
 		public String getLoginusername(){		
 			return this.loginusername;
 		}
-			public void setLoginusercreatetime(Date loginusercreatetime){		
+			public void setLoginusercreatetime(Timestamp loginusercreatetime){		
 			this.loginusercreatetime = loginusercreatetime;
 		}
-		public Date getLoginusercreatetime(){		
+		public Timestamp getLoginusercreatetime(){		
 			return this.loginusercreatetime;
 		}
 			public void setLoginuserstatus(Integer loginuserstatus){		

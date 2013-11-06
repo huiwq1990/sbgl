@@ -1,6 +1,3 @@
 id,parentcomputercategoryid,name,createtime,createuserid,status
- , , , , , 
- , , , , , 
- , , , , , 
- , , , , , 
- , , , , , 
+ , 0, 服务器, , , 
+ , 0, 数字调色, , , 

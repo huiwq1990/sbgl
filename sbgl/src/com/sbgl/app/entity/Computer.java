@@ -12,7 +12,7 @@ public class Computer extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer id;
-	private Integer serialnumber;
+	private String serialnumber;
 	private Integer computermodelid;
 	private Date createtime;
 	private Integer createuserid;
@@ -30,7 +30,7 @@ public class Computer extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Computer(Integer id, Integer serialnumber, Integer computermodelid,
+	public Computer(Integer id, String serialnumber, Integer computermodelid,
 			Date createtime, Integer createuserid, Integer status) {
 		this.id = id;
 		this.serialnumber = serialnumber;
@@ -50,11 +50,11 @@ public class Computer extends com.sbgl.app.dao.DaoAbs implements
 		this.id = id;
 	}
 
-	public Integer getSerialnumber() {
+	public String getSerialnumber() {
 		return this.serialnumber;
 	}
 
-	public void setSerialnumber(Integer serialnumber) {
+	public void setSerialnumber(String serialnumber) {
 		this.serialnumber = serialnumber;
 	}
 

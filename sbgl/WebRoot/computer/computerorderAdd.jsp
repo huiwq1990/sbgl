@@ -58,9 +58,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                   </div>
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">number</label>
+                    <label for="inputEquipId" class="col-lg-2 control-label">serialnumber</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerordernumber" name="number" placeholder="number">
+                      <input type="text" class="form-control" id="computerorderserialnumber" name="serialnumber" placeholder="serialnumber">
                     </div>
                   </div>
 		<div class="form-group">
@@ -79,18 +79,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label for="inputEquipId" class="col-lg-2 control-label">status</label>
                     <div class="col-lg-4">
                       <input type="text" class="form-control" id="computerorderstatus" name="status" placeholder="status">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">starttime</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerorderstarttime" name="starttime" placeholder="starttime">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">endtime</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerorderendtime" name="endtime" placeholder="endtime">
                     </div>
                   </div>
 

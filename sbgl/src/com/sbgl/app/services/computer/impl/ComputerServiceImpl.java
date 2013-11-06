@@ -28,7 +28,7 @@ public class ComputerServiceImpl implements ComputerService{
 	//http://blog.csdn.net/softimes/article/details/7008875 实体添加时需要配置hibernate
 	@Override
 	public void addComputer(Computer computer){
-	//	computer.setId(baseDao.getCode("Computer"));
+		computer.setId(baseDao.getCode("Computer"));
 		baseDao.saveEntity(computer);		
 	}
 
@@ -43,7 +43,10 @@ public class ComputerServiceImpl implements ComputerService{
 	public int deleteComputer(Integer computerId){
 		Computer computer = new Computer();
 		computer.setId(computerId);
-		return computerDao.deleteEntity(computerId);		
+		//return computerDao.deleteEntity(computerId);	
+		//baseDao.deleteEntityById(Computer.class,computerId);
+		baseDao.deleteEntity(computer);
+		return 1;
 	}
 
 //  根据实体删除实体

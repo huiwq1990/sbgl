@@ -189,7 +189,7 @@ public class DateUtil {
     			"HH:mm:ss dd.MM.yyyy", "yyyy:MM:dd",
     			"yyyy:MM:dd HH:mm", "dd.MM.yy", "yyyyMMdd", "EEE, dd MMM yyyy HH:mm:ss",
     			"MM/dd/yy", "yyyy:MM:dd HH:mm:sss",
-    			"yyyy/MM/dd"};
+    			"yyyy/MM/dd","yyyy-MM-dd"};
     	for (int j = 0; j < patterns.length ; j++)
     	{
     		try {

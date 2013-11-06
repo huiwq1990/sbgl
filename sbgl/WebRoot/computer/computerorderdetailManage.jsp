@@ -73,14 +73,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <th class="name">computerorderdetailcomputerid</th>
                     <th class="name">computerorderdetailcomputernumber</th>
                     <th class="name">computerorderdetailcreatetime</th>
+                    <th class="name">computerorderdetailborrowday</th>
+                    <th class="name">computerorderdetailborrowperiod</th>
                     <th class="name">computerorderdetailstatus</th>
                     <th class="name">computerorderid</th>
-                    <th class="name">computerordernumber</th>
+                    <th class="name">computerorderserialnumber</th>
                     <th class="name">computerorderuserid</th>
                     <th class="name">computerordercreatetime</th>
                     <th class="name">computerorderstatus</th>
-                    <th class="name">computerorderstarttime</th>
-                    <th class="name">computerorderendtime</th>
                     <th class="name">computerid</th>
                     <th class="name">computerserialnumber</th>
                     <th class="name">computercomputermodelid</th>
@@ -101,14 +101,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                         <td>${ tempEntityFull.computerorderdetailcomputerid }</td>
                                         <td>${ tempEntityFull.computerorderdetailcomputernumber }</td>
                                         <td>${ tempEntityFull.computerorderdetailcreatetime }</td>
+                                        <td>${ tempEntityFull.computerorderdetailborrowday }</td>
+                                        <td>${ tempEntityFull.computerorderdetailborrowperiod }</td>
                                         <td>${ tempEntityFull.computerorderdetailstatus }</td>
                                         <td>${ tempEntityFull.computerorderid }</td>
-                                        <td>${ tempEntityFull.computerordernumber }</td>
+                                        <td>${ tempEntityFull.computerorderserialnumber }</td>
                                         <td>${ tempEntityFull.computerorderuserid }</td>
                                         <td>${ tempEntityFull.computerordercreatetime }</td>
                                         <td>${ tempEntityFull.computerorderstatus }</td>
-                                        <td>${ tempEntityFull.computerorderstarttime }</td>
-                                        <td>${ tempEntityFull.computerorderendtime }</td>
                                         <td>${ tempEntityFull.computerid }</td>
                                         <td>${ tempEntityFull.computerserialnumber }</td>
                                         <td>${ tempEntityFull.computercomputermodelid }</td>

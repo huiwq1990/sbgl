@@ -191,6 +191,8 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 												  								
 												  								
 												  								
+												  								
+												  								
 								actionMsg = getText("viewComputerorderdetailSuccess");
 			}else{
 				actionMsg = getText("viewComputerorderdetailFail");
@@ -220,6 +222,8 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
   				tempComputerorderdetail.setComputerid(computerorderdetail.getComputerid());
   				tempComputerorderdetail.setComputernumber(computerorderdetail.getComputernumber());
   				tempComputerorderdetail.setCreatetime(computerorderdetail.getCreatetime());
+  				tempComputerorderdetail.setBorrowday(computerorderdetail.getBorrowday());
+  				tempComputerorderdetail.setBorrowperiod(computerorderdetail.getBorrowperiod());
   				tempComputerorderdetail.setStatus(computerorderdetail.getStatus());
  
 				

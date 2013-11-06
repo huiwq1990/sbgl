@@ -58,9 +58,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                   </div>
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerordernumber</label>
+                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderserialnumber</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerordernumber" value="${computerorderFull.computerordernumber}">
+                      <input type="text" class="form-control" id="computerorderserialnumber" value="${computerorderFull.computerorderserialnumber}">
                     </div>
                   </div>
 		<div class="form-group">
@@ -79,18 +79,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label for="inputEquipId" class="col-lg-2 control-label">computerorderstatus</label>
                     <div class="col-lg-4">
                       <input type="text" class="form-control" id="computerorderstatus" value="${computerorderFull.computerorderstatus}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderstarttime</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerorderstarttime" value="${computerorderFull.computerorderstarttime}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderendtime</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerorderendtime" value="${computerorderFull.computerorderendtime}">
                     </div>
                   </div>
 		<div class="form-group">

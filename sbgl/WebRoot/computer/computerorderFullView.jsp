@@ -69,8 +69,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerordernumber</td>
-                    <td>${computerorderFull.computerordernumber}</td>                    
+                    <td>computerorderserialnumber</td>
+                    <td>${computerorderFull.computerorderserialnumber}</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
@@ -86,16 +86,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computerorderstatus</td>
                     <td>${computerorderFull.computerorderstatus}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderstarttime</td>
-                    <td>${computerorderFull.computerorderstarttime}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderendtime</td>
-                    <td>${computerorderFull.computerorderendtime}</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>

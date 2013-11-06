@@ -10,8 +10,8 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <property name="serialnumber" type="java.lang.Integer">
-            <column name="serialnumber" />
+        <property name="serialnumber" type="java.lang.String">
+            <column name="serialnumber" length="30" />
         </property>
         <property name="computermodelid" type="java.lang.Integer">
             <column name="computermodelid" />

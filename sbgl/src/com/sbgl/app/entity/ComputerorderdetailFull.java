@@ -12,6 +12,8 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 			private Integer computerorderdetailcomputernumber;
 			private Date computerorderdetailcreatetime;
 			private Integer computerorderdetailstatus;
+			private String computerorderdetailborrowday;
+			private Integer computerorderdetailborrowperiod;
 			private Integer computerorderid;
 			private String computerordernumber;
 			private Integer computerorderuserid;
@@ -20,7 +22,7 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 			private Date computerorderstarttime;
 			private Date computerorderendtime;
 			private Integer computerid;
-			private Integer computerserialnumber;
+			private String computerserialnumber;
 			private Integer computercomputermodelid;
 			private Date computercreatetime;
 			private Integer computercreateuserid;
@@ -63,6 +65,18 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 		}
 		public Integer getComputerorderdetailstatus(){		
 			return this.computerorderdetailstatus;
+		}
+			public void setComputerorderdetailborrowday(String computerorderdetailborrowday){		
+			this.computerorderdetailborrowday = computerorderdetailborrowday;
+		}
+		public String getComputerorderdetailborrowday(){		
+			return this.computerorderdetailborrowday;
+		}
+			public void setComputerorderdetailborrowperiod(Integer computerorderdetailborrowperiod){		
+			this.computerorderdetailborrowperiod = computerorderdetailborrowperiod;
+		}
+		public Integer getComputerorderdetailborrowperiod(){		
+			return this.computerorderdetailborrowperiod;
 		}
 			public void setComputerorderid(Integer computerorderid){		
 			this.computerorderid = computerorderid;
@@ -112,10 +126,10 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 		public Integer getComputerid(){		
 			return this.computerid;
 		}
-			public void setComputerserialnumber(Integer computerserialnumber){		
+			public void setComputerserialnumber(String computerserialnumber){		
 			this.computerserialnumber = computerserialnumber;
 		}
-		public Integer getComputerserialnumber(){		
+		public String getComputerserialnumber(){		
 			return this.computerserialnumber;
 		}
 			public void setComputercomputermodelid(Integer computercomputermodelid){		

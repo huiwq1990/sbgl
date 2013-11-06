@@ -28,7 +28,7 @@ public class ComputerorderdetailServiceImpl implements ComputerorderdetailServic
 	//http://blog.csdn.net/softimes/article/details/7008875 实体添加时需要配置hibernate
 	@Override
 	public void addComputerorderdetail(Computerorderdetail computerorderdetail){
-	//	computerorderdetail.setId(baseDao.getCode("Computerorderdetail"));
+		computerorderdetail.setId(baseDao.getCode("Computerorderdetail"));
 		baseDao.saveEntity(computerorderdetail);		
 	}
 
@@ -43,7 +43,10 @@ public class ComputerorderdetailServiceImpl implements ComputerorderdetailServic
 	public int deleteComputerorderdetail(Integer computerorderdetailId){
 		Computerorderdetail computerorderdetail = new Computerorderdetail();
 		computerorderdetail.setId(computerorderdetailId);
-		return computerorderdetailDao.deleteEntity(computerorderdetailId);		
+		//return computerorderdetailDao.deleteEntity(computerorderdetailId);	
+		//baseDao.deleteEntityById(Computerorderdetail.class,computerorderdetailId);
+		baseDao.deleteEntity(computerorderdetail);
+		return 1;
 	}
 
 //  根据实体删除实体

@@ -74,8 +74,20 @@
                     </div>
                   </div>
 		<div class="form-group">
-                    <label for="label_computerorderdetail_status" class="col-lg-2 control-label">status</label>
+                    <label for="label_computerorderdetail_borrowday" class="col-lg-2 control-label">borrowday</label>
                     <div class="col-lg-5">
+                     <input type="text" class="form-control" id="input_computerorderdetail_borrowday" name="borrowday"  placeholder="borrowday">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="label_computerorderdetail_borrowperiod" class="col-lg-2 control-label">borrowperiod</label>
+                    <div class="col-lg-6">
+                     <input type="text" class="form-control" id="input_computerorderdetail_borrowperiod" name="borrowperiod"  placeholder="borrowperiod">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="label_computerorderdetail_status" class="col-lg-2 control-label">status</label>
+                    <div class="col-lg-7">
                      <input type="text" class="form-control" id="input_computerorderdetail_status" name="status"  placeholder="status">
                     </div>
                   </div>

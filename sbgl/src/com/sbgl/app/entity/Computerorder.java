@@ -12,12 +12,10 @@ public class Computerorder extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer id;
-	private String number;
+	private String serialnumber;
 	private Integer userid;
 	private Date createtime;
 	private Integer status;
-	private Date starttime;
-	private Date endtime;
 
 	// Constructors
 
@@ -31,16 +29,13 @@ public class Computerorder extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Computerorder(Integer id, String number, Integer userid,
-			Date createtime, Integer status, Date starttime,
-			Date endtime) {
+	public Computerorder(Integer id, String serialnumber, Integer userid,
+			Date createtime, Integer status) {
 		this.id = id;
-		this.number = number;
+		this.serialnumber = serialnumber;
 		this.userid = userid;
 		this.createtime = createtime;
 		this.status = status;
-		this.starttime = starttime;
-		this.endtime = endtime;
 	}
 
 	// Property accessors
@@ -53,12 +48,12 @@ public class Computerorder extends com.sbgl.app.dao.DaoAbs implements
 		this.id = id;
 	}
 
-	public String getNumber() {
-		return this.number;
+	public String getSerialnumber() {
+		return this.serialnumber;
 	}
 
-	public void setNumber(String number) {
-		this.number = number;
+	public void setSerialnumber(String serialnumber) {
+		this.serialnumber = serialnumber;
 	}
 
 	public Integer getUserid() {
@@ -83,22 +78,6 @@ public class Computerorder extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setStatus(Integer status) {
 		this.status = status;
-	}
-
-	public Date getStarttime() {
-		return this.starttime;
-	}
-
-	public void setStarttime(Date starttime) {
-		this.starttime = starttime;
-	}
-
-	public Date getEndtime() {
-		return this.endtime;
-	}
-
-	public void setEndtime(Date endtime) {
-		this.endtime = endtime;
 	}
 
 }

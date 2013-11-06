@@ -12,6 +12,10 @@ function computerorderdetailFormToJson(){
 					
 					"createtime" : $('#input_computerorderdetail_createtime').val(),
 					
+					"borrowday" : $('#input_computerorderdetail_borrowday').val(),
+					
+					"borrowperiod" : $('#input_computerorderdetail_borrowperiod').val(),
+					
 					"status" : $('#input_computerorderdetail_status').val()
 					
 

@@ -28,7 +28,7 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 	//http://blog.csdn.net/softimes/article/details/7008875 实体添加时需要配置hibernate
 	@Override
 	public void addComputercategory(Computercategory computercategory){
-	//	computercategory.setId(baseDao.getCode("Computercategory"));
+		computercategory.setId(baseDao.getCode("Computercategory"));
 		baseDao.saveEntity(computercategory);		
 	}
 
@@ -43,7 +43,10 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 	public int deleteComputercategory(Integer computercategoryId){
 		Computercategory computercategory = new Computercategory();
 		computercategory.setId(computercategoryId);
-		return computercategoryDao.deleteEntity(computercategoryId);		
+		//return computercategoryDao.deleteEntity(computercategoryId);	
+		//baseDao.deleteEntityById(Computercategory.class,computercategoryId);
+		baseDao.deleteEntity(computercategory);
+		return 1;
 	}
 
 //  根据实体删除实体

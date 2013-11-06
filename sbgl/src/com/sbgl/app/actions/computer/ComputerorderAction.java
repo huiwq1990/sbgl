@@ -190,8 +190,6 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 												  								
 												  								
 												  								
-												  								
-												  								
 								actionMsg = getText("viewComputerorderSuccess");
 			}else{
 				actionMsg = getText("viewComputerorderFail");
@@ -217,12 +215,10 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 				
 				
 //              选择能更改的属性，与界面一致	
-  				tempComputerorder.setNumber(computerorder.getNumber());
+  				tempComputerorder.setSerialnumber(computerorder.getSerialnumber());
   				tempComputerorder.setUserid(computerorder.getUserid());
   				tempComputerorder.setCreatetime(computerorder.getCreatetime());
   				tempComputerorder.setStatus(computerorder.getStatus());
-  				tempComputerorder.setStarttime(computerorder.getStarttime());
-  				tempComputerorder.setEndtime(computerorder.getEndtime());
  
 				
 				computerorderService.updateComputerorder(tempComputerorder);		

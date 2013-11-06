@@ -1,6 +1,5 @@
 package com.sbgl.app.services.common.impl;
 
-import java.math.BigDecimal;
 
 import javax.annotation.Resource;
 
@@ -28,7 +27,7 @@ public class CommonServiceImpl implements CommonService {
 		maxno = baseDao.getEntityById(Maxno.class, codeType);
 		if(maxno==null){
 			maxno = new  Maxno();
-			maxno.setMaxno(1);
+			maxno.setMaxno(Integer.valueOf(1));
 			maxno.setNotype(codeType);
 			baseDao.saveEntity(maxno);
 			reCode = maxno.getMaxno();
@@ -36,11 +35,21 @@ public class CommonServiceImpl implements CommonService {
 		}else{
 			Integer sum = maxno.getMaxno();
 			sum++;
-			maxno.setMaxno(sum);
+			maxno.setMaxno(Integer.valueOf(sum));
 			baseDao.updateEntity(maxno);
 			reCode = maxno.getMaxno();
 		}
 		return reCode;
+	}
+
+	@Override
+	public void iniCode(String codeType) {
+		Maxno maxno = new Maxno();
+		maxno = baseDao.getEntityById(Maxno.class, codeType);
+		if(maxno!=null){
+			maxno.setMaxno(Integer.valueOf(0));
+			baseDao.updateEntity(maxno);
+		}
 	}
 	
 }
