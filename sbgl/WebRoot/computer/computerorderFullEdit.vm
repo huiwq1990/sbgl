@@ -77,11 +77,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <tbody>					
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderid</td>
-                    <td>${computerorderFull.computerorderid}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computerorderserialnumber</td>
                     <td>${computerorderFull.computerorderserialnumber}</td>                    
                   </tr>               
@@ -130,19 +125,88 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </div>
 
       </div>
-      <!--equip-wrap end-->
-      <!--sidebar start-->
-      <div id="lside">
-        <form class="form-group">
-          <input type="text" class="form-control" placeholder="搜索">
-          <i class="icon-search"></i>
-        </form>
-        <div class="list-group">
-          <a href=".html" class="list-group-item">管理</a>
-          <a href=".html" class="list-group-item">添加</a>
-          <a href=".html" class="list-group-item active">查看</a>
-        </div>
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+ <div class="panel-body">
+                 <!-- form start -->
+               <form action="" method="" name="AddComputerorderForm">
+				 <input type="text" class="form-control" id="#input_computerorder_${attrName}" value="$!computerorderFull.$attrName}">
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderserialnumber</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computerorderserialnumber" value="$!computerorderFull.computerorderserialnumber}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderuserid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computerorderuserid" value="$!computerorderFull.computerorderuserid}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computerordercreatetime</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computerordercreatetime" value="$!computerorderFull.computerordercreatetime}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderstatus</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computerorderstatus" value="$!computerorderFull.computerorderstatus}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">loginuserid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="loginuserid" value="$!computerorderFull.loginuserid}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">loginusername</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="loginusername" value="$!computerorderFull.loginusername}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">loginusercreatetime</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="loginusercreatetime" value="$!computerorderFull.loginusercreatetime}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">loginuserstatus</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="loginuserstatus" value="$!computerorderFull.loginuserstatus}">
+                    </div>
+                  </div>
+
+               </form>
+               <!-- form end -->
+			  <!-- submit start -->
+			   <div class="form-group">   
+                  <div class="col-lg-offset-2 col-lg-4">
+                     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+                     <button type="submit" onClick = "updateComputerorderAjax()" class="btn btn-primary">添 加</button>
+                   </div>
+               </div>
+				<!-- submit end -->
+
+
+              </div>
+            </div>
+          </div>
+
       </div>
+      <!--equip-wrap end-->
+    
       <!--sidebar end-->
 
 </section>

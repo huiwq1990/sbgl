@@ -91,25 +91,25 @@
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                    
-                    <td>$!tempcomputercategory.${attrName}</td>
-                                        <td>$!tempcomputercategory.${attrName}</td>
-                                        <td>$!tempcomputercategory.${attrName}</td>
-                                        <td>$!tempcomputercategory.${attrName}</td>
-                                        <td>$!tempcomputercategory.${attrName}</td>
-                                        <td>$!tempcomputercategory.${attrName}</td>
-                                        <td>$!tempcomputercategory.${attrName}</td>
-                                        <td>$!tempcomputercategory.${attrName}</td>
-                                        <td>$!tempcomputercategory.${attrName}</td>
-                                        <td>$!tempcomputercategory.${attrName}</td>
-                                        <td>$!tempcomputercategory.${attrName}</td>
-                                        <td>$!tempcomputercategory.${attrName}</td>
-                                        <td>$!tempcomputercategory.${attrName}</td>
-                                        <td>$!tempcomputercategory.${attrName}</td>
-                                        <td>$!tempcomputercategory.${attrName}</td>
-                                        <td>$!tempcomputercategory.${attrName}</td>
-                    					<td><a href="http://localhost:8080/sbgl/viewComputercategoryFull.action?id=$tempcomputercategory.id">查看</a></td> 
-					<td><a href="http://localhost:8080/sbgl/${entityFullDelActionName}.action?id=$tempcomputercategory.id">删除</a></td>			
-					<td><a href="http://localhost:8080/sbgl/editComputercategoryFull.action?id=$tempcomputercategory.id">修改</a></td>
+<td>$!tempcomputercategory.${attrName}</td>
+<td>$!tempcomputercategory.${attrName}</td>
+<td>$!tempcomputercategory.${attrName}</td>
+<td>$!tempcomputercategory.${attrName}</td>
+<td>$!tempcomputercategory.${attrName}</td>
+<td>$!tempcomputercategory.${attrName}</td>
+<td>$!tempcomputercategory.${attrName}</td>
+<td>$!tempcomputercategory.${attrName}</td>
+<td>$!tempcomputercategory.${attrName}</td>
+<td>$!tempcomputercategory.${attrName}</td>
+<td>$!tempcomputercategory.${attrName}</td>
+<td>$!tempcomputercategory.${attrName}</td>
+<td>$!tempcomputercategory.${attrName}</td>
+<td>$!tempcomputercategory.${attrName}</td>
+<td>$!tempcomputercategory.${attrName}</td>
+<td>$!tempcomputercategory.${attrName}</td>
+					<td><a href="http://localhost:8080/sbgl/viewComputercategoryFull.action?id=$tempcomputercategory.$entityFullAttrNameList.get(0)">查看</a></td> 
+					<td><a href="http://localhost:8080/sbgl/${entityFullDelActionName}.action?id=$tempcomputercategory.$entityFullAttrNameList.get(0)">删除</a></td>			
+					<td><a href="http://localhost:8080/sbgl/editComputercategoryFull.action?id=$tempcomputercategory.$entityFullAttrNameList.get(0)">修改</a></td>
                  
                   </tr>
 #end            

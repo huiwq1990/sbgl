@@ -3,13 +3,12 @@
 <struts>
 	 <package name="computerorderdetail" extends="admin">
 
-		<!-- default entity manage action -->
+
+<!-- default entity manage action -->
     	<action name="manageComputerorderdetail" class="Entity" method="manageComputerorderdetail">
         	<result name="success">/computer/computerorderdetailManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
-		
-<!-- entity info manage  -->
 		<!-- default entity manage action -->
     	<action name="manageComputerorderdetailInfo" class="ComputerorderdetailAction" method="manageComputerorderdetailInfo">
         	<result name="success">/computer/computerorderdetailManage.vm</result>
@@ -90,10 +89,18 @@
         </action>
 		
 		
-<!--删除实体-->
+<!--del-->
+        <!--del entity-->
         <action name="deleteComputerorderdetail" class="ComputerorderdetailAction" method="deleteComputerorderdetail">
         	<result type="redirectAction">
 				<param name="actionName">manageComputerorderdetail</param>
+			</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteComputerorderdetailFull" class="ComputerorderdetailAction" method="deleteComputerorderdetailFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerorderdetailFull</param>
 			</result>
         	<result name="error">/login.vm</result> 
         </action>
@@ -147,17 +154,9 @@
         	<result name="success">/computer/computerorderdetailView.vm</result>
         	<result name="error">/login.vm</result> 
         </action>		
-		
-		
-        <!--查询全部实体-->
-        <action name="selectComputerorderdetailAll" class="ComputerorderdetailAction" method="selectComputerorderdetailAll">
-			<result name="success">/computer/computerorderdetail.jsp</result>
-			<result name="error">/login.vm</result>
-		</action>
-	
 <!-- View entity full-->		
         <action name="viewComputerorderdetailFull" class="ComputerorderdetailAction" method="viewComputerorderdetailFull">
-        	<result name="success">/computer/computerorderdetailFullView.jsp</result>
+        	<result name="success">/computer/computerorderdetailFullView.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
 		<!--go to view jsp-->
@@ -169,7 +168,15 @@
 		<action name="viewComputerorderdetailFullVm" class="ComputerorderdetailAction" method="viewComputerorderdetailFull">
         	<result name="success">/computer/computerorderdetailFullView.vm</result>
         	<result name="error">/login.vm</result> 
-        </action>	
+        </action>		
+		
+        <!--查询全部实体-->
+        <action name="selectComputerorderdetailAll" class="ComputerorderdetailAction" method="selectComputerorderdetailAll">
+			<result name="success">/computer/computerorderdetail.jsp</result>
+			<result name="error">/login.vm</result>
+		</action>
+	
+
 		
 		
 <!--根据id查询实体full-->
@@ -201,6 +208,10 @@
 			</result>
         </action>
         <action name="deleteComputerorderdetailAjax" class="ComputerorderdetailAction" method="deleteComputerorderdetailAjax">
+        	<result type="json"></result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteComputerorderdetailFullAjax" class="ComputerorderdetailAction" method="deleteComputerorderdetailFullAjax">
         	<result type="json"></result>
         </action>
     	<action name="updateComputerorderdetailAjax" class="ComputerorderdetailAction" method="updateComputerorderdetailAjax">

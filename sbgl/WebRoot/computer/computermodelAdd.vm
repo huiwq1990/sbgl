@@ -45,25 +45,25 @@
                <form action="http://localhost:8080/sbgl/addComputermodelAjax.action" method="post" name="AddComputermodelForm">
 		<div class="form-group">
                     <label for="label_computermodel_id" class="col-lg-2 control-label">id</label>
-                    <div class="col-lg-0">
+                    <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computermodel_id" name="id"  placeholder="id">
                     </div>
                   </div>
 		<div class="form-group">
                     <label for="label_computermodel_name" class="col-lg-2 control-label">name</label>
-                    <div class="col-lg-1">
+                    <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computermodel_name" name="name"  placeholder="name">
                     </div>
                   </div>
 		<div class="form-group">
                     <label for="label_computermodel_computercategoryid" class="col-lg-2 control-label">computercategoryid</label>
-                    <div class="col-lg-2">
+                    <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computermodel_computercategoryid" name="computercategoryid"  placeholder="computercategoryid">
                     </div>
                   </div>
 		<div class="form-group">
                     <label for="label_computermodel_picpath" class="col-lg-2 control-label">picpath</label>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computermodel_picpath" name="picpath"  placeholder="picpath">
                     </div>
                   </div>
@@ -75,13 +75,13 @@
                   </div>
 		<div class="form-group">
                     <label for="label_computermodel_createuserid" class="col-lg-2 control-label">createuserid</label>
-                    <div class="col-lg-5">
+                    <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computermodel_createuserid" name="createuserid"  placeholder="createuserid">
                     </div>
                   </div>
 		<div class="form-group">
                     <label for="label_computermodel_status" class="col-lg-2 control-label">status</label>
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computermodel_status" name="status"  placeholder="status">
                     </div>
                   </div>

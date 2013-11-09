@@ -94,28 +94,28 @@
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                    
-                    <td>$!tempcomputerorderdetail.${attrName}</td>
-                                        <td>$!tempcomputerorderdetail.${attrName}</td>
-                                        <td>$!tempcomputerorderdetail.${attrName}</td>
-                                        <td>$!tempcomputerorderdetail.${attrName}</td>
-                                        <td>$!tempcomputerorderdetail.${attrName}</td>
-                                        <td>$!tempcomputerorderdetail.${attrName}</td>
-                                        <td>$!tempcomputerorderdetail.${attrName}</td>
-                                        <td>$!tempcomputerorderdetail.${attrName}</td>
-                                        <td>$!tempcomputerorderdetail.${attrName}</td>
-                                        <td>$!tempcomputerorderdetail.${attrName}</td>
-                                        <td>$!tempcomputerorderdetail.${attrName}</td>
-                                        <td>$!tempcomputerorderdetail.${attrName}</td>
-                                        <td>$!tempcomputerorderdetail.${attrName}</td>
-                                        <td>$!tempcomputerorderdetail.${attrName}</td>
-                                        <td>$!tempcomputerorderdetail.${attrName}</td>
-                                        <td>$!tempcomputerorderdetail.${attrName}</td>
-                                        <td>$!tempcomputerorderdetail.${attrName}</td>
-                                        <td>$!tempcomputerorderdetail.${attrName}</td>
-                                        <td>$!tempcomputerorderdetail.${attrName}</td>
-                    					<td><a href="http://localhost:8080/sbgl/viewComputerorderdetailFull.action?id=$tempcomputerorderdetail.id">查看</a></td> 
-					<td><a href="http://localhost:8080/sbgl/${entityFullDelActionName}.action?id=$tempcomputerorderdetail.id">删除</a></td>			
-					<td><a href="http://localhost:8080/sbgl/editComputerorderdetailFull.action?id=$tempcomputerorderdetail.id">修改</a></td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+<td>$!tempcomputerorderdetail.${attrName}</td>
+					<td><a href="http://localhost:8080/sbgl/viewComputerorderdetailFull.action?id=$tempcomputerorderdetail.$entityFullAttrNameList.get(0)">查看</a></td> 
+					<td><a href="http://localhost:8080/sbgl/${entityFullDelActionName}.action?id=$tempcomputerorderdetail.$entityFullAttrNameList.get(0)">删除</a></td>			
+					<td><a href="http://localhost:8080/sbgl/editComputerorderdetailFull.action?id=$tempcomputerorderdetail.$entityFullAttrNameList.get(0)">修改</a></td>
                  
                   </tr>
 #end            

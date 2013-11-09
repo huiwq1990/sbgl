@@ -77,11 +77,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <tbody>					
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerid</td>
-                    <td>${computerFull.computerid}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computerserialnumber</td>
                     <td>${computerFull.computerserialnumber}</td>                    
                   </tr>               
@@ -170,19 +165,136 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </div>
 
       </div>
-      <!--equip-wrap end-->
-      <!--sidebar start-->
-      <div id="lside">
-        <form class="form-group">
-          <input type="text" class="form-control" placeholder="搜索">
-          <i class="icon-search"></i>
-        </form>
-        <div class="list-group">
-          <a href=".html" class="list-group-item">管理</a>
-          <a href=".html" class="list-group-item">添加</a>
-          <a href=".html" class="list-group-item active">查看</a>
-        </div>
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+ <div class="panel-body">
+                 <!-- form start -->
+               <form action="" method="" name="AddComputerForm">
+				 <input type="text" class="form-control" id="#input_computer_${attrName}" value="$!computerFull.$attrName}">
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computerserialnumber</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computerserialnumber" value="$!computerFull.computerserialnumber}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computercomputermodelid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computercomputermodelid" value="$!computerFull.computercomputermodelid}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computercreatetime</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computercreatetime" value="$!computerFull.computercreatetime}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computercreateuserid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computercreateuserid" value="$!computerFull.computercreateuserid}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computerstatus</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computerstatus" value="$!computerFull.computerstatus}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computermodelid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computermodelid" value="$!computerFull.computermodelid}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computermodelname</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computermodelname" value="$!computerFull.computermodelname}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computermodelcomputercategoryid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computermodelcomputercategoryid" value="$!computerFull.computermodelcomputercategoryid}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computermodelpicpath</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computermodelpicpath" value="$!computerFull.computermodelpicpath}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computermodelcreatetime</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computermodelcreatetime" value="$!computerFull.computermodelcreatetime}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computermodelcreateuserid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computermodelcreateuserid" value="$!computerFull.computermodelcreateuserid}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computermodelstatus</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computermodelstatus" value="$!computerFull.computermodelstatus}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">loginuserid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="loginuserid" value="$!computerFull.loginuserid}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">loginusername</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="loginusername" value="$!computerFull.loginusername}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">loginusercreatetime</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="loginusercreatetime" value="$!computerFull.loginusercreatetime}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">loginuserstatus</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="loginuserstatus" value="$!computerFull.loginuserstatus}">
+                    </div>
+                  </div>
+
+               </form>
+               <!-- form end -->
+			  <!-- submit start -->
+			   <div class="form-group">   
+                  <div class="col-lg-offset-2 col-lg-4">
+                     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+                     <button type="submit" onClick = "updateComputerAjax()" class="btn btn-primary">添 加</button>
+                   </div>
+               </div>
+				<!-- submit end -->
+
+
+              </div>
+            </div>
+          </div>
+
       </div>
+      <!--equip-wrap end-->
+    
       <!--sidebar end-->
 
 </section>

@@ -44,7 +44,8 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
 	List<Computerorderdetail> computerorderdetailList = new ArrayList<Computerorderdetail>();
 	List<ComputerorderdetailFull> computerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
-	private String logperfix = "exec method";		
+	private Integer computerorderdetailid; //entity full 的id属性名称		
+	private String logperfix = "exec action method:";		
 	Page page = new Page();
 		
 	
@@ -72,12 +73,17 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 		return SUCCESS;
 	}		
 			
-	//管理
+	//管理 查询
 	public String manageComputerorderdetailFull(){
 		log.info("exec action method:manageComputerorderdetailFull");
 		
+//      分页查询		
+		Page page = new Page();
+		computerorderdetailFullList  = computerorderdetailService.selectComputerorderdetailFullByPage(page);
 		
-		computerorderdetailFullList  = computerorderdetailService.selectComputerorderdetailFullAll();
+//		查询全部
+//		computerorderdetailFullList  = computerorderdetailService.selectComputerorderdetailFullAll();
+
 		for(int i = 0; i < computerorderdetailFullList.size(); i++){
 		//	System.out.println("id="+computerorderdetailFullList.get(i).getLoginusername());
 		}
@@ -179,7 +185,49 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 			log.error("类ComputerorderdetailAction的方法：deleteComputerorderdetail错误"+e);
 		}
 		return "Error";
-	}	
+	}
+
+	
+//	del entityfull
+	public String deleteComputerorderdetailFull(){
+		try {
+		
+			Integer getId = computerorderdetail.getId();
+			if(getId != null && getId >= 0){
+				log.info("删除的id不规范");
+				return "Error";
+			}
+		
+		
+			Computerorderdetail temp = computerorderdetailService.selectComputerorderdetailById(getId);
+			if (temp != null) {
+				computerorderdetailService.deleteComputerorderdetail(getId);
+				return SUCCESS;
+			} else {
+				log.info("删除的id不存在");
+				return "Error";
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "Error";
+	}
+	
+	//del entityfull Ajax
+	public String deleteComputerorderdetailFullAjax( ){
+		try{
+			if(computerorderdetail.getId() != null && computerorderdetail.getId() >= 0){
+				computerorderdetailService.deleteComputerorderdetail(computerorderdetail.getId());				
+			}
+			
+			return "IdNotExist";
+		}catch(Exception e){
+			e.printStackTrace();
+			log.error("类ComputerorderdetailAction的方法：deleteComputerorderdetail错误"+e);
+		}
+		return "Error";
+	}
 
 //修改
 	public String updateComputerorderdetail(){
@@ -210,7 +258,7 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 	
 	//ajax 修改
 	public String updateComputerorderdetailAjax(){
-		log.info(logperfix + "updateComputerorderdetailAjax");
+		log.info(logperfix + "updateComputerorderdetailAjax,id="+computerorderdetail.getId());
 		ReturnJson returnJson = new ReturnJson();
 		try {
 			if(computerorderdetail.getId() != null && computerorderdetail.getId() > 0){				
@@ -236,7 +284,7 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 				
 			}else{
 				actionMsg = getText("viewComputerorderdetailFail");
-				System.out.println(actionMsg);
+				log.info(logperfix + "updateComputerorderdetailAjax fail");
 			}			
 			
 		}catch(Exception e){
@@ -341,7 +389,43 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 		return "error";
 
 	}	
-	
+
+/**
+ * view ComputerorderdetailFull
+ * need give parmeter id
+ * get id from modle,
+ * @return
+ */
+	public String viewYaomingFull() {
+				
+		try {
+			int getId = computerorderdetail.getId();
+			log.info(this.logperfix + ";id=" + getId);
+			
+			if (getId > 0) {
+				log.error("error,id小于0不规范");
+				return "error";
+			}	
+			
+			ComputerorderdetailFull temComputerorderdetailFull = computerorderdetailService.selectComputerorderdetailFullById(getId);				
+			if(temComputerorderdetailFull!=null){				
+				BeanUtils.copyProperties(computerorderdetailFull,temComputerorderdetailFull);
+				return SUCCESS;				
+			}else{
+				log.error("error,查询实体不存在。");
+				return "Error";
+			}			
+
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();			
+		}
+		return "Error";
+	}
+
 	
 	//根据对象Id查询
 	public String selectComputerorderdetailById(){
@@ -383,32 +467,8 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 		return SUCCESS;
 	}
 
-	//view entityFull
-	public String viewComputerorderdetailFull(){
-		System.out.println("viewComputerorderdetailFull");
-			try {
-				if(computerorderdetail.getId() != null && computerorderdetail.getId() > 0){				
-				ComputerorderdetailFull temComputerorderdetailFull = computerorderdetailService.selectComputerorderdetailFullById(computerorderdetail.getId());
-				BeanUtils.copyProperties(computerorderdetailFull,temComputerorderdetailFull);	
-				actionMsg = getText("selectComputerorderdetailByIdSuccess");
-			}else{
-				actionMsg = getText("selectComputerorderdetailByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerorderdetailAction的方法：viewComputerorderdetailFull错误"+e);
-		}
-		
-		return "error";
 
-	}		
-	
+
 	
 	//根据对象Id查询Full
 	public String selectComputerorderdetailFullById(){
@@ -580,6 +640,14 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 
 	public void setPage(Page page) {
 		this.page = page;
+	}
+	
+	public int getComputerorderdetailid() {
+		return computerorderdetailid;
+	}
+
+	public void setComputerorderdetailid(int computerorderdetailid) {
+		this.computerorderdetailid = computerorderdetailid;
 	}
 	
 }

@@ -41,8 +41,8 @@
                 <thead>
                   <tr>
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-                    <th class="name">名称</th>
-                    <th class="f-category">父级分类</th>
+                    <th class="name">属性</th>
+                    <th class="f-category">属性值</th>
                     
                   </tr>
                 </thead>
@@ -50,82 +50,82 @@
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computercategoryid</td>
-                    <td>$computercategoryFull.computercategoryid</td>                    
+                    <td>$!computercategoryFull.computercategoryid</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computercategoryparentcomputercategoryid</td>
-                    <td>$computercategoryFull.computercategoryparentcomputercategoryid</td>                    
+                    <td>$!computercategoryFull.computercategoryparentcomputercategoryid</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computercategoryname</td>
-                    <td>$computercategoryFull.computercategoryname</td>                    
+                    <td>$!computercategoryFull.computercategoryname</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computercategorycreatetime</td>
-                    <td>$computercategoryFull.computercategorycreatetime</td>                    
+                    <td>$!computercategoryFull.computercategorycreatetime</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computercategorycreateuserid</td>
-                    <td>$computercategoryFull.computercategorycreateuserid</td>                    
+                    <td>$!computercategoryFull.computercategorycreateuserid</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computercategorystatus</td>
-                    <td>$computercategoryFull.computercategorystatus</td>                    
+                    <td>$!computercategoryFull.computercategorystatus</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>parentcomputercategoryid</td>
-                    <td>$computercategoryFull.parentcomputercategoryid</td>                    
+                    <td>$!computercategoryFull.parentcomputercategoryid</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>parentcomputercategoryparentcomputercategoryid</td>
-                    <td>$computercategoryFull.parentcomputercategoryparentcomputercategoryid</td>                    
+                    <td>$!computercategoryFull.parentcomputercategoryparentcomputercategoryid</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>parentcomputercategoryname</td>
-                    <td>$computercategoryFull.parentcomputercategoryname</td>                    
+                    <td>$!computercategoryFull.parentcomputercategoryname</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>parentcomputercategorycreatetime</td>
-                    <td>$computercategoryFull.parentcomputercategorycreatetime</td>                    
+                    <td>$!computercategoryFull.parentcomputercategorycreatetime</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>parentcomputercategorycreateuserid</td>
-                    <td>$computercategoryFull.parentcomputercategorycreateuserid</td>                    
+                    <td>$!computercategoryFull.parentcomputercategorycreateuserid</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>parentcomputercategorystatus</td>
-                    <td>$computercategoryFull.parentcomputercategorystatus</td>                    
+                    <td>$!computercategoryFull.parentcomputercategorystatus</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>loginuserid</td>
-                    <td>$computercategoryFull.loginuserid</td>                    
+                    <td>$!computercategoryFull.loginuserid</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>loginusername</td>
-                    <td>$computercategoryFull.loginusername</td>                    
+                    <td>$!computercategoryFull.loginusername</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>loginusercreatetime</td>
-                    <td>$computercategoryFull.loginusercreatetime</td>                    
+                    <td>$!computercategoryFull.loginusercreatetime</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>loginuserstatus</td>
-                    <td>$computercategoryFull.loginuserstatus</td>                    
+                    <td>$!computercategoryFull.loginuserstatus</td>                    
                   </tr>               
                 </tbody>
               </table>

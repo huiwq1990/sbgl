@@ -3,13 +3,12 @@
 <struts>
 	 <package name="computerorder" extends="admin">
 
-		<!-- default entity manage action -->
+
+<!-- default entity manage action -->
     	<action name="manageComputerorder" class="Entity" method="manageComputerorder">
         	<result name="success">/computer/computerorderManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
-		
-<!-- entity info manage  -->
 		<!-- default entity manage action -->
     	<action name="manageComputerorderInfo" class="ComputerorderAction" method="manageComputerorderInfo">
         	<result name="success">/computer/computerorderManage.vm</result>
@@ -90,10 +89,18 @@
         </action>
 		
 		
-<!--删除实体-->
+<!--del-->
+        <!--del entity-->
         <action name="deleteComputerorder" class="ComputerorderAction" method="deleteComputerorder">
         	<result type="redirectAction">
 				<param name="actionName">manageComputerorder</param>
+			</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteComputerorderFull" class="ComputerorderAction" method="deleteComputerorderFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerorderFull</param>
 			</result>
         	<result name="error">/login.vm</result> 
         </action>
@@ -147,17 +154,9 @@
         	<result name="success">/computer/computerorderView.vm</result>
         	<result name="error">/login.vm</result> 
         </action>		
-		
-		
-        <!--查询全部实体-->
-        <action name="selectComputerorderAll" class="ComputerorderAction" method="selectComputerorderAll">
-			<result name="success">/computer/computerorder.jsp</result>
-			<result name="error">/login.vm</result>
-		</action>
-	
 <!-- View entity full-->		
         <action name="viewComputerorderFull" class="ComputerorderAction" method="viewComputerorderFull">
-        	<result name="success">/computer/computerorderFullView.jsp</result>
+        	<result name="success">/computer/computerorderFullView.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
 		<!--go to view jsp-->
@@ -169,7 +168,15 @@
 		<action name="viewComputerorderFullVm" class="ComputerorderAction" method="viewComputerorderFull">
         	<result name="success">/computer/computerorderFullView.vm</result>
         	<result name="error">/login.vm</result> 
-        </action>	
+        </action>		
+		
+        <!--查询全部实体-->
+        <action name="selectComputerorderAll" class="ComputerorderAction" method="selectComputerorderAll">
+			<result name="success">/computer/computerorder.jsp</result>
+			<result name="error">/login.vm</result>
+		</action>
+	
+
 		
 		
 <!--根据id查询实体full-->
@@ -201,6 +208,10 @@
 			</result>
         </action>
         <action name="deleteComputerorderAjax" class="ComputerorderAction" method="deleteComputerorderAjax">
+        	<result type="json"></result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteComputerorderFullAjax" class="ComputerorderAction" method="deleteComputerorderFullAjax">
         	<result type="json"></result>
         </action>
     	<action name="updateComputerorderAjax" class="ComputerorderAction" method="updateComputerorderAjax">

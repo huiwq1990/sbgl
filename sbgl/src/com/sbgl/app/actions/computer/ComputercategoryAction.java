@@ -44,7 +44,8 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
 	List<Computercategory> computercategoryList = new ArrayList<Computercategory>();
 	List<ComputercategoryFull> computercategoryFullList = new ArrayList<ComputercategoryFull>();
-	private String logperfix = "exec method";		
+	private Integer computercategoryid; //entity full 的id属性名称		
+	private String logperfix = "exec action method:";		
 	Page page = new Page();
 		
 	
@@ -72,12 +73,17 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 		return SUCCESS;
 	}		
 			
-	//管理
+	//管理 查询
 	public String manageComputercategoryFull(){
 		log.info("exec action method:manageComputercategoryFull");
 		
+//      分页查询		
+		Page page = new Page();
+		computercategoryFullList  = computercategoryService.selectComputercategoryFullByPage(page);
 		
-		computercategoryFullList  = computercategoryService.selectComputercategoryFullAll();
+//		查询全部
+//		computercategoryFullList  = computercategoryService.selectComputercategoryFullAll();
+
 		for(int i = 0; i < computercategoryFullList.size(); i++){
 		//	System.out.println("id="+computercategoryFullList.get(i).getLoginusername());
 		}
@@ -179,7 +185,49 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 			log.error("类ComputercategoryAction的方法：deleteComputercategory错误"+e);
 		}
 		return "Error";
-	}	
+	}
+
+	
+//	del entityfull
+	public String deleteComputercategoryFull(){
+		try {
+		
+			Integer getId = computercategory.getId();
+			if(getId != null && getId >= 0){
+				log.info("删除的id不规范");
+				return "Error";
+			}
+		
+		
+			Computercategory temp = computercategoryService.selectComputercategoryById(getId);
+			if (temp != null) {
+				computercategoryService.deleteComputercategory(getId);
+				return SUCCESS;
+			} else {
+				log.info("删除的id不存在");
+				return "Error";
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "Error";
+	}
+	
+	//del entityfull Ajax
+	public String deleteComputercategoryFullAjax( ){
+		try{
+			if(computercategory.getId() != null && computercategory.getId() >= 0){
+				computercategoryService.deleteComputercategory(computercategory.getId());				
+			}
+			
+			return "IdNotExist";
+		}catch(Exception e){
+			e.printStackTrace();
+			log.error("类ComputercategoryAction的方法：deleteComputercategory错误"+e);
+		}
+		return "Error";
+	}
 
 //修改
 	public String updateComputercategory(){
@@ -208,7 +256,7 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	
 	//ajax 修改
 	public String updateComputercategoryAjax(){
-		log.info(logperfix + "updateComputercategoryAjax");
+		log.info(logperfix + "updateComputercategoryAjax,id="+computercategory.getId());
 		ReturnJson returnJson = new ReturnJson();
 		try {
 			if(computercategory.getId() != null && computercategory.getId() > 0){				
@@ -232,7 +280,7 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 				
 			}else{
 				actionMsg = getText("viewComputercategoryFail");
-				System.out.println(actionMsg);
+				log.info(logperfix + "updateComputercategoryAjax fail");
 			}			
 			
 		}catch(Exception e){
@@ -337,7 +385,43 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 		return "error";
 
 	}	
-	
+
+/**
+ * view ComputercategoryFull
+ * need give parmeter id
+ * get id from modle,
+ * @return
+ */
+	public String viewYaomingFull() {
+				
+		try {
+			int getId = computercategory.getId();
+			log.info(this.logperfix + ";id=" + getId);
+			
+			if (getId > 0) {
+				log.error("error,id小于0不规范");
+				return "error";
+			}	
+			
+			ComputercategoryFull temComputercategoryFull = computercategoryService.selectComputercategoryFullById(getId);				
+			if(temComputercategoryFull!=null){				
+				BeanUtils.copyProperties(computercategoryFull,temComputercategoryFull);
+				return SUCCESS;				
+			}else{
+				log.error("error,查询实体不存在。");
+				return "Error";
+			}			
+
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();			
+		}
+		return "Error";
+	}
+
 	
 	//根据对象Id查询
 	public String selectComputercategoryById(){
@@ -379,32 +463,8 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 		return SUCCESS;
 	}
 
-	//view entityFull
-	public String viewComputercategoryFull(){
-		System.out.println("viewComputercategoryFull");
-			try {
-				if(computercategory.getId() != null && computercategory.getId() > 0){				
-				ComputercategoryFull temComputercategoryFull = computercategoryService.selectComputercategoryFullById(computercategory.getId());
-				BeanUtils.copyProperties(computercategoryFull,temComputercategoryFull);	
-				actionMsg = getText("selectComputercategoryByIdSuccess");
-			}else{
-				actionMsg = getText("selectComputercategoryByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputercategoryAction的方法：viewComputercategoryFull错误"+e);
-		}
-		
-		return "error";
 
-	}		
-	
+
 	
 	//根据对象Id查询Full
 	public String selectComputercategoryFullById(){
@@ -576,6 +636,14 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 
 	public void setPage(Page page) {
 		this.page = page;
+	}
+	
+	public int getComputercategoryid() {
+		return computercategoryid;
+	}
+
+	public void setComputercategoryid(int computercategoryid) {
+		this.computercategoryid = computercategoryid;
 	}
 	
 }

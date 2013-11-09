@@ -77,11 +77,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <tbody>					
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computercategoryid</td>
-                    <td>${computercategoryFull.computercategoryid}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computercategoryparentcomputercategoryid</td>
                     <td>${computercategoryFull.computercategoryparentcomputercategoryid}</td>                    
                   </tr>               
@@ -165,19 +160,130 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </div>
 
       </div>
-      <!--equip-wrap end-->
-      <!--sidebar start-->
-      <div id="lside">
-        <form class="form-group">
-          <input type="text" class="form-control" placeholder="搜索">
-          <i class="icon-search"></i>
-        </form>
-        <div class="list-group">
-          <a href=".html" class="list-group-item">管理</a>
-          <a href=".html" class="list-group-item">添加</a>
-          <a href=".html" class="list-group-item active">查看</a>
-        </div>
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+ <div class="panel-body">
+                 <!-- form start -->
+               <form action="" method="" name="AddComputercategoryForm">
+				 <input type="text" class="form-control" id="#input_computercategory_${attrName}" value="$!computercategoryFull.$attrName}">
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computercategoryparentcomputercategoryid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computercategoryparentcomputercategoryid" value="$!computercategoryFull.computercategoryparentcomputercategoryid}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computercategoryname</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computercategoryname" value="$!computercategoryFull.computercategoryname}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computercategorycreatetime</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computercategorycreatetime" value="$!computercategoryFull.computercategorycreatetime}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computercategorycreateuserid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computercategorycreateuserid" value="$!computercategoryFull.computercategorycreateuserid}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">computercategorystatus</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="computercategorystatus" value="$!computercategoryFull.computercategorystatus}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">parentcomputercategoryid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="parentcomputercategoryid" value="$!computercategoryFull.parentcomputercategoryid}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">parentcomputercategoryparentcomputercategoryid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="parentcomputercategoryparentcomputercategoryid" value="$!computercategoryFull.parentcomputercategoryparentcomputercategoryid}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">parentcomputercategoryname</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="parentcomputercategoryname" value="$!computercategoryFull.parentcomputercategoryname}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">parentcomputercategorycreatetime</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="parentcomputercategorycreatetime" value="$!computercategoryFull.parentcomputercategorycreatetime}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">parentcomputercategorycreateuserid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="parentcomputercategorycreateuserid" value="$!computercategoryFull.parentcomputercategorycreateuserid}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">parentcomputercategorystatus</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="parentcomputercategorystatus" value="$!computercategoryFull.parentcomputercategorystatus}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">loginuserid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="loginuserid" value="$!computercategoryFull.loginuserid}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">loginusername</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="loginusername" value="$!computercategoryFull.loginusername}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">loginusercreatetime</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="loginusercreatetime" value="$!computercategoryFull.loginusercreatetime}">
+                    </div>
+                  </div>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">loginuserstatus</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="loginuserstatus" value="$!computercategoryFull.loginuserstatus}">
+                    </div>
+                  </div>
+
+               </form>
+               <!-- form end -->
+			  <!-- submit start -->
+			   <div class="form-group">   
+                  <div class="col-lg-offset-2 col-lg-4">
+                     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+                     <button type="submit" onClick = "updateComputercategoryAjax()" class="btn btn-primary">添 加</button>
+                   </div>
+               </div>
+				<!-- submit end -->
+
+
+              </div>
+            </div>
+          </div>
+
       </div>
+      <!--equip-wrap end-->
+    
       <!--sidebar end-->
 
 </section>

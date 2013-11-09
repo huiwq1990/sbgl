@@ -92,26 +92,26 @@
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                    
-                    <td>$!tempcomputermodel.${attrName}</td>
-                                        <td>$!tempcomputermodel.${attrName}</td>
-                                        <td>$!tempcomputermodel.${attrName}</td>
-                                        <td>$!tempcomputermodel.${attrName}</td>
-                                        <td>$!tempcomputermodel.${attrName}</td>
-                                        <td>$!tempcomputermodel.${attrName}</td>
-                                        <td>$!tempcomputermodel.${attrName}</td>
-                                        <td>$!tempcomputermodel.${attrName}</td>
-                                        <td>$!tempcomputermodel.${attrName}</td>
-                                        <td>$!tempcomputermodel.${attrName}</td>
-                                        <td>$!tempcomputermodel.${attrName}</td>
-                                        <td>$!tempcomputermodel.${attrName}</td>
-                                        <td>$!tempcomputermodel.${attrName}</td>
-                                        <td>$!tempcomputermodel.${attrName}</td>
-                                        <td>$!tempcomputermodel.${attrName}</td>
-                                        <td>$!tempcomputermodel.${attrName}</td>
-                                        <td>$!tempcomputermodel.${attrName}</td>
-                    					<td><a href="http://localhost:8080/sbgl/viewComputermodelFull.action?id=$tempcomputermodel.id">查看</a></td> 
-					<td><a href="http://localhost:8080/sbgl/${entityFullDelActionName}.action?id=$tempcomputermodel.id">删除</a></td>			
-					<td><a href="http://localhost:8080/sbgl/editComputermodelFull.action?id=$tempcomputermodel.id">修改</a></td>
+<td>$!tempcomputermodel.${attrName}</td>
+<td>$!tempcomputermodel.${attrName}</td>
+<td>$!tempcomputermodel.${attrName}</td>
+<td>$!tempcomputermodel.${attrName}</td>
+<td>$!tempcomputermodel.${attrName}</td>
+<td>$!tempcomputermodel.${attrName}</td>
+<td>$!tempcomputermodel.${attrName}</td>
+<td>$!tempcomputermodel.${attrName}</td>
+<td>$!tempcomputermodel.${attrName}</td>
+<td>$!tempcomputermodel.${attrName}</td>
+<td>$!tempcomputermodel.${attrName}</td>
+<td>$!tempcomputermodel.${attrName}</td>
+<td>$!tempcomputermodel.${attrName}</td>
+<td>$!tempcomputermodel.${attrName}</td>
+<td>$!tempcomputermodel.${attrName}</td>
+<td>$!tempcomputermodel.${attrName}</td>
+<td>$!tempcomputermodel.${attrName}</td>
+					<td><a href="http://localhost:8080/sbgl/viewComputermodelFull.action?id=$tempcomputermodel.$entityFullAttrNameList.get(0)">查看</a></td> 
+					<td><a href="http://localhost:8080/sbgl/${entityFullDelActionName}.action?id=$tempcomputermodel.$entityFullAttrNameList.get(0)">删除</a></td>			
+					<td><a href="http://localhost:8080/sbgl/editComputermodelFull.action?id=$tempcomputermodel.$entityFullAttrNameList.get(0)">修改</a></td>
                  
                   </tr>
 #end            

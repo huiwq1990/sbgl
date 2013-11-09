@@ -84,18 +84,18 @@
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                    
-                    <td>$!tempcomputerorder.${attrName}</td>
-                                        <td>$!tempcomputerorder.${attrName}</td>
-                                        <td>$!tempcomputerorder.${attrName}</td>
-                                        <td>$!tempcomputerorder.${attrName}</td>
-                                        <td>$!tempcomputerorder.${attrName}</td>
-                                        <td>$!tempcomputerorder.${attrName}</td>
-                                        <td>$!tempcomputerorder.${attrName}</td>
-                                        <td>$!tempcomputerorder.${attrName}</td>
-                                        <td>$!tempcomputerorder.${attrName}</td>
-                    					<td><a href="http://localhost:8080/sbgl/viewComputerorderFull.action?id=$tempcomputerorder.id">查看</a></td> 
-					<td><a href="http://localhost:8080/sbgl/${entityFullDelActionName}.action?id=$tempcomputerorder.id">删除</a></td>			
-					<td><a href="http://localhost:8080/sbgl/editComputerorderFull.action?id=$tempcomputerorder.id">修改</a></td>
+<td>$!tempcomputerorder.${attrName}</td>
+<td>$!tempcomputerorder.${attrName}</td>
+<td>$!tempcomputerorder.${attrName}</td>
+<td>$!tempcomputerorder.${attrName}</td>
+<td>$!tempcomputerorder.${attrName}</td>
+<td>$!tempcomputerorder.${attrName}</td>
+<td>$!tempcomputerorder.${attrName}</td>
+<td>$!tempcomputerorder.${attrName}</td>
+<td>$!tempcomputerorder.${attrName}</td>
+					<td><a href="http://localhost:8080/sbgl/viewComputerorderFull.action?id=$tempcomputerorder.$entityFullAttrNameList.get(0)">查看</a></td> 
+					<td><a href="http://localhost:8080/sbgl/${entityFullDelActionName}.action?id=$tempcomputerorder.$entityFullAttrNameList.get(0)">删除</a></td>			
+					<td><a href="http://localhost:8080/sbgl/editComputerorderFull.action?id=$tempcomputerorder.$entityFullAttrNameList.get(0)">修改</a></td>
                  
                   </tr>
 #end            

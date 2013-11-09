@@ -45,25 +45,25 @@
                <form action="http://localhost:8080/sbgl/addComputercategoryAjax.action" method="post" name="AddComputercategoryForm">
 		<div class="form-group">
                     <label for="label_computercategory_id" class="col-lg-2 control-label">id</label>
-                    <div class="col-lg-0">
+                    <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computercategory_id" name="id"  placeholder="id">
                     </div>
                   </div>
 		<div class="form-group">
                     <label for="label_computercategory_parentcomputercategoryid" class="col-lg-2 control-label">parentcomputercategoryid</label>
-                    <div class="col-lg-1">
+                    <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computercategory_parentcomputercategoryid" name="parentcomputercategoryid"  placeholder="parentcomputercategoryid">
                     </div>
                   </div>
 		<div class="form-group">
                     <label for="label_computercategory_name" class="col-lg-2 control-label">name</label>
-                    <div class="col-lg-2">
+                    <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computercategory_name" name="name"  placeholder="name">
                     </div>
                   </div>
 		<div class="form-group">
                     <label for="label_computercategory_createtime" class="col-lg-2 control-label">createtime</label>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computercategory_createtime" name="createtime"  placeholder="createtime">
                     </div>
                   </div>
@@ -75,7 +75,7 @@
                   </div>
 		<div class="form-group">
                     <label for="label_computercategory_status" class="col-lg-2 control-label">status</label>
-                    <div class="col-lg-5">
+                    <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computercategory_status" name="status"  placeholder="status">
                     </div>
                   </div>

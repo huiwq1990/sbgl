@@ -41,8 +41,8 @@
                 <thead>
                   <tr>
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-                    <th class="name">名称</th>
-                    <th class="f-category">父级分类</th>
+                    <th class="name">属性</th>
+                    <th class="f-category">属性值</th>
                     
                   </tr>
                 </thead>
@@ -50,87 +50,87 @@
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computerid</td>
-                    <td>$computerFull.computerid</td>                    
+                    <td>$!computerFull.computerid</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computerserialnumber</td>
-                    <td>$computerFull.computerserialnumber</td>                    
+                    <td>$!computerFull.computerserialnumber</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computercomputermodelid</td>
-                    <td>$computerFull.computercomputermodelid</td>                    
+                    <td>$!computerFull.computercomputermodelid</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computercreatetime</td>
-                    <td>$computerFull.computercreatetime</td>                    
+                    <td>$!computerFull.computercreatetime</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computercreateuserid</td>
-                    <td>$computerFull.computercreateuserid</td>                    
+                    <td>$!computerFull.computercreateuserid</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computerstatus</td>
-                    <td>$computerFull.computerstatus</td>                    
+                    <td>$!computerFull.computerstatus</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computermodelid</td>
-                    <td>$computerFull.computermodelid</td>                    
+                    <td>$!computerFull.computermodelid</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computermodelname</td>
-                    <td>$computerFull.computermodelname</td>                    
+                    <td>$!computerFull.computermodelname</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computermodelcomputercategoryid</td>
-                    <td>$computerFull.computermodelcomputercategoryid</td>                    
+                    <td>$!computerFull.computermodelcomputercategoryid</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computermodelpicpath</td>
-                    <td>$computerFull.computermodelpicpath</td>                    
+                    <td>$!computerFull.computermodelpicpath</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computermodelcreatetime</td>
-                    <td>$computerFull.computermodelcreatetime</td>                    
+                    <td>$!computerFull.computermodelcreatetime</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computermodelcreateuserid</td>
-                    <td>$computerFull.computermodelcreateuserid</td>                    
+                    <td>$!computerFull.computermodelcreateuserid</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computermodelstatus</td>
-                    <td>$computerFull.computermodelstatus</td>                    
+                    <td>$!computerFull.computermodelstatus</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>loginuserid</td>
-                    <td>$computerFull.loginuserid</td>                    
+                    <td>$!computerFull.loginuserid</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>loginusername</td>
-                    <td>$computerFull.loginusername</td>                    
+                    <td>$!computerFull.loginusername</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>loginusercreatetime</td>
-                    <td>$computerFull.loginusercreatetime</td>                    
+                    <td>$!computerFull.loginusercreatetime</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>loginuserstatus</td>
-                    <td>$computerFull.loginuserstatus</td>                    
+                    <td>$!computerFull.loginuserstatus</td>                    
                   </tr>               
                 </tbody>
               </table>

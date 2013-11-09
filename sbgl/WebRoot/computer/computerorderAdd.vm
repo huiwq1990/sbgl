@@ -45,25 +45,25 @@
                <form action="http://localhost:8080/sbgl/addComputerorderAjax.action" method="post" name="AddComputerorderForm">
 		<div class="form-group">
                     <label for="label_computerorder_id" class="col-lg-2 control-label">id</label>
-                    <div class="col-lg-0">
+                    <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computerorder_id" name="id"  placeholder="id">
                     </div>
                   </div>
 		<div class="form-group">
                     <label for="label_computerorder_serialnumber" class="col-lg-2 control-label">serialnumber</label>
-                    <div class="col-lg-1">
+                    <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computerorder_serialnumber" name="serialnumber"  placeholder="serialnumber">
                     </div>
                   </div>
 		<div class="form-group">
                     <label for="label_computerorder_userid" class="col-lg-2 control-label">userid</label>
-                    <div class="col-lg-2">
+                    <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computerorder_userid" name="userid"  placeholder="userid">
                     </div>
                   </div>
 		<div class="form-group">
                     <label for="label_computerorder_createtime" class="col-lg-2 control-label">createtime</label>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computerorder_createtime" name="createtime"  placeholder="createtime">
                     </div>
                   </div>

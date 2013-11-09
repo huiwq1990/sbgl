@@ -41,8 +41,8 @@
                 <thead>
                   <tr>
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-                    <th class="name">名称</th>
-                    <th class="f-category">父级分类</th>
+                    <th class="name">属性</th>
+                    <th class="f-category">属性值</th>
                     
                   </tr>
                 </thead>
@@ -50,47 +50,47 @@
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computerorderid</td>
-                    <td>$computerorderFull.computerorderid</td>                    
+                    <td>$!computerorderFull.computerorderid</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computerorderserialnumber</td>
-                    <td>$computerorderFull.computerorderserialnumber</td>                    
+                    <td>$!computerorderFull.computerorderserialnumber</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computerorderuserid</td>
-                    <td>$computerorderFull.computerorderuserid</td>                    
+                    <td>$!computerorderFull.computerorderuserid</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computerordercreatetime</td>
-                    <td>$computerorderFull.computerordercreatetime</td>                    
+                    <td>$!computerorderFull.computerordercreatetime</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>computerorderstatus</td>
-                    <td>$computerorderFull.computerorderstatus</td>                    
+                    <td>$!computerorderFull.computerorderstatus</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>loginuserid</td>
-                    <td>$computerorderFull.loginuserid</td>                    
+                    <td>$!computerorderFull.loginuserid</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>loginusername</td>
-                    <td>$computerorderFull.loginusername</td>                    
+                    <td>$!computerorderFull.loginusername</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>loginusercreatetime</td>
-                    <td>$computerorderFull.loginusercreatetime</td>                    
+                    <td>$!computerorderFull.loginusercreatetime</td>                    
                   </tr>               
 		          <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                     <td>loginuserstatus</td>
-                    <td>$computerorderFull.loginuserstatus</td>                    
+                    <td>$!computerorderFull.loginuserstatus</td>                    
                   </tr>               
                 </tbody>
               </table>

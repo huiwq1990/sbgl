@@ -44,7 +44,8 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
 	List<Computerorder> computerorderList = new ArrayList<Computerorder>();
 	List<ComputerorderFull> computerorderFullList = new ArrayList<ComputerorderFull>();
-	private String logperfix = "exec method";		
+	private Integer computerorderid; //entity full 的id属性名称		
+	private String logperfix = "exec action method:";		
 	Page page = new Page();
 		
 	
@@ -72,12 +73,17 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 		return SUCCESS;
 	}		
 			
-	//管理
+	//管理 查询
 	public String manageComputerorderFull(){
 		log.info("exec action method:manageComputerorderFull");
 		
+//      分页查询		
+		Page page = new Page();
+		computerorderFullList  = computerorderService.selectComputerorderFullByPage(page);
 		
-		computerorderFullList  = computerorderService.selectComputerorderFullAll();
+//		查询全部
+//		computerorderFullList  = computerorderService.selectComputerorderFullAll();
+
 		for(int i = 0; i < computerorderFullList.size(); i++){
 		//	System.out.println("id="+computerorderFullList.get(i).getLoginusername());
 		}
@@ -179,7 +185,49 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 			log.error("类ComputerorderAction的方法：deleteComputerorder错误"+e);
 		}
 		return "Error";
-	}	
+	}
+
+	
+//	del entityfull
+	public String deleteComputerorderFull(){
+		try {
+		
+			Integer getId = computerorder.getId();
+			if(getId != null && getId >= 0){
+				log.info("删除的id不规范");
+				return "Error";
+			}
+		
+		
+			Computerorder temp = computerorderService.selectComputerorderById(getId);
+			if (temp != null) {
+				computerorderService.deleteComputerorder(getId);
+				return SUCCESS;
+			} else {
+				log.info("删除的id不存在");
+				return "Error";
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "Error";
+	}
+	
+	//del entityfull Ajax
+	public String deleteComputerorderFullAjax( ){
+		try{
+			if(computerorder.getId() != null && computerorder.getId() >= 0){
+				computerorderService.deleteComputerorder(computerorder.getId());				
+			}
+			
+			return "IdNotExist";
+		}catch(Exception e){
+			e.printStackTrace();
+			log.error("类ComputerorderAction的方法：deleteComputerorder错误"+e);
+		}
+		return "Error";
+	}
 
 //修改
 	public String updateComputerorder(){
@@ -207,7 +255,7 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	
 	//ajax 修改
 	public String updateComputerorderAjax(){
-		log.info(logperfix + "updateComputerorderAjax");
+		log.info(logperfix + "updateComputerorderAjax,id="+computerorder.getId());
 		ReturnJson returnJson = new ReturnJson();
 		try {
 			if(computerorder.getId() != null && computerorder.getId() > 0){				
@@ -230,7 +278,7 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 				
 			}else{
 				actionMsg = getText("viewComputerorderFail");
-				System.out.println(actionMsg);
+				log.info(logperfix + "updateComputerorderAjax fail");
 			}			
 			
 		}catch(Exception e){
@@ -335,7 +383,43 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 		return "error";
 
 	}	
-	
+
+/**
+ * view ComputerorderFull
+ * need give parmeter id
+ * get id from modle,
+ * @return
+ */
+	public String viewYaomingFull() {
+				
+		try {
+			int getId = computerorder.getId();
+			log.info(this.logperfix + ";id=" + getId);
+			
+			if (getId > 0) {
+				log.error("error,id小于0不规范");
+				return "error";
+			}	
+			
+			ComputerorderFull temComputerorderFull = computerorderService.selectComputerorderFullById(getId);				
+			if(temComputerorderFull!=null){				
+				BeanUtils.copyProperties(computerorderFull,temComputerorderFull);
+				return SUCCESS;				
+			}else{
+				log.error("error,查询实体不存在。");
+				return "Error";
+			}			
+
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();			
+		}
+		return "Error";
+	}
+
 	
 	//根据对象Id查询
 	public String selectComputerorderById(){
@@ -377,32 +461,8 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 		return SUCCESS;
 	}
 
-	//view entityFull
-	public String viewComputerorderFull(){
-		System.out.println("viewComputerorderFull");
-			try {
-				if(computerorder.getId() != null && computerorder.getId() > 0){				
-				ComputerorderFull temComputerorderFull = computerorderService.selectComputerorderFullById(computerorder.getId());
-				BeanUtils.copyProperties(computerorderFull,temComputerorderFull);	
-				actionMsg = getText("selectComputerorderByIdSuccess");
-			}else{
-				actionMsg = getText("selectComputerorderByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerorderAction的方法：viewComputerorderFull错误"+e);
-		}
-		
-		return "error";
 
-	}		
-	
+
 	
 	//根据对象Id查询Full
 	public String selectComputerorderFullById(){
@@ -544,6 +604,14 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 
 	public void setPage(Page page) {
 		this.page = page;
+	}
+	
+	public int getComputerorderid() {
+		return computerorderid;
+	}
+
+	public void setComputerorderid(int computerorderid) {
+		this.computerorderid = computerorderid;
 	}
 	
 }

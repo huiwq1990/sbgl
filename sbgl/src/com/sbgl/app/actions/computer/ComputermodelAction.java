@@ -44,7 +44,8 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
 	List<Computermodel> computermodelList = new ArrayList<Computermodel>();
 	List<ComputermodelFull> computermodelFullList = new ArrayList<ComputermodelFull>();
-	private String logperfix = "exec method";		
+	private Integer computermodelid; //entity full 的id属性名称		
+	private String logperfix = "exec action method:";		
 	Page page = new Page();
 		
 	
@@ -72,12 +73,17 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 		return SUCCESS;
 	}		
 			
-	//管理
+	//管理 查询
 	public String manageComputermodelFull(){
 		log.info("exec action method:manageComputermodelFull");
 		
+//      分页查询		
+		Page page = new Page();
+		computermodelFullList  = computermodelService.selectComputermodelFullByPage(page);
 		
-		computermodelFullList  = computermodelService.selectComputermodelFullAll();
+//		查询全部
+//		computermodelFullList  = computermodelService.selectComputermodelFullAll();
+
 		for(int i = 0; i < computermodelFullList.size(); i++){
 		//	System.out.println("id="+computermodelFullList.get(i).getLoginusername());
 		}
@@ -179,7 +185,49 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 			log.error("类ComputermodelAction的方法：deleteComputermodel错误"+e);
 		}
 		return "Error";
-	}	
+	}
+
+	
+//	del entityfull
+	public String deleteComputermodelFull(){
+		try {
+		
+			Integer getId = computermodel.getId();
+			if(getId != null && getId >= 0){
+				log.info("删除的id不规范");
+				return "Error";
+			}
+		
+		
+			Computermodel temp = computermodelService.selectComputermodelById(getId);
+			if (temp != null) {
+				computermodelService.deleteComputermodel(getId);
+				return SUCCESS;
+			} else {
+				log.info("删除的id不存在");
+				return "Error";
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "Error";
+	}
+	
+	//del entityfull Ajax
+	public String deleteComputermodelFullAjax( ){
+		try{
+			if(computermodel.getId() != null && computermodel.getId() >= 0){
+				computermodelService.deleteComputermodel(computermodel.getId());				
+			}
+			
+			return "IdNotExist";
+		}catch(Exception e){
+			e.printStackTrace();
+			log.error("类ComputermodelAction的方法：deleteComputermodel错误"+e);
+		}
+		return "Error";
+	}
 
 //修改
 	public String updateComputermodel(){
@@ -209,7 +257,7 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 	
 	//ajax 修改
 	public String updateComputermodelAjax(){
-		log.info(logperfix + "updateComputermodelAjax");
+		log.info(logperfix + "updateComputermodelAjax,id="+computermodel.getId());
 		ReturnJson returnJson = new ReturnJson();
 		try {
 			if(computermodel.getId() != null && computermodel.getId() > 0){				
@@ -234,7 +282,7 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 				
 			}else{
 				actionMsg = getText("viewComputermodelFail");
-				System.out.println(actionMsg);
+				log.info(logperfix + "updateComputermodelAjax fail");
 			}			
 			
 		}catch(Exception e){
@@ -339,7 +387,43 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 		return "error";
 
 	}	
-	
+
+/**
+ * view ComputermodelFull
+ * need give parmeter id
+ * get id from modle,
+ * @return
+ */
+	public String viewYaomingFull() {
+				
+		try {
+			int getId = computermodel.getId();
+			log.info(this.logperfix + ";id=" + getId);
+			
+			if (getId > 0) {
+				log.error("error,id小于0不规范");
+				return "error";
+			}	
+			
+			ComputermodelFull temComputermodelFull = computermodelService.selectComputermodelFullById(getId);				
+			if(temComputermodelFull!=null){				
+				BeanUtils.copyProperties(computermodelFull,temComputermodelFull);
+				return SUCCESS;				
+			}else{
+				log.error("error,查询实体不存在。");
+				return "Error";
+			}			
+
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();			
+		}
+		return "Error";
+	}
+
 	
 	//根据对象Id查询
 	public String selectComputermodelById(){
@@ -381,32 +465,8 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 		return SUCCESS;
 	}
 
-	//view entityFull
-	public String viewComputermodelFull(){
-		System.out.println("viewComputermodelFull");
-			try {
-				if(computermodel.getId() != null && computermodel.getId() > 0){				
-				ComputermodelFull temComputermodelFull = computermodelService.selectComputermodelFullById(computermodel.getId());
-				BeanUtils.copyProperties(computermodelFull,temComputermodelFull);	
-				actionMsg = getText("selectComputermodelByIdSuccess");
-			}else{
-				actionMsg = getText("selectComputermodelByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputermodelAction的方法：viewComputermodelFull错误"+e);
-		}
-		
-		return "error";
 
-	}		
-	
+
 	
 	//根据对象Id查询Full
 	public String selectComputermodelFullById(){
@@ -578,6 +638,14 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 
 	public void setPage(Page page) {
 		this.page = page;
+	}
+	
+	public int getComputermodelid() {
+		return computermodelid;
+	}
+
+	public void setComputermodelid(int computermodelid) {
+		this.computermodelid = computermodelid;
 	}
 	
 }

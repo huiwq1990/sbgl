@@ -3,13 +3,12 @@
 <struts>
 	 <package name="computer" extends="admin">
 
-		<!-- default entity manage action -->
+
+<!-- default entity manage action -->
     	<action name="manageComputer" class="Entity" method="manageComputer">
         	<result name="success">/computer/computerManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
-		
-<!-- entity info manage  -->
 		<!-- default entity manage action -->
     	<action name="manageComputerInfo" class="ComputerAction" method="manageComputerInfo">
         	<result name="success">/computer/computerManage.vm</result>
@@ -90,10 +89,18 @@
         </action>
 		
 		
-<!--删除实体-->
+<!--del-->
+        <!--del entity-->
         <action name="deleteComputer" class="ComputerAction" method="deleteComputer">
         	<result type="redirectAction">
 				<param name="actionName">manageComputer</param>
+			</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteComputerFull" class="ComputerAction" method="deleteComputerFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerFull</param>
 			</result>
         	<result name="error">/login.vm</result> 
         </action>
@@ -147,17 +154,9 @@
         	<result name="success">/computer/computerView.vm</result>
         	<result name="error">/login.vm</result> 
         </action>		
-		
-		
-        <!--查询全部实体-->
-        <action name="selectComputerAll" class="ComputerAction" method="selectComputerAll">
-			<result name="success">/computer/computer.jsp</result>
-			<result name="error">/login.vm</result>
-		</action>
-	
 <!-- View entity full-->		
         <action name="viewComputerFull" class="ComputerAction" method="viewComputerFull">
-        	<result name="success">/computer/computerFullView.jsp</result>
+        	<result name="success">/computer/computerFullView.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
 		<!--go to view jsp-->
@@ -169,7 +168,15 @@
 		<action name="viewComputerFullVm" class="ComputerAction" method="viewComputerFull">
         	<result name="success">/computer/computerFullView.vm</result>
         	<result name="error">/login.vm</result> 
-        </action>	
+        </action>		
+		
+        <!--查询全部实体-->
+        <action name="selectComputerAll" class="ComputerAction" method="selectComputerAll">
+			<result name="success">/computer/computer.jsp</result>
+			<result name="error">/login.vm</result>
+		</action>
+	
+
 		
 		
 <!--根据id查询实体full-->
@@ -201,6 +208,10 @@
 			</result>
         </action>
         <action name="deleteComputerAjax" class="ComputerAction" method="deleteComputerAjax">
+        	<result type="json"></result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteComputerFullAjax" class="ComputerAction" method="deleteComputerFullAjax">
         	<result type="json"></result>
         </action>
     	<action name="updateComputerAjax" class="ComputerAction" method="updateComputerAjax">

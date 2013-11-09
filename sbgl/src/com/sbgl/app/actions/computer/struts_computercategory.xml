@@ -3,13 +3,12 @@
 <struts>
 	 <package name="computercategory" extends="admin">
 
-		<!-- default entity manage action -->
+
+<!-- default entity manage action -->
     	<action name="manageComputercategory" class="Entity" method="manageComputercategory">
         	<result name="success">/computer/computercategoryManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
-		
-<!-- entity info manage  -->
 		<!-- default entity manage action -->
     	<action name="manageComputercategoryInfo" class="ComputercategoryAction" method="manageComputercategoryInfo">
         	<result name="success">/computer/computercategoryManage.vm</result>
@@ -90,10 +89,18 @@
         </action>
 		
 		
-<!--删除实体-->
+<!--del-->
+        <!--del entity-->
         <action name="deleteComputercategory" class="ComputercategoryAction" method="deleteComputercategory">
         	<result type="redirectAction">
 				<param name="actionName">manageComputercategory</param>
+			</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteComputercategoryFull" class="ComputercategoryAction" method="deleteComputercategoryFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputercategoryFull</param>
 			</result>
         	<result name="error">/login.vm</result> 
         </action>
@@ -147,17 +154,9 @@
         	<result name="success">/computer/computercategoryView.vm</result>
         	<result name="error">/login.vm</result> 
         </action>		
-		
-		
-        <!--查询全部实体-->
-        <action name="selectComputercategoryAll" class="ComputercategoryAction" method="selectComputercategoryAll">
-			<result name="success">/computer/computercategory.jsp</result>
-			<result name="error">/login.vm</result>
-		</action>
-	
 <!-- View entity full-->		
         <action name="viewComputercategoryFull" class="ComputercategoryAction" method="viewComputercategoryFull">
-        	<result name="success">/computer/computercategoryFullView.jsp</result>
+        	<result name="success">/computer/computercategoryFullView.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
 		<!--go to view jsp-->
@@ -169,7 +168,15 @@
 		<action name="viewComputercategoryFullVm" class="ComputercategoryAction" method="viewComputercategoryFull">
         	<result name="success">/computer/computercategoryFullView.vm</result>
         	<result name="error">/login.vm</result> 
-        </action>	
+        </action>		
+		
+        <!--查询全部实体-->
+        <action name="selectComputercategoryAll" class="ComputercategoryAction" method="selectComputercategoryAll">
+			<result name="success">/computer/computercategory.jsp</result>
+			<result name="error">/login.vm</result>
+		</action>
+	
+
 		
 		
 <!--根据id查询实体full-->
@@ -201,6 +208,10 @@
 			</result>
         </action>
         <action name="deleteComputercategoryAjax" class="ComputercategoryAction" method="deleteComputercategoryAjax">
+        	<result type="json"></result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteComputercategoryFullAjax" class="ComputercategoryAction" method="deleteComputercategoryFullAjax">
         	<result type="json"></result>
         </action>
     	<action name="updateComputercategoryAjax" class="ComputercategoryAction" method="updateComputercategoryAjax">
