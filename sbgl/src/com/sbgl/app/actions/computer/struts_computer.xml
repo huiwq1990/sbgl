@@ -5,38 +5,38 @@
 
 
 <!-- default entity manage action -->
-    	<action name="manageComputer" class="Entity" method="manageComputer">
+    	<action name="manageComputer" class="ManageComputerAction" method="manageComputer">
         	<result name="success">/computer/computerManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
 		<!-- default entity manage action -->
-    	<action name="manageComputerInfo" class="ComputerAction" method="manageComputerInfo">
+    	<action name="manageComputerInfo" class="ManageComputerAction" method="manageComputerInfo">
         	<result name="success">/computer/computerManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
 		<!-- manage action , go to jsp page -->
-    	<action name="manageComputerJsp" class="ComputerAction" method="manageComputer">
+    	<action name="manageComputerJsp" class="ManageComputerAction" method="manageComputer">
         	<result name="success">/computer/computerManage.jsp</result>
         	<result name="error">/login.vm</result> 
         </action>		
 		<!-- manage action , go to vm page -->
-    	<action name="manageComputerVm" class="ComputerAction" method="manageComputer">
+    	<action name="manageComputerVm" class="ManageComputerAction" method="manageComputer">
         	<result name="success">/computer/computerManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>		
 <!-- entity full manage  -->		
 		<!-- default entity full manage action -->
-    	<action name="manageComputerFull" class="ComputerAction" method="manageComputerFull">
+    	<action name="manageComputerFull" class="ManageComputerAction" method="manageComputerFull">
         	<result name="success">/computer/computerFullManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
 		<!-- manage action , go to jsp page -->
-    	<action name="manageComputerFullJsp" class="ComputerAction" method="manageComputerFull">
+    	<action name="manageComputerFullJsp" class="ManageComputerAction" method="manageComputerFull">
         	<result name="success">/computer/computerFullManage.jsp</result>
         	<result name="error">/login.vm</result> 
         </action>		
 		<!-- manage action , go to vm page -->
-    	<action name="manageComputerFullVm" class="ComputerAction" method="manageComputerFull">
+    	<action name="manageComputerFullVm" class="ManageComputerAction" method="manageComputerFull">
         	<result name="success">/computer/computerFullManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>	

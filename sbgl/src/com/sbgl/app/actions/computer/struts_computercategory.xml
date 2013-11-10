@@ -5,38 +5,38 @@
 
 
 <!-- default entity manage action -->
-    	<action name="manageComputercategory" class="Entity" method="manageComputercategory">
+    	<action name="manageComputercategory" class="ManageComputerAction" method="manageComputercategory">
         	<result name="success">/computer/computercategoryManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
 		<!-- default entity manage action -->
-    	<action name="manageComputercategoryInfo" class="ComputercategoryAction" method="manageComputercategoryInfo">
+    	<action name="manageComputercategoryInfo" class="ManageComputerAction" method="manageComputercategoryInfo">
         	<result name="success">/computer/computercategoryManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
 		<!-- manage action , go to jsp page -->
-    	<action name="manageComputercategoryJsp" class="ComputercategoryAction" method="manageComputercategory">
+    	<action name="manageComputercategoryJsp" class="ManageComputerAction" method="manageComputercategory">
         	<result name="success">/computer/computercategoryManage.jsp</result>
         	<result name="error">/login.vm</result> 
         </action>		
 		<!-- manage action , go to vm page -->
-    	<action name="manageComputercategoryVm" class="ComputercategoryAction" method="manageComputercategory">
+    	<action name="manageComputercategoryVm" class="ManageComputerAction" method="manageComputercategory">
         	<result name="success">/computer/computercategoryManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>		
 <!-- entity full manage  -->		
 		<!-- default entity full manage action -->
-    	<action name="manageComputercategoryFull" class="ComputercategoryAction" method="manageComputercategoryFull">
+    	<action name="manageComputercategoryFull" class="ManageComputerAction" method="manageComputercategoryFull">
         	<result name="success">/computer/computercategoryFullManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
 		<!-- manage action , go to jsp page -->
-    	<action name="manageComputercategoryFullJsp" class="ComputercategoryAction" method="manageComputercategoryFull">
+    	<action name="manageComputercategoryFullJsp" class="ManageComputerAction" method="manageComputercategoryFull">
         	<result name="success">/computer/computercategoryFullManage.jsp</result>
         	<result name="error">/login.vm</result> 
         </action>		
 		<!-- manage action , go to vm page -->
-    	<action name="manageComputercategoryFullVm" class="ComputercategoryAction" method="manageComputercategoryFull">
+    	<action name="manageComputercategoryFullVm" class="ManageComputerAction" method="manageComputercategoryFull">
         	<result name="success">/computer/computercategoryFullManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>	

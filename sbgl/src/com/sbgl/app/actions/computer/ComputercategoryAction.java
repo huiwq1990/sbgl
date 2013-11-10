@@ -45,31 +45,27 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	List<Computercategory> computercategoryList = new ArrayList<Computercategory>();
 	List<ComputercategoryFull> computercategoryFullList = new ArrayList<ComputercategoryFull>();
 	private Integer computercategoryid; //entity full 的id属性名称		
-	private String logperfix = "exec action method:";		
+	private String logprefix = "exec action method:";		
 	Page page = new Page();
 		
 	
-		//管理
+//  manage Computercategory
 	public String manageComputercategory(){
-		log.info("exec action method:manageComputercategoryFull");
+		log.info(logprefix+"manageComputercategoryFull");
 		
-		
-		computercategoryFullList  = computercategoryService.selectComputercategoryFullAll();
-		for(int i = 0; i < computercategoryFullList.size(); i++){
-		//	System.out.println("id="+computercategoryFullList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}	
-	
-	//管理
-	public String manageComputercategoryInfo(){
-		log.info(logperfix +" manageComputercategory");
-		//Page page = new Page();
-		//if()
+//      分页查询		
+		Page page = new Page();
 		computercategoryList  = computercategoryService.selectComputercategoryByPage(page);
-		for(int i = 0; i < computercategoryList.size(); i++){
-		//	System.out.println("id="+computercategoryList.get(i).getLoginusername());
+		
+//		查询全部
+//		computercategoryList  = computercategoryService.selectComputercategoryById();
+		
+	    if(computercategoryList == null){
+			computercategoryList = new ArrayList<Computercategory>();
 		}
+//		for(int i = 0; i < computercategoryList.size(); i++){
+//			System.out.println("id="+computercategoryList.get(i).getLoginusername());
+//		}
 		return SUCCESS;
 	}		
 			
@@ -84,12 +80,27 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 //		查询全部
 //		computercategoryFullList  = computercategoryService.selectComputercategoryFullAll();
 
-		for(int i = 0; i < computercategoryFullList.size(); i++){
-		//	System.out.println("id="+computercategoryFullList.get(i).getLoginusername());
+		if(computercategoryFullList == null){
+			computercategoryFullList = new ArrayList<ComputercategoryFull>();
 		}
+//		for(int i = 0; i < computercategoryFullList.size(); i++){
+//			System.out.println("id="+computercategoryFullList.get(i).getLoginusername());
+//		}
 		return SUCCESS;
 	}			
 			
+		
+	//管理
+	public String manageComputercategoryInfo(){
+		log.info(logprefix +" manageComputercategory");
+		//Page page = new Page();
+		//if()
+		computercategoryList  = computercategoryService.selectComputercategoryByPage(page);
+		for(int i = 0; i < computercategoryList.size(); i++){
+		//	System.out.println("id="+computercategoryList.get(i).getLoginusername());
+		}
+		return SUCCESS;
+	}	
 			
 	public String addComputercategory(){	
 		log.info("Add Entity");
@@ -256,7 +267,7 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	
 	//ajax 修改
 	public String updateComputercategoryAjax(){
-		log.info(logperfix + "updateComputercategoryAjax,id="+computercategory.getId());
+		log.info(logprefix + "updateComputercategoryAjax,id="+computercategory.getId());
 		ReturnJson returnJson = new ReturnJson();
 		try {
 			if(computercategory.getId() != null && computercategory.getId() > 0){				
@@ -280,7 +291,7 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 				
 			}else{
 				actionMsg = getText("viewComputercategoryFail");
-				log.info(logperfix + "updateComputercategoryAjax fail");
+				log.info(logprefix + "updateComputercategoryAjax fail");
 			}			
 			
 		}catch(Exception e){
@@ -301,7 +312,7 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	
 	*/
 	public String editComputercategory(){
-		log.info(logperfix + "editComputercategory");
+		log.info(logprefix + "editComputercategory");
 			
 		try {
 			//实体的id可以为0
@@ -334,7 +345,7 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	*/
 	public String editComputercategoryFull(){
 		
-		log.info(logperfix + "viewComputercategory");
+		log.info(logprefix + "viewComputercategory");
 		
 		try {
 			if(computercategory.getId() != null && computercategory.getId() > 0){				
@@ -396,7 +407,7 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 				
 		try {
 			int getId = computercategory.getId();
-			log.info(this.logperfix + ";id=" + getId);
+			log.info(this.logprefix + ";id=" + getId);
 			
 			if (getId > 0) {
 				log.error("error,id小于0不规范");

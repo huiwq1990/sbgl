@@ -45,31 +45,27 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 	List<Computerorderdetail> computerorderdetailList = new ArrayList<Computerorderdetail>();
 	List<ComputerorderdetailFull> computerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
 	private Integer computerorderdetailid; //entity full 的id属性名称		
-	private String logperfix = "exec action method:";		
+	private String logprefix = "exec action method:";		
 	Page page = new Page();
 		
 	
-		//管理
+//  manage Computerorderdetail
 	public String manageComputerorderdetail(){
-		log.info("exec action method:manageComputerorderdetailFull");
+		log.info(logprefix+"manageComputerorderdetailFull");
 		
-		
-		computerorderdetailFullList  = computerorderdetailService.selectComputerorderdetailFullAll();
-		for(int i = 0; i < computerorderdetailFullList.size(); i++){
-		//	System.out.println("id="+computerorderdetailFullList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}	
-	
-	//管理
-	public String manageComputerorderdetailInfo(){
-		log.info(logperfix +" manageComputerorderdetail");
-		//Page page = new Page();
-		//if()
+//      分页查询		
+		Page page = new Page();
 		computerorderdetailList  = computerorderdetailService.selectComputerorderdetailByPage(page);
-		for(int i = 0; i < computerorderdetailList.size(); i++){
-		//	System.out.println("id="+computerorderdetailList.get(i).getLoginusername());
+		
+//		查询全部
+//		computerorderdetailList  = computerorderdetailService.selectComputerorderdetailById();
+		
+	    if(computerorderdetailList == null){
+			computerorderdetailList = new ArrayList<Computerorderdetail>();
 		}
+//		for(int i = 0; i < computerorderdetailList.size(); i++){
+//			System.out.println("id="+computerorderdetailList.get(i).getLoginusername());
+//		}
 		return SUCCESS;
 	}		
 			
@@ -84,12 +80,27 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 //		查询全部
 //		computerorderdetailFullList  = computerorderdetailService.selectComputerorderdetailFullAll();
 
-		for(int i = 0; i < computerorderdetailFullList.size(); i++){
-		//	System.out.println("id="+computerorderdetailFullList.get(i).getLoginusername());
+		if(computerorderdetailFullList == null){
+			computerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
 		}
+//		for(int i = 0; i < computerorderdetailFullList.size(); i++){
+//			System.out.println("id="+computerorderdetailFullList.get(i).getLoginusername());
+//		}
 		return SUCCESS;
 	}			
 			
+		
+	//管理
+	public String manageComputerorderdetailInfo(){
+		log.info(logprefix +" manageComputerorderdetail");
+		//Page page = new Page();
+		//if()
+		computerorderdetailList  = computerorderdetailService.selectComputerorderdetailByPage(page);
+		for(int i = 0; i < computerorderdetailList.size(); i++){
+		//	System.out.println("id="+computerorderdetailList.get(i).getLoginusername());
+		}
+		return SUCCESS;
+	}	
 			
 	public String addComputerorderdetail(){	
 		log.info("Add Entity");
@@ -258,7 +269,7 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 	
 	//ajax 修改
 	public String updateComputerorderdetailAjax(){
-		log.info(logperfix + "updateComputerorderdetailAjax,id="+computerorderdetail.getId());
+		log.info(logprefix + "updateComputerorderdetailAjax,id="+computerorderdetail.getId());
 		ReturnJson returnJson = new ReturnJson();
 		try {
 			if(computerorderdetail.getId() != null && computerorderdetail.getId() > 0){				
@@ -284,7 +295,7 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 				
 			}else{
 				actionMsg = getText("viewComputerorderdetailFail");
-				log.info(logperfix + "updateComputerorderdetailAjax fail");
+				log.info(logprefix + "updateComputerorderdetailAjax fail");
 			}			
 			
 		}catch(Exception e){
@@ -305,7 +316,7 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 	
 	*/
 	public String editComputerorderdetail(){
-		log.info(logperfix + "editComputerorderdetail");
+		log.info(logprefix + "editComputerorderdetail");
 			
 		try {
 			//实体的id可以为0
@@ -338,7 +349,7 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 	*/
 	public String editComputerorderdetailFull(){
 		
-		log.info(logperfix + "viewComputerorderdetail");
+		log.info(logprefix + "viewComputerorderdetail");
 		
 		try {
 			if(computerorderdetail.getId() != null && computerorderdetail.getId() > 0){				
@@ -400,7 +411,7 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 				
 		try {
 			int getId = computerorderdetail.getId();
-			log.info(this.logperfix + ";id=" + getId);
+			log.info(this.logprefix + ";id=" + getId);
 			
 			if (getId > 0) {
 				log.error("error,id小于0不规范");

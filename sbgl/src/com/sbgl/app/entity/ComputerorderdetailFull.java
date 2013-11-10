@@ -11,16 +11,14 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 			private Integer computerorderdetailcomputerid;
 			private Integer computerorderdetailcomputernumber;
 			private Date computerorderdetailcreatetime;
-			private Integer computerorderdetailstatus;
-			private String computerorderdetailborrowday;
+			private Date computerorderdetailborrowday;
 			private Integer computerorderdetailborrowperiod;
+			private Integer computerorderdetailstatus;
 			private Integer computerorderid;
-			private String computerordernumber;
+			private String computerorderserialnumber;
 			private Integer computerorderuserid;
 			private Date computerordercreatetime;
 			private Integer computerorderstatus;
-			private Date computerorderstarttime;
-			private Date computerorderendtime;
 			private Integer computerid;
 			private String computerserialnumber;
 			private Integer computercomputermodelid;
@@ -60,16 +58,10 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 		public Date getComputerorderdetailcreatetime(){		
 			return this.computerorderdetailcreatetime;
 		}
-			public void setComputerorderdetailstatus(Integer computerorderdetailstatus){		
-			this.computerorderdetailstatus = computerorderdetailstatus;
-		}
-		public Integer getComputerorderdetailstatus(){		
-			return this.computerorderdetailstatus;
-		}
-			public void setComputerorderdetailborrowday(String computerorderdetailborrowday){		
+			public void setComputerorderdetailborrowday(Date computerorderdetailborrowday){		
 			this.computerorderdetailborrowday = computerorderdetailborrowday;
 		}
-		public String getComputerorderdetailborrowday(){		
+		public Date getComputerorderdetailborrowday(){		
 			return this.computerorderdetailborrowday;
 		}
 			public void setComputerorderdetailborrowperiod(Integer computerorderdetailborrowperiod){		
@@ -78,17 +70,23 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 		public Integer getComputerorderdetailborrowperiod(){		
 			return this.computerorderdetailborrowperiod;
 		}
+			public void setComputerorderdetailstatus(Integer computerorderdetailstatus){		
+			this.computerorderdetailstatus = computerorderdetailstatus;
+		}
+		public Integer getComputerorderdetailstatus(){		
+			return this.computerorderdetailstatus;
+		}
 			public void setComputerorderid(Integer computerorderid){		
 			this.computerorderid = computerorderid;
 		}
 		public Integer getComputerorderid(){		
 			return this.computerorderid;
 		}
-			public void setComputerordernumber(String computerordernumber){		
-			this.computerordernumber = computerordernumber;
+			public void setComputerorderserialnumber(String computerorderserialnumber){		
+			this.computerorderserialnumber = computerorderserialnumber;
 		}
-		public String getComputerordernumber(){		
-			return this.computerordernumber;
+		public String getComputerorderserialnumber(){		
+			return this.computerorderserialnumber;
 		}
 			public void setComputerorderuserid(Integer computerorderuserid){		
 			this.computerorderuserid = computerorderuserid;
@@ -107,18 +105,6 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 		}
 		public Integer getComputerorderstatus(){		
 			return this.computerorderstatus;
-		}
-			public void setComputerorderstarttime(Date computerorderstarttime){		
-			this.computerorderstarttime = computerorderstarttime;
-		}
-		public Date getComputerorderstarttime(){		
-			return this.computerorderstarttime;
-		}
-			public void setComputerorderendtime(Date computerorderendtime){		
-			this.computerorderendtime = computerorderendtime;
-		}
-		public Date getComputerorderendtime(){		
-			return this.computerorderendtime;
 		}
 			public void setComputerid(Integer computerid){		
 			this.computerid = computerid;

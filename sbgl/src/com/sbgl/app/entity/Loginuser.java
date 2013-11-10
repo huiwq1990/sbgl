@@ -1,6 +1,6 @@
 package com.sbgl.app.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Loginuser entity. @author MyEclipse Persistence Tools
@@ -13,7 +13,7 @@ public class Loginuser extends com.sbgl.app.dao.DaoAbs implements
 
 	private Integer id;
 	private String name;
-	private Timestamp createtime;
+	private Date createtime;
 	private Integer status;
 
 	// Constructors
@@ -28,7 +28,7 @@ public class Loginuser extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Loginuser(Integer id, String name, Timestamp createtime,
+	public Loginuser(Integer id, String name, Date createtime,
 			Integer status) {
 		this.id = id;
 		this.name = name;
@@ -54,11 +54,11 @@ public class Loginuser extends com.sbgl.app.dao.DaoAbs implements
 		this.name = name;
 	}
 
-	public Timestamp getCreatetime() {
+	public Date getCreatetime() {
 		return this.createtime;
 	}
 
-	public void setCreatetime(Timestamp createtime) {
+	public void setCreatetime(Date createtime) {
 		this.createtime = createtime;
 	}
 

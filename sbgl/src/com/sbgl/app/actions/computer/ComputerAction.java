@@ -45,31 +45,27 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	List<Computer> computerList = new ArrayList<Computer>();
 	List<ComputerFull> computerFullList = new ArrayList<ComputerFull>();
 	private Integer computerid; //entity full 的id属性名称		
-	private String logperfix = "exec action method:";		
+	private String logprefix = "exec action method:";		
 	Page page = new Page();
 		
 	
-		//管理
+//  manage Computer
 	public String manageComputer(){
-		log.info("exec action method:manageComputerFull");
+		log.info(logprefix+"manageComputerFull");
 		
-		
-		computerFullList  = computerService.selectComputerFullAll();
-		for(int i = 0; i < computerFullList.size(); i++){
-		//	System.out.println("id="+computerFullList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}	
-	
-	//管理
-	public String manageComputerInfo(){
-		log.info(logperfix +" manageComputer");
-		//Page page = new Page();
-		//if()
+//      分页查询		
+		Page page = new Page();
 		computerList  = computerService.selectComputerByPage(page);
-		for(int i = 0; i < computerList.size(); i++){
-		//	System.out.println("id="+computerList.get(i).getLoginusername());
+		
+//		查询全部
+//		computerList  = computerService.selectComputerById();
+		
+	    if(computerList == null){
+			computerList = new ArrayList<Computer>();
 		}
+//		for(int i = 0; i < computerList.size(); i++){
+//			System.out.println("id="+computerList.get(i).getLoginusername());
+//		}
 		return SUCCESS;
 	}		
 			
@@ -84,12 +80,27 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 //		查询全部
 //		computerFullList  = computerService.selectComputerFullAll();
 
-		for(int i = 0; i < computerFullList.size(); i++){
-		//	System.out.println("id="+computerFullList.get(i).getLoginusername());
+		if(computerFullList == null){
+			computerFullList = new ArrayList<ComputerFull>();
 		}
+//		for(int i = 0; i < computerFullList.size(); i++){
+//			System.out.println("id="+computerFullList.get(i).getLoginusername());
+//		}
 		return SUCCESS;
 	}			
 			
+		
+	//管理
+	public String manageComputerInfo(){
+		log.info(logprefix +" manageComputer");
+		//Page page = new Page();
+		//if()
+		computerList  = computerService.selectComputerByPage(page);
+		for(int i = 0; i < computerList.size(); i++){
+		//	System.out.println("id="+computerList.get(i).getLoginusername());
+		}
+		return SUCCESS;
+	}	
 			
 	public String addComputer(){	
 		log.info("Add Entity");
@@ -256,7 +267,7 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	
 	//ajax 修改
 	public String updateComputerAjax(){
-		log.info(logperfix + "updateComputerAjax,id="+computer.getId());
+		log.info(logprefix + "updateComputerAjax,id="+computer.getId());
 		ReturnJson returnJson = new ReturnJson();
 		try {
 			if(computer.getId() != null && computer.getId() > 0){				
@@ -280,7 +291,7 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 				
 			}else{
 				actionMsg = getText("viewComputerFail");
-				log.info(logperfix + "updateComputerAjax fail");
+				log.info(logprefix + "updateComputerAjax fail");
 			}			
 			
 		}catch(Exception e){
@@ -301,7 +312,7 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	
 	*/
 	public String editComputer(){
-		log.info(logperfix + "editComputer");
+		log.info(logprefix + "editComputer");
 			
 		try {
 			//实体的id可以为0
@@ -334,7 +345,7 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	*/
 	public String editComputerFull(){
 		
-		log.info(logperfix + "viewComputer");
+		log.info(logprefix + "viewComputer");
 		
 		try {
 			if(computer.getId() != null && computer.getId() > 0){				
@@ -396,7 +407,7 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 				
 		try {
 			int getId = computer.getId();
-			log.info(this.logperfix + ";id=" + getId);
+			log.info(this.logprefix + ";id=" + getId);
 			
 			if (getId > 0) {
 				log.error("error,id小于0不规范");

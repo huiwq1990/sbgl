@@ -63,23 +63,23 @@
                   <tr>
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
 
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">View</th>
+             <th class="name">computercategoryid</th>
+             <th class="name">computercategoryparentcomputercategoryid</th>
+             <th class="name">computercategoryname</th>
+             <th class="name">computercategorycreatetime</th>
+             <th class="name">computercategorycreateuserid</th>
+             <th class="name">computercategorystatus</th>
+             <th class="name">parentcomputercategoryid</th>
+             <th class="name">parentcomputercategoryparentcomputercategoryid</th>
+             <th class="name">parentcomputercategoryname</th>
+             <th class="name">parentcomputercategorycreatetime</th>
+             <th class="name">parentcomputercategorycreateuserid</th>
+             <th class="name">parentcomputercategorystatus</th>
+             <th class="name">loginuserid</th>
+             <th class="name">loginusername</th>
+             <th class="name">loginusercreatetime</th>
+             <th class="name">loginuserstatus</th>
+                   <th class="name">View</th>
 				   <th class="name">Del</th>
 				   <th class="name">Edit</th>
                   </tr>

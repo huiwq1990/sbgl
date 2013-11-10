@@ -28,10 +28,10 @@ import com.sbgl.util.Page;
 
 
 @Scope("prototype") 
-@Controller("ComputerPageAction")
-public class ComputerPageAction extends ActionSupport implements SessionAware {
+@Controller("ManageComputerAction")
+public class ManageComputerAction extends ActionSupport implements SessionAware {
 
-	private static final Log log = LogFactory.getLog(ComputerPageAction.class);
+	private static final Log log = LogFactory.getLog(ManageComputerAction.class);
 
 	private Map<String, Object> session;
 
@@ -53,20 +53,47 @@ public class ComputerPageAction extends ActionSupport implements SessionAware {
 
 	List<ComputerorderFull> computerorderFullList = new ArrayList<ComputerorderFull>();
 
-	private String logperfix = "exec method";
+	private String logprefix = "exec method";
 	Page page = new Page();
 
-	// 管理
-	public String manageComputercategory() {
-		log.info("exec action method:manageComputercategory");
-
-		computercategoryFullList = computercategoryService
-				.selectComputercategoryFullAll();
-		for (int i = 0; i < computercategoryFullList.size(); i++) {
-			// System.out.println("id="+computercategoryFullList.get(i).getLoginusername());
+//  manage Computercategory
+	public String manageComputercategory(){
+		log.info(logprefix+"manageComputercategoryFull");
+		
+//      分页查询		
+		Page page = new Page();
+		computercategoryList  = computercategoryService.selectComputercategoryByPage(page);
+		
+//		查询全部
+//		computercategoryList  = computercategoryService.selectComputercategoryById();
+		
+	    if(computercategoryList == null){
+			computercategoryList = new ArrayList<Computercategory>();
 		}
+//		for(int i = 0; i < computercategoryList.size(); i++){
+//			System.out.println("id="+computercategoryList.get(i).getLoginusername());
+//		}
 		return SUCCESS;
+	}		
+			
+	//管理 查询
+	public String manageComputercategoryFull(){
+		log.info("exec action method:manageComputercategoryFull");
+		
+//      分页查询		
+		Page page = new Page();
+		computercategoryFullList  = computercategoryService.selectComputercategoryFullByPage(page);
+		
+//		查询全部
+//		computercategoryFullList  = computercategoryService.selectComputercategoryFullAll();
 
+		if(computercategoryFullList == null){
+			computercategoryFullList = new ArrayList<ComputercategoryFull>();
+		}
+//		for(int i = 0; i < computercategoryFullList.size(); i++){
+//			System.out.println("id="+computercategoryFullList.get(i).getLoginusername());
+//		}
+		return SUCCESS;
 	}
 
 	// 管理
@@ -160,13 +187,7 @@ public class ComputerPageAction extends ActionSupport implements SessionAware {
 		this.computerorderFullList = computerorderFullList;
 	}
 
-	public String getLogperfix() {
-		return logperfix;
-	}
 
-	public void setLogperfix(String logperfix) {
-		this.logperfix = logperfix;
-	}
 
 	public Page getPage() {
 		return page;

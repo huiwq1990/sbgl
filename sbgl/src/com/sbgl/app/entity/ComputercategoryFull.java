@@ -20,7 +20,7 @@ public class ComputercategoryFull extends DaoAbs implements java.io.Serializable
 			private Integer parentcomputercategorystatus;
 			private Integer loginuserid;
 			private String loginusername;
-			private Timestamp loginusercreatetime;
+			private Date loginusercreatetime;
 			private Integer loginuserstatus;
 		
 	
@@ -109,10 +109,10 @@ public class ComputercategoryFull extends DaoAbs implements java.io.Serializable
 		public String getLoginusername(){		
 			return this.loginusername;
 		}
-			public void setLoginusercreatetime(Timestamp loginusercreatetime){		
+			public void setLoginusercreatetime(Date loginusercreatetime){		
 			this.loginusercreatetime = loginusercreatetime;
 		}
-		public Timestamp getLoginusercreatetime(){		
+		public Date getLoginusercreatetime(){		
 			return this.loginusercreatetime;
 		}
 			public void setLoginuserstatus(Integer loginuserstatus){		

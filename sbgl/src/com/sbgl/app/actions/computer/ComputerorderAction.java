@@ -45,31 +45,27 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	List<Computerorder> computerorderList = new ArrayList<Computerorder>();
 	List<ComputerorderFull> computerorderFullList = new ArrayList<ComputerorderFull>();
 	private Integer computerorderid; //entity full 的id属性名称		
-	private String logperfix = "exec action method:";		
+	private String logprefix = "exec action method:";		
 	Page page = new Page();
 		
 	
-		//管理
+//  manage Computerorder
 	public String manageComputerorder(){
-		log.info("exec action method:manageComputerorderFull");
+		log.info(logprefix+"manageComputerorderFull");
 		
-		
-		computerorderFullList  = computerorderService.selectComputerorderFullAll();
-		for(int i = 0; i < computerorderFullList.size(); i++){
-		//	System.out.println("id="+computerorderFullList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}	
-	
-	//管理
-	public String manageComputerorderInfo(){
-		log.info(logperfix +" manageComputerorder");
-		//Page page = new Page();
-		//if()
+//      分页查询		
+		Page page = new Page();
 		computerorderList  = computerorderService.selectComputerorderByPage(page);
-		for(int i = 0; i < computerorderList.size(); i++){
-		//	System.out.println("id="+computerorderList.get(i).getLoginusername());
+		
+//		查询全部
+//		computerorderList  = computerorderService.selectComputerorderById();
+		
+	    if(computerorderList == null){
+			computerorderList = new ArrayList<Computerorder>();
 		}
+//		for(int i = 0; i < computerorderList.size(); i++){
+//			System.out.println("id="+computerorderList.get(i).getLoginusername());
+//		}
 		return SUCCESS;
 	}		
 			
@@ -84,12 +80,27 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 //		查询全部
 //		computerorderFullList  = computerorderService.selectComputerorderFullAll();
 
-		for(int i = 0; i < computerorderFullList.size(); i++){
-		//	System.out.println("id="+computerorderFullList.get(i).getLoginusername());
+		if(computerorderFullList == null){
+			computerorderFullList = new ArrayList<ComputerorderFull>();
 		}
+//		for(int i = 0; i < computerorderFullList.size(); i++){
+//			System.out.println("id="+computerorderFullList.get(i).getLoginusername());
+//		}
 		return SUCCESS;
 	}			
 			
+		
+	//管理
+	public String manageComputerorderInfo(){
+		log.info(logprefix +" manageComputerorder");
+		//Page page = new Page();
+		//if()
+		computerorderList  = computerorderService.selectComputerorderByPage(page);
+		for(int i = 0; i < computerorderList.size(); i++){
+		//	System.out.println("id="+computerorderList.get(i).getLoginusername());
+		}
+		return SUCCESS;
+	}	
 			
 	public String addComputerorder(){	
 		log.info("Add Entity");
@@ -255,7 +266,7 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	
 	//ajax 修改
 	public String updateComputerorderAjax(){
-		log.info(logperfix + "updateComputerorderAjax,id="+computerorder.getId());
+		log.info(logprefix + "updateComputerorderAjax,id="+computerorder.getId());
 		ReturnJson returnJson = new ReturnJson();
 		try {
 			if(computerorder.getId() != null && computerorder.getId() > 0){				
@@ -278,7 +289,7 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 				
 			}else{
 				actionMsg = getText("viewComputerorderFail");
-				log.info(logperfix + "updateComputerorderAjax fail");
+				log.info(logprefix + "updateComputerorderAjax fail");
 			}			
 			
 		}catch(Exception e){
@@ -299,7 +310,7 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	
 	*/
 	public String editComputerorder(){
-		log.info(logperfix + "editComputerorder");
+		log.info(logprefix + "editComputerorder");
 			
 		try {
 			//实体的id可以为0
@@ -332,7 +343,7 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	*/
 	public String editComputerorderFull(){
 		
-		log.info(logperfix + "viewComputerorder");
+		log.info(logprefix + "viewComputerorder");
 		
 		try {
 			if(computerorder.getId() != null && computerorder.getId() > 0){				
@@ -394,7 +405,7 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 				
 		try {
 			int getId = computerorder.getId();
-			log.info(this.logperfix + ";id=" + getId);
+			log.info(this.logprefix + ";id=" + getId);
 			
 			if (getId > 0) {
 				log.error("error,id小于0不规范");

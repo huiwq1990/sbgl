@@ -63,26 +63,26 @@
                   <tr>
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
 
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">${attrName}</th>
-                    <th class="name">View</th>
+             <th class="name">computerorderdetailid</th>
+             <th class="name">computerorderdetailcomputerorderid</th>
+             <th class="name">computerorderdetailcomputerid</th>
+             <th class="name">computerorderdetailcomputernumber</th>
+             <th class="name">computerorderdetailcreatetime</th>
+             <th class="name">computerorderdetailborrowday</th>
+             <th class="name">computerorderdetailborrowperiod</th>
+             <th class="name">computerorderdetailstatus</th>
+             <th class="name">computerorderid</th>
+             <th class="name">computerorderserialnumber</th>
+             <th class="name">computerorderuserid</th>
+             <th class="name">computerordercreatetime</th>
+             <th class="name">computerorderstatus</th>
+             <th class="name">computerid</th>
+             <th class="name">computerserialnumber</th>
+             <th class="name">computercomputermodelid</th>
+             <th class="name">computercreatetime</th>
+             <th class="name">computercreateuserid</th>
+             <th class="name">computerstatus</th>
+                   <th class="name">View</th>
 				   <th class="name">Del</th>
 				   <th class="name">Edit</th>
                   </tr>

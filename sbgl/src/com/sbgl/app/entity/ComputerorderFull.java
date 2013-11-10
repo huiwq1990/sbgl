@@ -7,15 +7,13 @@ import java.util.Date;
 
 public class ComputerorderFull extends DaoAbs implements java.io.Serializable {
 			private Integer computerorderid;
-			private String computerordernumber;
+			private String computerorderserialnumber;
 			private Integer computerorderuserid;
 			private Date computerordercreatetime;
 			private Integer computerorderstatus;
-			private Date computerorderstarttime;
-			private Date computerorderendtime;
 			private Integer loginuserid;
 			private String loginusername;
-			private Timestamp loginusercreatetime;
+			private Date loginusercreatetime;
 			private Integer loginuserstatus;
 		
 	
@@ -26,11 +24,11 @@ public class ComputerorderFull extends DaoAbs implements java.io.Serializable {
 		public Integer getComputerorderid(){		
 			return this.computerorderid;
 		}
-			public void setComputerordernumber(String computerordernumber){		
-			this.computerordernumber = computerordernumber;
+			public void setComputerorderserialnumber(String computerorderserialnumber){		
+			this.computerorderserialnumber = computerorderserialnumber;
 		}
-		public String getComputerordernumber(){		
-			return this.computerordernumber;
+		public String getComputerorderserialnumber(){		
+			return this.computerorderserialnumber;
 		}
 			public void setComputerorderuserid(Integer computerorderuserid){		
 			this.computerorderuserid = computerorderuserid;
@@ -50,18 +48,6 @@ public class ComputerorderFull extends DaoAbs implements java.io.Serializable {
 		public Integer getComputerorderstatus(){		
 			return this.computerorderstatus;
 		}
-			public void setComputerorderstarttime(Date computerorderstarttime){		
-			this.computerorderstarttime = computerorderstarttime;
-		}
-		public Date getComputerorderstarttime(){		
-			return this.computerorderstarttime;
-		}
-			public void setComputerorderendtime(Date computerorderendtime){		
-			this.computerorderendtime = computerorderendtime;
-		}
-		public Date getComputerorderendtime(){		
-			return this.computerorderendtime;
-		}
 			public void setLoginuserid(Integer loginuserid){		
 			this.loginuserid = loginuserid;
 		}
@@ -74,10 +60,10 @@ public class ComputerorderFull extends DaoAbs implements java.io.Serializable {
 		public String getLoginusername(){		
 			return this.loginusername;
 		}
-			public void setLoginusercreatetime(Timestamp loginusercreatetime){		
+			public void setLoginusercreatetime(Date loginusercreatetime){		
 			this.loginusercreatetime = loginusercreatetime;
 		}
-		public Timestamp getLoginusercreatetime(){		
+		public Date getLoginusercreatetime(){		
 			return this.loginusercreatetime;
 		}
 			public void setLoginuserstatus(Integer loginuserstatus){		

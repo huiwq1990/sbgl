@@ -5,38 +5,38 @@
 
 
 <!-- default entity manage action -->
-    	<action name="manageComputermodel" class="Entity" method="manageComputermodel">
+    	<action name="manageComputermodel" class="ManageComputerAction" method="manageComputermodel">
         	<result name="success">/computer/computermodelManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
 		<!-- default entity manage action -->
-    	<action name="manageComputermodelInfo" class="ComputermodelAction" method="manageComputermodelInfo">
+    	<action name="manageComputermodelInfo" class="ManageComputerAction" method="manageComputermodelInfo">
         	<result name="success">/computer/computermodelManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
 		<!-- manage action , go to jsp page -->
-    	<action name="manageComputermodelJsp" class="ComputermodelAction" method="manageComputermodel">
+    	<action name="manageComputermodelJsp" class="ManageComputerAction" method="manageComputermodel">
         	<result name="success">/computer/computermodelManage.jsp</result>
         	<result name="error">/login.vm</result> 
         </action>		
 		<!-- manage action , go to vm page -->
-    	<action name="manageComputermodelVm" class="ComputermodelAction" method="manageComputermodel">
+    	<action name="manageComputermodelVm" class="ManageComputerAction" method="manageComputermodel">
         	<result name="success">/computer/computermodelManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>		
 <!-- entity full manage  -->		
 		<!-- default entity full manage action -->
-    	<action name="manageComputermodelFull" class="ComputermodelAction" method="manageComputermodelFull">
+    	<action name="manageComputermodelFull" class="ManageComputerAction" method="manageComputermodelFull">
         	<result name="success">/computer/computermodelFullManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
 		<!-- manage action , go to jsp page -->
-    	<action name="manageComputermodelFullJsp" class="ComputermodelAction" method="manageComputermodelFull">
+    	<action name="manageComputermodelFullJsp" class="ManageComputerAction" method="manageComputermodelFull">
         	<result name="success">/computer/computermodelFullManage.jsp</result>
         	<result name="error">/login.vm</result> 
         </action>		
 		<!-- manage action , go to vm page -->
-    	<action name="manageComputermodelFullVm" class="ComputermodelAction" method="manageComputermodelFull">
+    	<action name="manageComputermodelFullVm" class="ManageComputerAction" method="manageComputermodelFull">
         	<result name="success">/computer/computermodelFullManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>	

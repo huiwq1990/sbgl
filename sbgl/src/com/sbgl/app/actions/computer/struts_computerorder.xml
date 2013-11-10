@@ -5,38 +5,38 @@
 
 
 <!-- default entity manage action -->
-    	<action name="manageComputerorder" class="Entity" method="manageComputerorder">
+    	<action name="manageComputerorder" class="ManageComputerAction" method="manageComputerorder">
         	<result name="success">/computer/computerorderManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
 		<!-- default entity manage action -->
-    	<action name="manageComputerorderInfo" class="ComputerorderAction" method="manageComputerorderInfo">
+    	<action name="manageComputerorderInfo" class="ManageComputerAction" method="manageComputerorderInfo">
         	<result name="success">/computer/computerorderManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
 		<!-- manage action , go to jsp page -->
-    	<action name="manageComputerorderJsp" class="ComputerorderAction" method="manageComputerorder">
+    	<action name="manageComputerorderJsp" class="ManageComputerAction" method="manageComputerorder">
         	<result name="success">/computer/computerorderManage.jsp</result>
         	<result name="error">/login.vm</result> 
         </action>		
 		<!-- manage action , go to vm page -->
-    	<action name="manageComputerorderVm" class="ComputerorderAction" method="manageComputerorder">
+    	<action name="manageComputerorderVm" class="ManageComputerAction" method="manageComputerorder">
         	<result name="success">/computer/computerorderManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>		
 <!-- entity full manage  -->		
 		<!-- default entity full manage action -->
-    	<action name="manageComputerorderFull" class="ComputerorderAction" method="manageComputerorderFull">
+    	<action name="manageComputerorderFull" class="ManageComputerAction" method="manageComputerorderFull">
         	<result name="success">/computer/computerorderFullManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>
 		<!-- manage action , go to jsp page -->
-    	<action name="manageComputerorderFullJsp" class="ComputerorderAction" method="manageComputerorderFull">
+    	<action name="manageComputerorderFullJsp" class="ManageComputerAction" method="manageComputerorderFull">
         	<result name="success">/computer/computerorderFullManage.jsp</result>
         	<result name="error">/login.vm</result> 
         </action>		
 		<!-- manage action , go to vm page -->
-    	<action name="manageComputerorderFullVm" class="ComputerorderAction" method="manageComputerorderFull">
+    	<action name="manageComputerorderFullVm" class="ManageComputerAction" method="manageComputerorderFull">
         	<result name="success">/computer/computerorderFullManage.vm</result>
         	<result name="error">/login.vm</result> 
         </action>	
