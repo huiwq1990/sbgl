@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="computermodel" extends="admin">
+
+
+<!-- default entity manage action -->
+    	<action name="manageComputermodel" class="ManageComputerAction" method="manageComputermodel">
+        	<result name="success">/computer/computermodelManage.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!-- default entity manage action -->
+    	<action name="manageComputermodelInfo" class="ManageComputerAction" method="manageComputermodelInfo">
+        	<result name="success">/computer/computermodelManage.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!-- manage action , go to jsp page -->
+    	<action name="manageComputermodelJsp" class="ManageComputerAction" method="manageComputermodel">
+        	<result name="success">/computer/computermodelManage.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>		
+		<!-- manage action , go to vm page -->
+    	<action name="manageComputermodelVm" class="ManageComputerAction" method="manageComputermodel">
+        	<result name="success">/computer/computermodelManage.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>		
+<!-- entity full manage  -->		
+		<!-- default entity full manage action -->
+    	<action name="manageComputermodelFull" class="ManageComputerAction" method="manageComputermodelFull">
+        	<result name="success">/computer/computermodelFullManage.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!-- manage action , go to jsp page -->
+    	<action name="manageComputermodelFullJsp" class="ManageComputerAction" method="manageComputermodelFull">
+        	<result name="success">/computer/computermodelFullManage.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>		
+		<!-- manage action , go to vm page -->
+    	<action name="manageComputermodelFullVm" class="ManageComputerAction" method="manageComputermodelFull">
+        	<result name="success">/computer/computermodelFullManage.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>	
+		
+		
+<!--添加实体-->
+    	<action name="addComputermodel" class="ComputermodelAction" method="addComputermodel">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputermodel</param>
+			</result>
+        </action>
+		<!--
+    	<action name="addComputermodelJsp" class="ComputermodelAction" method="addComputermodel">
+        	<result type="redirectAction">
+				<param name="actionName">selectComputermodelAll</param>
+			</result>
+        </action>		
+    	<action name="addComputermodelVm" class="ComputermodelAction" method="addComputermodel">
+        	<result type="redirectAction">
+				<param name="actionName">selectComputermodelAll</param>
+			</result>
+        </action>		
+		
+		-->
+<!--edit entity-->
+        <action name="editComputermodel" class="ComputermodelAction" method="editComputermodel">
+        	<result name="success">/computer/computermodelEdit.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<action name="editComputermodelJsp" class="ComputermodelAction" method="editComputermodel">
+        	<result name="success">/computer/computermodelEdit.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<action name="editComputermodelVm" class="ComputermodelAction" method="editComputermodel">
+        	<result name="success">/computer/computermodelEdit.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>		
+<!--edit entity full-->
+        <action name="editComputermodelFull" class="ComputermodelAction" method="editComputermodelFull">
+        	<result name="success">/computer/computermodelFullEdit.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<action name="editComputermodelFullJsp" class="ComputermodelAction" method="editComputermodelFull">
+        	<result name="success">/computer/computermodelFullEdit.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<action name="editComputermodelFullVm" class="ComputermodelAction" method="editComputermodelFull">
+        	<result name="success">/computer/computermodelFullEdit.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		
+		
+<!--del-->
+        <!--del entity-->
+        <action name="deleteComputermodel" class="ComputermodelAction" method="deleteComputermodel">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputermodel</param>
+			</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteComputermodelFull" class="ComputermodelAction" method="deleteComputermodelFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputermodelFull</param>
+			</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		
+<!--更新实体-->
+        <action name="updateComputermodel" class="ComputermodelAction" method="updateComputermodel">
+        	<result name="success">/computer/computermodelUpdate.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<action name="updateComputermodelJsp" class="ComputermodelAction" method="updateComputermodel">
+        	<result name="success">/computer/computermodelUpdate.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<action name="updateComputermodelVm" class="ComputermodelAction" method="updateComputermodel">
+        	<result name="success">/computer/computermodelUpdate.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+<!--update entity full-->
+        <action name="updateComputermodelFull" class="ComputermodelAction" method="updateComputermodel">
+        	<result name="success">/computer/computermodelFullUpdate.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<action name="updateComputermodelFullJsp" class="ComputermodelAction" method="updateComputermodel">
+        	<result name="success">/computer/computermodelFullUpdate.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<action name="updateComputermodelFullVm" class="ComputermodelAction" method="updateComputermodel">
+        	<result name="success">/computer/computermodelFullUpdate.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		
+		
+<!--根据id查询实体-->
+        <action name="selectComputermodelById" class="ComputermodelAction" method="selectComputermodelById">
+        	<result name="success">/computer/computermodelView.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		
+<!-- View entity-->		
+        <action name="viewComputermodel" class="ComputermodelAction" method="viewComputermodel">
+        	<result name="success">/computer/computermodelView.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!--go to view jsp-->
+		<action name="viewComputermodelJsp" class="ComputermodelAction" method="viewComputermodel">
+        	<result name="success">/computer/computermodelView.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!-- go to view vm-->
+		<action name="viewComputermodelVm" class="ComputermodelAction" method="viewComputermodel">
+        	<result name="success">/computer/computermodelView.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>		
+<!-- View entity full-->		
+        <action name="viewComputermodelFull" class="ComputermodelAction" method="viewComputermodelFull">
+        	<result name="success">/computer/computermodelFullView.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!--go to view jsp-->
+		<action name="viewComputermodelFullJsp" class="ComputermodelAction" method="viewComputermodelFull">
+        	<result name="success">/computer/computermodelFullView.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!-- go to view vm-->
+		<action name="viewComputermodelFullVm" class="ComputermodelAction" method="viewComputermodelFull">
+        	<result name="success">/computer/computermodelFullView.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>		
+		
+        <!--查询全部实体-->
+        <action name="selectComputermodelAll" class="ComputermodelAction" method="selectComputermodelAll">
+			<result name="success">/computer/computermodel.jsp</result>
+			<result name="error">/login.vm</result>
+		</action>
+	
+
+		
+		
+<!--根据id查询实体full-->
+
+		<action name="selectComputermodelFullById" class="ComputermodelAction" method="selectComputermodelFullById">
+		  	<result name="success">/computer/computermodelViewFull.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+
+		
+		
+        <!--查询全部实体full-->
+        <action name="selectComputermodelFullAll" class="ComputermodelAction" method="selectComputermodelFullAll">
+			<result name="success">/computer/computermodelManage.vm</result>
+			<result name="error">/login.vm</result>
+		</action>
+		
+	
+		
+
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="computermodelAjax" extends="json-default">
+    	<action name="addComputermodelAjax" class="ComputermodelAction" method="addComputermodelAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        <action name="deleteComputermodelAjax" class="ComputermodelAction" method="deleteComputermodelAjax">
+        	<result type="json"></result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteComputermodelFullAjax" class="ComputermodelAction" method="deleteComputermodelFullAjax">
+        	<result type="json"></result>
+        </action>
+    	<action name="updateComputermodelAjax" class="ComputermodelAction" method="updateComputermodelAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
+	</package>
+
+</struts>

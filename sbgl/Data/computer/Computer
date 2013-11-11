@@ -1,0 +1,12 @@
+id,serialnumber,computermodelid,createtime,createuserid,status
+ , Dell-1 , 1, , , 
+ , Dell-2 , 1, , , 
+ , Dell-3 , 1, , , 
+ , Dell-4 , 1, , , 
+ , Dell-5 , 1, , , 
+ , Dell-6 , 1, , ,     
+ , Mac-1, 2, , , 
+ , Mac-2, 2, , , 
+ , Mac-3, 2, , , 
+ , Mac-4, 2, , , 
+ , DFQ-1, 3, , , 

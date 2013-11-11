@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    
+	<package name="equip"  extends="struts-default">
+        <action name="equipManagerAdmin" class="EquipmentAction" method="gotoEquipManageAdmin">
+        	<result name="success">
+        		/admin/equipManageAdmin.vm
+        	</result>
+        </action>
+        
+        <action name="equipManagerEquip" class="EquipmentAction" method="gotoEquipManageEquip">
+        	<result name="success">
+        		/admin/equipManageEquip.vm
+        	</result>
+        </action>
+        
+        <action name="equipManagerModel" class="EquipmentAction" method="gotoEquipManageModel">
+        	<result name="success">
+        		/admin/equipManageModel.vm
+        	</result>
+        </action>
+        
+        <action name="equipManagerClassfication" class="EquipmentAction" method="gotoEquipManageClassfiction">
+        	<result name="success">
+        		/admin/equipManageClassfication.vm
+        	</result>
+        </action>
+    </package>
+ 
+</struts>    
