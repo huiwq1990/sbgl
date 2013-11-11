@@ -1,0 +1,45 @@
+<div class="pages">
+	<div class="pages_page">
+		<span>第 ${page.pageNo}/${page.totalpage} 页 每页${page.pageSize}  条 共${page.totalCount} 个结果</span>
+		<span class="previous"><a href="javascript:topage(1)">首页</a></span>
+		#foreach( $pageC in [1,${page.totalpage}])
+		 #if( $pageC==$page.pageNo) 
+		 <span class="frist">$page.pageNo</span>
+		 #end
+		 
+		  #if( $pageC!=$page.pageNo) 
+		 <span class="last" style="text-decoration: underline;"><a href="javascript:topage($pageC)" > $pageC </a></span>
+		 #end
+		 
+		 
+		 #end
+		<span class="previous"><a href="javascript:topage(${page.totalpage})">尾页</a></span>
+		<!--
+		<span>到<input type="text"  class="fenyeinput_text" onkeyup=toNum(this) id="curpagego" name="curpagego" value=${page.pageNo} /> 页 </span>
+		<span class="previous"><a href="javascript:topagecheck(document.getElementById('curpagego').value)">确定</a></span>
+		-->
+	</div>
+</div>
+				
+<SCRIPT>
+		function topagecheck(pagenum){
+			if(pagenum>${page.totalpage}){
+				pagenum = ${page.totalpage};
+			}
+			if(pagenum<${page.pageNo}){
+				pagenum = ${page.pageNo};
+			}
+			topage(pagenum);
+		}
+		function toNum(obj){
+		  var s;
+		  s=obj.value;
+		  s=s.replace(/[^0-9]/g,"");
+		  obj.value=s?s:"";
+		}
+		function topage(pagenum){
+		alert("sss");
+		document.getElementById("curPage").value=pagenum;
+		document.getElementById("$formId").submit();
+		}
+</SCRIPT>
