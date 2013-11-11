@@ -216,7 +216,7 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 		page.setTotalCount(getRowCount(entityClass));
 		try {
 	        String queryString = "from "+entityClass.getName()+" as a ";
-	         Query q = this.getCurrentSession().createQuery(queryString).setFirstResult(page.getStartNum()).setMaxResults(page.getPageSize());
+	         Query q = this.getCurrentSession().createQuery(queryString).setFirstResult(page.getPageNo()).setMaxResults(page.getPageSize());
 	         
 	         List l = q.list(); 
 			 return l;

@@ -90,9 +90,9 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 //	查询全部实体full
 	@Override
 	public List<ComputerorderdetailFull> selectComputerorderdetailFullAll() {
-	final String  sql = "select a.id as computerorderdetailid, a.computerorderid as computerorderdetailcomputerorderid, a.computerid as computerorderdetailcomputerid, a.computernumber as computerorderdetailcomputernumber, a.createtime as computerorderdetailcreatetime, a.borrowday as computerorderdetailborrowday, a.borrowperiod as computerorderdetailborrowperiod, a.status as computerorderdetailstatus, b.id as computerorderid, b.serialnumber as computerorderserialnumber, b.userid as computerorderuserid, b.createtime as computerordercreatetime, b.status as computerorderstatus, c.id as computerid, c.serialnumber as computerserialnumber, c.computermodelid as computercomputermodelid, c.createtime as computercreatetime, c.createuserid as computercreateuserid, c.status as computerstatus from Computerorderdetail a  left join Computerorder b on a.computerorderid=b.id left join Computerorder c on a.computerorderid=c.id ";
+		final String  sql = "select a.id as computerorderdetailid, a.computerorderid as computerorderdetailcomputerorderid, a.computerid as computerorderdetailcomputerid, a.computernumber as computerorderdetailcomputernumber, a.createtime as computerorderdetailcreatetime, a.borrowday as computerorderdetailborrowday, a.borrowperiod as computerorderdetailborrowperiod, a.status as computerorderdetailstatus, b.id as computerorderid, b.serialnumber as computerorderserialnumber, b.userid as computerorderuserid, b.createtime as computerordercreatetime, b.status as computerorderstatus, c.id as computerid, c.serialnumber as computerserialnumber, c.computermodelid as computercomputermodelid, c.createtime as computercreatetime, c.createuserid as computercreateuserid, c.status as computerstatus from Computerorderdetail a  left join Computerorder b on a.computerorderid=b.id left join Computerorder c on a.computerorderid=c.id ";
 		
-		List<ComputerorderdetailFull> computerorderdetailList = getHibernateTemplate()
+		List<ComputerorderdetailFull> computerorderdetailFullList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
 					public Object doInHibernate(Session session)
 							throws HibernateException {
@@ -102,15 +102,29 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 						return query.list();
 					}
 				});
-		if (computerorderdetailList != null && !computerorderdetailList.isEmpty()) {			
-			return computerorderdetailList;
+		if (computerorderdetailFullList != null && !computerorderdetailFullList.isEmpty()) {			
+			return computerorderdetailFullList;
 		}
 		return null;
 	}
 //  分页查询 实体full
 	public List<ComputerorderdetailFull> selectComputerorderdetailFullByPage(Page page){
+		final String  sql = "select a.id as computerorderdetailid, a.computerorderid as computerorderdetailcomputerorderid, a.computerid as computerorderdetailcomputerid, a.computernumber as computerorderdetailcomputernumber, a.createtime as computerorderdetailcreatetime, a.borrowday as computerorderdetailborrowday, a.borrowperiod as computerorderdetailborrowperiod, a.status as computerorderdetailstatus, b.id as computerorderid, b.serialnumber as computerorderserialnumber, b.userid as computerorderuserid, b.createtime as computerordercreatetime, b.status as computerorderstatus, c.id as computerid, c.serialnumber as computerserialnumber, c.computermodelid as computercomputermodelid, c.createtime as computercreatetime, c.createuserid as computercreateuserid, c.status as computerstatus from Computerorderdetail a  left join Computerorder b on a.computerorderid=b.id left join Computerorder c on a.computerorderid=c.id ";
 		
-			return null;
+		List<ComputerorderdetailFull> computerorderdetailFullList = getHibernateTemplate()
+				.executeFind(new HibernateCallback() {
+					public Object doInHibernate(Session session)
+							throws HibernateException {
+						Query query = session.createSQLQuery(sql);
+						query.setResultTransformer(new EscColumnToBean(
+								ComputerorderdetailFull.class));
+						return query.list();
+					}
+				});
+		if (computerorderdetailFullList != null && !computerorderdetailFullList.isEmpty()) {			
+			return computerorderdetailFullList;
+		}
+		return null;
 	}
 	
 //  根据关联查询实体full

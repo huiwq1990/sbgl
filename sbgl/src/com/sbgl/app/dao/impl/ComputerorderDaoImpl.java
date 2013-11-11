@@ -90,9 +90,9 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 //	查询全部实体full
 	@Override
 	public List<ComputerorderFull> selectComputerorderFullAll() {
-	final String  sql = "select a.id as computerorderid, a.serialnumber as computerorderserialnumber, a.userid as computerorderuserid, a.createtime as computerordercreatetime, a.status as computerorderstatus, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computerorder a  left join Loginuser b on a.userid=b.id ";
+		final String  sql = "select a.id as computerorderid, a.serialnumber as computerorderserialnumber, a.userid as computerorderuserid, a.createtime as computerordercreatetime, a.status as computerorderstatus, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computerorder a  left join Loginuser b on a.userid=b.id ";
 		
-		List<ComputerorderFull> computerorderList = getHibernateTemplate()
+		List<ComputerorderFull> computerorderFullList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
 					public Object doInHibernate(Session session)
 							throws HibernateException {
@@ -102,15 +102,29 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 						return query.list();
 					}
 				});
-		if (computerorderList != null && !computerorderList.isEmpty()) {			
-			return computerorderList;
+		if (computerorderFullList != null && !computerorderFullList.isEmpty()) {			
+			return computerorderFullList;
 		}
 		return null;
 	}
 //  分页查询 实体full
 	public List<ComputerorderFull> selectComputerorderFullByPage(Page page){
+		final String  sql = "select a.id as computerorderid, a.serialnumber as computerorderserialnumber, a.userid as computerorderuserid, a.createtime as computerordercreatetime, a.status as computerorderstatus, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computerorder a  left join Loginuser b on a.userid=b.id ";
 		
-			return null;
+		List<ComputerorderFull> computerorderFullList = getHibernateTemplate()
+				.executeFind(new HibernateCallback() {
+					public Object doInHibernate(Session session)
+							throws HibernateException {
+						Query query = session.createSQLQuery(sql);
+						query.setResultTransformer(new EscColumnToBean(
+								ComputerorderFull.class));
+						return query.list();
+					}
+				});
+		if (computerorderFullList != null && !computerorderFullList.isEmpty()) {			
+			return computerorderFullList;
+		}
+		return null;
 	}
 	
 //  根据关联查询实体full

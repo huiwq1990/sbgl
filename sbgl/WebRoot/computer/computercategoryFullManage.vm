@@ -27,8 +27,6 @@
 </head>
 
 <body id="admin">
-	
-	${imageDomain}
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
 
       <!--admin-wrap start-->
@@ -59,7 +57,7 @@
               </div>
             </div><!--control-bar end-->
             <div class="panel panel-default">
-<form id="cat" action="${webbaseurl}/manageComputercategoryFull.action" method="get">   
+
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -93,7 +91,7 @@
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                    
-<td>$!tempcomputercategory.computercategoryid</td>
+<td>$!tempcomputercategory.${attrName}</td>
 <td>$!tempcomputercategory.${attrName}</td>
 <td>$!tempcomputercategory.${attrName}</td>
 <td>$!tempcomputercategory.${attrName}</td>
@@ -118,11 +116,8 @@
            
                 </tbody>
               </table>
-			  </form>   
-#getPageHtml("formId=cat" "parameters=pageNo:$page.pageNo,pageSize:$page.pageSize,totalCount:$page.totalCount,pageviewcount:$page.pageviewcount,vmpath:common/page.vm")
-      
 
-   </div>
+            </div>
           </div>
 
       </div>

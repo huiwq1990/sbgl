@@ -90,7 +90,7 @@
                 <tbody>					
 							
 
-#foreach($tempcomputerorderdetail in $computerorderdetailList)
+#foreach($tempcomputerorderdetail in $computerorderdetailFullList)
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                    

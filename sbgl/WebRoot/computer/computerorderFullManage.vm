@@ -80,7 +80,7 @@
                 <tbody>					
 							
 
-#foreach($tempcomputerorder in $computerorderList)
+#foreach($tempcomputerorder in $computerorderFullList)
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
                    
