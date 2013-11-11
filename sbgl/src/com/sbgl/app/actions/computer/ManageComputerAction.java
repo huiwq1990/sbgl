@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.entity.Computer;
 import com.sbgl.app.entity.ComputerFull;
 import com.sbgl.app.entity.Computercategory;
@@ -79,9 +78,10 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 	//管理 查询
 	public String manageComputercategoryFull(){
 		log.info("exec action method:manageComputercategoryFull");
-		
+		page.setPageSize(1);
 //      分页查询		
-		Page page = new Page();
+//		Page page = new Page();
+//		if(page.getPageNo())
 		computercategoryFullList  = computercategoryService.selectComputercategoryFullByPage(page);
 		
 //		查询全部

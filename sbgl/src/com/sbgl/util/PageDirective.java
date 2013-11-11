@@ -19,11 +19,8 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.runtime.directive.Directive;
 import org.apache.velocity.runtime.parser.node.Node;
 
-public class sbglFrontDirective  extends  Directive{
-	 private static String imageDomain = PropertyUtil.readValue("/system.properties", "imageDomain");
-	    private static String cssDomain = PropertyUtil.readValue("/system.properties", "cssDomain");
-	    private static String jsDomain = PropertyUtil.readValue("/system.properties", "jsDomain");
-	    private static String sbglpath = PropertyUtil.readValue("/system.properties", "sbglpath");
+
+public class PageDirective  extends  Directive {
 	@Override
 	public int getLine() {
 		// TODO Auto-generated method stub
@@ -33,7 +30,7 @@ public class sbglFrontDirective  extends  Directive{
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "getFrontWindow";
+		return "getPageHtml";
 	}
 
 	@Override
@@ -47,30 +44,30 @@ public class sbglFrontDirective  extends  Directive{
 			throws IOException, ResourceNotFoundException, ParseErrorException,
 			MethodInvocationException {
 		 Map params = getPareMap(icad, node);
+		//处理参数
+		 Object isPas=params.get("parameters");
+		 if (isPas!=null) {
+			 setParem(params) ;
+		}
+		 //当前页码
+		 int  pageNo=Integer.parseInt(params.get("pageNo").toString());
+		 //商品总数
+		 int totalCount=Integer.parseInt(params.get("totalCount").toString());
+		//每页面显示数据多少
+		 int pageSize=Integer.parseInt(params.get("pageSize").toString());
+		 /** 页码数量 **/
+		 int pageviewcount=Integer.parseInt(params.get("pageviewcount").toString());
+		 if (pageviewcount==0) {
+			 pageviewcount=10;
+		}
+		 //public Page(int pageNo, int pageSize, int totalCount,int pageviewcount) 
+		 Page page=new Page(pageNo,pageSize,pageviewcount);
+		 page.setTotalCount(totalCount);
 		 VelocityContext context = new VelocityContext();
-		 context.put("imageDomain", imageDomain);
-		 context.put("cssDomain", cssDomain);
-		 context.put("jsDomain", jsDomain);
-		 context.put("sbglpath", sbglpath);
-		 
-		 System.out.println("ssssssssssssssssssss");
-		 
+		 context.put("page", page);
+		 context.put("formId", params.get("formId"));
 		 try {
 			 //获取文件路径
-			 FrontDirective frontdirective = (FrontDirective)Class.forName("com.sbgl.actions"+params.get("moduleName")+"Action").newInstance();
-			 //处理参数
-			 Object isPas=params.get("parameters");
-			 if (isPas!=null) {
-				 setParem(params) ;
-			}
-			 String tag=params.get("tag").toString();
-			 if ("HEAD".equals(tag)) {
-				 frontdirective.head(icad, params,context);
-			}else if ("FOOT".equals(tag)) {
-				frontdirective.foot(icad, params,context);
-			}else if ("WINDOW".equals(tag)) {
-				frontdirective.window(icad, params, context);
-			}
 			 String vmpath=params.get("vmpath").toString();
 			 icad.pushCurrentTemplateName(vmpath);
 			 Properties properties = new Properties();
@@ -80,16 +77,16 @@ public class sbglFrontDirective  extends  Directive{
 		     properties.setProperty(Velocity.ENCODING_DEFAULT, "utf-8");
 		     properties.setProperty(Velocity.INPUT_ENCODING, "utf-8");
 		     properties.setProperty(Velocity.OUTPUT_ENCODING, "utf-8");
-			 /* 首先创建一个模板引擎的实例，并予以初始化 */
+			 // 首先创建一个模板引擎的实例，并予以初始化 
 	           VelocityEngine engine = new VelocityEngine(); engine.init(properties);
-			 /* 接着，获得一个模板 */
+			 // 接着，获得一个模板 
 	           Template template = engine.getTemplate(icad.getCurrentTemplateName());
 
-	        /* 现在，把模板和数据合并，输出到StringWriter */
+	         //现在，把模板和数据合并，输出到StringWriter 
 	           StringWriter wri = new StringWriter();
 	           template.merge( context, wri );
-	         /* 显示结果 */
-			 writer.write(wri.toString());
+	          //显示结果 
+	           writer.write(wri.toString());
 		} catch  (Exception e) {
 			e.printStackTrace();
 		}
@@ -124,9 +121,9 @@ public class sbglFrontDirective  extends  Directive{
 	    }
 	 protected void setParem(Map pasMap) throws ParseErrorException, MethodInvocationException {
 
-         String [] str=pasMap.get("parameters").toString().split(",");
-         int pasNum=str.length;
-         for (int i = 0; i < pasNum; i++) {
+            String [] str=pasMap.get("parameters").toString().split(",");
+            int pasNum=str.length;
+            for (int i = 0; i < pasNum; i++) {
 				String key=str[i].split(":")[0];
 				String value=str[i].split(":")[1];
 				pasMap.put(key, value);
@@ -142,4 +139,5 @@ public class sbglFrontDirective  extends  Directive{
 	            propertyMap.put(property, value);
 	        }
 	    }
+
 }

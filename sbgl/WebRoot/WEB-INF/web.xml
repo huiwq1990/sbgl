@@ -26,10 +26,10 @@
 	</init-param>
   </filter>
   <filter>
-  	<filter-name>struts2</filter-name>
-  	<filter-class>
-  		org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter
-  	</filter-class>
+	  <filter-name>struts2</filter-name>
+	  	<filter-class>
+	  		com.sbgl.util.SbglFilterDispatcher
+	  	</filter-class>
   </filter>
   
   <!-- 登录拦截器 -->
@@ -54,6 +54,11 @@
   <servlet>
     <servlet-name>velocity</servlet-name>
     <servlet-class>org.apache.velocity.tools.view.servlet.VelocityViewServlet</servlet-class>
+    <init-param>
+	  		<param-name>org.apache.velocity.properties</param-name>
+	  		<param-value>/WEB-INF/velocity.properties</param-value>
+  		</init-param>
+    
   </servlet> 
   
 <!-- Map *.vm files to Velocity -->

@@ -59,7 +59,9 @@
               </div>
             </div><!--control-bar end-->
             <div class="panel panel-default">
-<form id="cat" action="${webbaseurl}/manageComputercategoryFull.action" method="get">   
+
+				
+				<form>
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -118,11 +120,12 @@
            
                 </tbody>
               </table>
-			  </form>   
-#getPageHtml("formId=cat" "parameters=pageNo:$page.pageNo,pageSize:$page.pageSize,totalCount:$page.totalCount,pageviewcount:$page.pageviewcount,vmpath:common/page.vm")
-      
+#getPageHtml("formId=memberForm" "parameters=pageNo:$page.pageNo,pageSize:$page.pageSize,totalCount:$page.totalCount,pageviewcount:$page.pageviewcount,vmpath:common/page.vm")
+          
+</form>
 
-   </div>
+
+  </div>
           </div>
 
       </div>

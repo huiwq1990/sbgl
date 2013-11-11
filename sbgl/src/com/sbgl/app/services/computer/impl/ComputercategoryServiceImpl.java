@@ -111,7 +111,7 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 		return baseDao.selectByPage(Computercategory.class,page);
 	}
 	public List<ComputercategoryFull> selectComputercategoryFullByPage(Page page){	
-		
+		page.setTotalCount(baseDao.getRowCount(Computercategory.class));
 		return computercategoryDao.selectComputercategoryFullByPage(page);
 	}
 	
