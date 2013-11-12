@@ -14,6 +14,8 @@
 		 
 		 #end
 		<span class="previous"><a href="javascript:topage(${page.totalpage})">尾页</a></span>
+		<input id="pageNo" name="pageNo" type ="hidden" />
+		
 		<!--
 		<span>到<input type="text"  class="fenyeinput_text" onkeyup=toNum(this) id="curpagego" name="curpagego" value=${page.pageNo} /> 页 </span>
 		<span class="previous"><a href="javascript:topagecheck(document.getElementById('curpagego').value)">确定</a></span>
@@ -38,8 +40,10 @@
 		  obj.value=s?s:"";
 		}
 		function topage(pagenum){
-		alert("sss");
-		document.getElementById("curPage").value=pagenum;
+		
+		document.getElementById("pageNo").value=pagenum;
+		//alert(document.getElementById("pageNo").value);
 		document.getElementById("$formId").submit();
+		
 		}
 </SCRIPT>
