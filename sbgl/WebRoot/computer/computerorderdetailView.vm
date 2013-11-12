@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="http://localhost:8080/sbgl/css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="http://localhost:8080/sbgl/css/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script src="../js/html5shiv.js"></script>
+  <script src="../js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body id="admin">
+
+
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+
+            <div class="panel panel-default">
+
+				
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="name">名称</th>
+                    <th class="f-category">父级分类</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>					
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>id<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
+                    <td>$computerorderdetailModel.id</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>computerorderid<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
+                    <td>$computerorderdetailModel.computerorderid</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>computerid<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
+                    <td>$computerorderdetailModel.computerid</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>computernumber<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
+                    <td>$computerorderdetailModel.computernumber</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>createtime<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
+                    <td>$computerorderdetailModel.createtime</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>borrowday<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
+                    <td>$computerorderdetailModel.borrowday</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>borrowperiod<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
+                    <td>$computerorderdetailModel.borrowperiod</td>                    
+                  </tr>               
+		          <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>status<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
+                    <td>$computerorderdetailModel.status</td>                    
+                  </tr>               
+                </tbody>
+              </table>
+			  
+			  
+            </div>
+          </div>
+
+      </div>
+     
+
+</section>
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="http://localhost:8080/sbgl/js/jquery.js"></script>
+<script src="http://localhost:8080/sbgl/js/loader.min.js"></script>
+<script src="http://localhost:8080/sbgl/js/select2.js"></script>
+<script src="http://localhost:8080/sbgl/js/bootstrap-hover-dropdown.min.js"></script>
+<script>
+	$("#modifyFaCategoryId").select2("val","2");
+</script>
+</body>
+</html>

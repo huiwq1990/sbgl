@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="computerorder" extends="admin">
+
+
+<!-- default entity manage action -->
+    	<action name="manageComputerorder" class="ManageComputerAction" method="manageComputerorder">
+        	<result name="success">/computer/computerorderManage.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!-- default entity manage action -->
+    	<action name="manageComputerorderInfo" class="ManageComputerAction" method="manageComputerorderInfo">
+        	<result name="success">/computer/computerorderManage.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!-- manage action , go to jsp page -->
+    	<action name="manageComputerorderJsp" class="ManageComputerAction" method="manageComputerorder">
+        	<result name="success">/computer/computerorderManage.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>		
+		<!-- manage action , go to vm page -->
+    	<action name="manageComputerorderVm" class="ManageComputerAction" method="manageComputerorder">
+        	<result name="success">/computer/computerorderManage.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>		
+<!-- entity full manage  -->		
+		<!-- default entity full manage action -->
+    	<action name="manageComputerorderFull" class="ManageComputerAction" method="manageComputerorderFull">
+        	<result name="success">/computer/computerorderFullManage.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!-- manage action , go to jsp page -->
+    	<action name="manageComputerorderFullJsp" class="ManageComputerAction" method="manageComputerorderFull">
+        	<result name="success">/computer/computerorderFullManage.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>		
+		<!-- manage action , go to vm page -->
+    	<action name="manageComputerorderFullVm" class="ManageComputerAction" method="manageComputerorderFull">
+        	<result name="success">/computer/computerorderFullManage.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>	
+		
+		
+<!--添加实体-->
+    	<action name="addComputerorder" class="ComputerorderAction" method="addComputerorder">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerorder</param>
+			</result>
+        </action>
+		<!--
+    	<action name="addComputerorderJsp" class="ComputerorderAction" method="addComputerorder">
+        	<result type="redirectAction">
+				<param name="actionName">selectComputerorderAll</param>
+			</result>
+        </action>		
+    	<action name="addComputerorderVm" class="ComputerorderAction" method="addComputerorder">
+        	<result type="redirectAction">
+				<param name="actionName">selectComputerorderAll</param>
+			</result>
+        </action>		
+		
+		-->
+<!--edit entity-->
+        <action name="editComputerorder" class="ComputerorderAction" method="editComputerorder">
+        	<result name="success">/computer/computerorderEdit.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<action name="editComputerorderJsp" class="ComputerorderAction" method="editComputerorder">
+        	<result name="success">/computer/computerorderEdit.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<action name="editComputerorderVm" class="ComputerorderAction" method="editComputerorder">
+        	<result name="success">/computer/computerorderEdit.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>		
+<!--edit entity full-->
+        <action name="editComputerorderFull" class="ComputerorderAction" method="editComputerorderFull">
+        	<result name="success">/computer/computerorderFullEdit.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<action name="editComputerorderFullJsp" class="ComputerorderAction" method="editComputerorderFull">
+        	<result name="success">/computer/computerorderFullEdit.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<action name="editComputerorderFullVm" class="ComputerorderAction" method="editComputerorderFull">
+        	<result name="success">/computer/computerorderFullEdit.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		
+		
+<!--del-->
+        <!--del entity-->
+        <action name="deleteComputerorder" class="ComputerorderAction" method="deleteComputerorder">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerorder</param>
+			</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteComputerorderFull" class="ComputerorderAction" method="deleteComputerorderFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerorderFull</param>
+			</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		
+<!--更新实体-->
+        <action name="updateComputerorder" class="ComputerorderAction" method="updateComputerorder">
+        	<result name="success">/computer/computerorderUpdate.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<action name="updateComputerorderJsp" class="ComputerorderAction" method="updateComputerorder">
+        	<result name="success">/computer/computerorderUpdate.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<action name="updateComputerorderVm" class="ComputerorderAction" method="updateComputerorder">
+        	<result name="success">/computer/computerorderUpdate.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+<!--update entity full-->
+        <action name="updateComputerorderFull" class="ComputerorderAction" method="updateComputerorder">
+        	<result name="success">/computer/computerorderFullUpdate.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<action name="updateComputerorderFullJsp" class="ComputerorderAction" method="updateComputerorder">
+        	<result name="success">/computer/computerorderFullUpdate.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<action name="updateComputerorderFullVm" class="ComputerorderAction" method="updateComputerorder">
+        	<result name="success">/computer/computerorderFullUpdate.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		
+		
+<!--根据id查询实体-->
+        <action name="selectComputerorderById" class="ComputerorderAction" method="selectComputerorderById">
+        	<result name="success">/computer/computerorderView.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		
+<!-- View entity-->		
+        <action name="viewComputerorder" class="ComputerorderAction" method="viewComputerorder">
+        	<result name="success">/computer/computerorderView.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!--go to view jsp-->
+		<action name="viewComputerorderJsp" class="ComputerorderAction" method="viewComputerorder">
+        	<result name="success">/computer/computerorderView.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!-- go to view vm-->
+		<action name="viewComputerorderVm" class="ComputerorderAction" method="viewComputerorder">
+        	<result name="success">/computer/computerorderView.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>		
+<!-- View entity full-->		
+        <action name="viewComputerorderFull" class="ComputerorderAction" method="viewComputerorderFull">
+        	<result name="success">/computer/computerorderFullView.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!--go to view jsp-->
+		<action name="viewComputerorderFullJsp" class="ComputerorderAction" method="viewComputerorderFull">
+        	<result name="success">/computer/computerorderFullView.jsp</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+		<!-- go to view vm-->
+		<action name="viewComputerorderFullVm" class="ComputerorderAction" method="viewComputerorderFull">
+        	<result name="success">/computer/computerorderFullView.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>		
+		
+        <!--查询全部实体-->
+        <action name="selectComputerorderAll" class="ComputerorderAction" method="selectComputerorderAll">
+			<result name="success">/computer/computerorder.jsp</result>
+			<result name="error">/login.vm</result>
+		</action>
+	
+
+		
+		
+<!--根据id查询实体full-->
+
+		<action name="selectComputerorderFullById" class="ComputerorderAction" method="selectComputerorderFullById">
+		  	<result name="success">/computer/computerorderViewFull.vm</result>
+        	<result name="error">/login.vm</result> 
+        </action>
+
+		
+		
+        <!--查询全部实体full-->
+        <action name="selectComputerorderFullAll" class="ComputerorderAction" method="selectComputerorderFullAll">
+			<result name="success">/computer/computerorderManage.vm</result>
+			<result name="error">/login.vm</result>
+		</action>
+		
+	
+		
+
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="computerorderAjax" extends="json-default">
+    	<action name="addComputerorderAjax" class="ComputerorderAction" method="addComputerorderAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        <action name="deleteComputerorderAjax" class="ComputerorderAction" method="deleteComputerorderAjax">
+        	<result type="json"></result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteComputerorderFullAjax" class="ComputerorderAction" method="deleteComputerorderFullAjax">
+        	<result type="json"></result>
+        </action>
+    	<action name="updateComputerorderAjax" class="ComputerorderAction" method="updateComputerorderAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
+	</package>
+
+</struts>
