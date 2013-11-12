@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Page {
 
-	public static int SIZE = 20;
+	public static int SIZE = 2;
 	public static int PAGE = 1;
 	private int pageNo = PAGE;
 	/** 每页显示记录数 **/
@@ -128,7 +128,7 @@ public class Page {
 		this.totalpage = totalpage;
 	}
 
-	public long getStartindex() {
+	public int getStartindex() {
 		return startindex;
 	}
 
