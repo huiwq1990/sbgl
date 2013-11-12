@@ -30,8 +30,8 @@ public class EquipServiceImpl implements EquipService {
 	private BaseDao baseDao;
 	
 	@Override
-	public long addEquipInfo(Equipment equip) {
-		long id = baseDao.getCode("equipId");
+	public Integer addEquipInfo(Equipment equip) {
+		int id = baseDao.getCode("equipId");
 		equip.setEquipmentid( id );
 		equip.setMakedate( new Date() );
 		try {
@@ -43,9 +43,9 @@ public class EquipServiceImpl implements EquipService {
 	}
 
 	@Override
-	public long alterEquipInfo(Equipment equip) {
+	public Integer alterEquipInfo(Equipment equip) {
 		// TODO Auto-generated method stub
-		long id = equip.getEquipmentid();
+		Integer id = equip.getEquipmentid();
 		Equipment storeEquip = baseDao.getEntityById(Equipment.class, id);
 		
 		storeEquip.setEquipmentname( equip.getEquipmentname() );
@@ -67,7 +67,7 @@ public class EquipServiceImpl implements EquipService {
 	}
 
 	@Override
-	public boolean deleteEquipInfo(long equipId) {
+	public boolean deleteEquipInfo(Integer equipId) {
 		// TODO Auto-generated method stub
 		boolean flag = false;
 		Equipment storeEquip = baseDao.getEntityById(Equipment.class, equipId);
@@ -81,7 +81,7 @@ public class EquipServiceImpl implements EquipService {
 	}
 
 	@Override
-	public Equipment getEquipmentById(long equipId) {
+	public Equipment getEquipmentById(Integer equipId) {
 		try {
 			return baseDao.getEntityById(Equipment.class, equipId);
         } catch (RuntimeException re) {
@@ -106,7 +106,7 @@ public class EquipServiceImpl implements EquipService {
 	@Override
 	public List<Equipment> getEquipsByCategories(List<Category> categoryList) {
 		// TODO Auto-generated method stub
-		List<Long> categoryId = new ArrayList<Long>();
+		List<Integer> categoryId = new ArrayList<Integer>();
 		for (Category category : categoryList) {
 			categoryId.add( category.getCategoryid() );
 		}
@@ -135,8 +135,8 @@ public class EquipServiceImpl implements EquipService {
 	public List<Equipment> getEquipsByCategoryDetail(
 			Categorydetail categorydetail) {
 		// TODO Auto-generated method stub
-		List<Equipment> resultList = new ArrayList<Equipment>();
-		final String sql = "select * from CATEGORYDETAIL where info like '%" + categorydetail.getInfo() + "%'";
+		/*List<Equipment> resultList = new ArrayList<Equipment>();
+		final String sql = "select * from CATEGORYDETAIL where info like '%" + categorydetail.ge + "%'";
 		List<Categorydetail> tempList = baseDao.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(sql).addEntity(Categorydetail.class);
@@ -147,6 +147,8 @@ public class EquipServiceImpl implements EquipService {
 			resultList.add( baseDao.getEntityById(Equipment.class, cd.getEquipmentid()) );
 		}
 		return resultList;
+		*/
+		return null;
 	}
 
 //	@Override
@@ -158,16 +160,16 @@ public class EquipServiceImpl implements EquipService {
 //	}
 
 	@Override
-	public List<Equipment> getEquipsByClassification(long equipmentclassificationId) {
+	public List<Equipment> getEquipsByClassification(Integer equipmentclassificationId) {
 		// TODO Auto-generated method stub
 		List<Equipment> resultList = baseDao.getEntityByProperty("Equipment", "classificationid", String.valueOf(equipmentclassificationId));
 		return resultList;
 	}
 
 	@Override
-	public long addEquipmentdetail(Equipmentdetail equipmentdetail) {
+	public Integer addEquipmentdetail(Equipmentdetail equipmentdetail) {
 		// TODO Auto-generated method stub
-		long id = baseDao.getCode("equipDetailId");
+		Integer id = baseDao.getCode("equipDetailId");
 		equipmentdetail.setEquipdetaild( id );
 		equipmentdetail.setMakedate( new Date() );
 		try {
@@ -179,9 +181,9 @@ public class EquipServiceImpl implements EquipService {
 	}
 
 	@Override
-	public long alterEquipmentdetail(Equipmentdetail equipmentdetail) {
+	public Integer alterEquipmentdetail(Equipmentdetail equipmentdetail) {
 		// TODO Auto-generated method stub
-		long id = equipmentdetail.getEquipdetaild();
+		Integer id = equipmentdetail.getEquipdetaild();
 		Equipmentdetail storeEquipmentdetail = baseDao.getEntityById(Equipmentdetail.class, id);
 		
 		storeEquipmentdetail.setEquipserial( equipmentdetail.getEquipserial() );
@@ -202,7 +204,7 @@ public class EquipServiceImpl implements EquipService {
 	}
 
 	@Override
-	public boolean deleteEquipmentdetail(long equipmentdetailId) {
+	public boolean deleteEquipmentdetail(Integer equipmentdetailId) {
 		// TODO Auto-generated method stub
 		boolean flag = false;
 		Equipmentdetail storeEquipmentdetail = baseDao.getEntityById(Equipmentdetail.class, equipmentdetailId);
@@ -216,13 +218,13 @@ public class EquipServiceImpl implements EquipService {
 	}
 
 	@Override
-	public Equipmentdetail getEquipmentdetail(long equipmentdetailId) {
+	public Equipmentdetail getEquipmentdetail(Integer equipmentdetailId) {
 		// TODO Auto-generated method stub
 		return baseDao.getEntityById(Equipmentdetail.class, equipmentdetailId);
 	}
 	
 	@Override
-	public List<Equipmentdetail> getAllEquipmentdetailByEquipInfo(long EquipId) {
+	public List<Equipmentdetail> getAllEquipmentdetailByEquipInfo(Integer EquipId) {
 		List<Equipmentdetail> tempList = baseDao.getEntityByProperty("Equipmentdetail", "equipmentid", String.valueOf(EquipId));
 		return tempList;
 	}
@@ -234,10 +236,10 @@ public class EquipServiceImpl implements EquipService {
 	}
 
 	@Override
-	public long addEquipmentclassification(
+	public Integer addEquipmentclassification(
 			Equipmentclassification equipmentclassification) {
 		// TODO Auto-generated method stub
-		long id = 0;
+		Integer id = 0;
 		if( equipmentclassification.getClassificationid() == null ) {
 			id = baseDao.getCode( "equipClassificationId" );
 			equipmentclassification.setClassificationid( id );
@@ -253,9 +255,9 @@ public class EquipServiceImpl implements EquipService {
 	}
 
 	@Override
-	public long alterEquipmentclassification(Equipmentclassification equipmentclassification) {
+	public Integer alterEquipmentclassification(Equipmentclassification equipmentclassification) {
 		// TODO Auto-generated method stub
-		long id = equipmentclassification.getClassificationid();
+		Integer id = equipmentclassification.getClassificationid();
 		Equipmentclassification storeEquipmentclassification = baseDao.getEntityById(Equipmentclassification.class, id);
 		
 		storeEquipmentclassification.setParentid( equipmentclassification.getParentid() );
@@ -272,7 +274,7 @@ public class EquipServiceImpl implements EquipService {
 	}
 
 	@Override
-	public boolean deleteEquipmentclassification(long equipmentclassificationId) {
+	public boolean deleteEquipmentclassification(Integer equipmentclassificationId) {
 		// TODO Auto-generated method stub
 		boolean flag = false;
 		Equipmentclassification storeEquipmentclassification = baseDao.getEntityById(Equipmentclassification.class, equipmentclassificationId);
@@ -292,13 +294,13 @@ public class EquipServiceImpl implements EquipService {
 	}
 	
 	@Override
-	public List<Equipmentclassification> getAllChildEquipmentclassificationsByParentId(long parentId) {
+	public List<Equipmentclassification> getAllChildEquipmentclassificationsByParentId(Integer parentId) {
 		List<Equipmentclassification> tempList = baseDao.getEntityByProperty("Equipmentclassification", "parentid", String.valueOf(parentId));
 		return tempList;
 	}
 	
 	@Override
-	public Integer getCountOfEquipByClassification(long classificationId) {
+	public Integer getCountOfEquipByClassification(Integer classificationId) {
 		final String modelCountSQL = "select count(*) from Equipment where classificationid = " + classificationId;
 		BigDecimal EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
@@ -314,7 +316,7 @@ public class EquipServiceImpl implements EquipService {
 	}
 	
 	@Override
-	public Integer getCountOfEquipdetailByClassification(long classificationId) {
+	public Integer getCountOfEquipdetailByClassification(Integer classificationId) {
 		final String equipCountSQL = "select sum(equipmentnum) from Equipment  where classificationid = " + classificationId;
 		BigDecimal EquipdetailSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
@@ -331,7 +333,7 @@ public class EquipServiceImpl implements EquipService {
 	}
 	
 	@Override
-	public Equipmentclassification getEquipmentclassificationByEquipmentdetail( long equipmentdetailId ) {
+	public Equipmentclassification getEquipmentclassificationByEquipmentdetail( Integer equipmentdetailId ) {
 		Equipmentdetail equipmentdetail = baseDao.getEntityById(Equipmentdetail.class, equipmentdetailId);
 		Equipment equipment = baseDao.getEntityById(Equipment.class, equipmentdetail.getEquipmentid());
 		Equipmentclassification equipmentclassification = baseDao.getEntityById(Equipmentclassification.class, equipment.getClassificationid());
@@ -339,9 +341,9 @@ public class EquipServiceImpl implements EquipService {
 	}
 
 	@Override
-	public long addCategory(Category category) {
+	public Integer addCategory(Category category) {
 		// TODO Auto-generated method stub
-		long id = baseDao.getCode("categoryId");
+		Integer id = baseDao.getCode("categoryId");
 		category.setCategoryid( id );
 		try {
 			baseDao.saveEntity( category );
@@ -352,9 +354,9 @@ public class EquipServiceImpl implements EquipService {
 	}
 
 	@Override
-	public long alterCategory(Category category) {
+	public Integer alterCategory(Category category) {
 		// TODO Auto-generated method stub
-		long id = category.getCategoryid();
+		Integer id = category.getCategoryid();
 		Category storeCategory = baseDao.getEntityById(Category.class, id);
 		
 		storeCategory.setCategoryid( category.getCategoryid() );
@@ -372,7 +374,7 @@ public class EquipServiceImpl implements EquipService {
 	}
 
 	@Override
-	public boolean deleteCategory(long categoryId) {
+	public boolean deleteCategory(Integer categoryId) {
 		// TODO Auto-generated method stub
 		boolean flag = false;
 		Category storeCategory = baseDao.getEntityById(Category.class, categoryId);
@@ -403,9 +405,9 @@ public class EquipServiceImpl implements EquipService {
 	}
 
 	@Override
-	public long addCategorydetail(Categorydetail categorydetail) {
+	public Integer addCategorydetail(Categorydetail categorydetail) {
 		// TODO Auto-generated method stub
-		long id = baseDao.getCode("categorydetailId");
+		Integer id = baseDao.getCode("categorydetailId");
 		categorydetail.setCategoryid( id );
 		try {
 			baseDao.saveEntity( categorydetail );
@@ -416,9 +418,9 @@ public class EquipServiceImpl implements EquipService {
 	}
 
 	@Override
-	public long alterCategorydetail(Categorydetail categorydetail) {
+	public Integer alterCategorydetail(Categorydetail categorydetail) {
 		// TODO Auto-generated method stub
-		long id = categorydetail.getCategorydetailsid();
+		Integer id = categorydetail.getCategorydetailsid();
 		Categorydetail storeCategorydetail = baseDao.getEntityById(Categorydetail.class, id);
 		
 		storeCategorydetail.setCategorydetailsid( categorydetail.getCategorydetailsid() );
@@ -435,7 +437,7 @@ public class EquipServiceImpl implements EquipService {
 	}
 
 	@Override
-	public boolean deleteCategorydetail(long categorydetailId) {
+	public boolean deleteCategorydetail(Integer categorydetailId) {
 		// TODO Auto-generated method stub
 		boolean flag = false;
 		Categorydetail storeCategorydetail = baseDao.getEntityById(Categorydetail.class, categorydetailId);
@@ -468,7 +470,7 @@ public class EquipServiceImpl implements EquipService {
 
 	@Override
 	public Equipmentclassification getEquipmentclassificationById(
-			long equipmentclassificationId) {
+			Integer equipmentclassificationId) {
 		// TODO Auto-generated method stub
 		
 		return baseDao.getEntityById(Equipmentclassification.class, equipmentclassificationId);

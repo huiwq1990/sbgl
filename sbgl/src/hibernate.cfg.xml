@@ -7,7 +7,7 @@
 <hibernate-configuration>
 	<session-factory>
 
-		<!-- 
+		
 			<mapping
 			resource="com/sbgl/app/entity/Equipmentclassification.hbm.xml" />
 			<mapping resource="com/sbgl/app/entity/Maxno.hbm.xml" />
@@ -62,7 +62,7 @@
 			<mapping
 			resource="com/sbgl/app/entity/Bbstagconnection.hbm.xml" />
 			
-		-->
+	
 		<mapping resource="com/sbgl/app/entity/Computer.hbm.xml" />
 		<mapping
 			resource="com/sbgl/app/entity/Computerorderdetail.hbm.xml" />

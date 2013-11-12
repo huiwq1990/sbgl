@@ -107,7 +107,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	/**
 	 * 查询全部分类信息
 	 */
-	private Map<Long, String> idNameMap = new HashMap<Long, String>();
+	private Map<Integer, String> idNameMap = new HashMap<Integer, String>();
 	private List<Equipmentclassification> tempList;
 	
 	public String getAllEquipmentclassifications() {
@@ -120,7 +120,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			//首先遍历找出所有的一级分类
 			for (Equipmentclassification equipmentclassification : tempList) {
 				String name = equipmentclassification.getName();
-				Long parentId = equipmentclassification.getParentid();
+				Integer parentId = equipmentclassification.getParentid();
 				if( parentId == 0 ) {
 //					System.out.println("************  一级分类名：" + name);
 					if( ! allClass.containsKey( name ) ) {
@@ -132,7 +132,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			//再遍历找出一级分类下的二级分类
 			for (Equipmentclassification equipmentclassification : tempList) {
 				String name = equipmentclassification.getName();
-				Long parentId = equipmentclassification.getParentid();
+				Integer parentId = equipmentclassification.getParentid();
 				if( parentId != 0 && parentId != null ) {
 //					System.out.println("************  二级分类名：" + name);
 					List<String> nameList = allClass.get( idNameMap.get( parentId ) );
@@ -223,7 +223,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				List<Equipment> equipList = equipService.getEquipsByClassification( classficationId );
 				if(equipList != null) {
 					for (Equipment equipment : equipList) {
-						equipment.setClassificationid( Long.valueOf(-1) );
+						equipment.setClassificationid( Integer.valueOf(-1) );
 						equipService.alterEquipInfo( equipment );
 					}
 				}
@@ -233,7 +233,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					
 					List<Equipment> equipList = equipService.getEquipsByClassification( classficationId );
 					for (Equipment equipment : equipList) {
-						equipment.setClassificationid( Long.valueOf(-1) );
+						equipment.setClassificationid( Integer.valueOf(-1) );
 						equipService.alterEquipInfo( equipment );
 					}
 				}
@@ -338,7 +338,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			if( equipService.deleteEquipInfo( oneId ) ) {
 				List<Equipmentdetail> equips = equipService.getAllEquipmentdetailByEquipInfo( oneId );
 				for (Equipmentdetail equipmentdetail : equips) {
-					equipmentdetail.setEquipmentid( Long.valueOf( -1 ) );
+					equipmentdetail.setEquipmentid( Integer.valueOf( -1 ) );
 					equipService.alterEquipmentdetail( equipmentdetail );
 				}
 				
@@ -569,7 +569,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			
 			for (Equipmentclassification equipmentclassification : equipList) {
 				String name = equipmentclassification.getName();
-				Long parentId = equipmentclassification.getParentid();
+				Integer parentId = equipmentclassification.getParentid();
 				if( parentId == 0 ) {
 					idNameMap.put(equipmentclassification.getClassificationid(), name);
 				}

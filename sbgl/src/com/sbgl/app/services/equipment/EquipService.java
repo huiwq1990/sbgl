@@ -10,13 +10,13 @@ import com.sbgl.app.entity.Equipmentdetail;
 
 public interface EquipService {
 	//添加器材类型信息
-	public long addEquipInfo(Equipment equip);
+	public Integer addEquipInfo(Equipment equip);
 	//修改器材类型信息
-	public long alterEquipInfo(Equipment equip);
+	public Integer alterEquipInfo(Equipment equip);
 	//删除器材类型信息 
-	public boolean deleteEquipInfo(long equipId);
+	public boolean deleteEquipInfo(Integer equipId);
 	//查询器材类型信息-id
-	public Equipment getEquipmentById(long equipId);
+	public Equipment getEquipmentById(Integer equipId);
 	//查询器材类型信息--所有器材类型
 	public List<Equipment> getAllEquips();
 	//查询器材类型信息--拥有某一品类
@@ -28,57 +28,57 @@ public interface EquipService {
 	//查询器材类型信息--拥有某些品类特征
 //	public List<Equipment> getEquipsByCategoryDetails(List<Categorydetail> categorydetailList);
 	//查询器材类型信息--某一分类
-	public List<Equipment> getEquipsByClassification(long equipmentclassificationId);
+	public List<Equipment> getEquipsByClassification(Integer equipmentclassificationId);
 	
 	//添加器材详情
-	public long addEquipmentdetail(Equipmentdetail equipmentdetail);
+	public Integer addEquipmentdetail(Equipmentdetail equipmentdetail);
 	//修改器材详情
-	public long alterEquipmentdetail(Equipmentdetail equipmentdetail);
+	public Integer alterEquipmentdetail(Equipmentdetail equipmentdetail);
 	//删除器材详情
-	public boolean deleteEquipmentdetail(long equipmentdetailId);
+	public boolean deleteEquipmentdetail(Integer equipmentdetailId);
 	//查询器材详情
-	public Equipmentdetail getEquipmentdetail(long equipmentdetailId);
+	public Equipmentdetail getEquipmentdetail(Integer equipmentdetailId);
 	//查询某一设备型号下的全部器材详情
-	public List<Equipmentdetail> getAllEquipmentdetailByEquipInfo(long EquipId);
+	public List<Equipmentdetail> getAllEquipmentdetailByEquipInfo(Integer EquipId);
 	//查询全部器材详情
 	public List<Equipmentdetail> getAllEquipmentdetail();
 	
 	//添加器材分类
-	public long addEquipmentclassification(Equipmentclassification equipmentclassification);
+	public Integer addEquipmentclassification(Equipmentclassification equipmentclassification);
 	//修改器材分类
-	public long alterEquipmentclassification(Equipmentclassification equipmentclassification);
+	public Integer alterEquipmentclassification(Equipmentclassification equipmentclassification);
 	//删除器材分类
-	public boolean deleteEquipmentclassification(long equipmentclassificationId);
+	public boolean deleteEquipmentclassification(Integer equipmentclassificationId);
 	//查询单个分类
-	public Equipmentclassification getEquipmentclassificationById(long equipmentclassificationId);
+	public Equipmentclassification getEquipmentclassificationById(Integer equipmentclassificationId);
 	//查询全部器材分类
 	public List<Equipmentclassification> getAllEquipmentclassifications();
 	//查询某一一级分类下的所有二级器材分类
-	public List<Equipmentclassification> getAllChildEquipmentclassificationsByParentId(long equipmentclassificationId);
+	public List<Equipmentclassification> getAllChildEquipmentclassificationsByParentId(Integer equipmentclassificationId);
 	//查询分类下器材模型的数量
-	public Integer getCountOfEquipByClassification(long classificationId);
+	public Integer getCountOfEquipByClassification(Integer classificationId);
 	//查询分类下所有设备的数量
-	public Integer getCountOfEquipdetailByClassification(long classificationId);
+	public Integer getCountOfEquipdetailByClassification(Integer classificationId);
 	//查询某一器材所属的分类
-	public Equipmentclassification getEquipmentclassificationByEquipmentdetail(long equipmentdetailId);
+	public Equipmentclassification getEquipmentclassificationByEquipmentdetail(Integer equipmentdetailId);
 	
 	//添加品类信息
-	public long addCategory(Category category);
+	public Integer addCategory(Category category);
 	//修改品类信息
-	public long alterCategory(Category category);
+	public Integer alterCategory(Category category);
 	//删除品类信息
-	public boolean deleteCategory(long categoryId);
+	public boolean deleteCategory(Integer categoryId);
 	//查询全部品类
 	public List<Category> getAllCategories();
 	//查询某一器材的拥有的所有品类
 	public List<Category> getAllCategoriesByEquip(Equipment equip);
 	
 	//添加品类详情
-	public long addCategorydetail(Categorydetail categorydetail);
+	public Integer addCategorydetail(Categorydetail categorydetail);
 	//修改品类详情
-	public long alterCategorydetail(Categorydetail categorydetail);
+	public Integer alterCategorydetail(Categorydetail categorydetail);
 	//删除品类详情
-	public boolean deleteCategorydetail(long categorydetailId);
+	public boolean deleteCategorydetail(Integer categorydetailId);
 	//查询某一品类下的所有品类详情
 	public List<Categorydetail> getAllCategorydetailsByCategory(Category category);
 	//查询某一器材下的所有品类详情

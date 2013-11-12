@@ -39,6 +39,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	}
 	
 	public void doLogin(){
+		/*
 		Loginuser loginUser2 = new Loginuser();		
 		boolean flag  = false;
 		try{	
@@ -56,6 +57,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			e.printStackTrace();			
 		}
 		Javascript(flag);
+		*/
 	}
 	
 	public void Javascript(boolean flag){
