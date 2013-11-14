@@ -10,8 +10,8 @@
             <column name="equipDetailid" />
             <generator class="assigned" />
         </id>
-        <property name="equipserial" type="java.lang.Integer">
-            <column name="equipserial" />
+        <property name="equipserial" type="java.lang.String">
+            <column name="equipserial" length="30" />
         </property>
         <property name="equipmentid" type="java.lang.Integer">
             <column name="equipmentid" />
@@ -22,10 +22,10 @@
         <property name="administrationid" type="java.lang.Integer">
             <column name="administrationid" />
         </property>
-        <property name="makedate" type="java.util.Date">
+        <property name="makedate" type="java.sql.Timestamp">
             <column name="makedate" length="19" />
         </property>
-        <property name="modifydate" type="java.util.Date">
+        <property name="modifydate" type="java.sql.Timestamp">
             <column name="modifydate" length="19" />
         </property>
         <property name="sysremark" type="java.lang.String">

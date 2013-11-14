@@ -18,60 +18,60 @@
 		<!-- <mapping resource="com/sbgl/app/entity/Administrator.hbm.xml" /> -->
 		<!-- <mapping resource="com/sbgl/app/entity/Equipmenborrow.hbm.xml" /> -->
 		<!-- <mapping resource="com/sbgl/app/entity/Worker.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Teacher.hbm.xml" /> -->
+			<mapping resource="com/sbgl/app/entity/Teacher.hbm.xml" /> -->
 		<mapping resource="com/sbgl/app/entity/Equipmentdetail.hbm.xml" />
 		<mapping resource="com/sbgl/app/entity/Equipment.hbm.xml" />
 		<!-- <mapping resource="com/sbgl/app/entity/Student.hbm.xml" /> -->
 		<!-- <mapping resource="com/sbgl/app/entity/Listdetail.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Noticereply.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Grouping.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Notice.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Groupmember.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Noticestate.hbm.xml" /> -->
+			<mapping resource="com/sbgl/app/entity/Noticereply.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Grouping.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Notice.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Groupmember.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Noticestate.hbm.xml" /> -->
 		<!-- <mapping resource="com/sbgl/app/entity/Equipmentnum.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Homework.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Score.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Orderaudit.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Imagemanage.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Orderdetail.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Teachercourse.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Message.hbm.xml" /> -->
+			<mapping resource="com/sbgl/app/entity/Homework.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Score.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Orderaudit.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Imagemanage.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Orderdetail.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Teachercourse.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Message.hbm.xml" /> -->
 		<!-- <mapping
 			resource="com/sbgl/app/entity/Usergrouprelation.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Course.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Class.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Datapaging.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Uploaddoc.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Usergroup.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Messagereceiver.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Shortmessage.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Equipmentdamage.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Cart.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Bbstag.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Bbspanel.hbm.xml" />
-		<mapping
+			<mapping resource="com/sbgl/app/entity/Course.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Class.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Datapaging.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Uploaddoc.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Usergroup.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Messagereceiver.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Shortmessage.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Equipmentdamage.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Cart.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Bbstag.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Bbspanel.hbm.xml" />
+			<mapping
 			resource="com/sbgl/app/entity/Ordermessagereceiver.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Ordermessage.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Selectcourse.hbm.xml" />
-		<mapping
+			<mapping resource="com/sbgl/app/entity/Ordermessage.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Selectcourse.hbm.xml" />
+			<mapping
 			resource="com/sbgl/app/entity/Bbstipicfavourite.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Orderlist.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Courseforum.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Bbstagfavourite.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Bbsshare.hbm.xml" />
-		<mapping
+			<mapping resource="com/sbgl/app/entity/Orderlist.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Courseforum.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Bbstagfavourite.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Bbsshare.hbm.xml" />
+			<mapping
 			resource="com/sbgl/app/entity/Bbstagconnection.hbm.xml" />
-
-
-		<mapping resource="com/sbgl/app/entity/Computer.hbm.xml" />
-		<mapping
+			
+			
+			<mapping resource="com/sbgl/app/entity/Computer.hbm.xml" />
+			<mapping
 			resource="com/sbgl/app/entity/Computerorderdetail.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Computerorder.hbm.xml" />
-		<mapping
+			<mapping resource="com/sbgl/app/entity/Computerorder.hbm.xml" />
+			<mapping
 			resource="com/sbgl/app/entity/Computercategory.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Loginuser.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Computermodel.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Maxno.hbm.xml" /> -->
+			<mapping resource="com/sbgl/app/entity/Loginuser.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Computermodel.hbm.xml" />
+			<mapping resource="com/sbgl/app/entity/Maxno.hbm.xml" /> -->
 
 
 

@@ -75,8 +75,8 @@
     			"equipClassforAltert.userid": userId
     		};
     		
-    		$.ajax({  
-    		    url: "alterClassification.do",  
+    		jQuery.ajax({  
+    		    url: "${webbaseurl}/alterClassification.do",  
     		    type: "post",
     		    data: postData,
     		    success:function(data,textStatus,jq) {  
@@ -110,8 +110,8 @@
 				"equipClassforAdd.userid": userId
 			}
 			
-			$.ajax({  
-			    url: "addClassification.do",  
+			jQuery.ajax({  
+			    url: "${webbaseurl}/addClassification.do",  
 			    type: "post",
 			    data: postData,
 			    success:function(data,textStatus,jq){  

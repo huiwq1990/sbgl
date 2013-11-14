@@ -3,7 +3,9 @@ package com.sbgl.app.actions.equipment.template;
 public class EquipCourse {
 	private String id;
 	private String code;
+	private String modelId;
 	private String modelName;
+	private String classId;
 	private String className;
 	private String state;
 	private String memo;
@@ -43,6 +45,18 @@ public class EquipCourse {
 	}
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+	public String getModelId() {
+		return modelId;
+	}
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
+	}
+	public String getClassId() {
+		return classId;
+	}
+	public void setClassId(String classId) {
+		this.classId = classId;
 	}
 	
 }

@@ -462,30 +462,49 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	/**
 	 * 获取设备详情列表
 	 */
-	/*private List<EquipCourse> equipCourse;
-	public List<EquipCourse> getEquipCourse() {
-		return equipCourse;
+	private List<EquipCourse> equipDetailCourse;
+	public List<EquipCourse> getEquipDetailCourse() {
+		return equipDetailCourse;
 	}
-	
-	public String getAllEquipCourse() {
+
+	public String showAllEquipDetailCourse() {
+		equipDetailCourse = new ArrayList<EquipCourse>();
 		List<Equipmentdetail> tempList = equipService.getAllEquipmentdetail();
 		for (Equipmentdetail equipdetail : tempList) {
 			EquipCourse ec = new EquipCourse();
 			Equipment e = equipService.getEquipmentById( equipdetail.getEquipmentid() );
-			Equipmentclassification ecf = equipService.getEquipmentclassificationByEquipmentdetail( equipdetail.getEquipdetaild() );
-			if(e != null && ecf != null) {
+			Equipmentclassification ecf = equipService.getEquipmentclassificationByEquipmentdetail( equipdetail.getEquipDetailid() );
+			if(e != null) {
+				ec.setId( String.valueOf( equipdetail.getEquipDetailid() ) );
 				String modelName = e.getEquipmentname();
+				ec.setModelId( String.valueOf( e.getEquipmentid() ) );
 				ec.setModelName( modelName );
-				ec.setClassName( ecf.getName() );
+				
+				if(ecf != null) {
+					ec.setClassId(  String.valueOf( ecf.getClassificationid() ) );
+					ec.setClassName( ecf.getName() );
+				} else {
+					ec.setClassId(  "" );
+					ec.setClassName( "无分类" );
+				}
+				
 				ec.setCode( String.valueOf( equipdetail.getEquipserial() ) );
 				ec.setState( String.valueOf( equipdetail.getStatus() ) );
-				ec.setMemo( equipdetail.getSysremark() + "；" + equipdetail.getUsermark() );
+				if(equipdetail.getSysremark() != null && equipdetail.getUsermark() != null) {
+					ec.setMemo( equipdetail.getSysremark() + " " + equipdetail.getUsermark());
+				} else if(equipdetail.getSysremark() == null && equipdetail.getUsermark() != null) {
+					ec.setMemo(equipdetail.getUsermark());
+				} else if(equipdetail.getSysremark() != null && equipdetail.getUsermark() == null) {
+					ec.setMemo( equipdetail.getSysremark());
+				} else {
+					ec.setMemo("");
+				}
 				
-				equipCourse.add( ec );
+				equipDetailCourse.add( ec );
 			}
 		}
 		return SUCCESS;
-	}*/
+	}
 	
 	/**
 	 * 视图资源映射
@@ -493,6 +512,9 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	 */
 	//设备管理首页
 	public String gotoEquipManageAdmin() {
+		showAllEquipDetailCourse();
+		getAllEquipInfoCourse();
+		
 		return SUCCESS;
 	}
 	/**
@@ -512,10 +534,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	public List<ClassficationCourse> getClassForEquipAdd() {
 		return classForEquipAdd;
 	}
-
-	public String gotoEquipManageModel() {
-		getAllEquipInfoCourse();
-		
+	
+	private void doGetClassForEquipAdd() {
 		List<Equipmentclassification> ecList = equipService.getAllEquipmentclassifications();
 		for (Equipmentclassification ec : ecList) {
 			if(ec.getParentid() == 0) {
@@ -539,7 +559,13 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				}
 			}
 		}
-		 return SUCCESS;
+	}
+
+	public String gotoEquipManageModel() {
+		getAllEquipInfoCourse();
+		doGetClassForEquipAdd();
+		
+		return SUCCESS;
 	}
 	/**
 	 * 设备管理-分类管理

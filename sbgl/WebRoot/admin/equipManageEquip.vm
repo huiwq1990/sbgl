@@ -87,7 +87,7 @@
             <div class="panel panel-default">
               <div class="panel-body">
               
-                <form class="form-horizontal" role="form">
+                <form class="form-horizontal" action="javascript:void(0)" role="form">
                   <div class="form-group">
                     <label for="inputEquipId" class="col-lg-2 control-label">设备号</label>
                     <div class="col-lg-4">
@@ -217,8 +217,8 @@
 			"equipmentdetail.usermark": memo
 		}
 	
-		$.ajax({  
-		    url: "addEquipDetail.do",  
+		jQuery.ajax({  
+		    url: "${webbaseurl}/addEquipDetail.do",  
 		    type: "post",
 		    data: postData,
 		    success:function(data,textStatus,jq){  

@@ -1,5 +1,6 @@
 package com.sbgl.app.entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -12,7 +13,7 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer equipDetailid;
-	private Integer equipserial;
+	private String equipserial;
 	private Integer equipmentid;
 	private String status;
 	private Integer administrationid;
@@ -33,9 +34,9 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Equipmentdetail(Integer equipDetailid, Integer equipserial,
+	public Equipmentdetail(Integer equipDetailid, String equipserial,
 			Integer equipmentid, String status, Integer administrationid,
-			Date makedate, Date modifydate, String sysremark,
+			Timestamp makedate, Timestamp modifydate, String sysremark,
 			String usermark) {
 		this.equipDetailid = equipDetailid;
 		this.equipserial = equipserial;
@@ -58,11 +59,11 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.equipDetailid = equipDetailid;
 	}
 
-	public Integer getEquipserial() {
+	public String getEquipserial() {
 		return this.equipserial;
 	}
 
-	public void setEquipserial(Integer equipserial) {
+	public void setEquipserial(String equipserial) {
 		this.equipserial = equipserial;
 	}
 

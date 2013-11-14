@@ -69,5 +69,12 @@
         	</result>
         </action>
     	
+    	
+    	<action name="alterEquipDetail" class="EquipmentAction" method="alterEquipmentdetail">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+    	
     </package>
 </struts>
