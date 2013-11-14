@@ -11,7 +11,16 @@ public class Loginuser extends com.sbgl.app.dao.DaoAbs implements
 
 	// Fields
 
-	private Integer id;
+	private Integer userid;
+	private String password;
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	private String name;
 	private Date createtime;
 	private Integer status;
@@ -23,14 +32,14 @@ public class Loginuser extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** minimal constructor */
-	public Loginuser(Integer id) {
-		this.id = id;
+	public Loginuser(Integer userid) {
+		this.userid = userid;
 	}
 
 	/** full constructor */
-	public Loginuser(Integer id, String name, Date createtime,
+	public Loginuser(Integer userid, String name, Date createtime,
 			Integer status) {
-		this.id = id;
+		this.userid = userid;
 		this.name = name;
 		this.createtime = createtime;
 		this.status = status;
@@ -39,11 +48,11 @@ public class Loginuser extends com.sbgl.app.dao.DaoAbs implements
 	// Property accessors
 
 	public Integer getId() {
-		return this.id;
+		return this.userid;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setId(Integer userid) {
+		this.userid = userid;
 	}
 
 	public String getName() {

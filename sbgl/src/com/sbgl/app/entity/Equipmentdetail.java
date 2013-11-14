@@ -11,7 +11,8 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 
 	// Fields
 
-	private Integer equipdetaild;
+	private Integer equipDetailid;
+	private Integer equipserial;
 	private Integer equipmentid;
 	private String status;
 	private Integer administrationid;
@@ -27,15 +28,17 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** minimal constructor */
-	public Equipmentdetail(Integer equipdetaild) {
-		this.equipdetaild = equipdetaild;
+	public Equipmentdetail(Integer equipDetailid) {
+		this.equipDetailid = equipDetailid;
 	}
 
 	/** full constructor */
-	public Equipmentdetail(Integer equipdetaild, Integer equipmentid,
-			String status, Integer administrationid, Date makedate,
-			Date modifydate, String sysremark, String usermark) {
-		this.equipdetaild = equipdetaild;
+	public Equipmentdetail(Integer equipDetailid, Integer equipserial,
+			Integer equipmentid, String status, Integer administrationid,
+			Date makedate, Date modifydate, String sysremark,
+			String usermark) {
+		this.equipDetailid = equipDetailid;
+		this.equipserial = equipserial;
 		this.equipmentid = equipmentid;
 		this.status = status;
 		this.administrationid = administrationid;
@@ -47,12 +50,20 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 
 	// Property accessors
 
-	public Integer getEquipdetaild() {
-		return this.equipdetaild;
+	public Integer getEquipDetailid() {
+		return this.equipDetailid;
 	}
 
-	public void setEquipdetaild(Integer equipdetaild) {
-		this.equipdetaild = equipdetaild;
+	public void setEquipDetailid(Integer equipDetailid) {
+		this.equipDetailid = equipDetailid;
+	}
+
+	public Integer getEquipserial() {
+		return this.equipserial;
+	}
+
+	public void setEquipserial(Integer equipserial) {
+		this.equipserial = equipserial;
 	}
 
 	public Integer getEquipmentid() {

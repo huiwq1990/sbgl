@@ -7,8 +7,8 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="./css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="./css/global.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
 <!--[if lt IE 9]>
   <script src="../js/html5shiv.js"></script>
@@ -159,10 +159,10 @@
           <i class="icon-search"></i>
         </form>
         <div class="list-group">
-          <a href="equipManagerAdmin.do" class="list-group-item">设备管理</a>
-          <a href="equipManagerEquip.do" class="list-group-item">添加设备</a>
-          <a href="equipManagerModel.do" class="list-group-item active">型号管理</a>
-          <a href="equipManagerClassfication.do" class="list-group-item">分类管理</a>
+          <a href="${webbaseurl}/equipManageAdmin.do" class="list-group-item">设备管理</a>
+          <a href="${webbaseurl}/equipManageEquip.do" class="list-group-item">添加设备</a>
+          <a href="${webbaseurl}/equipManageModel.do" class="list-group-item active">型号管理</a>
+          <a href="${webbaseurl}/equipManageClassfication.do" class="list-group-item">分类管理</a>
         </div>
         </div>
       <!--sidebar end-->
@@ -295,11 +295,11 @@
 
     <!-- javascript
     ================================================== -->
-<script src="./js/jquery.js"></script>
-<script src="./js/loader.min.js"></script>
-<script src="./js/select2.js"></script>
-<script src="./js/bootstrap-hover-dropdown.min.js"></script>
-<script src="./js/bfa.js"></script>
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
 
 <!--[if lt IE 10]>
   <script src="./js/jquery.placeholder.js"></script>

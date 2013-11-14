@@ -3,25 +3,25 @@
 <struts>
     
 	<package name="equip"  extends="struts-default">
-        <action name="equipManagerAdmin" class="EquipmentAction" method="gotoEquipManageAdmin">
+        <action name="equipManageAdmin" class="EquipmentAction" method="gotoEquipManageAdmin">
         	<result name="success">
         		/admin/equipManageAdmin.vm
         	</result>
         </action>
         
-        <action name="equipManagerEquip" class="EquipmentAction" method="gotoEquipManageEquip">
+        <action name="equipManageEquip" class="EquipmentAction" method="gotoEquipManageEquip">
         	<result name="success">
         		/admin/equipManageEquip.vm
         	</result>
         </action>
         
-        <action name="equipManagerModel" class="EquipmentAction" method="gotoEquipManageModel">
+        <action name="equipManageModel" class="EquipmentAction" method="gotoEquipManageModel">
         	<result name="success">
         		/admin/equipManageModel.vm
         	</result>
         </action>
         
-        <action name="equipManagerClassfication" class="EquipmentAction" method="gotoEquipManageClassfiction">
+        <action name="equipManageClassfication" class="EquipmentAction" method="gotoEquipManageClassfiction">
         	<result name="success">
         		/admin/equipManageClassfication.vm
         	</result>

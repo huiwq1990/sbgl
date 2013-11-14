@@ -6,10 +6,13 @@
 -->
 <hibernate-mapping>
     <class name="com.sbgl.app.entity.Equipmentdetail" table="equipmentdetail" catalog="sbgl">
-        <id name="equipdetaild" type="java.lang.Integer">
-            <column name="equipdetaild" />
+        <id name="equipDetailid" type="java.lang.Integer">
+            <column name="equipDetailid" />
             <generator class="assigned" />
         </id>
+        <property name="equipserial" type="java.lang.Integer">
+            <column name="equipserial" />
+        </property>
         <property name="equipmentid" type="java.lang.Integer">
             <column name="equipmentid" />
         </property>
@@ -20,10 +23,10 @@
             <column name="administrationid" />
         </property>
         <property name="makedate" type="java.util.Date">
-            <column name="makedate"  />
+            <column name="makedate" length="19" />
         </property>
         <property name="modifydate" type="java.util.Date">
-            <column name="modifydate"  />
+            <column name="modifydate" length="19" />
         </property>
         <property name="sysremark" type="java.lang.String">
             <column name="sysremark" length="2000" />

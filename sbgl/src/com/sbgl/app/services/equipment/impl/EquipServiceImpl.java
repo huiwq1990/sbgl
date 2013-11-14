@@ -1,6 +1,7 @@
 package com.sbgl.app.services.equipment.impl;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -170,7 +171,7 @@ public class EquipServiceImpl implements EquipService {
 	public Integer addEquipmentdetail(Equipmentdetail equipmentdetail) {
 		// TODO Auto-generated method stub
 		Integer id = baseDao.getCode("equipDetailId");
-		equipmentdetail.setEquipdetaild( id );
+		equipmentdetail.setEquipDetailid( id );
 		equipmentdetail.setMakedate( new Date() );
 		try {
 			baseDao.saveEntity( equipmentdetail );
@@ -183,7 +184,7 @@ public class EquipServiceImpl implements EquipService {
 	@Override
 	public Integer alterEquipmentdetail(Equipmentdetail equipmentdetail) {
 		// TODO Auto-generated method stub
-		Integer id = equipmentdetail.getEquipdetaild();
+		Integer id = equipmentdetail.getEquipDetailid();
 		Equipmentdetail storeEquipmentdetail = baseDao.getEntityById(Equipmentdetail.class, id);
 		
 		storeEquipmentdetail.setEquipserial( equipmentdetail.getEquipserial() );
@@ -302,7 +303,7 @@ public class EquipServiceImpl implements EquipService {
 	@Override
 	public Integer getCountOfEquipByClassification(Integer classificationId) {
 		final String modelCountSQL = "select count(*) from Equipment where classificationid = " + classificationId;
-		BigDecimal EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
+		BigInteger EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(modelCountSQL);
 				return query.list().get(0); 
@@ -318,7 +319,7 @@ public class EquipServiceImpl implements EquipService {
 	@Override
 	public Integer getCountOfEquipdetailByClassification(Integer classificationId) {
 		final String equipCountSQL = "select sum(equipmentnum) from Equipment  where classificationid = " + classificationId;
-		BigDecimal EquipdetailSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
+		BigInteger EquipdetailSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(equipCountSQL);
 				return query.list().get(0); 
@@ -426,7 +427,6 @@ public class EquipServiceImpl implements EquipService {
 		storeCategorydetail.setCategorydetailsid( categorydetail.getCategorydetailsid() );
 		storeCategorydetail.setEquipmentid( categorydetail.getEquipmentid() );
 		storeCategorydetail.setCategoryid( categorydetail.getCategoryid() );
-		storeCategorydetail.setInfo( categorydetail.getInfo() );
 		
 		try {
 			baseDao.updateEntity( storeCategorydetail );

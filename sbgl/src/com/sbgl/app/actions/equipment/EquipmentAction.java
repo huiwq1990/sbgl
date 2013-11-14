@@ -153,10 +153,10 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	/**
 	 * 查询某个设备所属的分类信息
 	 */
-	private long equipId;
+	private Integer equipId;
 	private Equipmentclassification equipClass;
 	
-	public void setEquipId(long equipId) {
+	public void setEquipId(Integer equipId) {
 		this.equipId = equipId;
 	}
 	
@@ -204,11 +204,11 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	 * 业务说明：在删除了某个分类信息后，其分类下的所有设备都归为未分类，未分类本身并不存储，将设备类型中的分类设置成-1
 	 * 说明其未分类
 	 */
-	private long classficationId;
-	public long getClassficationId() {
+	private Integer classficationId;
+	public Integer getClassficationId() {
 		return classficationId;
 	}
-	public void setClassficationId(long classficationId) {
+	public void setClassficationId(Integer classficationId) {
 		this.classficationId = classficationId;
 	}
 
@@ -263,7 +263,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		returnJSON = new HashMap<String,Object>();
 		String[] ids = classIds.split("_");
 		for (String id : ids) {
-			this.classficationId = Long.valueOf( id );
+			this.classficationId = Integer.valueOf( id );
 			String result = deleteClassfication();
 			if(result == null || result == ERROR) {
 				this.tag = "0";
@@ -334,7 +334,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		returnJSON = new HashMap<String,Object>();
 		String[] ids = equipInfoIds.split("_");
 		for (String id : ids) {
-			Long oneId = Long.valueOf( id );
+			Integer oneId = Integer.valueOf( id );
 			if( equipService.deleteEquipInfo( oneId ) ) {
 				List<Equipmentdetail> equips = equipService.getAllEquipmentdetailByEquipInfo( oneId );
 				for (Equipmentdetail equipmentdetail : equips) {
@@ -450,7 +450,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	public String deleteEquipmentdetail() {
 		String[] ids = equipdetailIds.split("_");
 		for (String id : ids) {
-			Long oneId = Long.valueOf( id );
+			Integer oneId = Integer.valueOf( id );
 			if( equipService.deleteEquipmentdetail( oneId ) ) {
 				this.tag = "0";
 			} else {
