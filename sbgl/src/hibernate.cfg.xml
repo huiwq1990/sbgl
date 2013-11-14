@@ -29,7 +29,7 @@
 		<!-- <mapping resource="com/sbgl/app/entity/Equipmenborrow.hbm.xml" /> -->
 		<!-- <mapping resource="com/sbgl/app/entity/Worker.hbm.xml" />
 			<mapping resource="com/sbgl/app/entity/Teacher.hbm.xml" /> -->
-		
+
 		<!-- <mapping resource="com/sbgl/app/entity/Student.hbm.xml" /> -->
 		<!-- <mapping resource="com/sbgl/app/entity/Listdetail.hbm.xml" />
 			<mapping resource="com/sbgl/app/entity/Noticereply.hbm.xml" />
@@ -70,15 +70,14 @@
 			<mapping resource="com/sbgl/app/entity/Bbsshare.hbm.xml" />
 			<mapping
 			resource="com/sbgl/app/entity/Bbstagconnection.hbm.xml" />
-			
 		-->
 
 		<!-- hg -->
 		<mapping resource="com/sbgl/app/entity/Computer.hbm.xml" />
 		<mapping
 			resource="com/sbgl/app/entity/Computerorderdetail.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Computerorder.hbm.xml" />
-		<mapping
+			<mapping resource="com/sbgl/app/entity/Computerorder.hbm.xml" />
+			<mapping
 			resource="com/sbgl/app/entity/Computercategory.hbm.xml" />
 
 		<mapping resource="com/sbgl/app/entity/Computermodel.hbm.xml" />

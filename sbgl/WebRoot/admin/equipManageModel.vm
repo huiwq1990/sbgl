@@ -137,8 +137,8 @@
 				  #if($!model.showClass != 1)
                     <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
                     <td>$!model.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-name="$!model.name" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo">修改</a></td>
-                    <td>双塔影视</td>
 					<td>$!model.cName</td>
+					<td>双塔影视</td>
                     <td>$!model.memo</td>
 				  #end
                   </tr>
@@ -335,8 +335,8 @@
 			"equipment.equipmentdetail": memo
 		}
 	
-		$.ajax({  
-		    url: "addEquipModel.do",  
+		jQuery.ajax({  
+		    url: "${webbaseurl}/addEquipModel.do",  
 		    type: "post",
 		    data: postData,
 		    success:function(data,textStatus,jq){  
@@ -377,8 +377,8 @@
 				"equipment.equipmentdetail": memo
 			}
 			
-			$.ajax({  
-			    url:"altEquipModel.do",  
+			jQuery.ajax({  
+			    url:"${webbaseurl}/altEquipModel.do",  
 			    type:"post",
 			    data:postData,
 			    success:function(data,textStatus,jq){  

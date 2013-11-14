@@ -87,13 +87,13 @@
               <div class="filter category-filter">
                 <select id="select-categories" style="width:130px" class="select2">
                   <option value="0" data-foo="fa">全部分类</option>
-                  <option value="1" data-foo="fa">摄影摄像机</option>
-                  <option value="2" data-foo="sub">数字摄影机</option>
-                  <option value="3" data-foo="sub">数字摄像机</option>
-                  <option value="4" data-foo="sub">单反</option>
-                  <option value="5" data-foo="fa">灯具</option>
-                  <option value="6" data-foo="sub">钨丝灯</option>
-                  <option value="7" data-foo="sub">镝灯</option>
+				  #foreach($clazz in $classForEquipAdd)
+    				#if($!clazz.isParent == '1')
+						<option value="1" data-foo="fa">$!clazz.name</option>
+    				#else
+						<option value="$!clazz.id" data-foo="sub">$!clazz.name</option>
+    				#end
+    			 #end
                 </select>
               </div>
               
@@ -120,7 +120,7 @@
                 </div>              
               </div>
               <ul class="status-filter nav nav-pills pull-right">
-                <li class="active"><a href="#">全部(10)（无不显示）</a></li>
+                <li class="active"><a href="#">全部($!equipDetailCourse.size())（无不显示）</a></li>
                 <li><a href="#">正常(5)</a></li>
                 <li><a href="#">借出(2)</a></li>
                 <li><a href="#">维护(2)</a></li>
@@ -143,54 +143,28 @@
                   </tr>
                 </thead>
                 <tbody>
+				  #foreach($equipDetail in $equipDetailCourse)
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
-                    <td>2145322<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
-                    <td>Arri Alexa Plus</td>
-                    <td>数字摄影机</td>
-                    <td>正常</td>
-                    <td></td>
+                    <td>$!equipDetail.code<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="alterDetailFillIn" data-id="$!equipDetail.id" data-code="$!equipDetail.code" data-mid="$!equipDetail.modelId" data-state="$!equipDetail.state" data-memo="$!equipDetail.memo">修改</a></td>
+                    <td>$!equipDetail.modelName</td>
+					<td>$!equipDetail.className</td>
+					#if($!equipDetail.state == 0)
+						<td>正常</td>
+					#elseif($!equipDetail.state == 1)
+						<td>借出</td>
+					#elseif($!equipDetail.state == 2)
+						<td>维护</td>
+					#elseif($!equipDetail.state == 3)
+						<td>维修</td>
+					#elseif($!equipDetail.state == 4)
+						<td>遗失</td>
+					#elseif($!equipDetail.state == 5)
+						<td>回收站</td>
+					#end
+                    <td>$!equipDetail.memo</td>
                   </tr>
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="2"></td>
-                    <td>2145321<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
-                    <td>Arri Alexa M</td>
-                    <td>数字摄影机</td>
-                    <td>借出</td>
-                    <td><a rel="popover" class="lk" href="#" data-original-title="" title="">XXX</a>于2013-10-11至2013-10-15借出，租赁号<a class="lk" href="#">XXXXX</a>。</td>
-                  </tr>
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>2145325<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
-                    <td>Arri Alexa M</td>
-                    <td>数字摄影机</td>
-                    <td>维护</td>
-                    <td>该设备目前处于维护中，不可租借。</td>
-                  </tr>
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>2145327<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
-                    <td>Canon EOS 5D MARK II</td>
-                    <td>单反</td>
-                    <td>维修</td>
-                    <td>维修备注信息，管理员自行添加（如可能包含相关用户）。</td>
-                  </tr>
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>2145328<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
-                    <td>Canon EOS 5D MARK II</td>
-                    <td>单反</td>
-                    <td>遗失</td>
-                    <td>遗失备注信息，管理员自行添加（如可能包含相关用户）。</td>
-                  </tr>
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>2145329<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
-                    <td>Canon EOS 5D MARK II</td>
-                    <td>单反</td>
-                    <td>正常</td>
-                    <td></td>
-                  </tr>
+                  #end
                 </tbody>
               </table>
               
@@ -228,29 +202,20 @@
         <div class="form-group">
           <label for="modifyEquipId" class="col-xs-3 control-label">设备号</label>
           <div class="col-xs-7">
-            <input type="text" class="form-control" id="modifyEquipId" placeholder="设备编号" value="242424">
+            <input type="text" class="form-control" id="modifyEquipId" placeholder="设备编号">
           </div>
         </div>
         <div class="form-group">
           <label for="modifyEquipModelId" class="col-xs-3 control-label">所属设备型号</label>
           <div class="col-xs-7">
             <select class="select2 select-white form-control" id="modifyEquipModelId">
-              <optgroup label="数字摄影机">
-                <option value="AK">Alaska</option>
-                <option value="HI">Hawaii</option>
-              </optgroup>
-              <optgroup label="数字摄像机">
-                <option value="CA">California</option>
-              </optgroup>
-              <optgroup label="单反">
-                <option value="AZ">Arizona</option>
-              </optgroup>
-              <optgroup label="镝灯">
-                <option value="AL">Alabama</option>
-              </optgroup>
-              <optgroup label="钨丝灯">
-                <option value="CT">Connecticut</option>
-              </optgroup>
+			  #foreach($equip in $equipCourse)
+			    #if($!equip.showClass == '1')
+				  <optgroup label="$!equip.cName">
+			    #else
+				  <option value="$!equip.id">$!equip.name</option>
+			    #end
+			  #end
             </select>
           </div>
         </div>
@@ -292,7 +257,7 @@
     </div>
   <div class="modal-footer">
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary">确 定</button>
+    <button class="btn btn-primary" action-type="alterDetail">确 定</button>
   </div>
 </div>
 
@@ -323,5 +288,72 @@
   $('input, textarea').placeholder();
   </script>
 <![endif]-->
+
+<script>
+	var cookie = { 
+  		//读取COOKIES,n为COOKIE名 
+   		Get:function(n){ 
+       		var re=new RegExp(n+'=([^;]*);?','gi');
+       	    var r=re.exec(document.cookie)||[];
+       	    return (r.length>1?r[1]:null)
+   		}
+	};
+	var detailIdForAlter;
+	var detailCodeForAlter;
+	var detailMIdForAlter;
+	var detailStatus;
+	var detailMemo;
+	
+	$("body").on("click", "a[action-type|=alterDetailFillIn]", function() {
+		var myData = $(this).data();
+		
+		$("#modifyEquipId").val(myData.code);
+		$("#modifyEquipModelId").select2("val", myData.mid);
+		$("#modifyEquipStatus").select2("val", myData.state);
+		$("#modifyEquipRemark").val(myData.memo);
+		
+		detailIdForAlter = myData.id;
+		detailCodeForALter = myData.code
+		detailMIdForAlter = myData.mid;
+		detailStatusForAlter = myData.state;
+		detailMemoForAlter = myData.memo;
+		
+		console.log("myData.id " + myData.id);
+		console.log("myData.code " + myData.code);
+		console.log("myData.modelId " + myData.mid);
+		console.log("myData.state " + myData.state);
+		console.log("myData.memo " + myData.memo);
+	})
+	
+	$("body").on("click", "button[action-type|=alterDetail]", function() {
+		var dCode = $("#modifyEquipId").val();
+		var dMid = $("#modifyEquipModelId").val();
+		var dStatus = $("#modifyEquipStatus").val();
+		var dMemo = $("#modifyEquipRemark").val();
+		
+		if(dCode == detailCodeForALter && dMid == detailMIdForAlter && dStatus == detailStatusForAlter && dMemo == detailMemoForAlter) {
+			alert("并未做修改！");
+		} else {
+			var postData = {
+				"equipmentdetail.equipdetaild": detailIdForAlter,
+				"equipmentdetail.equipserial": dCode,
+				"equipmentdetail.equipmentid": dMid,
+				"equipmentdetail.status": dStatus,
+				"equipmentdetail.administrationid": cookie.Get("id"),
+				"equipmentdetail.usermark": dMemo
+			}
+			
+			jQuery.ajax({  
+			    url:"${webbaseurl}/alterEquipDetail.do",  
+			    type:"post",
+			    data:postData,
+			    success:function(data,textStatus,jq){  
+			    	console.log(data);
+		        },  
+			    error:function(data,textStatus,jq){alert("修改器材失败！");}  
+			});
+		}
+	})
+</script>
 </body>
 </html>
