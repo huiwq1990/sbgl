@@ -8,8 +8,8 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="http://localhost:8080/sbgl/css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="http://localhost:8080/sbgl/css/global.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
 <!--[if lt IE 10]>
   <script src="../js/jquery.placeholder.js"></script>
@@ -33,31 +33,13 @@
       <div id="admin-wrap">
         <div id="admin-content" class="clearfix">    
             <!--control-bar start-->
-            <div class="control-bar clearfix">
-             
-
-
-              <div class="page pull-right clearfix">
-                <ul class="page-index nav nav-pills pull-left">
-                  <li class="record"><strong>XX</strong>条记录</li>
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">最新</a></li>
-                      <li><a href="#">最旧</a></li>
-                    </ul>
-                  </li>              
-                </ul>
-                <div class="pagination pull-right">
-                  <ul>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
-                  </ul>
-                </div>              
-              </div>
-            </div><!--control-bar end-->
+         
             <div class="panel panel-default">
 
+<!--管理内容从这里开始 -->
+
+				<form id="formComputercategoryManage" action="${webbaseurl}/manageComputercategoryFull.action" method="get">
+
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -69,12 +51,6 @@
              <th class="name">computercategorycreatetime</th>
              <th class="name">computercategorycreateuserid</th>
              <th class="name">computercategorystatus</th>
-             <th class="name">parentcomputercategoryid</th>
-             <th class="name">parentcomputercategoryparentcomputercategoryid</th>
-             <th class="name">parentcomputercategoryname</th>
-             <th class="name">parentcomputercategorycreatetime</th>
-             <th class="name">parentcomputercategorycreateuserid</th>
-             <th class="name">parentcomputercategorystatus</th>
              <th class="name">loginuserid</th>
              <th class="name">loginusername</th>
              <th class="name">loginusercreatetime</th>
@@ -89,126 +65,52 @@
 
 #foreach($tempcomputercategory in $computercategoryFullList)
                   <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                   
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>                   
 <td>$!tempcomputercategory.computercategoryid</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-					<td><a href="http://localhost:8080/sbgl/viewComputercategoryFull.action?id=$tempcomputercategory.$entityFullAttrNameList.get(0)">查看</a></td> 
-					<td><a href="http://localhost:8080/sbgl/${entityFullDelActionName}.action?id=$tempcomputercategory.$entityFullAttrNameList.get(0)">删除</a></td>			
-					<td><a href="http://localhost:8080/sbgl/editComputercategoryFull.action?id=$tempcomputercategory.$entityFullAttrNameList.get(0)">修改</a></td>
+<td>$!tempcomputercategory.computercategoryparentcomputercategoryid</td>
+<td>$!tempcomputercategory.computercategoryname</td>
+<td>$!tempcomputercategory.computercategorycreatetime</td>
+<td>$!tempcomputercategory.computercategorycreateuserid</td>
+<td>$!tempcomputercategory.computercategorystatus</td>
+<td>$!tempcomputercategory.loginuserid</td>
+<td>$!tempcomputercategory.loginusername</td>
+<td>$!tempcomputercategory.loginusercreatetime</td>
+<td>$!tempcomputercategory.loginuserstatus</td>
+					<td><a href="${webbaseurl}/viewComputercategoryFull.action?id=$!tempcomputercategory.computercategoryid">查看</a></td> 
+					<td><a href="${webbaseurl}/deleteComputercategoryFull.action?id=$!tempcomputercategory.computercategoryid">删除</a></td>			
+					<td><a href="${webbaseurl}/editComputercategoryFull.action?id=$!tempcomputercategory.computercategoryid">修改</a></td>
                  
                   </tr>
 #end            
            
                 </tbody>
               </table>
-			 
-<form id="cat" action="${webbaseurl}/manageComputercategoryFull.action" method="get">    		  
-#getPageHtml("formId=cat" "parameters=pageNo:$page.pageNo,pageSize:$page.pageSize,totalCount:$page.totalCount,pageviewcount:$page.pageviewcount,vmpath:common/page.vm")
-</form>      
-=======
-<form id="cat" action="${webbaseurl}/manageComputercategoryFull.action" method="get">   
->>>>>>> refs/remotes/remote/master
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+  		  
+#getPageHtml("formId=formComputercategoryManage" "parameters=pageNo:$page.pageNo,pageSize:$page.pageSize,totalCount:$page.totalCount,pageviewcount:$page.pageviewcount,vmpath:common/page.vm")
 
-             <th class="name">computercategoryid</th>
-             <th class="name">computercategoryparentcomputercategoryid</th>
-             <th class="name">computercategoryname</th>
-             <th class="name">computercategorycreatetime</th>
-             <th class="name">computercategorycreateuserid</th>
-             <th class="name">computercategorystatus</th>
-             <th class="name">parentcomputercategoryid</th>
-             <th class="name">parentcomputercategoryparentcomputercategoryid</th>
-             <th class="name">parentcomputercategoryname</th>
-             <th class="name">parentcomputercategorycreatetime</th>
-             <th class="name">parentcomputercategorycreateuserid</th>
-             <th class="name">parentcomputercategorystatus</th>
-             <th class="name">loginuserid</th>
-             <th class="name">loginusername</th>
-             <th class="name">loginusercreatetime</th>
-             <th class="name">loginuserstatus</th>
-                   <th class="name">View</th>
-				   <th class="name">Del</th>
-				   <th class="name">Edit</th>
-                  </tr>
-                </thead>
-                <tbody>					
-							
-
-#foreach($tempcomputercategory in $computercategoryFullList)
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                   
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-<td>$!tempcomputercategory.${attrName}</td>
-					<td><a href="http://localhost:8080/sbgl/viewComputercategoryFull.action?id=$tempcomputercategory.$entityFullAttrNameList.get(0)">查看</a></td> 
-					<td><a href="http://localhost:8080/sbgl/${entityFullDelActionName}.action?id=$tempcomputercategory.$entityFullAttrNameList.get(0)">删除</a></td>			
-					<td><a href="http://localhost:8080/sbgl/editComputercategoryFull.action?id=$tempcomputercategory.$entityFullAttrNameList.get(0)">修改</a></td>
-                 
-                  </tr>
-#end            
-           
-                </tbody>
-              </table>
-<<<<<<< HEAD
-=======
-			  </form>   
-#getPageHtml("formId=cat" "parameters=pageNo:$page.pageNo,pageSize:$page.pageSize,totalCount:$page.totalCount,pageviewcount:$page.pageviewcount,vmpath:common/page.vm")
-      
->>>>>>> refs/remotes/rem/master
->>>>>>> refs/remotes/remote/master
+</form>
 
             </div>
           </div>
 
       </div>
       <!--equip-wrap end-->
-      <!--sidebar start-->
-      <div id="lside">
+	  
+	  
+       <div id="lside">
         <form class="form-group">
           <input type="text" class="form-control" placeholder="搜索">
           <i class="icon-search"></i>
         </form>
         <div class="list-group">
-          <a href=".html" class="list-group-item">管理</a>
-          <a href=".html" class="list-group-item">添加</a>
-          <a href=".html" class="list-group-item active">查看</a>
+          <a href="${webbaseurl}/manageComputercategoryFull.action" class="list-group-item">管理</a>
+          <a href="${webbaseurl}/computer/computercategoryAdd.vm" class="list-group-item">添加</a>
+          
         </div>
       </div>
       <!--sidebar end-->
 
-</section>
+
 
 
 </section>
@@ -218,10 +120,10 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-<script src="http://localhost:8080/sbgl/js/jquery.js"></script>
-<script src="http://localhost:8080/sbgl/js/loader.min.js"></script>
-<script src="http://localhost:8080/sbgl/js/select2.js"></script>
-<script src="http://localhost:8080/sbgl/js/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script>
 	$("#modifyFaCategoryId").select2("val","2");
 </script>

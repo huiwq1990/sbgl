@@ -33,34 +33,43 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 	private static final Log log = LogFactory.getLog(ManageComputerAction.class);
 
 	private Map<String, Object> session;
+	private int pageNo;
 
 	// Service
 	@Resource
 	private ComputerService computerService;
+	List<Computer> computerList = new ArrayList<Computer>();
+	List<ComputerFull> computerFullList = new ArrayList<ComputerFull>();
+	private Integer computerid; //entity full 的id属性名称		
+	
 	@Resource
 	private ComputercategoryService computercategoryService;
+	List<Computercategory> computercategoryList = new ArrayList<Computercategory>();
+	List<ComputercategoryFull> computercategoryFullList = new ArrayList<ComputercategoryFull>();
+	
 	@Resource
 	private ComputermodelService computermodelService;
 	@Resource
 	private ComputerorderService computerorderService;
 
-	List<Computer> computerList = new ArrayList<Computer>();
-	List<ComputerFull> computerFullList = new ArrayList<ComputerFull>();
 
-	List<Computercategory> computercategoryList = new ArrayList<Computercategory>();
-	List<ComputercategoryFull> computercategoryFullList = new ArrayList<ComputercategoryFull>();
+
+
 
 	List<ComputerorderFull> computerorderFullList = new ArrayList<ComputerorderFull>();
 
 	private String logprefix = "exec method";
 	Page page = new Page();
 
+	
 //  manage Computercategory
 	public String manageComputercategory(){
 		log.info(logprefix+"manageComputercategoryFull");
 		
-//      分页查询		
-		Page page = new Page();
+//      分页查询	
+		page.setPageNo(pageNo);
+		//设置总数量，在service中设置
+		//page.setTotalpage(computercategoryService.countComputercategoryRow());
 		computercategoryList  = computercategoryService.selectComputercategoryByPage(page);
 		
 //		查询全部
@@ -78,10 +87,11 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 	//管理 查询
 	public String manageComputercategoryFull(){
 		log.info("exec action method:manageComputercategoryFull");
-		page.setPageSize(1);
+		
 //      分页查询		
-//		Page page = new Page();
-//		if(page.getPageNo())
+		page.setPageNo(pageNo);
+		//设置总数量，在service中设置
+		//page.setTotalpage(computercategoryService.countComputercategoryRow());
 		computercategoryFullList  = computercategoryService.selectComputercategoryFullByPage(page);
 		
 //		查询全部
@@ -94,15 +104,50 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 //			System.out.println("id="+computercategoryFullList.get(i).getLoginusername());
 //		}
 		return SUCCESS;
-	}
-
-	// 管理
-	public String manageComputer() {
-		log.info("exec action method:manageComputer");
-		computerFullList = computerService.selectComputerFullAll();
-		for (int i = 0; i < computerFullList.size(); i++) {
-			// System.out.println("id="+computerFullList.get(i).getLoginusername());
+	}			
+			
+	
+//  manage Computer
+	public String manageComputer(){
+		log.info(logprefix+"manageComputerFull");
+		
+//      分页查询	
+		page.setPageNo(pageNo);
+		//设置总数量，在service中设置
+		//page.setTotalpage(computerService.countComputerRow());
+		computerList  = computerService.selectComputerByPage(page);
+		
+//		查询全部
+//		computerList  = computerService.selectComputerById();
+		
+	    if(computerList == null){
+			computerList = new ArrayList<Computer>();
 		}
+//		for(int i = 0; i < computerList.size(); i++){
+//			System.out.println("id="+computerList.get(i).getLoginusername());
+//		}
+		return SUCCESS;
+	}		
+			
+	//管理 查询
+	public String manageComputerFull(){
+		log.info("exec action method:manageComputerFull");
+		
+//      分页查询		
+		page.setPageNo(pageNo);
+		//设置总数量，在service中设置
+		//page.setTotalpage(computerService.countComputerRow());
+		computerFullList  = computerService.selectComputerFullByPage(page);
+		
+//		查询全部
+//		computerFullList  = computerService.selectComputerFullAll();
+
+		if(computerFullList == null){
+			computerFullList = new ArrayList<ComputerFull>();
+		}
+//		for(int i = 0; i < computerFullList.size(); i++){
+//			System.out.println("id="+computerFullList.get(i).getLoginusername());
+//		}
 		return SUCCESS;
 	}
 
@@ -203,6 +248,30 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 
 	public Map<String, Object> getSession() {
 		return session;
+	}
+
+	public int getPageNo() {
+		return pageNo;
+	}
+
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
+
+	public Integer getComputerid() {
+		return computerid;
+	}
+
+	public void setComputerid(Integer computerid) {
+		this.computerid = computerid;
+	}
+
+	public String getLogprefix() {
+		return logprefix;
+	}
+
+	public void setLogprefix(String logprefix) {
+		this.logprefix = logprefix;
 	}
 
 	

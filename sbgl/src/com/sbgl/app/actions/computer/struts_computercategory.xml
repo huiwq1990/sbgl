@@ -7,38 +7,38 @@
 <!-- default entity manage action -->
     	<action name="manageComputercategory" class="ManageComputerAction" method="manageComputercategory">
         	<result name="success">/computer/computercategoryManage.vm</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		<!-- default entity manage action -->
     	<action name="manageComputercategoryInfo" class="ManageComputerAction" method="manageComputercategoryInfo">
         	<result name="success">/computer/computercategoryManage.vm</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		<!-- manage action , go to jsp page -->
     	<action name="manageComputercategoryJsp" class="ManageComputerAction" method="manageComputercategory">
         	<result name="success">/computer/computercategoryManage.jsp</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>		
 		<!-- manage action , go to vm page -->
     	<action name="manageComputercategoryVm" class="ManageComputerAction" method="manageComputercategory">
         	<result name="success">/computer/computercategoryManage.vm</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>		
 <!-- entity full manage  -->		
 		<!-- default entity full manage action -->
     	<action name="manageComputercategoryFull" class="ManageComputerAction" method="manageComputercategoryFull">
         	<result name="success">/computer/computercategoryFullManage.vm</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		<!-- manage action , go to jsp page -->
     	<action name="manageComputercategoryFullJsp" class="ManageComputerAction" method="manageComputercategoryFull">
         	<result name="success">/computer/computercategoryFullManage.jsp</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>		
 		<!-- manage action , go to vm page -->
     	<action name="manageComputercategoryFullVm" class="ManageComputerAction" method="manageComputercategoryFull">
         	<result name="success">/computer/computercategoryFullManage.vm</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>	
 		
 		
@@ -64,28 +64,28 @@
 <!--edit entity-->
         <action name="editComputercategory" class="ComputercategoryAction" method="editComputercategory">
         	<result name="success">/computer/computercategoryEdit.vm</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		<action name="editComputercategoryJsp" class="ComputercategoryAction" method="editComputercategory">
         	<result name="success">/computer/computercategoryEdit.jsp</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		<action name="editComputercategoryVm" class="ComputercategoryAction" method="editComputercategory">
         	<result name="success">/computer/computercategoryEdit.vm</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>		
 <!--edit entity full-->
         <action name="editComputercategoryFull" class="ComputercategoryAction" method="editComputercategoryFull">
         	<result name="success">/computer/computercategoryFullEdit.vm</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		<action name="editComputercategoryFullJsp" class="ComputercategoryAction" method="editComputercategoryFull">
         	<result name="success">/computer/computercategoryFullEdit.jsp</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		<action name="editComputercategoryFullVm" class="ComputercategoryAction" method="editComputercategoryFull">
         	<result name="success">/computer/computercategoryFullEdit.vm</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		
 		
@@ -95,85 +95,85 @@
         	<result type="redirectAction">
 				<param name="actionName">manageComputercategory</param>
 			</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		<!--del entityfull-->
         <action name="deleteComputercategoryFull" class="ComputercategoryAction" method="deleteComputercategoryFull">
         	<result type="redirectAction">
 				<param name="actionName">manageComputercategoryFull</param>
 			</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		
 <!--更新实体-->
         <action name="updateComputercategory" class="ComputercategoryAction" method="updateComputercategory">
         	<result name="success">/computer/computercategoryUpdate.jsp</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		<action name="updateComputercategoryJsp" class="ComputercategoryAction" method="updateComputercategory">
         	<result name="success">/computer/computercategoryUpdate.jsp</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		<action name="updateComputercategoryVm" class="ComputercategoryAction" method="updateComputercategory">
         	<result name="success">/computer/computercategoryUpdate.vm</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 <!--update entity full-->
         <action name="updateComputercategoryFull" class="ComputercategoryAction" method="updateComputercategory">
         	<result name="success">/computer/computercategoryFullUpdate.jsp</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		<action name="updateComputercategoryFullJsp" class="ComputercategoryAction" method="updateComputercategory">
         	<result name="success">/computer/computercategoryFullUpdate.jsp</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		<action name="updateComputercategoryFullVm" class="ComputercategoryAction" method="updateComputercategory">
         	<result name="success">/computer/computercategoryFullUpdate.vm</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		
 		
 <!--根据id查询实体-->
         <action name="selectComputercategoryById" class="ComputercategoryAction" method="selectComputercategoryById">
         	<result name="success">/computer/computercategoryView.vm</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		
 <!-- View entity-->		
         <action name="viewComputercategory" class="ComputercategoryAction" method="viewComputercategory">
         	<result name="success">/computer/computercategoryView.jsp</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		<!--go to view jsp-->
 		<action name="viewComputercategoryJsp" class="ComputercategoryAction" method="viewComputercategory">
         	<result name="success">/computer/computercategoryView.jsp</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		<!-- go to view vm-->
 		<action name="viewComputercategoryVm" class="ComputercategoryAction" method="viewComputercategory">
         	<result name="success">/computer/computercategoryView.vm</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>		
 <!-- View entity full-->		
         <action name="viewComputercategoryFull" class="ComputercategoryAction" method="viewComputercategoryFull">
         	<result name="success">/computer/computercategoryFullView.vm</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		<!--go to view jsp-->
 		<action name="viewComputercategoryFullJsp" class="ComputercategoryAction" method="viewComputercategoryFull">
         	<result name="success">/computer/computercategoryFullView.jsp</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 		<!-- go to view vm-->
 		<action name="viewComputercategoryFullVm" class="ComputercategoryAction" method="viewComputercategoryFull">
         	<result name="success">/computer/computercategoryFullView.vm</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>		
 		
         <!--查询全部实体-->
         <action name="selectComputercategoryAll" class="ComputercategoryAction" method="selectComputercategoryAll">
 			<result name="success">/computer/computercategory.jsp</result>
-			<result name="error">/login.vm</result>
+			<result name="error">/error.vm</result>
 		</action>
 	
 
@@ -183,7 +183,7 @@
 
 		<action name="selectComputercategoryFullById" class="ComputercategoryAction" method="selectComputercategoryFullById">
 		  	<result name="success">/computer/computercategoryViewFull.vm</result>
-        	<result name="error">/login.vm</result> 
+        	<result name="error">/error.vm</result> 
         </action>
 
 		
@@ -191,7 +191,7 @@
         <!--查询全部实体full-->
         <action name="selectComputercategoryFullAll" class="ComputercategoryAction" method="selectComputercategoryFullAll">
 			<result name="success">/computer/computercategoryManage.vm</result>
-			<result name="error">/login.vm</result>
+			<result name="error">/error.vm</result>
 		</action>
 		
 	

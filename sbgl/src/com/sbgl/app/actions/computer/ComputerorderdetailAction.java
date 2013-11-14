@@ -47,14 +47,16 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 	private Integer computerorderdetailid; //entity full 的id属性名称		
 	private String logprefix = "exec action method:";		
 	Page page = new Page();
-		
+	Integer pageNo=1;	
 	
 //  manage Computerorderdetail
 	public String manageComputerorderdetail(){
 		log.info(logprefix+"manageComputerorderdetailFull");
 		
-//      分页查询		
-		Page page = new Page();
+//      分页查询	
+		page.setPageNo(pageNo);
+		//设置总数量，在service中设置
+		//page.setTotalpage(computerorderdetailService.countComputerorderdetailRow());
 		computerorderdetailList  = computerorderdetailService.selectComputerorderdetailByPage(page);
 		
 //		查询全部
@@ -74,7 +76,9 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 		log.info("exec action method:manageComputerorderdetailFull");
 		
 //      分页查询		
-		Page page = new Page();
+		page.setPageNo(pageNo);
+		//设置总数量，在service中设置
+		//page.setTotalpage(computerorderdetailService.countComputerorderdetailRow());
 		computerorderdetailFullList  = computerorderdetailService.selectComputerorderdetailFullByPage(page);
 		
 //		查询全部
@@ -204,7 +208,7 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 		try {
 		
 			Integer getId = computerorderdetail.getId();
-			if(getId != null && getId >= 0){
+			if(getId != null && getId < 0){
 				log.info("删除的id不规范");
 				return "Error";
 			}
@@ -407,13 +411,13 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
  * get id from modle,
  * @return
  */
-	public String viewYaomingFull() {
+	public String viewComputerorderdetailFull() {
 				
 		try {
 			int getId = computerorderdetail.getId();
 			log.info(this.logprefix + ";id=" + getId);
 			
-			if (getId > 0) {
+			if (getId < 0) {
 				log.error("error,id小于0不规范");
 				return "error";
 			}	
@@ -519,66 +523,6 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 	}
 
 
-	//根据computerorderid 查询实体
-	public String selectComputerorderdetailByComputerorderId() {
-			//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		computerorderdetailList  = computerorderdetailService.selectComputerorderdetailAll();
-		for(int i = 0; i < computerorderdetailList.size(); i++){
-			System.out.println("id="+computerorderdetailList.get(i).getId());
-		}
-		return SUCCESS;
-	}
-	//根据computerid 查询实体
-	public String selectComputerorderdetailByComputerId() {
-			//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		computerorderdetailList  = computerorderdetailService.selectComputerorderdetailAll();
-		for(int i = 0; i < computerorderdetailList.size(); i++){
-			System.out.println("id="+computerorderdetailList.get(i).getId());
-		}
-		return SUCCESS;
-	}
-	//根据computerorderid 查询实体full
-	public String selectComputerorderdetailFullByComputerorderId() {
-				//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		computerorderdetailFullList  = computerorderdetailService.selectComputerorderdetailFullByComputerorderId(userId);
-		for(int i = 0; i < computerorderdetailFullList.size(); i++){
-			//System.out.println("id="+computerorderdetailFullList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}
-	//根据computerid 查询实体full
-	public String selectComputerorderdetailFullByComputerId() {
-				//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		computerorderdetailFullList  = computerorderdetailService.selectComputerorderdetailFullByComputerId(userId);
-		for(int i = 0; i < computerorderdetailFullList.size(); i++){
-			//System.out.println("id="+computerorderdetailFullList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}
 
 	//get set
 	public void setSession(Map<String, Object> session) {
@@ -660,5 +604,11 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 	public void setComputerorderdetailid(int computerorderdetailid) {
 		this.computerorderdetailid = computerorderdetailid;
 	}
-	
+		public Integer getPageNo() {
+		return pageNo;
+	}
+
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
 }

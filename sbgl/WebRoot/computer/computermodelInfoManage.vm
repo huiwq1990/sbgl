@@ -67,6 +67,7 @@
                     <th class="name">picpath</th>
                     <th class="name">createtime</th>
                     <th class="name">createuserid</th>
+                    <th class="name">count</th>
                     <th class="name">status</th>
                     <th class="name">View</th>
 				   <th class="name">Del</th>
@@ -86,6 +87,7 @@
                                         <td>$!tempcomputermodel.picpath</td>
                                         <td>$!tempcomputermodel.createtime</td>
                                         <td>$!tempcomputermodel.createuserid</td>
+                                        <td>$!tempcomputermodel.count</td>
                                         <td>$!tempcomputermodel.status</td>
                     					<td><a href="http://localhost:8080/sbgl/viewComputermodel.action?id=$tempcomputermodel.id">查看</a></td> 
 					<td><a href="http://localhost:8080/sbgl/deleteComputermodel.action?id=$tempcomputermodel.id">删除</a></td>			

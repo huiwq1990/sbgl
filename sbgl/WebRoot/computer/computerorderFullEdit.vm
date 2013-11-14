@@ -1,9 +1,3 @@
-<%@ page language="java" import="java.util.*,com.sbgl.app.entity.*" pageEncoding="utf-8"%>
-<%@taglib prefix="s" uri="/struts-tags"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
 
 <!DOCTYPE html>
 <html>
@@ -14,8 +8,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="http://localhost:8080/sbgl/css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="http://localhost:8080/sbgl/css/global.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
 <!--[if lt IE 10]>
   <script src="../js/jquery.placeholder.js"></script>
@@ -33,6 +27,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 
 <body id="admin">
+	
+	<a href="${webbaseurl}/manageComputerorderFull.action">返回管理</a>
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
 
       <!--admin-wrap start-->
@@ -42,149 +38,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="control-bar clearfix">
              
 
-              <div class="page pull-right clearfix">
-                <ul class="page-index nav nav-pills pull-left">
-                  <li class="record"><strong>XX</strong>条记录</li>
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">最新</a></li>
-                      <li><a href="#">最旧</a></li>
-                    </ul>
-                  </li>              
-                </ul>
-                <div class="pagination pull-right">
-                  <ul>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
-                  </ul>
-                </div>              
-              </div>
-            </div><!--control-bar end-->
-            <div class="panel panel-default">
-			
-<!--data start--> 
-
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-                    <th class="name">属性名称</th>
-                    <th class="f-category">属性值</th>
-                    
-                  </tr>
-                </thead>
-                <tbody>					
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderserialnumber</td>
-                    <td>${computerorderFull.computerorderserialnumber}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderuserid</td>
-                    <td>${computerorderFull.computerorderuserid}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerordercreatetime</td>
-                    <td>${computerorderFull.computerordercreatetime}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderstatus</td>
-                    <td>${computerorderFull.computerorderstatus}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>loginuserid</td>
-                    <td>${computerorderFull.loginuserid}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>loginusername</td>
-                    <td>${computerorderFull.loginusername}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>loginusercreatetime</td>
-                    <td>${computerorderFull.loginusercreatetime}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>loginuserstatus</td>
-                    <td>${computerorderFull.loginuserstatus}</td>                    
-                  </tr>               
-                </tbody>
-              </table>
-			   
-			   
-<!--data end--> 
-
-            </div>
-          </div>
-
-      </div>
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
+             
 	  
 	  
  <div class="panel-body">
                  <!-- form start -->
                <form action="" method="" name="AddComputerorderForm">
-				 <input type="text" class="form-control" id="#input_computerorder_${attrName}" value="$!computerorderFull.$attrName}">
+				 <input type="hidden" class="form-control" id="input_computerorder_id" value="$!computerorderFull.computerorderid">
+
+
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderserialnumber</label>
+                    <label for="serialnumber" class="col-lg-2 control-label">serialnumber</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerorderserialnumber" value="$!computerorderFull.computerorderserialnumber}">
+                      <input type="text" class="form-control" id="input_computerorder_serialnumber" value="$!computerorderFull.computerorderserialnumber">
                     </div>
                   </div>
+
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderuserid</label>
+                    <label for="userid" class="col-lg-2 control-label">userid</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerorderuserid" value="$!computerorderFull.computerorderuserid}">
+                      <input type="text" class="form-control" id="input_computerorder_userid" value="$!computerorderFull.computerorderuserid">
                     </div>
                   </div>
+
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerordercreatetime</label>
+                    <label for="createtime" class="col-lg-2 control-label">createtime</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerordercreatetime" value="$!computerorderFull.computerordercreatetime}">
+                      <input type="text" class="form-control" id="input_computerorder_createtime" value="$!computerorderFull.computerordercreatetime">
                     </div>
                   </div>
+
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderstatus</label>
+                    <label for="status" class="col-lg-2 control-label">status</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerorderstatus" value="$!computerorderFull.computerorderstatus}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">loginuserid</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="loginuserid" value="$!computerorderFull.loginuserid}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">loginusername</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="loginusername" value="$!computerorderFull.loginusername}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">loginusercreatetime</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="loginusercreatetime" value="$!computerorderFull.loginusercreatetime}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">loginuserstatus</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="loginuserstatus" value="$!computerorderFull.loginuserstatus}">
+                      <input type="text" class="form-control" id="input_computerorder_status" value="$!computerorderFull.computerorderstatus">
                     </div>
                   </div>
 
@@ -194,10 +81,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   <div class="form-group">   
                   <div class="col-lg-offset-2 col-lg-4">
                      <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-                     <button type="submit" onClick = "updateComputerorderAjax()" class="btn btn-primary">添 加</button>
+                     <button type="submit" onClick = "updateComputerorderAjax()" class="btn btn-primary">修改</button>
                    </div>
                </div>
 				<!-- submit end -->
+
+
 
 
               </div>
@@ -216,9 +105,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-<script src="http://localhost:8080/sbgl/js/jquery.js"></script>
-<script src="http://localhost:8080/sbgl/js/loader.min.js"></script>
-<script src="http://localhost:8080/sbgl/js/select2.js"></script>
-<script src="http://localhost:8080/sbgl/js/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/computer/computerorder.js"></script>
 </body>
 </html>

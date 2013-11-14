@@ -7,8 +7,8 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="./css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="./css/global.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
 <!--[if lt IE 10]>
   <script src="../js/jquery.placeholder.js"></script>
@@ -27,7 +27,7 @@
 
 <body id="admin">
 
-
+<a href="${webbaseurl}/manageComputerorderFull.action">返回管理</a>
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
 
       <!--admin-wrap start-->
@@ -40,7 +40,7 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    
                     <th class="name">属性</th>
                     <th class="f-category">属性值</th>
                     
@@ -48,47 +48,47 @@
                 </thead>
                 <tbody>					
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>computerorderid</td>
                     <td>$!computerorderFull.computerorderid</td>                    
                   </tr>               
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>computerorderserialnumber</td>
                     <td>$!computerorderFull.computerorderserialnumber</td>                    
                   </tr>               
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>computerorderuserid</td>
                     <td>$!computerorderFull.computerorderuserid</td>                    
                   </tr>               
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>computerordercreatetime</td>
                     <td>$!computerorderFull.computerordercreatetime</td>                    
                   </tr>               
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>computerorderstatus</td>
                     <td>$!computerorderFull.computerorderstatus</td>                    
                   </tr>               
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>loginuserid</td>
                     <td>$!computerorderFull.loginuserid</td>                    
                   </tr>               
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>loginusername</td>
                     <td>$!computerorderFull.loginusername</td>                    
                   </tr>               
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>loginusercreatetime</td>
                     <td>$!computerorderFull.loginusercreatetime</td>                    
                   </tr>               
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>loginuserstatus</td>
                     <td>$!computerorderFull.loginuserstatus</td>                    
                   </tr>               
@@ -109,11 +109,11 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-<script src="../js/jquery.js"></script>
-<script src="../js/loader.min.js"></script>
-<script src="../js/select2.js"></script>
-<script src="../js/bootstrap-hover-dropdown.min.js"></script>
-<script src="../js/bfa.js"></script>
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/computer/computerorder.js"></script>
 <script>
 	$("#modifyFaCategoryId").select2("val","2");
 </script>

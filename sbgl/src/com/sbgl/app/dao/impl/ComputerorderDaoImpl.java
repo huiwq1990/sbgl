@@ -65,27 +65,6 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 		}
 		return null;
 	}
-
-/*
-	@Override
-	public List<ComputerorderFull> selectComputerorderFullByUserId(Integer userId) {
-		final String  sql = "select a.id as computerorderid, a.serialnumber as computerorderserialnumber, a.userid as computerorderuserid, a.createtime as computerordercreatetime, a.status as computerorderstatus, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computerorder a  left join Loginuser b on a.userid=b.id " + "where a.userid = "+userId;
-		
-		List<ComputerorderFull> computerorderList = getHibernateTemplate()
-				.executeFind(new HibernateCallback() {
-					public Object doInHibernate(Session session)
-							throws HibernateException {
-						Query query = session.createSQLQuery(sql);
-						query.setResultTransformer(new EscColumnToBean(
-								ComputerorderFull.class));
-						return query.list();
-					}
-				});
-		if (computerorderList != null && !computerorderList.isEmpty()) {
-			return computerorderList;
-		}
-		return null;
-	}*/
 	
 //	查询全部实体full
 	@Override
@@ -108,7 +87,7 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 		return null;
 	}
 //  分页查询 实体full
-	public List<ComputerorderFull> selectComputerorderFullByPage(Page page){
+	public List<ComputerorderFull> selectComputerorderFullByPage(final Page page){
 		final String  sql = "select a.id as computerorderid, a.serialnumber as computerorderserialnumber, a.userid as computerorderuserid, a.createtime as computerordercreatetime, a.status as computerorderstatus, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computerorder a  left join Loginuser b on a.userid=b.id ";
 		
 		List<ComputerorderFull> computerorderFullList = getHibernateTemplate()
@@ -116,6 +95,8 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 					public Object doInHibernate(Session session)
 							throws HibernateException {
 						Query query = session.createSQLQuery(sql);
+						query.setFirstResult(page.getStartNum());
+						query.setMaxResults(page.getPageSize());
 						query.setResultTransformer(new EscColumnToBean(
 								ComputerorderFull.class));
 						return query.list();

@@ -8,8 +8,8 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="http://localhost:8080/sbgl/css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="http://localhost:8080/sbgl/css/global.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
 <!--[if lt IE 10]>
   <script src="../js/jquery.placeholder.js"></script>
@@ -33,30 +33,12 @@
       <div id="admin-wrap">
         <div id="admin-content" class="clearfix">    
             <!--control-bar start-->
-            <div class="control-bar clearfix">
-             
-
-
-              <div class="page pull-right clearfix">
-                <ul class="page-index nav nav-pills pull-left">
-                  <li class="record"><strong>XX</strong>条记录</li>
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">最新</a></li>
-                      <li><a href="#">最旧</a></li>
-                    </ul>
-                  </li>              
-                </ul>
-                <div class="pagination pull-right">
-                  <ul>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
-                  </ul>
-                </div>              
-              </div>
-            </div><!--control-bar end-->
+         
             <div class="panel panel-default">
+
+<!--管理内容从这里开始 -->
+
+				<form id="formComputermodelManage" action="${webbaseurl}/manageComputermodelFull.action" method="get">
 
               <table class="table table-hover">
                 <thead>
@@ -69,13 +51,8 @@
              <th class="name">computermodelpicpath</th>
              <th class="name">computermodelcreatetime</th>
              <th class="name">computermodelcreateuserid</th>
+             <th class="name">computermodelcount</th>
              <th class="name">computermodelstatus</th>
-             <th class="name">computercategoryid</th>
-             <th class="name">computercategoryparentcomputercategoryid</th>
-             <th class="name">computercategoryname</th>
-             <th class="name">computercategorycreatetime</th>
-             <th class="name">computercategorycreateuserid</th>
-             <th class="name">computercategorystatus</th>
              <th class="name">loginuserid</th>
              <th class="name">loginusername</th>
              <th class="name">loginusercreatetime</th>
@@ -90,55 +67,54 @@
 
 #foreach($tempcomputermodel in $computermodelFullList)
                   <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                   
-<td>$!tempcomputermodel.${attrName}</td>
-<td>$!tempcomputermodel.${attrName}</td>
-<td>$!tempcomputermodel.${attrName}</td>
-<td>$!tempcomputermodel.${attrName}</td>
-<td>$!tempcomputermodel.${attrName}</td>
-<td>$!tempcomputermodel.${attrName}</td>
-<td>$!tempcomputermodel.${attrName}</td>
-<td>$!tempcomputermodel.${attrName}</td>
-<td>$!tempcomputermodel.${attrName}</td>
-<td>$!tempcomputermodel.${attrName}</td>
-<td>$!tempcomputermodel.${attrName}</td>
-<td>$!tempcomputermodel.${attrName}</td>
-<td>$!tempcomputermodel.${attrName}</td>
-<td>$!tempcomputermodel.${attrName}</td>
-<td>$!tempcomputermodel.${attrName}</td>
-<td>$!tempcomputermodel.${attrName}</td>
-<td>$!tempcomputermodel.${attrName}</td>
-					<td><a href="http://localhost:8080/sbgl/viewComputermodelFull.action?id=$tempcomputermodel.$entityFullAttrNameList.get(0)">查看</a></td> 
-					<td><a href="http://localhost:8080/sbgl/${entityFullDelActionName}.action?id=$tempcomputermodel.$entityFullAttrNameList.get(0)">删除</a></td>			
-					<td><a href="http://localhost:8080/sbgl/editComputermodelFull.action?id=$tempcomputermodel.$entityFullAttrNameList.get(0)">修改</a></td>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>                   
+<td>$!tempcomputermodel.computermodelid</td>
+<td>$!tempcomputermodel.computermodelname</td>
+<td>$!tempcomputermodel.computermodelcomputercategoryid</td>
+<td>$!tempcomputermodel.computermodelpicpath</td>
+<td>$!tempcomputermodel.computermodelcreatetime</td>
+<td>$!tempcomputermodel.computermodelcreateuserid</td>
+<td>$!tempcomputermodel.computermodelcount</td>
+<td>$!tempcomputermodel.computermodelstatus</td>
+<td>$!tempcomputermodel.loginuserid</td>
+<td>$!tempcomputermodel.loginusername</td>
+<td>$!tempcomputermodel.loginusercreatetime</td>
+<td>$!tempcomputermodel.loginuserstatus</td>
+					<td><a href="${webbaseurl}/viewComputermodelFull.action?id=$!tempcomputermodel.computermodelid">查看</a></td> 
+					<td><a href="${webbaseurl}/deleteComputermodelFull.action?id=$!tempcomputermodel.computermodelid">删除</a></td>			
+					<td><a href="${webbaseurl}/editComputermodelFull.action?id=$!tempcomputermodel.computermodelid">修改</a></td>
                  
                   </tr>
 #end            
            
                 </tbody>
               </table>
+  		  
+#getPageHtml("formId=formComputermodelManage" "parameters=pageNo:$page.pageNo,pageSize:$page.pageSize,totalCount:$page.totalCount,pageviewcount:$page.pageviewcount,vmpath:common/page.vm")
+
+</form>
 
             </div>
           </div>
 
       </div>
       <!--equip-wrap end-->
-      <!--sidebar start-->
-      <div id="lside">
+	  
+	  
+       <div id="lside">
         <form class="form-group">
           <input type="text" class="form-control" placeholder="搜索">
           <i class="icon-search"></i>
         </form>
         <div class="list-group">
-          <a href=".html" class="list-group-item">管理</a>
-          <a href=".html" class="list-group-item">添加</a>
-          <a href=".html" class="list-group-item active">查看</a>
+          <a href="${webbaseurl}/manageComputermodelFull.action" class="list-group-item">管理</a>
+          <a href="${webbaseurl}/computer/computermodelAdd.vm" class="list-group-item">添加</a>
+          
         </div>
       </div>
       <!--sidebar end-->
 
-</section>
+
 
 
 </section>
@@ -148,10 +124,10 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-<script src="http://localhost:8080/sbgl/js/jquery.js"></script>
-<script src="http://localhost:8080/sbgl/js/loader.min.js"></script>
-<script src="http://localhost:8080/sbgl/js/select2.js"></script>
-<script src="http://localhost:8080/sbgl/js/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script>
 	$("#modifyFaCategoryId").select2("val","2");
 </script>

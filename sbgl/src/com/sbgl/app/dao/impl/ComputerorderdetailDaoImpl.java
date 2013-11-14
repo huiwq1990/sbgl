@@ -46,7 +46,7 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 //  根据实体id查询实体full	
 	@Override
 	public ComputerorderdetailFull selectComputerorderdetailFullById(Integer computerorderdetailId) {
-		final String  sql = "select a.id as computerorderdetailid, a.computerorderid as computerorderdetailcomputerorderid, a.computerid as computerorderdetailcomputerid, a.computernumber as computerorderdetailcomputernumber, a.createtime as computerorderdetailcreatetime, a.borrowday as computerorderdetailborrowday, a.borrowperiod as computerorderdetailborrowperiod, a.status as computerorderdetailstatus, b.id as computerorderid, b.serialnumber as computerorderserialnumber, b.userid as computerorderuserid, b.createtime as computerordercreatetime, b.status as computerorderstatus, c.id as computerid, c.serialnumber as computerserialnumber, c.computermodelid as computercomputermodelid, c.createtime as computercreatetime, c.createuserid as computercreateuserid, c.status as computerstatus from Computerorderdetail a  left join Computerorder b on a.computerorderid=b.id left join Computerorder c on a.computerorderid=c.id " + "where a.id = "+computerorderdetailId;
+		final String  sql = "select a.id as computerorderdetailid, a.computerorderid as computerorderdetailcomputerorderid, a.computerid as computerorderdetailcomputerid, a.computernumber as computerorderdetailcomputernumber, a.createtime as computerorderdetailcreatetime, a.borrowday as computerorderdetailborrowday, a.borrowperiod as computerorderdetailborrowperiod, a.status as computerorderdetailstatus from Computerorderdetail a  " + "where a.id = "+computerorderdetailId;
 		
 		List<ComputerorderdetailFull> computerorderdetailList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
@@ -65,32 +65,11 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 		}
 		return null;
 	}
-
-/*
-	@Override
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByUserId(Integer userId) {
-		final String  sql = "select a.id as computerorderdetailid, a.computerorderid as computerorderdetailcomputerorderid, a.computerid as computerorderdetailcomputerid, a.computernumber as computerorderdetailcomputernumber, a.createtime as computerorderdetailcreatetime, a.borrowday as computerorderdetailborrowday, a.borrowperiod as computerorderdetailborrowperiod, a.status as computerorderdetailstatus, b.id as computerorderid, b.serialnumber as computerorderserialnumber, b.userid as computerorderuserid, b.createtime as computerordercreatetime, b.status as computerorderstatus, c.id as computerid, c.serialnumber as computerserialnumber, c.computermodelid as computercomputermodelid, c.createtime as computercreatetime, c.createuserid as computercreateuserid, c.status as computerstatus from Computerorderdetail a  left join Computerorder b on a.computerorderid=b.id left join Computerorder c on a.computerorderid=c.id " + "where a.userid = "+userId;
-		
-		List<ComputerorderdetailFull> computerorderdetailList = getHibernateTemplate()
-				.executeFind(new HibernateCallback() {
-					public Object doInHibernate(Session session)
-							throws HibernateException {
-						Query query = session.createSQLQuery(sql);
-						query.setResultTransformer(new EscColumnToBean(
-								ComputerorderdetailFull.class));
-						return query.list();
-					}
-				});
-		if (computerorderdetailList != null && !computerorderdetailList.isEmpty()) {
-			return computerorderdetailList;
-		}
-		return null;
-	}*/
 	
 //	查询全部实体full
 	@Override
 	public List<ComputerorderdetailFull> selectComputerorderdetailFullAll() {
-		final String  sql = "select a.id as computerorderdetailid, a.computerorderid as computerorderdetailcomputerorderid, a.computerid as computerorderdetailcomputerid, a.computernumber as computerorderdetailcomputernumber, a.createtime as computerorderdetailcreatetime, a.borrowday as computerorderdetailborrowday, a.borrowperiod as computerorderdetailborrowperiod, a.status as computerorderdetailstatus, b.id as computerorderid, b.serialnumber as computerorderserialnumber, b.userid as computerorderuserid, b.createtime as computerordercreatetime, b.status as computerorderstatus, c.id as computerid, c.serialnumber as computerserialnumber, c.computermodelid as computercomputermodelid, c.createtime as computercreatetime, c.createuserid as computercreateuserid, c.status as computerstatus from Computerorderdetail a  left join Computerorder b on a.computerorderid=b.id left join Computerorder c on a.computerorderid=c.id ";
+		final String  sql = "select a.id as computerorderdetailid, a.computerorderid as computerorderdetailcomputerorderid, a.computerid as computerorderdetailcomputerid, a.computernumber as computerorderdetailcomputernumber, a.createtime as computerorderdetailcreatetime, a.borrowday as computerorderdetailborrowday, a.borrowperiod as computerorderdetailborrowperiod, a.status as computerorderdetailstatus from Computerorderdetail a  ";
 		
 		List<ComputerorderdetailFull> computerorderdetailFullList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
@@ -108,14 +87,16 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 		return null;
 	}
 //  分页查询 实体full
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByPage(Page page){
-		final String  sql = "select a.id as computerorderdetailid, a.computerorderid as computerorderdetailcomputerorderid, a.computerid as computerorderdetailcomputerid, a.computernumber as computerorderdetailcomputernumber, a.createtime as computerorderdetailcreatetime, a.borrowday as computerorderdetailborrowday, a.borrowperiod as computerorderdetailborrowperiod, a.status as computerorderdetailstatus, b.id as computerorderid, b.serialnumber as computerorderserialnumber, b.userid as computerorderuserid, b.createtime as computerordercreatetime, b.status as computerorderstatus, c.id as computerid, c.serialnumber as computerserialnumber, c.computermodelid as computercomputermodelid, c.createtime as computercreatetime, c.createuserid as computercreateuserid, c.status as computerstatus from Computerorderdetail a  left join Computerorder b on a.computerorderid=b.id left join Computerorder c on a.computerorderid=c.id ";
+	public List<ComputerorderdetailFull> selectComputerorderdetailFullByPage(final Page page){
+		final String  sql = "select a.id as computerorderdetailid, a.computerorderid as computerorderdetailcomputerorderid, a.computerid as computerorderdetailcomputerid, a.computernumber as computerorderdetailcomputernumber, a.createtime as computerorderdetailcreatetime, a.borrowday as computerorderdetailborrowday, a.borrowperiod as computerorderdetailborrowperiod, a.status as computerorderdetailstatus from Computerorderdetail a  ";
 		
 		List<ComputerorderdetailFull> computerorderdetailFullList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
 					public Object doInHibernate(Session session)
 							throws HibernateException {
 						Query query = session.createSQLQuery(sql);
+						query.setFirstResult(page.getStartNum());
+						query.setMaxResults(page.getPageSize());
 						query.setResultTransformer(new EscColumnToBean(
 								ComputerorderdetailFull.class));
 						return query.list();
@@ -128,26 +109,5 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	}
 	
 //  根据关联查询实体full
-
-	//根据关联查询实体 
-	public List<Computerorderdetail> selectComputerorderdetailByComputerorderId(Integer computerorderid ){
-	
-		return null;
-	}
-	public List<Computerorderdetail> selectComputerorderdetailByComputerId(Integer computerid ){
-	
-		return null;
-	}
-  
-
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerorderId(Integer computerorderid ){
-	
-		return null;
-	}
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerId(Integer computerid ){
-	
-		return null;
-	}
-
  
 }

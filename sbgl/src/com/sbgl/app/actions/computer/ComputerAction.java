@@ -47,14 +47,16 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	private Integer computerid; //entity full 的id属性名称		
 	private String logprefix = "exec action method:";		
 	Page page = new Page();
-		
+	Integer pageNo=1;	
 	
 //  manage Computer
 	public String manageComputer(){
 		log.info(logprefix+"manageComputerFull");
 		
-//      分页查询		
-		Page page = new Page();
+//      分页查询	
+		page.setPageNo(pageNo);
+		//设置总数量，在service中设置
+		//page.setTotalpage(computerService.countComputerRow());
 		computerList  = computerService.selectComputerByPage(page);
 		
 //		查询全部
@@ -74,7 +76,9 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 		log.info("exec action method:manageComputerFull");
 		
 //      分页查询		
-		Page page = new Page();
+		page.setPageNo(pageNo);
+		//设置总数量，在service中设置
+		//page.setTotalpage(computerService.countComputerRow());
 		computerFullList  = computerService.selectComputerFullByPage(page);
 		
 //		查询全部
@@ -204,7 +208,7 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 		try {
 		
 			Integer getId = computer.getId();
-			if(getId != null && getId >= 0){
+			if(getId != null && getId < 0){
 				log.info("删除的id不规范");
 				return "Error";
 			}
@@ -403,13 +407,13 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
  * get id from modle,
  * @return
  */
-	public String viewYaomingFull() {
+	public String viewComputerFull() {
 				
 		try {
 			int getId = computer.getId();
 			log.info(this.logprefix + ";id=" + getId);
 			
-			if (getId > 0) {
+			if (getId < 0) {
 				log.error("error,id小于0不规范");
 				return "error";
 			}	
@@ -515,21 +519,6 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	}
 
 
-	//根据computermodelid 查询实体
-	public String selectComputerByComputermodelId() {
-			//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		computerList  = computerService.selectComputerAll();
-		for(int i = 0; i < computerList.size(); i++){
-			System.out.println("id="+computerList.get(i).getId());
-		}
-		return SUCCESS;
-	}
 	//根据createuserid 查询实体
 	public String selectComputerByLoginuserId() {
 			//检查用户登录
@@ -542,21 +531,6 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 		computerList  = computerService.selectComputerAll();
 		for(int i = 0; i < computerList.size(); i++){
 			System.out.println("id="+computerList.get(i).getId());
-		}
-		return SUCCESS;
-	}
-	//根据computermodelid 查询实体full
-	public String selectComputerFullByComputermodelId() {
-				//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		computerFullList  = computerService.selectComputerFullByComputermodelId(userId);
-		for(int i = 0; i < computerFullList.size(); i++){
-			//System.out.println("id="+computerFullList.get(i).getLoginusername());
 		}
 		return SUCCESS;
 	}
@@ -656,5 +630,11 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	public void setComputerid(int computerid) {
 		this.computerid = computerid;
 	}
-	
+		public Integer getPageNo() {
+		return pageNo;
+	}
+
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
 }

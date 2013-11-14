@@ -1,6 +1,6 @@
 package com.sbgl.app.entity;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * Loginuser entity. @author MyEclipse Persistence Tools
@@ -11,18 +11,9 @@ public class Loginuser extends com.sbgl.app.dao.DaoAbs implements
 
 	// Fields
 
-	private Integer userid;
-	private String password;
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
+	private Integer id;
 	private String name;
-	private Date createtime;
+	private Timestamp createtime;
 	private Integer status;
 
 	// Constructors
@@ -32,14 +23,14 @@ public class Loginuser extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** minimal constructor */
-	public Loginuser(Integer userid) {
-		this.userid = userid;
+	public Loginuser(Integer id) {
+		this.id = id;
 	}
 
 	/** full constructor */
-	public Loginuser(Integer userid, String name, Date createtime,
+	public Loginuser(Integer id, String name, Timestamp createtime,
 			Integer status) {
-		this.userid = userid;
+		this.id = id;
 		this.name = name;
 		this.createtime = createtime;
 		this.status = status;
@@ -48,11 +39,11 @@ public class Loginuser extends com.sbgl.app.dao.DaoAbs implements
 	// Property accessors
 
 	public Integer getId() {
-		return this.userid;
+		return this.id;
 	}
 
-	public void setId(Integer userid) {
-		this.userid = userid;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -63,11 +54,11 @@ public class Loginuser extends com.sbgl.app.dao.DaoAbs implements
 		this.name = name;
 	}
 
-	public Date getCreatetime() {
+	public Timestamp getCreatetime() {
 		return this.createtime;
 	}
 
-	public void setCreatetime(Date createtime) {
+	public void setCreatetime(Timestamp createtime) {
 		this.createtime = createtime;
 	}
 

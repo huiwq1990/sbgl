@@ -39,10 +39,8 @@ public interface ComputercategoryService{
 	public List<ComputercategoryFull> selectComputercategoryFullByPage(Page page);
 	
 //根据关联查询实体	
-	public List<Computercategory> selectComputercategoryByComputercategoryId(Integer parentcomputercategoryid );
 	public List<Computercategory> selectComputercategoryByLoginuserId(Integer createuserid );
 //根据关联查询实体full	
-	public List<ComputercategoryFull> selectComputercategoryFullByComputercategoryId(Integer parentcomputercategoryid );
 	public List<ComputercategoryFull> selectComputercategoryFullByLoginuserId(Integer createuserid );
 
 		

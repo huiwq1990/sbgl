@@ -24,11 +24,8 @@ public interface ComputermodelDao{
 
 
 	//根据关联查询实体 
-	public List<Computermodel> selectComputermodelByComputercategoryId(Integer computercategoryid );
-	//根据关联查询实体 
 	public List<Computermodel> selectComputermodelByLoginuserId(Integer createuserid );
 
-	public List<ComputermodelFull> selectComputermodelFullByComputercategoryId(Integer computercategoryid );
 	public List<ComputermodelFull> selectComputermodelFullByLoginuserId(Integer createuserid );
 
  

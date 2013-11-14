@@ -105,13 +105,12 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 	}
 		
 //  分页查询
-
 	public List<Computerorder> selectComputerorderByPage(Page page){	
-		
 		return baseDao.selectByPage(Computerorder.class,page);
 	}
-	public List<ComputerorderFull> selectComputerorderFullByPage(Page page){	
-		
+//  分页查询full	
+	public List<ComputerorderFull> selectComputerorderFullByPage(Page page){
+		page.setTotalCount(baseDao.getRowCount(Computerorder.class));
 		return computerorderDao.selectComputerorderFullByPage(page);
 	}
 	

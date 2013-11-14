@@ -46,7 +46,7 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
 //  根据实体id查询实体full	
 	@Override
 	public ComputermodelFull selectComputermodelFullById(Integer computermodelId) {
-		final String  sql = "select a.id as computermodelid, a.name as computermodelname, a.computercategoryid as computermodelcomputercategoryid, a.picpath as computermodelpicpath, a.createtime as computermodelcreatetime, a.createuserid as computermodelcreateuserid, a.status as computermodelstatus, b.id as computercategoryid, b.parentcomputercategoryid as computercategoryparentcomputercategoryid, b.name as computercategoryname, b.createtime as computercategorycreatetime, b.createuserid as computercategorycreateuserid, b.status as computercategorystatus, c.id as loginuserid, c.name as loginusername, c.createtime as loginusercreatetime, c.status as loginuserstatus from Computermodel a  left join Computercategory b on a.computercategoryid=b.id left join Computercategory c on a.computercategoryid=c.id " + "where a.id = "+computermodelId;
+		final String  sql = "select a.id as computermodelid, a.name as computermodelname, a.computercategoryid as computermodelcomputercategoryid, a.picpath as computermodelpicpath, a.createtime as computermodelcreatetime, a.createuserid as computermodelcreateuserid, a.count as computermodelcount, a.status as computermodelstatus, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computermodel a  left join Loginuser b on a.createuserid=b.id " + "where a.id = "+computermodelId;
 		
 		List<ComputermodelFull> computermodelList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
@@ -65,32 +65,11 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
 		}
 		return null;
 	}
-
-/*
-	@Override
-	public List<ComputermodelFull> selectComputermodelFullByUserId(Integer userId) {
-		final String  sql = "select a.id as computermodelid, a.name as computermodelname, a.computercategoryid as computermodelcomputercategoryid, a.picpath as computermodelpicpath, a.createtime as computermodelcreatetime, a.createuserid as computermodelcreateuserid, a.status as computermodelstatus, b.id as computercategoryid, b.parentcomputercategoryid as computercategoryparentcomputercategoryid, b.name as computercategoryname, b.createtime as computercategorycreatetime, b.createuserid as computercategorycreateuserid, b.status as computercategorystatus, c.id as loginuserid, c.name as loginusername, c.createtime as loginusercreatetime, c.status as loginuserstatus from Computermodel a  left join Computercategory b on a.computercategoryid=b.id left join Computercategory c on a.computercategoryid=c.id " + "where a.userid = "+userId;
-		
-		List<ComputermodelFull> computermodelList = getHibernateTemplate()
-				.executeFind(new HibernateCallback() {
-					public Object doInHibernate(Session session)
-							throws HibernateException {
-						Query query = session.createSQLQuery(sql);
-						query.setResultTransformer(new EscColumnToBean(
-								ComputermodelFull.class));
-						return query.list();
-					}
-				});
-		if (computermodelList != null && !computermodelList.isEmpty()) {
-			return computermodelList;
-		}
-		return null;
-	}*/
 	
 //	查询全部实体full
 	@Override
 	public List<ComputermodelFull> selectComputermodelFullAll() {
-		final String  sql = "select a.id as computermodelid, a.name as computermodelname, a.computercategoryid as computermodelcomputercategoryid, a.picpath as computermodelpicpath, a.createtime as computermodelcreatetime, a.createuserid as computermodelcreateuserid, a.status as computermodelstatus, b.id as computercategoryid, b.parentcomputercategoryid as computercategoryparentcomputercategoryid, b.name as computercategoryname, b.createtime as computercategorycreatetime, b.createuserid as computercategorycreateuserid, b.status as computercategorystatus, c.id as loginuserid, c.name as loginusername, c.createtime as loginusercreatetime, c.status as loginuserstatus from Computermodel a  left join Computercategory b on a.computercategoryid=b.id left join Computercategory c on a.computercategoryid=c.id ";
+		final String  sql = "select a.id as computermodelid, a.name as computermodelname, a.computercategoryid as computermodelcomputercategoryid, a.picpath as computermodelpicpath, a.createtime as computermodelcreatetime, a.createuserid as computermodelcreateuserid, a.count as computermodelcount, a.status as computermodelstatus, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computermodel a  left join Loginuser b on a.createuserid=b.id ";
 		
 		List<ComputermodelFull> computermodelFullList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
@@ -108,14 +87,16 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
 		return null;
 	}
 //  分页查询 实体full
-	public List<ComputermodelFull> selectComputermodelFullByPage(Page page){
-		final String  sql = "select a.id as computermodelid, a.name as computermodelname, a.computercategoryid as computermodelcomputercategoryid, a.picpath as computermodelpicpath, a.createtime as computermodelcreatetime, a.createuserid as computermodelcreateuserid, a.status as computermodelstatus, b.id as computercategoryid, b.parentcomputercategoryid as computercategoryparentcomputercategoryid, b.name as computercategoryname, b.createtime as computercategorycreatetime, b.createuserid as computercategorycreateuserid, b.status as computercategorystatus, c.id as loginuserid, c.name as loginusername, c.createtime as loginusercreatetime, c.status as loginuserstatus from Computermodel a  left join Computercategory b on a.computercategoryid=b.id left join Computercategory c on a.computercategoryid=c.id ";
+	public List<ComputermodelFull> selectComputermodelFullByPage(final Page page){
+		final String  sql = "select a.id as computermodelid, a.name as computermodelname, a.computercategoryid as computermodelcomputercategoryid, a.picpath as computermodelpicpath, a.createtime as computermodelcreatetime, a.createuserid as computermodelcreateuserid, a.count as computermodelcount, a.status as computermodelstatus, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computermodel a  left join Loginuser b on a.createuserid=b.id ";
 		
 		List<ComputermodelFull> computermodelFullList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
 					public Object doInHibernate(Session session)
 							throws HibernateException {
 						Query query = session.createSQLQuery(sql);
+						query.setFirstResult(page.getStartNum());
+						query.setMaxResults(page.getPageSize());
 						query.setResultTransformer(new EscColumnToBean(
 								ComputermodelFull.class));
 						return query.list();
@@ -130,20 +111,12 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
 //  根据关联查询实体full
 
 	//根据关联查询实体 
-	public List<Computermodel> selectComputermodelByComputercategoryId(Integer computercategoryid ){
-	
-		return null;
-	}
 	public List<Computermodel> selectComputermodelByLoginuserId(Integer createuserid ){
 	
 		return null;
 	}
   
 
-	public List<ComputermodelFull> selectComputermodelFullByComputercategoryId(Integer computercategoryid ){
-	
-		return null;
-	}
 	public List<ComputermodelFull> selectComputermodelFullByLoginuserId(Integer createuserid ){
 	
 		return null;

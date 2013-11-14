@@ -105,24 +105,15 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 	}
 		
 //  分页查询
-
 	public List<Computermodel> selectComputermodelByPage(Page page){	
-		
 		return baseDao.selectByPage(Computermodel.class,page);
 	}
-	public List<ComputermodelFull> selectComputermodelFullByPage(Page page){	
-		
+//  分页查询full	
+	public List<ComputermodelFull> selectComputermodelFullByPage(Page page){
+		page.setTotalCount(baseDao.getRowCount(Computermodel.class));
 		return computermodelDao.selectComputermodelFullByPage(page);
 	}
 	
-	//根据computercategoryid 查询实体
-	@Override
-	public List<Computermodel> selectComputermodelByComputercategoryId(Integer computercategoryid ) {
-		List<Computermodel> computermodelList = new ArrayList<Computermodel>();
-		String id = String.valueOf(computercategoryid );
-		computermodelList = baseDao.getEntityByProperty("Computermodel", "computercategoryid ", id);
-		return computermodelList;
-	}
 	//根据createuserid 查询实体
 	@Override
 	public List<Computermodel> selectComputermodelByLoginuserId(Integer createuserid ) {
@@ -130,11 +121,6 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 		String id = String.valueOf(createuserid );
 		computermodelList = baseDao.getEntityByProperty("Computermodel", "createuserid ", id);
 		return computermodelList;
-	}
-	//根据computercategoryid 查询实体full
-	@Override
-	public List<ComputermodelFull> selectComputermodelFullByComputercategoryId(Integer computercategoryid ) {
-		return computermodelDao.selectComputermodelFullByComputercategoryId(computercategoryid );
 	}
 	//根据createuserid 查询实体full
 	@Override

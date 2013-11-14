@@ -12,16 +12,9 @@ public class ComputerFull extends DaoAbs implements java.io.Serializable {
 			private Date computercreatetime;
 			private Integer computercreateuserid;
 			private Integer computerstatus;
-			private Integer computermodelid;
-			private String computermodelname;
-			private Integer computermodelcomputercategoryid;
-			private String computermodelpicpath;
-			private Date computermodelcreatetime;
-			private Integer computermodelcreateuserid;
-			private Integer computermodelstatus;
 			private Integer loginuserid;
 			private String loginusername;
-			private Date loginusercreatetime;
+			private Timestamp loginusercreatetime;
 			private Integer loginuserstatus;
 		
 	
@@ -62,48 +55,6 @@ public class ComputerFull extends DaoAbs implements java.io.Serializable {
 		public Integer getComputerstatus(){		
 			return this.computerstatus;
 		}
-			public void setComputermodelid(Integer computermodelid){		
-			this.computermodelid = computermodelid;
-		}
-		public Integer getComputermodelid(){		
-			return this.computermodelid;
-		}
-			public void setComputermodelname(String computermodelname){		
-			this.computermodelname = computermodelname;
-		}
-		public String getComputermodelname(){		
-			return this.computermodelname;
-		}
-			public void setComputermodelcomputercategoryid(Integer computermodelcomputercategoryid){		
-			this.computermodelcomputercategoryid = computermodelcomputercategoryid;
-		}
-		public Integer getComputermodelcomputercategoryid(){		
-			return this.computermodelcomputercategoryid;
-		}
-			public void setComputermodelpicpath(String computermodelpicpath){		
-			this.computermodelpicpath = computermodelpicpath;
-		}
-		public String getComputermodelpicpath(){		
-			return this.computermodelpicpath;
-		}
-			public void setComputermodelcreatetime(Date computermodelcreatetime){		
-			this.computermodelcreatetime = computermodelcreatetime;
-		}
-		public Date getComputermodelcreatetime(){		
-			return this.computermodelcreatetime;
-		}
-			public void setComputermodelcreateuserid(Integer computermodelcreateuserid){		
-			this.computermodelcreateuserid = computermodelcreateuserid;
-		}
-		public Integer getComputermodelcreateuserid(){		
-			return this.computermodelcreateuserid;
-		}
-			public void setComputermodelstatus(Integer computermodelstatus){		
-			this.computermodelstatus = computermodelstatus;
-		}
-		public Integer getComputermodelstatus(){		
-			return this.computermodelstatus;
-		}
 			public void setLoginuserid(Integer loginuserid){		
 			this.loginuserid = loginuserid;
 		}
@@ -116,10 +67,10 @@ public class ComputerFull extends DaoAbs implements java.io.Serializable {
 		public String getLoginusername(){		
 			return this.loginusername;
 		}
-			public void setLoginusercreatetime(Date loginusercreatetime){		
+			public void setLoginusercreatetime(Timestamp loginusercreatetime){		
 			this.loginusercreatetime = loginusercreatetime;
 		}
-		public Date getLoginusercreatetime(){		
+		public Timestamp getLoginusercreatetime(){		
 			return this.loginusercreatetime;
 		}
 			public void setLoginuserstatus(Integer loginuserstatus){		

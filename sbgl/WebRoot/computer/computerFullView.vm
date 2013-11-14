@@ -7,8 +7,8 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="./css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="./css/global.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
 <!--[if lt IE 10]>
   <script src="../js/jquery.placeholder.js"></script>
@@ -27,7 +27,7 @@
 
 <body id="admin">
 
-
+<a href="${webbaseurl}/manageComputerFull.action">返回管理</a>
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
 
       <!--admin-wrap start-->
@@ -40,7 +40,7 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    
                     <th class="name">属性</th>
                     <th class="f-category">属性值</th>
                     
@@ -48,87 +48,52 @@
                 </thead>
                 <tbody>					
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>computerid</td>
                     <td>$!computerFull.computerid</td>                    
                   </tr>               
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>computerserialnumber</td>
                     <td>$!computerFull.computerserialnumber</td>                    
                   </tr>               
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>computercomputermodelid</td>
                     <td>$!computerFull.computercomputermodelid</td>                    
                   </tr>               
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>computercreatetime</td>
                     <td>$!computerFull.computercreatetime</td>                    
                   </tr>               
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>computercreateuserid</td>
                     <td>$!computerFull.computercreateuserid</td>                    
                   </tr>               
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>computerstatus</td>
                     <td>$!computerFull.computerstatus</td>                    
                   </tr>               
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computermodelid</td>
-                    <td>$!computerFull.computermodelid</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computermodelname</td>
-                    <td>$!computerFull.computermodelname</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computermodelcomputercategoryid</td>
-                    <td>$!computerFull.computermodelcomputercategoryid</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computermodelpicpath</td>
-                    <td>$!computerFull.computermodelpicpath</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computermodelcreatetime</td>
-                    <td>$!computerFull.computermodelcreatetime</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computermodelcreateuserid</td>
-                    <td>$!computerFull.computermodelcreateuserid</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computermodelstatus</td>
-                    <td>$!computerFull.computermodelstatus</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>loginuserid</td>
                     <td>$!computerFull.loginuserid</td>                    
                   </tr>               
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>loginusername</td>
                     <td>$!computerFull.loginusername</td>                    
                   </tr>               
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>loginusercreatetime</td>
                     <td>$!computerFull.loginusercreatetime</td>                    
                   </tr>               
 		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                   
                     <td>loginuserstatus</td>
                     <td>$!computerFull.loginuserstatus</td>                    
                   </tr>               
@@ -149,11 +114,11 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-<script src="../js/jquery.js"></script>
-<script src="../js/loader.min.js"></script>
-<script src="../js/select2.js"></script>
-<script src="../js/bootstrap-hover-dropdown.min.js"></script>
-<script src="../js/bfa.js"></script>
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/computer/computer.js"></script>
 <script>
 	$("#modifyFaCategoryId").select2("val","2");
 </script>

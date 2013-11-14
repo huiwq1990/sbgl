@@ -24,11 +24,8 @@ public interface ComputerDao{
 
 
 	//根据关联查询实体 
-	public List<Computer> selectComputerByComputermodelId(Integer computermodelid );
-	//根据关联查询实体 
 	public List<Computer> selectComputerByLoginuserId(Integer createuserid );
 
-	public List<ComputerFull> selectComputerFullByComputermodelId(Integer computermodelid );
 	public List<ComputerFull> selectComputerFullByLoginuserId(Integer createuserid );
 
  

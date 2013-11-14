@@ -8,8 +8,8 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="http://localhost:8080/sbgl/css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="http://localhost:8080/sbgl/css/global.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
 <!--[if lt IE 10]>
   <script src="../js/jquery.placeholder.js"></script>
@@ -33,30 +33,12 @@
       <div id="admin-wrap">
         <div id="admin-content" class="clearfix">    
             <!--control-bar start-->
-            <div class="control-bar clearfix">
-             
-
-
-              <div class="page pull-right clearfix">
-                <ul class="page-index nav nav-pills pull-left">
-                  <li class="record"><strong>XX</strong>条记录</li>
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">最新</a></li>
-                      <li><a href="#">最旧</a></li>
-                    </ul>
-                  </li>              
-                </ul>
-                <div class="pagination pull-right">
-                  <ul>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
-                  </ul>
-                </div>              
-              </div>
-            </div><!--control-bar end-->
+         
             <div class="panel panel-default">
+
+<!--管理内容从这里开始 -->
+
+				<form id="formComputerorderManage" action="${webbaseurl}/manageComputerorderFull.action" method="get">
 
               <table class="table table-hover">
                 <thead>
@@ -82,47 +64,51 @@
 
 #foreach($tempcomputerorder in $computerorderFullList)
                   <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                   
-<td>$!tempcomputerorder.${attrName}</td>
-<td>$!tempcomputerorder.${attrName}</td>
-<td>$!tempcomputerorder.${attrName}</td>
-<td>$!tempcomputerorder.${attrName}</td>
-<td>$!tempcomputerorder.${attrName}</td>
-<td>$!tempcomputerorder.${attrName}</td>
-<td>$!tempcomputerorder.${attrName}</td>
-<td>$!tempcomputerorder.${attrName}</td>
-<td>$!tempcomputerorder.${attrName}</td>
-					<td><a href="http://localhost:8080/sbgl/viewComputerorderFull.action?id=$tempcomputerorder.$entityFullAttrNameList.get(0)">查看</a></td> 
-					<td><a href="http://localhost:8080/sbgl/${entityFullDelActionName}.action?id=$tempcomputerorder.$entityFullAttrNameList.get(0)">删除</a></td>			
-					<td><a href="http://localhost:8080/sbgl/editComputerorderFull.action?id=$tempcomputerorder.$entityFullAttrNameList.get(0)">修改</a></td>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>                   
+<td>$!tempcomputerorder.computerorderid</td>
+<td>$!tempcomputerorder.computerorderserialnumber</td>
+<td>$!tempcomputerorder.computerorderuserid</td>
+<td>$!tempcomputerorder.computerordercreatetime</td>
+<td>$!tempcomputerorder.computerorderstatus</td>
+<td>$!tempcomputerorder.loginuserid</td>
+<td>$!tempcomputerorder.loginusername</td>
+<td>$!tempcomputerorder.loginusercreatetime</td>
+<td>$!tempcomputerorder.loginuserstatus</td>
+					<td><a href="${webbaseurl}/viewComputerorderFull.action?id=$!tempcomputerorder.computerorderid">查看</a></td> 
+					<td><a href="${webbaseurl}/deleteComputerorderFull.action?id=$!tempcomputerorder.computerorderid">删除</a></td>			
+					<td><a href="${webbaseurl}/editComputerorderFull.action?id=$!tempcomputerorder.computerorderid">修改</a></td>
                  
                   </tr>
 #end            
            
                 </tbody>
               </table>
+  		  
+#getPageHtml("formId=formComputerorderManage" "parameters=pageNo:$page.pageNo,pageSize:$page.pageSize,totalCount:$page.totalCount,pageviewcount:$page.pageviewcount,vmpath:common/page.vm")
+
+</form>
 
             </div>
           </div>
 
       </div>
       <!--equip-wrap end-->
-      <!--sidebar start-->
-      <div id="lside">
+	  
+	  
+       <div id="lside">
         <form class="form-group">
           <input type="text" class="form-control" placeholder="搜索">
           <i class="icon-search"></i>
         </form>
         <div class="list-group">
-          <a href=".html" class="list-group-item">管理</a>
-          <a href=".html" class="list-group-item">添加</a>
-          <a href=".html" class="list-group-item active">查看</a>
+          <a href="${webbaseurl}/manageComputerorderFull.action" class="list-group-item">管理</a>
+          <a href="${webbaseurl}/computer/computerorderAdd.vm" class="list-group-item">添加</a>
+          
         </div>
       </div>
       <!--sidebar end-->
 
-</section>
+
 
 
 </section>
@@ -132,10 +118,10 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-<script src="http://localhost:8080/sbgl/js/jquery.js"></script>
-<script src="http://localhost:8080/sbgl/js/loader.min.js"></script>
-<script src="http://localhost:8080/sbgl/js/select2.js"></script>
-<script src="http://localhost:8080/sbgl/js/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script>
 	$("#modifyFaCategoryId").select2("val","2");
 </script>

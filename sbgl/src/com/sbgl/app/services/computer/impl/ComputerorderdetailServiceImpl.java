@@ -105,41 +105,14 @@ public class ComputerorderdetailServiceImpl implements ComputerorderdetailServic
 	}
 		
 //  分页查询
-
 	public List<Computerorderdetail> selectComputerorderdetailByPage(Page page){	
-		
 		return baseDao.selectByPage(Computerorderdetail.class,page);
 	}
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByPage(Page page){	
-		
+//  分页查询full	
+	public List<ComputerorderdetailFull> selectComputerorderdetailFullByPage(Page page){
+		page.setTotalCount(baseDao.getRowCount(Computerorderdetail.class));
 		return computerorderdetailDao.selectComputerorderdetailFullByPage(page);
 	}
 	
-	//根据computerorderid 查询实体
-	@Override
-	public List<Computerorderdetail> selectComputerorderdetailByComputerorderId(Integer computerorderid ) {
-		List<Computerorderdetail> computerorderdetailList = new ArrayList<Computerorderdetail>();
-		String id = String.valueOf(computerorderid );
-		computerorderdetailList = baseDao.getEntityByProperty("Computerorderdetail", "computerorderid ", id);
-		return computerorderdetailList;
-	}
-	//根据computerid 查询实体
-	@Override
-	public List<Computerorderdetail> selectComputerorderdetailByComputerId(Integer computerid ) {
-		List<Computerorderdetail> computerorderdetailList = new ArrayList<Computerorderdetail>();
-		String id = String.valueOf(computerid );
-		computerorderdetailList = baseDao.getEntityByProperty("Computerorderdetail", "computerid ", id);
-		return computerorderdetailList;
-	}
-	//根据computerorderid 查询实体full
-	@Override
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerorderId(Integer computerorderid ) {
-		return computerorderdetailDao.selectComputerorderdetailFullByComputerorderId(computerorderid );
-	}
-	//根据computerid 查询实体full
-	@Override
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerId(Integer computerid ) {
-		return computerorderdetailDao.selectComputerorderdetailFullByComputerId(computerid );
-	}
 
 }

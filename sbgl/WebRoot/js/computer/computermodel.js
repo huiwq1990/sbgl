@@ -14,6 +14,8 @@ function computermodelFormToJson(){
 					
 					"createuserid" : $('#input_computermodel_createuserid').val(),
 					
+					"count" : $('#input_computermodel_count').val(),
+					
 					"status" : $('#input_computermodel_status').val()
 					
 

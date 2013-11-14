@@ -47,14 +47,16 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 	private Integer computermodelid; //entity full 的id属性名称		
 	private String logprefix = "exec action method:";		
 	Page page = new Page();
-		
+	Integer pageNo=1;	
 	
 //  manage Computermodel
 	public String manageComputermodel(){
 		log.info(logprefix+"manageComputermodelFull");
 		
-//      分页查询		
-		Page page = new Page();
+//      分页查询	
+		page.setPageNo(pageNo);
+		//设置总数量，在service中设置
+		//page.setTotalpage(computermodelService.countComputermodelRow());
 		computermodelList  = computermodelService.selectComputermodelByPage(page);
 		
 //		查询全部
@@ -74,7 +76,9 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 		log.info("exec action method:manageComputermodelFull");
 		
 //      分页查询		
-		Page page = new Page();
+		page.setPageNo(pageNo);
+		//设置总数量，在service中设置
+		//page.setTotalpage(computermodelService.countComputermodelRow());
 		computermodelFullList  = computermodelService.selectComputermodelFullByPage(page);
 		
 //		查询全部
@@ -204,7 +208,7 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 		try {
 		
 			Integer getId = computermodel.getId();
-			if(getId != null && getId >= 0){
+			if(getId != null && getId < 0){
 				log.info("删除的id不规范");
 				return "Error";
 			}
@@ -251,6 +255,7 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 												  								
 												  								
 												  								
+												  								
 								actionMsg = getText("viewComputermodelSuccess");
 			}else{
 				actionMsg = getText("viewComputermodelFail");
@@ -281,6 +286,7 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
   				tempComputermodel.setPicpath(computermodel.getPicpath());
   				tempComputermodel.setCreatetime(computermodel.getCreatetime());
   				tempComputermodel.setCreateuserid(computermodel.getCreateuserid());
+  				tempComputermodel.setCount(computermodel.getCount());
   				tempComputermodel.setStatus(computermodel.getStatus());
  
 				
@@ -405,13 +411,13 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
  * get id from modle,
  * @return
  */
-	public String viewYaomingFull() {
+	public String viewComputermodelFull() {
 				
 		try {
 			int getId = computermodel.getId();
 			log.info(this.logprefix + ";id=" + getId);
 			
-			if (getId > 0) {
+			if (getId < 0) {
 				log.error("error,id小于0不规范");
 				return "error";
 			}	
@@ -517,21 +523,6 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 	}
 
 
-	//根据computercategoryid 查询实体
-	public String selectComputermodelByComputercategoryId() {
-			//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		computermodelList  = computermodelService.selectComputermodelAll();
-		for(int i = 0; i < computermodelList.size(); i++){
-			System.out.println("id="+computermodelList.get(i).getId());
-		}
-		return SUCCESS;
-	}
 	//根据createuserid 查询实体
 	public String selectComputermodelByLoginuserId() {
 			//检查用户登录
@@ -544,21 +535,6 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 		computermodelList  = computermodelService.selectComputermodelAll();
 		for(int i = 0; i < computermodelList.size(); i++){
 			System.out.println("id="+computermodelList.get(i).getId());
-		}
-		return SUCCESS;
-	}
-	//根据computercategoryid 查询实体full
-	public String selectComputermodelFullByComputercategoryId() {
-				//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		computermodelFullList  = computermodelService.selectComputermodelFullByComputercategoryId(userId);
-		for(int i = 0; i < computermodelFullList.size(); i++){
-			//System.out.println("id="+computermodelFullList.get(i).getLoginusername());
 		}
 		return SUCCESS;
 	}
@@ -658,5 +634,11 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 	public void setComputermodelid(int computermodelid) {
 		this.computermodelid = computermodelid;
 	}
-	
+		public Integer getPageNo() {
+		return pageNo;
+	}
+
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
 }

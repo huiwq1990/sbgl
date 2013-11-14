@@ -24,11 +24,8 @@ public interface ComputercategoryDao{
 
 
 	//根据关联查询实体 
-	public List<Computercategory> selectComputercategoryByComputercategoryId(Integer parentcomputercategoryid );
-	//根据关联查询实体 
 	public List<Computercategory> selectComputercategoryByLoginuserId(Integer createuserid );
 
-	public List<ComputercategoryFull> selectComputercategoryFullByComputercategoryId(Integer parentcomputercategoryid );
 	public List<ComputercategoryFull> selectComputercategoryFullByLoginuserId(Integer createuserid );
 
  

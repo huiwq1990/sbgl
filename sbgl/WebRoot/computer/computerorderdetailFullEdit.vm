@@ -1,9 +1,3 @@
-<%@ page language="java" import="java.util.*,com.sbgl.app.entity.*" pageEncoding="utf-8"%>
-<%@taglib prefix="s" uri="/struts-tags"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
 
 <!DOCTYPE html>
 <html>
@@ -14,8 +8,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="http://localhost:8080/sbgl/css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="http://localhost:8080/sbgl/css/global.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
 <!--[if lt IE 10]>
   <script src="../js/jquery.placeholder.js"></script>
@@ -33,6 +27,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 
 <body id="admin">
+	
+	<a href="${webbaseurl}/manageComputerorderdetailFull.action">返回管理</a>
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
 
       <!--admin-wrap start-->
@@ -42,259 +38,61 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="control-bar clearfix">
              
 
-              <div class="page pull-right clearfix">
-                <ul class="page-index nav nav-pills pull-left">
-                  <li class="record"><strong>XX</strong>条记录</li>
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">最新</a></li>
-                      <li><a href="#">最旧</a></li>
-                    </ul>
-                  </li>              
-                </ul>
-                <div class="pagination pull-right">
-                  <ul>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
-                  </ul>
-                </div>              
-              </div>
-            </div><!--control-bar end-->
-            <div class="panel panel-default">
-			
-<!--data start--> 
-
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-                    <th class="name">属性名称</th>
-                    <th class="f-category">属性值</th>
-                    
-                  </tr>
-                </thead>
-                <tbody>					
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderdetailcomputerorderid</td>
-                    <td>${computerorderdetailFull.computerorderdetailcomputerorderid}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderdetailcomputerid</td>
-                    <td>${computerorderdetailFull.computerorderdetailcomputerid}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderdetailcomputernumber</td>
-                    <td>${computerorderdetailFull.computerorderdetailcomputernumber}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderdetailcreatetime</td>
-                    <td>${computerorderdetailFull.computerorderdetailcreatetime}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderdetailborrowday</td>
-                    <td>${computerorderdetailFull.computerorderdetailborrowday}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderdetailborrowperiod</td>
-                    <td>${computerorderdetailFull.computerorderdetailborrowperiod}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderdetailstatus</td>
-                    <td>${computerorderdetailFull.computerorderdetailstatus}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderid</td>
-                    <td>${computerorderdetailFull.computerorderid}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderserialnumber</td>
-                    <td>${computerorderdetailFull.computerorderserialnumber}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderuserid</td>
-                    <td>${computerorderdetailFull.computerorderuserid}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerordercreatetime</td>
-                    <td>${computerorderdetailFull.computerordercreatetime}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerorderstatus</td>
-                    <td>${computerorderdetailFull.computerorderstatus}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerid</td>
-                    <td>${computerorderdetailFull.computerid}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerserialnumber</td>
-                    <td>${computerorderdetailFull.computerserialnumber}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computercomputermodelid</td>
-                    <td>${computerorderdetailFull.computercomputermodelid}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computercreatetime</td>
-                    <td>${computerorderdetailFull.computercreatetime}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computercreateuserid</td>
-                    <td>${computerorderdetailFull.computercreateuserid}</td>                    
-                  </tr>               
-		          <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>computerstatus</td>
-                    <td>${computerorderdetailFull.computerstatus}</td>                    
-                  </tr>               
-                </tbody>
-              </table>
-			   
-			   
-<!--data end--> 
-
-            </div>
-          </div>
-
-      </div>
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
+             
 	  
 	  
  <div class="panel-body">
                  <!-- form start -->
                <form action="" method="" name="AddComputerorderdetailForm">
-				 <input type="text" class="form-control" id="#input_computerorderdetail_${attrName}" value="$!computerorderdetailFull.$attrName}">
+				 <input type="hidden" class="form-control" id="input_computerorderdetail_id" value="$!computerorderdetailFull.computerorderdetailid">
+
+
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderdetailcomputerorderid</label>
+                    <label for="computerorderid" class="col-lg-2 control-label">computerorderid</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerorderdetailcomputerorderid" value="$!computerorderdetailFull.computerorderdetailcomputerorderid}">
+                      <input type="text" class="form-control" id="input_computerorderdetail_computerorderid" value="$!computerorderdetailFull.computerorderdetailcomputerorderid">
                     </div>
                   </div>
+
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderdetailcomputerid</label>
+                    <label for="computerid" class="col-lg-2 control-label">computerid</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerorderdetailcomputerid" value="$!computerorderdetailFull.computerorderdetailcomputerid}">
+                      <input type="text" class="form-control" id="input_computerorderdetail_computerid" value="$!computerorderdetailFull.computerorderdetailcomputerid">
                     </div>
                   </div>
+
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderdetailcomputernumber</label>
+                    <label for="computernumber" class="col-lg-2 control-label">computernumber</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerorderdetailcomputernumber" value="$!computerorderdetailFull.computerorderdetailcomputernumber}">
+                      <input type="text" class="form-control" id="input_computerorderdetail_computernumber" value="$!computerorderdetailFull.computerorderdetailcomputernumber">
                     </div>
                   </div>
+
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderdetailcreatetime</label>
+                    <label for="createtime" class="col-lg-2 control-label">createtime</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerorderdetailcreatetime" value="$!computerorderdetailFull.computerorderdetailcreatetime}">
+                      <input type="text" class="form-control" id="input_computerorderdetail_createtime" value="$!computerorderdetailFull.computerorderdetailcreatetime">
                     </div>
                   </div>
+
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderdetailborrowday</label>
+                    <label for="borrowday" class="col-lg-2 control-label">borrowday</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerorderdetailborrowday" value="$!computerorderdetailFull.computerorderdetailborrowday}">
+                      <input type="text" class="form-control" id="input_computerorderdetail_borrowday" value="$!computerorderdetailFull.computerorderdetailborrowday">
                     </div>
                   </div>
+
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderdetailborrowperiod</label>
+                    <label for="borrowperiod" class="col-lg-2 control-label">borrowperiod</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerorderdetailborrowperiod" value="$!computerorderdetailFull.computerorderdetailborrowperiod}">
+                      <input type="text" class="form-control" id="input_computerorderdetail_borrowperiod" value="$!computerorderdetailFull.computerorderdetailborrowperiod">
                     </div>
                   </div>
+
 		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderdetailstatus</label>
+                    <label for="status" class="col-lg-2 control-label">status</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerorderdetailstatus" value="$!computerorderdetailFull.computerorderdetailstatus}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderid</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerorderid" value="$!computerorderdetailFull.computerorderid}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderserialnumber</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerorderserialnumber" value="$!computerorderdetailFull.computerorderserialnumber}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderuserid</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerorderuserid" value="$!computerorderdetailFull.computerorderuserid}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerordercreatetime</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerordercreatetime" value="$!computerorderdetailFull.computerordercreatetime}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerorderstatus</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerorderstatus" value="$!computerorderdetailFull.computerorderstatus}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerid</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerid" value="$!computerorderdetailFull.computerid}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerserialnumber</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerserialnumber" value="$!computerorderdetailFull.computerserialnumber}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computercomputermodelid</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computercomputermodelid" value="$!computerorderdetailFull.computercomputermodelid}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computercreatetime</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computercreatetime" value="$!computerorderdetailFull.computercreatetime}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computercreateuserid</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computercreateuserid" value="$!computerorderdetailFull.computercreateuserid}">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">computerstatus</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="computerstatus" value="$!computerorderdetailFull.computerstatus}">
+                      <input type="text" class="form-control" id="input_computerorderdetail_status" value="$!computerorderdetailFull.computerorderdetailstatus">
                     </div>
                   </div>
 
@@ -304,10 +102,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   <div class="form-group">   
                   <div class="col-lg-offset-2 col-lg-4">
                      <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-                     <button type="submit" onClick = "updateComputerorderdetailAjax()" class="btn btn-primary">添 加</button>
+                     <button type="submit" onClick = "updateComputerorderdetailAjax()" class="btn btn-primary">修改</button>
                    </div>
                </div>
 				<!-- submit end -->
+
+
 
 
               </div>
@@ -326,9 +126,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-<script src="http://localhost:8080/sbgl/js/jquery.js"></script>
-<script src="http://localhost:8080/sbgl/js/loader.min.js"></script>
-<script src="http://localhost:8080/sbgl/js/select2.js"></script>
-<script src="http://localhost:8080/sbgl/js/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/computer/computerorderdetail.js"></script>
 </body>
 </html>

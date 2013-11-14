@@ -7,8 +7,8 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="http://localhost:8080/sbgl/css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="http://localhost:8080/sbgl/css/global.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
 
 <!--[if lt IE 10]>
@@ -42,7 +42,7 @@
             <div class="panel panel-default">
               <div class="panel-body">
  <!--Add 表单-->             
-               <form action="http://localhost:8080/sbgl/addComputerAjax.action" method="post" name="AddComputerForm">
+               <form action="${webbaseurl}/addComputerAjax.action" method="post" name="AddComputerForm">
 		<div class="form-group">
                     <label for="label_computer_id" class="col-lg-2 control-label">id</label>
                     <div class="col-lg-4">
@@ -79,13 +79,14 @@
                      <input type="text" class="form-control" id="input_computer_status" name="status"  placeholder="status">
                     </div>
                   </div>
-
+	              <!--
                  <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-4">
                       <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
                       <button type="submit" class="btn btn-primary">添 加</button>
                    </div>
                </div>
+			   -->
 
                </form>
                <div class="form-group">
@@ -103,7 +104,18 @@
 
       </div>
       <!--equip-wrap end-->
-    
+       <!--sidebar start-->
+      <div id="lside">
+        <form class="form-group">
+          <input type="text" class="form-control" placeholder="搜索">
+          <i class="icon-search"></i>
+        </form>
+        <div class="list-group">
+          <a href="${webbaseurl}/manageComputerFull.action" class="list-group-item">管理</a>
+          <a href="${webbaseurl}/computer/computerAdd.vm" class="list-group-item">添加</a>
+          
+        </div>
+      </div>
       <!--sidebar end-->
 
 </section>
@@ -111,10 +123,10 @@
 
     <!-- javascript
     ================================================== -->
-<script src="http://localhost:8080/sbgl/js/jquery.js"></script>
-<script src="http://localhost:8080/sbgl/js/loader.min.js"></script>
-<script src="http://localhost:8080/sbgl/js/select2.js"></script>
-<script src="http://localhost:8080/sbgl/js/bootstrap-hover-dropdown.min.js"></script>
-	<script src="http://localhost:8080/sbgl/js/computer/computer.js"></script>
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/computer/computer.js"></script>
 </body>
 </html>

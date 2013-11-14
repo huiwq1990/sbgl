@@ -103,6 +103,11 @@ public class ComputermodelSpringTest {
 																method.invoke(obj,Integer.valueOf(datas[6].trim()));
  										}
 					
+									if(!datas[7].trim().equals("")){
+					 method = map.get(attrs[7]);
+																method.invoke(obj,Integer.valueOf(datas[7].trim()));
+ 										}
+					
 								
 				computermodelService.addComputermodel((Computermodel)obj);
 			}

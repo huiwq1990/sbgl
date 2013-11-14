@@ -47,14 +47,16 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	private Integer computerorderid; //entity full 的id属性名称		
 	private String logprefix = "exec action method:";		
 	Page page = new Page();
-		
+	Integer pageNo=1;	
 	
 //  manage Computerorder
 	public String manageComputerorder(){
 		log.info(logprefix+"manageComputerorderFull");
 		
-//      分页查询		
-		Page page = new Page();
+//      分页查询	
+		page.setPageNo(pageNo);
+		//设置总数量，在service中设置
+		//page.setTotalpage(computerorderService.countComputerorderRow());
 		computerorderList  = computerorderService.selectComputerorderByPage(page);
 		
 //		查询全部
@@ -74,7 +76,9 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 		log.info("exec action method:manageComputerorderFull");
 		
 //      分页查询		
-		Page page = new Page();
+		page.setPageNo(pageNo);
+		//设置总数量，在service中设置
+		//page.setTotalpage(computerorderService.countComputerorderRow());
 		computerorderFullList  = computerorderService.selectComputerorderFullByPage(page);
 		
 //		查询全部
@@ -204,7 +208,7 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 		try {
 		
 			Integer getId = computerorder.getId();
-			if(getId != null && getId >= 0){
+			if(getId != null && getId < 0){
 				log.info("删除的id不规范");
 				return "Error";
 			}
@@ -401,13 +405,13 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
  * get id from modle,
  * @return
  */
-	public String viewYaomingFull() {
+	public String viewComputerorderFull() {
 				
 		try {
 			int getId = computerorder.getId();
 			log.info(this.logprefix + ";id=" + getId);
 			
-			if (getId > 0) {
+			if (getId < 0) {
 				log.error("error,id小于0不规范");
 				return "error";
 			}	
@@ -624,5 +628,11 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	public void setComputerorderid(int computerorderid) {
 		this.computerorderid = computerorderid;
 	}
-	
+		public Integer getPageNo() {
+		return pageNo;
+	}
+
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
 }
