@@ -53,10 +53,12 @@
              <th class="name">computermodelcreateuserid</th>
              <th class="name">computermodelcount</th>
              <th class="name">computermodelstatus</th>
-             <th class="name">loginuserid</th>
-             <th class="name">loginusername</th>
-             <th class="name">loginusercreatetime</th>
-             <th class="name">loginuserstatus</th>
+             <th class="name">computercategoryid</th>
+             <th class="name">computercategoryparentcomputercategoryid</th>
+             <th class="name">computercategoryname</th>
+             <th class="name">computercategorycreatetime</th>
+             <th class="name">computercategorycreateuserid</th>
+             <th class="name">computercategorystatus</th>
                    <th class="name">View</th>
 				   <th class="name">Del</th>
 				   <th class="name">Edit</th>
@@ -76,10 +78,12 @@
 <td>$!tempcomputermodel.computermodelcreateuserid</td>
 <td>$!tempcomputermodel.computermodelcount</td>
 <td>$!tempcomputermodel.computermodelstatus</td>
-<td>$!tempcomputermodel.loginuserid</td>
-<td>$!tempcomputermodel.loginusername</td>
-<td>$!tempcomputermodel.loginusercreatetime</td>
-<td>$!tempcomputermodel.loginuserstatus</td>
+<td>$!tempcomputermodel.computercategoryid</td>
+<td>$!tempcomputermodel.computercategoryparentcomputercategoryid</td>
+<td>$!tempcomputermodel.computercategoryname</td>
+<td>$!tempcomputermodel.computercategorycreatetime</td>
+<td>$!tempcomputermodel.computercategorycreateuserid</td>
+<td>$!tempcomputermodel.computercategorystatus</td>
 					<td><a href="${webbaseurl}/viewComputermodelFull.action?id=$!tempcomputermodel.computermodelid">查看</a></td> 
 					<td><a href="${webbaseurl}/deleteComputermodelFull.action?id=$!tempcomputermodel.computermodelid">删除</a></td>			
 					<td><a href="${webbaseurl}/editComputermodelFull.action?id=$!tempcomputermodel.computermodelid">修改</a></td>

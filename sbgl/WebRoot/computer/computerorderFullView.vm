@@ -72,26 +72,6 @@
                     <td>computerorderstatus</td>
                     <td>$!computerorderFull.computerorderstatus</td>                    
                   </tr>               
-		          <tr>
-                   
-                    <td>loginuserid</td>
-                    <td>$!computerorderFull.loginuserid</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>loginusername</td>
-                    <td>$!computerorderFull.loginusername</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>loginusercreatetime</td>
-                    <td>$!computerorderFull.loginusercreatetime</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>loginuserstatus</td>
-                    <td>$!computerorderFull.loginuserstatus</td>                    
-                  </tr>               
                 </tbody>
               </table>
 			  

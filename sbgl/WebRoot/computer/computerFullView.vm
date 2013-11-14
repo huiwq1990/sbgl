@@ -79,23 +79,48 @@
                   </tr>               
 		          <tr>
                    
-                    <td>loginuserid</td>
-                    <td>$!computerFull.loginuserid</td>                    
+                    <td>computerremark</td>
+                    <td>$!computerFull.computerremark</td>                    
                   </tr>               
 		          <tr>
                    
-                    <td>loginusername</td>
-                    <td>$!computerFull.loginusername</td>                    
+                    <td>computermodelid</td>
+                    <td>$!computerFull.computermodelid</td>                    
                   </tr>               
 		          <tr>
                    
-                    <td>loginusercreatetime</td>
-                    <td>$!computerFull.loginusercreatetime</td>                    
+                    <td>computermodelname</td>
+                    <td>$!computerFull.computermodelname</td>                    
                   </tr>               
 		          <tr>
                    
-                    <td>loginuserstatus</td>
-                    <td>$!computerFull.loginuserstatus</td>                    
+                    <td>computermodelcomputercategoryid</td>
+                    <td>$!computerFull.computermodelcomputercategoryid</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computermodelpicpath</td>
+                    <td>$!computerFull.computermodelpicpath</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computermodelcreatetime</td>
+                    <td>$!computerFull.computermodelcreatetime</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computermodelcreateuserid</td>
+                    <td>$!computerFull.computermodelcreateuserid</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computermodelcount</td>
+                    <td>$!computerFull.computermodelcount</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computermodelstatus</td>
+                    <td>$!computerFull.computermodelstatus</td>                    
                   </tr>               
                 </tbody>
               </table>

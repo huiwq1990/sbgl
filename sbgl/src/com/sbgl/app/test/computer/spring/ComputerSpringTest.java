@@ -98,6 +98,11 @@ public class ComputerSpringTest {
 																method.invoke(obj,Integer.valueOf(datas[5].trim()));
  										}
 					
+									if(!datas[6].trim().equals("")){
+					 method = map.get(attrs[6]);
+																method.invoke(obj,String.valueOf(datas[6].trim()));
+ 										}
+					
 								
 				computerService.addComputer((Computer)obj);
 			}

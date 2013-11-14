@@ -12,7 +12,9 @@ function computerFormToJson(){
 					
 					"createuserid" : $('#input_computer_createuserid').val(),
 					
-					"status" : $('#input_computer_status').val()
+					"status" : $('#input_computer_status').val(),
+					
+					"remark" : $('#input_computer_remark').val()
 					
 
 	};

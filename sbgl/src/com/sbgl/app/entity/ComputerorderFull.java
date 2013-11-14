@@ -11,10 +11,6 @@ public class ComputerorderFull extends DaoAbs implements java.io.Serializable {
 			private Integer computerorderuserid;
 			private Date computerordercreatetime;
 			private Integer computerorderstatus;
-			private Integer loginuserid;
-			private String loginusername;
-			private Timestamp loginusercreatetime;
-			private Integer loginuserstatus;
 		
 	
 			
@@ -47,30 +43,6 @@ public class ComputerorderFull extends DaoAbs implements java.io.Serializable {
 		}
 		public Integer getComputerorderstatus(){		
 			return this.computerorderstatus;
-		}
-			public void setLoginuserid(Integer loginuserid){		
-			this.loginuserid = loginuserid;
-		}
-		public Integer getLoginuserid(){		
-			return this.loginuserid;
-		}
-			public void setLoginusername(String loginusername){		
-			this.loginusername = loginusername;
-		}
-		public String getLoginusername(){		
-			return this.loginusername;
-		}
-			public void setLoginusercreatetime(Timestamp loginusercreatetime){		
-			this.loginusercreatetime = loginusercreatetime;
-		}
-		public Timestamp getLoginusercreatetime(){		
-			return this.loginusercreatetime;
-		}
-			public void setLoginuserstatus(Integer loginuserstatus){		
-			this.loginuserstatus = loginuserstatus;
-		}
-		public Integer getLoginuserstatus(){		
-			return this.loginuserstatus;
 		}
 		
 	

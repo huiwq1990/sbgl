@@ -519,8 +519,8 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	}
 
 
-	//根据createuserid 查询实体
-	public String selectComputercategoryByLoginuserId() {
+	//根据parentcomputercategoryid 查询实体
+	public String selectComputercategoryByComputercategoryId() {
 			//检查用户登录
 		Loginuser lu = (Loginuser)session.get("Loginuser");
 		if(lu==null || lu.getId()==null){
@@ -534,8 +534,8 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 		}
 		return SUCCESS;
 	}
-	//根据createuserid 查询实体full
-	public String selectComputercategoryFullByLoginuserId() {
+	//根据parentcomputercategoryid 查询实体full
+	public String selectComputercategoryFullByComputercategoryId() {
 				//检查用户登录
 		Loginuser lu = (Loginuser)session.get("Loginuser");
 		if(lu==null || lu.getId()==null){
@@ -543,7 +543,7 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 		}
 		Integer userId = lu.getId();
 		
-		computercategoryFullList  = computercategoryService.selectComputercategoryFullByLoginuserId(userId);
+		computercategoryFullList  = computercategoryService.selectComputercategoryFullByComputercategoryId(userId);
 		for(int i = 0; i < computercategoryFullList.size(); i++){
 			//System.out.println("id="+computercategoryFullList.get(i).getLoginusername());
 		}

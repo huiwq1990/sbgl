@@ -7,13 +7,13 @@
 <hibernate-configuration>
 	<session-factory>
 
-<!-- 公用common -->
+		<!-- 公用common -->
 		<mapping resource="com/sbgl/app/entity/Loginuser.hbm.xml" />
 		<mapping resource="com/sbgl/app/entity/Maxno.hbm.xml" />
 
 
 
-<!-- 小龙 -->
+		<!-- 小龙 -->
 
 		<mapping
 			resource="com/sbgl/app/entity/Equipmentclassification.hbm.xml" />
@@ -24,7 +24,7 @@
 		<mapping resource="com/sbgl/app/entity/Categorydetail.hbm.xml" />
 		<mapping resource="com/sbgl/app/entity/Equipmentdetail.hbm.xml" />
 		<mapping resource="com/sbgl/app/entity/Equipment.hbm.xml" />
-	
+
 		<!-- <mapping resource="com/sbgl/app/entity/Administrator.hbm.xml" /> -->
 		<!-- <mapping resource="com/sbgl/app/entity/Equipmenborrow.hbm.xml" /> -->
 		<!-- <mapping resource="com/sbgl/app/entity/Worker.hbm.xml" />
@@ -76,8 +76,8 @@
 		<mapping resource="com/sbgl/app/entity/Computer.hbm.xml" />
 		<mapping
 			resource="com/sbgl/app/entity/Computerorderdetail.hbm.xml" />
-			<mapping resource="com/sbgl/app/entity/Computerorder.hbm.xml" />
-			<mapping
+		<mapping resource="com/sbgl/app/entity/Computerorder.hbm.xml" />
+		<mapping
 			resource="com/sbgl/app/entity/Computercategory.hbm.xml" />
 
 		<mapping resource="com/sbgl/app/entity/Computermodel.hbm.xml" />

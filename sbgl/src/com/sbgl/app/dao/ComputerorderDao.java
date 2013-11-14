@@ -21,12 +21,5 @@ public interface ComputerorderDao{
 //  分页查询 实体full
 	public List<ComputerorderFull> selectComputerorderFullByPage(Page page);
 
-
-
-	//根据关联查询实体 
-	public List<Computerorder> selectComputerorderByLoginuserId(Integer userid );
-
-	public List<ComputerorderFull> selectComputerorderFullByLoginuserId(Integer userid );
-
  
 }

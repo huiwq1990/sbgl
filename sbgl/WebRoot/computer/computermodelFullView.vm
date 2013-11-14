@@ -89,23 +89,33 @@
                   </tr>               
 		          <tr>
                    
-                    <td>loginuserid</td>
-                    <td>$!computermodelFull.loginuserid</td>                    
+                    <td>computercategoryid</td>
+                    <td>$!computermodelFull.computercategoryid</td>                    
                   </tr>               
 		          <tr>
                    
-                    <td>loginusername</td>
-                    <td>$!computermodelFull.loginusername</td>                    
+                    <td>computercategoryparentcomputercategoryid</td>
+                    <td>$!computermodelFull.computercategoryparentcomputercategoryid</td>                    
                   </tr>               
 		          <tr>
                    
-                    <td>loginusercreatetime</td>
-                    <td>$!computermodelFull.loginusercreatetime</td>                    
+                    <td>computercategoryname</td>
+                    <td>$!computermodelFull.computercategoryname</td>                    
                   </tr>               
 		          <tr>
                    
-                    <td>loginuserstatus</td>
-                    <td>$!computermodelFull.loginuserstatus</td>                    
+                    <td>computercategorycreatetime</td>
+                    <td>$!computermodelFull.computercategorycreatetime</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computercategorycreateuserid</td>
+                    <td>$!computermodelFull.computercategorycreateuserid</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computercategorystatus</td>
+                    <td>$!computermodelFull.computercategorystatus</td>                    
                   </tr>               
                 </tbody>
               </table>

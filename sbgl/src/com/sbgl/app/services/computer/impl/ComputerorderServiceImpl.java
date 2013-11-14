@@ -114,18 +114,5 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 		return computerorderDao.selectComputerorderFullByPage(page);
 	}
 	
-	//根据userid 查询实体
-	@Override
-	public List<Computerorder> selectComputerorderByLoginuserId(Integer userid ) {
-		List<Computerorder> computerorderList = new ArrayList<Computerorder>();
-		String id = String.valueOf(userid );
-		computerorderList = baseDao.getEntityByProperty("Computerorder", "userid ", id);
-		return computerorderList;
-	}
-	//根据userid 查询实体full
-	@Override
-	public List<ComputerorderFull> selectComputerorderFullByLoginuserId(Integer userid ) {
-		return computerorderDao.selectComputerorderFullByLoginuserId(userid );
-	}
 
 }

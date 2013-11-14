@@ -523,8 +523,8 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 	}
 
 
-	//根据createuserid 查询实体
-	public String selectComputermodelByLoginuserId() {
+	//根据computercategoryid 查询实体
+	public String selectComputermodelByComputercategoryId() {
 			//检查用户登录
 		Loginuser lu = (Loginuser)session.get("Loginuser");
 		if(lu==null || lu.getId()==null){
@@ -538,8 +538,8 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 		}
 		return SUCCESS;
 	}
-	//根据createuserid 查询实体full
-	public String selectComputermodelFullByLoginuserId() {
+	//根据computercategoryid 查询实体full
+	public String selectComputermodelFullByComputercategoryId() {
 				//检查用户登录
 		Loginuser lu = (Loginuser)session.get("Loginuser");
 		if(lu==null || lu.getId()==null){
@@ -547,7 +547,7 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 		}
 		Integer userId = lu.getId();
 		
-		computermodelFullList  = computermodelService.selectComputermodelFullByLoginuserId(userId);
+		computermodelFullList  = computermodelService.selectComputermodelFullByComputercategoryId(userId);
 		for(int i = 0; i < computermodelFullList.size(); i++){
 			//System.out.println("id="+computermodelFullList.get(i).getLoginusername());
 		}

@@ -12,10 +12,15 @@ public class ComputerFull extends DaoAbs implements java.io.Serializable {
 			private Date computercreatetime;
 			private Integer computercreateuserid;
 			private Integer computerstatus;
-			private Integer loginuserid;
-			private String loginusername;
-			private Timestamp loginusercreatetime;
-			private Integer loginuserstatus;
+			private String computerremark;
+			private Integer computermodelid;
+			private String computermodelname;
+			private Integer computermodelcomputercategoryid;
+			private String computermodelpicpath;
+			private Date computermodelcreatetime;
+			private Integer computermodelcreateuserid;
+			private Integer computermodelcount;
+			private Integer computermodelstatus;
 		
 	
 			
@@ -55,29 +60,59 @@ public class ComputerFull extends DaoAbs implements java.io.Serializable {
 		public Integer getComputerstatus(){		
 			return this.computerstatus;
 		}
-			public void setLoginuserid(Integer loginuserid){		
-			this.loginuserid = loginuserid;
+			public void setComputerremark(String computerremark){		
+			this.computerremark = computerremark;
 		}
-		public Integer getLoginuserid(){		
-			return this.loginuserid;
+		public String getComputerremark(){		
+			return this.computerremark;
 		}
-			public void setLoginusername(String loginusername){		
-			this.loginusername = loginusername;
+			public void setComputermodelid(Integer computermodelid){		
+			this.computermodelid = computermodelid;
 		}
-		public String getLoginusername(){		
-			return this.loginusername;
+		public Integer getComputermodelid(){		
+			return this.computermodelid;
 		}
-			public void setLoginusercreatetime(Timestamp loginusercreatetime){		
-			this.loginusercreatetime = loginusercreatetime;
+			public void setComputermodelname(String computermodelname){		
+			this.computermodelname = computermodelname;
 		}
-		public Timestamp getLoginusercreatetime(){		
-			return this.loginusercreatetime;
+		public String getComputermodelname(){		
+			return this.computermodelname;
 		}
-			public void setLoginuserstatus(Integer loginuserstatus){		
-			this.loginuserstatus = loginuserstatus;
+			public void setComputermodelcomputercategoryid(Integer computermodelcomputercategoryid){		
+			this.computermodelcomputercategoryid = computermodelcomputercategoryid;
 		}
-		public Integer getLoginuserstatus(){		
-			return this.loginuserstatus;
+		public Integer getComputermodelcomputercategoryid(){		
+			return this.computermodelcomputercategoryid;
+		}
+			public void setComputermodelpicpath(String computermodelpicpath){		
+			this.computermodelpicpath = computermodelpicpath;
+		}
+		public String getComputermodelpicpath(){		
+			return this.computermodelpicpath;
+		}
+			public void setComputermodelcreatetime(Date computermodelcreatetime){		
+			this.computermodelcreatetime = computermodelcreatetime;
+		}
+		public Date getComputermodelcreatetime(){		
+			return this.computermodelcreatetime;
+		}
+			public void setComputermodelcreateuserid(Integer computermodelcreateuserid){		
+			this.computermodelcreateuserid = computermodelcreateuserid;
+		}
+		public Integer getComputermodelcreateuserid(){		
+			return this.computermodelcreateuserid;
+		}
+			public void setComputermodelcount(Integer computermodelcount){		
+			this.computermodelcount = computermodelcount;
+		}
+		public Integer getComputermodelcount(){		
+			return this.computermodelcount;
+		}
+			public void setComputermodelstatus(Integer computermodelstatus){		
+			this.computermodelstatus = computermodelstatus;
+		}
+		public Integer getComputermodelstatus(){		
+			return this.computermodelstatus;
 		}
 		
 	

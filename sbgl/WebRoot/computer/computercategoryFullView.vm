@@ -79,23 +79,33 @@
                   </tr>               
 		          <tr>
                    
-                    <td>loginuserid</td>
-                    <td>$!computercategoryFull.loginuserid</td>                    
+                    <td>parentcomputercategoryid</td>
+                    <td>$!computercategoryFull.parentcomputercategoryid</td>                    
                   </tr>               
 		          <tr>
                    
-                    <td>loginusername</td>
-                    <td>$!computercategoryFull.loginusername</td>                    
+                    <td>parentcomputercategoryparentcomputercategoryid</td>
+                    <td>$!computercategoryFull.parentcomputercategoryparentcomputercategoryid</td>                    
                   </tr>               
 		          <tr>
                    
-                    <td>loginusercreatetime</td>
-                    <td>$!computercategoryFull.loginusercreatetime</td>                    
+                    <td>parentcomputercategoryname</td>
+                    <td>$!computercategoryFull.parentcomputercategoryname</td>                    
                   </tr>               
 		          <tr>
                    
-                    <td>loginuserstatus</td>
-                    <td>$!computercategoryFull.loginuserstatus</td>                    
+                    <td>parentcomputercategorycreatetime</td>
+                    <td>$!computercategoryFull.parentcomputercategorycreatetime</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>parentcomputercategorycreateuserid</td>
+                    <td>$!computercategoryFull.parentcomputercategorycreateuserid</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>parentcomputercategorystatus</td>
+                    <td>$!computercategoryFull.parentcomputercategorystatus</td>                    
                   </tr>               
                 </tbody>
               </table>

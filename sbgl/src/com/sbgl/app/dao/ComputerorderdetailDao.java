@@ -21,5 +21,15 @@ public interface ComputerorderdetailDao{
 //  分页查询 实体full
 	public List<ComputerorderdetailFull> selectComputerorderdetailFullByPage(Page page);
 
+
+
+	//根据关联查询实体 
+	public List<Computerorderdetail> selectComputerorderdetailByComputerorderId(Integer computerorderid );
+	//根据关联查询实体 
+	public List<Computerorderdetail> selectComputerorderdetailByComputerId(Integer computerid );
+
+	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerorderId(Integer computerorderid );
+	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerId(Integer computerid );
+
  
 }

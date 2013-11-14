@@ -67,6 +67,7 @@
                     <th class="name">createtime</th>
                     <th class="name">createuserid</th>
                     <th class="name">status</th>
+                    <th class="name">remark</th>
                     <th class="name">View</th>
 				   <th class="name">Del</th>
 				   <th class="name">Edit</th>
@@ -85,6 +86,7 @@
                                         <td>$!tempcomputer.createtime</td>
                                         <td>$!tempcomputer.createuserid</td>
                                         <td>$!tempcomputer.status</td>
+                                        <td>$!tempcomputer.remark</td>
                     					<td><a href="http://localhost:8080/sbgl/viewComputer.action?id=$tempcomputer.id">查看</a></td> 
 					<td><a href="http://localhost:8080/sbgl/deleteComputer.action?id=$tempcomputer.id">删除</a></td>			
 					<td><a href="http://localhost:8080/sbgl/editComputer.action?id=$tempcomputer.id">修改</a></td>

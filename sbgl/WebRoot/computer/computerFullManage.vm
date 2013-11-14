@@ -51,10 +51,15 @@
              <th class="name">computercreatetime</th>
              <th class="name">computercreateuserid</th>
              <th class="name">computerstatus</th>
-             <th class="name">loginuserid</th>
-             <th class="name">loginusername</th>
-             <th class="name">loginusercreatetime</th>
-             <th class="name">loginuserstatus</th>
+             <th class="name">computerremark</th>
+             <th class="name">computermodelid</th>
+             <th class="name">computermodelname</th>
+             <th class="name">computermodelcomputercategoryid</th>
+             <th class="name">computermodelpicpath</th>
+             <th class="name">computermodelcreatetime</th>
+             <th class="name">computermodelcreateuserid</th>
+             <th class="name">computermodelcount</th>
+             <th class="name">computermodelstatus</th>
                    <th class="name">View</th>
 				   <th class="name">Del</th>
 				   <th class="name">Edit</th>
@@ -72,10 +77,15 @@
 <td>$!tempcomputer.computercreatetime</td>
 <td>$!tempcomputer.computercreateuserid</td>
 <td>$!tempcomputer.computerstatus</td>
-<td>$!tempcomputer.loginuserid</td>
-<td>$!tempcomputer.loginusername</td>
-<td>$!tempcomputer.loginusercreatetime</td>
-<td>$!tempcomputer.loginuserstatus</td>
+<td>$!tempcomputer.computerremark</td>
+<td>$!tempcomputer.computermodelid</td>
+<td>$!tempcomputer.computermodelname</td>
+<td>$!tempcomputer.computermodelcomputercategoryid</td>
+<td>$!tempcomputer.computermodelpicpath</td>
+<td>$!tempcomputer.computermodelcreatetime</td>
+<td>$!tempcomputer.computermodelcreateuserid</td>
+<td>$!tempcomputer.computermodelcount</td>
+<td>$!tempcomputer.computermodelstatus</td>
 					<td><a href="${webbaseurl}/viewComputerFull.action?id=$!tempcomputer.computerid">查看</a></td> 
 					<td><a href="${webbaseurl}/deleteComputerFull.action?id=$!tempcomputer.computerid">删除</a></td>			
 					<td><a href="${webbaseurl}/editComputerFull.action?id=$!tempcomputer.computerid">修改</a></td>

@@ -114,18 +114,18 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 		return computercategoryDao.selectComputercategoryFullByPage(page);
 	}
 	
-	//根据createuserid 查询实体
+	//根据parentcomputercategoryid 查询实体
 	@Override
-	public List<Computercategory> selectComputercategoryByLoginuserId(Integer createuserid ) {
+	public List<Computercategory> selectComputercategoryByComputercategoryId(Integer parentcomputercategoryid ) {
 		List<Computercategory> computercategoryList = new ArrayList<Computercategory>();
-		String id = String.valueOf(createuserid );
-		computercategoryList = baseDao.getEntityByProperty("Computercategory", "createuserid ", id);
+		String id = String.valueOf(parentcomputercategoryid );
+		computercategoryList = baseDao.getEntityByProperty("Computercategory", "parentcomputercategoryid ", id);
 		return computercategoryList;
 	}
-	//根据createuserid 查询实体full
+	//根据parentcomputercategoryid 查询实体full
 	@Override
-	public List<ComputercategoryFull> selectComputercategoryFullByLoginuserId(Integer createuserid ) {
-		return computercategoryDao.selectComputercategoryFullByLoginuserId(createuserid );
+	public List<ComputercategoryFull> selectComputercategoryFullByComputercategoryId(Integer parentcomputercategoryid ) {
+		return computercategoryDao.selectComputercategoryFullByComputercategoryId(parentcomputercategoryid );
 	}
 
 }

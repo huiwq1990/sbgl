@@ -254,6 +254,7 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 												  								
 												  								
 												  								
+												  								
 								actionMsg = getText("viewComputerSuccess");
 			}else{
 				actionMsg = getText("viewComputerFail");
@@ -284,6 +285,7 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
   				tempComputer.setCreatetime(computer.getCreatetime());
   				tempComputer.setCreateuserid(computer.getCreateuserid());
   				tempComputer.setStatus(computer.getStatus());
+  				tempComputer.setRemark(computer.getRemark());
  
 				
 				computerService.updateComputer(tempComputer);		
@@ -519,8 +521,8 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	}
 
 
-	//根据createuserid 查询实体
-	public String selectComputerByLoginuserId() {
+	//根据computermodelid 查询实体
+	public String selectComputerByComputermodelId() {
 			//检查用户登录
 		Loginuser lu = (Loginuser)session.get("Loginuser");
 		if(lu==null || lu.getId()==null){
@@ -534,8 +536,8 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 		}
 		return SUCCESS;
 	}
-	//根据createuserid 查询实体full
-	public String selectComputerFullByLoginuserId() {
+	//根据computermodelid 查询实体full
+	public String selectComputerFullByComputermodelId() {
 				//检查用户登录
 		Loginuser lu = (Loginuser)session.get("Loginuser");
 		if(lu==null || lu.getId()==null){
@@ -543,7 +545,7 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 		}
 		Integer userId = lu.getId();
 		
-		computerFullList  = computerService.selectComputerFullByLoginuserId(userId);
+		computerFullList  = computerService.selectComputerFullByComputermodelId(userId);
 		for(int i = 0; i < computerFullList.size(); i++){
 			//System.out.println("id="+computerFullList.get(i).getLoginusername());
 		}

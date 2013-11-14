@@ -87,6 +87,66 @@
                     <td>computerorderdetailstatus</td>
                     <td>$!computerorderdetailFull.computerorderdetailstatus</td>                    
                   </tr>               
+		          <tr>
+                   
+                    <td>computerorderid</td>
+                    <td>$!computerorderdetailFull.computerorderid</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computerorderserialnumber</td>
+                    <td>$!computerorderdetailFull.computerorderserialnumber</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computerorderuserid</td>
+                    <td>$!computerorderdetailFull.computerorderuserid</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computerordercreatetime</td>
+                    <td>$!computerorderdetailFull.computerordercreatetime</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computerorderstatus</td>
+                    <td>$!computerorderdetailFull.computerorderstatus</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computerid</td>
+                    <td>$!computerorderdetailFull.computerid</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computerserialnumber</td>
+                    <td>$!computerorderdetailFull.computerserialnumber</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computercomputermodelid</td>
+                    <td>$!computerorderdetailFull.computercomputermodelid</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computercreatetime</td>
+                    <td>$!computerorderdetailFull.computercreatetime</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computercreateuserid</td>
+                    <td>$!computerorderdetailFull.computercreateuserid</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computerstatus</td>
+                    <td>$!computerorderdetailFull.computerstatus</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computerremark</td>
+                    <td>$!computerorderdetailFull.computerremark</td>                    
+                  </tr>               
                 </tbody>
               </table>
 			  

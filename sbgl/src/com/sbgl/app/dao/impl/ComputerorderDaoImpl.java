@@ -46,7 +46,7 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 //  根据实体id查询实体full	
 	@Override
 	public ComputerorderFull selectComputerorderFullById(Integer computerorderId) {
-		final String  sql = "select a.id as computerorderid, a.serialnumber as computerorderserialnumber, a.userid as computerorderuserid, a.createtime as computerordercreatetime, a.status as computerorderstatus, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computerorder a  left join Loginuser b on a.userid=b.id " + "where a.id = "+computerorderId;
+		final String  sql = "select a.id as computerorderid, a.serialnumber as computerorderserialnumber, a.userid as computerorderuserid, a.createtime as computerordercreatetime, a.status as computerorderstatus from Computerorder a  " + "where a.id = "+computerorderId;
 		
 		List<ComputerorderFull> computerorderList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
@@ -69,7 +69,7 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 //	查询全部实体full
 	@Override
 	public List<ComputerorderFull> selectComputerorderFullAll() {
-		final String  sql = "select a.id as computerorderid, a.serialnumber as computerorderserialnumber, a.userid as computerorderuserid, a.createtime as computerordercreatetime, a.status as computerorderstatus, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computerorder a  left join Loginuser b on a.userid=b.id ";
+		final String  sql = "select a.id as computerorderid, a.serialnumber as computerorderserialnumber, a.userid as computerorderuserid, a.createtime as computerordercreatetime, a.status as computerorderstatus from Computerorder a  ";
 		
 		List<ComputerorderFull> computerorderFullList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
@@ -88,7 +88,7 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 	}
 //  分页查询 实体full
 	public List<ComputerorderFull> selectComputerorderFullByPage(final Page page){
-		final String  sql = "select a.id as computerorderid, a.serialnumber as computerorderserialnumber, a.userid as computerorderuserid, a.createtime as computerordercreatetime, a.status as computerorderstatus, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computerorder a  left join Loginuser b on a.userid=b.id ";
+		final String  sql = "select a.id as computerorderid, a.serialnumber as computerorderserialnumber, a.userid as computerorderuserid, a.createtime as computerordercreatetime, a.status as computerorderstatus from Computerorder a  ";
 		
 		List<ComputerorderFull> computerorderFullList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
@@ -109,18 +109,5 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 	}
 	
 //  根据关联查询实体full
-
-	//根据关联查询实体 
-	public List<Computerorder> selectComputerorderByLoginuserId(Integer userid ){
-	
-		return null;
-	}
-  
-
-	public List<ComputerorderFull> selectComputerorderFullByLoginuserId(Integer userid ){
-	
-		return null;
-	}
-
  
 }

@@ -12,10 +12,12 @@ public class ComputercategoryFull extends DaoAbs implements java.io.Serializable
 			private Date computercategorycreatetime;
 			private Integer computercategorycreateuserid;
 			private Integer computercategorystatus;
-			private Integer loginuserid;
-			private String loginusername;
-			private Timestamp loginusercreatetime;
-			private Integer loginuserstatus;
+			private Integer parentcomputercategoryid;
+			private Integer parentcomputercategoryparentcomputercategoryid;
+			private String parentcomputercategoryname;
+			private Date parentcomputercategorycreatetime;
+			private Integer parentcomputercategorycreateuserid;
+			private Integer parentcomputercategorystatus;
 		
 	
 			
@@ -55,29 +57,41 @@ public class ComputercategoryFull extends DaoAbs implements java.io.Serializable
 		public Integer getComputercategorystatus(){		
 			return this.computercategorystatus;
 		}
-			public void setLoginuserid(Integer loginuserid){		
-			this.loginuserid = loginuserid;
+			public void setParentcomputercategoryid(Integer parentcomputercategoryid){		
+			this.parentcomputercategoryid = parentcomputercategoryid;
 		}
-		public Integer getLoginuserid(){		
-			return this.loginuserid;
+		public Integer getParentcomputercategoryid(){		
+			return this.parentcomputercategoryid;
 		}
-			public void setLoginusername(String loginusername){		
-			this.loginusername = loginusername;
+			public void setParentcomputercategoryparentcomputercategoryid(Integer parentcomputercategoryparentcomputercategoryid){		
+			this.parentcomputercategoryparentcomputercategoryid = parentcomputercategoryparentcomputercategoryid;
 		}
-		public String getLoginusername(){		
-			return this.loginusername;
+		public Integer getParentcomputercategoryparentcomputercategoryid(){		
+			return this.parentcomputercategoryparentcomputercategoryid;
 		}
-			public void setLoginusercreatetime(Timestamp loginusercreatetime){		
-			this.loginusercreatetime = loginusercreatetime;
+			public void setParentcomputercategoryname(String parentcomputercategoryname){		
+			this.parentcomputercategoryname = parentcomputercategoryname;
 		}
-		public Timestamp getLoginusercreatetime(){		
-			return this.loginusercreatetime;
+		public String getParentcomputercategoryname(){		
+			return this.parentcomputercategoryname;
 		}
-			public void setLoginuserstatus(Integer loginuserstatus){		
-			this.loginuserstatus = loginuserstatus;
+			public void setParentcomputercategorycreatetime(Date parentcomputercategorycreatetime){		
+			this.parentcomputercategorycreatetime = parentcomputercategorycreatetime;
 		}
-		public Integer getLoginuserstatus(){		
-			return this.loginuserstatus;
+		public Date getParentcomputercategorycreatetime(){		
+			return this.parentcomputercategorycreatetime;
+		}
+			public void setParentcomputercategorycreateuserid(Integer parentcomputercategorycreateuserid){		
+			this.parentcomputercategorycreateuserid = parentcomputercategorycreateuserid;
+		}
+		public Integer getParentcomputercategorycreateuserid(){		
+			return this.parentcomputercategorycreateuserid;
+		}
+			public void setParentcomputercategorystatus(Integer parentcomputercategorystatus){		
+			this.parentcomputercategorystatus = parentcomputercategorystatus;
+		}
+		public Integer getParentcomputercategorystatus(){		
+			return this.parentcomputercategorystatus;
 		}
 		
 	

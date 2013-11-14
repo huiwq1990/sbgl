@@ -50,10 +50,6 @@
              <th class="name">computerorderuserid</th>
              <th class="name">computerordercreatetime</th>
              <th class="name">computerorderstatus</th>
-             <th class="name">loginuserid</th>
-             <th class="name">loginusername</th>
-             <th class="name">loginusercreatetime</th>
-             <th class="name">loginuserstatus</th>
                    <th class="name">View</th>
 				   <th class="name">Del</th>
 				   <th class="name">Edit</th>
@@ -70,10 +66,6 @@
 <td>$!tempcomputerorder.computerorderuserid</td>
 <td>$!tempcomputerorder.computerordercreatetime</td>
 <td>$!tempcomputerorder.computerorderstatus</td>
-<td>$!tempcomputerorder.loginuserid</td>
-<td>$!tempcomputerorder.loginusername</td>
-<td>$!tempcomputerorder.loginusercreatetime</td>
-<td>$!tempcomputerorder.loginuserstatus</td>
 					<td><a href="${webbaseurl}/viewComputerorderFull.action?id=$!tempcomputerorder.computerorderid">查看</a></td> 
 					<td><a href="${webbaseurl}/deleteComputerorderFull.action?id=$!tempcomputerorder.computerorderid">删除</a></td>			
 					<td><a href="${webbaseurl}/editComputerorderFull.action?id=$!tempcomputerorder.computerorderid">修改</a></td>

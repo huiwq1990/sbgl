@@ -25,5 +25,8 @@
         <property name="status" type="java.lang.Integer">
             <column name="status" />
         </property>
+        <property name="remark" type="java.lang.String">
+            <column name="remark" length="10" />
+        </property>
     </class>
 </hibernate-mapping>

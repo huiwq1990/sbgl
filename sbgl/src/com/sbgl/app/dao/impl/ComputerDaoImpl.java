@@ -46,7 +46,7 @@ public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
 //  根据实体id查询实体full	
 	@Override
 	public ComputerFull selectComputerFullById(Integer computerId) {
-		final String  sql = "select a.id as computerid, a.serialnumber as computerserialnumber, a.computermodelid as computercomputermodelid, a.createtime as computercreatetime, a.createuserid as computercreateuserid, a.status as computerstatus, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computer a  left join Loginuser b on a.createuserid=b.id " + "where a.id = "+computerId;
+		final String  sql = "select a.id as computerid, a.serialnumber as computerserialnumber, a.computermodelid as computercomputermodelid, a.createtime as computercreatetime, a.createuserid as computercreateuserid, a.status as computerstatus, a.remark as computerremark, b.id as computermodelid, b.name as computermodelname, b.computercategoryid as computermodelcomputercategoryid, b.picpath as computermodelpicpath, b.createtime as computermodelcreatetime, b.createuserid as computermodelcreateuserid, b.count as computermodelcount, b.status as computermodelstatus from Computer a  left join Computermodel b on a.computermodelid=b.id " + "where a.id = "+computerId;
 		
 		List<ComputerFull> computerList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
@@ -69,7 +69,7 @@ public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
 //	查询全部实体full
 	@Override
 	public List<ComputerFull> selectComputerFullAll() {
-		final String  sql = "select a.id as computerid, a.serialnumber as computerserialnumber, a.computermodelid as computercomputermodelid, a.createtime as computercreatetime, a.createuserid as computercreateuserid, a.status as computerstatus, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computer a  left join Loginuser b on a.createuserid=b.id ";
+		final String  sql = "select a.id as computerid, a.serialnumber as computerserialnumber, a.computermodelid as computercomputermodelid, a.createtime as computercreatetime, a.createuserid as computercreateuserid, a.status as computerstatus, a.remark as computerremark, b.id as computermodelid, b.name as computermodelname, b.computercategoryid as computermodelcomputercategoryid, b.picpath as computermodelpicpath, b.createtime as computermodelcreatetime, b.createuserid as computermodelcreateuserid, b.count as computermodelcount, b.status as computermodelstatus from Computer a  left join Computermodel b on a.computermodelid=b.id ";
 		
 		List<ComputerFull> computerFullList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
@@ -88,7 +88,7 @@ public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
 	}
 //  分页查询 实体full
 	public List<ComputerFull> selectComputerFullByPage(final Page page){
-		final String  sql = "select a.id as computerid, a.serialnumber as computerserialnumber, a.computermodelid as computercomputermodelid, a.createtime as computercreatetime, a.createuserid as computercreateuserid, a.status as computerstatus, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computer a  left join Loginuser b on a.createuserid=b.id ";
+		final String  sql = "select a.id as computerid, a.serialnumber as computerserialnumber, a.computermodelid as computercomputermodelid, a.createtime as computercreatetime, a.createuserid as computercreateuserid, a.status as computerstatus, a.remark as computerremark, b.id as computermodelid, b.name as computermodelname, b.computercategoryid as computermodelcomputercategoryid, b.picpath as computermodelpicpath, b.createtime as computermodelcreatetime, b.createuserid as computermodelcreateuserid, b.count as computermodelcount, b.status as computermodelstatus from Computer a  left join Computermodel b on a.computermodelid=b.id ";
 		
 		List<ComputerFull> computerFullList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
@@ -111,13 +111,13 @@ public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
 //  根据关联查询实体full
 
 	//根据关联查询实体 
-	public List<Computer> selectComputerByLoginuserId(Integer createuserid ){
+	public List<Computer> selectComputerByComputermodelId(Integer computermodelid ){
 	
 		return null;
 	}
   
 
-	public List<ComputerFull> selectComputerFullByLoginuserId(Integer createuserid ){
+	public List<ComputerFull> selectComputerFullByComputermodelId(Integer computermodelid ){
 	
 		return null;
 	}

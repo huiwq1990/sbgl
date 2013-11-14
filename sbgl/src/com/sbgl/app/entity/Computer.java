@@ -17,6 +17,7 @@ public class Computer extends com.sbgl.app.dao.DaoAbs implements
 	private Date createtime;
 	private Integer createuserid;
 	private Integer status;
+	private String remark;
 
 	// Constructors
 
@@ -31,13 +32,15 @@ public class Computer extends com.sbgl.app.dao.DaoAbs implements
 
 	/** full constructor */
 	public Computer(Integer id, String serialnumber, Integer computermodelid,
-			Date createtime, Integer createuserid, Integer status) {
+			Date createtime, Integer createuserid, Integer status,
+			String remark) {
 		this.id = id;
 		this.serialnumber = serialnumber;
 		this.computermodelid = computermodelid;
 		this.createtime = createtime;
 		this.createuserid = createuserid;
 		this.status = status;
+		this.remark = remark;
 	}
 
 	// Property accessors
@@ -88,6 +91,14 @@ public class Computer extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public String getRemark() {
+		return this.remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 }

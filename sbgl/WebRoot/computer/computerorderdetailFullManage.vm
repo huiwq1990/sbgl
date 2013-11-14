@@ -53,6 +53,18 @@
              <th class="name">computerorderdetailborrowday</th>
              <th class="name">computerorderdetailborrowperiod</th>
              <th class="name">computerorderdetailstatus</th>
+             <th class="name">computerorderid</th>
+             <th class="name">computerorderserialnumber</th>
+             <th class="name">computerorderuserid</th>
+             <th class="name">computerordercreatetime</th>
+             <th class="name">computerorderstatus</th>
+             <th class="name">computerid</th>
+             <th class="name">computerserialnumber</th>
+             <th class="name">computercomputermodelid</th>
+             <th class="name">computercreatetime</th>
+             <th class="name">computercreateuserid</th>
+             <th class="name">computerstatus</th>
+             <th class="name">computerremark</th>
                    <th class="name">View</th>
 				   <th class="name">Del</th>
 				   <th class="name">Edit</th>
@@ -72,6 +84,18 @@
 <td>$!tempcomputerorderdetail.computerorderdetailborrowday</td>
 <td>$!tempcomputerorderdetail.computerorderdetailborrowperiod</td>
 <td>$!tempcomputerorderdetail.computerorderdetailstatus</td>
+<td>$!tempcomputerorderdetail.computerorderid</td>
+<td>$!tempcomputerorderdetail.computerorderserialnumber</td>
+<td>$!tempcomputerorderdetail.computerorderuserid</td>
+<td>$!tempcomputerorderdetail.computerordercreatetime</td>
+<td>$!tempcomputerorderdetail.computerorderstatus</td>
+<td>$!tempcomputerorderdetail.computerid</td>
+<td>$!tempcomputerorderdetail.computerserialnumber</td>
+<td>$!tempcomputerorderdetail.computercomputermodelid</td>
+<td>$!tempcomputerorderdetail.computercreatetime</td>
+<td>$!tempcomputerorderdetail.computercreateuserid</td>
+<td>$!tempcomputerorderdetail.computerstatus</td>
+<td>$!tempcomputerorderdetail.computerremark</td>
 					<td><a href="${webbaseurl}/viewComputerorderdetailFull.action?id=$!tempcomputerorderdetail.computerorderdetailid">查看</a></td> 
 					<td><a href="${webbaseurl}/deleteComputerorderdetailFull.action?id=$!tempcomputerorderdetail.computerorderdetailid">删除</a></td>			
 					<td><a href="${webbaseurl}/editComputerorderdetailFull.action?id=$!tempcomputerorderdetail.computerorderdetailid">修改</a></td>

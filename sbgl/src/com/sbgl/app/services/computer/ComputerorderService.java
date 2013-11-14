@@ -39,10 +39,6 @@ public interface ComputerorderService{
 	public List<ComputerorderFull> selectComputerorderFullByPage(Page page);
 	
 //根据关联查询实体	
-	public List<Computerorder> selectComputerorderByLoginuserId(Integer userid );
-//根据关联查询实体full	
-	public List<ComputerorderFull> selectComputerorderFullByLoginuserId(Integer userid );
-
 		
 	
 	

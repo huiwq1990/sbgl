@@ -51,10 +51,12 @@
              <th class="name">computercategorycreatetime</th>
              <th class="name">computercategorycreateuserid</th>
              <th class="name">computercategorystatus</th>
-             <th class="name">loginuserid</th>
-             <th class="name">loginusername</th>
-             <th class="name">loginusercreatetime</th>
-             <th class="name">loginuserstatus</th>
+             <th class="name">parentcomputercategoryid</th>
+             <th class="name">parentcomputercategoryparentcomputercategoryid</th>
+             <th class="name">parentcomputercategoryname</th>
+             <th class="name">parentcomputercategorycreatetime</th>
+             <th class="name">parentcomputercategorycreateuserid</th>
+             <th class="name">parentcomputercategorystatus</th>
                    <th class="name">View</th>
 				   <th class="name">Del</th>
 				   <th class="name">Edit</th>
@@ -72,10 +74,12 @@
 <td>$!tempcomputercategory.computercategorycreatetime</td>
 <td>$!tempcomputercategory.computercategorycreateuserid</td>
 <td>$!tempcomputercategory.computercategorystatus</td>
-<td>$!tempcomputercategory.loginuserid</td>
-<td>$!tempcomputercategory.loginusername</td>
-<td>$!tempcomputercategory.loginusercreatetime</td>
-<td>$!tempcomputercategory.loginuserstatus</td>
+<td>$!tempcomputercategory.parentcomputercategoryid</td>
+<td>$!tempcomputercategory.parentcomputercategoryparentcomputercategoryid</td>
+<td>$!tempcomputercategory.parentcomputercategoryname</td>
+<td>$!tempcomputercategory.parentcomputercategorycreatetime</td>
+<td>$!tempcomputercategory.parentcomputercategorycreateuserid</td>
+<td>$!tempcomputercategory.parentcomputercategorystatus</td>
 					<td><a href="${webbaseurl}/viewComputercategoryFull.action?id=$!tempcomputercategory.computercategoryid">查看</a></td> 
 					<td><a href="${webbaseurl}/deleteComputercategoryFull.action?id=$!tempcomputercategory.computercategoryid">删除</a></td>			
 					<td><a href="${webbaseurl}/editComputercategoryFull.action?id=$!tempcomputercategory.computercategoryid">修改</a></td>

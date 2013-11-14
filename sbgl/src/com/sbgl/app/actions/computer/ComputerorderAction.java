@@ -517,36 +517,6 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	}
 
 
-	//根据userid 查询实体
-	public String selectComputerorderByLoginuserId() {
-			//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		computerorderList  = computerorderService.selectComputerorderAll();
-		for(int i = 0; i < computerorderList.size(); i++){
-			System.out.println("id="+computerorderList.get(i).getId());
-		}
-		return SUCCESS;
-	}
-	//根据userid 查询实体full
-	public String selectComputerorderFullByLoginuserId() {
-				//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		computerorderFullList  = computerorderService.selectComputerorderFullByLoginuserId(userId);
-		for(int i = 0; i < computerorderFullList.size(); i++){
-			//System.out.println("id="+computerorderFullList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}
 
 	//get set
 	public void setSession(Map<String, Object> session) {

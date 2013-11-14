@@ -1,5 +1,5 @@
 
-    ManyToOne;attrName=createuserid ;colName=createuserid;class=Loginuser;
+    ManyToOne;attrName=computermodelid ;colName=computermodelid;class=Computermodel;
 //如果有多对一，则配置
 //OneToMany;attrName= ;colName=;class=;
 

@@ -39,9 +39,9 @@ public interface ComputermodelService{
 	public List<ComputermodelFull> selectComputermodelFullByPage(Page page);
 	
 //根据关联查询实体	
-	public List<Computermodel> selectComputermodelByLoginuserId(Integer createuserid );
+	public List<Computermodel> selectComputermodelByComputercategoryId(Integer computercategoryid );
 //根据关联查询实体full	
-	public List<ComputermodelFull> selectComputermodelFullByLoginuserId(Integer createuserid );
+	public List<ComputermodelFull> selectComputermodelFullByComputercategoryId(Integer computercategoryid );
 
 		
 	
