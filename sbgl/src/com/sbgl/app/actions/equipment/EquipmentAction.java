@@ -163,16 +163,16 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	public Equipmentclassification getEquipClass() {
 		return equipClass;
 	}
-
-	public String getClassificationByEquipdetail() {
-		try {
-			equipClass = equipService.getEquipmentclassificationByEquipmentdetail( equipId );
-			this.tag = "0";
-		} catch (RuntimeException re) {
-			this.tag = "1";
-	    }
-		return SUCCESS;
-	}
+//  通过器材没有意义，应该通过该器材的型号来找齐其相应的分类
+//	public String getClassificationByEquipdetail() {
+//		try {
+//			equipClass = equipService.getEquipmentclassificationByEquipmentdetail( equipId );
+//			this.tag = "0";
+//		} catch (RuntimeException re) {
+//			this.tag = "1";
+//	    }
+//		return SUCCESS;
+//	}
 	/**
 	 * 获取全部分类信息进程单详情
 	 * 显示格式为：分类名称 -父级分类-型号数量-设备数量
