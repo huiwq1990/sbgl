@@ -44,6 +44,8 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 	
 	@Resource
 	private ComputercategoryService computercategoryService;
+	//父级分类的list
+	List<Computercategory> parentcomputercategoryList = new ArrayList<Computercategory>();
 	List<Computercategory> computercategoryList = new ArrayList<Computercategory>();
 	List<ComputercategoryFull> computercategoryFullList = new ArrayList<ComputercategoryFull>();
 	
@@ -100,9 +102,11 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 		if(computercategoryFullList == null){
 			computercategoryFullList = new ArrayList<ComputercategoryFull>();
 		}
-//		for(int i = 0; i < computercategoryFullList.size(); i++){
-//			System.out.println("id="+computercategoryFullList.get(i).getLoginusername());
-//		}
+		
+		parentcomputercategoryList = computercategoryService.selectParentComputercategory();
+		if(parentcomputercategoryList == null){
+			parentcomputercategoryList = new ArrayList<Computercategory>();
+		}
 		return SUCCESS;
 	}			
 			
@@ -272,6 +276,15 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 
 	public void setLogprefix(String logprefix) {
 		this.logprefix = logprefix;
+	}
+
+	public List<Computercategory> getParentcomputercategoryList() {
+		return parentcomputercategoryList;
+	}
+
+	public void setParentcomputercategoryList(
+			List<Computercategory> parentcomputercategoryList) {
+		this.parentcomputercategoryList = parentcomputercategoryList;
 	}
 
 	

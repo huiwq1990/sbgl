@@ -108,6 +108,31 @@ public class ComputercategoryDaoImpl extends HibernateDaoSupport implements Comp
 		return null;
 	}
 	
+	
+//	
+//	
+////	查询所有的父级分类
+//	@Override
+//	public List<ComputercategoryFull> selectParentComputercategoryAll() {
+//		final String  sql = "from Computercategory"
+//		
+//		List<ComputercategoryFull> computercategoryFullList = getHibernateTemplate()
+//				.executeFind(new HibernateCallback() {
+//					public Object doInHibernate(Session session)
+//							throws HibernateException {
+//						Query query = session.createSQLQuery(sql);
+//						query.setResultTransformer(new EscColumnToBean(
+//								ComputercategoryFull.class));
+//						return query.list();
+//					}
+//				});
+//		if (computercategoryFullList != null && !computercategoryFullList.isEmpty()) {			
+//			return computercategoryFullList;
+//		}
+//		return null;
+//	}
+	
+	
 //  根据关联查询实体full
 
 	//根据关联查询实体 
