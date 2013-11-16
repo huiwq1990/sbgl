@@ -335,7 +335,7 @@
 			alert("并未做修改！");
 		} else {
 			var postData = {
-				"equipmentdetail.equipdetaild": detailIdForAlter,
+				"equipmentdetail.equipDetailid": detailIdForAlter,
 				"equipmentdetail.equipserial": dCode,
 				"equipmentdetail.equipmentid": dMid,
 				"equipmentdetail.status": dStatus,

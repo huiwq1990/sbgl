@@ -201,8 +201,9 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	}
 	/**
 	 * 删除分类信息
-	 * 业务说明：在删除了某个分类信息后，其分类下的所有设备都归为未分类，未分类本身并不存储，将设备类型中的分类设置成-1
-	 * 说明其未分类
+	 * 业务逻辑说明   1.在删除了某个分类信息后，其分类下的所有型号都归为未分类，未分类本身并不存储，将型号中的分类设置成-1
+	 *          2.如果删除的是一个父分类，连同其所有的子分类一起删除
+	 * 
 	 */
 	private Integer classficationId;
 	public Integer getClassficationId() {
@@ -212,26 +213,29 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		this.classficationId = classficationId;
 	}
 
-	public String deleteClassfication() {
+	private String deleteClassfication() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
+		
 		try {
-			equipService.deleteEquipmentclassification( classficationId );
-			
-			List<Equipmentclassification> childList = equipService.getAllChildEquipmentclassificationsByParentId( classficationId );
-			if(childList == null) {
-				List<Equipment> equipList = equipService.getEquipsByClassification( classficationId );
-				if(equipList != null) {
-					for (Equipment equipment : equipList) {
-						equipment.setClassificationid( Integer.valueOf(-1) );
-						equipService.alterEquipInfo( equipment );
+			Equipmentclassification ec = equipService.getEquipmentclassificationById( this.classficationId );
+			if(ec.getParentid() == 0) {
+				List<Equipmentclassification> childList = equipService.getAllChildEquipmentclassificationsByParentId( ec.getClassificationid() );
+				if(childList != null) {
+					for (Equipmentclassification e : childList) {
+						List<Equipment> equipList = equipService.getEquipsByClassification( e.getClassificationid() );
+						if(equipList != null) {
+							for (Equipment equipment : equipList) {
+								equipment.setClassificationid( Integer.valueOf(-1) );
+								equipService.alterEquipInfo( equipment );
+							}
+						}
+						equipService.deleteEquipmentclassification( e.getClassificationid() );
 					}
 				}
-			} else if(childList.size() > 0) {
-				for (Equipmentclassification childClass : childList) {
-					equipService.deleteEquipmentclassification( childClass.getClassificationid() );
-					
-					List<Equipment> equipList = equipService.getEquipsByClassification( classficationId );
+			} else {
+				List<Equipment> equipList = equipService.getEquipsByClassification( this.classficationId );
+				if(equipList != null) {
 					for (Equipment equipment : equipList) {
 						equipment.setClassificationid( Integer.valueOf(-1) );
 						equipService.alterEquipInfo( equipment );
@@ -239,13 +243,15 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				}
 			}
 			
-			
-			this.tag = "0";
-		} catch (RuntimeException re) {
-			this.tag = "1";
+			equipService.deleteEquipmentclassification( this.classficationId );
+		} catch(RuntimeException re) {
+			re.printStackTrace();
+			this.tag = "200";
 		}
-		returnJSON.put("tag", tag);
-		return SUCCESS;
+		
+		this.tag = "0";
+		returnJSON.put("tag", this.tag);
+		return tag;
 	}
 	/**
 	 * 批量删除设备分类
@@ -265,7 +271,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		for (String id : ids) {
 			this.classficationId = Integer.valueOf( id );
 			String result = deleteClassfication();
-			if(result == null || result == ERROR) {
+			if("200".equals(result)) {
 				this.tag = "0";
 				break;
 			} else {

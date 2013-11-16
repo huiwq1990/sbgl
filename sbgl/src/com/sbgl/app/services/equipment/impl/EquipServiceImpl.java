@@ -191,7 +191,7 @@ public class EquipServiceImpl implements EquipService {
 		storeEquipmentdetail.setEquipmentid( equipmentdetail.getEquipmentid() );
 		storeEquipmentdetail.setStatus( equipmentdetail.getStatus() );
 		storeEquipmentdetail.setAdministrationid( equipmentdetail.getAdministrationid() );
-		storeEquipmentdetail.setMakedate( equipmentdetail.getMakedate() );
+//		storeEquipmentdetail.setMakedate( equipmentdetail.getMakedate() );
 		storeEquipmentdetail.setModifydate( new Date() );
 		storeEquipmentdetail.setSysremark( equipmentdetail.getSysremark() );
 		storeEquipmentdetail.setUsermark( equipmentdetail.getUsermark() );
