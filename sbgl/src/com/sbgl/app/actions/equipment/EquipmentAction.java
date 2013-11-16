@@ -526,6 +526,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					} else {
 						ec.setMemo("");
 					}
+					equipDetailCourse.add( ec );
 				}
 			}
 		}
