@@ -99,6 +99,19 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 		return computercategoryDao.selectComputercategoryFullAll();
 	}
 	
+
+	@Override
+	/**
+	 *  查询实体full,要显示的full
+	 *  条件 id大于0
+	 * @param page
+	 * @return
+	 */
+	public List<ComputercategoryFull> selectShowedComputercategoryFullByPage(Page page){
+		page.setTotalCount(baseDao.getRowCount(Computercategory.class));
+		String showFullConditon = " a.id > 0";
+		return computercategoryDao.selectComputercategoryFullByConditionAndPage(showFullConditon,page);
+	}
 	
 	public int countComputercategoryRow(){
 		return baseDao.getRowCount(Computercategory.class);

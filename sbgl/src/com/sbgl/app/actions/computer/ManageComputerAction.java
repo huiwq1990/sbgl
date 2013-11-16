@@ -95,7 +95,7 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 		page.setPageNo(pageNo);
 		//设置总数量，在service中设置
 		//page.setTotalpage(computercategoryService.countComputercategoryRow());
-		computercategoryFullList  = computercategoryService.selectComputercategoryFullByPage(page);
+		computercategoryFullList  = computercategoryService.selectShowedComputercategoryFullByPage(page);
 		
 //		查询全部
 //		computercategoryFullList  = computercategoryService.selectComputercategoryFullAll();

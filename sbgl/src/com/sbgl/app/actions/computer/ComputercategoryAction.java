@@ -21,6 +21,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputercategoryService;
+import com.sbgl.app.services.computer.ComputermodelService;
 import com.sbgl.util.*;
 
 
@@ -37,6 +38,9 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	@Resource
 	private ComputercategoryService computercategoryService;
 	
+	@Resource
+	private ComputermodelService computermodelService;
+	
 	private Computercategory computercategory = new Computercategory();//实例化一个模型
 	private Computercategory computercategoryModel = new Computercategory();//实例化一个模型
 	private ComputercategoryFull computercategoryFull = new ComputercategoryFull();//实例化一个模型
@@ -51,63 +55,7 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	private String logprefix = "exec action method:";		
 	Page page = new Page();
 	Integer pageNo=1;	
-	
-//  manage Computercategory
-	public String manageComputercategory(){
-		log.info(logprefix+"manageComputercategoryFull");
-		
-//      分页查询	
-		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
-		//page.setTotalpage(computercategoryService.countComputercategoryRow());
-		computercategoryList  = computercategoryService.selectComputercategoryByPage(page);
-		
-//		查询全部
-//		computercategoryList  = computercategoryService.selectComputercategoryById();
-		
-	    if(computercategoryList == null){
-			computercategoryList = new ArrayList<Computercategory>();
-		}
-//		for(int i = 0; i < computercategoryList.size(); i++){
-//			System.out.println("id="+computercategoryList.get(i).getLoginusername());
-//		}
-		return SUCCESS;
-	}		
-			
-	//管理 查询
-	public String manageComputercategoryFull(){
-		log.info("exec action method:manageComputercategoryFull");
-		
-//      分页查询		
-		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
-		//page.setTotalpage(computercategoryService.countComputercategoryRow());
-		computercategoryFullList  = computercategoryService.selectComputercategoryFullByPage(page);
-		
-//		查询全部
-//		computercategoryFullList  = computercategoryService.selectComputercategoryFullAll();
 
-		if(computercategoryFullList == null){
-			computercategoryFullList = new ArrayList<ComputercategoryFull>();
-		}
-//		for(int i = 0; i < computercategoryFullList.size(); i++){
-//			System.out.println("id="+computercategoryFullList.get(i).getLoginusername());
-//		}
-		return SUCCESS;
-	}			
-			
-		
-	//管理
-	public String manageComputercategoryInfo(){
-		log.info(logprefix +" manageComputercategory");
-		//Page page = new Page();
-		//if()
-		computercategoryList  = computercategoryService.selectComputercategoryByPage(page);
-		for(int i = 0; i < computercategoryList.size(); i++){
-		//	System.out.println("id="+computercategoryList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}	
 			
 	public String addComputercategory(){	
 		log.info("Add Entity");
@@ -243,6 +191,9 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	}
 	
 	//del entityfull Ajax
+	/**
+	 * 删除分类，将相应分类下面的型号设置为-1
+	 */
 	public String deleteComputercategoryFullAjax( ){
 		log.info(logprefix + "deleteComputercategoryFullAjax");
 		ReturnJson returnJson = new ReturnJson();
@@ -253,24 +204,35 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 				
 				Integer tempDelId = Integer.valueOf(ids[i]);			
 				log.info(tempDelId);
+				//检查id
 				if(tempDelId == null || tempDelId < 0){
 					returnJson.setFlag(0);
 					returnJson.setReason("删除的id不规范");
 					log.info("删除的id不规范");
+					JSONObject jo = JSONObject.fromObject(returnJson);
+					this.returnStr = jo.toString();
 					return SUCCESS;
 				}	
+				//del
 				Computercategory temp = computercategoryService.selectComputercategoryById(tempDelId);			
-				if (temp != null) {				
-					computercategoryService.deleteComputercategory(tempDelId);			
+				if (temp != null) {			
+					//将相应的PC类型分类设置成-1
+					computermodelService.updateCategoryComputermodel(tempDelId);
+					computercategoryService.deleteComputercategory(tempDelId);
+					
 				} else {
 					log.info("删除的id不存在");		
 					returnJson.setFlag(0);
 					returnJson.setReason("删除的id不存在");
+					JSONObject jo = JSONObject.fromObject(returnJson);
+					this.returnStr = jo.toString();
 					return SUCCESS;
 				}
 			}
 			returnJson.setFlag(1);
 //			returnJson.setReason("删除的id不存在");
+			JSONObject jo = JSONObject.fromObject(returnJson);
+			this.returnStr = jo.toString();
 			return SUCCESS;
 			
 		} catch (Exception e) {
@@ -279,6 +241,8 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 		
 		returnJson.setFlag(0);
 		returnJson.setReason("删除的内部错误");
+		JSONObject jo = JSONObject.fromObject(returnJson);
+		this.returnStr = jo.toString();
 		return SUCCESS;
 	}
 

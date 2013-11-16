@@ -47,5 +47,7 @@ public interface ComputercategoryService{
 
 ////查询所有的父级分类
 public List<Computercategory> selectParentComputercategory() ;
+
+List<ComputercategoryFull> selectShowedComputercategoryFullByPage(Page page);
 	
 }

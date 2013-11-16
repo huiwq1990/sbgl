@@ -68,6 +68,15 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 		baseDao.updateEntity(tempComputermodel);
 
 	}
+	
+	/**
+	 * 更新某一分类下面的型号为为分类
+	 */
+	@Override
+	public void updateCategoryComputermodel(int computercategoryid){
+		String sql = "update Computermodel as tb set tb.computercategoryid = -1 where tb.computercategoryid =  " + computercategoryid;
+		baseDao.createSQL(sql);		
+	}
 
 //	根据id查询实体类			
 	@Override
