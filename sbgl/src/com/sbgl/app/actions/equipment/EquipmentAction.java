@@ -407,6 +407,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	
 	/**
 	 * 添加设备
+	 * 业务说明：1.对新添加的设备器材，要统计其状态并对型号库中相应状态的数量进行增加操作
 	 */
 	private Equipmentdetail equipmentdetail;
 	public Equipmentdetail getEquipmentdetail() {
@@ -447,8 +448,12 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	/**
 	 * 批量删除设备
 	 * 使用添加设备的参数 equipmentdetail
+	 * 器材设备删除业务说明 1.删除时需要统计该器材类型状态对型号库中的数量做减少操作
 	 */
 	private String equipdetailIds;
+	public String getEquipdetailIds() {
+		return equipdetailIds;
+	}
 	public void setEquipdetailIds(String equipdetailIds) {
 		this.equipdetailIds = equipdetailIds;
 	}
