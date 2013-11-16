@@ -128,4 +128,11 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 		return computercategoryDao.selectComputercategoryFullByComputercategoryId(parentcomputercategoryid );
 	}
 
+	@Override
+	public List<Computercategory> selectParentComputercategory() {
+		List<Computercategory> parentcomputercategoryList = new ArrayList<Computercategory>();
+		parentcomputercategoryList = baseDao.getEntityByProperty("Computercategory", "parentcomputercategoryid", "0");
+		return parentcomputercategoryList;
+	}
+
 }

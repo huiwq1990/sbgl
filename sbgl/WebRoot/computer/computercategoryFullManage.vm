@@ -11,12 +11,7 @@
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
-<!--[if lt IE 10]>
-  <script src="../js/jquery.placeholder.js"></script>
-  <script>
-  $('input, textarea').placeholder();
-  </script>
-<![endif]-->
+
 <!--[if lt IE 9]>
   <script src="../js/html5shiv.js"></script>
   <script src="../js/respond.min.js"></script>
@@ -27,100 +22,230 @@
 </head>
 
 <body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="http://google.com"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="#anotherAction">个人主页</a></li>
+          <li><a href="#">人脉</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">设置</a></li>
+        <li><a href="用户管理首页.html">用户</a></li>
+        <li class="active"><a href="设备管理首页.html">机器</a></li>
+        <li><a href="#">内容</a></li>
+      </ul>
+    </div>    
+    <ul class="account-wrap nav nav-pills pull-right">
+          <li class="notice dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">消息1</a></li>
+              <li><a href="#">消息2</a></li>
+            </ul>
+          </li>     
+          <li class="social dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="../img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+            <div class="dropdown-menu">
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img src="../img/photo.jpg" width="96" height="96" class="img-rounded">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+                  <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+                  <div class="setting"><a href="#">账户设置</a></div>
+                  <button class="btn btn-primary" type="button">查看个人主页</button>
+                </div>
+              </div>
+            </div>      
+          </li>
+        </ul>
+  </div>
+</header><!--/#header-wrap-->
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
-
+      <ul class="nav nav-tabs">
+        <li><a href="机器预约管理首页.html">机器预约管理</a></li>
+        <li class="active"><a href="机器信息管理首页.html">机器信息管理</a></li>
+      </ul>
+	  
+	  
+	  
+	  
       <!--admin-wrap start-->
       <div id="admin-wrap">
         <div id="admin-content" class="clearfix">    
             <!--control-bar start-->
-         
+            <div class="control-bar clearfix">
+              <div class="title pull-left">分类管理</div>
+              <div class="tips">在此页面下你可以添加新的设备分类，也可以管理现有设备分类。……</div>
+              <div class="operate-item pull-left">
+                <a href="#add-equip-category" class="btn btn-primary" data-toggle="modal" role="button">添加分类</a>
+                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+              </div>
+
+              <div class="page pull-right clearfix">
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="record"><strong>XX</strong>条记录</li>
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">最新</a></li>
+                      <li><a href="#">最旧</a></li>
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+                  <ul>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+            </div><!--control-bar end-->
             <div class="panel panel-default">
-
-<!--管理内容从这里开始 -->
-
-				<form id="formComputercategoryManage" action="${webbaseurl}/manageComputercategoryFull.action" method="get">
 
               <table class="table table-hover">
                 <thead>
                   <tr>
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-
-             <th class="name">computercategoryid</th>
-             <th class="name">computercategoryparentcomputercategoryid</th>
-             <th class="name">computercategoryname</th>
-             <th class="name">computercategorycreatetime</th>
-             <th class="name">computercategorycreateuserid</th>
-             <th class="name">computercategorystatus</th>
-             <th class="name">parentcomputercategoryid</th>
-             <th class="name">parentcomputercategoryparentcomputercategoryid</th>
-             <th class="name">parentcomputercategoryname</th>
-             <th class="name">parentcomputercategorycreatetime</th>
-             <th class="name">parentcomputercategorycreateuserid</th>
-             <th class="name">parentcomputercategorystatus</th>
-                   <th class="name">View</th>
-				   <th class="name">Del</th>
-				   <th class="name">Edit</th>
+                    <th class="name">名称</th>
+                   
+                    <th class="model-num">型号数量</th>
+                    <th class="equip-num">设备数量</th>
                   </tr>
                 </thead>
-                <tbody>					
-							
-
-#foreach($tempcomputercategory in $computercategoryFullList)
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>                   
-<td>$!tempcomputercategory.computercategoryid</td>
-<td>$!tempcomputercategory.computercategoryparentcomputercategoryid</td>
-<td>$!tempcomputercategory.computercategoryname</td>
-<td>$!tempcomputercategory.computercategorycreatetime</td>
-<td>$!tempcomputercategory.computercategorycreateuserid</td>
-<td>$!tempcomputercategory.computercategorystatus</td>
-<td>$!tempcomputercategory.parentcomputercategoryid</td>
-<td>$!tempcomputercategory.parentcomputercategoryparentcomputercategoryid</td>
-<td>$!tempcomputercategory.parentcomputercategoryname</td>
-<td>$!tempcomputercategory.parentcomputercategorycreatetime</td>
-<td>$!tempcomputercategory.parentcomputercategorycreateuserid</td>
-<td>$!tempcomputercategory.parentcomputercategorystatus</td>
-					<td><a href="${webbaseurl}/viewComputercategoryFull.action?id=$!tempcomputercategory.computercategoryid">查看</a></td> 
-					<td><a href="${webbaseurl}/deleteComputercategoryFull.action?id=$!tempcomputercategory.computercategoryid">删除</a></td>			
-					<td><a href="${webbaseurl}/editComputercategoryFull.action?id=$!tempcomputercategory.computercategoryid">修改</a></td>
-                 
+                <tbody>
+				
+			#foreach($computercategoryFull in $computercategoryFullList)
+			  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!computercategoryFull.computercategoryid"></td>
+                    <td>$!computercategoryFull.computercategoryname<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button" action-type="editComputercategoryFillIn" data-id="$!computercategoryFull.computercategoryid" data-name="$!computercategoryFull.computercategoryname" >修改</a></td>
+                  
+                    <td>3</td>
+                    <td>3</td>
                   </tr>
-#end            
-           
+        
+			#end
                 </tbody>
               </table>
-  		  
-#getPageHtml("formId=formComputercategoryManage" "parameters=pageNo:$page.pageNo,pageSize:$page.pageSize,totalCount:$page.totalCount,pageviewcount:$page.pageviewcount,vmpath:common/page.vm")
-
-</form>
 
             </div>
           </div>
 
       </div>
       <!--equip-wrap end-->
+
 	  
 	  
-       <div id="lside">
+	  
+	  
+	  
+	   <div id="lside"><!--sidebar start-->
         <form class="form-group">
-          <input type="text" class="form-control" placeholder="搜索">
+          <input type="text" class="form-control" placeholder="搜索设备">
           <i class="icon-search"></i>
         </form>
         <div class="list-group">
-          <a href="${webbaseurl}/manageComputercategoryFull.action" class="list-group-item">管理</a>
-          <a href="${webbaseurl}/computer/computercategoryAdd.vm" class="list-group-item">添加</a>
-          
+          <a href="机器信息管理首页.html" class="list-group-item active">机器信息管理</a>
+          <a href="机器添加.html" class="list-group-item">机器添加</a>
+          <a href="机器型号管理.html" class="list-group-item">型号管理</a>
+          <a href="机器分类管理.html" class="list-group-item">分类管理</a>
         </div>
       </div>
       <!--sidebar end-->
-
-
-
+	  
+	  
 
 </section>
 
 
+<!-- Modal -->
+<!-- 添加分类信息 -->
+<div id="add-equip-category" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">添加分类</h3>
+  </div>
+  <div class="modal-body">
+    <p>添加设备分类目录。</p>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="inputCategoryName" class="col-xs-3 control-label">分类名称</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="addComputercategoryName" placeholder="设备类型（如：工作站）">
+        </div>
+      </div>
+	  <!--
+      <div class="form-group">
+        <label for="inputFaCategoryId" class="col-xs-3 control-label">所属父级分类</label>
+        <div class="col-xs-7">
+          <select class="select2 select-white form-control" id="inputFaCategoryId">
+            <option value="-1">无</option>
+            <option value="2">工作站</option>
+            <option value="6">调色器</option>
+          </select>
+        </div>
+      </div>
+	  -->
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary">确 定</button>
+  </div>
+</div>      
+<!--end 添加分类信息 -->
 
+<!-- 修改分类信息 -->
+<div id="modify-equip-category" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">修改</h3>
+  </div>
+  <div class="modal-body">
+    <p>修改当前选定的设备分类目录。</p>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="modifyCategoryName" class="col-xs-3 control-label">分类名称</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="editComputercategoryName" placeholder="工作站">
+        </div>
+      </div>
+	  <!--获取父级分类 
+	  <!--
+      <div class="form-group">
+        <label for="modifyFaCategoryId" class="col-xs-3 control-label">所属父级分类</label>
+        <div class="col-xs-7">
+          <select class="select2 select-white form-control" id="modifyFaCategoryId" disabled>
+            <option value="-1">无</option>
+		
+			#foreach($parcomputercategory in $parentcomputercategoryList)
+            <option value="$!parcomputercategory.id">$!parcomputercategory.name</option>        
+			#end
+          </select>
+        </div>
+      </div>
+	  -->	
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary">确 定</button>
+  </div>
+</div>
+<!--end 修改分类信息 -->
+  
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -130,6 +255,76 @@
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script>
 	$("#modifyFaCategoryId").select2("val","2");
+</script>
+
+
+<script>
+	var cookie = { 
+  		//读取COOKIES,n为COOKIE名 
+   		Get:function(n){ 
+       		var re=new RegExp(n+'=([^;]*);?','gi');
+       	    var r=re.exec(document.cookie)||[];
+       	    return (r.length>1?r[1]:null)
+   		}
+	};
+	var editComputercategoryId;
+	var editComputercategoryName;
+
+//添加分类
+	$("body").on("click", "button[action-type|=addComputercategory]", function() {
+		var modelName = $("#addComputercategoryName").val();
+		
+		var postData = {
+			"createuserid": cookie.Get("id"),
+			"name": modelName		
+		}
+	
+		jQuery.ajax({  
+		    url: "${webbaseurl}/addComputercategoryAjax.action",  
+		    type: "post",
+		    data: postData,
+		    success:function(data,textStatus,jq){  
+		    	console.log(data);
+	        },  
+		    error:function(data,textStatus,jq){alert("添加型号失败!");}  
+		});
+	})
+	
+	//选择修改按钮，填充修改弹出框
+	$("body").on("click", "a[action-type|=editComputercategoryFillIn]", function() {
+		var myData = $(this).data();
+		$("#editComputercategoryName").val(myData.name);	
+		editComputercategoryId = myData.id;
+		editComputercategoryName = myData.name;
+	})
+	
+	$("body").on("click", "button[action-type|=alterModel]", function() {
+		var ename = $("#modifyEModelName").val();
+		var cidInput = $("#modifyEquipCategory").val();
+		var memo = $("#modifyEDescribe").val();
+		
+		if(ename == modelNameForAlter && modelCIdForAlter == cidInput && modelMemoForAlter == memo) {
+			alert("并未做修改！");
+		} else {
+			var postData = {
+				"equipment.equipmentid": modelIdForAlter,
+				"equipment.equipmentname": ename,
+				"equipment.classificationid": cidInput,
+				"equipment.equipmentdetail": memo
+			}
+			
+			jQuery.ajax({  
+			    url:"${webbaseurl}/altEquipModel.do",  
+			    type:"post",
+			    data:postData,
+			    success:function(data,textStatus,jq){  
+			    	console.log(data);
+		        },  
+			    error:function(data,textStatus,jq){alert("修改型号失败！");}  
+			});
+		}
+		
+	})
 </script>
 </body>
 </html>

@@ -33,7 +33,23 @@ public class ComputercategorySpringTest {
 //		selectComputercategoryFullById(1L);
 //      selectComputercategoryFullAll();
 
+		
+		selectParentComputercategory();
 	}
+	
+	public static void selectParentComputercategory(){
+
+		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
+		
+		ComputercategoryService computercategoryService = (ComputercategoryService)cxt.getBean("computercategoryService");
+	
+		List<Computercategory> parentcomputercategoryList =computercategoryService.selectParentComputercategory();
+		for(int i = 0; i < parentcomputercategoryList.size(); i++){
+			System.out.println("id="+parentcomputercategoryList.get(i).getName());
+		}
+	}
+	
+	
 	
 	
 //初始化数据库 将数据库中数据删除 添加新的数据

@@ -44,6 +44,8 @@ public interface ComputercategoryService{
 	public List<ComputercategoryFull> selectComputercategoryFullByComputercategoryId(Integer parentcomputercategoryid );
 
 		
-	
+
+////查询所有的父级分类
+public List<Computercategory> selectParentComputercategory() ;
 	
 }
