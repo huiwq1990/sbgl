@@ -245,30 +245,41 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	//del entityfull Ajax
 	public String deleteComputercategoryFullAjax( ){
 		log.info(logprefix + "deleteComputercategoryFullAjax");
+		ReturnJson returnJson = new ReturnJson();
+		
 		try{
 			String ids[] = computercategoryIdsForDel.split(";");
 			for(int i=0; i < ids.length;i++){
 				
 				Integer tempDelId = Integer.valueOf(ids[i]);			
+				log.info(tempDelId);
 				if(tempDelId == null || tempDelId < 0){
+					returnJson.setFlag(0);
+					returnJson.setReason("删除的id不规范");
 					log.info("删除的id不规范");
-					return "Error";
+					return SUCCESS;
 				}	
 				Computercategory temp = computercategoryService.selectComputercategoryById(tempDelId);			
 				if (temp != null) {				
 					computercategoryService.deleteComputercategory(tempDelId);			
 				} else {
-					log.info("删除的id不存在");			
-					return "Error";	
+					log.info("删除的id不存在");		
+					returnJson.setFlag(0);
+					returnJson.setReason("删除的id不存在");
+					return SUCCESS;
 				}
 			}
-			
+			returnJson.setFlag(1);
+//			returnJson.setReason("删除的id不存在");
 			return SUCCESS;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "Error";
+		
+		returnJson.setFlag(0);
+		returnJson.setReason("删除的内部错误");
+		return SUCCESS;
 	}
 
 //修改
