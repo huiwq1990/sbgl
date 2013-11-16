@@ -25,6 +25,7 @@
 	var alterClassName;  //修改分类的name
 	var parentId;        //父分类id
 	var classSum;        //分类个数
+	var idsForDel = "";  //用于删除的id串
 	//var _obj;            //select2全局对象
 	var cookie = { 
   		//读取COOKIES,n为COOKIE名 
@@ -123,6 +124,28 @@
 			alert("分类名称不能为空！");
 		}
 	 }
+	 
+	 /*********************************************************************************
+	 *
+	 *删除分类信息
+	 *
+	 ********************************************************************************/
+	 function delClass() {
+	 	//alert(idsForDel);
+		var postData = {
+			classIds: idsForDel
+		}
+			
+		jQuery.ajax({  
+		    url: "${webbaseurl}/deleteClassifications.do",  
+		    type: "post",
+		    data: postData,
+		    success:function(data,textStatus,jq){  
+		    	console.log(data);
+	        },  
+		    error:function(data,textStatus,jq){alert("删除分类失败！");}  
+		});
+	 }
 </script>
 
 </head>
@@ -193,7 +216,7 @@
               <div class="tips">在此页面下你可以添加新的设备分类，也可以管理现有设备分类。……</div>
               <div class="operate-item pull-left">
                 <a href="#add-equip-category" class="btn btn-primary" data-toggle="modal" role="button">添加分类</a>
-                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+                <a href="#" class="btn btn-white s-h" onclick="delClass()"><i class="icon-trash"></i> 删除</a>
               </div>
 
               <div class="page pull-right clearfix">
@@ -230,7 +253,7 @@
                 <tbody>
 				  #foreach($clazz in $allClassCourse)
                   <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!clazz.id"></td>
                     <td>$!clazz.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button" onclick="modifyClass($!clazz.id, $!clazz.pId, '$!clazz.name', '$!clazz.pName')">修改</a></td>
                     <td>$!clazz.pName</td>
                     <td>$!clazz.equipCount</td>
@@ -343,5 +366,23 @@
   $('input, textarea').placeholder();
   </script>
 <![endif]-->
+
+<script>
+	/* 处理CheckBox选中事件用于删除处理 */
+	$("input[type='checkbox']").click(function() {
+		//var num = 0;
+		idsForDel = "";
+		
+		if($(this).attr("id") === "chk-all") {
+			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
+		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true) {
+				//num++;
+				idsForDel += $(this).prop("value") + "_";
+			}
+		});
+	});
+</script>
 </body>
 </html>

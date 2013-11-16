@@ -97,7 +97,7 @@
               </div>
               <div class="operate-item pull-left">
                 <a href="#add-equip-model" class="btn btn-primary" data-toggle="modal" role="button">添加型号</a>
-                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+                <a href="#" class="btn btn-white s-h" action-type="deleteModel"><i class="icon-trash"></i> 删除</a>
               </div>
 
               <div class="page pull-right clearfix">
@@ -135,7 +135,7 @@
 				#foreach($model in $equipCourse)
                   <tr>
 				  #if($!model.showClass != 1)
-                    <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!model.id"></td>
                     <td>$!model.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-name="$!model.name" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo">修改</a></td>
 					<td>$!model.cName</td>
 					<td>双塔影视</td>
@@ -309,6 +309,8 @@
 <![endif]-->
 
 <script>
+	
+	
 	var cookie = { 
   		//读取COOKIES,n为COOKIE名 
    		Get:function(n){ 
@@ -321,6 +323,23 @@
 	var modelIdForAlter;
 	var modelCIdForAlter;
 	var modelMemoForAlter;
+	var idsForDel;
+	
+	/* 处理CheckBox选中事件用于删除处理 */
+	$("input[type='checkbox']").click(function() {
+		//var num = 0;
+		idsForDel = "";
+		
+		if($(this).attr("id") === "chk-all") {
+			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
+		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true) {
+				//num++;
+				idsForDel += $(this).prop("value") + "_";
+			}
+		});
+	});
 
 	$("body").on("click", "button[action-type|=addModel]", function() {
 		var modelName = $("#inputEModelName").val();
@@ -387,7 +406,22 @@
 			    error:function(data,textStatus,jq){alert("修改型号失败！");}  
 			});
 		}
-		
+	})
+	
+	$("body").on("click", "a[action-type|=deleteModel]", function() {
+		var postData = {
+			equipInfoIds: idsForDel
+		}
+		alert(idsForDel);
+		jQuery.ajax({  
+		    url:"${webbaseurl}/delEquipModel.do",  
+		    type:"post",
+		    data:postData,
+		    success:function(data,textStatus,jq){  
+		    	console.log(data);
+	        },  
+		    error:function(data,textStatus,jq){alert("删除型号失败！");}  
+		});
 	})
 </script>
 </body>

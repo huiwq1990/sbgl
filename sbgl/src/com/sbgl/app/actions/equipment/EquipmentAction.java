@@ -163,16 +163,16 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	public Equipmentclassification getEquipClass() {
 		return equipClass;
 	}
-
-	public String getClassificationByEquipdetail() {
-		try {
-			equipClass = equipService.getEquipmentclassificationByEquipmentdetail( equipId );
-			this.tag = "0";
-		} catch (RuntimeException re) {
-			this.tag = "1";
-	    }
-		return SUCCESS;
-	}
+//  通过器材没有意义，应该通过该器材的型号来找齐其相应的分类
+//	public String getClassificationByEquipdetail() {
+//		try {
+//			equipClass = equipService.getEquipmentclassificationByEquipmentdetail( equipId );
+//			this.tag = "0";
+//		} catch (RuntimeException re) {
+//			this.tag = "1";
+//	    }
+//		return SUCCESS;
+//	}
 	/**
 	 * 获取全部分类信息进程单详情
 	 * 显示格式为：分类名称 -父级分类-型号数量-设备数量
@@ -201,8 +201,9 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	}
 	/**
 	 * 删除分类信息
-	 * 业务说明：在删除了某个分类信息后，其分类下的所有设备都归为未分类，未分类本身并不存储，将设备类型中的分类设置成-1
-	 * 说明其未分类
+	 * 业务逻辑说明   1.在删除了某个分类信息后，其分类下的所有型号都归为未分类，未分类本身并不存储，将型号中的分类设置成-1
+	 *          2.如果删除的是一个父分类，连同其所有的子分类一起删除
+	 * 
 	 */
 	private Integer classficationId;
 	public Integer getClassficationId() {
@@ -212,26 +213,29 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		this.classficationId = classficationId;
 	}
 
-	public String deleteClassfication() {
+	private String deleteClassfication() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
+		
 		try {
-			equipService.deleteEquipmentclassification( classficationId );
-			
-			List<Equipmentclassification> childList = equipService.getAllChildEquipmentclassificationsByParentId( classficationId );
-			if(childList == null) {
-				List<Equipment> equipList = equipService.getEquipsByClassification( classficationId );
-				if(equipList != null) {
-					for (Equipment equipment : equipList) {
-						equipment.setClassificationid( Integer.valueOf(-1) );
-						equipService.alterEquipInfo( equipment );
+			Equipmentclassification ec = equipService.getEquipmentclassificationById( this.classficationId );
+			if(ec.getParentid() == 0) {
+				List<Equipmentclassification> childList = equipService.getAllChildEquipmentclassificationsByParentId( ec.getClassificationid() );
+				if(childList != null) {
+					for (Equipmentclassification e : childList) {
+						List<Equipment> equipList = equipService.getEquipsByClassification( e.getClassificationid() );
+						if(equipList != null) {
+							for (Equipment equipment : equipList) {
+								equipment.setClassificationid( Integer.valueOf(-1) );
+								equipService.alterEquipInfo( equipment );
+							}
+						}
+						equipService.deleteEquipmentclassification( e.getClassificationid() );
 					}
 				}
-			} else if(childList.size() > 0) {
-				for (Equipmentclassification childClass : childList) {
-					equipService.deleteEquipmentclassification( childClass.getClassificationid() );
-					
-					List<Equipment> equipList = equipService.getEquipsByClassification( classficationId );
+			} else {
+				List<Equipment> equipList = equipService.getEquipsByClassification( this.classficationId );
+				if(equipList != null) {
 					for (Equipment equipment : equipList) {
 						equipment.setClassificationid( Integer.valueOf(-1) );
 						equipService.alterEquipInfo( equipment );
@@ -239,13 +243,15 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				}
 			}
 			
-			
-			this.tag = "0";
-		} catch (RuntimeException re) {
-			this.tag = "1";
+			equipService.deleteEquipmentclassification( this.classficationId );
+		} catch(RuntimeException re) {
+			re.printStackTrace();
+			this.tag = "200";
 		}
-		returnJSON.put("tag", tag);
-		return SUCCESS;
+		
+		this.tag = "0";
+		returnJSON.put("tag", this.tag);
+		return tag;
 	}
 	/**
 	 * 批量删除设备分类
@@ -265,7 +271,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		for (String id : ids) {
 			this.classficationId = Integer.valueOf( id );
 			String result = deleteClassfication();
-			if(result == null || result == ERROR) {
+			if("200".equals(result)) {
 				this.tag = "0";
 				break;
 			} else {
@@ -319,7 +325,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	}
 	/**
 	 * 删除设备型号
-	 * 所有此设备型号的设备的设备型号归为未分配型号，将其型号外键设为 -1 以作标示
+	 * 所有此设备型号的设备的设备型号归为位置型号型号，将其型号外键设为 -1 以作标识
 	 */
 	private String equipInfoIds;
 	public String getEquipInfoIds() {
@@ -472,22 +478,14 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		List<Equipmentdetail> tempList = equipService.getAllEquipmentdetail();
 		for (Equipmentdetail equipdetail : tempList) {
 			EquipCourse ec = new EquipCourse();
-			Equipment e = equipService.getEquipmentById( equipdetail.getEquipmentid() );
-			Equipmentclassification ecf = equipService.getEquipmentclassificationByEquipmentdetail( equipdetail.getEquipDetailid() );
-			if(e != null) {
-				ec.setId( String.valueOf( equipdetail.getEquipDetailid() ) );
-				String modelName = e.getEquipmentname();
-				ec.setModelId( String.valueOf( e.getEquipmentid() ) );
-				ec.setModelName( modelName );
+			ec.setId( String.valueOf( equipdetail.getEquipDetailid() ) );
+			
+			if(equipdetail.getEquipmentid() == -1) {  //如果该器材未知型号
 				
-				if(ecf != null) {
-					ec.setClassId(  String.valueOf( ecf.getClassificationid() ) );
-					ec.setClassName( ecf.getName() );
-				} else {
-					ec.setClassId(  "" );
-					ec.setClassName( "无分类" );
-				}
-				
+				ec.setModelId( String.valueOf( -1 ) );
+				ec.setModelName( "未知型号" );
+				ec.setClassId( String.valueOf( -1 ) );
+				ec.setClassName( "未知分类" );
 				ec.setCode( String.valueOf( equipdetail.getEquipserial() ) );
 				ec.setState( String.valueOf( equipdetail.getStatus() ) );
 				if(equipdetail.getSysremark() != null && equipdetail.getUsermark() != null) {
@@ -501,6 +499,34 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				}
 				
 				equipDetailCourse.add( ec );
+			} else {
+				Equipment e = equipService.getEquipmentById( equipdetail.getEquipmentid() );
+			
+				if(e != null) {
+					ec.setModelId( String.valueOf( e.getEquipmentid() ) );
+					ec.setModelName( e.getEquipmentname() );
+					if(e.getClassificationid() != -1) { //该设备有分类
+						Equipmentclassification ecf = equipService.getEquipmentclassificationByEquipmentModel( equipdetail.getEquipDetailid() );
+						if(ecf != null) {
+							ec.setClassId(  String.valueOf( ecf.getClassificationid() ) );
+							ec.setClassName( ecf.getName() );
+						}
+					} else {
+						ec.setClassId(  String.valueOf( -1 ) );
+						ec.setClassName( "未分类" );
+					}
+					ec.setCode( String.valueOf( equipdetail.getEquipserial() ) );
+					ec.setState( String.valueOf( equipdetail.getStatus() ) );
+					if(equipdetail.getSysremark() != null && equipdetail.getUsermark() != null) {
+						ec.setMemo( equipdetail.getSysremark() + " " + equipdetail.getUsermark());
+					} else if(equipdetail.getSysremark() == null && equipdetail.getUsermark() != null) {
+						ec.setMemo(equipdetail.getUsermark());
+					} else if(equipdetail.getSysremark() != null && equipdetail.getUsermark() == null) {
+						ec.setMemo( equipdetail.getSysremark());
+					} else {
+						ec.setMemo("");
+					}
+				}
 			}
 		}
 		return SUCCESS;

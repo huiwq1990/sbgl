@@ -20,7 +20,7 @@
         	</result>
         </action>
         
-        <action name="deleteClassification" class="EquipmentAction" method="alterEquipmentclassification">
+        <action name="deleteClassification" class="EquipmentAction" method="deleteClassfication">
         	<result type="json">
         		<param name="root">returnJSON</param>
         	</result>
@@ -32,7 +32,7 @@
         	</result>
         </action>
     	
-    	<action name="deleteClassCourse" class="EquipmentAction" method="deleteClassficationByIds">
+    	<action name="deleteClassifications" class="EquipmentAction" method="deleteClassficationByIds">
         	<result type="json">
         		<param name="root">returnJSON</param>
         	</result>
