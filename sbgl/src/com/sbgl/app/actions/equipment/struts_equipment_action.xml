@@ -76,5 +76,21 @@
         	</result>
         </action>
     	
+    	<action name="deleteEquipDetail" class="EquipmentAction" method="deleteEquipmentdetail">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+    	
     </package>
+    
+    <package name="equipmentHTML" extends="struts-default">
+    	<!-- 请求刷新类型界面数据 -->
+        <action name="refreshClassification" class="EquipmentAction" method="gotoEquipManageClassfiction">
+        	<result name="success">
+        		/admin/equipManageClassfication.vm
+        	</result>
+        </action>
+    </package>
+    
 </struts>
