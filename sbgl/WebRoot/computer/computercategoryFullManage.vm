@@ -11,13 +11,18 @@
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
-
+<!--[if lt IE 10]>
+  <script src="${jsDomain}/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
 <!--[if lt IE 9]>
-  <script src="../js/html5shiv.js"></script>
-  <script src="../js/respond.min.js"></script>
+  <script src="${jsDomain}/html5shiv.js"></script>
+  <script src="${jsDomain}/respond.min.js"></script>
 <![endif]-->
 <!--[if IE 7]>
-<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<link rel="stylesheet" href="${cssDomain}/font-awesome-ie7.min.css">
 <![endif]-->
 </head>
 
@@ -91,7 +96,7 @@
               <div class="tips">在此页面下你可以添加新的设备分类，也可以管理现有设备分类。……</div>
               <div class="operate-item pull-left">
                 <a href="#add-equip-category" class="btn btn-primary" data-toggle="modal" role="button">添加分类</a>
-                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+                <a href="#" class="btn btn-white s-h" action-type="deleteComputercategory"><i class="icon-trash"></i>删除</a>
               </div>
 
               <div class="page pull-right clearfix">
@@ -202,7 +207,7 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary">确 定</button>
+    <button class="btn btn-primary" action-type="addComputercategoryButton">确 定</button>
   </div>
 </div>      
 <!--end 添加分类信息 -->
@@ -219,7 +224,7 @@
       <div class="form-group">
         <label for="modifyCategoryName" class="col-xs-3 control-label">分类名称</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="editComputercategoryName" placeholder="工作站">
+          <input type="text" class="form-control" id="inputEditComputercategoryName" placeholder="工作站">
         </div>
       </div>
 	  <!--获取父级分类 
@@ -241,7 +246,7 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary">确 定</button>
+    <button class="btn btn-primary" action-type="updateComputercategoryButton">确 定</button>
   </div>
 </div>
 <!--end 修改分类信息 -->
@@ -253,10 +258,16 @@
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
 <script>
 	$("#modifyFaCategoryId").select2("val","2");
 </script>
-
+<!--[if lt IE 10]>
+  <script src="${jsDomain}/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
 
 <script>
 	var cookie = { 
@@ -271,7 +282,7 @@
 	var editComputercategoryName;
 
 //添加分类
-	$("body").on("click", "button[action-type|=addComputercategory]", function() {
+	$("body").on("click", "button[action-type|=addComputercategoryButton]", function() {
 		var modelName = $("#addComputercategoryName").val();
 		
 		var postData = {
@@ -283,48 +294,99 @@
 		    url: "${webbaseurl}/addComputercategoryAjax.action",  
 		    type: "post",
 		    data: postData,
-		    success:function(data,textStatus,jq){  
-		    	console.log(data);
-	        },  
-		    error:function(data,textStatus,jq){alert("添加型号失败!");}  
-		});
+		    dataType: 'json',
+			success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+				//alert(returnJson.flag);
+				if(returnJson.flag==1){
+					alert("保存成功!")
+				}else{
+					alert("保存失败!")
+				}
+			}		  	  
+		});	
 	})
 	
 	//选择修改按钮，填充修改弹出框
 	$("body").on("click", "a[action-type|=editComputercategoryFillIn]", function() {
 		var myData = $(this).data();
-		$("#editComputercategoryName").val(myData.name);	
+		$("#inputEditComputercategoryName").val(myData.name);	
 		editComputercategoryId = myData.id;
 		editComputercategoryName = myData.name;
 	})
 	
-	$("body").on("click", "button[action-type|=alterModel]", function() {
-		var ename = $("#modifyEModelName").val();
-		var cidInput = $("#modifyEquipCategory").val();
-		var memo = $("#modifyEDescribe").val();
-		
-		if(ename == modelNameForAlter && modelCIdForAlter == cidInput && modelMemoForAlter == memo) {
-			alert("并未做修改！");
-		} else {
+	//更新分类
+	$("body").on("click", "button[action-type|=updateComputercategoryButton]", function() {
+		var modelName = $("#inputEditComputercategoryName").val();
+
 			var postData = {
-				"equipment.equipmentid": modelIdForAlter,
-				"equipment.equipmentname": ename,
-				"equipment.classificationid": cidInput,
-				"equipment.equipmentdetail": memo
+				"id": editComputercategoryId,
+				"name": modelName
+				
 			}
 			
 			jQuery.ajax({  
-			    url:"${webbaseurl}/altEquipModel.do",  
+			    url:"${webbaseurl}/updateComputercategoryAjax.${strutsaction}",  
 			    type:"post",
 			    data:postData,
-			    success:function(data,textStatus,jq){  
-			    	console.log(data);
-		        },  
-			    error:function(data,textStatus,jq){alert("修改型号失败！");}  
-			});
-		}
-		
+			  	dataType: 'json',
+				success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+			//alert(returnJson.flag);
+			if(returnJson.flag==1){
+				alert("保存成功!")
+			}else{
+				alert("保存失败!")
+			}
+		}	});		  	  
+
 	})
+	//end update
+	
+	
+	
+	var idsForDel;	
+	/* 处理CheckBox选中事件用于删除处理 */
+	$("input[type='checkbox']").click(function() {
+		//var num = 0;
+		idsForDel = "";
+		
+		if($(this).attr("id") === "chk-all") {
+			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
+		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true) {
+				//num++;
+				idsForDel += $(this).prop("value") + ";";
+			}
+		});
+	});
+	//end box
+	
+	//delete分类
+	$("body").on("click", "a[action-type|=deleteComputercategory]", function() {
+		idsForDel = idsForDel.substring(0,idsForDel.length-1);
+		var postData = {
+			computercategoryIdsForDel: idsForDel
+		}
+		alert(idsForDel);
+		jQuery.ajax({  
+		    url:"${webbaseurl}/deleteComputercategoryFullAjax.${strutsaction}",  
+		    type:"post",
+		    data:postData,
+			  dataType: 'json',
+			success: function(data){
+			if(data.flag!=1){
+				alert("保存成功!")
+			}else{
+				alert("保存失败!")
+				}
+				}		  	  
+			});
+	})
+	//end delete 分类
+	
+	
 </script>
 </body>
 </html>

@@ -44,6 +44,7 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 	
 	@Resource
 	private ComputercategoryService computercategoryService;
+	
 	//父级分类的list
 	List<Computercategory> parentcomputercategoryList = new ArrayList<Computercategory>();
 	List<Computercategory> computercategoryList = new ArrayList<Computercategory>();

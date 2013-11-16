@@ -45,6 +45,9 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	List<Computercategory> computercategoryList = new ArrayList<Computercategory>();
 	List<ComputercategoryFull> computercategoryFullList = new ArrayList<ComputercategoryFull>();
 	private Integer computercategoryid; //entity full 的id属性名称		
+	
+	String computercategoryIdsForDel;
+	
 	private String logprefix = "exec action method:";		
 	Page page = new Page();
 	Integer pageNo=1;	
@@ -171,13 +174,19 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 //删除
 	public String deleteComputercategory( ){
 		try{
-			if(computercategory.getId() != null && computercategory.getId() > 0){
-				computercategoryService.deleteComputercategory(computercategory.getId());
-				actionMsg = getText("deleteComputercategorySuccess");
-			}else{
-				System.out.println("删除的id不存在");
-				actionMsg = getText("deleteComputercategoryFail");
+			String ids[] = computercategoryIdsForDel.split(";");
+			for(int i=0; i < ids.length-1;i++){
+				int tempDelId = Integer.valueOf(ids[i]);
+				if(tempDelId > 0){
+					computercategoryService.deleteComputercategory(tempDelId);
+					actionMsg = getText("deleteComputercategorySuccess");
+				}else{
+					System.out.println("删除的id不存在");
+					actionMsg = getText("deleteComputercategoryFail");
+					return "Error";
+				}
 			}
+			
 			
 			return SUCCESS;
 		}catch(Exception e){
@@ -205,23 +214,27 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	
 //	del entityfull
 	public String deleteComputercategoryFull(){
-		try {
 		
-			Integer getId = computercategory.getId();
-			if(getId != null && getId < 0){
-				log.info("删除的id不规范");
-				return "Error";
+		try{
+			String ids[] = computercategoryIdsForDel.split(";");
+			for(int i=0; i < ids.length-1;i++){
+				
+				
+				Integer tempDelId = Integer.valueOf(ids[i]);			
+				if(tempDelId != null || tempDelId < 0){
+					log.info("删除的id不规范");
+					return "Error";
+				}	
+				Computercategory temp = computercategoryService.selectComputercategoryById(tempDelId);			
+				if (temp != null) {				
+					computercategoryService.deleteComputercategory(tempDelId);			
+				} else {
+					log.info("删除的id不存在");			
+					return "Error";	
+				}
 			}
-		
-		
-			Computercategory temp = computercategoryService.selectComputercategoryById(getId);
-			if (temp != null) {
-				computercategoryService.deleteComputercategory(getId);
-				return SUCCESS;
-			} else {
-				log.info("删除的id不存在");
-				return "Error";
-			}
+			
+			return SUCCESS;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -231,15 +244,29 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	
 	//del entityfull Ajax
 	public String deleteComputercategoryFullAjax( ){
+		log.info(logprefix + "deleteComputercategoryFullAjax");
 		try{
-			if(computercategory.getId() != null && computercategory.getId() >= 0){
-				computercategoryService.deleteComputercategory(computercategory.getId());				
+			String ids[] = computercategoryIdsForDel.split(";");
+			for(int i=0; i < ids.length;i++){
+				
+				Integer tempDelId = Integer.valueOf(ids[i]);			
+				if(tempDelId == null || tempDelId < 0){
+					log.info("删除的id不规范");
+					return "Error";
+				}	
+				Computercategory temp = computercategoryService.selectComputercategoryById(tempDelId);			
+				if (temp != null) {				
+					computercategoryService.deleteComputercategory(tempDelId);			
+				} else {
+					log.info("删除的id不存在");			
+					return "Error";	
+				}
 			}
 			
-			return "IdNotExist";
-		}catch(Exception e){
+			return SUCCESS;
+			
+		} catch (Exception e) {
 			e.printStackTrace();
-			log.error("类ComputercategoryAction的方法：deleteComputercategory错误"+e);
 		}
 		return "Error";
 	}
@@ -637,4 +664,14 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	public void setPageNo(Integer pageNo) {
 		this.pageNo = pageNo;
 	}
+
+	public String getComputercategoryIdsForDel() {
+		return computercategoryIdsForDel;
+	}
+
+	public void setComputercategoryIdsForDel(String computercategoryIdsForDel) {
+		this.computercategoryIdsForDel = computercategoryIdsForDel;
+	}
+	
+	
 }
