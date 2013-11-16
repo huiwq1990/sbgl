@@ -59,8 +59,8 @@ public interface EquipService {
 	public Integer getCountOfEquipByClassification(Integer classificationId);
 	//查询分类下所有设备的数量
 	public Integer getCountOfEquipdetailByClassification(Integer classificationId);
-	//查询某一器材所属的分类
-	public Equipmentclassification getEquipmentclassificationByEquipmentdetail(Integer equipmentdetailId);
+	//查询某一型号所属的分类
+	public Equipmentclassification getEquipmentclassificationByEquipmentModel(Integer equipmentModelId);
 	
 	//添加品类信息
 	public Integer addCategory(Category category);

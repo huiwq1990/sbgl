@@ -334,9 +334,8 @@ public class EquipServiceImpl implements EquipService {
 	}
 	
 	@Override
-	public Equipmentclassification getEquipmentclassificationByEquipmentdetail( Integer equipmentdetailId ) {
-		Equipmentdetail equipmentdetail = baseDao.getEntityById(Equipmentdetail.class, equipmentdetailId);
-		Equipment equipment = baseDao.getEntityById(Equipment.class, equipmentdetail.getEquipmentid());
+	public Equipmentclassification getEquipmentclassificationByEquipmentModel( Integer equipmentModelId ) {
+		Equipment equipment = baseDao.getEntityById(Equipment.class, equipmentModelId);
 		Equipmentclassification equipmentclassification = baseDao.getEntityById(Equipmentclassification.class, equipment.getClassificationid());
 		return equipmentclassification;
 	}

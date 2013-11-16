@@ -325,7 +325,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	}
 	/**
 	 * 删除设备型号
-	 * 所有此设备型号的设备的设备型号归为未分配型号，将其型号外键设为 -1 以作标示
+	 * 所有此设备型号的设备的设备型号归为位置型号型号，将其型号外键设为 -1 以作标识
 	 */
 	private String equipInfoIds;
 	public String getEquipInfoIds() {
@@ -478,22 +478,14 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		List<Equipmentdetail> tempList = equipService.getAllEquipmentdetail();
 		for (Equipmentdetail equipdetail : tempList) {
 			EquipCourse ec = new EquipCourse();
-			Equipment e = equipService.getEquipmentById( equipdetail.getEquipmentid() );
-			Equipmentclassification ecf = equipService.getEquipmentclassificationByEquipmentdetail( equipdetail.getEquipDetailid() );
-			if(e != null) {
-				ec.setId( String.valueOf( equipdetail.getEquipDetailid() ) );
-				String modelName = e.getEquipmentname();
-				ec.setModelId( String.valueOf( e.getEquipmentid() ) );
-				ec.setModelName( modelName );
+			ec.setId( String.valueOf( equipdetail.getEquipDetailid() ) );
+			
+			if(equipdetail.getEquipmentid() == -1) {  //如果该器材未知型号
 				
-				if(ecf != null) {
-					ec.setClassId(  String.valueOf( ecf.getClassificationid() ) );
-					ec.setClassName( ecf.getName() );
-				} else {
-					ec.setClassId(  "" );
-					ec.setClassName( "无分类" );
-				}
-				
+				ec.setModelId( String.valueOf( -1 ) );
+				ec.setModelName( "未知型号" );
+				ec.setClassId( String.valueOf( -1 ) );
+				ec.setClassName( "未知分类" );
 				ec.setCode( String.valueOf( equipdetail.getEquipserial() ) );
 				ec.setState( String.valueOf( equipdetail.getStatus() ) );
 				if(equipdetail.getSysremark() != null && equipdetail.getUsermark() != null) {
@@ -507,6 +499,34 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				}
 				
 				equipDetailCourse.add( ec );
+			} else {
+				Equipment e = equipService.getEquipmentById( equipdetail.getEquipmentid() );
+			
+				if(e != null) {
+					ec.setModelId( String.valueOf( e.getEquipmentid() ) );
+					ec.setModelName( e.getEquipmentname() );
+					if(e.getClassificationid() != -1) { //该设备有分类
+						Equipmentclassification ecf = equipService.getEquipmentclassificationByEquipmentModel( equipdetail.getEquipDetailid() );
+						if(ecf != null) {
+							ec.setClassId(  String.valueOf( ecf.getClassificationid() ) );
+							ec.setClassName( ecf.getName() );
+						}
+					} else {
+						ec.setClassId(  String.valueOf( -1 ) );
+						ec.setClassName( "未分类" );
+					}
+					ec.setCode( String.valueOf( equipdetail.getEquipserial() ) );
+					ec.setState( String.valueOf( equipdetail.getStatus() ) );
+					if(equipdetail.getSysremark() != null && equipdetail.getUsermark() != null) {
+						ec.setMemo( equipdetail.getSysremark() + " " + equipdetail.getUsermark());
+					} else if(equipdetail.getSysremark() == null && equipdetail.getUsermark() != null) {
+						ec.setMemo(equipdetail.getUsermark());
+					} else if(equipdetail.getSysremark() != null && equipdetail.getUsermark() == null) {
+						ec.setMemo( equipdetail.getSysremark());
+					} else {
+						ec.setMemo("");
+					}
+				}
 			}
 		}
 		return SUCCESS;
