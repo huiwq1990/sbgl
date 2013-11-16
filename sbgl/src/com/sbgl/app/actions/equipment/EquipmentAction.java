@@ -506,7 +506,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					ec.setModelId( String.valueOf( e.getEquipmentid() ) );
 					ec.setModelName( e.getEquipmentname() );
 					if(e.getClassificationid() != -1) { //该设备有分类
-						Equipmentclassification ecf = equipService.getEquipmentclassificationByEquipmentModel( equipdetail.getEquipDetailid() );
+						Equipmentclassification ecf = equipService.getEquipmentclassificationByEquipmentModel( equipdetail.getEquipmentid() );
 						if(ecf != null) {
 							ec.setClassId(  String.valueOf( ecf.getClassificationid() ) );
 							ec.setClassName( ecf.getName() );
@@ -526,6 +526,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					} else {
 						ec.setMemo("");
 					}
+					equipDetailCourse.add( ec );
 				}
 			}
 		}
