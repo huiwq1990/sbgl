@@ -56,7 +56,8 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	Page page = new Page();
 	Integer pageNo=1;	
 
-			
+	ReturnJson returnJson = new ReturnJson();
+	
 	public String addComputercategory(){	
 		log.info("Add Entity");
 
@@ -86,11 +87,18 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	public String addComputercategoryAjax(){	
 		log.info("Add Entity Ajax Manner");
 		
-		ReturnJson returnJson = new ReturnJson();
+		//名称不规范
+		boolean pass = checkComputercategoryName();
+		if(!pass){
+			return SUCCESS;
+		}
+		
+		
 		
 		try {
 			Computercategory temp = new Computercategory();
 			// 将model里的属性值赋给temp
+			computercategory.setName(computercategory.getName().trim());
 			BeanUtils.copyProperties(temp, computercategory);			
 			//add your code here.
 			
@@ -99,10 +107,10 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 			
 			computercategoryService.addComputercategory(temp);
 			
-			returnJson.setFlag(1);		
+			returnJson.setFlag(1);
+			returnJson.setReason("添加分类成功");
 			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
-			
+			this.returnStr = jo.toString();			
 			return SUCCESS;
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
@@ -114,9 +122,30 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 		}
 		
 		returnJson.setFlag(0);		
+		returnJson.setReason("内部错误，添加分类失败");
 		JSONObject jo = JSONObject.fromObject(returnJson);
 		this.returnStr = jo.toString();
 		return SUCCESS;
+	}
+	
+	private boolean checkComputercategoryName(){
+		if(computercategory.getName()==null || computercategory.getName().trim().equals("")){
+			returnJson.setFlag(0);	
+			returnJson.setReason("分类名称不能为空");
+			JSONObject jo = JSONObject.fromObject(returnJson);
+			this.returnStr = jo.toString();				
+			return false;
+		}
+		
+		if(computercategoryService.isComputercategoryNameExist(computercategory.getName().trim())){
+			returnJson.setFlag(0);	
+			returnJson.setReason("分类名称重复");
+			JSONObject jo = JSONObject.fromObject(returnJson);
+			this.returnStr = jo.toString();				
+			return false;
+		}
+		
+		return true;
 	}
 
 //删除

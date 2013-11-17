@@ -12,7 +12,8 @@ public class ComputermodelFull extends DaoAbs implements java.io.Serializable {
 			private String computermodelpicpath;
 			private Date computermodelcreatetime;
 			private Integer computermodelcreateuserid;
-			private Integer computermodelcount;
+			private Integer computermodelcomputercount;
+			private String computermodeldescription;
 			private Integer computermodelstatus;
 			private Integer computercategoryid;
 			private Integer computercategoryparentcomputercategoryid;
@@ -59,11 +60,17 @@ public class ComputermodelFull extends DaoAbs implements java.io.Serializable {
 		public Integer getComputermodelcreateuserid(){		
 			return this.computermodelcreateuserid;
 		}
-			public void setComputermodelcount(Integer computermodelcount){		
-			this.computermodelcount = computermodelcount;
+			public void setComputermodelcomputercount(Integer computermodelcomputercount){		
+			this.computermodelcomputercount = computermodelcomputercount;
 		}
-		public Integer getComputermodelcount(){		
-			return this.computermodelcount;
+		public Integer getComputermodelcomputercount(){		
+			return this.computermodelcomputercount;
+		}
+			public void setComputermodeldescription(String computermodeldescription){		
+			this.computermodeldescription = computermodeldescription;
+		}
+		public String getComputermodeldescription(){		
+			return this.computermodeldescription;
 		}
 			public void setComputermodelstatus(Integer computermodelstatus){		
 			this.computermodelstatus = computermodelstatus;

@@ -26,7 +26,32 @@ public class ComputercategoryDaoImpl extends HibernateDaoSupport implements Comp
 
 	private static final Log log = LogFactory.getLog(ComputercategoryDaoImpl.class);
 	
-	final String  basicFullSql = "select a.id as computercategoryid, a.parentcomputercategoryid as computercategoryparentcomputercategoryid, a.name as computercategoryname, a.createtime as computercategorycreatetime, a.createuserid as computercategorycreateuserid, a.status as computercategorystatus, b.id as parentcomputercategoryid, b.parentcomputercategoryid as parentcomputercategoryparentcomputercategoryid, b.name as parentcomputercategoryname, b.createtime as parentcomputercategorycreatetime, b.createuserid as parentcomputercategorycreateuserid, b.status as parentcomputercategorystatus from Computercategory a  left join Computercategory b on a.parentcomputercategoryid=b.id " ;
+	final String  basicFullSql = "select a.id as computercategoryid, a.parentcomputercategoryid as computercategoryparentcomputercategoryid, a.name as computercategoryname, a.createtime as computercategorycreatetime, a.createuserid as computercategorycreateuserid, a.status as computercategorystatus, b.id as parentcomputercategoryid, b.parentcomputercategoryid as parentcomputercategoryparentcomputercategoryid, b.name as parentcomputercategoryname, b.createtime as parentcomputercategorycreatetime, b.createuserid as parentcomputercategorycreateuserid, b.status as parentcomputercategorystatus from Computercategory a  left join Computercategory b on a.parentcomputercategoryid=b.id " ;	
+//	final String tableName = "computercategory";
+//	final String  basicSql="select * from " +tableName+" " ;
+	
+//	public List<Computercategory> selectComputercategoryByCondition(String condition){
+//	   	  
+//		String conSql=basicSql + condition;
+//	  	List<Computercategory> computercategoryList = getHibernateTemplate()
+//		.executeFind(new HibernateCallback() {
+//			public Object doInHibernate(Session session)
+//					throws HibernateException {
+//					
+//					//Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(YaomingFull.class));  
+//				Query query = session.createSQLQuery(sql);
+//				
+//				query.setResultTransformer(new EscColumnToBean(
+//						Computercategory.class));
+//				return query.list();
+//			}
+//		});
+//	  	if (computercategoryList != null && !computercategoryList.isEmpty()) {
+//	  		return computercategoryList;
+//	  	}
+//	  	return null;
+//	}
+	
 	
 	
 //  删除实体

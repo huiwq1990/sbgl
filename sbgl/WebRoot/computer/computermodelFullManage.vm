@@ -12,128 +12,456 @@
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
 <!--[if lt IE 10]>
-  <script src="../js/jquery.placeholder.js"></script>
+  <script src="${jsDomain}/jquery.placeholder.js"></script>
   <script>
   $('input, textarea').placeholder();
   </script>
 <![endif]-->
 <!--[if lt IE 9]>
-  <script src="../js/html5shiv.js"></script>
-  <script src="../js/respond.min.js"></script>
+  <script src="${jsDomain}/html5shiv.js"></script>
+  <script src="${jsDomain}/respond.min.js"></script>
 <![endif]-->
 <!--[if IE 7]>
-<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<link rel="stylesheet" href="${cssDomain}/font-awesome-ie7.min.css">
 <![endif]-->
 </head>
 
-<body id="admin">
-<section id="main-wrap" class="clearfix"><!--main-wrap-->
 
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="http://google.com"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="#anotherAction">个人主页</a></li>
+          <li><a href="#">人脉</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">设置</a></li>
+        <li><a href="用户管理首页.html">用户</a></li>
+        <li class="active"><a href="设备管理首页.html">机器</a></li>
+        <li><a href="#">内容</a></li>
+      </ul>
+    </div>    
+    <ul class="account-wrap nav nav-pills pull-right">
+          <li class="notice dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">消息1</a></li>
+              <li><a href="#">消息2</a></li>
+            </ul>
+          </li>     
+          <li class="social dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="../img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+            <div class="dropdown-menu">
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img src="../img/photo.jpg" width="96" height="96" class="img-rounded">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+                  <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+                  <div class="setting"><a href="#">账户设置</a></div>
+                  <button class="btn btn-primary" type="button">查看个人主页</button>
+                </div>
+              </div>
+            </div>      
+          </li>
+        </ul>
+  </div>
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+      <ul class="nav nav-tabs">
+        <li><a href="机器预约管理首页.html">机器预约管理</a></li>
+        <li class="active"><a href="机器信息管理首页.html">机器信息管理</a></li>
+      </ul>
+	  
+	  
+	  
+	  
+	  
       <!--admin-wrap start-->
       <div id="admin-wrap">
         <div id="admin-content" class="clearfix">    
             <!--control-bar start-->
-         
+            <div class="control-bar clearfix">
+              <div class="title pull-left">型号管理</div>
+			  <div class="tips">在此页面下管理设备型号。设备型号包含每种设备的基本信息，如设备名、设备图片、设备资料介绍等等。</div>
+              <div class="filter category-filter">
+                <select id="select-categories" style="width:130px" class="select2">
+                  <option value="0" data-foo="fa">全部分类</option>
+            <option value="1" data-foo="fa">工作站</option>
+          
+            <option value="5" data-foo="fa">数字调色</option>
+          
+                </select>
+				
+				
+				
+              </div>
+              <div class="operate-item pull-left">
+                <a href="#add-equip-model" class="btn btn-primary" data-toggle="modal" role="button">添加型号</a>
+                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+              </div>
+
+              <div class="page pull-right clearfix">
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="record">当前分类下有<strong>XX</strong>条记录</li>
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">最新</a></li>
+                      <li><a href="#">最旧</a></li>
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+                  <ul>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+            </div><!--control-bar end-->
             <div class="panel panel-default">
-
-<!--管理内容从这里开始 -->
-
-				<form id="formComputermodelManage" action="${webbaseurl}/manageComputermodelFull.action" method="get">
-
+            
               <table class="table table-hover">
                 <thead>
                   <tr>
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-
-             <th class="name">computermodelid</th>
-             <th class="name">computermodelname</th>
-             <th class="name">computermodelcomputercategoryid</th>
-             <th class="name">computermodelpicpath</th>
-             <th class="name">computermodelcreatetime</th>
-             <th class="name">computermodelcreateuserid</th>
-             <th class="name">computermodelcount</th>
-             <th class="name">computermodelstatus</th>
-             <th class="name">computercategoryid</th>
-             <th class="name">computercategoryparentcomputercategoryid</th>
-             <th class="name">computercategoryname</th>
-             <th class="name">computercategorycreatetime</th>
-             <th class="name">computercategorycreateuserid</th>
-             <th class="name">computercategorystatus</th>
-                   <th class="name">View</th>
-				   <th class="name">Del</th>
-				   <th class="name">Edit</th>
+                    <th class="name">设备名称(型号)</th>
+                    <th class="categories">分类</th>
+                    <th class="categories">可借数量</th>
+                    <th class="describe">描述</th>
                   </tr>
                 </thead>
-                <tbody>					
-							
-
-#foreach($tempcomputermodel in $computermodelFullList)
+                <tbody>
+				<!--数据开始 -->
+				#foreach($tempcomputermodel in $computermodelFullList)
                   <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>                   
-<td>$!tempcomputermodel.computermodelid</td>
-<td>$!tempcomputermodel.computermodelname</td>
-<td>$!tempcomputermodel.computermodelcomputercategoryid</td>
-<td>$!tempcomputermodel.computermodelpicpath</td>
-<td>$!tempcomputermodel.computermodelcreatetime</td>
-<td>$!tempcomputermodel.computermodelcreateuserid</td>
-<td>$!tempcomputermodel.computermodelcount</td>
-<td>$!tempcomputermodel.computermodelstatus</td>
-<td>$!tempcomputermodel.computercategoryid</td>
-<td>$!tempcomputermodel.computercategoryparentcomputercategoryid</td>
-<td>$!tempcomputermodel.computercategoryname</td>
-<td>$!tempcomputermodel.computercategorycreatetime</td>
-<td>$!tempcomputermodel.computercategorycreateuserid</td>
-<td>$!tempcomputermodel.computercategorystatus</td>
-					<td><a href="${webbaseurl}/viewComputermodelFull.action?id=$!tempcomputermodel.computermodelid">查看</a></td> 
-					<td><a href="${webbaseurl}/deleteComputermodelFull.action?id=$!tempcomputermodel.computermodelid">删除</a></td>			
-					<td><a href="${webbaseurl}/editComputermodelFull.action?id=$!tempcomputermodel.computermodelid">修改</a></td>
-                 
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!tempcomputermodel.computermodelid"></td>
+                    <td>$!tempcomputermodel.computermodelname<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="editComputercategoryFillIn" data-id="$!tempcomputermodel.computermodelid" data-name="$!tempcomputermodel.computermodelname" >修改</a></td>
+                    
+                     <td>3</td>
+                    <td>设备型号描述信息。</td>
                   </tr>
-#end            
-           
+               #end
+                
                 </tbody>
               </table>
-  		  
-#getPageHtml("formId=formComputermodelManage" "parameters=pageNo:$page.pageNo,pageSize:$page.pageSize,totalCount:$page.totalCount,pageviewcount:$page.pageviewcount,vmpath:common/page.vm")
-
-</form>
 
             </div>
           </div>
 
       </div>
       <!--equip-wrap end-->
+
 	  
 	  
-       <div id="lside">
+	  
+	  
+	  
+	  
+      <div id="lside"><!--sidebar start-->
         <form class="form-group">
-          <input type="text" class="form-control" placeholder="搜索">
+          <input type="text" class="form-control" placeholder="搜索设备">
           <i class="icon-search"></i>
         </form>
         <div class="list-group">
-          <a href="${webbaseurl}/manageComputermodelFull.action" class="list-group-item">管理</a>
-          <a href="${webbaseurl}/computer/computermodelAdd.vm" class="list-group-item">添加</a>
-          
+          <a href="机器信息管理首页.html" class="list-group-item active">机器信息管理</a>
+          <a href="机器添加.html" class="list-group-item">机器添加</a>
+          <a href="机器型号管理.html" class="list-group-item">型号管理</a>
+          <a href="机器分类管理.html" class="list-group-item">分类管理</a>
         </div>
       </div>
       <!--sidebar end-->
-
-
-
+	  
+	  
+	  
 
 </section>
 
 
+<!-- 修改-->
+<!-- Modal -->
+<div id="modify-model" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">修改</h3>
+  </div>
+  <div class="modal-body">
+    <p>这里是修改设备型号相关说明。</p>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="modifyEModelName" class="col-xs-3 control-label">型号名</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="modifyEModelName" placeholder="Arri Alexa Plus">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modifyEquipCategory" class="col-xs-3 control-label">分类</label>
+        <div class="col-xs-7">
+         <select class="select2 select-white form-control" id="inputECategory">
+           
+            <option value="1" >工作站</option>
+           
+            <option value="5" >调色器</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modifyEDescribe" class="col-xs-3 control-label">描述</label>
+        <div class="col-xs-7">
+          <textarea class="form-control" id="modifyEDescribe" rows="3"></textarea>
+        </div>
+      </div>
+    
+      <div class="form-group">
+        <label for="modifyEPic" class="col-xs-3 control-label">图片</label>
+        <div class="col-xs-7">
+          <span class="btn btn-white file-input-button">
+              <i class="icon-plus"></i>
+              <span>添加图片</span>
+              <input id="modifyEPic" type="file" name="files[]" multiple>
+          </span>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary" action-type="updateComputermodelButton">确 定</button>
+  </div>
+</div>
+<!-- end 修改-->
 
-    <!-- Le javascript
+<!-- 添加 Model-->
+<div id="add-equip-model" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">添加设备型号</h3>
+  </div>
+  <div class="modal-body">
+    <p>这里是添加设备型号相关说明。</p>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="addComputermodelName" class="col-xs-3 control-label">型号</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="addComputermodelName" placeholder="设备型号（如：Dell">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputECategory" class="col-xs-3 control-label">分类</label>
+        <div class="col-xs-7">
+          <select class="select2 select-white form-control" id="addComputermodelComputercategoryid">
+			 <option value="1000" >测试空分类</option>
+			#foreach($tempcomputercategory in $computercategoryFullList)
+            <option value="$!tempcomputercategory.computercategoryid" >$!tempcomputercategory.computercategoryname</option>
+           #end
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputEDescribe" class="col-xs-3 control-label">描述</label>
+        <div class="col-xs-7">
+          <textarea class="form-control" id="addComputermodelDescription" rows="3"></textarea>
+        </div>
+      </div>
+ 
+      <div class="form-group">
+        <label for="inputEPic" class="col-xs-3 control-label">图片</label>
+        <div class="col-xs-7">
+          <span class="btn btn-white file-input-button">
+              <i class="icon-plus"></i>
+              <span>添加图片</span>
+              <input id="inputEPic" type="file" name="files[]" multiple>
+          </span>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary" action-type="addComputermodelButton">确 定</button>
+  </div>
+</div>
+<!-- end 添加 Model-->
+
+
+     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+
 <script>
 	$("#modifyFaCategoryId").select2("val","2");
+</script>
+<!--[if lt IE 10]>
+  <script src="${jsDomain}/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+
+<script>
+	var cookie = { 
+  		//读取COOKIES,n为COOKIE名 
+   		Get:function(n){ 
+       		var re=new RegExp(n+'=([^;]*);?','gi');
+       	    var r=re.exec(document.cookie)||[];
+       	    return (r.length>1?r[1]:null)
+   		}
+	};
+	var editComputercategoryId;
+	var editComputercategoryName;
+
+
+
+// 触发提交按钮事件
+$('.modal').on('click', ('button.btn-primary'), function () {		
+		var _this = $(this);
+
+		//处理添加
+		if(_this.attr('action-type') == 'addComputermodelButton')
+		{
+			//alert('ssss');
+			var actionUrl = "${webbaseurl}/addComputermodelAjax.action";
+			var addComputermodelName = $('#addComputermodelName').val();
+			var addComputermodelComputercategoryid = $('#addComputermodelComputercategoryid').val();
+			var addComputermodelDescription = $('#addComputermodelDescription').val()
+			var postData = {
+				"createuserid": cookie.Get("id"),
+				"name": addComputermodelName,
+				"computercategoryid":addComputermodelComputercategoryid,
+				"description": addComputermodelDescription
+			}
+			var successStr = "添加分类成功！";
+			var failedStr = "添加分类失败！";				
+		}
+		// 如果是其它的提交操作，对照上一行的if代码处理		
+		
+		// 提交处理
+		jQuery.ajax({  
+		    url: actionUrl,  
+		    type: "post",
+		    data: postData,
+		    dataType: 'json',
+			success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+				if(returnJson.flag == 1){
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+					console.log('this is :'+$(this));
+				}else{
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
+				}
+			}		  	  
+		});		
+	})
+
+
+
+	//选择修改按钮，填充修改弹出框
+	$("body").on("click", "a[action-type|=editComputercategoryFillIn]", function() {
+		var myData = $(this).data();
+		$("#inputEditComputercategoryName").val(myData.name);	
+		editComputercategoryId = myData.id;
+		editComputercategoryName = myData.name;
+	})
+	
+	//更新分类
+	$("body").on("click", "button[action-type|=updateComputercategoryButton]", function() {
+		var modelName = $("#inputEditComputercategoryName").val();
+
+			var postData = {
+				"id": editComputercategoryId,
+				"name": modelName
+				
+			}
+			
+			jQuery.ajax({  
+			    url:"${webbaseurl}/updateComputercategoryAjax.${strutsaction}",  
+			    type:"post",
+			    data:postData,
+			  	dataType: 'json',
+				success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+			//alert(returnJson.flag);
+			if(returnJson.flag==1){
+				alert("保存成功!")
+			}else{
+				alert("保存失败!")
+			}
+		}	});		  	  
+
+	})
+	//end update
+	
+	
+	
+	var idsForDel;	
+	/* 处理CheckBox选中事件用于删除处理 */
+	$("input[type='checkbox']").click(function() {
+		//var num = 0;
+		idsForDel = "";
+		
+		if($(this).attr("id") === "chk-all") {
+			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
+		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true) {
+				//num++;
+				idsForDel += $(this).prop("value") + ";";
+			}
+		});
+	});
+	//end box
+	
+	//delete分类
+	$("body").on("click", "a[action-type|=deleteComputercategory]", function() {
+		idsForDel = idsForDel.substring(0,idsForDel.length-1);
+		var postData = {
+			computercategoryIdsForDel: idsForDel
+		}
+		//alert(idsForDel);
+		jQuery.ajax({  
+		    url:"${webbaseurl}/deleteComputercategoryFullAjax.${strutsaction}",  
+		    type:"post",
+		    data:postData,
+			  dataType: 'json',
+			success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+
+				
+				if(returnJson.flag == 1){
+					var n = noty({text: 'sss', timeout: 2500, type: 'success'});					
+					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框					
+				}else{
+					var n = noty({text: failedStr, timeout: 2500, type: 'error'});
+				}
+
+				
+				
+				}		  	  
+			});
+	})
+	//end delete 分类
+	
+	
 </script>
 </body>
 </html>

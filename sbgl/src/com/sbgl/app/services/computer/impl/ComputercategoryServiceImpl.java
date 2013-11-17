@@ -9,6 +9,7 @@ import com.sbgl.app.entity.ComputercategoryFull;
 import com.sbgl.app.services.computer.ComputercategoryService;
 import com.sbgl.app.dao.ComputercategoryDao;
 import com.sbgl.app.dao.BaseDao;
+
 import com.sbgl.util.*;
 
 import javax.annotation.Resource;
@@ -24,6 +25,7 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 	private BaseDao baseDao;
 	@Resource
 	private ComputercategoryDao computercategoryDao;
+	
 	
 	//http://blog.csdn.net/softimes/article/details/7008875 实体添加时需要配置hibernate
 	@Override
@@ -147,5 +149,16 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 		parentcomputercategoryList = baseDao.getEntityByProperty("Computercategory", "parentcomputercategoryid", "0");
 		return parentcomputercategoryList;
 	}
+	
+	
+	@Override
+	 public boolean isComputercategoryNameExist(String name){
+		 List<Computercategory>  l = baseDao.getEntityByProperty("Computercategory", "name", name);
+		 if(l==null || l.size()==0){
+			 return false;
+		 }else{
+			 return true;
+		 }
+	 }
 
 }

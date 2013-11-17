@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.app.services.computer.ComputermodelService;
@@ -136,5 +137,13 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 	public List<ComputermodelFull> selectComputermodelFullByComputercategoryId(Integer computercategoryid ) {
 		return computermodelDao.selectComputermodelFullByComputercategoryId(computercategoryid );
 	}
-
+	@Override
+	 public boolean isComputermodelNameExist(String name){
+		 List<Computercategory>  l = baseDao.getEntityByProperty("Computermodel", "name", name);
+		 if(l==null || l.size()==0){
+			 return false;
+		 }else{
+			 return true;
+		 }
+	 }
 }

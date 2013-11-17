@@ -49,5 +49,7 @@ public interface ComputercategoryService{
 public List<Computercategory> selectParentComputercategory() ;
 
 List<ComputercategoryFull> selectShowedComputercategoryFullByPage(Page page);
+
+boolean isComputercategoryNameExist(String name);
 	
 }

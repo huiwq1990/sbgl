@@ -259,6 +259,8 @@
 <script src="${jsDomain}/select2.js"></script>
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+
 <script>
 	$("#modifyFaCategoryId").select2("val","2");
 </script>
@@ -281,32 +283,48 @@
 	var editComputercategoryId;
 	var editComputercategoryName;
 
-//添加分类
-	$("body").on("click", "button[action-type|=addComputercategoryButton]", function() {
-		var modelName = $("#addComputercategoryName").val();
-		
-		var postData = {
-			"createuserid": cookie.Get("id"),
-			"name": modelName		
+
+
+// 触发提交按钮事件
+$('.modal').on('click', ('button.btn-primary'), function () {		
+		var _this = $(this);
+
+		//处理添加
+		if(_this.attr('action-type') == 'addComputercategoryButton')
+		{
+			//alert('test add');
+			var actionUrl = "${webbaseurl}/addComputercategoryAjax.action";
+			var inputCategoryName = $('#addComputercategoryName').val();			
+			var postData = {
+				"createuserid": cookie.Get("id"),
+				"name": inputCategoryName		
+			}
+			var successStr = "添加分类成功！";
+			var failedStr = "添加分类失败！";				
 		}
-	
+		// 如果是其它的提交操作，对照上一行的if代码处理		
+		
+		// 提交处理
 		jQuery.ajax({  
-		    url: "${webbaseurl}/addComputercategoryAjax.action",  
+		    url: actionUrl,  
 		    type: "post",
 		    data: postData,
 		    dataType: 'json',
 			success: function(data){
 				var returnJson = jQuery.parseJSON(data); 
-				//alert(returnJson.flag);
-				if(returnJson.flag==1){
-					alert("保存成功!")
+				if(returnJson.flag == 1){
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+					
 				}else{
-					alert("保存失败!")
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
 				}
 			}		  	  
-		});	
+		});		
 	})
-	
+
+
+
 	//选择修改按钮，填充修改弹出框
 	$("body").on("click", "a[action-type|=editComputercategoryFillIn]", function() {
 		var myData = $(this).data();
@@ -369,18 +387,25 @@
 		var postData = {
 			computercategoryIdsForDel: idsForDel
 		}
-		alert(idsForDel);
+		//alert(idsForDel);
 		jQuery.ajax({  
 		    url:"${webbaseurl}/deleteComputercategoryFullAjax.${strutsaction}",  
 		    type:"post",
 		    data:postData,
 			  dataType: 'json',
 			success: function(data){
-			if(data.flag!=1){
-				alert("删除成功!")
-			}else{
-				alert("删除失败!")
+				var returnJson = jQuery.parseJSON(data); 
+
+				
+				if(returnJson.flag == 1){
+					var n = noty({text: 'sss', timeout: 2500, type: 'success'});					
+					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框					
+				}else{
+					var n = noty({text: failedStr, timeout: 2500, type: 'error'});
 				}
+
+				
+				
 				}		  	  
 			});
 	})

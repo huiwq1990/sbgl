@@ -45,6 +45,8 @@ public interface ComputermodelService{
 
 	void updateCategoryComputermodel(int computercategoryid);
 
+	boolean isComputermodelNameExist(String name);
+
 		
 	
 	

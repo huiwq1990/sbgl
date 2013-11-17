@@ -17,6 +17,8 @@ import com.sbgl.app.entity.Computer;
 import com.sbgl.app.entity.ComputerFull;
 import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.ComputercategoryFull;
+import com.sbgl.app.entity.Computermodel;
+import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.app.entity.ComputerorderFull;
 import com.sbgl.app.services.computer.ComputerService;
 import com.sbgl.app.services.computer.ComputercategoryService;
@@ -52,6 +54,13 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 	
 	@Resource
 	private ComputermodelService computermodelService;
+	//分
+//	List<Computercategory> computermodeComputercategoryList = new ArrayList<Computercategory>();
+	List<Computermodel> computermodelList = new ArrayList<Computermodel>();
+	List<ComputermodelFull> computermodelFullList = new ArrayList<ComputermodelFull>();
+	
+	
+	
 	@Resource
 	private ComputerorderService computerorderService;
 
@@ -156,6 +165,26 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 		return SUCCESS;
 	}
 
+	
+	//管理ComputermodelFull
+	public String manageComputermodelFull(){
+		log.info("exec action method:manageComputermodelFull");
+		
+//      分页查询		
+		page.setPageNo(pageNo);
+		//设置总数量，在service中设置
+		//page.setTotalpage(computermodelService.countComputermodelRow());
+		computermodelFullList  = computermodelService.selectComputermodelFullByPage(page);
+		computercategoryFullList  = computercategoryService.selectComputercategoryFullAll();
+		
+		if(computermodelFullList == null){
+			computermodelFullList = new ArrayList<ComputermodelFull>();
+		}
+
+		return SUCCESS;
+	}			
+	
+	
 	@Override
 	public void setSession(Map<String, Object> arg0) {
 		// TODO Auto-generated method stub
@@ -286,6 +315,23 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 	public void setParentcomputercategoryList(
 			List<Computercategory> parentcomputercategoryList) {
 		this.parentcomputercategoryList = parentcomputercategoryList;
+	}
+
+	public List<Computermodel> getComputermodelList() {
+		return computermodelList;
+	}
+
+	public void setComputermodelList(List<Computermodel> computermodelList) {
+		this.computermodelList = computermodelList;
+	}
+
+	public List<ComputermodelFull> getComputermodelFullList() {
+		return computermodelFullList;
+	}
+
+	public void setComputermodelFullList(
+			List<ComputermodelFull> computermodelFullList) {
+		this.computermodelFullList = computermodelFullList;
 	}
 
 	

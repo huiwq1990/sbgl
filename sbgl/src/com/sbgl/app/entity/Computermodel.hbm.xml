@@ -25,8 +25,11 @@
         <property name="createuserid" type="java.lang.Integer">
             <column name="createuserid" />
         </property>
-        <property name="count" type="java.lang.Integer">
-            <column name="count" />
+        <property name="computercount" type="java.lang.Integer">
+            <column name="computercount" />
+        </property>
+        <property name="description" type="java.lang.String">
+            <column name="description" length="2000" />
         </property>
         <property name="status" type="java.lang.Integer">
             <column name="status" />
