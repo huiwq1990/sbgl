@@ -99,7 +99,7 @@
               
               <div class="operate-item pull-left">
                 <a href="${webbaseurl}/equipManageEquip.do" class="btn btn-primary">添加设备</a>
-                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+                <a href="#" class="btn btn-white s-h" action-type="deleteDetail"><i class="icon-trash"></i> 删除</a>
               </div>
 
               <div class="page pull-right clearfix">
@@ -304,6 +304,23 @@
 	var detailMIdForAlter;
 	var detailStatus;
 	var detailMemo;
+	var idsForDel;
+	
+	/* 处理CheckBox选中事件用于删除处理 */
+	$("input[type='checkbox']").click(function() {
+		//var num = 0;
+		idsForDel = "";
+		
+		if($(this).attr("id") === "chk-all") {
+			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
+		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true) {
+				//num++;
+				idsForDel += $(this).prop("value") + "_";
+			}
+		});
+	});
 	
 	$("body").on("click", "a[action-type|=alterDetailFillIn]", function() {
 		var myData = $(this).data();
@@ -354,6 +371,22 @@
 			    error:function(data,textStatus,jq){alert("修改器材失败！");}  
 			});
 		}
+	})
+	
+	$("body").on("click", "a[action-type|=deleteDetail]", function() {
+		var postData = {
+			equipdetailIds: idsForDel
+		}
+		alert(idsForDel);
+		jQuery.ajax({  
+		    url:"${webbaseurl}/deleteEquipDetail.do",  
+		    type:"post",
+		    data:postData,
+		    success:function(data,textStatus,jq){  
+		    	console.log(data);
+	        },  
+		    error:function(data,textStatus,jq){alert("删除型号失败！");}  
+		});
 	})
 </script>
 </body>
