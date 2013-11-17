@@ -22,11 +22,15 @@ import com.sbgl.app.entity.Equipment;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Equipmentdetail;
 import com.sbgl.app.services.equipment.EquipService;
+import com.sbgl.util.Page;
 
 @Scope("prototype") 
 @Controller("EquipmentAction")
 public class EquipmentAction extends ActionSupport implements SessionAware {
 	private static final long serialVersionUID = 1L;
+	
+	Page page = new Page();
+	Integer pageNo=1;	
 	
 	private static final Log log = LogFactory.getLog(EquipmentAction.class);
 	@SuppressWarnings("unused")
@@ -174,8 +178,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 //		return SUCCESS;
 //	}
 	/**
-	 * 获取全部分类信息进程单详情
-	 * 显示格式为：分类名称 -父级分类-型号数量-设备数量
+	 * 获取全部分类信息进程单详情	 * 显示格式为：分类名称 -父级分类-型号数量-设备数量
 	 */
 	public String getAllClassficationCourse() {
 		List<ClassficationCourse> classCourse = new ArrayList<ClassficationCourse>();
@@ -407,7 +410,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	
 	/**
 	 * 添加设备
-	 * 业务说明：1.对新添加的设备器材，要统计其状态并对型号库中相应状态的数量进行增加操作
+	 * 业务说明     1.对新添加的设备器材，要统计其状态并对型号库中相应状态的数量进行增加操作
+	 *        2.器材状态说明：0-正常；1-借出；2-维护；3-维修；4-遗失；5-回收站
 	 */
 	private Equipmentdetail equipmentdetail;
 	public Equipmentdetail getEquipmentdetail() {
@@ -422,6 +426,35 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		long returnCode = equipService.addEquipmentdetail( equipmentdetail );
+		Equipment equip = equipService.getEquipmentById(  equipmentdetail.getEquipmentid() );
+		
+		String stateCodeStr = equipmentdetail.getStatus();
+		Integer activeNum = equip.getActivenum();
+		Integer maintainNum = equip.getMaintainnum();
+		Integer repairNum = equip.getRepairnum();
+		Integer losedNum = equip.getLosednum();
+		Integer recycleNum = equip.getRecyclingnum();
+		
+		if(stateCodeStr.equals("0")) {
+			activeNum += 1;
+		} else if(stateCodeStr.equals("1")) {
+			//TODO 借出如何获取和存储借出数量
+		} else if(stateCodeStr.equals("2")) {
+			maintainNum += 1;
+		} else if(stateCodeStr.equals("3")) {
+			repairNum += 1;
+		} else if(stateCodeStr.equals("4")) {
+			losedNum += 1;
+		} else if(stateCodeStr.equals("5")) {
+			recycleNum += 1;
+		}
+		equip.setActivenum( activeNum );
+		equip.setMaintainnum( maintainNum );
+		equip.setRepairnum( repairNum );
+		equip.setLosednum( losedNum );
+		equip.setRecyclingnum( recycleNum );
+		equipService.alterEquipInfo( equip );
+		
 		if( returnCode != -1 ) {
 			this.tag = "0";
 		} else {
@@ -434,8 +467,54 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	/**
 	 * 修改设备
 	 * 使用添加设备的参数 equipmentdetail
+	 * 同样需要对型号库进行数量清点
 	 */
 	public String alterEquipmentdetail() {
+		Equipmentdetail temp = equipService.getEquipmentdetail( equipmentdetail.getEquipDetailid() );
+		Equipment equip = equipService.getEquipmentById( equipmentdetail.getEquipmentid() );
+		
+		String stateCodeStr = equipmentdetail.getStatus();
+		String stateCodeOld = temp.getStatus();
+		
+		Integer activeNum = equip.getActivenum();
+		Integer maintainNum = equip.getMaintainnum();
+		Integer repairNum = equip.getRepairnum();
+		Integer losedNum = equip.getLosednum();
+		Integer recycleNum = equip.getRecyclingnum();
+		
+		if(stateCodeStr.equals("0")) {
+			activeNum += 1;
+		} else if(stateCodeStr.equals("1")) {
+			//TODO 借出如何获取和存储借出数量
+		} else if(stateCodeStr.equals("2")) {
+			maintainNum += 1;
+		} else if(stateCodeStr.equals("3")) {
+			repairNum += 1;
+		} else if(stateCodeStr.equals("4")) {
+			losedNum += 1;
+		} else if(stateCodeStr.equals("5")) {
+			recycleNum += 1;
+		}
+		if(stateCodeOld.equals("0")) {
+			activeNum -= 1;
+		} else if(stateCodeOld.equals("1")) {
+			//TODO 借出如何获取和存储借出数量
+		} else if(stateCodeOld.equals("2")) {
+			maintainNum -= 1;
+		} else if(stateCodeOld.equals("3")) {
+			repairNum -= 1;
+		} else if(stateCodeOld.equals("4")) {
+			losedNum -= 1;
+		} else if(stateCodeOld.equals("5")) {
+			recycleNum -= 1;
+		}
+		equip.setActivenum( activeNum );
+		equip.setMaintainnum( maintainNum );
+		equip.setRepairnum( repairNum );
+		equip.setLosednum( losedNum );
+		equip.setRecyclingnum( recycleNum );
+		equipService.alterEquipInfo( equip );
+		
 		long returnCode = equipService.alterEquipmentdetail( equipmentdetail );
 		if( returnCode != -1 ) {
 			this.tag = "0";
@@ -459,6 +538,34 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	}
 
 	public String deleteEquipmentdetail() {
+		Equipment equip = equipService.getEquipmentById( equipmentdetail.getEquipmentid() );
+		Integer activeNum = equip.getActivenum();
+		Integer maintainNum = equip.getMaintainnum();
+		Integer repairNum = equip.getRepairnum();
+		Integer losedNum = equip.getLosednum();
+		Integer recycleNum = equip.getRecyclingnum();
+		
+		String stateCodeStr = equipmentdetail.getStatus();
+		if(stateCodeStr.equals("0")) {
+			activeNum -= 1;
+		} else if(stateCodeStr.equals("1")) {
+			//TODO 借出如何获取和存储借出数量
+		} else if(stateCodeStr.equals("2")) {
+			maintainNum -= 1;
+		} else if(stateCodeStr.equals("3")) {
+			repairNum -= 1;
+		} else if(stateCodeStr.equals("4")) {
+			losedNum -= 1;
+		} else if(stateCodeStr.equals("5")) {
+			recycleNum -= 1;
+		}
+		equip.setActivenum( activeNum );
+		equip.setMaintainnum( maintainNum );
+		equip.setRepairnum( repairNum );
+		equip.setLosednum( losedNum );
+		equip.setRecyclingnum( recycleNum );
+		equipService.alterEquipInfo( equip );
+		
 		String[] ids = equipdetailIds.split("_");
 		for (String id : ids) {
 			Integer oneId = Integer.valueOf( id );
@@ -618,6 +725,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		return classSum;
 	}
 
+	
+	
 	public String gotoEquipManageClassfiction() {
 		
 		List<Equipmentclassification> equipList =  equipService.getAllEquipmentclassifications();
