@@ -35,7 +35,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	private static final Log log = LogFactory.getLog(EquipmentAction.class);
 	@SuppressWarnings("unused")
 	private Map<String, Object> session;
-	private String tag;    //返回执行结果 0-成功 1-失败
+	private String tag;     //返回执行结果 0-成功 1-失败
+	private String message; //返回信息
 	
 	@Resource
 	private EquipService equipService;
@@ -54,11 +55,14 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		return returnJSON;
 	}
 
-	public String getTag() {
-		return tag;
-	}
-
-
+//	public String getTag() {
+//		return tag;
+//	}
+//	
+//
+//	public String getMessage() {
+//		return message;
+//	}
 	/**
 	 * 添加分类信息
 	 */
@@ -76,11 +80,15 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		long returnCode = equipService.addEquipmentclassification( equipClassforAdd );
 		if( returnCode != -1 ) {
 			this.tag = "0";
+			this.message = "分类保存成功！";
 		} else {
 			this.tag = "1";
+			this.message = "分类保存失败！";
 			log.error("################ 保存器材分类失败！ ################");
 		}
-		returnJSON.put("addClassTag", tag);
+		returnJSON.put("tag", tag);
+		returnJSON.put("msg", message);
+		
 		return SUCCESS;
 	}
 	/**
@@ -101,11 +109,14 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		long returnCode = equipService.alterEquipmentclassification( equipClassforAltert );
 		if( returnCode != -1) {
 			this.tag = "0";
+			this.message = "分类修改成功！";
 		} else {
 			this.tag = "1";
+			this.message = "分类修改失败！";
 			log.error("################ 修改器材分类失败！ ################");
 		}
-		returnJSON.put("alterClassTag", tag);
+		returnJSON.put("tag", tag);
+		returnJSON.put("msg", message);
 		return SUCCESS;
 	}
 	/**
@@ -275,13 +286,16 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			this.classficationId = Integer.valueOf( id );
 			String result = deleteClassfication();
 			if("200".equals(result)) {
-				this.tag = "0";
+				this.tag = "1";
+				this.message = "分类删除失败！";
 				break;
 			} else {
-				this.tag = "1";
+				this.message = "分类删除成功！";
+				this.tag = "0";
 			}
 		}
 		returnJSON.put("tag", tag);
+		returnJSON.put("msg", message);
 		return SUCCESS;
 	}
 
