@@ -146,4 +146,16 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 			 return true;
 		 }
 	 }
+	
+	
+	@Override
+	 public List<Computermodel>  selectComputermodelByName(String name){
+		 List<Computermodel>  l = baseDao.getEntityByProperty("Computermodel", "name", name);
+		return l;
+	 }	
+//	@Override
+//	 public List<Integer>  selectComputermodelidByName(String name){
+//		 List<Integer>  l = baseDao.createSQL("select id from Computermodel");
+//		return l;
+//	 }
 }

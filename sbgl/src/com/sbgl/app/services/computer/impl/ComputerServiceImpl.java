@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.sbgl.app.entity.Computer;
 import com.sbgl.app.entity.ComputerFull;
+import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.services.computer.ComputerService;
 import com.sbgl.app.dao.ComputerDao;
 import com.sbgl.app.dao.BaseDao;
@@ -68,6 +69,16 @@ public class ComputerServiceImpl implements ComputerService{
 		baseDao.updateEntity(tempComputer);
 
 	}
+	
+	/**
+	 * 更新某一型号下面所有的机器
+	 */
+	@Override
+	public void updateComputermodelTo(int originalComputermodelid,int toComputermodelid){
+		String sql = "update Computer as tb set tb.computermodelid = "+toComputermodelid +" where tb.computermodelid =  " + originalComputermodelid;
+		baseDao.createSQL(sql);		
+	}
+	
 
 //	根据id查询实体类			
 	@Override
@@ -127,5 +138,18 @@ public class ComputerServiceImpl implements ComputerService{
 	public List<ComputerFull> selectComputerFullByComputermodelId(Integer computermodelid ) {
 		return computerDao.selectComputerFullByComputermodelId(computermodelid );
 	}
-
+	/**
+	 * 更改属于某一型号的所有机器
+	 * @param name
+	 * @return
+	 */
+//	@Override
+//	 public boolean isComputermodelNameExist(String name){
+//		 List<Computercategory>  l = baseDao.getEntityByProperty("Computermodel", "name", name);
+//		 if(l==null || l.size()==0){
+//			 return false;
+//		 }else{
+//			 return true;
+//		 }
+//	 }
 }

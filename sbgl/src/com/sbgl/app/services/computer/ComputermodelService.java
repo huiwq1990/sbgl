@@ -2,6 +2,7 @@ package com.sbgl.app.services.computer;
 
 import java.util.List;
 
+import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.util.*;
@@ -46,6 +47,8 @@ public interface ComputermodelService{
 	void updateCategoryComputermodel(int computercategoryid);
 
 	boolean isComputermodelNameExist(String name);
+
+	List<Computermodel> selectComputermodelByName(String name);
 
 		
 	

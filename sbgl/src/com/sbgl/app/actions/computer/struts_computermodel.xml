@@ -212,7 +212,9 @@
         </action>
 <!--del entityfull ajax -->		
 		<action name="deleteComputermodelFullAjax" class="ComputermodelAction" method="deleteComputermodelFullAjax">
-        	<result type="json"></result>
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
         </action>
     	<action name="updateComputermodelAjax" class="ComputermodelAction" method="updateComputermodelAjax">
         	<result type="json">

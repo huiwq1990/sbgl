@@ -20,6 +20,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.entity.*;
+import com.sbgl.app.services.computer.ComputerService;
 import com.sbgl.app.services.computer.ComputercategoryService;
 import com.sbgl.app.services.computer.ComputermodelService;
 import com.sbgl.util.*;
@@ -39,6 +40,8 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 	private ComputermodelService computermodelService;
 	@Resource
 	private ComputercategoryService computercategoryService;
+	@Resource
+	private ComputerService computerService;
 	
 	private Computermodel computermodel = new Computermodel();//实例化一个模型
 	private Computermodel computermodelModel = new Computermodel();//实例化一个模型
@@ -52,63 +55,13 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 	Page page = new Page();
 	Integer pageNo=1;	
 	ReturnJson returnJson = new ReturnJson();
-//  manage Computermodel
-	public String manageComputermodel(){
-		log.info(logprefix+"manageComputermodelFull");
-		
-//      分页查询	
-		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
-		//page.setTotalpage(computermodelService.countComputermodelRow());
-		computermodelList  = computermodelService.selectComputermodelByPage(page);
-		
-//		查询全部
-//		computermodelList  = computermodelService.selectComputermodelById();
-		
-	    if(computermodelList == null){
-			computermodelList = new ArrayList<Computermodel>();
-		}
-//		for(int i = 0; i < computermodelList.size(); i++){
-//			System.out.println("id="+computermodelList.get(i).getLoginusername());
-//		}
-		return SUCCESS;
-	}		
-			
-	//管理 查询
-	public String manageComputermodelFull(){
-		log.info("exec action method:manageComputermodelFull");
-		
-//      分页查询		
-		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
-		//page.setTotalpage(computermodelService.countComputermodelRow());
-		computermodelFullList  = computermodelService.selectComputermodelFullByPage(page);
-		
-//		查询全部
-//		computermodelFullList  = computermodelService.selectComputermodelFullAll();
+	
+	private String computermodelIdsForDel;
 
-		if(computermodelFullList == null){
-			computermodelFullList = new ArrayList<ComputermodelFull>();
-		}
-//		for(int i = 0; i < computermodelFullList.size(); i++){
-//			System.out.println("id="+computermodelFullList.get(i).getLoginusername());
-//		}
-		return SUCCESS;
-	}			
-			
-		
-	//管理
-	public String manageComputermodelInfo(){
-		log.info(logprefix +" manageComputermodel");
-		//Page page = new Page();
-		//if()
-		computermodelList  = computermodelService.selectComputermodelByPage(page);
-		for(int i = 0; i < computermodelList.size(); i++){
-		//	System.out.println("id="+computermodelList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}	
-			
+	/**
+	 * 		
+	 * @return
+	 */
 	public String addComputermodel(){	
 		log.info("Add Entity");
 
@@ -137,7 +90,7 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 	
 	//check model
 	private boolean checkComputermodel(){
-		System.out.println("sssssss" + computermodel.getName());
+//		System.out.println("sssssss" + computermodel.getName());
 		if(computermodel.getName()==null || computermodel.getName().trim().equals("")){
 			returnJson.setFlag(0);	
 			returnJson.setReason("模型名称不能为空");
@@ -145,7 +98,7 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 			this.returnStr = jo.toString();				
 			return false;
 		}
-		String name = computermodel.getName();
+		String name = computermodel.getName().trim();
 		
 		if(computermodelService.isComputermodelNameExist(name)){
 			returnJson.setFlag(0);	
@@ -187,7 +140,8 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 			
 			computermodelService.addComputermodel(temp);
 			
-			returnJson.setFlag(1);		
+			returnJson.setFlag(1);	
+			returnJson.setReason("添加机器模型成功");
 			JSONObject jo = JSONObject.fromObject(returnJson);
 			this.returnStr = jo.toString();
 			
@@ -202,6 +156,7 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 		}
 		
 		returnJson.setFlag(0);		
+		returnJson.setReason("数据库错误");
 		JSONObject jo = JSONObject.fromObject(returnJson);
 		this.returnStr = jo.toString();
 		return SUCCESS;
@@ -270,50 +225,124 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 	
 	//del entityfull Ajax
 	public String deleteComputermodelFullAjax( ){
+		log.info(logprefix + "deleteComputercategoryFullAjax" + computermodelIdsForDel);
+		ReturnJson returnJson = new ReturnJson();
+		//检查要删除的id是否为空
+		if(computermodelIdsForDel == null || computermodelIdsForDel.trim().length()==0){
+			returnJson.setFlag(0);
+			returnJson.setReason("删除型号的id为空");
+			log.info("删除型号的id为空");
+			JSONObject jo = JSONObject.fromObject(returnJson);
+			this.returnStr = jo.toString();
+			return SUCCESS;
+		}
+		
 		try{
-			if(computermodel.getId() != null && computermodel.getId() >= 0){
-				computermodelService.deleteComputermodel(computermodel.getId());				
+			String ids[] = computermodelIdsForDel.split(";");
+			for(int i=0; i < ids.length;i++){				
+				Integer tempDelId = Integer.valueOf(ids[i]);			
+				log.info(tempDelId);
+				//检查id
+				if(tempDelId == null || tempDelId < 0){
+					returnJson.setFlag(0);
+					returnJson.setReason("删除的id不规范");
+					log.info("删除的id不规范");
+					JSONObject jo = JSONObject.fromObject(returnJson);
+					this.returnStr = jo.toString();
+					return SUCCESS;
+				}	
+				//del
+				Computermodel temp = computermodelService.selectComputermodelById(tempDelId);			
+				if (temp != null) {		
+					computerService.updateComputermodelTo(tempDelId, -1);//删除
+					computermodelService.deleteComputermodel(tempDelId);
+					
+					
+				} else {
+					log.info("删除的id不存在");		
+					returnJson.setFlag(0);
+					returnJson.setReason("删除的id不存在");
+					JSONObject jo = JSONObject.fromObject(returnJson);
+					this.returnStr = jo.toString();
+					return SUCCESS;
+				}
+			}
+			returnJson.setFlag(1);
+			returnJson.setReason("删除型号成功");
+			JSONObject jo = JSONObject.fromObject(returnJson);
+			this.returnStr = jo.toString();
+			return SUCCESS;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		returnJson.setFlag(0);
+		returnJson.setReason("删除发生内部错误");
+		JSONObject jo = JSONObject.fromObject(returnJson);
+		this.returnStr = jo.toString();
+		return SUCCESS;
+	}
+
+
+
+	//check model
+	private boolean checkUpdateComputermodel(){
+//		System.out.println("sssssss" + computermodel.getName());
+		if(computermodel.getId()==null || computermodel.getId()<0){
+			returnJson.setFlag(0);	
+			returnJson.setReason("模型编号错误");
+			JSONObject jo = JSONObject.fromObject(returnJson);
+			this.returnStr = jo.toString();				
+			return false;
+		}
+		if(computermodel.getName()==null || computermodel.getName().trim().equals("")){
+			returnJson.setFlag(0);	
+			returnJson.setReason("模型名称不能为空");
+			JSONObject jo = JSONObject.fromObject(returnJson);
+			this.returnStr = jo.toString();				
+			return false;
+		}
+		
+		String name = computermodel.getName().trim();		
+		List<Computermodel> sameNameComputermodelList = computermodelService.selectComputermodelByName(name);
+//		System.out.println(l.size());
+		List<Integer> sameNameIdList = new ArrayList<Integer>();
+		
+		if(sameNameComputermodelList!=null && sameNameComputermodelList.size()>0){
+			for(int i = 0; i < sameNameComputermodelList.size(); i++){
+				if(sameNameComputermodelList.get(i).getId()!= computermodel.getId())
+					sameNameIdList.add(sameNameComputermodelList.get(i).getId());
+			}
+			if(sameNameIdList.size()>0){
+				returnJson.setFlag(0);	
+				returnJson.setReason("模型名称重复");
+				JSONObject jo = JSONObject.fromObject(returnJson);
+				this.returnStr = jo.toString();				
+				return false;
 			}
 			
-			return "IdNotExist";
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputermodelAction的方法：deleteComputermodel错误"+e);
 		}
-		return "Error";
-	}
-
-//修改
-	public String updateComputermodel(){
-		try {
-			if(computermodel.getId() != null && computermodel.getId() > 0){				
-				Computermodel tempComputermodel = computermodelService.selectComputermodelById(computermodel.getId());
-																				  								
-												  								
-												  								
-												  								
-												  								
-												  								
-												  								
-								actionMsg = getText("viewComputermodelSuccess");
-			}else{
-				actionMsg = getText("viewComputermodelFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputermodelAction的方法：viewComputermodel错误"+e);
+		
+		Computercategory c= computercategoryService.selectComputercategoryById(computermodel.getComputercategoryid());
+		if(c==null || c.getId()==0){
+			returnJson.setFlag(0);	
+			returnJson.setReason("模型分类不正确");
+			JSONObject jo = JSONObject.fromObject(returnJson);
+			this.returnStr = jo.toString();				
+			return false;
 		}
-
-		return "error";
+		
+		return true;
 	}
-	
 	
 	//ajax 修改
 	public String updateComputermodelAjax(){
 		log.info(logprefix + "updateComputermodelAjax,id="+computermodel.getId());
-		ReturnJson returnJson = new ReturnJson();
+		boolean pass = checkUpdateComputermodel();
+		if(!pass){
+			return SUCCESS;
+		}
 		try {
 			if(computermodel.getId() != null && computermodel.getId() > 0){				
 				Computermodel tempComputermodel = computermodelService.selectComputermodelById(computermodel.getId());
@@ -331,6 +360,7 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 				
 				computermodelService.updateComputermodel(tempComputermodel);		
 				returnJson.setFlag(1);		
+				returnJson.setReason("修改型号成功");
 				JSONObject jo = JSONObject.fromObject(returnJson);
 				this.returnStr = jo.toString();
 				//actionMsg = getText("viewComputermodelSuccess");
@@ -680,4 +710,16 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 	public void setPageNo(Integer pageNo) {
 		this.pageNo = pageNo;
 	}
+
+
+	public String getComputermodelIdsForDel() {
+		return computermodelIdsForDel;
+	}
+
+
+	public void setComputermodelIdsForDel(String computermodelIdsForDel) {
+		this.computermodelIdsForDel = computermodelIdsForDel;
+	}
+	
+	
 }

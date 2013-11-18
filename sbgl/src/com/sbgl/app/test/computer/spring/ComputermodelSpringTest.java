@@ -31,7 +31,7 @@ public class ComputermodelSpringTest {
 //		updateComputermodel();
 //		selectComputermodelById(1L);
 //		selectComputermodelFullById(1L);
-//      selectComputermodelFullAll();
+      selectComputermodelFullAll();
 
 	}
 	
@@ -209,11 +209,15 @@ public class ComputermodelSpringTest {
 		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
 		
 		ComputermodelService computermodelService = (ComputermodelService)cxt.getBean("computermodelService");
-		List<ComputermodelFull> objList  = computermodelService.selectComputermodelFullAll();
-		if(objList == null){
-			System.out.println("objList is null");
-			return;
-		}
+		
+		List<Computermodel> objList = computermodelService.selectComputermodelByName("test");
+		System.out.println(objList.size());
+		
+//		List<ComputermodelFull> objList  = computermodelService.selectComputermodelFullAll();
+//		if(objList == null){
+//			System.out.println("objList is null");
+//			return;
+//		}
 		for(int i = 0; i < objList.size(); i++){
 	//		System.out.println("id="+objList.get(i).getId());
 		}

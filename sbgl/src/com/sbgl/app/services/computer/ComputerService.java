@@ -43,7 +43,9 @@ public interface ComputerService{
 //根据关联查询实体full	
 	public List<ComputerFull> selectComputerFullByComputermodelId(Integer computermodelid );
 
-		
-	
+	void updateComputermodelTo(int originalComputermodelid,
+			int toComputermodelid);
+
+
 	
 }
