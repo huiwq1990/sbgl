@@ -54,10 +54,10 @@
 			upload_complete_handler : uploadComplete,
 
 			// 按钮的处理
-			button_image_url : "images/XPButtonUploadText_61x22.png",
+			button_image_url : "img/uploadBtn.png",
 			button_placeholder_id : "imageUploadBtn",
-			button_width: 61,
-			button_height: 22,
+			button_width: 98,
+			button_height: 26,
 				
 			// Flash Settings
 			flash_url : "js/fileUpload/swfupload.swf",
@@ -274,14 +274,13 @@
       <div class="form-group">
         <label for="modifyEPic" class="col-xs-3 control-label">图片</label>
         <div class="col-xs-7">
-			<div  class="fieldset flash" id="fsUploadProgress1">
-							aaaaa
-						</div>
-						<input id="btnCancel1" type="button" style="display:none;" value="Cancel Uploads" onclick="cancelQueue(upload1);" disabled="disabled" style="margin-left: 2px; height: 22px; font-size: 8pt;" />
-          <span class="btn btn-white file-input-button">
+			<div style="display:none;" class="fieldset flash" id="fsUploadProgress1"></div>
+		  <input id="btnCancel1" type="button" style="display:none;" value="Cancel Uploads" onclick="cancelQueue(upload1);" disabled="disabled" style="margin-left: 2px; height: 22px; font-size: 8pt;" />
+          <span id="imageUploadBtn" >添加图片</span>
+		  <!--<span class="btn btn-white file-input-button">
               <i class="icon-plus"></i>
               <span id="imageUploadBtn" >添加图片</span>
-          </span>
+		  </span>-->
         </div>
       </div>
     </form>
