@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
 <![endif]-->
 
-
+<!--
 <script>
 	var classData = {};  //全部分类信息
 	var alterClassId;    //修改分类的id
@@ -117,8 +117,16 @@
 			    data: postData,
 			    success:function(data,textStatus,jq){  
 			    	console.log(data);
+				if(data.tag == "0") {
+				    var n = noty({text: data.msg, timeout: 2500, type: 'success'});
+				    $('.modal').modal('toggle');
+				} else {
+				    alert(data.message);
+				}
 		        },  
-			    error:function(data,textStatus,jq){alert("添加分类失败！");}  
+			    error:function(data,textStatus,jq){
+			        var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+			    }  
 			});
 		} else {
 			alert("分类名称不能为空！");
@@ -147,7 +155,7 @@
 		});
 	 }
 </script>
-
+-->
 </head>
 
 <body id="admin">
@@ -216,7 +224,7 @@
               <div class="tips">在此页面下你可以添加新的设备分类，也可以管理现有设备分类。……</div>
               <div class="operate-item pull-left">
                 <a href="#add-equip-category" class="btn btn-primary" data-toggle="modal" role="button">添加分类</a>
-                <a href="#" class="btn btn-white s-h" onclick="delClass()"><i class="icon-trash"></i> 删除</a>
+                <a href="#" class="btn btn-white s-h" action-type="delClass"><i class="icon-trash"></i> 删除</a>
               </div>
 
               <div class="page pull-right clearfix">
@@ -254,7 +262,7 @@
 				  #foreach($clazz in $allClassCourse)
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!clazz.id"></td>
-                    <td>$!clazz.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button" onclick="modifyClass($!clazz.id, $!clazz.pId, '$!clazz.name', '$!clazz.pName')">修改</a></td>
+                    <td>$!clazz.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button" action-type="modifyClass" data-id="$!clazz.id" data-pId="$!clazz.pId" data-name="$!clazz.name" data-pName="$!clazz.pName">修改</a></td>
                     <td>$!clazz.pName</td>
                     <td>$!clazz.equipCount</td>
                     <td>$!clazz.modelCount</td>
@@ -316,7 +324,7 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary" onclick="addClass()">确 定</button>
+    <button class="btn btn-primary" action-type="addClass">确 定</button>
   </div>
 </div>       
 <div id="modify-equip-category" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
@@ -347,8 +355,8 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true" onclick="undoAlterClass()">取 消</button>
-    <button class="btn btn-primary" onclick="alterClass()">确 定</button>
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary" action-type="alterClass">确 定</button>
   </div>
 </div>
 
@@ -360,6 +368,7 @@
 <script src="${jsDomain}/select2.js"></script>
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
 <!--[if lt IE 10]>
   <script src="../js/jquery.placeholder.js"></script>
   <script>
@@ -368,6 +377,22 @@
 <![endif]-->
 
 <script>
+    var classData = {};  //全部分类信息
+	var alterClassId;    //修改分类的id
+	var alterClassName;  //修改分类的name
+	var parentId;        //父分类id
+	var classSum;        //分类个数
+	var idsForDel = "";  //用于删除的id串
+	//var _obj;            //select2全局对象
+	var cookie = { 
+		//读取COOKIES,n为COOKIE名 
+		Get:function(n){ 
+		var re=new RegExp(n+'=([^;]*);?','gi');
+	    var r=re.exec(document.cookie)||[];
+	    return (r.length>1?r[1]:null)
+		}
+	};
+	
 	/* 处理CheckBox选中事件用于删除处理 */
 	$("input[type='checkbox']").click(function() {
 		//var num = 0;
@@ -383,6 +408,104 @@
 			}
 		});
 	});
+	
+	$('.modal').on('click', ('button.btn-primary'), function () {
+	    var _this = $(this);
+		var postData = {};
+		var actionUrl = "";
+	    
+	    if(_this.attr('action-type') == 'addClass') {
+	        var className = $("#inputCategoryName").val();
+    		var pId = $("#inputFaCategoryId").val();
+    		var userId = cookie.Get("id");
+    		
+    		if(className != "") {
+    			postData = {
+    				"equipClassforAdd.parentid": pId,
+    				"equipClassforAdd.name": className,
+    				"equipClassforAdd.userid": userId
+    			}
+    			actionUrl = "${webbaseurl}/addClassification.do";
+    			
+    		} else {
+    			alert("分类名称不能为空！");
+    		}
+	    }
+	    
+	    if(_this.attr('action-type') == 'alterClass') {
+	        var newClassName = $("#modifyCategoryName").val() == "" ? alterClassName : $("#modifyCategoryName").val();
+    		var parentClassId = $("#modifyFaCategoryId").val();
+    		var userId=cookie.Get("id");
+    		
+    		if(alterClassName == newClassName && parentClassId == parentId) {
+    			alert("并未做修改！");
+    		} else {
+    			postData = {
+        			"equipClassforAltert.name": newClassName,
+        			"equipClassforAltert.classificationid": alterClassId,
+        			"equipClassforAltert.parentid": parentClassId,
+        			"equipClassforAltert.userid": userId
+        		};
+				actionUrl = "${webbaseurl}/alterClassification.do";
+    		}
+	    }
+	    
+	    jQuery.ajax({  
+		    url: actionUrl,  
+		    type: "post",
+		    data: postData,
+		    success:function(data,textStatus,jq){  
+		    	console.log(data);
+    			if(data.tag == "0") {
+    			    var n = noty({text: data.msg, timeout: 2500, type: 'success'});
+    			    _this.parents('.modal').modal('toggle');
+    			} else {
+    			    alert(data.message);
+    			}
+	        },  
+		    error:function(data,textStatus,jq){
+		        var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+		    }  
+		});
+	})
+	
+	$("body").on("click", "a[action-type|=modifyClass]", function() {
+		var myData = $(this).data();
+		
+		alterClassId = myData.id;
+		alterClassName = myData.name;
+		parentId = myData.pId;
+		
+		if(myData.pId == 0) {
+			$("#modifyFaCategoryId").attr("disabled", true);
+		} else {
+			$("#modifyFaCategoryId").attr("disabled", false);
+		}
+		
+		$("#modifyFaCategoryId").select2("val", myData.pId);
+		
+		$("#modifyCategoryName").val(myData.name);
+	})
+	
+	$("body").on("click", "a[action-type|=delClass]", function() {
+		var postData = {
+			classIds: idsForDel
+		}
+			
+		jQuery.ajax({  
+		    url: "${webbaseurl}/deleteClassifications.do",  
+		    type: "post",
+		    data: postData,
+		    success:function(data,textStatus,jq){ 
+		    	console.log(data);
+				var n = noty({text: data.msg, timeout: 2500, type: 'success'});
+				$(this).parents('.modal').modal('toggle');
+	        },  
+		    error:function(data,textStatus,jq){
+    			var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+			}  
+		});
+	})
 </script>
 </body>
 </html>
