@@ -20,6 +20,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.entity.*;
+import com.sbgl.app.services.computer.ComputercategoryService;
 import com.sbgl.app.services.computer.ComputermodelService;
 import com.sbgl.util.*;
 
@@ -36,6 +37,8 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 	//Service	
 	@Resource
 	private ComputermodelService computermodelService;
+	@Resource
+	private ComputercategoryService computercategoryService;
 	
 	private Computermodel computermodel = new Computermodel();//实例化一个模型
 	private Computermodel computermodelModel = new Computermodel();//实例化一个模型
@@ -48,7 +51,7 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 	private String logprefix = "exec action method:";		
 	Page page = new Page();
 	Integer pageNo=1;	
-	
+	ReturnJson returnJson = new ReturnJson();
 //  manage Computermodel
 	public String manageComputermodel(){
 		log.info(logprefix+"manageComputermodelFull");
@@ -131,15 +134,51 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 		return "Error";
 	}
 	
+	
+	//check model
+	private boolean checkComputermodel(){
+		System.out.println("sssssss" + computermodel.getName());
+		if(computermodel.getName()==null || computermodel.getName().trim().equals("")){
+			returnJson.setFlag(0);	
+			returnJson.setReason("模型名称不能为空");
+			JSONObject jo = JSONObject.fromObject(returnJson);
+			this.returnStr = jo.toString();				
+			return false;
+		}
+		String name = computermodel.getName();
+		
+		if(computermodelService.isComputermodelNameExist(name)){
+			returnJson.setFlag(0);	
+			returnJson.setReason("模型名称重复");
+			JSONObject jo = JSONObject.fromObject(returnJson);
+			this.returnStr = jo.toString();				
+			return false;
+		}
+		
+		Computercategory c= computercategoryService.selectComputercategoryById(computermodel.getComputercategoryid());
+		if(c==null || c.getId()==0){
+			returnJson.setFlag(0);	
+			returnJson.setReason("模型分类不正确");
+			JSONObject jo = JSONObject.fromObject(returnJson);
+			this.returnStr = jo.toString();				
+			return false;
+		}
+		
+		return true;
+	}
 //  ajax add	
 	public String addComputermodelAjax(){	
 		log.info("Add Entity Ajax Manner");
 		
-		ReturnJson returnJson = new ReturnJson();
+		boolean pass = checkComputermodel();
+		if(!pass){
+			return SUCCESS;
+		}
 		
 		try {
 			Computermodel temp = new Computermodel();
 			// 将model里的属性值赋给temp
+			computermodel.setName(computermodel.getName().trim());
 			BeanUtils.copyProperties(temp, computermodel);			
 			//add your code here.
 			
@@ -286,7 +325,7 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
   				tempComputermodel.setPicpath(computermodel.getPicpath());
   				tempComputermodel.setCreatetime(computermodel.getCreatetime());
   				tempComputermodel.setCreateuserid(computermodel.getCreateuserid());
-  				tempComputermodel.setCount(computermodel.getCount());
+  				tempComputermodel.setComputercount(computermodel.getComputercount());
   				tempComputermodel.setStatus(computermodel.getStatus());
  
 				

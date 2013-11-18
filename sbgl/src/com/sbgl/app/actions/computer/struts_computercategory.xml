@@ -212,8 +212,11 @@
         </action>
 <!--del entityfull ajax -->		
 		<action name="deleteComputercategoryFullAjax" class="ComputercategoryAction" method="deleteComputercategoryFullAjax">
-        	<result type="json"></result>
+        	<result type="json">
+        	<param name="root">returnStr</param>
+        	</result>
         </action>
+        
     	<action name="updateComputercategoryAjax" class="ComputercategoryAction" method="updateComputercategoryAjax">
         	<result type="json">
 				<param name="root">returnStr</param>

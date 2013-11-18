@@ -17,7 +17,8 @@ public class Computermodel extends com.sbgl.app.dao.DaoAbs implements
 	private String picpath;
 	private Date createtime;
 	private Integer createuserid;
-	private Integer count;
+	private Integer computercount;
+	private String description;
 	private Integer status;
 
 	// Constructors
@@ -34,14 +35,15 @@ public class Computermodel extends com.sbgl.app.dao.DaoAbs implements
 	/** full constructor */
 	public Computermodel(Integer id, String name, Integer computercategoryid,
 			String picpath, Date createtime, Integer createuserid,
-			Integer count, Integer status) {
+			Integer computercount, String description, Integer status) {
 		this.id = id;
 		this.name = name;
 		this.computercategoryid = computercategoryid;
 		this.picpath = picpath;
 		this.createtime = createtime;
 		this.createuserid = createuserid;
-		this.count = count;
+		this.computercount = computercount;
+		this.description = description;
 		this.status = status;
 	}
 
@@ -95,12 +97,20 @@ public class Computermodel extends com.sbgl.app.dao.DaoAbs implements
 		this.createuserid = createuserid;
 	}
 
-	public Integer getCount() {
-		return this.count;
+	public Integer getComputercount() {
+		return this.computercount;
 	}
 
-	public void setCount(Integer count) {
-		this.count = count;
+	public void setComputercount(Integer computercount) {
+		this.computercount = computercount;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Integer getStatus() {

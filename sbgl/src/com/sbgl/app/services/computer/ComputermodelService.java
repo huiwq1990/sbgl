@@ -43,6 +43,10 @@ public interface ComputermodelService{
 //根据关联查询实体full	
 	public List<ComputermodelFull> selectComputermodelFullByComputercategoryId(Integer computercategoryid );
 
+	void updateCategoryComputermodel(int computercategoryid);
+
+	boolean isComputermodelNameExist(String name);
+
 		
 	
 	

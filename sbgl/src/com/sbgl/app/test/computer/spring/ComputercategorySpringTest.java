@@ -26,7 +26,7 @@ public class ComputercategorySpringTest {
 //		intTable();
 //		addComputercategory();
 //		selectComputercategoryAll();
-//		deleteComputercategory();
+		deleteComputercategory(5);
 		
 //		updateComputercategory();
 //		selectComputercategoryById(1L);
@@ -34,7 +34,7 @@ public class ComputercategorySpringTest {
 //      selectComputercategoryFullAll();
 
 		
-		selectParentComputercategory();
+//		selectParentComputercategory();
 	}
 	
 	public static void selectParentComputercategory(){
@@ -154,8 +154,8 @@ public class ComputercategorySpringTest {
 		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
 		ComputercategoryService computercategoryService =(ComputercategoryService)cxt.getBean("computercategoryService");
 		
-		computercategoryService.deleteComputercategory(id);
-
+		int a = computercategoryService.deleteComputercategory(id);
+		System.out.println(a);
 	}
 	
 	public static void updateComputercategory(){

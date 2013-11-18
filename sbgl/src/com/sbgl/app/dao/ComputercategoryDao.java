@@ -28,5 +28,15 @@ public interface ComputercategoryDao{
 
 	public List<ComputercategoryFull> selectComputercategoryFullByComputercategoryId(Integer parentcomputercategoryid );
 
+
+
+	
+
+
+
+	List<ComputercategoryFull> selectComputercategoryFullByConditionAndPage(
+			String conditionSql, Page page);
+
+
  
 }
