@@ -412,7 +412,6 @@
 		var postData = {
 			equipInfoIds: idsForDel
 		}
-		alert(idsForDel);
 		jQuery.ajax({  
 		    url:"${webbaseurl}/delEquipModel.do",  
 		    type:"post",

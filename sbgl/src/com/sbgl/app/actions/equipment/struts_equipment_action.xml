@@ -84,13 +84,13 @@
     	
     </package>
     
-    <package name="equipmentHTML" extends="struts-default">
-    	<!-- 请求刷新类型界面数据 -->
+   <!--  <package name="equipmentHTML" extends="struts-default">
+    	请求刷新类型界面数据
         <action name="refreshClassification" class="EquipmentAction" method="gotoEquipManageClassfiction">
         	<result name="success">
         		/admin/equipManageClassfication.vm
         	</result>
         </action>
-    </package>
+    </package> -->
     
 </struts>

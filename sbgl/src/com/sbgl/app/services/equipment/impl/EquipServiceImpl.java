@@ -52,8 +52,14 @@ public class EquipServiceImpl implements EquipService {
 		storeEquip.setEquipmentname( equip.getEquipmentname() );
 		storeEquip.setBrandid( equip.getBrandid() );
 		storeEquip.setClassificationid( equip.getClassificationid() );
+		storeEquip.setAdministrationid( equip.getAdministrationid() );
 		storeEquip.setModifydate( new Date() );
 		storeEquip.setEquipmentnum( equip.getEquipmentnum() );
+		storeEquip.setActivenum( equip.getActivenum() );
+		storeEquip.setMaintainnum( equip.getMaintainnum() );
+		storeEquip.setRepairnum( equip.getRepairnum() );
+		storeEquip.setLosednum( equip.getLosednum() );
+		storeEquip.setRecyclingnum( equip.getRecyclingnum() );
 		//storeEquip.setProductnum( equip.getProductnum() );
 		storeEquip.setEquipmentdetail( equip.getEquipmentdetail() );
 		storeEquip.setCategory( equip.getCategory() );

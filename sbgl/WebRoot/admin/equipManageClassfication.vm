@@ -117,15 +117,6 @@
 			    data: postData,
 			    success:function(data,textStatus,jq){  
 			    	console.log(data);
-					jQuery.ajax({  
-        			    url: "${webbaseurl}/refreshClassification.do",
-        			    type: "post",
-        			    success:function(data,textStatus,jq){  
-        			    	console.log(data);
-        					$("#classificationDomain").html(data);
-        		        },  
-        			    error:function(data,textStatus,jq){alert("刷新分类失败！");}  
-        			});
 		        },  
 			    error:function(data,textStatus,jq){alert("添加分类失败！");}  
 			});
@@ -247,8 +238,8 @@
                 </div>              
               </div>
             </div><!--control-bar end-->
-            <div class="panel panel-default" id="classificationDomain">
-<form id="formComputerManage" action="${webbaseurl}/manageComputerFull.action" method="get">		
+            <div class="panel panel-default">
+
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -272,9 +263,6 @@
                 </tbody>
               </table>
 
-    		  
-#getPageHtml("formId=formComputerManage" "parameters=pageNo:$page.pageNo,pageSize:$page.pageSize,totalCount:$page.totalCount,pageviewcount:$page.pageviewcount,vmpath:common/page.vm")
-</form>
             </div>
           </div>
 
