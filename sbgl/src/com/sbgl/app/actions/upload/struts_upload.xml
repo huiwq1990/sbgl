@@ -38,4 +38,22 @@
 			</result>
 		</action>
     </package>
+    
+    <!-- 配置struts2.1.8 上传是文件的最大限制为100M -->
+	<constant name="struts.multipart.maxSize" value="104857600" />
+	
+	<!-- 设置struts2 上传文件时  保存的临时目录 -->
+	<constant name="struts.multipart.saveDir" value="C:\temp"></constant>
+	
+	<package name="struts2" extends="struts-default">
+	    <action name="uploadFile" class="com.sbgl.app.actions.upload.FileUploadAction" method="uploadFile">
+			<result name="success" >/admin/equipManageModel.vm</result>
+			<!-- <result name="input">/index.jsp</result> -->
+			<interceptor-ref name="fileUpload">
+			 <!-- 配置允许上传的文件大小 单位字节-->
+			<param name="maximumSize">1073741824</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"/>
+		</action>
+	</package>
 </struts>
