@@ -1,0 +1,36 @@
+ <table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+        <th class="id">编号</th>
+        <th class="name">设备名称(型号)</th>
+        <th class="categories">分类</th>
+        <th class="status">状态</th>
+        <th class="remark">备注</th>
+      </tr>
+    </thead>
+    <tbody>
+	  #foreach($equipDetail in $equipDetailCourse)
+      <tr>
+        <td><input class="chk" type="checkbox" name="chk-list" value="$!equipDetail.id"></td>
+        <td>$!equipDetail.code<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="alterDetailFillIn" data-id="$!equipDetail.id" data-code="$!equipDetail.code" data-mid="$!equipDetail.modelId" data-state="$!equipDetail.state" data-memo="$!equipDetail.memo">修改</a></td>
+        <td>$!equipDetail.modelName</td>
+		<td>$!equipDetail.className</td>
+		#if($!equipDetail.state == 0)
+			<td>正常</td>
+		#elseif($!equipDetail.state == 1)
+			<td>借出</td>
+		#elseif($!equipDetail.state == 2)
+			<td>维护</td>
+		#elseif($!equipDetail.state == 3)
+			<td>维修</td>
+		#elseif($!equipDetail.state == 4)
+			<td>遗失</td>
+		#elseif($!equipDetail.state == 5)
+			<td>回收站</td>
+		#end
+        <td>$!equipDetail.memo</td>
+      </tr>
+      #end
+    </tbody>
+  </table>

@@ -129,7 +129,7 @@
                 <li><a href="#">回收站(1)</a></li>
               </ul>
             </div><!--control-bar end-->
-            <div class="panel panel-default table-responsive">
+            <div class="panel panel-default table-responsive" id="detailDataDomain">
                           
               <table class="table table-hover">
                 <thead>
@@ -373,6 +373,18 @@
     					if(data.tag == "0") {
         					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
         		    		_this.parents('.modal').modal('toggle');
+							
+							//刷新界面数据
+        					jQuery.ajax({
+        						url: "${webbaseurl}/flushEquipDetail.do",  
+        		    			type: "post",
+        						success: function(data,textStatus,jq) { 
+        							$("#detailDataDomain").html(data);
+        						},
+        						error: function(data,textStatus,jq) {
+        							alert("刷新界面失败!");
+        						}
+        					})
         				} else {
         					var n = noty({text: data.msg, timeout: 2500, type: 'error'});
         				}
@@ -397,6 +409,18 @@
 		    	console.log(data);
 				if(data.tag == "0") {
 					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
+					
+					//刷新界面数据
+					jQuery.ajax({
+						url: "${webbaseurl}/flushEquipDetail.do",  
+		    			type: "post",
+						success: function(data,textStatus,jq) { 
+							$("#detailDataDomain").html(data);
+						},
+						error: function(data,textStatus,jq) {
+							alert("刷新界面失败!");
+						}
+					})
 				} else {
 					var n = noty({text: data.msg, timeout: 2500, type: 'error'});
 				}

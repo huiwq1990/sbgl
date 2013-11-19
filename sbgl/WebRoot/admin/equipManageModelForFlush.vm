@@ -1,0 +1,24 @@
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+        <th class="name">设备名称(型号)</th>
+        <th class="categories">分类</th>
+        <th class="stock">合作器材公司</th>
+        <th class="describe">描述</th>
+      </tr>
+    </thead>
+    <tbody>
+	#foreach($model in $equipCourse)
+      <tr>
+	  #if($!model.showClass != 1)
+        <td><input class="chk" type="checkbox" name="chk-list" value="$!model.id"></td>
+        <td>$!model.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-name="$!model.name" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo">修改</a></td>
+		<td>$!model.cName</td>
+		<td>双塔影视</td>
+        <td>$!model.memo</td>
+	  #end
+      </tr>
+    #end  
+    </tbody>
+  </table>

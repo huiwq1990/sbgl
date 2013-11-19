@@ -26,6 +26,18 @@
         		/admin/equipManageClassfication.vm
         	</result>
         </action>
+        
+        <action name="flushClassification" class="EquipmentAction" method="flushClassification">
+        	<result name="success">/admin/equipManageClassficationForFlush.vm</result>
+        </action>
+        
+        <action name="flushEquipModel" class="EquipmentAction" method="flushEquipModel">
+        	<result name="success">/admin/equipManageModelForFlush.vm</result>
+        </action>
+        
+        <action name="flushEquipDetail" class="EquipmentAction" method="flushEquipDetail">
+        	<result name="success">/admin/equipManageAdminForFlush.vm</result>
+        </action>
     </package>
- 
+    
 </struts>    

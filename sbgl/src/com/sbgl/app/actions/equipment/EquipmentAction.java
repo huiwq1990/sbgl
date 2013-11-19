@@ -774,7 +774,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	}
 
 	
-	
 	public String gotoEquipManageClassfiction() {
 		
 		List<Equipmentclassification> equipList =  equipService.getAllEquipmentclassifications();
@@ -806,6 +805,25 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		} else {
 			classSum = "0";
 		}
+		return SUCCESS;
+	}
+	
+	/**
+	 * 异步请求刷新界面数据
+	 */
+	//刷新分类界面
+	public String flushClassification() {
+		gotoEquipManageClassfiction();
+		return SUCCESS;
+	}
+	//刷新器材界面
+	public String flushEquipDetail() {
+		gotoEquipManageAdmin();
+		return SUCCESS;
+	}
+	//刷新型号界面
+	public String flushEquipModel() {
+		gotoEquipManageModel();
 		return SUCCESS;
 	}
 }
