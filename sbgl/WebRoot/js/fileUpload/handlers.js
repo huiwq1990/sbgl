@@ -32,6 +32,8 @@ function fileQueued(file) {
 		progress.setStatus("Pending...");
 		progress.toggleCancel(true, this);
 
+
+
 	} catch (ex) {
 		this.debug(ex);
 	}
@@ -84,7 +86,10 @@ function fileDialogComplete(numFilesSelected, numFilesQueued) {
 		}
 		
 		/* I want auto start and I can do that here */
-		this.startUpload();
+		if(equipmentid!=null&&equipmentid!=""){	
+			this.startUpload();
+		}
+		
 	} catch (ex)  {
         this.debug(ex);
 	}

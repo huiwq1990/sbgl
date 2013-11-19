@@ -23,7 +23,9 @@
 <!-- 初始化swfupload 对象-->
    <script type="text/javascript">
 	var upload1, upload2;
+	var equipmentid = ""
 	var uploadFileName = "";
+	var addflag = "1";
 
 	window.onload = function() {
 		upload1 = new SWFUpload({
@@ -56,6 +58,52 @@
 			// 按钮的处理
 			button_image_url : "img/uploadBtn.png",
 			button_placeholder_id : "imageUploadBtn",
+			button_width: 98,
+			button_height: 26,
+				
+			// Flash Settings
+			flash_url : "js/fileUpload/swfupload.swf",
+				
+
+			custom_settings : {
+				progressTarget : "fsUploadProgress1",
+				cancelButtonId : "btnCancel1"
+			},
+				
+			// Debug Settings
+			debug: false
+		});
+		
+		upload2 = new SWFUpload({
+
+			//提交路径
+			upload_url: "${webbaseurl}/uploadFile.do",
+			//向后台传递额外的参数
+			post_params: {"name" : uploadFileName},
+			//上传文件的名称
+			file_post_name: "file",
+				
+			// 下面自己按照字面意思理解
+			file_size_limit : "102400",	// 100MB
+			file_types : "*.*",
+			file_types_description : "All Files",
+			file_upload_limit : "10",
+			file_queue_limit : "0",
+
+			// 事件处理
+			file_dialog_start_handler : fileDialogStart,
+			file_queued_handler : fileQueued,
+			file_queue_error_handler : fileQueueError,
+			file_dialog_complete_handler : fileDialogComplete,
+			upload_start_handler : uploadStart,
+			upload_progress_handler : uploadProgress,
+			upload_error_handler : uploadError,
+			upload_success_handler : uploadSuccess,
+			upload_complete_handler : uploadComplete,
+
+			// 按钮的处理
+			button_image_url : "img/uploadBtn.png",
+			button_placeholder_id : "imageUploadBtn2",
 			button_width: 98,
 			button_height: 26,
 				
@@ -274,7 +322,7 @@
       <div class="form-group">
         <label for="modifyEPic" class="col-xs-3 control-label">图片</label>
         <div class="col-xs-7">
-			<div style="display:none;" class="fieldset flash" id="fsUploadProgress1"></div>
+		  <div style="display:none;" class="fieldset flash" id="fsUploadProgress1"></div>
 		  <input id="btnCancel1" type="button" style="display:none;" value="Cancel Uploads" onclick="cancelQueue(upload1);" disabled="disabled" style="margin-left: 2px; height: 22px; font-size: 8pt;" />
           <span id="imageUploadBtn" >添加图片</span>
 		  <!--<span class="btn btn-white file-input-button">
@@ -337,11 +385,9 @@
       <div class="form-group">
         <label for="inputEPic" class="col-xs-3 control-label">图片</label>
         <div class="col-xs-7">
-          <span class="btn btn-white file-input-button">
-              <i class="icon-plus"></i>
-              <span>添加图片</span>
-              <input id="inputEPic" type="file" name="files[]" multiple>
-          </span>
+              <div style="display:none;" class="fieldset flash" id="fsUploadProgress2"></div>
+			  <input id="btnCancel2" type="button" style="display:none;" value="Cancel Uploads" onclick="cancelQueue(upload2);" disabled="disabled" style="margin-left: 2px; height: 22px; font-size: 8pt;" />
+			  <span id="imageUploadBtn2" >添加图片</span>
         </div>
       </div>
     </form>
@@ -454,8 +500,8 @@
 		    	console.log(data);
 				if(data.tag == "0") {
 					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
-		    		_this.parents('.modal').modal('toggle');
-					
+					equipmentid = data.equipmentid;
+					/*
 					//刷新界面数据
 					jQuery.ajax({
 						url: "${webbaseurl}/flushEquipModel.do",  
@@ -466,7 +512,7 @@
 						error: function(data,textStatus,jq) {
 							alert("刷新界面失败!");
 						}
-					})
+					})*/
 				} else {
 					var n = noty({text: data.msg, timeout: 2500, type: 'error'});
 				}
@@ -488,6 +534,8 @@
 		modelIdForAlter = myData.id;
 		modelCIdForAlter = myData.cid;
 		modelMemoForAlter = myData.memo;
+		
+		equipmentid = myData.id;
 		
 		console.log("myData.name" + myData.name);
 		console.log("myData.cId" + myData.cid);

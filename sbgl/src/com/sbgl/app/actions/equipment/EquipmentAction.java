@@ -322,6 +322,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			this.message = "添加型号失败！";
 			log.error("################ 保存设备型号失败！ ################");
 		}
+		returnJSON.put("equipmentid", returnCode);
 		returnJSON.put("tag", tag);
 		returnJSON.put("msg", message);
 		return SUCCESS;
@@ -342,6 +343,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			this.message = "修改型号失败！";
 			log.error("################ 修改设备型号失败！ ################");
 		}
+		returnJSON.put("equipmentid", returnCode);
 		returnJSON.put("tag", tag);
 		returnJSON.put("msg", message);
 		return SUCCESS;
@@ -826,4 +828,5 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		gotoEquipManageModel();
 		return SUCCESS;
 	}
+
 }
