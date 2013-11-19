@@ -1,6 +1,6 @@
 package com.sbgl.app.entity;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * Equipment entity. @author MyEclipse Persistence Tools
@@ -14,10 +14,12 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 	private Integer equipmentid;
 	private String equipmentname;
 	private Integer brandid;
+	private String imgNameSaved;
+	private String imgName;
 	private Integer classificationid;
 	private Integer administrationid;
-	private Date makedate;
-	private Date modifydate;
+	private Timestamp makedate;
+	private Timestamp modifydate;
 	private Integer equipmentnum;
 	private Integer activenum;
 	private Integer maintainnum;
@@ -41,14 +43,17 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 
 	/** full constructor */
 	public Equipment(Integer equipmentid, String equipmentname,
-			Integer brandid, Integer classificationid,
-			Integer administrationid, Date makedate, Date modifydate,
-			Integer equipmentnum, Integer activenum, Integer maintainnum,
-			Integer repairnum, Integer losednum, Integer recyclingnum,
-			String equipmentdetail, Integer category, String remark) {
+			Integer brandid, String imgNameSaved, String imgName,
+			Integer classificationid, Integer administrationid,
+			Timestamp makedate, Timestamp modifydate, Integer equipmentnum,
+			Integer activenum, Integer maintainnum, Integer repairnum,
+			Integer losednum, Integer recyclingnum, String equipmentdetail,
+			Integer category, String remark) {
 		this.equipmentid = equipmentid;
 		this.equipmentname = equipmentname;
 		this.brandid = brandid;
+		this.imgNameSaved = imgNameSaved;
+		this.imgName = imgName;
 		this.classificationid = classificationid;
 		this.administrationid = administrationid;
 		this.makedate = makedate;
@@ -90,6 +95,22 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 		this.brandid = brandid;
 	}
 
+	public String getImgNameSaved() {
+		return this.imgNameSaved;
+	}
+
+	public void setImgNameSaved(String imgNameSaved) {
+		this.imgNameSaved = imgNameSaved;
+	}
+
+	public String getImgName() {
+		return this.imgName;
+	}
+
+	public void setImgName(String imgName) {
+		this.imgName = imgName;
+	}
+
 	public Integer getClassificationid() {
 		return this.classificationid;
 	}
@@ -106,19 +127,19 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 		this.administrationid = administrationid;
 	}
 
-	public Date getMakedate() {
+	public Timestamp getMakedate() {
 		return this.makedate;
 	}
 
-	public void setMakedate(Date makedate) {
+	public void setMakedate(Timestamp makedate) {
 		this.makedate = makedate;
 	}
 
-	public Date getModifydate() {
+	public Timestamp getModifydate() {
 		return this.modifydate;
 	}
 
-	public void setModifydate(Date modifydate) {
+	public void setModifydate(Timestamp modifydate) {
 		this.modifydate = modifydate;
 	}
 

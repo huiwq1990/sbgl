@@ -16,17 +16,23 @@
         <property name="brandid" type="java.lang.Integer">
             <column name="brandid" />
         </property>
+        <property name="imgNameSaved" type="java.lang.String">
+            <column name="imgNameSaved" length="20" />
+        </property>
+        <property name="imgName" type="java.lang.String">
+            <column name="imgName" length="100" />
+        </property>
         <property name="classificationid" type="java.lang.Integer">
             <column name="classificationid" />
         </property>
         <property name="administrationid" type="java.lang.Integer">
             <column name="administrationid" />
         </property>
-        <property name="makedate" type="java.util.Date">
-            <column name="makedate"  />
+        <property name="makedate" type="java.sql.Timestamp">
+            <column name="makedate" length="19" />
         </property>
-        <property name="modifydate" type="java.util.Date">
-            <column name="modifydate"  />
+        <property name="modifydate" type="java.sql.Timestamp">
+            <column name="modifydate" length="19" />
         </property>
         <property name="equipmentnum" type="java.lang.Integer">
             <column name="equipmentnum" />
