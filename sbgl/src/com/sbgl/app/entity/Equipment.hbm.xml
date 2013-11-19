@@ -28,10 +28,10 @@
         <property name="administrationid" type="java.lang.Integer">
             <column name="administrationid" />
         </property>
-        <property name="makedate" type="java.sql.Timestamp">
+        <property name="makedate" type="java.util.Date">
             <column name="makedate" length="19" />
         </property>
-        <property name="modifydate" type="java.sql.Timestamp">
+        <property name="modifydate" type="java.util.Date">
             <column name="modifydate" length="19" />
         </property>
         <property name="equipmentnum" type="java.lang.Integer">

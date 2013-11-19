@@ -51,6 +51,8 @@ public class EquipServiceImpl implements EquipService {
 		
 		storeEquip.setEquipmentname( equip.getEquipmentname() );
 		storeEquip.setBrandid( equip.getBrandid() );
+		storeEquip.setImgName(equip.getImgName() );
+		storeEquip.setImgNameSaved( equip.getImgNameSaved() );
 		storeEquip.setClassificationid( equip.getClassificationid() );
 		storeEquip.setAdministrationid( equip.getAdministrationid() );
 		storeEquip.setModifydate( new Date() );
