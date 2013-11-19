@@ -359,6 +359,7 @@
 <script src="${jsDomain}/select2.js"></script>
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
 
 
 <!--[if lt IE 10]>
@@ -400,28 +401,63 @@
 			}
 		});
 	});
-
-	$("body").on("click", "button[action-type|=addModel]", function() {
-		var modelName = $("#inputEModelName").val();
-		var clazzId = $("#inputECategory").val();
-		var memo = $("#inputEDescribe").val();
-		//console.log("modelName " + modelName);
-		//console.log("clazzId" + clazzId);
-		var postData = {
-			"equipment.administrationid": cookie.Get("id"),
-			"equipment.equipmentname": modelName,
-			"equipment.classificationid": clazzId,
-			"equipment.equipmentdetail": memo
-		}
 	
+	$('.modal').on('click', ('button.btn-primary'), function () {
+		var _this = $(this);
+		var postData = {};
+		var actionUrl = "";
+		
+		if(_this.attr('action-type') == 'addModel') {
+			var modelName = $("#inputEModelName").val();
+			var clazzId = $("#inputECategory").val();
+			var memo = $("#inputEDescribe").val();
+			if(modelName != "") {
+    			postData = {
+        			"equipment.administrationid": cookie.Get("id"),
+        			"equipment.equipmentname": modelName,
+        			"equipment.classificationid": clazzId,
+        			"equipment.equipmentdetail": memo
+        		}
+    			
+    			actionUrl = "${webbaseurl}/addEquipModel.do";
+			} else {
+				alert("型号名称不能为空！");
+				return;
+			}
+			
+		}
+		
+		if(_this.attr('action-type') == 'alterModel') {
+			var ename = $("#modifyEModelName").val();
+    		var cidInput = $("#modifyEquipCategory").val();
+    		var memo = $("#modifyEDescribe").val();
+			
+			if(ename == modelNameForAlter && modelCIdForAlter == cidInput && modelMemoForAlter == memo) {
+    			alert("并未做修改！");
+				return;
+    		} else {
+				postData = {
+    				"equipment.equipmentid": modelIdForAlter,
+    				"equipment.equipmentname": ename,
+    				"equipment.classificationid": cidInput,
+    				"equipment.equipmentdetail": memo
+    			}
+				actionUrl = "${webbaseurl}/altEquipModel.do";
+			}
+		}
+		
 		jQuery.ajax({  
-		    url: "${webbaseurl}/addEquipModel.do",  
-		    type: "post",
-		    data: postData,
+		    url:actionUrl,  
+		    type:"post",
+		    data:postData,
 		    success:function(data,textStatus,jq){  
 		    	console.log(data);
+				var n = noty({text: data.msg, timeout: 2500, type: 'success'});
+		    	_this.parents('.modal').modal('toggle');
 	        },  
-		    error:function(data,textStatus,jq){alert("添加型号失败!");}  
+		    error:function(data,textStatus,jq) {
+				alert(data.msg);
+			}  
 		});
 	})
 	
@@ -441,33 +477,6 @@
 		console.log("myData.memo" + myData.memo);
 	})
 	
-	$("body").on("click", "button[action-type|=alterModel]", function() {
-		var ename = $("#modifyEModelName").val();
-		var cidInput = $("#modifyEquipCategory").val();
-		var memo = $("#modifyEDescribe").val();
-		
-		if(ename == modelNameForAlter && modelCIdForAlter == cidInput && modelMemoForAlter == memo) {
-			alert("并未做修改！");
-		} else {
-			var postData = {
-				"equipment.equipmentid": modelIdForAlter,
-				"equipment.equipmentname": ename,
-				"equipment.classificationid": cidInput,
-				"equipment.equipmentdetail": memo
-			}
-			
-			jQuery.ajax({  
-			    url:"${webbaseurl}/altEquipModel.do",  
-			    type:"post",
-			    data:postData,
-			    success:function(data,textStatus,jq){  
-			    	console.log(data);
-		        },  
-			    error:function(data,textStatus,jq){alert("修改型号失败！");}  
-			});
-		}
-	})
-	
 	$("body").on("click", "a[action-type|=deleteModel]", function() {
 		var postData = {
 			equipInfoIds: idsForDel
@@ -478,8 +487,12 @@
 		    data:postData,
 		    success:function(data,textStatus,jq){  
 		    	console.log(data);
+				var n = noty({text: data.msg, timeout: 2500, type: 'success'});
+		    	_this.parents('.modal').modal('toggle');
 	        },  
-		    error:function(data,textStatus,jq){alert("删除型号失败！");}  
+		    error:function(data,textStatus,jq) {
+				alert(data.msg);
+			}  
 		});
 	})
 </script>

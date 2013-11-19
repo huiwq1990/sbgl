@@ -316,11 +316,14 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		long returnCode = equipService.addEquipInfo( equipment );
 		if( returnCode != -1 ) {
 			this.tag = "0";
+			this.message = "添加型号成功！";
 		} else {
 			this.tag = "1";
+			this.message = "添加型号失败！";
 			log.error("################ 保存设备型号失败！ ################");
 		}
 		returnJSON.put("tag", tag);
+		returnJSON.put("msg", message);
 		return SUCCESS;
 	}
 	/**
@@ -333,11 +336,14 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		long returnCode = equipService.alterEquipInfo( equipment );
 		if( returnCode != -1 ) {
 			this.tag = "0";
+			this.message = "修改型号成功！";
 		} else {
 			this.tag = "1";
+			this.message = "修改型号失败！";
 			log.error("################ 修改设备型号失败！ ################");
 		}
 		returnJSON.put("tag", tag);
+		returnJSON.put("msg", message);
 		return SUCCESS;
 	}
 	/**
@@ -364,12 +370,15 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					equipmentdetail.setEquipmentid( Integer.valueOf( -1 ) );
 					equipService.alterEquipmentdetail( equipmentdetail );
 				}
-				
+				this.message = "删除型号成功！";
 				this.tag = "0";
 			} else {
 				this.tag = "1";
+				this.message = "删除型号失败！";
 			}
 		}
+		returnJSON.put("tag", tag);
+		returnJSON.put("msg", message);
 		return SUCCESS;
 	}
 	
