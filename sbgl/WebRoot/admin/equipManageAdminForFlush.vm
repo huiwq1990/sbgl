@@ -1,36 +1,97 @@
- <table class="table table-hover">
-    <thead>
-      <tr>
-        <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-        <th class="id">编号</th>
-        <th class="name">设备名称(型号)</th>
-        <th class="categories">分类</th>
-        <th class="status">状态</th>
-        <th class="remark">备注</th>
-      </tr>
-    </thead>
-    <tbody>
-	  #foreach($equipDetail in $equipDetailCourse)
-      <tr>
-        <td><input class="chk" type="checkbox" name="chk-list" value="$!equipDetail.id"></td>
-        <td>$!equipDetail.code<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="alterDetailFillIn" data-id="$!equipDetail.id" data-code="$!equipDetail.code" data-mid="$!equipDetail.modelId" data-state="$!equipDetail.state" data-memo="$!equipDetail.memo">修改</a></td>
-        <td>$!equipDetail.modelName</td>
-		<td>$!equipDetail.className</td>
-		#if($!equipDetail.state == 0)
-			<td>正常</td>
-		#elseif($!equipDetail.state == 1)
-			<td>借出</td>
-		#elseif($!equipDetail.state == 2)
-			<td>维护</td>
-		#elseif($!equipDetail.state == 3)
-			<td>维修</td>
-		#elseif($!equipDetail.state == 4)
-			<td>遗失</td>
-		#elseif($!equipDetail.state == 5)
-			<td>回收站</td>
-		#end
-        <td>$!equipDetail.memo</td>
-      </tr>
-      #end
-    </tbody>
-  </table>
+<div id="admin-content" class="clearfix">    
+    <!--control-bar start-->
+    <div class="control-bar clearfix">
+      <div class="title pull-left">设备管理</div>
+	  <div class="tips">在此页面下管理设备信息，如设备的添加、修改、删除及维护等。</div>
+      <div class="filter category-filter">
+        <select id="select-categories" style="width:130px" class="select2">
+          <option value="0" data-foo="fa">全部分类</option>
+		  #foreach($clazz in $classForEquipAdd)
+			#if($!clazz.isParent == '1')
+				<option value="1" data-foo="fa">$!clazz.name</option>
+			#else
+				<option value="$!clazz.id" data-foo="sub">$!clazz.name</option>
+			#end
+		 #end
+        </select>
+      </div>
+      
+      <div class="operate-item pull-left">
+        <a href="${webbaseurl}/equipManageEquip.do" class="btn btn-primary">添加设备</a>
+        <a href="#" class="btn btn-white s-h" action-type="deleteDetail"><i class="icon-trash"></i> 删除</a>
+      </div>
+
+      <div class="page pull-right clearfix">
+        <ul class="page-index nav nav-pills pull-left">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">最新</a></li>
+              <li><a href="#">最旧</a></li>
+            </ul>
+          </li>              
+        </ul>
+        <div class="pagination pull-right">
+          <ul>
+            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+          </ul>
+        </div>              
+      </div>
+      <ul class="status-filter nav nav-pills pull-right">
+        <li class="active"><a href="#">全部($!equipDetailCourse.size())（无不显示）</a></li>
+        <li><a href="#">正常(5)</a></li>
+        <li><a href="#">借出(2)</a></li>
+        <li><a href="#">维护(2)</a></li>
+        <li><a href="#">维修(2)</a></li>
+        <li><a href="#">遗失(2)</a></li>
+        <li><a href="#">回收站(1)</a></li>
+      </ul>
+    </div><!--control-bar end-->
+    <div class="panel panel-default table-responsive" id="detailDataDomain">
+                  
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+            <th class="id">编号</th>
+            <th class="name">设备名称(型号)</th>
+            <th class="categories">分类</th>
+            <th class="status">状态</th>
+            <th class="remark">备注</th>
+          </tr>
+        </thead>
+        <tbody>
+		  #foreach($equipDetail in $equipDetailCourse)
+          <tr>
+            <td><input class="chk" type="checkbox" name="chk-list" value="$!equipDetail.id"></td>
+            <td>$!equipDetail.code<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="alterDetailFillIn" data-id="$!equipDetail.id" data-code="$!equipDetail.code" data-mid="$!equipDetail.modelId" data-state="$!equipDetail.state" data-memo="$!equipDetail.memo">修改</a></td>
+            <td>$!equipDetail.modelName</td>
+			<td>$!equipDetail.className</td>
+			#if($!equipDetail.state == 0)
+				<td>正常</td>
+			#elseif($!equipDetail.state == 1)
+				<td>借出</td>
+			#elseif($!equipDetail.state == 2)
+				<td>维护</td>
+			#elseif($!equipDetail.state == 3)
+				<td>维修</td>
+			#elseif($!equipDetail.state == 4)
+				<td>遗失</td>
+			#elseif($!equipDetail.state == 5)
+				<td>回收站</td>
+			#end
+            <td>$!equipDetail.memo</td>
+          </tr>
+          #end
+        </tbody>
+      </table>
+      
+    </div>
+  </div>
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>

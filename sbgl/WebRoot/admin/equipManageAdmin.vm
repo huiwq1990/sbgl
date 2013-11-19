@@ -379,7 +379,7 @@
         						url: "${webbaseurl}/flushEquipDetail.do",  
         		    			type: "post",
         						success: function(data,textStatus,jq) { 
-        							$("#detailDataDomain").html(data);
+        							$("#admin-wrap").html(data);
         						},
         						error: function(data,textStatus,jq) {
         							alert("刷新界面失败!");
@@ -415,7 +415,7 @@
 						url: "${webbaseurl}/flushEquipDetail.do",  
 		    			type: "post",
 						success: function(data,textStatus,jq) { 
-							$("#detailDataDomain").html(data);
+							$("#admin-wrap").html(data);
 						},
 						error: function(data,textStatus,jq) {
 							alert("刷新界面失败!");

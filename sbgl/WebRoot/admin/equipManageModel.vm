@@ -461,7 +461,7 @@
 						url: "${webbaseurl}/flushEquipModel.do",  
 		    			type: "post",
 						success: function(data,textStatus,jq) { 
-							$("#modelDataDomain").html(data);
+							$("#admin-wrap").html(data);
 						},
 						error: function(data,textStatus,jq) {
 							alert("刷新界面失败!");
@@ -512,7 +512,7 @@
 						url: "${webbaseurl}/flushEquipModel.do",  
 		    			type: "post",
 						success: function(data,textStatus,jq) { 
-							$("#modelDataDomain").html(data);
+							$("#admin-wrap").html(data);
 						},
 						error: function(data,textStatus,jq) {
 							alert("刷新界面失败!");
