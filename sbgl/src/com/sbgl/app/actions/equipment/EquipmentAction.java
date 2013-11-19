@@ -484,11 +484,14 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		
 		if( returnCode != -1 ) {
 			this.tag = "0";
+			this.message = "器材添加成功！";
 		} else {
 			this.tag = "1";
+			this.message = "器材添加失败！";
 			log.error("################ 保存设备失败！ ################");
 		}
 		returnJSON.put("tag", tag);
+		returnJSON.put("msg", message);
 		return SUCCESS;
 	}
 	/**
@@ -497,6 +500,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	 * 同样需要对型号库进行数量清点
 	 */
 	public String alterEquipmentdetail() {
+		returnJSON = null;
+		returnJSON = new HashMap<String,Object>();
 		if(equipmentdetail.getEquipmentid() != -1) {  //不是未知型号
 			Equipmentdetail temp = equipService.getEquipmentdetail( equipmentdetail.getEquipDetailid() );
 			Equipment equip = equipService.getEquipmentById( equipmentdetail.getEquipmentid() );
@@ -547,10 +552,14 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		long returnCode = equipService.alterEquipmentdetail( equipmentdetail );
 		if( returnCode != -1 ) {
 			this.tag = "0";
+			this.message = "器材修改成功！";
 		} else {
 			this.tag = "1";
+			this.message = "器材修改失败！";
 			log.error("################ 修改设备失败！ ################");
 		}
+		returnJSON.put("tag", tag);
+		returnJSON.put("msg", message);
 		return SUCCESS;
 	}
 	/**
@@ -567,6 +576,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	}
 
 	public String deleteEquipmentdetail() {
+		returnJSON = null;
+		returnJSON = new HashMap<String,Object>();
 		String[] ids = equipdetailIds.split("_");
 		for (String id : ids) {
 			Integer oneId = Integer.valueOf( id );
@@ -604,10 +615,14 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			
 			if( equipService.deleteEquipmentdetail( oneId ) ) {
 				this.tag = "0";
+				this.message = "器材删除成功！";
 			} else {
 				this.tag = "1";
+				this.message = "器材删除失败！";
 			}
 		}
+		returnJSON.put("tag", tag);
+		returnJSON.put("msg", message);
 		return SUCCESS;
 	}
 	/**

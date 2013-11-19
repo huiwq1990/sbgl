@@ -487,11 +487,16 @@
 		    data:postData,
 		    success:function(data,textStatus,jq){  
 		    	console.log(data);
-				var n = noty({text: data.msg, timeout: 2500, type: 'success'});
-		    	_this.parents('.modal').modal('toggle');
+				if(data.tag == "0") {
+    				var n = noty({text: data.msg, timeout: 2500, type: 'success'});
+    		    	_this.parents('.modal').modal('toggle');
+				} else {
+					var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+				}
+				
 	        },  
 		    error:function(data,textStatus,jq) {
-				alert(data.msg);
+				var n = noty({text: data.msg, timeout: 2500, type: 'error'});
 			}  
 		});
 	})

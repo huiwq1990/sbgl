@@ -460,7 +460,7 @@
     			    var n = noty({text: data.msg, timeout: 2500, type: 'success'});
     			    _this.parents('.modal').modal('toggle');
     			} else {
-    			    alert(data.message);
+    			    alert(data.msg);
     			}
 	        },  
 		    error:function(data,textStatus,jq){

@@ -184,6 +184,7 @@
 <script src="${jsDomain}/select2.js"></script>
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
 
 <!--[if lt IE 10]>
   <script src="./js/jquery.placeholder.js"></script>
@@ -202,6 +203,7 @@
 	};
 	
 	$("body").on("click", "button[action-type|=addEquipDetail]", function() {
+		var _this = $(this);
 		var detailNum = $("#inputEquipId").val();
 		var modelId = $("#inputEquipModelId").val();
 		var state = $("#inputEquipStatus").val();
@@ -225,8 +227,21 @@
 		    data: postData,
 		    success:function(data,textStatus,jq){  
 		    	console.log(data);
+				if(data.tag == "0") {
+					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
+		    		_this.parents('.modal').modal('toggle');
+					
+					$("#inputEquipId").val("");
+            		$("#inputEquipModelId").select2("val", -1);
+            		$("#inputEquipStatus").select2("val", 0);
+            		$("#inputEquipRemark").val("");
+				} else {
+					var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+				}
 	        },  
-		    error:function(data,textStatus,jq){alert("添加设备失败!");}  
+		    error:function(data,textStatus,jq) {
+				var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+			}  
 		});
 	})
 	

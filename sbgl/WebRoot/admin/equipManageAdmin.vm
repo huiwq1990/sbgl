@@ -283,6 +283,7 @@
 <script src="${jsDomain}/select2.js"></script>
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
 <!--[if lt IE 10]>
   <script src="../js/jquery.placeholder.js"></script>
   <script>
@@ -343,33 +344,44 @@
 		console.log("myData.memo " + myData.memo);
 	})
 	
-	$("body").on("click", "button[action-type|=alterDetail]", function() {
-		var dCode = $("#modifyEquipId").val();
-		var dMid = $("#modifyEquipModelId").val();
-		var dStatus = $("#modifyEquipStatus").val();
-		var dMemo = $("#modifyEquipRemark").val();
-		
-		if(dCode == detailCodeForALter && dMid == detailMIdForAlter && dStatus == detailStatusForAlter && dMemo == detailMemoForAlter) {
-			alert("并未做修改！");
-		} else {
-			var postData = {
-				"equipmentdetail.equipDetailid": detailIdForAlter,
-				"equipmentdetail.equipserial": dCode,
-				"equipmentdetail.equipmentid": dMid,
-				"equipmentdetail.status": dStatus,
-				"equipmentdetail.administrationid": cookie.Get("id"),
-				"equipmentdetail.usermark": dMemo
-			}
-			
-			jQuery.ajax({  
-			    url:"${webbaseurl}/alterEquipDetail.do",  
-			    type:"post",
-			    data:postData,
-			    success:function(data,textStatus,jq){  
-			    	console.log(data);
-		        },  
-			    error:function(data,textStatus,jq){alert("修改器材失败！");}  
-			});
+	$('.modal').on('click', ('button.btn-primary'), function () {
+		var _this = $(this);
+		if(_this.attr('action-type') == 'alterDetail') {
+    		var dCode = $("#modifyEquipId").val();
+    		var dMid = $("#modifyEquipModelId").val();
+    		var dStatus = $("#modifyEquipStatus").val();
+    		var dMemo = $("#modifyEquipRemark").val();
+    		
+    		if(dCode == detailCodeForALter && dMid == detailMIdForAlter && dStatus == detailStatusForAlter && dMemo == detailMemoForAlter) {
+    			alert("并未做修改！");
+    		} else {
+    			var postData = {
+    				"equipmentdetail.equipDetailid": detailIdForAlter,
+    				"equipmentdetail.equipserial": dCode,
+    				"equipmentdetail.equipmentid": dMid,
+    				"equipmentdetail.status": dStatus,
+    				"equipmentdetail.administrationid": cookie.Get("id"),
+    				"equipmentdetail.usermark": dMemo
+    			}
+    			
+    			jQuery.ajax({  
+    			    url:"${webbaseurl}/alterEquipDetail.do",  
+    			    type:"post",
+    			    data:postData,
+    			    success:function(data,textStatus,jq){  
+    			    	console.log(data);
+    					if(data.tag == "0") {
+        					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
+        		    		_this.parents('.modal').modal('toggle');
+        				} else {
+        					var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+        				}
+    		        },  
+    			    error:function(data,textStatus,jq) {
+    					var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+    				}  
+    			});
+    		}
 		}
 	})
 	
@@ -383,8 +395,15 @@
 		    data:postData,
 		    success:function(data,textStatus,jq){  
 		    	console.log(data);
+				if(data.tag == "0") {
+					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
+				} else {
+					var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+				}
 	        },  
-		    error:function(data,textStatus,jq){alert("删除型号失败！");}  
+		    error:function(data,textStatus,jq) {
+				var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+			}  
 		});
 	})
 </script>
