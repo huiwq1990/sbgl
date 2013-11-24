@@ -30,6 +30,27 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
 	
 	
 	
+//	@Override
+//	public ComputermodelFull selectComputermodelByCondition(String condition) {
+//		 try {
+//	        	String hqlString="From Computermodel "; 
+//	        	List<ComputermodelFull> computermodelFullList = getHibernateTemplate()
+//				.executeFind(new HibernateCallback() {
+//					public Object doInHibernate(Session session)
+//							throws HibernateException {
+//						Query query = session.createSQLQuery(sql);
+//						query.setFirstResult(page.getStartNum());
+//						query.setMaxResults(page.getPageSize());
+//						query.setResultTransformer(new EscColumnToBean(
+//								ComputermodelFull.class));
+//						return query.list();
+//					}
+//				});
+//		if (computermodelFullList != null && !computermodelFullList.isEmpty()) {			
+//			return computermodelFullList;
+//		}
+//	}
+	
 //  删除实体
 	public int deleteEntity(Integer computermodelId) {
 		// TODO Auto-generated method stub		

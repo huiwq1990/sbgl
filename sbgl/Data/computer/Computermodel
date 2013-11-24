@@ -1,5 +1,5 @@
-id,name,computercategoryid,picpath,createtime,createuserid,status
- , Dell Model,1 , , , , 
- , Mac Model,1 , , , , 
- , 达芬奇 Model, 2, , , , 
- , 宽泰 Model, 2, , , , 
+id,name,computercategoryid,picpath,createtime,createuserid,status,computercount
+ , Dell Model,1 , , , , ,10
+ , Mac Model,1 , , , , ,5
+ , 达芬奇 Model, 2, , , , ,2
+ , 宽泰 Model, 2, , , , ,1

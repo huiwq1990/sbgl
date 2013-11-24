@@ -26,6 +26,21 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 
 	private static final Log log = LogFactory.getLog(ComputerorderdetailDaoImpl.class);
 	
+	@Override
+	public List<Computerorderdetail> selectComputerorderdetailByCondition(String condition) {
+		try {
+	        String queryString = "from Computerorderdetail " + condition;
+//	        System.out.println(queryString);
+	         Query q = this.getSession().createQuery(queryString);
+	         
+	         List l = q.list(); 
+			 return l;
+	      } catch (RuntimeException re) {
+	         log.error("查询失败", re);
+	         throw re;
+	      }
+	}
+	
 //  删除实体
 	public int deleteEntity(Integer computerorderdetailId) {
 		// TODO Auto-generated method stub		

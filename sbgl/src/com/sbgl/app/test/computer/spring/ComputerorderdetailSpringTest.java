@@ -23,7 +23,7 @@ import com.sbgl.app.services.common.*;
 public class ComputerorderdetailSpringTest {
 
 	public static void main(String[] args) {
-//		intTable();
+		intTable();
 //		addComputerorderdetail();
 //		selectComputerorderdetailAll();
 //		deleteComputerorderdetail();
