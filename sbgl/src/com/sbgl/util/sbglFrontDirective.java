@@ -57,7 +57,9 @@ public class sbglFrontDirective  extends  Directive{
 		 
 		 try {
 			 //获取文件路径
-			 FrontDirective frontdirective = (FrontDirective)Class.forName("com.sbgl.actions"+params.get("moduleName")+"Action").newInstance();
+			 FrontDirective frontdirective = (FrontDirective)Class.forName("com.sbgl.app.actions"+params.get("moduleName")+"Action").newInstance();
+//			 ComputerDirective computerdirective = (ComputerDirective)Class.forName("com.sbgl.app.actions."+params.get("moduleName")+"Action").newInstance();
+				
 			 //处理参数
 			 Object isPas=params.get("parameters");
 			 if (isPas!=null) {
@@ -70,7 +72,8 @@ public class sbglFrontDirective  extends  Directive{
 				frontdirective.foot(icad, params,context);
 			}else if ("WINDOW".equals(tag)) {
 				frontdirective.window(icad, params, context);
-			}
+			} 
+			
 			 String vmpath=params.get("vmpath").toString();
 			 icad.pushCurrentTemplateName(vmpath);
 			 Properties properties = new Properties();

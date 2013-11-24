@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +9,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
-
+<script >
+	function aaaa(pageNum){
+			jQuery.ajax({  
+		    url: '${webbaseurl}/manageComputercategoryFull.action',  
+		    type: "post",
+		    data:{pageNo:pageNum,passType:'ajaxType'},
+		    dataType: 'html',
+			success: function(data){
+				$("#formComputerorderdetailManage").html(data);
+			}		  	  
+		});		
+	}
+</script> 
 <!--[if lt IE 10]>
   <script src="${jsDomain}/jquery.placeholder.js"></script>
   <script>
@@ -101,9 +112,9 @@
 
               <div class="page pull-right clearfix">
                 <ul class="page-index nav nav-pills pull-left">
-                  <li class="record"><strong>XX</strong>条记录</li>
+                  <li class="record"><strong>$!page.totalCount</strong>条记录</li>
                   <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!page.pageNo/$!page.totalpage页 <b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu">
                       <li><a href="#">最新</a></li>
                       <li><a href="#">最旧</a></li>
@@ -112,13 +123,14 @@
                 </ul>
                 <div class="pagination pull-right">
                   <ul>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" onclick="aaaa(2)"  rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
                     <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
                   </ul>
                 </div>              
               </div>
             </div><!--control-bar end-->
-            <div class="panel panel-default">
+				 
+            <div id="formComputerorderdetailManage" class="panel panel-default">
 
               <table class="table table-hover">
                 <thead>

@@ -28,6 +28,7 @@
 		<!-- default entity full manage action -->
     	<action name="manageComputercategoryFull" class="ManageComputerAction" method="manageComputercategoryFull">
         	<result name="success">/computer/computercategoryFullManage.vm</result>
+        	<result name="success2">/computer/computercategorycontent.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
 		<!-- manage action , go to jsp page -->

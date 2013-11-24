@@ -9,8 +9,14 @@ import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.SessionAware;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.context.InternalContextAdapter;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.entity.Computer;
@@ -24,18 +30,22 @@ import com.sbgl.app.services.computer.ComputerService;
 import com.sbgl.app.services.computer.ComputercategoryService;
 import com.sbgl.app.services.computer.ComputermodelService;
 import com.sbgl.app.services.computer.ComputerorderService;
+import com.sbgl.util.ComputerDirective;
 import com.sbgl.util.Page;
+import com.sbgl.util.SpringContextUtil;
+import com.sbgl.util.SpringUtil;
 
 
 
 @Scope("prototype") 
 @Controller("ManageComputerAction")
-public class ManageComputerAction extends ActionSupport implements SessionAware {
+public class ManageComputerAction extends ActionSupport implements SessionAware, ComputerDirective{
 
 	private static final Log log = LogFactory.getLog(ManageComputerAction.class);
 
 	private Map<String, Object> session;
 	private int pageNo;
+	private String passType;
 
 	// Service
 	@Resource
@@ -117,9 +127,43 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 		if(parentcomputercategoryList == null){
 			parentcomputercategoryList = new ArrayList<Computercategory>();
 		}
-		return SUCCESS;
+		if(passType!=null&&passType.equals("ajaxType")){
+			return "success2";
+		}else{
+			return "success";
+		}
 	}			
-			
+	
+	//管理 查询
+	public void manageComputercategoryFull(InternalContextAdapter cxt,Map param,VelocityContext context){
+		log.info("exec action method:manageComputercategoryFull");
+//		ApplicationContext a=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
+//		 WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();  
+		ComputercategoryService computercategoryService =(ComputercategoryService)SpringContextUtil.getWebApplicationContext().getBean("computercategoryService");
+		if(computercategoryService ==null){
+			System.out.println("aaaaaassssssssssssssssssss");
+		}
+//      分页查询		
+		page.setPageNo(pageNo);
+		//设置总数量，在service中设置
+		//page.setTotalpage(computercategoryService.countComputercategoryRow());
+		computercategoryFullList  = computercategoryService.selectShowedComputercategoryFullByPage(page);
+		
+//		查询全部
+//		computercategoryFullList  = computercategoryService.selectComputercategoryFullAll();
+
+		if(computercategoryFullList == null){
+			computercategoryFullList = new ArrayList<ComputercategoryFull>();
+		}
+		
+		parentcomputercategoryList = computercategoryService.selectParentComputercategory();
+		if(parentcomputercategoryList == null){
+			parentcomputercategoryList = new ArrayList<Computercategory>();
+		}
+		context.put("computercategoryFullList", computercategoryFullList);
+//		return SUCCESS;
+	}
+	
 	
 //  manage Computer
 	public String manageComputer(){
@@ -332,6 +376,14 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 	public void setComputermodelFullList(
 			List<ComputermodelFull> computermodelFullList) {
 		this.computermodelFullList = computermodelFullList;
+	}
+
+	public String getPassType() {
+		return passType;
+	}
+
+	public void setPassType(String passType) {
+		this.passType = passType;
 	}
 
 	
