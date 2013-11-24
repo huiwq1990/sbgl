@@ -21,7 +21,7 @@
 <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
 <![endif]-->
 <!-- 初始化swfupload 对象-->
-   <script type="text/javascript">
+<!--   <script type="text/javascript">
 	var upload1, upload2;
 	var equipmentid = ""
 	var uploadFileName = "";
@@ -122,6 +122,7 @@
 	}
 	    
 	</script>
+-->
 </head>
 
 <body id="admin">
@@ -322,13 +323,11 @@
       <div class="form-group">
         <label for="modifyEPic" class="col-xs-3 control-label">图片</label>
         <div class="col-xs-7">
-		  <div style="display:none;" class="fieldset flash" id="fsUploadProgress1"></div>
-		  <input id="btnCancel1" type="button" style="display:none;" value="Cancel Uploads" onclick="cancelQueue(upload1);" disabled="disabled" style="margin-left: 2px; height: 22px; font-size: 8pt;" />
-          <span id="imageUploadBtn" >添加图片</span>
-		  <!--<span class="btn btn-white file-input-button">
+          <span class="btn btn-white file-input-button">
               <i class="icon-plus"></i>
-              <span id="imageUploadBtn" >添加图片</span>
-		  </span>-->
+              <span>添加图片</span>
+              <input id="modifyEPic" type="file" name="files[]" multiple>
+          </span>
         </div>
       </div>
     </form>
@@ -385,9 +384,11 @@
       <div class="form-group">
         <label for="inputEPic" class="col-xs-3 control-label">图片</label>
         <div class="col-xs-7">
-              <div style="display:none;" class="fieldset flash" id="fsUploadProgress2"></div>
-			  <input id="btnCancel2" type="button" style="display:none;" value="Cancel Uploads" onclick="cancelQueue(upload2);" disabled="disabled" style="margin-left: 2px; height: 22px; font-size: 8pt;" />
-			  <span id="imageUploadBtn2" >添加图片</span>
+          <span class="btn btn-white file-input-button">
+              <i class="icon-plus"></i>
+              <span>添加图片</span>
+              <input id="inputEPic" type="file" name="files[]" multiple>
+          </span>
         </div>
       </div>
     </form>
