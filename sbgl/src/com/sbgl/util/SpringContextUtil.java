@@ -4,10 +4,24 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 
+/**
+ * http://uule.iteye.com/blog/821712
+ * @author hg
+ *
+ */
 public class SpringContextUtil implements ApplicationContextAware  {
 	private static ApplicationContext applicationContext;     //Spring应用上下文环境   
 	   
+	
+	
+	
+public static WebApplicationContext getWebApplicationContext(){
+	 WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();  
+	 return wac;
+}
 	  /** 
 	  * 实现ApplicationContextAware接口的回调方法，设置上下文环境    
 	  * @param applicationContext 
@@ -31,6 +45,9 @@ public class SpringContextUtil implements ApplicationContextAware  {
 	  * @throws BeansException 
 	  */  
 	  public static Object getBean(String name) throws BeansException {  
+		  if(applicationContext == null){
+			  System.out.println("applicationContext is null");
+		  }
 	    return applicationContext.getBean(name);  
 	  }  
 	   

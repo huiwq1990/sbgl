@@ -158,4 +158,12 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 //		 List<Integer>  l = baseDao.createSQL("select id from Computermodel");
 //		return l;
 //	 }
+	
+	@Override
+	 public List<Computermodel>  selectComputermodelAvailableborrowcount(int modelid){
+//		 List<Computermodel>  l = baseDao.createSQL("From Computermodel where id"+ modelid);
+		return null;
+	 }	
+	
+	
 }

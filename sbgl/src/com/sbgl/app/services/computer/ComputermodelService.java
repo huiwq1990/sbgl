@@ -50,6 +50,8 @@ public interface ComputermodelService{
 
 	List<Computermodel> selectComputermodelByName(String name);
 
+	List<Computermodel> selectComputermodelAvailableborrowcount(int modelid);
+
 		
 	
 	

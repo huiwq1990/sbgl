@@ -31,5 +31,10 @@ public interface ComputerorderdetailDao{
 	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerorderId(Integer computerorderid );
 	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerId(Integer computerid );
 
+
+
+	List<Computerorderdetail> selectComputerorderdetailByCondition(
+			String condition);
+
  
 }

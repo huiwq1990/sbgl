@@ -23,7 +23,7 @@ import com.sbgl.app.services.common.*;
 public class ComputermodelSpringTest {
 
 	public static void main(String[] args) {
-//		intTable();
+		intTable();
 //		addComputermodel();
 //		selectComputermodelAll();
 //		deleteComputermodel();
@@ -31,7 +31,7 @@ public class ComputermodelSpringTest {
 //		updateComputermodel();
 //		selectComputermodelById(1L);
 //		selectComputermodelFullById(1L);
-      selectComputermodelFullAll();
+//      selectComputermodelFullAll();
 
 	}
 	

@@ -45,6 +45,9 @@ public interface ComputerorderdetailService{
 	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerorderId(Integer computerorderid );
 	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerId(Integer computerid );
 
+	List<Computerorderdetail> selectComputerorderdetailAfterNow(
+			String currentDay, int currentPeriod);
+
 		
 	
 	

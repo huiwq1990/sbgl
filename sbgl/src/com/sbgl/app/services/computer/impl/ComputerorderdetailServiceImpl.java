@@ -140,5 +140,23 @@ public class ComputerorderdetailServiceImpl implements ComputerorderdetailServic
 	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerId(Integer computerid ) {
 		return computerorderdetailDao.selectComputerorderdetailFullByComputerId(computerid );
 	}
+	
+	/**
+	 * 取出所有的预约单，预约时间大于currentDay
+	 * @param day
+	 * @param period
+	 * @return
+	 * select * from computerorderdetail where ((borrowday = "2013-10-02 00:00:00" and borrowperiod >=1) or (borrowday > "2013-10-02 00:00:00"))
+
+	 */
+	@Override
+	public List<Computerorderdetail> selectComputerorderdetailAfterNow(String currentDay,int currentPeriod){
+		String cond = "where ((borrowday = '" + currentDay+"' and borrowperiod >="+currentPeriod+") or (borrowday > '" + currentDay+"'))";
+	System.out.println(cond);
+		return computerorderdetailDao.selectComputerorderdetailByCondition(cond);
+
+	}
+	
+	
 
 }
