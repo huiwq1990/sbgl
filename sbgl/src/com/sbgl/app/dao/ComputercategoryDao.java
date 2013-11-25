@@ -12,8 +12,12 @@ public interface ComputercategoryDao{
 //删除实体
 	public int deleteEntity(Integer computercategoryId);
 
+public List<Computercategory> selectComputercategoryByCondition(String condition);
+	 public List<Computercategory>  selectComputercategoryByConditionAndPage(String conditionSql,final Page page) ;
 
-
+		public List<ComputercategoryFull> selectComputercategoryFullByCondition(String condition);
+			 public List<ComputercategoryFull>  selectComputercategoryFullByConditionAndPage(String conditionSql,final Page page);
+	
 	public ComputercategoryFull selectComputercategoryFullById(Integer computercategoryId);
 		
 	public List<ComputercategoryFull> selectComputercategoryFullAll();
@@ -27,16 +31,6 @@ public interface ComputercategoryDao{
 	public List<Computercategory> selectComputercategoryByComputercategoryId(Integer parentcomputercategoryid );
 
 	public List<ComputercategoryFull> selectComputercategoryFullByComputercategoryId(Integer parentcomputercategoryid );
-
-
-
-	
-
-
-
-	List<ComputercategoryFull> selectComputercategoryFullByConditionAndPage(
-			String conditionSql, Page page);
-
 
  
 }

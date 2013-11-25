@@ -1,0 +1,27 @@
+<table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="name">名称</th>
+                   
+                    <th class="model-num">型号数量</th>
+                    <th class="equip-num">设备数量</th>
+                  </tr>
+                </thead>
+                <tbody>
+				
+			#foreach($computercategoryFull in $computercategoryFullList)
+			  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!computercategoryFull.computercategoryid"></td>
+                    <td>$!computercategoryFull.computercategoryname<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button" action-type="editComputercategoryFillIn" data-id="$!computercategoryFull.computercategoryid" data-name="$!computercategoryFull.computercategoryname" >修改</a></td>
+                  
+                    <td>3</td>
+                    <td>3</td>
+                  </tr>
+        
+			#end
+                </tbody>
+              </table>
+		
+	
+

@@ -12,12 +12,15 @@ public class Computermodel extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer id;
+	private Integer computermodeltype;
+	private String languagetype;
 	private String name;
 	private Integer computercategoryid;
 	private String picpath;
 	private Date createtime;
 	private Integer createuserid;
 	private Integer computercount;
+	private Integer availableborrowcountnumber;
 	private String description;
 	private Integer status;
 
@@ -33,16 +36,21 @@ public class Computermodel extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Computermodel(Integer id, String name, Integer computercategoryid,
+	public Computermodel(Integer id, Integer computermodeltype,
+			String languagetype, String name, Integer computercategoryid,
 			String picpath, Date createtime, Integer createuserid,
-			Integer computercount, String description, Integer status) {
+			Integer computercount, Integer availableborrowcountnumber,
+			String description, Integer status) {
 		this.id = id;
+		this.computermodeltype = computermodeltype;
+		this.languagetype = languagetype;
 		this.name = name;
 		this.computercategoryid = computercategoryid;
 		this.picpath = picpath;
 		this.createtime = createtime;
 		this.createuserid = createuserid;
 		this.computercount = computercount;
+		this.availableborrowcountnumber = availableborrowcountnumber;
 		this.description = description;
 		this.status = status;
 	}
@@ -55,6 +63,22 @@ public class Computermodel extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Integer getComputermodeltype() {
+		return this.computermodeltype;
+	}
+
+	public void setComputermodeltype(Integer computermodeltype) {
+		this.computermodeltype = computermodeltype;
+	}
+
+	public String getLanguagetype() {
+		return this.languagetype;
+	}
+
+	public void setLanguagetype(String languagetype) {
+		this.languagetype = languagetype;
 	}
 
 	public String getName() {
@@ -103,6 +127,14 @@ public class Computermodel extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setComputercount(Integer computercount) {
 		this.computercount = computercount;
+	}
+
+	public Integer getAvailableborrowcountnumber() {
+		return this.availableborrowcountnumber;
+	}
+
+	public void setAvailableborrowcountnumber(Integer availableborrowcountnumber) {
+		this.availableborrowcountnumber = availableborrowcountnumber;
 	}
 
 	public String getDescription() {

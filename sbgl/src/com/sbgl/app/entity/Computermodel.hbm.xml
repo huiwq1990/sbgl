@@ -10,6 +10,12 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
+        <property name="computermodeltype" type="java.lang.Integer">
+            <column name="computermodeltype" />
+        </property>
+        <property name="languagetype" type="java.lang.String">
+            <column name="languagetype" length="2" />
+        </property>
         <property name="name" type="java.lang.String">
             <column name="name" length="100" />
         </property>
@@ -27,6 +33,9 @@
         </property>
         <property name="computercount" type="java.lang.Integer">
             <column name="computercount" />
+        </property>
+        <property name="availableborrowcountnumber" type="java.lang.Integer">
+            <column name="availableborrowcountnumber" />
         </property>
         <property name="description" type="java.lang.String">
             <column name="description" length="2000" />

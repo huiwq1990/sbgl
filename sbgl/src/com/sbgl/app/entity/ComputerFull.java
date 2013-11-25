@@ -8,18 +8,24 @@ import java.util.Date;
 public class ComputerFull extends DaoAbs implements java.io.Serializable {
 			private Integer computerid;
 			private String computerserialnumber;
+			private Integer computercomputertype;
+			private String computerlanguagetype;
 			private Integer computercomputermodelid;
 			private Date computercreatetime;
 			private Integer computercreateuserid;
 			private Integer computerstatus;
 			private String computerremark;
 			private Integer computermodelid;
+			private Integer computermodelcomputermodeltype;
+			private String computermodellanguagetype;
 			private String computermodelname;
 			private Integer computermodelcomputercategoryid;
 			private String computermodelpicpath;
 			private Date computermodelcreatetime;
 			private Integer computermodelcreateuserid;
-			private Integer computermodelcount;
+			private Integer computermodelcomputercount;
+			private Integer computermodelavailableborrowcountnumber;
+			private String computermodeldescription;
 			private Integer computermodelstatus;
 		
 	
@@ -35,6 +41,18 @@ public class ComputerFull extends DaoAbs implements java.io.Serializable {
 		}
 		public String getComputerserialnumber(){		
 			return this.computerserialnumber;
+		}
+			public void setComputercomputertype(Integer computercomputertype){		
+			this.computercomputertype = computercomputertype;
+		}
+		public Integer getComputercomputertype(){		
+			return this.computercomputertype;
+		}
+			public void setComputerlanguagetype(String computerlanguagetype){		
+			this.computerlanguagetype = computerlanguagetype;
+		}
+		public String getComputerlanguagetype(){		
+			return this.computerlanguagetype;
 		}
 			public void setComputercomputermodelid(Integer computercomputermodelid){		
 			this.computercomputermodelid = computercomputermodelid;
@@ -72,6 +90,18 @@ public class ComputerFull extends DaoAbs implements java.io.Serializable {
 		public Integer getComputermodelid(){		
 			return this.computermodelid;
 		}
+			public void setComputermodelcomputermodeltype(Integer computermodelcomputermodeltype){		
+			this.computermodelcomputermodeltype = computermodelcomputermodeltype;
+		}
+		public Integer getComputermodelcomputermodeltype(){		
+			return this.computermodelcomputermodeltype;
+		}
+			public void setComputermodellanguagetype(String computermodellanguagetype){		
+			this.computermodellanguagetype = computermodellanguagetype;
+		}
+		public String getComputermodellanguagetype(){		
+			return this.computermodellanguagetype;
+		}
 			public void setComputermodelname(String computermodelname){		
 			this.computermodelname = computermodelname;
 		}
@@ -102,11 +132,23 @@ public class ComputerFull extends DaoAbs implements java.io.Serializable {
 		public Integer getComputermodelcreateuserid(){		
 			return this.computermodelcreateuserid;
 		}
-			public void setComputermodelcount(Integer computermodelcount){		
-			this.computermodelcount = computermodelcount;
+			public void setComputermodelcomputercount(Integer computermodelcomputercount){		
+			this.computermodelcomputercount = computermodelcomputercount;
 		}
-		public Integer getComputermodelcount(){		
-			return this.computermodelcount;
+		public Integer getComputermodelcomputercount(){		
+			return this.computermodelcomputercount;
+		}
+			public void setComputermodelavailableborrowcountnumber(Integer computermodelavailableborrowcountnumber){		
+			this.computermodelavailableborrowcountnumber = computermodelavailableborrowcountnumber;
+		}
+		public Integer getComputermodelavailableborrowcountnumber(){		
+			return this.computermodelavailableborrowcountnumber;
+		}
+			public void setComputermodeldescription(String computermodeldescription){		
+			this.computermodeldescription = computermodeldescription;
+		}
+		public String getComputermodeldescription(){		
+			return this.computermodeldescription;
 		}
 			public void setComputermodelstatus(Integer computermodelstatus){		
 			this.computermodelstatus = computermodelstatus;

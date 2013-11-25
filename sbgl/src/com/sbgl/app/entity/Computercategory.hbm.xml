@@ -10,6 +10,12 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
+        <property name="computercategorytype" type="java.lang.Integer">
+            <column name="computercategorytype" />
+        </property>
+        <property name="languagetype" type="java.lang.String">
+            <column name="languagetype" length="2" />
+        </property>
         <property name="parentcomputercategoryid" type="java.lang.Integer">
             <column name="parentcomputercategoryid" />
         </property>

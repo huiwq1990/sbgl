@@ -81,6 +81,10 @@
 			resource="com/sbgl/app/entity/Computercategory.hbm.xml" />
 
 		<mapping resource="com/sbgl/app/entity/Computermodel.hbm.xml" />
+		<mapping
+			resource="com/sbgl/app/entity/Computerorderrule.hbm.xml" />
+		<mapping
+			resource="com/sbgl/app/entity/Computerorderclassrule.hbm.xml" />
 
 
 

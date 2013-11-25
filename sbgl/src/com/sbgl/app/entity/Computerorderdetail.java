@@ -13,11 +13,12 @@ public class Computerorderdetail extends com.sbgl.app.dao.DaoAbs implements
 
 	private Integer id;
 	private Integer computerorderid;
-	private Integer computerid;
-	private Integer computernumber;
+	private Integer computermodelid;
+	private Integer borrownumber;
 	private Date createtime;
 	private Date borrowday;
 	private Integer borrowperiod;
+	private String computerid;
 	private Integer status;
 
 	// Constructors
@@ -33,15 +34,17 @@ public class Computerorderdetail extends com.sbgl.app.dao.DaoAbs implements
 
 	/** full constructor */
 	public Computerorderdetail(Integer id, Integer computerorderid,
-			Integer computerid, Integer computernumber, Date createtime,
-			Date borrowday, Integer borrowperiod, Integer status) {
+			Integer computermodelid, Integer borrownumber,
+			Date createtime, Date borrowday, Integer borrowperiod,
+			String computerid, Integer status) {
 		this.id = id;
 		this.computerorderid = computerorderid;
-		this.computerid = computerid;
-		this.computernumber = computernumber;
+		this.computermodelid = computermodelid;
+		this.borrownumber = borrownumber;
 		this.createtime = createtime;
 		this.borrowday = borrowday;
 		this.borrowperiod = borrowperiod;
+		this.computerid = computerid;
 		this.status = status;
 	}
 
@@ -63,20 +66,20 @@ public class Computerorderdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.computerorderid = computerorderid;
 	}
 
-	public Integer getComputerid() {
-		return this.computerid;
+	public Integer getComputermodelid() {
+		return this.computermodelid;
 	}
 
-	public void setComputerid(Integer computerid) {
-		this.computerid = computerid;
+	public void setComputermodelid(Integer computermodelid) {
+		this.computermodelid = computermodelid;
 	}
 
-	public Integer getComputernumber() {
-		return this.computernumber;
+	public Integer getBorrownumber() {
+		return this.borrownumber;
 	}
 
-	public void setComputernumber(Integer computernumber) {
-		this.computernumber = computernumber;
+	public void setBorrownumber(Integer borrownumber) {
+		this.borrownumber = borrownumber;
 	}
 
 	public Date getCreatetime() {
@@ -101,6 +104,14 @@ public class Computerorderdetail extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setBorrowperiod(Integer borrowperiod) {
 		this.borrowperiod = borrowperiod;
+	}
+
+	public String getComputerid() {
+		return this.computerid;
+	}
+
+	public void setComputerid(String computerid) {
+		this.computerid = computerid;
 	}
 
 	public Integer getStatus() {

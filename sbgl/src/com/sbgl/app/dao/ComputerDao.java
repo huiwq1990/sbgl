@@ -12,8 +12,12 @@ public interface ComputerDao{
 //删除实体
 	public int deleteEntity(Integer computerId);
 
+public List<Computer> selectComputerByCondition(String condition);
+	 public List<Computer>  selectComputerByConditionAndPage(String conditionSql,final Page page) ;
 
-
+		public List<ComputerFull> selectComputerFullByCondition(String condition);
+			 public List<ComputerFull>  selectComputerFullByConditionAndPage(String conditionSql,final Page page);
+	
 	public ComputerFull selectComputerFullById(Integer computerId);
 		
 	public List<ComputerFull> selectComputerFullAll();

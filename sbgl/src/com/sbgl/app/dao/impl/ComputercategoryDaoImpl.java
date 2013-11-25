@@ -25,32 +25,100 @@ import com.sbgl.util.*;
 public class ComputercategoryDaoImpl extends HibernateDaoSupport implements ComputercategoryDao{
 
 	private static final Log log = LogFactory.getLog(ComputercategoryDaoImpl.class);
+	private final String basicComputercategoryFullSql = "select a.id as computercategoryid, a.computercategorytype as computercategorycomputercategorytype, a.languagetype as computercategorylanguagetype, a.parentcomputercategoryid as computercategoryparentcomputercategoryid, a.name as computercategoryname, a.createtime as computercategorycreatetime, a.createuserid as computercategorycreateuserid, a.status as computercategorystatus, b.id as parentcomputercategoryid, b.computercategorytype as parentcomputercategorycomputercategorytype, b.languagetype as parentcomputercategorylanguagetype, b.parentcomputercategoryid as parentcomputercategoryparentcomputercategoryid, b.name as parentcomputercategoryname, b.createtime as parentcomputercategorycreatetime, b.createuserid as parentcomputercategorycreateuserid, b.status as parentcomputercategorystatus from Computercategory a  left join Computercategory b on a.parentcomputercategoryid=b.id ";
 	
-	final String  basicFullSql = "select a.id as computercategoryid, a.parentcomputercategoryid as computercategoryparentcomputercategoryid, a.name as computercategoryname, a.createtime as computercategorycreatetime, a.createuserid as computercategorycreateuserid, a.status as computercategorystatus, b.id as parentcomputercategoryid, b.parentcomputercategoryid as parentcomputercategoryparentcomputercategoryid, b.name as parentcomputercategoryname, b.createtime as parentcomputercategorycreatetime, b.createuserid as parentcomputercategorycreateuserid, b.status as parentcomputercategorystatus from Computercategory a  left join Computercategory b on a.parentcomputercategoryid=b.id " ;	
-//	final String tableName = "computercategory";
-//	final String  basicSql="select * from " +tableName+" " ;
+	private final String basicComputercategorySql = "From Computercategory  ";
 	
-//	public List<Computercategory> selectComputercategoryByCondition(String condition){
-//	   	  
-//		String conSql=basicSql + condition;
-//	  	List<Computercategory> computercategoryList = getHibernateTemplate()
-//		.executeFind(new HibernateCallback() {
-//			public Object doInHibernate(Session session)
-//					throws HibernateException {
-//					
-//					//Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(YaomingFull.class));  
-//				Query query = session.createSQLQuery(sql);
-//				
-//				query.setResultTransformer(new EscColumnToBean(
-//						Computercategory.class));
-//				return query.list();
-//			}
-//		});
-//	  	if (computercategoryList != null && !computercategoryList.isEmpty()) {
-//	  		return computercategoryList;
-//	  	}
-//	  	return null;
-//	}
+	// 根据条件查询查询实体
+	@Override
+	public List<Computercategory> selectComputercategoryByCondition(String condition) {
+		final String  sql = basicComputercategorySql +" " + condition;
+		
+		List<Computercategory> computercategoryList = getHibernateTemplate()
+				.executeFind(new HibernateCallback() {
+					public Object doInHibernate(Session session)
+							throws HibernateException {
+							
+							//Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(YaomingFull.class));  
+						Query query = session.createSQLQuery(sql);
+						query.setResultTransformer(new EscColumnToBean(
+								Computercategory.class));
+						return query.list();
+					}
+				});		
+		return null;
+	}
+	
+	
+	//  根据条件分页查询实体        
+        @Override
+        public List<Computercategory>  selectComputercategoryByConditionAndPage(String conditionSql,final Page page) {
+                final String  sql = basicComputercategorySql  +conditionSql;
+                List<Computercategory> computercategoryList = getHibernateTemplate()
+                                .executeFind(new HibernateCallback() {
+                                        public Object doInHibernate(Session session)
+                                                        throws HibernateException {
+                                                        
+                                                        //Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(YaomingFull.class));  
+                                                Query query = session.createSQLQuery(sql);
+                                                query.setFirstResult(page.getStartNum());
+                                                query.setMaxResults(page.getPageSize());
+                                                query.setResultTransformer(new EscColumnToBean(
+                                                                Computercategory.class));
+                                                return query.list();
+                                        }
+                                });
+                if (computercategoryList != null && !computercategoryList.isEmpty()) {
+                        return computercategoryList;
+                }
+                return null;
+        }
+	
+	
+	//条件查询full
+	@Override
+	public List<ComputercategoryFull> selectComputercategoryFullByCondition(String condition) {
+		final String  sql = basicComputercategoryFullSql +" " + condition;
+		
+		List<ComputercategoryFull> computercategoryList = getHibernateTemplate()
+				.executeFind(new HibernateCallback() {
+					public Object doInHibernate(Session session)
+							throws HibernateException {
+							
+							//Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(YaomingFull.class));  
+						Query query = session.createSQLQuery(sql);
+						query.setResultTransformer(new EscColumnToBean(
+								ComputercategoryFull.class));
+						return query.list();
+					}
+				});		
+		return null;
+	}
+	
+	
+	// 查询实体full        
+        @Override
+        public List<ComputercategoryFull>  selectComputercategoryFullByConditionAndPage(String conditionSql,final Page page) {
+                final String  sql = basicComputercategoryFullSql  +conditionSql;
+                List<ComputercategoryFull> computercategoryList = getHibernateTemplate()
+                                .executeFind(new HibernateCallback() {
+                                        public Object doInHibernate(Session session)
+                                                        throws HibernateException {
+                                                        
+                                                        //Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(YaomingFull.class));  
+                                                Query query = session.createSQLQuery(sql);
+                                                query.setFirstResult(page.getStartNum());
+                                                query.setMaxResults(page.getPageSize());
+                                                query.setResultTransformer(new EscColumnToBean(
+                                                                ComputercategoryFull.class));
+                                                return query.list();
+                                        }
+                                });
+                if (computercategoryList != null && !computercategoryList.isEmpty()) {
+                        return computercategoryList;
+                }
+                return null;
+        }
 	
 	
 	
@@ -73,32 +141,8 @@ public class ComputercategoryDaoImpl extends HibernateDaoSupport implements Comp
 
 //  根据实体id查询实体full	
 	@Override
-	public List<ComputercategoryFull>  selectComputercategoryFullByConditionAndPage(String conditionSql,final Page page) {
-		final String  sql = basicFullSql +" where" +conditionSql;
-		List<ComputercategoryFull> computercategoryList = getHibernateTemplate()
-				.executeFind(new HibernateCallback() {
-					public Object doInHibernate(Session session)
-							throws HibernateException {
-							
-							//Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(YaomingFull.class));  
-						Query query = session.createSQLQuery(sql);
-						query.setFirstResult(page.getStartNum());
-						query.setMaxResults(page.getPageSize());
-						query.setResultTransformer(new EscColumnToBean(
-								ComputercategoryFull.class));
-						return query.list();
-					}
-				});
-		if (computercategoryList != null && !computercategoryList.isEmpty()) {
-			return computercategoryList;
-		}
-		return null;
-	}
-	
-//  根据实体id查询实体full	
-	@Override
 	public ComputercategoryFull selectComputercategoryFullById(Integer computercategoryId) {
-		final String  sql = "select a.id as computercategoryid, a.parentcomputercategoryid as computercategoryparentcomputercategoryid, a.name as computercategoryname, a.createtime as computercategorycreatetime, a.createuserid as computercategorycreateuserid, a.status as computercategorystatus, b.id as parentcomputercategoryid, b.parentcomputercategoryid as parentcomputercategoryparentcomputercategoryid, b.name as parentcomputercategoryname, b.createtime as parentcomputercategorycreatetime, b.createuserid as parentcomputercategorycreateuserid, b.status as parentcomputercategorystatus from Computercategory a  left join Computercategory b on a.parentcomputercategoryid=b.id " + "where a.id = "+computercategoryId;
+		final String  sql =  basicComputercategoryFullSql + " where a.id = "+computercategoryId;
 		
 		List<ComputercategoryFull> computercategoryList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
@@ -121,7 +165,7 @@ public class ComputercategoryDaoImpl extends HibernateDaoSupport implements Comp
 //	查询全部实体full
 	@Override
 	public List<ComputercategoryFull> selectComputercategoryFullAll() {
-		final String  sql = "select a.id as computercategoryid, a.parentcomputercategoryid as computercategoryparentcomputercategoryid, a.name as computercategoryname, a.createtime as computercategorycreatetime, a.createuserid as computercategorycreateuserid, a.status as computercategorystatus, b.id as parentcomputercategoryid, b.parentcomputercategoryid as parentcomputercategoryparentcomputercategoryid, b.name as parentcomputercategoryname, b.createtime as parentcomputercategorycreatetime, b.createuserid as parentcomputercategorycreateuserid, b.status as parentcomputercategorystatus from Computercategory a  left join Computercategory b on a.parentcomputercategoryid=b.id ";
+		final String  sql = basicComputercategoryFullSql;
 		
 		List<ComputercategoryFull> computercategoryFullList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
@@ -140,7 +184,7 @@ public class ComputercategoryDaoImpl extends HibernateDaoSupport implements Comp
 	}
 //  分页查询 实体full
 	public List<ComputercategoryFull> selectComputercategoryFullByPage(final Page page){
-		final String  sql = "select a.id as computercategoryid, a.parentcomputercategoryid as computercategoryparentcomputercategoryid, a.name as computercategoryname, a.createtime as computercategorycreatetime, a.createuserid as computercategorycreateuserid, a.status as computercategorystatus, b.id as parentcomputercategoryid, b.parentcomputercategoryid as parentcomputercategoryparentcomputercategoryid, b.name as parentcomputercategoryname, b.createtime as parentcomputercategorycreatetime, b.createuserid as parentcomputercategorycreateuserid, b.status as parentcomputercategorystatus from Computercategory a  left join Computercategory b on a.parentcomputercategoryid=b.id ";
+		final String  sql = basicComputercategoryFullSql;
 		
 		List<ComputercategoryFull> computercategoryFullList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
@@ -159,31 +203,6 @@ public class ComputercategoryDaoImpl extends HibernateDaoSupport implements Comp
 		}
 		return null;
 	}
-	
-	
-//	
-//	
-////	查询所有的父级分类
-//	@Override
-//	public List<ComputercategoryFull> selectParentComputercategoryAll() {
-//		final String  sql = "from Computercategory"
-//		
-//		List<ComputercategoryFull> computercategoryFullList = getHibernateTemplate()
-//				.executeFind(new HibernateCallback() {
-//					public Object doInHibernate(Session session)
-//							throws HibernateException {
-//						Query query = session.createSQLQuery(sql);
-//						query.setResultTransformer(new EscColumnToBean(
-//								ComputercategoryFull.class));
-//						return query.list();
-//					}
-//				});
-//		if (computercategoryFullList != null && !computercategoryFullList.isEmpty()) {			
-//			return computercategoryFullList;
-//		}
-//		return null;
-//	}
-	
 	
 //  根据关联查询实体full
 

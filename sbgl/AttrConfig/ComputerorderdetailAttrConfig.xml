@@ -1,5 +1,6 @@
 
     ManyToOne;attrName=computerorderid ;colName=computerorderid;class=Computerorder;
+    ManyToOne;attrName=computermodelid ;colName=computermodelid;class=Computermodel;
     ManyToOne;attrName=computerid ;colName=computerid;class=Computer;
 //如果有多对一，则配置
 //OneToMany;attrName= ;colName=;class=;

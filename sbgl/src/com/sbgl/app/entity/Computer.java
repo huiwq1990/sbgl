@@ -13,6 +13,8 @@ public class Computer extends com.sbgl.app.dao.DaoAbs implements
 
 	private Integer id;
 	private String serialnumber;
+	private Integer computertype;
+	private String languagetype;
 	private Integer computermodelid;
 	private Date createtime;
 	private Integer createuserid;
@@ -31,11 +33,13 @@ public class Computer extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Computer(Integer id, String serialnumber, Integer computermodelid,
-			Date createtime, Integer createuserid, Integer status,
-			String remark) {
+	public Computer(Integer id, String serialnumber, Integer computertype,
+			String languagetype, Integer computermodelid, Date createtime,
+			Integer createuserid, Integer status, String remark) {
 		this.id = id;
 		this.serialnumber = serialnumber;
+		this.computertype = computertype;
+		this.languagetype = languagetype;
 		this.computermodelid = computermodelid;
 		this.createtime = createtime;
 		this.createuserid = createuserid;
@@ -59,6 +63,22 @@ public class Computer extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setSerialnumber(String serialnumber) {
 		this.serialnumber = serialnumber;
+	}
+
+	public Integer getComputertype() {
+		return this.computertype;
+	}
+
+	public void setComputertype(Integer computertype) {
+		this.computertype = computertype;
+	}
+
+	public String getLanguagetype() {
+		return this.languagetype;
+	}
+
+	public void setLanguagetype(String languagetype) {
+		this.languagetype = languagetype;
 	}
 
 	public Integer getComputermodelid() {

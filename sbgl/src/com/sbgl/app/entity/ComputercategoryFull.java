@@ -7,12 +7,16 @@ import java.util.Date;
 
 public class ComputercategoryFull extends DaoAbs implements java.io.Serializable {
 			private Integer computercategoryid;
+			private Integer computercategorycomputercategorytype;
+			private String computercategorylanguagetype;
 			private Integer computercategoryparentcomputercategoryid;
 			private String computercategoryname;
 			private Date computercategorycreatetime;
 			private Integer computercategorycreateuserid;
 			private Integer computercategorystatus;
 			private Integer parentcomputercategoryid;
+			private Integer parentcomputercategorycomputercategorytype;
+			private String parentcomputercategorylanguagetype;
 			private Integer parentcomputercategoryparentcomputercategoryid;
 			private String parentcomputercategoryname;
 			private Date parentcomputercategorycreatetime;
@@ -26,6 +30,18 @@ public class ComputercategoryFull extends DaoAbs implements java.io.Serializable
 		}
 		public Integer getComputercategoryid(){		
 			return this.computercategoryid;
+		}
+			public void setComputercategorycomputercategorytype(Integer computercategorycomputercategorytype){		
+			this.computercategorycomputercategorytype = computercategorycomputercategorytype;
+		}
+		public Integer getComputercategorycomputercategorytype(){		
+			return this.computercategorycomputercategorytype;
+		}
+			public void setComputercategorylanguagetype(String computercategorylanguagetype){		
+			this.computercategorylanguagetype = computercategorylanguagetype;
+		}
+		public String getComputercategorylanguagetype(){		
+			return this.computercategorylanguagetype;
 		}
 			public void setComputercategoryparentcomputercategoryid(Integer computercategoryparentcomputercategoryid){		
 			this.computercategoryparentcomputercategoryid = computercategoryparentcomputercategoryid;
@@ -62,6 +78,18 @@ public class ComputercategoryFull extends DaoAbs implements java.io.Serializable
 		}
 		public Integer getParentcomputercategoryid(){		
 			return this.parentcomputercategoryid;
+		}
+			public void setParentcomputercategorycomputercategorytype(Integer parentcomputercategorycomputercategorytype){		
+			this.parentcomputercategorycomputercategorytype = parentcomputercategorycomputercategorytype;
+		}
+		public Integer getParentcomputercategorycomputercategorytype(){		
+			return this.parentcomputercategorycomputercategorytype;
+		}
+			public void setParentcomputercategorylanguagetype(String parentcomputercategorylanguagetype){		
+			this.parentcomputercategorylanguagetype = parentcomputercategorylanguagetype;
+		}
+		public String getParentcomputercategorylanguagetype(){		
+			return this.parentcomputercategorylanguagetype;
 		}
 			public void setParentcomputercategoryparentcomputercategoryid(Integer parentcomputercategoryparentcomputercategoryid){		
 			this.parentcomputercategoryparentcomputercategoryid = parentcomputercategoryparentcomputercategoryid;

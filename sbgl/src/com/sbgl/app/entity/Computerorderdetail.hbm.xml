@@ -13,11 +13,11 @@
         <property name="computerorderid" type="java.lang.Integer">
             <column name="computerorderid" />
         </property>
-        <property name="computerid" type="java.lang.Integer">
-            <column name="computerid" />
+        <property name="computermodelid" type="java.lang.Integer">
+            <column name="computermodelid" />
         </property>
-        <property name="computernumber" type="java.lang.Integer">
-            <column name="computernumber" />
+        <property name="borrownumber" type="java.lang.Integer">
+            <column name="borrownumber" />
         </property>
         <property name="createtime" type="java.util.Date">
             <column name="createtime"  />
@@ -27,6 +27,9 @@
         </property>
         <property name="borrowperiod" type="java.lang.Integer">
             <column name="borrowperiod" />
+        </property>
+        <property name="computerid" type="java.lang.String">
+            <column name="computerid" length="1000" />
         </property>
         <property name="status" type="java.lang.Integer">
             <column name="status" />
