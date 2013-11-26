@@ -18,144 +18,6 @@
 <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
 <![endif]-->
 
-<!--
-<script>
-	var classData = {};  //全部分类信息
-	var alterClassId;    //修改分类的id
-	var alterClassName;  //修改分类的name
-	var parentId;        //父分类id
-	var classSum;        //分类个数
-	var idsForDel = "";  //用于删除的id串
-	//var _obj;            //select2全局对象
-	var cookie = { 
-  		//读取COOKIES,n为COOKIE名 
-   		Get:function(n){ 
-       		var re=new RegExp(n+'=([^;]*);?','gi');
-       	    var r=re.exec(document.cookie)||[];
-       	    return (r.length>1?r[1]:null)
-   		}
-	};
-</script>
-<script>
-	/*********************************************************************************
-	 *
-	 *修改分类信息
-	 *
-	 ********************************************************************************/
-	function modifyClass(id, pId, name, pName) {
-		alterClassId = id;
-		alterClassName = name;
-		parentId = pId;
-		
-		if(pId == 0) {
-			$("#modifyFaCategoryId").attr("disabled", true);
-		} else {
-			$("#modifyFaCategoryId").attr("disabled", false);
-		}
-		
-		$("#modifyFaCategoryId").select2("val", pId);
-		
-		$("#modifyCategoryName").val(name);
-		
-	}
-	
-	
-	function alterClass() {
-		//$("#modifyFaCategoryId").empty();
-		var newClassName = $("#modifyCategoryName").val() == "" ? alterClassName : $("#modifyCategoryName").val();
-		var parentClassId = $("#modifyFaCategoryId").val();
-		var userId=cookie.Get("id");
-		
-		if(alterClassName == newClassName && parentClassId == parentId) {
-			alert("并未做修改！");
-		} else {
-			var postData = {
-    			"equipClassforAltert.name": newClassName,
-    			"equipClassforAltert.classificationid": alterClassId,
-    			"equipClassforAltert.parentid": parentClassId,
-    			"equipClassforAltert.userid": userId
-    		};
-    		
-    		jQuery.ajax({  
-    		    url: "${webbaseurl}/alterClassification.do",  
-    		    type: "post",
-    		    data: postData,
-    		    success:function(data,textStatus,jq) {  
-    		    	console.log(data);
-    	        },  
-    		    error:function(data,textStatus,jq) {
-    				alert("修改分类失败！");
-    			}  
-    		});
-		}
-	}
-	
-	function undoAlterClass() {
-		//$("#modifyFaCategoryId").empty();
-	}
-	
-	/*********************************************************************************
-	 *
-	 *添加分类信息
-	 *
-	 ********************************************************************************/
-	 function addClass() {
-	 	var className = $("#inputCategoryName").val();
-		var pId = $("#inputFaCategoryId").val();
-		var userId = cookie.Get("id");
-		
-		if(className != "") {
-			var postData = {
-				"equipClassforAdd.parentid": pId,
-				"equipClassforAdd.name": className,
-				"equipClassforAdd.userid": userId
-			}
-			
-			jQuery.ajax({  
-			    url: "${webbaseurl}/addClassification.do",  
-			    type: "post",
-			    data: postData,
-			    success:function(data,textStatus,jq){  
-			    	console.log(data);
-				if(data.tag == "0") {
-				    var n = noty({text: data.msg, timeout: 2500, type: 'success'});
-				    $('.modal').modal('toggle');
-				} else {
-				    alert(data.message);
-				}
-		        },  
-			    error:function(data,textStatus,jq){
-			        var n = noty({text: data.msg, timeout: 2500, type: 'error'});
-			    }  
-			});
-		} else {
-			alert("分类名称不能为空！");
-		}
-	 }
-	 
-	 /*********************************************************************************
-	 *
-	 *删除分类信息
-	 *
-	 ********************************************************************************/
-	 function delClass() {
-	 	//alert(idsForDel);
-		var postData = {
-			classIds: idsForDel
-		}
-			
-		jQuery.ajax({  
-		    url: "${webbaseurl}/deleteClassifications.do",  
-		    type: "post",
-		    data: postData,
-		    success:function(data,textStatus,jq){  
-		    	console.log(data);
-	        },  
-		    error:function(data,textStatus,jq){alert("删除分类失败！");}  
-		});
-	 }
-</script>
--->
 </head>
 
 <body id="admin">
@@ -223,7 +85,7 @@
               <div class="title pull-left">分类管理</div>
               <div class="tips">在此页面下你可以添加新的设备分类，也可以管理现有设备分类。……</div>
               <div class="operate-item pull-left">
-                <a href="#add-equip-category" class="btn btn-primary" data-toggle="modal" role="button">添加分类</a>
+                <a href="#add-equip-category" class="btn btn-primary" action-type="clearInput" data-toggle="modal" role="button">添加分类</a>
                 <a href="#" class="btn btn-white s-h" action-type="delClass"><i class="icon-trash"></i> 删除</a>
               </div>
 
@@ -383,6 +245,7 @@
 	var parentId;        //父分类id
 	var classSum;        //分类个数
 	var idsForDel = "";  //用于删除的id串
+	var needDisableIds = [];  //用于记录已是一级分类的id，不能再将此分类添加父分类
 	//var _obj;            //select2全局对象
 	var cookie = { 
 		//读取COOKIES,n为COOKIE名 
@@ -410,6 +273,12 @@
 		
 	});
 	*/
+	
+	$("body").on("click", "a[action-type|=clearInput]", function() {
+		$("#inputFaCategoryId").select2("val", 0);
+		$("#inputCategoryName").val("");
+	});
+	
 	$("body").on("click", "input[type='checkbox']", function() {
 		var num = 0;
 		if($(this).attr("id") === "chk-all") {
@@ -465,6 +334,7 @@
     			
     		} else {
     			alert("分类名称不能为空！");
+				return;
     		}
 	    }
 	    
@@ -475,6 +345,7 @@
     		
     		if(alterClassName == newClassName && parentClassId == parentId) {
     			alert("并未做修改！");
+				return;
     		} else {
     			postData = {
         			"equipClassforAltert.name": newClassName,
@@ -494,12 +365,13 @@
 		    	console.log(data);
     			if(data.tag == "0") {
     			    var n = noty({text: data.msg, timeout: 2500, type: 'success'});
+					updateParentClass(data.pClass);  //刷新一级分类
     			    _this.parents('.modal').modal('toggle');
 					//刷新界面数据
 					jQuery.ajax({
 						url: "${webbaseurl}/flushClassification.do",  
 		    			type: "post",
-						success: function(data,textStatus,jq) { 
+						success: function(data,textStatus,jq) {
 							$("#admin-wrap").html(data);
 						},
 						error: function(data,textStatus,jq) {
@@ -521,15 +393,17 @@
 		
 		alterClassId = myData.id;
 		alterClassName = myData.name;
-		parentId = myData.pId;
+		parentId = myData.pid;
 		
-		if(myData.pId == 0) {
+		console.log(parentId);
+		
+		if(myData.pid == 0) {
 			$("#modifyFaCategoryId").attr("disabled", true);
 		} else {
 			$("#modifyFaCategoryId").attr("disabled", false);
 		}
 		
-		$("#modifyFaCategoryId").select2("val", myData.pId);
+		$("#modifyFaCategoryId").select2("val", myData.pid);
 		
 		$("#modifyCategoryName").val(myData.name);
 	})
@@ -546,6 +420,7 @@
 		    success:function(data,textStatus,jq){ 
 		    	console.log(data);
 				if(data.tag == "0") {
+					updateParentClass(data.pClass);
 					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
 					$(this).parents('.modal').modal('toggle');
 				
@@ -553,7 +428,7 @@
 					jQuery.ajax({
 						url: "${webbaseurl}/flushClassification.do",  
 		    			type: "post",
-						success: function(data,textStatus,jq) { 
+						success: function(data,textStatus,jq) {
 							$("#admin-wrap").html(data);
 						},
 						error: function(data,textStatus,jq) {
@@ -570,6 +445,23 @@
 			}  
 		});
 	})
+	
+	function updateParentClass(pClass) {
+		needDisableIds = [];
+		$("#inputFaCategoryId").empty();
+		$("#modifyFaCategoryId").empty();
+		
+		$("#inputFaCategoryId").append("<option value=0>无</option>");
+		$.each(pClass,function(index,value){
+			needDisableIds.push(value.pId);
+          	$("#inputFaCategoryId")[0].options.add(new Option(value.pName,value.pId,false,false)); 
+        });
+		
+		$("#modifyFaCategoryId").append("<option value=0>无</option>");
+		$.each(pClass,function(index,value){
+          	$("#modifyFaCategoryId")[0].options.add(new Option(value.pName,value.pId,false,false)); 
+        });
+	}
 </script>
 </body>
 </html>

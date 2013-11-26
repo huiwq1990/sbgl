@@ -24,6 +24,8 @@ import com.sbgl.app.entity.Equipmentdetail;
 import com.sbgl.app.services.equipment.EquipService;
 import com.sbgl.util.Page;
 
+import net.sf.json.JSONArray;
+
 @Scope("prototype") 
 @Controller("EquipmentAction")
 public class EquipmentAction extends ActionSupport implements SessionAware {
@@ -81,6 +83,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		if( returnCode != -1 ) {
 			this.tag = "0";
 			this.message = "分类保存成功！";
+			gotoEquipManageClassfiction();  //获取最新一集分类信息返回页面
 		} else {
 			this.tag = "1";
 			this.message = "分类保存失败！";
@@ -88,6 +91,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		}
 		returnJSON.put("tag", tag);
 		returnJSON.put("msg", message);
+		returnJSON.put("pClass", JSONArray.fromObject(allParent));
 		
 		return SUCCESS;
 	}
@@ -109,6 +113,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		long returnCode = equipService.alterEquipmentclassification( equipClassforAltert );
 		if( returnCode != -1) {
 			this.tag = "0";
+			gotoEquipManageClassfiction();  //获取最新一集分类信息返回页面
 			this.message = "分类修改成功！";
 		} else {
 			this.tag = "1";
@@ -117,6 +122,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		}
 		returnJSON.put("tag", tag);
 		returnJSON.put("msg", message);
+		returnJSON.put("pClass", JSONArray.fromObject(allParent));
 		return SUCCESS;
 	}
 	/**
@@ -290,12 +296,14 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				this.message = "分类删除失败！";
 				break;
 			} else {
+				gotoEquipManageClassfiction();  //获取最新一集分类信息返回页面
 				this.message = "分类删除成功！";
 				this.tag = "0";
 			}
 		}
 		returnJSON.put("tag", tag);
 		returnJSON.put("msg", message);
+		returnJSON.put("pClass", JSONArray.fromObject(allParent));
 		return SUCCESS;
 	}
 
@@ -777,7 +785,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 
 	
 	public String gotoEquipManageClassfiction() {
-		
+		allParent.clear();
 		List<Equipmentclassification> equipList =  equipService.getAllEquipmentclassifications();
 		
 		if(equipList != null) {

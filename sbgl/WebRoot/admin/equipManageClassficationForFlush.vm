@@ -4,7 +4,7 @@
       <div class="title pull-left">分类管理</div>
       <div class="tips">在此页面下你可以添加新的设备分类，也可以管理现有设备分类。……</div>
       <div class="operate-item pull-left">
-        <a href="#add-equip-category" class="btn btn-primary" data-toggle="modal" role="button">添加分类</a>
+        <a href="#add-equip-category" class="btn btn-primary" data-toggle="modal" action-type="clearInput" role="button">添加分类</a>
         <a href="#" class="btn btn-white s-h" action-type="delClass"><i class="icon-trash"></i> 删除</a>
       </div>
 
@@ -54,3 +54,5 @@
 
     </div>
   </div>
+	
+  
