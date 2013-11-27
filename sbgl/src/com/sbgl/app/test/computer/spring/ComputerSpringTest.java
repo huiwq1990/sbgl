@@ -24,6 +24,7 @@ public class ComputerSpringTest {
 
 	public static void main(String[] args) {
 //		intTable();
+//iniDouble();
 //		addComputer();
 //		selectComputerAll();
 //		deleteComputer();
@@ -65,10 +66,62 @@ public class ComputerSpringTest {
 				obj = Computer.class.newInstance();
 
 				String[] datas = dataList.get(i).split(",");
-				Method method = null;
 				
-				 
-													if(!datas[0].trim().equals("")){
+				
+				computerService.addComputer(getObj(attrs,dataList.get(i)));
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public static void iniDouble(){
+		ApplicationContext cxt = new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
+
+		ComputerService computerService = (ComputerService) cxt.getBean("computerService");
+		CommonService commonService = (CommonService) cxt.getBean("commonService");
+		// 将计数器置1
+		commonService.iniCode("Computer");
+		commonService.iniCode("Computertype");
+		// 删除
+		List<Computer> computerList = computerService.selectComputerAll();
+		if (computerList != null) {
+			for (int i = 0; i < computerList.size(); i++) {
+				computerService.deleteComputer(computerList.get(i).getId());
+			}
+		}
+		
+		
+		try {
+			
+			List<String> dataList = new ArrayList<String>();
+			File f = new File( "D:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computer");
+			dataList = FileUtils.readLines(f);
+			String[] attrs = dataList.get(0).split(",");
+			for(int i=1; i < dataList.size();i=i+2){
+				
+				Computer ch =	getObj(attrs,dataList.get(i));
+				Computer en =	getObj(attrs,dataList.get(i+1));
+								
+				computerService.addComputer(ch,en);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	}
+	
+	public static Computer getObj(String[] attrs,String str) throws Exception{
+		HashMap<String, Method> map = ReflectUtil.ConverBean(Computer.class);
+		
+		Object obj =  Computer.class.newInstance();
+		String[] datas = str.split(",");
+		Method method = null;
+		
+											if(!datas[0].trim().equals("")){
 					 method = map.get(attrs[0]);
 																method.invoke(obj,Integer.valueOf(datas[0].trim()));
  										}
@@ -85,8 +138,8 @@ public class ComputerSpringTest {
 					
 									if(!datas[3].trim().equals("")){
 					 method = map.get(attrs[3]);
-																method.invoke(obj,DateUtil.parseDate(datas[3].trim()));  
-										}
+																method.invoke(obj,String.valueOf(datas[3].trim()));
+ 										}
 					
 									if(!datas[4].trim().equals("")){
 					 method = map.get(attrs[4]);
@@ -95,21 +148,27 @@ public class ComputerSpringTest {
 					
 									if(!datas[5].trim().equals("")){
 					 method = map.get(attrs[5]);
-																method.invoke(obj,Integer.valueOf(datas[5].trim()));
- 										}
+																method.invoke(obj,DateUtil.parseDate(datas[5].trim()));  
+										}
 					
 									if(!datas[6].trim().equals("")){
 					 method = map.get(attrs[6]);
-																method.invoke(obj,String.valueOf(datas[6].trim()));
+																method.invoke(obj,Integer.valueOf(datas[6].trim()));
+ 										}
+					
+									if(!datas[7].trim().equals("")){
+					 method = map.get(attrs[7]);
+																method.invoke(obj,Integer.valueOf(datas[7].trim()));
+ 										}
+					
+									if(!datas[8].trim().equals("")){
+					 method = map.get(attrs[8]);
+																method.invoke(obj,String.valueOf(datas[8].trim()));
  										}
 					
 								
-				computerService.addComputer((Computer)obj);
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		return (Computer)obj;		
+		
 	}
 	
 	public static void addComputer(){

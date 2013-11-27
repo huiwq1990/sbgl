@@ -23,33 +23,17 @@ import com.sbgl.app.services.common.*;
 public class ComputercategorySpringTest {
 
 	public static void main(String[] args) {
-//		intTable();
+		iniDouble();
 //		addComputercategory();
 //		selectComputercategoryAll();
-		deleteComputercategory(5);
+//		deleteComputercategory();
 		
 //		updateComputercategory();
 //		selectComputercategoryById(1L);
 //		selectComputercategoryFullById(1L);
 //      selectComputercategoryFullAll();
 
-		
-//		selectParentComputercategory();
 	}
-	
-	public static void selectParentComputercategory(){
-
-		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
-		
-		ComputercategoryService computercategoryService = (ComputercategoryService)cxt.getBean("computercategoryService");
-	
-		List<Computercategory> parentcomputercategoryList =computercategoryService.selectParentComputercategory();
-		for(int i = 0; i < parentcomputercategoryList.size(); i++){
-			System.out.println("id="+parentcomputercategoryList.get(i).getName());
-		}
-	}
-	
-	
 	
 	
 //初始化数据库 将数据库中数据删除 添加新的数据
@@ -81,10 +65,63 @@ public class ComputercategorySpringTest {
 				obj = Computercategory.class.newInstance();
 
 				String[] datas = dataList.get(i).split(",");
-				Method method = null;
 				
-				 
-													if(!datas[0].trim().equals("")){
+				
+				computercategoryService.addComputercategory(getObj(attrs,dataList.get(i)));
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public static void iniDouble(){
+		ApplicationContext cxt = new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
+
+		ComputercategoryService computercategoryService = (ComputercategoryService) cxt.getBean("computercategoryService");
+		CommonService commonService = (CommonService) cxt.getBean("commonService");
+		// 将计数器置1
+		commonService.iniCode("Computercategory");
+		commonService.iniCode("Computercategorytype");
+		// 删除
+		List<Computercategory> computercategoryList = computercategoryService.selectComputercategoryAll();
+		if (computercategoryList != null) {
+			for (int i = 0; i < computercategoryList.size(); i++) {
+				computercategoryService.deleteComputercategory(computercategoryList.get(i).getId());
+			}
+		}
+		
+		
+		try {
+			
+			List<String> dataList = new ArrayList<String>();
+			File f = new File( "D:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computercategory");
+			dataList = FileUtils.readLines(f);
+			String[] attrs = dataList.get(0).split(",");
+			for(int i=1; i < dataList.size();i=i+2){
+				
+				Computercategory ch =	getObj(attrs,dataList.get(i));
+				Computercategory en =	getObj(attrs,dataList.get(i+1));
+								
+//				System.out.println(ch.getLanguagetype());
+				computercategoryService.addComputercategory(ch,en);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	}
+	
+	public static Computercategory getObj(String[] attrs,String str) throws Exception{
+		HashMap<String, Method> map = ReflectUtil.ConverBean(Computercategory.class);
+		
+		Object obj =  Computercategory.class.newInstance();
+		String[] datas = str.split(",");
+		Method method = null;
+		
+											if(!datas[0].trim().equals("")){
 					 method = map.get(attrs[0]);
 																method.invoke(obj,Integer.valueOf(datas[0].trim()));
  										}
@@ -101,26 +138,32 @@ public class ComputercategorySpringTest {
 					
 									if(!datas[3].trim().equals("")){
 					 method = map.get(attrs[3]);
-																method.invoke(obj,DateUtil.parseDate(datas[3].trim()));  
-										}
+																method.invoke(obj,Integer.valueOf(datas[3].trim()));
+ 										}
 					
 									if(!datas[4].trim().equals("")){
 					 method = map.get(attrs[4]);
-																method.invoke(obj,Integer.valueOf(datas[4].trim()));
+																method.invoke(obj,String.valueOf(datas[4].trim()));
  										}
 					
 									if(!datas[5].trim().equals("")){
 					 method = map.get(attrs[5]);
-																method.invoke(obj,Integer.valueOf(datas[5].trim()));
+																method.invoke(obj,DateUtil.parseDate(datas[5].trim()));  
+										}
+					
+									if(!datas[6].trim().equals("")){
+					 method = map.get(attrs[6]);
+																method.invoke(obj,Integer.valueOf(datas[6].trim()));
+ 										}
+					
+									if(!datas[7].trim().equals("")){
+					 method = map.get(attrs[7]);
+																method.invoke(obj,Integer.valueOf(datas[7].trim()));
  										}
 					
 								
-				computercategoryService.addComputercategory((Computercategory)obj);
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		return (Computercategory)obj;		
+		
 	}
 	
 	public static void addComputercategory(){

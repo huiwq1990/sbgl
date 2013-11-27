@@ -24,6 +24,7 @@ public class ComputerorderdetailSpringTest {
 
 	public static void main(String[] args) {
 		intTable();
+//iniDouble();
 //		addComputerorderdetail();
 //		selectComputerorderdetailAll();
 //		deleteComputerorderdetail();
@@ -55,20 +56,68 @@ public class ComputerorderdetailSpringTest {
 
 
 		try {
-			HashMap<String, Method> map = ReflectUtil.ConverBean(Computerorderdetail.class);
-			Object obj;
+			
+		
 			List<String> dataList = new ArrayList<String>();
 			File f = new File( "D:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computerorderdetail");
 			dataList = FileUtils.readLines(f);
 			String[] attrs = dataList.get(0).split(",");
 			for(int i=1; i < dataList.size();i++){
-				obj = Computerorderdetail.class.newInstance();
+			
+				computerorderdetailService.addComputerorderdetail(getObj(attrs,dataList.get(i)));
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public static void iniDouble(){
+		ApplicationContext cxt = new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
 
-				String[] datas = dataList.get(i).split(",");
-				Method method = null;
+		ComputerorderdetailService computerorderdetailService = (ComputerorderdetailService) cxt.getBean("computerorderdetailService");
+		CommonService commonService = (CommonService) cxt.getBean("commonService");
+		// 将计数器置1
+		commonService.iniCode("Computerorderdetail");
+		commonService.iniCode("Computerorderdetailtype");
+		// 删除
+		List<Computerorderdetail> computerorderdetailList = computerorderdetailService.selectComputerorderdetailAll();
+		if (computerorderdetailList != null) {
+			for (int i = 0; i < computerorderdetailList.size(); i++) {
+				computerorderdetailService.deleteComputerorderdetail(computerorderdetailList.get(i).getId());
+			}
+		}
+		
+		
+		try {
+			
+			List<String> dataList = new ArrayList<String>();
+			File f = new File( "D:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computerorderdetail");
+			dataList = FileUtils.readLines(f);
+			String[] attrs = dataList.get(0).split(",");
+			for(int i=1; i < dataList.size();i=i+2){
 				
-				 
-													if(!datas[0].trim().equals("")){
+				Computerorderdetail ch =	getObj(attrs,dataList.get(i));
+				Computerorderdetail en =	getObj(attrs,dataList.get(i+1));
+								
+//				computerorderdetailService.addComputerorderdetail(ch,en);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	}
+	
+	public static Computerorderdetail getObj(String[] attrs,String str) throws Exception{
+		HashMap<String, Method> map = ReflectUtil.ConverBean(Computerorderdetail.class);
+		
+		Object obj =  Computerorderdetail.class.newInstance();
+		String[] datas = str.split(",");
+		Method method = null;
+		
+											if(!datas[0].trim().equals("")){
 					 method = map.get(attrs[0]);
 																method.invoke(obj,Integer.valueOf(datas[0].trim()));
  										}
@@ -105,16 +154,17 @@ public class ComputerorderdetailSpringTest {
 					
 									if(!datas[7].trim().equals("")){
 					 method = map.get(attrs[7]);
-																method.invoke(obj,Integer.valueOf(datas[7].trim()));
+																method.invoke(obj,String.valueOf(datas[7].trim()));
+ 										}
+					
+									if(!datas[8].trim().equals("")){
+					 method = map.get(attrs[8]);
+																method.invoke(obj,Integer.valueOf(datas[8].trim()));
  										}
 					
 								
-				computerorderdetailService.addComputerorderdetail((Computerorderdetail)obj);
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		return (Computerorderdetail)obj;		
+		
 	}
 	
 	public static void addComputerorderdetail(){

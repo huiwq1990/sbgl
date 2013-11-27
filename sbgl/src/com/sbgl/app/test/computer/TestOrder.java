@@ -28,10 +28,10 @@ public class TestOrder {
 		int computerorderTotalOrderDay = 14;
 		int computerorderTotalOrderPeriod = 3;
 		
-		//去得当前库存数量
+		//取得当前库存数量
 		List<Computermodel> modelList = computermodelService.selectComputermodelAll();
 		for (int i = 0; i < modelList.size(); i++) {
-			System.out.println("id=" + modelList.get(i).getId() + "  "
+			System.out.println("当前可借数量id=" + modelList.get(i).getId() + "  "
 					+ modelList.get(i).getAvailableborrowcountnumber());
 		}
 		
@@ -41,10 +41,19 @@ public class TestOrder {
 			Integer[][] pcnumberArray = new Integer[computerorderTotalOrderPeriod][computerorderTotalOrderDay];
 			for(int tempperiod=0; tempperiod < computerorderTotalOrderPeriod; tempperiod++){
 				for(int tempday=0; tempday < computerorderTotalOrderDay; tempday++){				
-					pcnumberArray[tempperiod][tempday] = modelList.get(tempmodel).getComputercount();
+					pcnumberArray[tempperiod][tempday] = modelList.get(tempmodel).getAvailableborrowcountnumber();
 				}				
 			}
-			availableBorrowModelMap.put(modelList.get(tempmodel).getId(), pcnumberArray);
+			availableBorrowModelMap.put(modelList.get(tempmodel).getComputermodeltype(), pcnumberArray);
+		}
+		
+		
+		Integer[][] pcnumberArray = availableBorrowModelMap.get(1);
+		for(int tempperiod=0; tempperiod < computerorderTotalOrderPeriod; tempperiod++){
+			for(int tempday=0; tempday < computerorderTotalOrderDay; tempday++){				
+				System.out.print(pcnumberArray[tempperiod][tempday] + " ");
+			}	
+			System.out.println();
 		}
 		
 			
@@ -52,8 +61,10 @@ public class TestOrder {
 		String currentDay = "2013-10-02 00:00:00";
 		int currentPeriod = 2;
 //		查询当前时间之后，预约的清单
+		System.out.println("预约订单：");
 		ComputerorderdetailService computerorderdetailService = (ComputerorderdetailService)cxt.getBean("computerorderdetailService");
 		List<Computerorderdetail> computerorderdetailList  = computerorderdetailService.selectComputerorderdetailAfterNow(currentDay, currentPeriod);
+		System.out.println(computerorderdetailList.size());
 		for(int i = 0; i <computerorderdetailList.size(); i++){
 			System.out.println("id="+computerorderdetailList.get(i).getId() + "  " +computerorderdetailList.get(i).getComputermodelid());
 		}
@@ -61,7 +72,8 @@ public class TestOrder {
 		//根据预约清单计算当前可借数量			
 		for(Computerorderdetail od : computerorderdetailList){
 				int between = DateUtil.daysBetween(DateUtil.parseDate(currentDay),od.getBorrowday());
-				availableBorrowModelMap.get(od.getComputerid())[od.getBorrowperiod()][between]  -= od.getBorrownumber();
+				System.out.println(od.getId());
+				availableBorrowModelMap.get(od.getComputermodelid())[od.getBorrowperiod()][between]  -= od.getBorrownumber();
 
 		}
 
@@ -72,7 +84,7 @@ public class TestOrder {
 			for(int tempperiod=0; tempperiod < computerorderTotalOrderPeriod; tempperiod++){
 					for(int tempday=0; tempday < computerorderTotalOrderDay; tempday++){	
 //						System.out.println(tempperiod+"  "+tempday);
-						System.out.print(availableBorrowModelMap.get(modelList.get(tempmodel).getId())[tempperiod][tempday] + "   ");
+						System.out.print(availableBorrowModelMap.get(modelList.get(tempmodel).getComputermodeltype())[tempperiod][tempday] + "   ");
 					}			
 					System.out.println();
 				}

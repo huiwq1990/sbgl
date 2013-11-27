@@ -34,19 +34,13 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
 	public List<Computermodel> selectComputermodelByCondition(String condition) {
 		final String  sql = basicComputermodelSql +" " + condition;
 		
-		List<Computermodel> computermodelList = getHibernateTemplate()
-				.executeFind(new HibernateCallback() {
-					public Object doInHibernate(Session session)
-							throws HibernateException {
-							
-							//Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(YaomingFull.class));  
-						Query query = session.createSQLQuery(sql);
-						query.setResultTransformer(new EscColumnToBean(
-								Computermodel.class));
-						return query.list();
-					}
-				});		
-		return null;
+		try {
+             List l = this.getHibernateTemplate().find(sql);
+			 return l;
+        } catch (RuntimeException re) {
+            log.error("失败", re);
+            throw re;
+        }
 	}
 	
 	
@@ -54,24 +48,16 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
         @Override
         public List<Computermodel>  selectComputermodelByConditionAndPage(String conditionSql,final Page page) {
                 final String  sql = basicComputermodelSql  +conditionSql;
-                List<Computermodel> computermodelList = getHibernateTemplate()
-                                .executeFind(new HibernateCallback() {
-                                        public Object doInHibernate(Session session)
-                                                        throws HibernateException {
-                                                        
-                                                        //Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(YaomingFull.class));  
-                                                Query query = session.createSQLQuery(sql);
-                                                query.setFirstResult(page.getStartNum());
-                                                query.setMaxResults(page.getPageSize());
-                                                query.setResultTransformer(new EscColumnToBean(
-                                                                Computermodel.class));
-                                                return query.list();
-                                        }
-                                });
-                if (computermodelList != null && !computermodelList.isEmpty()) {
-                        return computermodelList;
-                }
-                return null;
+              try {
+	        
+	         Query q = this.getSession().createQuery(sql).setFirstResult(page.getPageNo()).setMaxResults(page.getPageSize());
+	         
+	         List l = q.list(); 
+			 return l;
+	      } catch (RuntimeException re) {
+	         log.error("查询失败", re);
+	         throw re;
+	      }
         }
 	
 	

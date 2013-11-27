@@ -34,19 +34,13 @@ public class ComputerorderclassruleDaoImpl extends HibernateDaoSupport implement
 	public List<Computerorderclassrule> selectComputerorderclassruleByCondition(String condition) {
 		final String  sql = basicComputerorderclassruleSql +" " + condition;
 		
-		List<Computerorderclassrule> computerorderclassruleList = getHibernateTemplate()
-				.executeFind(new HibernateCallback() {
-					public Object doInHibernate(Session session)
-							throws HibernateException {
-							
-							//Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(YaomingFull.class));  
-						Query query = session.createSQLQuery(sql);
-						query.setResultTransformer(new EscColumnToBean(
-								Computerorderclassrule.class));
-						return query.list();
-					}
-				});		
-		return null;
+		try {
+             List l = this.getHibernateTemplate().find(sql);
+			 return l;
+        } catch (RuntimeException re) {
+            log.error("失败", re);
+            throw re;
+        }
 	}
 	
 	
@@ -54,24 +48,16 @@ public class ComputerorderclassruleDaoImpl extends HibernateDaoSupport implement
         @Override
         public List<Computerorderclassrule>  selectComputerorderclassruleByConditionAndPage(String conditionSql,final Page page) {
                 final String  sql = basicComputerorderclassruleSql  +conditionSql;
-                List<Computerorderclassrule> computerorderclassruleList = getHibernateTemplate()
-                                .executeFind(new HibernateCallback() {
-                                        public Object doInHibernate(Session session)
-                                                        throws HibernateException {
-                                                        
-                                                        //Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(YaomingFull.class));  
-                                                Query query = session.createSQLQuery(sql);
-                                                query.setFirstResult(page.getStartNum());
-                                                query.setMaxResults(page.getPageSize());
-                                                query.setResultTransformer(new EscColumnToBean(
-                                                                Computerorderclassrule.class));
-                                                return query.list();
-                                        }
-                                });
-                if (computerorderclassruleList != null && !computerorderclassruleList.isEmpty()) {
-                        return computerorderclassruleList;
-                }
-                return null;
+              try {
+	        
+	         Query q = this.getSession().createQuery(sql).setFirstResult(page.getPageNo()).setMaxResults(page.getPageSize());
+	         
+	         List l = q.list(); 
+			 return l;
+	      } catch (RuntimeException re) {
+	         log.error("查询失败", re);
+	         throw re;
+	      }
         }
 	
 	
