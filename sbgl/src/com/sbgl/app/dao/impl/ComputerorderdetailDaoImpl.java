@@ -34,44 +34,31 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	public List<Computerorderdetail> selectComputerorderdetailByCondition(String condition) {
 		final String  sql = basicComputerorderdetailSql +" " + condition;
 		
-		List<Computerorderdetail> computerorderdetailList = getHibernateTemplate()
-				.executeFind(new HibernateCallback() {
-					public Object doInHibernate(Session session)
-							throws HibernateException {
-							
-							//Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(YaomingFull.class));  
-						Query query = session.createSQLQuery(sql);
-						query.setResultTransformer(new EscColumnToBean(
-								Computerorderdetail.class));
-						return query.list();
-					}
-				});		
-		return null;
+		System.out.println(sql);
+		try {
+             List l = this.getHibernateTemplate().find(sql);
+			 return l;
+        } catch (RuntimeException re) {
+            log.error("失败", re);
+            throw re;
+        }
 	}
 	
 	
 	//  根据条件分页查询实体        
         @Override
         public List<Computerorderdetail>  selectComputerorderdetailByConditionAndPage(String conditionSql,final Page page) {
-                final String  sql = basicComputerorderdetailSql  +conditionSql;
-                List<Computerorderdetail> computerorderdetailList = getHibernateTemplate()
-                                .executeFind(new HibernateCallback() {
-                                        public Object doInHibernate(Session session)
-                                                        throws HibernateException {
-                                                        
-                                                        //Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(YaomingFull.class));  
-                                                Query query = session.createSQLQuery(sql);
-                                                query.setFirstResult(page.getStartNum());
-                                                query.setMaxResults(page.getPageSize());
-                                                query.setResultTransformer(new EscColumnToBean(
-                                                                Computerorderdetail.class));
-                                                return query.list();
-                                        }
-                                });
-                if (computerorderdetailList != null && !computerorderdetailList.isEmpty()) {
-                        return computerorderdetailList;
-                }
-                return null;
+                final String  sql = basicComputerorderdetailSql+" "  +conditionSql;
+              try {
+	        
+	         Query q = this.getSession().createQuery(sql).setFirstResult(page.getPageNo()).setMaxResults(page.getPageSize());
+	         
+	         List l = q.list(); 
+			 return l;
+	      } catch (RuntimeException re) {
+	         log.error("查询失败", re);
+	         throw re;
+	      }
         }
 	
 	

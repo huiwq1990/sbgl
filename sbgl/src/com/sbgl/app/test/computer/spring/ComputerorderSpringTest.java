@@ -23,7 +23,8 @@ import com.sbgl.app.services.common.*;
 public class ComputerorderSpringTest {
 
 	public static void main(String[] args) {
-//		intTable();
+		intTable();
+//iniDouble();
 //		addComputerorder();
 //		selectComputerorderAll();
 //		deleteComputerorder();
@@ -64,11 +65,61 @@ public class ComputerorderSpringTest {
 			for(int i=1; i < dataList.size();i++){
 				obj = Computerorder.class.newInstance();
 
-				String[] datas = dataList.get(i).split(",");
-				Method method = null;
 				
-				 
-													if(!datas[0].trim().equals("")){
+				computerorderService.addComputerorder(getObj(attrs,dataList.get(i)));
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public static void iniDouble(){
+		ApplicationContext cxt = new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
+
+		ComputerorderService computerorderService = (ComputerorderService) cxt.getBean("computerorderService");
+		CommonService commonService = (CommonService) cxt.getBean("commonService");
+		// 将计数器置1
+		commonService.iniCode("Computerorder");
+		commonService.iniCode("Computerordertype");
+		// 删除
+		List<Computerorder> computerorderList = computerorderService.selectComputerorderAll();
+		if (computerorderList != null) {
+			for (int i = 0; i < computerorderList.size(); i++) {
+				computerorderService.deleteComputerorder(computerorderList.get(i).getId());
+			}
+		}
+		
+		
+		try {
+			
+			List<String> dataList = new ArrayList<String>();
+			File f = new File( "D:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computerorder");
+			dataList = FileUtils.readLines(f);
+			String[] attrs = dataList.get(0).split(",");
+			for(int i=1; i < dataList.size();i=i+2){
+				
+				Computerorder ch =	getObj(attrs,dataList.get(i));
+				Computerorder en =	getObj(attrs,dataList.get(i+1));
+								
+//				computerorderService.addComputerorder(ch,en);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	}
+	
+	public static Computerorder getObj(String[] attrs,String str) throws Exception{
+		HashMap<String, Method> map = ReflectUtil.ConverBean(Computerorder.class);
+		
+		Object obj =  Computerorder.class.newInstance();
+		String[] datas = str.split(",");
+		Method method = null;
+		
+											if(!datas[0].trim().equals("")){
 					 method = map.get(attrs[0]);
 																method.invoke(obj,Integer.valueOf(datas[0].trim()));
  										}
@@ -94,12 +145,8 @@ public class ComputerorderSpringTest {
  										}
 					
 								
-				computerorderService.addComputerorder((Computerorder)obj);
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		return (Computerorder)obj;		
+		
 	}
 	
 	public static void addComputerorder(){

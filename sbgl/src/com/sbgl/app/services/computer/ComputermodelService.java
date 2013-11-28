@@ -52,6 +52,8 @@ public interface ComputermodelService{
 
 	List<Computermodel> selectComputermodelAvailableborrowcount(int modelid);
 
+	void addComputermodel(Computermodel ch, Computermodel en);
+
 		
 	
 	

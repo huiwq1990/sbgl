@@ -152,8 +152,8 @@ public class ComputerorderdetailServiceImpl implements ComputerorderdetailServic
 	@Override
 	public List<Computerorderdetail> selectComputerorderdetailAfterNow(String currentDay,int currentPeriod){
 		String cond = "where ((borrowday = '" + currentDay+"' and borrowperiod >="+currentPeriod+") or (borrowday > '" + currentDay+"'))";
-		cond = " ";
-	System.out.println(cond);
+//		cond = " ";
+//	System.out.println(cond);
 		return computerorderdetailDao.selectComputerorderdetailByCondition(cond);
 
 	}

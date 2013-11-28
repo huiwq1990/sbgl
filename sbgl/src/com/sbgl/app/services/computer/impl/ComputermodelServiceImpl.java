@@ -32,6 +32,17 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 		computermodel.setId(baseDao.getCode("Computermodel"));
 		baseDao.saveEntity(computermodel);		
 	}
+	
+	@Override
+	public void addComputermodel(Computermodel ch,Computermodel en){
+		int type = baseDao.getCode("Computermodeltype");
+		ch.setId(baseDao.getCode("Computermodel"));
+		ch.setComputermodeltype(type);
+		en.setId(baseDao.getCode("Computermodel"));
+		en.setComputermodeltype(type);
+		baseDao.saveEntity(ch);	
+		baseDao.saveEntity(en);		
+	}
 
 	@Override
 	public void addComputermodelWithId(Computermodel computermodel){

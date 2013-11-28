@@ -33,6 +33,17 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 		computercategory.setId(baseDao.getCode("Computercategory"));
 		baseDao.saveEntity(computercategory);		
 	}
+	
+	@Override
+	public void addComputercategory(Computercategory chcomputercategory,Computercategory encomputercategory){
+		int type = baseDao.getCode("Computercategorytype");
+		chcomputercategory.setId(baseDao.getCode("Computercategory"));
+		chcomputercategory.setComputercategorytype(type);
+		encomputercategory.setId(baseDao.getCode("Computercategory"));
+		encomputercategory.setComputercategorytype(type);
+		baseDao.saveEntity(chcomputercategory);	
+		baseDao.saveEntity(encomputercategory);		
+	}
 
 	@Override
 	public void addComputercategoryWithId(Computercategory computercategory){
