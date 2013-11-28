@@ -91,19 +91,19 @@
 
               <div class="page pull-right clearfix">
                 <ul class="page-index nav nav-pills pull-left">
-                  <li class="record"><strong>$!classSum</strong>条记录</li>
+                  <li class="record"><strong id="sum">$!classSum</strong>条记录</li>
                   <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!currentPage/$!totalPage页<b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">最新</a></li>
-                      <li><a href="#">最旧</a></li>
+                      <li><a href="#" action-type="goFirst">最新</a></li>
+                      <li><a href="#" action-type="goLast">最旧</a></li>
                     </ul>
                   </li>              
                 </ul>
                 <div class="pagination pull-right">
                   <ul>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                    <li><a href="#" rel="tooltip" action-type="backPage" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" action-type="nextPage" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
                   </ul>
                 </div>              
               </div>
@@ -239,14 +239,16 @@
 <![endif]-->
 
 <script>
-    var classData = {};  //全部分类信息
-	var alterClassId;    //修改分类的id
-	var alterClassName;  //修改分类的name
-	var parentId;        //父分类id
-	var classSum;        //分类个数
-	var idsForDel = "";  //用于删除的id串
-	var needDisableIds = [];  //用于记录已是一级分类的id，不能再将此分类添加父分类
-	//var _obj;            //select2全局对象
+    var classData = {};  		//全部分类信息
+	var currentPageNo = 1;		//当前页码
+	var totalPageNo;			//总页码
+	var alterClassId;    		//修改分类的id
+	var alterClassName;  		//修改分类的name
+	var parentId;        		//父分类id
+var classSum;        			//分类个数
+	var idsForDel = "";  		//用于删除的id串
+	var needDisableIds = [];  	//用于记录已是一级分类的id，不能再将此分类添加父分类
+	//var _obj;            		//select2全局对象
 	var cookie = { 
 		//读取COOKIES,n为COOKIE名 
 		Get:function(n){ 
@@ -328,7 +330,8 @@
     			postData = {
     				"equipClassforAdd.parentid": pId,
     				"equipClassforAdd.name": className,
-    				"equipClassforAdd.userid": userId
+    				"equipClassforAdd.userid": userId,
+					"currentPage": currentPageNo
     			}
     			actionUrl = "${webbaseurl}/addClassification.do";
     			
@@ -351,7 +354,8 @@
         			"equipClassforAltert.name": newClassName,
         			"equipClassforAltert.classificationid": alterClassId,
         			"equipClassforAltert.parentid": parentClassId,
-        			"equipClassforAltert.userid": userId
+        			"equipClassforAltert.userid": userId,
+					"currentPage": currentPageNo
         		};
 				actionUrl = "${webbaseurl}/alterClassification.do";
     		}
@@ -367,10 +371,16 @@
     			    var n = noty({text: data.msg, timeout: 2500, type: 'success'});
 					updateParentClass(data.pClass);  //刷新一级分类
     			    _this.parents('.modal').modal('toggle');
+					
+					postData = {
+    					"currentPage": currentPageNo
+            		};
+				
 					//刷新界面数据
 					jQuery.ajax({
 						url: "${webbaseurl}/flushClassification.do",  
 		    			type: "post",
+						data: postData,
 						success: function(data,textStatus,jq) {
 							$("#admin-wrap").html(data);
 						},
@@ -409,8 +419,10 @@
 	})
 	
 	$("body").on("click", "a[action-type|=delClass]", function() {
+		console.log("**********************" + currentPageNo);
 		var postData = {
-			classIds: idsForDel
+			classIds: idsForDel,
+			currentPage: currentPageNo
 		}
 			
 		jQuery.ajax({  
@@ -420,14 +432,21 @@
 		    success:function(data,textStatus,jq){ 
 		    	console.log(data);
 				if(data.tag == "0") {
+					currentPageNo = data.crtPage
+					console.log("**********************" + currentPageNo);
 					updateParentClass(data.pClass);
 					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
 					$(this).parents('.modal').modal('toggle');
+					
+					postData = {
+            			"currentPage": currentPageNo
+            		};
 				
 					//刷新界面数据
 					jQuery.ajax({
 						url: "${webbaseurl}/flushClassification.do",  
 		    			type: "post",
+						data: postData,
 						success: function(data,textStatus,jq) {
 							$("#admin-wrap").html(data);
 						},
@@ -462,6 +481,97 @@
           	$("#modifyFaCategoryId")[0].options.add(new Option(value.pName,value.pId,false,false)); 
         });
 	}
+	//向前一页翻页
+	$("body").on("click", "a[action-type|=backPage]", function() {
+		if(currentPageNo - 1 <= 0 ) {
+			currentPageNo = 0;
+			return;
+		} else {
+			currentPageNo--;
+		}
+		
+		postData = {
+			"currentPage": currentPageNo
+		};
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushClassification.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		})
+	})
+	//向后一页翻页
+	$("body").on("click", "a[action-type|=nextPage]", function() {
+		if(currentPageNo + 1 > totalPageNo ) {
+			currentPageNo = totalPageNo;
+			return;
+		} else {
+			currentPageNo++;
+		}
+		
+		postData = {
+			"currentPage": currentPageNo
+		};
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushClassification.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		})
+	})
+	//跳到第一页
+	$("body").on("click", "a[action-type|=goFirst]", function() {
+		currentPageNo = 1;
+		postData = {
+			"currentPage": currentPageNo
+		};
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushClassification.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		})
+	})
+	//跳到最后一页
+	$("body").on("click", "a[action-type|=goLast]", function() {
+		var sum = $("#sum").html();
+		currentPageNo = Math.floor(sum / 10);
+		if(sum % 10 != 0 && sum > 10) {
+			currentPageNo++;
+		}
+		postData = {
+			"currentPage": currentPageNo
+		};
+		jQuery.ajax({
+			url: "${webbaseurl}/flushClassification.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		})
+	})
 </script>
 </body>
 </html>

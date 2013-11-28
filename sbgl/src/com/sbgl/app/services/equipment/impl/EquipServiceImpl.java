@@ -31,6 +31,11 @@ public class EquipServiceImpl implements EquipService {
 	private BaseDao baseDao;
 	
 	@Override
+	public int getCountOfEquipInfo() {
+		return baseDao.getAllEntity(Equipment.class).size();
+	}
+	
+	@Override
 	public Integer addEquipInfo(Equipment equip) {
 		int id = baseDao.getCode("equipId");
 		equip.setEquipmentid( id );
@@ -481,6 +486,16 @@ public class EquipServiceImpl implements EquipService {
 		// TODO Auto-generated method stub
 		
 		return baseDao.getEntityById(Equipmentclassification.class, equipmentclassificationId);
+	}
+
+	@Override
+	public int getCountOfEquipmentdetail() {
+		return baseDao.getAllEntity(Equipmentdetail.class).size();
+	}
+
+	@Override
+	public int getCountOfEquipmentclassfication() {
+		return baseDao.getAllEntity(Equipmentclassification.class).size();
 	}
 
 }

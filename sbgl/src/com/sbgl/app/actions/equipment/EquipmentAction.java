@@ -223,6 +223,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	 * 删除分类信息
 	 * 业务逻辑说明   1.在删除了某个分类信息后，其分类下的所有型号都归为未分类，未分类本身并不存储，将型号中的分类设置成-1
 	 *          2.如果删除的是一个父分类，连同其所有的子分类一起删除
+	 * 分页说明 如果整页删除，判断一下当前页是否不存在，要更新界面的当前页数         
 	 * 
 	 */
 	private Integer classficationId;
@@ -234,8 +235,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	}
 
 	private String deleteClassfication() {
-		returnJSON = null;
-		returnJSON = new HashMap<String,Object>();
 		
 		try {
 			Equipmentclassification ec = equipService.getEquipmentclassificationById( this.classficationId );
@@ -264,13 +263,11 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			}
 			
 			equipService.deleteEquipmentclassification( this.classficationId );
+			this.tag = "0";
 		} catch(RuntimeException re) {
 			re.printStackTrace();
 			this.tag = "200";
 		}
-		
-		this.tag = "0";
-		returnJSON.put("tag", this.tag);
 		return tag;
 	}
 	/**
@@ -301,6 +298,20 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				this.tag = "0";
 			}
 		}
+		//当前页数判断
+		int curCountOfRow = equipService.getCountOfEquipmentclassfication();
+		int curPages = curCountOfRow / 10;
+		if(curCountOfRow % 10 != 0 && curCountOfRow > 10) {
+			curPages++;
+		}
+		System.out.println("+++++++++++++++++++++ curPages is " + curPages);
+		System.out.println("+++++++++++++++++++++ Integer.valueOf(currentPage) is " + Integer.valueOf(currentPage));
+		if(Integer.valueOf(currentPage) > curPages) {
+			currentPage = String.valueOf(curPages);
+		}
+		
+		
+		returnJSON.put("crtPage", this.currentPage);
 		returnJSON.put("tag", tag);
 		returnJSON.put("msg", message);
 		returnJSON.put("pClass", JSONArray.fromObject(allParent));
@@ -782,7 +793,19 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	public String getClassSum() {
 		return classSum;
 	}
-
+	
+	public String currentPage;
+	public String getCurrentPage() {
+		return currentPage;
+	}
+	public void setCurrentPage(String currentPage) {
+		this.currentPage = currentPage;
+	}
+	
+	public String totalPage;
+	public String getTotalPage() {
+		return totalPage;
+	}
 	
 	public String gotoEquipManageClassfiction() {
 		allParent.clear();
@@ -790,7 +813,16 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		
 		if(equipList != null) {
 			classSum = String.valueOf( equipList.size() );
-			
+			if(equipList.size() % 10 != 0 && equipList.size() > 10) {
+				totalPage = String.valueOf( equipList.size() / 10 + 1 );
+			} else {
+				totalPage = String.valueOf( equipList.size() / 10 );
+			}
+			System.out.println("****************************** pre currentPage = " + currentPage);
+			if(currentPage == null || currentPage == "") {
+				currentPage = "1";
+			}
+			System.out.println("****************************** after currentPage = " + currentPage);
 			for (Equipmentclassification equipmentclassification : equipList) {
 				String name = equipmentclassification.getName();
 				Integer parentId = equipmentclassification.getParentid();
@@ -812,8 +844,18 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					allParent.add( new ParentClassIdName( classfication.getClassificationid(), classfication.getName() ) );
 				}
 			}
+			//根据前台页面请求页码返回数据
+			if(currentPage != null && currentPage != "") {
+				int startIndex = Integer.valueOf( currentPage.trim() ) - 1;
+				int endIndex = (startIndex + 1) * 10 > equipList.size() ? equipList.size() : (startIndex + 1) * 10;
+				System.out.println("****************************** startIndex*10 = " + startIndex*10);
+				System.out.println("****************************** currentPage = " + endIndex);
+				allClassCourse = allClassCourse.subList(startIndex*10, endIndex);
+			}
+			
 		} else {
 			classSum = "0";
+			totalPage = "0";
 		}
 		return SUCCESS;
 	}

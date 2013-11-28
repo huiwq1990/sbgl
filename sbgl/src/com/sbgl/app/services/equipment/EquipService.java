@@ -9,6 +9,8 @@ import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Equipmentdetail;
 
 public interface EquipService {
+	//获取器材类型总数
+	public int getCountOfEquipInfo();
 	//添加器材类型信息
 	public Integer addEquipInfo(Equipment equip);
 	//修改器材类型信息
@@ -30,6 +32,8 @@ public interface EquipService {
 	//查询器材类型信息--某一分类
 	public List<Equipment> getEquipsByClassification(Integer equipmentclassificationId);
 	
+	//查询器材详情记录总数
+	public int getCountOfEquipmentdetail();
 	//添加器材详情
 	public Integer addEquipmentdetail(Equipmentdetail equipmentdetail);
 	//修改器材详情
@@ -43,6 +47,8 @@ public interface EquipService {
 	//查询全部器材详情
 	public List<Equipmentdetail> getAllEquipmentdetail();
 	
+	//查询器材分类总数
+	public int getCountOfEquipmentclassfication();
 	//添加器材分类
 	public Integer addEquipmentclassification(Equipmentclassification equipmentclassification);
 	//修改器材分类
