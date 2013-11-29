@@ -146,7 +146,7 @@
         <li><a href="#">首页</a></li>
         <li><a href="#">设置</a></li>
         <li><a href="用户管理首页.html">用户</a></li>
-        <li class="active"><a href="设备管理首页.html">器材</a></li>
+        <li class="active"><a href="${webbaseurl}/equipManageAdmin.do">器材</a></li>
         <li><a href="#">内容</a></li>
       </ul>
     </div>    
@@ -180,7 +180,7 @@
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
       <ul class="nav nav-tabs">
         <li><a href="设备预约首页.html">器材预约</a></li>
-        <li class="active"><a href="设备管理首页.html">器材管理</a></li>
+        <li class="active"><a href="${webbaseurl}/equipManageAdmin.do">器材管理</a></li>
       </ul>
       <!--admin-wrap start-->
       <div id="admin-wrap">
@@ -202,25 +202,25 @@
                 </select>
               </div>
               <div class="operate-item pull-left">
-                <a href="#add-equip-model" class="btn btn-primary" data-toggle="modal" role="button">添加型号</a>
+                <a href="#add-equip-model" class="btn btn-primary" action-type="clearInput" data-toggle="modal" role="button">添加型号</a>
                 <a href="#" class="btn btn-white s-h" action-type="deleteModel"><i class="icon-trash"></i> 删除</a>
               </div>
 
               <div class="page pull-right clearfix">
                 <ul class="page-index nav nav-pills pull-left">
-                  <li class="record">当前分类下有<strong>$!equipCourse.size()</strong>条记录</li>
+                  <li class="record">当前分类下有<strong>$!modelCount</strong>条记录</li>
                   <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!crtModelPage/$!totalModelPages页 <b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">最新</a></li>
-                      <li><a href="#">最旧</a></li>
+                      <li><a href="#" action-type="goFirst">最新</a></li>
+                      <li><a href="#" action-type="goLast">最旧</a></li>
                     </ul>
                   </li>              
                 </ul>
                 <div class="pagination pull-right">
                   <ul>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                    <li><a href="#" rel="tooltip" action-type="backPage" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" action-type="nextPage" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
                   </ul>
                 </div>              
               </div>
@@ -432,8 +432,10 @@
 	var modelCIdForAlter;
 	var modelMemoForAlter;
 	var idsForDel;
+	var currentPageNo = 1;		//当前页码
+	var totalPageNo;			//总页码
 	
-	/* 处理CheckBox选中事件用于删除处理 */
+	/* 处理CheckBox选中事件用于删除处理 
 	$("input[type='checkbox']").click(function() {
 		//var num = 0;
 		idsForDel = "";
@@ -441,6 +443,46 @@
 		if($(this).attr("id") === "chk-all") {
 			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
 		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true) {
+				//num++;
+				idsForDel += $(this).prop("value") + "_";
+			}
+		});
+	});*/
+	
+	$("body").on("click", "a[action-type|=clearInput]", function() {
+		$("#inputECategory").select2("val", -1);
+		$("#inputEModelName").val("");
+		$("#inputEDescribe").val("");
+	});
+	
+	$("body").on("click", "input[type='checkbox']", function() {
+		var num = 0;
+		if($(this).attr("id") === "chk-all") {
+			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
+		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true){
+				num++;  
+			}
+		});
+		if(num > 0){
+			$(".s-h").css({
+				"visibility": "visible",
+				"opacity": "1",
+				"filter": "alpha(opacity=100)"
+			});
+		} else {
+			$(".s-h").css({
+				"visibility": "hidden",
+				"opacity": "0",
+				"filter": "alpha(opacity=0)"
+			});
+		}
+		
+		idsForDel = "";
+		
 		$("input[name='chk-list']").each(function() {
 			if($(this).prop("checked") === true) {
 				//num++;
@@ -464,6 +506,7 @@
         			"equipment.equipmentname": modelName,
         			"equipment.classificationid": clazzId,
         			"equipment.equipmentdetail": memo
+					"crtModelPage": currentPageNo
         		}
     			
     			actionUrl = "${webbaseurl}/addEquipModel.do";
@@ -488,6 +531,7 @@
     				"equipment.equipmentname": ename,
     				"equipment.classificationid": cidInput,
     				"equipment.equipmentdetail": memo
+					"crtModelPage": currentPageNo
     			}
 				actionUrl = "${webbaseurl}/altEquipModel.do";
 			}
@@ -502,11 +546,16 @@
 				if(data.tag == "0") {
 					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
 					equipmentid = data.equipmentid;
+					
+					postData = {
+    					"crtModelPage": currentPageNo
+            		};
 					/*
 					//刷新界面数据
 					jQuery.ajax({
 						url: "${webbaseurl}/flushEquipModel.do",  
 		    			type: "post",
+						data: postData,
 						success: function(data,textStatus,jq) { 
 							$("#admin-wrap").html(data);
 						},
@@ -546,6 +595,7 @@
 	$("body").on("click", "a[action-type|=deleteModel]", function() {
 		var postData = {
 			equipInfoIds: idsForDel
+			crtModelPage: currentPageNo
 		}
 		jQuery.ajax({  
 		    url:"${webbaseurl}/delEquipModel.do",  
@@ -554,12 +604,18 @@
 		    success:function(data,textStatus,jq){  
 		    	console.log(data);
 				if(data.tag == "0") {
+					currentPageNo = data.crtModelPage
     				var n = noty({text: data.msg, timeout: 2500, type: 'success'});
+					
+					postData = {
+            			"crtModelPage": currentPageNo
+            		};
 					
 					//刷新界面数据
 					jQuery.ajax({
 						url: "${webbaseurl}/flushEquipModel.do",  
 		    			type: "post",
+						data:postData,
 						success: function(data,textStatus,jq) { 
 							$("#admin-wrap").html(data);
 						},
@@ -576,6 +632,97 @@
 				var n = noty({text: data.msg, timeout: 2500, type: 'error'});
 			}  
 		});
+	})
+	//向前一页翻页
+	$("body").on("click", "a[action-type|=backPage]", function() {
+		if(currentPageNo - 1 <= 0 ) {
+			currentPageNo = 0;
+			return;
+		} else {
+			currentPageNo--;
+		}
+		
+		postData = {
+			"crtModelPage": currentPageNo
+		};
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipModel.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		})
+	})
+	//向后一页翻页
+	$("body").on("click", "a[action-type|=nextPage]", function() {
+		if(currentPageNo + 1 > totalPageNo ) {
+			currentPageNo = totalPageNo;
+			return;
+		} else {
+			currentPageNo++;
+		}
+		
+		postData = {
+			"crtModelPage": currentPageNo
+		};
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipModel.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		})
+	})
+	//跳到第一页
+	$("body").on("click", "a[action-type|=goFirst]", function() {
+		currentPageNo = 1;
+		postData = {
+			"crtModelPage": currentPageNo
+		};
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipModel.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		})
+	})
+	//跳到最后一页
+	$("body").on("click", "a[action-type|=goLast]", function() {
+		var sum = $("#sum").html();
+		currentPageNo = Math.floor(sum / 10);
+		if(sum % 10 != 0 && sum > 10) {
+			currentPageNo++;
+		}
+		postData = {
+			"crtModelPage": currentPageNo
+		};
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipModel.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		})
 	})
 </script>
 </body>

@@ -304,8 +304,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		if(curCountOfRow % 10 != 0 && curCountOfRow > 10) {
 			curPages++;
 		}
-		System.out.println("+++++++++++++++++++++ curPages is " + curPages);
-		System.out.println("+++++++++++++++++++++ Integer.valueOf(currentPage) is " + Integer.valueOf(currentPage));
 		if(Integer.valueOf(currentPage) > curPages) {
 			currentPage = String.valueOf(curPages);
 		}
@@ -410,42 +408,84 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	public List<EquipModelCourse> getEquipCourse() {
 		return equipCourse;
 	}
-
+	
+	public String modelCount;
+	public String getModelCount() {
+		return modelCount;
+	}
+	
+	public String totalModelPages;
+	public String getTotalModelPages() {
+		return totalModelPages;
+	}
+	
+	public String crtModelPage;
+	public String getCrtModelPage() {
+		return crtModelPage;
+	}
+	public void setCrtModelPage(String crtModelPage) {
+		this.crtModelPage = crtModelPage;
+	}
+	
 	public String getAllEquipInfoCourse() {
 			List<Equipment> allEquips = equipService.getAllEquips();
-			for (Equipment equipment : allEquips) {
-				EquipModelCourse emc = new EquipModelCourse();
-				emc.setId( String.valueOf( equipment.getEquipmentid() ) );
-				emc.setName( String.valueOf( equipment.getEquipmentname() ) );
+			if(allEquips != null) {
+				modelCount = String.valueOf( allEquips.size() );
 				
-				Equipmentclassification cf = equipService.getEquipmentclassificationById( equipment.getClassificationid() );
-				emc.setcId( String.valueOf( cf == null ? -1 : cf.getClassificationid() ) );
-				emc.setcName( cf == null ? "未分类" : cf.getName() );
-				emc.setMemo( equipment.getEquipmentdetail() );
+				if(allEquips.size() % 10 != 0 && allEquips.size() > 10) {
+					totalModelPages = String.valueOf( allEquips.size() / 10 + 1 );
+				} else {
+					totalModelPages = String.valueOf( allEquips.size() / 10 );
+				}
+				if(crtModelPage == null || crtModelPage == "") {
+					crtModelPage = "1";
+				}
 				
-				equipCourse.add( emc );
-			}
-			
-			List<String> classIds = new ArrayList<String>();
-			List<EquipModelCourse> tempCourse = new ArrayList<EquipModelCourse>();
-			for (EquipModelCourse ec : equipCourse) {
-				String cId = ec.getcId();
-				if( !classIds.contains(cId) ) {
-					classIds.add( cId );
-					EquipModelCourse showModelClass = new EquipModelCourse();
-					showModelClass.setcName( ec.getcName() );
-					showModelClass.setShowClass("1");
-					tempCourse.add( showModelClass );
+				for (Equipment equipment : allEquips) {
+					EquipModelCourse emc = new EquipModelCourse();
+					emc.setId( String.valueOf( equipment.getEquipmentid() ) );
+					emc.setName( String.valueOf( equipment.getEquipmentname() ) );
 					
-					for (EquipModelCourse equipModel : equipCourse) {
-						if(equipModel.getcId().equals( cId )) {
-							tempCourse.add( equipModel );
+					Equipmentclassification cf = equipService.getEquipmentclassificationById( equipment.getClassificationid() );
+					emc.setcId( String.valueOf( cf == null ? -1 : cf.getClassificationid() ) );
+					emc.setcName( cf == null ? "未分类" : cf.getName() );
+					emc.setMemo( equipment.getEquipmentdetail() );
+					
+					equipCourse.add( emc );
+				}
+				
+				List<String> classIds = new ArrayList<String>();
+				List<EquipModelCourse> tempCourse = new ArrayList<EquipModelCourse>();
+				for (EquipModelCourse ec : equipCourse) {
+					String cId = ec.getcId();
+					if( !classIds.contains(cId) ) {
+						classIds.add( cId );
+						EquipModelCourse showModelClass = new EquipModelCourse();
+						showModelClass.setcName( ec.getcName() );
+						showModelClass.setShowClass("1");
+						tempCourse.add( showModelClass );
+						
+						for (EquipModelCourse equipModel : equipCourse) {
+							if(equipModel.getcId().equals( cId )) {
+								tempCourse.add( equipModel );
+							}
 						}
 					}
 				}
+				
+				//根据前台页面请求页码返回数据
+				if(crtModelPage != null && crtModelPage != "") {
+					int startIndex = Integer.valueOf( crtModelPage.trim() ) - 1;
+					int endIndex = (startIndex + 1) * 10 > tempCourse.size() ? tempCourse.size() : (startIndex + 1) * 10;
+					tempCourse = tempCourse.subList(startIndex*10, endIndex);
+				}
+				
+				
+				equipCourse = tempCourse;
+			} else {
+				modelCount = "0";
+				totalModelPages = "0";
 			}
-			
-			equipCourse = tempCourse;
 		
 //		returnJSON.put("allEquips", allEquips);
 //		returnJSON.put("classIdName", classIdName);
@@ -818,11 +858,9 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			} else {
 				totalPage = String.valueOf( equipList.size() / 10 );
 			}
-			System.out.println("****************************** pre currentPage = " + currentPage);
 			if(currentPage == null || currentPage == "") {
 				currentPage = "1";
 			}
-			System.out.println("****************************** after currentPage = " + currentPage);
 			for (Equipmentclassification equipmentclassification : equipList) {
 				String name = equipmentclassification.getName();
 				Integer parentId = equipmentclassification.getParentid();
@@ -848,8 +886,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			if(currentPage != null && currentPage != "") {
 				int startIndex = Integer.valueOf( currentPage.trim() ) - 1;
 				int endIndex = (startIndex + 1) * 10 > equipList.size() ? equipList.size() : (startIndex + 1) * 10;
-				System.out.println("****************************** startIndex*10 = " + startIndex*10);
-				System.out.println("****************************** currentPage = " + endIndex);
 				allClassCourse = allClassCourse.subList(startIndex*10, endIndex);
 			}
 			
