@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="computerorderdetail" extends="admin">
+
+
+<!-- default entity manage action -->
+    	<action name="manageComputerorderdetail" class="ManageComputerAction" method="manageComputerorderdetail">
+        	<result name="success">/computer/computerorderdetailManage.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!-- default entity manage action -->
+    	<action name="manageComputerorderdetailInfo" class="ManageComputerAction" method="manageComputerorderdetailInfo">
+        	<result name="success">/computer/computerorderdetailManage.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!-- manage action , go to jsp page -->
+    	<action name="manageComputerorderdetailJsp" class="ManageComputerAction" method="manageComputerorderdetail">
+        	<result name="success">/computer/computerorderdetailManage.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>		
+		<!-- manage action , go to vm page -->
+    	<action name="manageComputerorderdetailVm" class="ManageComputerAction" method="manageComputerorderdetail">
+        	<result name="success">/computer/computerorderdetailManage.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>		
+<!-- entity full manage  -->		
+		<!-- default entity full manage action -->
+    	<action name="manageComputerorderdetailFull" class="ManageComputerAction" method="manageComputerorderdetailFull">
+        	<result name="success">/computer/computerorderdetailFullManage.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!-- manage action , go to jsp page -->
+    	<action name="manageComputerorderdetailFullJsp" class="ManageComputerAction" method="manageComputerorderdetailFull">
+        	<result name="success">/computer/computerorderdetailFullManage.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>		
+		<!-- manage action , go to vm page -->
+    	<action name="manageComputerorderdetailFullVm" class="ManageComputerAction" method="manageComputerorderdetailFull">
+        	<result name="success">/computer/computerorderdetailFullManage.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>	
+		
+		
+<!--添加实体-->
+    	<action name="addComputerorderdetail" class="ComputerorderdetailAction" method="addComputerorderdetail">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerorderdetail</param>
+			</result>
+        </action>
+		<!--
+    	<action name="addComputerorderdetailJsp" class="ComputerorderdetailAction" method="addComputerorderdetail">
+        	<result type="redirectAction">
+				<param name="actionName">selectComputerorderdetailAll</param>
+			</result>
+        </action>		
+    	<action name="addComputerorderdetailVm" class="ComputerorderdetailAction" method="addComputerorderdetail">
+        	<result type="redirectAction">
+				<param name="actionName">selectComputerorderdetailAll</param>
+			</result>
+        </action>		
+		
+		-->
+<!--edit entity-->
+        <action name="editComputerorderdetail" class="ComputerorderdetailAction" method="editComputerorderdetail">
+        	<result name="success">/computer/computerorderdetailEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="editComputerorderdetailJsp" class="ComputerorderdetailAction" method="editComputerorderdetail">
+        	<result name="success">/computer/computerorderdetailEdit.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="editComputerorderdetailVm" class="ComputerorderdetailAction" method="editComputerorderdetail">
+        	<result name="success">/computer/computerorderdetailEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>		
+<!--edit entity full-->
+        <action name="editComputerorderdetailFull" class="ComputerorderdetailAction" method="editComputerorderdetailFull">
+        	<result name="success">/computer/computerorderdetailFullEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="editComputerorderdetailFullJsp" class="ComputerorderdetailAction" method="editComputerorderdetailFull">
+        	<result name="success">/computer/computerorderdetailFullEdit.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="editComputerorderdetailFullVm" class="ComputerorderdetailAction" method="editComputerorderdetailFull">
+        	<result name="success">/computer/computerorderdetailFullEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+<!--del-->
+        <!--del entity-->
+        <action name="deleteComputerorderdetail" class="ComputerorderdetailAction" method="deleteComputerorderdetail">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerorderdetail</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteComputerorderdetailFull" class="ComputerorderdetailAction" method="deleteComputerorderdetailFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerorderdetailFull</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--更新实体-->
+        <action name="updateComputerorderdetail" class="ComputerorderdetailAction" method="updateComputerorderdetail">
+        	<result name="success">/computer/computerorderdetailUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerorderdetailJsp" class="ComputerorderdetailAction" method="updateComputerorderdetail">
+        	<result name="success">/computer/computerorderdetailUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerorderdetailVm" class="ComputerorderdetailAction" method="updateComputerorderdetail">
+        	<result name="success">/computer/computerorderdetailUpdate.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+<!--update entity full-->
+        <action name="updateComputerorderdetailFull" class="ComputerorderdetailAction" method="updateComputerorderdetail">
+        	<result name="success">/computer/computerorderdetailFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerorderdetailFullJsp" class="ComputerorderdetailAction" method="updateComputerorderdetail">
+        	<result name="success">/computer/computerorderdetailFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerorderdetailFullVm" class="ComputerorderdetailAction" method="updateComputerorderdetail">
+        	<result name="success">/computer/computerorderdetailFullUpdate.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+<!--根据id查询实体-->
+        <action name="selectComputerorderdetailById" class="ComputerorderdetailAction" method="selectComputerorderdetailById">
+        	<result name="success">/computer/computerorderdetailView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity-->		
+        <action name="viewComputerorderdetail" class="ComputerorderdetailAction" method="viewComputerorderdetail">
+        	<result name="success">/computer/computerorderdetailView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--go to view jsp-->
+		<action name="viewComputerorderdetailJsp" class="ComputerorderdetailAction" method="viewComputerorderdetail">
+        	<result name="success">/computer/computerorderdetailView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!-- go to view vm-->
+		<action name="viewComputerorderdetailVm" class="ComputerorderdetailAction" method="viewComputerorderdetail">
+        	<result name="success">/computer/computerorderdetailView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>		
+<!-- View entity full-->		
+        <action name="viewComputerorderdetailFull" class="ComputerorderdetailAction" method="viewComputerorderdetailFull">
+        	<result name="success">/computer/computerorderdetailFullView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--go to view jsp-->
+		<action name="viewComputerorderdetailFullJsp" class="ComputerorderdetailAction" method="viewComputerorderdetailFull">
+        	<result name="success">/computer/computerorderdetailFullView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!-- go to view vm-->
+		<action name="viewComputerorderdetailFullVm" class="ComputerorderdetailAction" method="viewComputerorderdetailFull">
+        	<result name="success">/computer/computerorderdetailFullView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>		
+		
+        <!--查询全部实体-->
+        <action name="selectComputerorderdetailAll" class="ComputerorderdetailAction" method="selectComputerorderdetailAll">
+			<result name="success">/computer/computerorderdetail.jsp</result>
+			<result name="error">/error.vm</result>
+		</action>
+	
+
+		
+		
+<!--根据id查询实体full-->
+
+		<action name="selectComputerorderdetailFullById" class="ComputerorderdetailAction" method="selectComputerorderdetailFullById">
+		  	<result name="success">/computer/computerorderdetailViewFull.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+
+		
+		
+        <!--查询全部实体full-->
+        <action name="selectComputerorderdetailFullAll" class="ComputerorderdetailAction" method="selectComputerorderdetailFullAll">
+			<result name="success">/computer/computerorderdetailManage.vm</result>
+			<result name="error">/error.vm</result>
+		</action>
+		
+	
+		
+
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="computerorderdetailAjax" extends="json-default">
+    	<action name="addComputerorderdetailAjax" class="ComputerorderdetailAction" method="addComputerorderdetailAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        <action name="deleteComputerorderdetailAjax" class="ComputerorderdetailAction" method="deleteComputerorderdetailAjax">
+        	<result type="json"></result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteComputerorderdetailFullAjax" class="ComputerorderdetailAction" method="deleteComputerorderdetailFullAjax">
+        	<result type="json"></result>
+        </action>
+    	<action name="updateComputerorderdetailAjax" class="ComputerorderdetailAction" method="updateComputerorderdetailAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
+	</package>
+
+</struts>

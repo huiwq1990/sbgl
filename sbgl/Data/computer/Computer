@@ -1,0 +1,7 @@
+id,serialnumber,computertype,languagetype,computermodelid,createtime,createuserid,status,remark
+ , 戴尔1, ,0 ,1 , , , , 
+ ,d1 , ,1 , 1, , , , 
+ ,戴尔2 , , 0,1 , , , , 
+ ,d2 , , 1,1 , , , , 
+ ,戴尔3 , ,0 ,1 , , , , 
+ ,d3 , ,1 ,1 , , , , 

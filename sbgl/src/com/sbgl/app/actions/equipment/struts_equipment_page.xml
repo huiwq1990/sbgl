@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    
+	<package name="equip"  extends="struts-default">
+        <action name="equipManageAdmin" class="EquipmentAction" method="gotoEquipManageAdmin">
+        	<result name="success">
+        		/admin/equipManageAdmin.vm
+        	</result>
+        </action>
+        
+        <action name="equipManageEquip" class="EquipmentAction" method="gotoEquipManageEquip">
+        	<result name="success">
+        		/admin/equipManageEquip.vm
+        	</result>
+        </action>
+        
+        <action name="equipManageModel" class="EquipmentAction" method="gotoEquipManageModel">
+        	<result name="success">
+        		/admin/equipManageModel.vm
+        	</result>
+        </action>
+        
+        <action name="equipManageClassfication" class="EquipmentAction" method="gotoEquipManageClassfiction">
+        	<result name="success">
+        		/admin/equipManageClassfication.vm
+        	</result>
+        </action>
+        
+        <action name="flushClassification" class="EquipmentAction" method="flushClassification">
+        	<result name="success">/admin/equipManageClassficationForFlush.vm</result>
+        </action>
+        
+        <action name="flushEquipModel" class="EquipmentAction" method="flushEquipModel">
+        	<result name="success">/admin/equipManageModelForFlush.vm</result>
+        </action>
+        
+        <action name="flushEquipDetail" class="EquipmentAction" method="flushEquipDetail">
+        	<result name="success">/admin/equipManageAdminForFlush.vm</result>
+        </action>
+    </package>
+    
+</struts>    

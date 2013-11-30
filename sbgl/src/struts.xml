@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    <constant name="struts.action.extension" value="do,action,go"></constant>    
+    <constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory"></constant> 
+    <constant name="struts.i18n.encoding"  value="UTF-8" />
+    <constant name="struts.multipart.maxSize" value ="1073741824" />
+    <constant name="struts.custom.i18n.resources" value ="messages" />
+    
+    <!-- 定义一个admin的总包余下包继承该包 -->  
+	<package name="admin"  extends="struts-default">
+        <!-- 定义一个拦截器 -->  
+        <interceptors>  
+           <!-- 拦截器栈 -->  
+           <interceptor-stack name="mydefault">  
+               <interceptor-ref name="defaultStack" />  
+           </interceptor-stack>  
+	    </interceptors>  
+	    <!-- 定义全局Result -->  
+        <global-results>  
+            <!-- 当返回login视图名时，转入/login.jsp页面 -->  
+            <result name="login">/login.vm</result>  
+        </global-results>      
+    </package>
+ 
+    
+    
+    
+    
+    <!-- 根据不同的包引入自己的struts文件 -->
+    <include file="com/sbgl/app/actions/*/struts_*.xml"/>
+</struts>    

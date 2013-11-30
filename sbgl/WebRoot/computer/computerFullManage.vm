@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script src="../js/html5shiv.js"></script>
+  <script src="../js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body id="admin">
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+         
+            <div class="panel panel-default">
+
+<!--管理内容从这里开始 -->
+
+				<form id="formComputerManage" action="${webbaseurl}/manageComputerFull.action" method="get">
+
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+
+             <th class="name">computerid</th>
+             <th class="name">computerserialnumber</th>
+             <th class="name">computercomputermodelid</th>
+             <th class="name">computercreatetime</th>
+             <th class="name">computercreateuserid</th>
+             <th class="name">computerstatus</th>
+             <th class="name">computerremark</th>
+             <th class="name">computermodelid</th>
+             <th class="name">computermodelname</th>
+             <th class="name">computermodelcomputercategoryid</th>
+             <th class="name">computermodelpicpath</th>
+             <th class="name">computermodelcreatetime</th>
+             <th class="name">computermodelcreateuserid</th>
+             <th class="name">computermodelcount</th>
+             <th class="name">computermodelstatus</th>
+                   <th class="name">View</th>
+				   <th class="name">Del</th>
+				   <th class="name">Edit</th>
+                  </tr>
+                </thead>
+                <tbody>					
+							
+
+#foreach($tempcomputer in $computerFullList)
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>                   
+<td>$!tempcomputer.computerid</td>
+<td>$!tempcomputer.computerserialnumber</td>
+<td>$!tempcomputer.computercomputermodelid</td>
+<td>$!tempcomputer.computercreatetime</td>
+<td>$!tempcomputer.computercreateuserid</td>
+<td>$!tempcomputer.computerstatus</td>
+<td>$!tempcomputer.computerremark</td>
+<td>$!tempcomputer.computermodelid</td>
+<td>$!tempcomputer.computermodelname</td>
+<td>$!tempcomputer.computermodelcomputercategoryid</td>
+<td>$!tempcomputer.computermodelpicpath</td>
+<td>$!tempcomputer.computermodelcreatetime</td>
+<td>$!tempcomputer.computermodelcreateuserid</td>
+<td>$!tempcomputer.computermodelcount</td>
+<td>$!tempcomputer.computermodelstatus</td>
+					<td><a href="${webbaseurl}/viewComputerFull.action?id=$!tempcomputer.computerid">查看</a></td> 
+					<td><a href="${webbaseurl}/deleteComputerFull.action?id=$!tempcomputer.computerid">删除</a></td>			
+					<td><a href="${webbaseurl}/editComputerFull.action?id=$!tempcomputer.computerid">修改</a></td>
+                 
+                  </tr>
+#end            
+           
+                </tbody>
+              </table>
+  		  
+#getPageHtml("formId=formComputerManage" "parameters=pageNo:$page.pageNo,pageSize:$page.pageSize,totalCount:$page.totalCount,pageviewcount:$page.pageviewcount,vmpath:common/page.vm")
+
+</form>
+
+            </div>
+          </div>
+
+      </div>
+      <!--equip-wrap end-->
+	  
+	  
+       <div id="lside">
+        <form class="form-group">
+          <input type="text" class="form-control" placeholder="搜索">
+          <i class="icon-search"></i>
+        </form>
+        <div class="list-group">
+          <a href="${webbaseurl}/manageComputerFull.action" class="list-group-item">管理</a>
+          <a href="${webbaseurl}/computer/computerAdd.vm" class="list-group-item">添加</a>
+          
+        </div>
+      </div>
+      <!--sidebar end-->
+
+
+
+
+</section>
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script>
+	$("#modifyFaCategoryId").select2("val","2");
+</script>
+</body>
+</html>

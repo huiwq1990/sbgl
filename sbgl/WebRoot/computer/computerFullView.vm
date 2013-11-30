@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script src="../js/html5shiv.js"></script>
+  <script src="../js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body id="admin">
+
+<a href="${webbaseurl}/manageComputerFull.action">返回管理</a>
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+
+            <div class="panel panel-default">
+
+				
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    
+                    <th class="name">属性</th>
+                    <th class="f-category">属性值</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>					
+		          <tr>
+                   
+                    <td>computerid</td>
+                    <td>$!computerFull.computerid</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computerserialnumber</td>
+                    <td>$!computerFull.computerserialnumber</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computercomputermodelid</td>
+                    <td>$!computerFull.computercomputermodelid</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computercreatetime</td>
+                    <td>$!computerFull.computercreatetime</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computercreateuserid</td>
+                    <td>$!computerFull.computercreateuserid</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computerstatus</td>
+                    <td>$!computerFull.computerstatus</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computerremark</td>
+                    <td>$!computerFull.computerremark</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computermodelid</td>
+                    <td>$!computerFull.computermodelid</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computermodelname</td>
+                    <td>$!computerFull.computermodelname</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computermodelcomputercategoryid</td>
+                    <td>$!computerFull.computermodelcomputercategoryid</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computermodelpicpath</td>
+                    <td>$!computerFull.computermodelpicpath</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computermodelcreatetime</td>
+                    <td>$!computerFull.computermodelcreatetime</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computermodelcreateuserid</td>
+                    <td>$!computerFull.computermodelcreateuserid</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computermodelcount</td>
+                    <td>$!computerFull.computermodelcount</td>                    
+                  </tr>               
+		          <tr>
+                   
+                    <td>computermodelstatus</td>
+                    <td>$!computerFull.computermodelstatus</td>                    
+                  </tr>               
+                </tbody>
+              </table>
+			  
+			  
+            </div>
+          </div>
+
+      </div>
+     
+
+</section>
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/computer/computer.js"></script>
+<script>
+	$("#modifyFaCategoryId").select2("val","2");
+</script>
+</body>
+</html>

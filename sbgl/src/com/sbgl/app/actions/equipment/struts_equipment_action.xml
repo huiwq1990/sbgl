@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    <package name="equipmentajax" extends="json-default">
+    	<action name="addClassification" class="EquipmentAction" method="addEquipmentclassification">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+        
+        <action name="getAllClassification" class="EquipmentAction" method="getAllEquipmentclassifications">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+        
+        <action name="alterClassification" class="EquipmentAction" method="alterEquipmentclassification">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+        
+        <action name="deleteClassification" class="EquipmentAction" method="deleteClassfication">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+        
+    	<action name="getAllClassCourse" class="EquipmentAction" method="getAllClassficationCourse">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+    	
+    	<action name="deleteClassifications" class="EquipmentAction" method="deleteClassficationByIds">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+    	
+    	
+    	<action name="addEquipModel" class="EquipmentAction" method="addEquipInfo">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+    	
+    	<action name="delEquipModel" class="EquipmentAction" method="deleteEquipInfo">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+    	
+    	<action name="altEquipModel" class="EquipmentAction" method="alterEquipInfo">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+    	
+    	<action name="getAllEquipModels" class="EquipmentAction" method="getAllEquipInfoCourse">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+    	
+    	<action name="addEquipDetail" class="EquipmentAction" method="addEquipdetail">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+    	
+    	
+    	<action name="alterEquipDetail" class="EquipmentAction" method="alterEquipmentdetail">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+    	
+    	<action name="deleteEquipDetail" class="EquipmentAction" method="deleteEquipmentdetail">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+    	
+    </package>
+    
+   <!--  <package name="equipmentHTML" extends="struts-default">
+    	请求刷新类型界面数据
+        <action name="refreshClassification" class="EquipmentAction" method="gotoEquipManageClassfiction">
+        	<result name="success">
+        		/admin/equipManageClassfication.vm
+        	</result>
+        </action>
+    </package> -->
+    
+</struts>

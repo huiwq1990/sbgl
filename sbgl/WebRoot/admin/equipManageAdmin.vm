@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 设备管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 9]>
+  <script src="${jsDomain}/html5shiv.js"></script>
+  <script src="${jsDomain}/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="http://google.com"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="#anotherAction">个人主页</a></li>
+          <li><a href="#">人脉</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">设置</a></li>
+        <li><a href="用户管理首页.html">用户</a></li>
+        <li class="active"><a href="设备管理首页.html">器材</a></li>
+        <li><a href="#">内容</a></li>
+      </ul>
+    </div>    
+    <ul class="account-wrap nav nav-pills pull-right">
+          <li class="notice dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">消息1</a></li>
+              <li><a href="#">消息2</a></li>
+            </ul>
+          </li>     
+          <li class="social dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="${imageDomain}/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+            <div class="dropdown-menu">
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img src="${imageDomain}/photo.jpg" width="96" height="96" class="img-rounded">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+                  <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+                  <div class="setting"><a href="#">账户设置</a></div>
+                  <button class="btn btn-primary" type="button">查看个人主页</button>
+                </div>
+              </div>
+            </div>      
+          </li>
+        </ul>
+  </div>
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <ul class="nav nav-tabs">
+        <li><a href="设备预约首页.html">器材预约</a></li>
+        <li class="active"><a href="设备管理首页.html">器材管理</a></li>
+      </ul>
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">设备管理</div>
+			  <div class="tips">在此页面下管理设备信息，如设备的添加、修改、删除及维护等。</div>
+              <div class="filter category-filter">
+                <select id="select-categories" style="width:130px" class="select2">
+                  <option value="0" data-foo="fa">全部分类</option>
+				  #foreach($clazz in $classForEquipAdd)
+    				#if($!clazz.isParent == '1')
+						<option value="1" data-foo="fa">$!clazz.name</option>
+    				#else
+						<option value="$!clazz.id" data-foo="sub">$!clazz.name</option>
+    				#end
+    			 #end
+                </select>
+              </div>
+              
+              <div class="operate-item pull-left">
+                <a href="${webbaseurl}/equipManageEquip.do" class="btn btn-primary">添加设备</a>
+                <a href="#" class="btn btn-white s-h" action-type="deleteDetail"><i class="icon-trash"></i> 删除</a>
+              </div>
+
+              <div class="page pull-right clearfix">
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">最新</a></li>
+                      <li><a href="#">最旧</a></li>
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+                  <ul>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+              <ul class="status-filter nav nav-pills pull-right">
+                <li class="active"><a href="#">全部($!equipDetailCourse.size())（无不显示）</a></li>
+                <li><a href="#">正常(5)</a></li>
+                <li><a href="#">借出(2)</a></li>
+                <li><a href="#">维护(2)</a></li>
+                <li><a href="#">维修(2)</a></li>
+                <li><a href="#">遗失(2)</a></li>
+                <li><a href="#">回收站(1)</a></li>
+              </ul>
+            </div><!--control-bar end-->
+            <div class="panel panel-default table-responsive" id="detailDataDomain">
+                          
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="id">编号</th>
+                    <th class="name">设备名称(型号)</th>
+                    <th class="categories">分类</th>
+                    <th class="status">状态</th>
+                    <th class="remark">备注</th>
+                  </tr>
+                </thead>
+                <tbody>
+				  #foreach($equipDetail in $equipDetailCourse)
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!equipDetail.id"></td>
+                    <td>$!equipDetail.code<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="alterDetailFillIn" data-id="$!equipDetail.id" data-code="$!equipDetail.code" data-mid="$!equipDetail.modelId" data-state="$!equipDetail.state" data-memo="$!equipDetail.memo">修改</a></td>
+                    <td>$!equipDetail.modelName</td>
+					<td>$!equipDetail.className</td>
+					#if($!equipDetail.state == 0)
+						<td>正常</td>
+					#elseif($!equipDetail.state == 1)
+						<td>借出</td>
+					#elseif($!equipDetail.state == 2)
+						<td>维护</td>
+					#elseif($!equipDetail.state == 3)
+						<td>维修</td>
+					#elseif($!equipDetail.state == 4)
+						<td>遗失</td>
+					#elseif($!equipDetail.state == 5)
+						<td>回收站</td>
+					#end
+                    <td>$!equipDetail.memo</td>
+                  </tr>
+                  #end
+                </tbody>
+              </table>
+              
+            </div>
+          </div>
+
+      </div><!--equip-wrap end-->
+      <div id="lside"><!--sidebar start-->
+        <form class="form-group">
+          <input type="text" class="form-control" placeholder="搜索设备">
+          <i class="icon-search"></i>
+        </form>
+        <div class="list-group">
+          <a href="${webbaseurl}/equipManageAdmin.do" class="list-group-item active">设备管理</a>
+          <a href="${webbaseurl}/equipManageEquip.do" class="list-group-item">添加设备</a>
+          <a href="${webbaseurl}/equipManageModel.do" class="list-group-item">型号管理</a>
+          <a href="${webbaseurl}/equipManageClassfication.do" class="list-group-item">分类管理</a>
+        </div>
+      </div>
+      <!--sidebar end-->
+
+</section>
+
+
+<!-- Modal -->
+<div id="modify-status" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">修改</h3>
+  </div>
+  
+  <div class="modal-body">
+      <p>修改设备。</p>
+      <form class="form-horizontal" role="form">
+        <div class="form-group">
+          <label for="modifyEquipId" class="col-xs-3 control-label">设备号</label>
+          <div class="col-xs-7">
+            <input type="text" class="form-control" id="modifyEquipId" placeholder="设备编号">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="modifyEquipModelId" class="col-xs-3 control-label">所属设备型号</label>
+          <div class="col-xs-7">
+            <select class="select2 select-white form-control" id="modifyEquipModelId">
+			  #foreach($equip in $equipCourse)
+			    #if($!equip.showClass == '1')
+				  <optgroup label="$!equip.cName">
+			    #else
+				  <option value="$!equip.id">$!equip.name</option>
+			    #end
+			  #end
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="modifyEquipCategory" class="col-xs-3 control-label">分类</label>
+          <div class="col-xs-7">
+            <select class="select2 select-white form-control" id="modifyEquipCategory">
+              <optgroup label="摄影摄像机">
+                <option value="2">数字摄影机</option>
+                <option value="3">数字摄像机</option>
+                <option value="4">单反</option>
+              </optgroup>
+              <optgroup label="灯具">
+                <option value="6">钨丝灯</option>
+                <option value="7">镝灯</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="modifyEquipStatus" class="col-xs-3 control-label">状态</label>
+          <div class="col-xs-7">
+            <select class="select2 select-white form-control" id="modifyEquipStatus">
+              <option value="0">正常</option>
+              <option value="1">借出</option>
+              <option value="2">维护</option>
+              <option value="3">维修</option>
+              <option value="4">遗失</option>
+	      <option value="5">回收站</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="modifyEquipRemark" class="col-xs-3 control-label">备注</label>
+          <div class="col-xs-7">
+            <textarea class="form-control" id="modifyEquipRemark" rows="3"></textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary" action-type="alterDetail">确 定</button>
+  </div>
+</div>
+
+<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
+  <img src="${imageDomain}/cover-img.jpg" class="cover" alt="封面照片">
+  <div class="cover-layout"></div>
+  <div class="avatar"><img src="${imageDomain}/photo.jpg" width="80" height="80" class="img-circle"></div>
+  <div class="user-wrap">
+    <div class="user-name"><a href="#">用户名</a></div>
+    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
+    <div class="user-info">职务等信息</div>
+    <div class="user-info">地点</div>
+  </div>
+  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
+</div>
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+
+<script>
+	var cookie = { 
+  		//读取COOKIES,n为COOKIE名 
+   		Get:function(n){ 
+       		var re=new RegExp(n+'=([^;]*);?','gi');
+       	    var r=re.exec(document.cookie)||[];
+       	    return (r.length>1?r[1]:null)
+   		}
+	};
+	var detailIdForAlter;
+	var detailCodeForAlter;
+	var detailMIdForAlter;
+	var detailStatus;
+	var detailMemo;
+	var idsForDel;
+	
+	/* 处理CheckBox选中事件用于删除处理 */
+	$("input[type='checkbox']").click(function() {
+		//var num = 0;
+		idsForDel = "";
+		
+		if($(this).attr("id") === "chk-all") {
+			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
+		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true) {
+				//num++;
+				idsForDel += $(this).prop("value") + "_";
+			}
+		});
+	});
+	
+	$("body").on("click", "a[action-type|=alterDetailFillIn]", function() {
+		var myData = $(this).data();
+		
+		$("#modifyEquipId").val(myData.code);
+		$("#modifyEquipModelId").select2("val", myData.mid);
+		$("#modifyEquipStatus").select2("val", myData.state);
+		$("#modifyEquipRemark").val(myData.memo);
+		
+		detailIdForAlter = myData.id;
+		detailCodeForALter = myData.code
+		detailMIdForAlter = myData.mid;
+		detailStatusForAlter = myData.state;
+		detailMemoForAlter = myData.memo;
+		
+		console.log("myData.id " + myData.id);
+		console.log("myData.code " + myData.code);
+		console.log("myData.modelId " + myData.mid);
+		console.log("myData.state " + myData.state);
+		console.log("myData.memo " + myData.memo);
+	})
+	
+	$('.modal').on('click', ('button.btn-primary'), function () {
+		var _this = $(this);
+		if(_this.attr('action-type') == 'alterDetail') {
+    		var dCode = $("#modifyEquipId").val();
+    		var dMid = $("#modifyEquipModelId").val();
+    		var dStatus = $("#modifyEquipStatus").val();
+    		var dMemo = $("#modifyEquipRemark").val();
+    		
+    		if(dCode == detailCodeForALter && dMid == detailMIdForAlter && dStatus == detailStatusForAlter && dMemo == detailMemoForAlter) {
+    			alert("并未做修改！");
+    		} else {
+    			var postData = {
+    				"equipmentdetail.equipDetailid": detailIdForAlter,
+    				"equipmentdetail.equipserial": dCode,
+    				"equipmentdetail.equipmentid": dMid,
+    				"equipmentdetail.status": dStatus,
+    				"equipmentdetail.administrationid": cookie.Get("id"),
+    				"equipmentdetail.usermark": dMemo
+    			}
+    			
+    			jQuery.ajax({  
+    			    url:"${webbaseurl}/alterEquipDetail.do",  
+    			    type:"post",
+    			    data:postData,
+    			    success:function(data,textStatus,jq){  
+    			    	console.log(data);
+    					if(data.tag == "0") {
+        					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
+        		    		_this.parents('.modal').modal('toggle');
+							
+							//刷新界面数据
+        					jQuery.ajax({
+        						url: "${webbaseurl}/flushEquipDetail.do",  
+        		    			type: "post",
+        						success: function(data,textStatus,jq) { 
+        							$("#admin-wrap").html(data);
+        						},
+        						error: function(data,textStatus,jq) {
+        							alert("刷新界面失败!");
+        						}
+        					})
+        				} else {
+        					var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+        				}
+    		        },  
+    			    error:function(data,textStatus,jq) {
+    					var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+    				}  
+    			});
+    		}
+		}
+	})
+	
+	$("body").on("click", "a[action-type|=deleteDetail]", function() {
+		var postData = {
+			equipdetailIds: idsForDel
+		}
+		jQuery.ajax({  
+		    url:"${webbaseurl}/deleteEquipDetail.do",  
+		    type:"post",
+		    data:postData,
+		    success:function(data,textStatus,jq){  
+		    	console.log(data);
+				if(data.tag == "0") {
+					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
+					
+					//刷新界面数据
+					jQuery.ajax({
+						url: "${webbaseurl}/flushEquipDetail.do",  
+		    			type: "post",
+						success: function(data,textStatus,jq) { 
+							$("#admin-wrap").html(data);
+						},
+						error: function(data,textStatus,jq) {
+							alert("刷新界面失败!");
+						}
+					})
+				} else {
+					var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+				}
+	        },  
+		    error:function(data,textStatus,jq) {
+				var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+			}  
+		});
+	})
+</script>
+</body>
+</html>

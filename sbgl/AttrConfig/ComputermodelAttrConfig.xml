@@ -1,0 +1,6 @@
+
+    ManyToOne;attrName=computercategoryid ;colName=computercategoryid;class=Computercategory;
+//如果有多对一，则配置
+//OneToMany;attrName= ;colName=;class=;
+
+	
