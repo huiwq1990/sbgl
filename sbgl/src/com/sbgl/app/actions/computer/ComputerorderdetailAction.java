@@ -283,7 +283,7 @@ public class ComputerorderdetailAction extends ActionSupport implements SessionA
 //              选择能更改的属性，与界面一致	
   				tempComputerorderdetail.setComputerorderid(computerorderdetail.getComputerorderid());
   				tempComputerorderdetail.setComputerid(computerorderdetail.getComputerid());
-  				tempComputerorderdetail.setComputernumber(computerorderdetail.getComputernumber());
+  				
   				tempComputerorderdetail.setCreatetime(computerorderdetail.getCreatetime());
   				tempComputerorderdetail.setBorrowday(computerorderdetail.getBorrowday());
   				tempComputerorderdetail.setBorrowperiod(computerorderdetail.getBorrowperiod());
