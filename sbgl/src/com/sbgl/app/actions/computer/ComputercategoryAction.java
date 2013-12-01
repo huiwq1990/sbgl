@@ -50,13 +50,27 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	List<ComputercategoryFull> computercategoryFullList = new ArrayList<ComputercategoryFull>();
 	private Integer computercategoryid; //entity full 的id属性名称		
 	
-	String computercategoryIdsForDel;
+	
 	
 	private String logprefix = "exec action method:";		
 	Page page = new Page();
 	Integer pageNo=1;	
 
 	ReturnJson returnJson = new ReturnJson();
+	
+	
+	//添加信息
+	private String inputAddCategoryNameEn;
+	private String inputAddCategoryNameCh;
+	
+	//修改信息
+	private int computercategoryIdCh;
+	private String computercategoryNameCh;
+	private int computercategoryIdEn;
+	private String computercategoryNameEn;
+	
+	//删除
+	String computercategoryIdsForDel;
 	
 	public String addComputercategory(){	
 		log.info("Add Entity");
@@ -88,24 +102,22 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 		log.info("Add Entity Ajax Manner");
 		
 		//名称不规范
-		boolean pass = checkComputercategoryName();
-		if(!pass){
-			return SUCCESS;
-		}
-		
-		
+//		boolean pass = checkComputercategoryName();
+//		if(!pass){
+//			return SUCCESS;
+//		}
 		
 		try {
-			Computercategory temp = new Computercategory();
-			// 将model里的属性值赋给temp
-			computercategory.setName(computercategory.getName().trim());
-			BeanUtils.copyProperties(temp, computercategory);			
-			//add your code here.
+			Computercategory tempCh = new Computercategory();		
+			BeanUtils.copyProperties(tempCh, computercategory);		
+			tempCh.setName(inputAddCategoryNameCh.trim());
+			tempCh.setLanguagetype("0");
 			
-			//temp.setCreatetime(DateUtil.currentDate());
-			
-			
-			computercategoryService.addComputercategory(temp);
+			Computercategory tempEn = new Computercategory();			
+			BeanUtils.copyProperties(tempEn, computercategory);		
+			tempEn.setName(inputAddCategoryNameEn.trim());
+			tempEn.setLanguagetype("1");
+			computercategoryService.addComputercategory(tempCh,tempEn);
 			
 			returnJson.setFlag(1);
 			returnJson.setReason("添加分类成功");
@@ -136,6 +148,8 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 			this.returnStr = jo.toString();				
 			return false;
 		}
+		
+		
 		
 		if(computercategoryService.isComputercategoryNameExist(computercategory.getName().trim())){
 			returnJson.setFlag(0);	
@@ -231,9 +245,10 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 			String ids[] = computercategoryIdsForDel.split(";");
 			for(int i=0; i < ids.length;i++){
 				
-				Integer tempDelId = Integer.valueOf(ids[i]);			
-				log.info(tempDelId);
+				Integer typeId = Integer.valueOf(ids[i]);			
+				log.info(typeId);
 				//检查id
+				/*
 				if(tempDelId == null || tempDelId < 0){
 					returnJson.setFlag(0);
 					returnJson.setReason("删除的id不规范");
@@ -243,11 +258,11 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 					return SUCCESS;
 				}	
 				//del
-				Computercategory temp = computercategoryService.selectComputercategoryById(tempDelId);			
+				Computercategory temp = computercategoryService.selectComputercategoryById(typeId);			
 				if (temp != null) {			
 					//将相应的PC类型分类设置成-1
-					computermodelService.updateCategoryComputermodel(tempDelId);
-					computercategoryService.deleteComputercategory(tempDelId);
+					computermodelService.updateCategoryComputermodel(typeId);
+					computercategoryService.deleteComputercategory(typeId);
 					
 				} else {
 					log.info("删除的id不存在");		
@@ -257,9 +272,15 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 					this.returnStr = jo.toString();
 					return SUCCESS;
 				}
+				*/
+				computermodelService.updateCategoryComputermodel(typeId);
+				computercategoryService.deleteComputercategoryByType(typeId);
+				
+				
+				
 			}
 			returnJson.setFlag(1);
-//			returnJson.setReason("删除的id不存在");
+			returnJson.setReason("删除成功!");
 			JSONObject jo = JSONObject.fromObject(returnJson);
 			this.returnStr = jo.toString();
 			return SUCCESS;
@@ -275,59 +296,32 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 		return SUCCESS;
 	}
 
-//修改
-	public String updateComputercategory(){
-		try {
-			if(computercategory.getId() != null && computercategory.getId() > 0){				
-				Computercategory tempComputercategory = computercategoryService.selectComputercategoryById(computercategory.getId());
-																				  								
-												  								
-												  								
-												  								
-												  								
-								actionMsg = getText("viewComputercategorySuccess");
-			}else{
-				actionMsg = getText("viewComputercategoryFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputercategoryAction的方法：viewComputercategory错误"+e);
-		}
 
-		return "error";
-	}
-	
-	
 	//ajax 修改
 	public String updateComputercategoryAjax(){
-		log.info(logprefix + "updateComputercategoryAjax,id="+computercategory.getId());
+		log.info(logprefix + "updateComputercategoryAjax,id=");
 		ReturnJson returnJson = new ReturnJson();
 		try {
-			if(computercategory.getId() != null && computercategory.getId() > 0){				
-				Computercategory tempComputercategory = computercategoryService.selectComputercategoryById(computercategory.getId());
+			
+//			ch
+				Computercategory tempComputercategory = computercategoryService.selectComputercategoryById(computercategoryIdCh);
+
+  				tempComputercategory.setName(computercategoryNameCh);
+				computercategoryService.updateComputercategory(tempComputercategory);			
 				
-				
-//              选择能更改的属性，与界面一致	
-  				tempComputercategory.setParentcomputercategoryid(computercategory.getParentcomputercategoryid());
-  				tempComputercategory.setName(computercategory.getName());
-  				tempComputercategory.setCreatetime(computercategory.getCreatetime());
-  				tempComputercategory.setCreateuserid(computercategory.getCreateuserid());
-  				tempComputercategory.setStatus(computercategory.getStatus());
- 
-				
-				computercategoryService.updateComputercategory(tempComputercategory);		
+//				en
+				tempComputercategory = computercategoryService.selectComputercategoryById(computercategoryIdEn);
+  				tempComputercategory.setName(computercategoryNameEn);
+  				computercategoryService.updateComputercategory(tempComputercategory);	
+  				
 				returnJson.setFlag(1);		
-				JSONObject jo = JSONObject.fromObject(returnJson);
+				returnJson.setReason("修改成功!");
+				JSONObject jo = JSONObject.fromObject(returnJson);				
 				this.returnStr = jo.toString();
 				//actionMsg = getText("viewComputercategorySuccess");
 				return SUCCESS;
 				
-			}else{
-				actionMsg = getText("viewComputercategoryFail");
-				log.info(logprefix + "updateComputercategoryAjax fail");
-			}			
+			
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -335,6 +329,7 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 		}
 
 			returnJson.setFlag(0);		
+			returnJson.setReason("修改失败");
 			JSONObject jo = JSONObject.fromObject(returnJson);
 			this.returnStr = jo.toString();
 			return SUCCESS;
@@ -675,6 +670,107 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 
 	public void setComputercategoryIdsForDel(String computercategoryIdsForDel) {
 		this.computercategoryIdsForDel = computercategoryIdsForDel;
+	}
+
+	public ComputercategoryService getComputercategoryService() {
+		return computercategoryService;
+	}
+
+	public void setComputercategoryService(
+			ComputercategoryService computercategoryService) {
+		this.computercategoryService = computercategoryService;
+	}
+
+	public ComputermodelService getComputermodelService() {
+		return computermodelService;
+	}
+
+	public void setComputermodelService(ComputermodelService computermodelService) {
+		this.computermodelService = computermodelService;
+	}
+
+	public String getActionMsg() {
+		return actionMsg;
+	}
+
+	public void setActionMsg(String actionMsg) {
+		this.actionMsg = actionMsg;
+	}
+
+	public String getLogprefix() {
+		return logprefix;
+	}
+
+	public void setLogprefix(String logprefix) {
+		this.logprefix = logprefix;
+	}
+
+	public ReturnJson getReturnJson() {
+		return returnJson;
+	}
+
+	public void setReturnJson(ReturnJson returnJson) {
+		this.returnJson = returnJson;
+	}
+
+	public String getInputAddCategoryNameEn() {
+		return inputAddCategoryNameEn;
+	}
+
+	public void setInputAddCategoryNameEn(String inputAddCategoryNameEn) {
+		this.inputAddCategoryNameEn = inputAddCategoryNameEn;
+	}
+
+	public String getInputAddCategoryNameCh() {
+		return inputAddCategoryNameCh;
+	}
+
+	public void setInputAddCategoryNameCh(String inputAddCategoryNameCh) {
+		this.inputAddCategoryNameCh = inputAddCategoryNameCh;
+	}
+
+	public static Log getLog() {
+		return log;
+	}
+
+	public Map<String, Object> getSession() {
+		return session;
+	}
+
+	public void setComputercategoryid(Integer computercategoryid) {
+		this.computercategoryid = computercategoryid;
+	}
+
+	public int getComputercategoryIdCh() {
+		return computercategoryIdCh;
+	}
+
+	public void setComputercategoryIdCh(int computercategoryIdCh) {
+		this.computercategoryIdCh = computercategoryIdCh;
+	}
+
+	public String getComputercategoryNameCh() {
+		return computercategoryNameCh;
+	}
+
+	public void setComputercategoryNameCh(String computercategoryNameCh) {
+		this.computercategoryNameCh = computercategoryNameCh;
+	}
+
+	public int getComputercategoryIdEn() {
+		return computercategoryIdEn;
+	}
+
+	public void setComputercategoryIdEn(int computercategoryIdEn) {
+		this.computercategoryIdEn = computercategoryIdEn;
+	}
+
+	public String getComputercategoryNameEn() {
+		return computercategoryNameEn;
+	}
+
+	public void setComputercategoryNameEn(String computercategoryNameEn) {
+		this.computercategoryNameEn = computercategoryNameEn;
 	}
 	
 	

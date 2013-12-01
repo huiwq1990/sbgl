@@ -7,6 +7,7 @@ import org.apache.commons.lang.time.DateUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import com.sbgl.app.actions.computer.ComputerConfig;
 import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.services.computer.ComputermodelService;
@@ -25,8 +26,8 @@ public class TestOrder {
 		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
 		ComputermodelService computermodelService = (ComputermodelService)cxt.getBean("computermodelService");
 		
-		int computerorderTotalOrderDay = 14;
-		int computerorderTotalOrderPeriod = 3;
+		int computerorderTotalOrderDay = ComputerConfig.computerorderTotalOrderDay;
+		int computerorderTotalOrderPeriod = ComputerConfig.computerorderTotalOrderPeriod;
 		
 		//取得当前库存数量
 		List<Computermodel> modelList = computermodelService.selectComputermodelAll();

@@ -9,19 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
-<script >
-	function aaaa(pageNum){
-			jQuery.ajax({  
-		    url: '${webbaseurl}/manageComputercategoryFull.action',  
-		    type: "post",
-		    data:{pageNo:pageNum,passType:'ajaxType'},
-		    dataType: 'html',
-			success: function(data){
-				$("#formComputerorderdetailManage").html(data);
-			}		  	  
-		});		
-	}
-</script> 
+<link rel="stylesheet" href="${cssDomain}/jqpagination.css" type="text/css" />
 <!--[if lt IE 10]>
   <script src="${jsDomain}/jquery.placeholder.js"></script>
   <script>
@@ -111,6 +99,16 @@
               </div>
 
               <div class="page pull-right clearfix">
+				<!--page -->
+			  <div class="pagination">
+				<a href="#" class="first" data-action="first">&laquo;</a>
+				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
+				<input type="text" readonly="readonly" data-max-page="$!page.totalpage" />
+				<a href="#" class="next" data-action="next">&rsaquo;</a>
+				<a href="#" class="last" data-action="last">&raquo;</a>
+			  </div>
+			  <!-- end page -->
+				
                 <ul class="page-index nav nav-pills pull-left">
                   <li class="record"><strong>$!page.totalCount</strong>条记录</li>
                   <li class="dropdown">
@@ -130,8 +128,8 @@
               </div>
             </div><!--control-bar end-->
 				 
-            <div id="formComputerorderdetailManage" class="panel panel-default">
-
+            <div class="panel panel-default">
+<div id="formComputerorderdetailManage">
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -144,27 +142,51 @@
                 </thead>
                 <tbody>
 				
-			#foreach($computercategoryFull in $computercategoryFullList)
+	
+#set($listSize = $computercategoryFullListCh.size() - 1)
+#if($listSize>=0)
+#set($listRegion = [0..$listSize])
+##取出所有的属性名称
+#foreach($tempKey in $listRegion)
+			#set($computercategoryFull = $computercategoryFullListCh.get($tempKey))
+			#set($en = $computercategoryFullListEn.get($tempKey))
+			##set($tempKey = $tempKey*2)
 			  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="$!computercategoryFull.computercategoryid"></td>
-                    <td>$!computercategoryFull.computercategoryname<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button" action-type="editComputercategoryFillIn" data-id="$!computercategoryFull.computercategoryid" data-name="$!computercategoryFull.computercategoryname" >修改</a></td>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!computercategoryFull.computercategorycomputercategorytype"></td>
+                    <td>$!computercategoryFull.computercategoryname<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button" action-type="editComputercategoryFillIn" 
+						data-id="$!computercategoryFull.computercategoryid" data-name="$!computercategoryFull.computercategoryname"
+						data-iden="$!en.computercategoryid" data-nameen="$!en.computercategoryname">修改</a></td>
                   
                     <td>3</td>
                     <td>3</td>
                   </tr>
         
-			#end
+#end
+#end
                 </tbody>
               </table>
+			  <!--page -->
+			  <div class="pagination">
+				<a href="#" class="first" data-action="first">&laquo;</a>
+				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
+				<input type="text" readonly="readonly" data-max-page="$!page.totalpage" />
+				<a href="#" class="next" data-action="next">&rsaquo;</a>
+				<a href="#" class="last" data-action="last">&raquo;</a>
+			  </div>
+			  <!-- end page -->
+			  
 
             </div>
+			
+				</div>
+			
           </div>
 
       </div>
       <!--equip-wrap end-->
 
 	  
-	  
+	    
 	  
 	  
 	  
@@ -198,9 +220,15 @@
     <p>添加设备分类目录。</p>
     <form class="form-horizontal" role="form">
       <div class="form-group">
-        <label for="inputCategoryName" class="col-xs-3 control-label">分类名称</label>
+        <label for="inputCategoryNameCh" class="col-xs-3 control-label">分类名称</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="addComputercategoryName" placeholder="设备类型（如：工作站）">
+          <input type="text" class="form-control" id="addComputercategoryNameCh" placeholder="设备类型（如：工作站）">
+        </div>
+      </div>
+	   <div class="form-group">
+        <label for="inputCategoryNameEn" class="col-xs-3 control-label">分类英文名称</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="addComputercategoryNameEn" placeholder="">
         </div>
       </div>
 	  <!--
@@ -234,9 +262,15 @@
     <p>修改当前选定的设备分类目录。</p>
     <form class="form-horizontal" role="form">
       <div class="form-group">
-        <label for="modifyCategoryName" class="col-xs-3 control-label">分类名称</label>
+        <label for="modifyCategoryName" class="col-xs-3 control-label">分类中文名称</label>
         <div class="col-xs-7">
           <input type="text" class="form-control" id="inputEditComputercategoryName" placeholder="工作站">
+        </div>
+      </div>
+	  <div class="form-group">
+        <label for="modifyCategoryName" class="col-xs-3 control-label">分类英文名称</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="inputEditComputercategoryNameEn" placeholder="工作站">
         </div>
       </div>
 	  <!--获取父级分类 
@@ -272,6 +306,7 @@
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/jquery.jqpagination.js"></script>
 
 <script>
 	$("#modifyFaCategoryId").select2("val","2");
@@ -293,9 +328,11 @@
    		}
 	};
 	var editComputercategoryId;
-	var editComputercategoryName;
+	var editComputercategoryIdEn;
 
-
+//当前页
+var currentpagenum=1;
+var totalpage=$page.totalpage;
 
 // 触发提交按钮事件
 $('.modal').on('click', ('button.btn-primary'), function () {		
@@ -306,10 +343,15 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 		{
 			//alert('test add');
 			var actionUrl = "${webbaseurl}/addComputercategoryAjax.action";
-			var inputCategoryName = $('#addComputercategoryName').val();			
+			var inputAddCategoryNameCh = $('#addComputercategoryNameCh').val();	
+			var inputAddCategoryNameEn = $('#addComputercategoryNameEn').val();	
+			//置空
+			$('#addComputercategoryNameCh').val("");	
+			$('#addComputercategoryNameEn').val("");	
 			var postData = {
 				"createuserid": cookie.Get("id"),
-				"name": inputCategoryName		
+				"inputAddCategoryNameCh": inputAddCategoryNameCh,		
+				"inputAddCategoryNameEn": inputAddCategoryNameEn,		
 			}
 			var successStr = "添加分类成功！";
 			var failedStr = "添加分类失败！";				
@@ -326,7 +368,10 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 				var returnJson = jQuery.parseJSON(data); 
 				if(returnJson.flag == 1){
 					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
-					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框	
+					//添加后页面设置为1
+					currentpagenum = 1;
+					refreshComputercategoryTable();
 					
 				}else{
 					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
@@ -341,18 +386,22 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 	$("body").on("click", "a[action-type|=editComputercategoryFillIn]", function() {
 		var myData = $(this).data();
 		$("#inputEditComputercategoryName").val(myData.name);	
+		$("#inputEditComputercategoryNameEn").val(myData.nameen);	
 		editComputercategoryId = myData.id;
-		editComputercategoryName = myData.name;
+		editComputercategoryIdEn= myData.iden;
+		
 	})
 	
 	//更新分类
 	$("body").on("click", "button[action-type|=updateComputercategoryButton]", function() {
+		var _this = $(this);
 		var modelName = $("#inputEditComputercategoryName").val();
-
+		var modelNameEn = $("#inputEditComputercategoryNameEn").val();
 			var postData = {
-				"id": editComputercategoryId,
-				"name": modelName
-				
+				"computercategoryIdCh": editComputercategoryId,
+				"computercategoryNameCh": modelName,
+				"computercategoryIdEn": editComputercategoryIdEn,
+				"computercategoryNameEn": modelNameEn
 			}
 			
 			jQuery.ajax({  
@@ -362,12 +411,14 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 			  	dataType: 'json',
 				success: function(data){
 				var returnJson = jQuery.parseJSON(data); 
-			//alert(returnJson.flag);
-			if(returnJson.flag==1){
-				alert("保存成功!")
-			}else{
-				alert("保存失败!")
-			}
+				if(returnJson.flag == 1){
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+					console.log('this is :'+$(this));
+					refreshComputercategoryTable();
+				}else{
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
+				}
 		}	});		  	  
 
 	})
@@ -377,7 +428,7 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 	
 	var idsForDel;	
 	/* 处理CheckBox选中事件用于删除处理 */
-	$("input[type='checkbox']").click(function() {
+	/*$("input[type='checkbox']").click(function() {
 		//var num = 0;
 		idsForDel = "";
 		
@@ -390,14 +441,48 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 				idsForDel += $(this).prop("value") + ";";
 			}
 		});
+	});*/
+	
+	$("body").on("click", "input[type='checkbox']", function() {
+		var num = 0;
+		if($(this).attr("id") === "chk-all") {
+			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
+		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true){
+				num++;  
+			}
+		});
+		if(num > 0){
+			$(".s-h").css({
+				"visibility": "visible",
+				"opacity": "1",
+				"filter": "alpha(opacity=100)"
+			});
+		} else {
+			$(".s-h").css({
+				"visibility": "hidden",
+				"opacity": "0",
+				"filter": "alpha(opacity=0)"
+			});
+		}
+		
+		idsForDel = "";
+		
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true) {
+				//num++;
+				idsForDel += $(this).prop("value") + ";";
+			}
+		});
 	});
-	//end box
+	//end checkbox
 	
 	//delete分类
 	$("body").on("click", "a[action-type|=deleteComputercategory]", function() {
 		idsForDel = idsForDel.substring(0,idsForDel.length-1);
 		var postData = {
-			computercategoryIdsForDel: idsForDel
+			computercategoryIdsForDel:idsForDel
 		}
 		//alert(idsForDel);
 		jQuery.ajax({  
@@ -407,22 +492,56 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 			  dataType: 'json',
 			success: function(data){
 				var returnJson = jQuery.parseJSON(data); 
-
-				
 				if(returnJson.flag == 1){
-					var n = noty({text: 'sss', timeout: 2500, type: 'success'});					
-					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框					
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});	
+					refreshComputercategoryTable();
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+					console.log('this is :'+$(this));
+					
 				}else{
-					var n = noty({text: failedStr, timeout: 2500, type: 'error'});
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
 				}
-
 				
-				
-				}		  	  
-			});
+			}		  	  
+		});
 	})
 	//end delete 分类
 	
+
+//换页时调用方法
+	$('.pagination').jqPagination({
+    	paged: function(page) {
+     	   // do something with the page variable
+			currentpagenum = page;
+			refreshComputercategoryTable();
+		
+    	}
+	});
+	
+
+	function refreshComputercategoryTable(){
+			jQuery.ajax({  
+		    url: '${webbaseurl}/manageComputercategoryFull.action',  
+		    type: "post",
+		    data:{pageNo:currentpagenum,callType:'ajaxType'},
+		    dataType: 'html',
+			success: function(data){
+				$("#formComputerorderdetailManage").html(data);
+				
+				$('.pagination').jqPagination({
+					link_string	: '/?page={page_number}',
+					max_page	: totalpage,
+					current_page:currentpagenum,
+					paged: function(page) {     	  
+						currentpagenum = page;
+						refreshComputercategoryTable();
+		
+    				}
+				});
+				}		  	  
+			});		
+	}
+
 	
 </script>
 </body>
