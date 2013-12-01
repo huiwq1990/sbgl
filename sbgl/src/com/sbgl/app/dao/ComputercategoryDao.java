@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.ComputercategoryFull;
+import com.sbgl.app.entity.Computercategoryi18n;
 import com.sbgl.util.*;
 
 public interface ComputercategoryDao{
@@ -31,6 +32,12 @@ public List<Computercategory> selectComputercategoryByCondition(String condition
 	public List<Computercategory> selectComputercategoryByComputercategoryId(Integer parentcomputercategoryid );
 
 	public List<ComputercategoryFull> selectComputercategoryFullByComputercategoryId(Integer parentcomputercategoryid );
+
+	List<Computercategoryi18n> selectComputercategoryi18nByConditionAndPage(
+			String conditionSql, Page page);
+
+	List<Computercategoryi18n> selectComputercategoryi18nByCondition(
+			String conditionSql);
 
  
 }

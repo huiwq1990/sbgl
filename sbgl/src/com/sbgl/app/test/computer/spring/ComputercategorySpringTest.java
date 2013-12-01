@@ -16,6 +16,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.ComputercategoryFull;
+import com.sbgl.app.entity.Computercategoryi18n;
 import com.sbgl.app.services.computer.ComputercategoryService;
 import com.sbgl.util.*;
 import com.sbgl.app.services.common.*;
@@ -32,7 +33,7 @@ public class ComputercategorySpringTest {
 //		selectComputercategoryById(1L);
 //		selectComputercategoryFullById(1L);
 //      selectComputercategoryFullAll();
-
+//		selectComputercategoryi18n();
 	}
 	
 	
@@ -264,7 +265,7 @@ public class ComputercategorySpringTest {
 			return;
 		}
 		for(int i = 0; i < objList.size(); i++){
-	//		System.out.println("id="+objList.get(i).getId());
+			System.out.println("id="+objList.get(i).getComputercategoryname());
 		}
 	}
 
@@ -295,4 +296,19 @@ public class ComputercategorySpringTest {
 			//System.out.println("id="+objList.get(i).getId());
 		}
 	}
+		
+		
+		
+		public static void selectComputercategoryi18n(){
+			
+			ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
+			
+			ComputercategoryService computercategoryService = (ComputercategoryService)cxt.getBean("computercategoryService");
+//			Page page = new Page(1,3);
+
+			List<Computercategoryi18n> objList  =  computercategoryService.selectComputercategoryi18nByCondition("");
+			for(int i = 0; i < objList.size(); i++){
+				System.out.println("id="+objList.get(i).getNamech());
+			}
+		}
 }

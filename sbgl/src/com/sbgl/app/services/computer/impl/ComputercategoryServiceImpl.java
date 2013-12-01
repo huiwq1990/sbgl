@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.ComputercategoryFull;
+import com.sbgl.app.entity.Computercategoryi18n;
 import com.sbgl.app.services.computer.ComputercategoryService;
 import com.sbgl.app.dao.ComputercategoryDao;
 import com.sbgl.app.dao.BaseDao;
@@ -59,6 +60,13 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 		//return computercategoryDao.deleteEntity(computercategoryId);	
 		//baseDao.deleteEntityById(Computercategory.class,computercategoryId);
 		baseDao.deleteEntity(computercategory);
+		return 1;
+	}
+	
+	@Override
+	public int deleteComputercategoryByType(Integer computercategoryType){
+		String sql = "delete from Computercategory where computercategorytype="+computercategoryType;
+		baseDao.createSQL(sql);
 		return 1;
 	}
 
@@ -122,9 +130,18 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 	 */
 	public List<ComputercategoryFull> selectShowedComputercategoryFullByPage(Page page){
 		page.setTotalCount(baseDao.getRowCount(Computercategory.class));
-		String showFullConditon = " a.id > 0";
+		String showFullConditon = "where a.id > 0";
 		return computercategoryDao.selectComputercategoryFullByConditionAndPage(showFullConditon,page);
 	}
+	
+	@Override
+	public List<ComputercategoryFull> selectComputercategoryFullByConditionAndPage(String sql,Page page){
+//		page.setTotalCount(baseDao.getRowCount(Computercategory.class));
+//		String showFullConditon = " a.id > 0";
+		return computercategoryDao.selectComputercategoryFullByConditionAndPage(sql,page);
+	}
+	
+	
 	
 	public int countComputercategoryRow(){
 		return baseDao.getRowCount(Computercategory.class);
@@ -136,7 +153,6 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 	}
 //  分页查询full	
 	public List<ComputercategoryFull> selectComputercategoryFullByPage(Page page){
-		page.setTotalCount(baseDao.getRowCount(Computercategory.class));
 		return computercategoryDao.selectComputercategoryFullByPage(page);
 	}
 	
@@ -172,4 +188,12 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 		 }
 	 }
 
+	@Override
+	public List<Computercategoryi18n> selectComputercategoryi18nByCondition(String conditionSql){
+		return computercategoryDao.selectComputercategoryi18nByCondition(conditionSql);
+	}
+	@Override
+	public List<Computercategoryi18n> selectComputercategoryi18nByConditionAndPage(String conditionSql,final Page page){
+		return computercategoryDao.selectComputercategoryi18nByConditionAndPage(conditionSql, page);
+	}
 }
