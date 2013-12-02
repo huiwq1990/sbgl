@@ -30,7 +30,7 @@ import com.sbgl.app.services.computer.ComputerService;
 import com.sbgl.app.services.computer.ComputercategoryService;
 import com.sbgl.app.services.computer.ComputermodelService;
 import com.sbgl.app.services.computer.ComputerorderService;
-import com.sbgl.util.ComputerDirective;
+//import com.sbgl.util.ComputerDirective;
 import com.sbgl.util.Page;
 import com.sbgl.util.SpringContextUtil;
 import com.sbgl.util.SpringUtil;
@@ -39,7 +39,7 @@ import com.sbgl.util.SpringUtil;
 
 @Scope("prototype") 
 @Controller("ManageComputerAction")
-public class ManageComputerAction extends ActionSupport implements SessionAware, ComputerDirective{
+public class ManageComputerAction extends ActionSupport implements SessionAware {
 
 	private static final Log log = LogFactory.getLog(ManageComputerAction.class);
 

@@ -81,6 +81,12 @@
         		<param name="root">returnJSON</param>
         	</result>
         </action>
+        
+        <action name="uploadFile" class="com.sbgl.app.actions.upload.FileUploadAction" method="uploadFile">
+			<result type="json">
+        		<param name="root">savedFileName</param>
+        	</result>
+		</action>
     	
     </package>
     

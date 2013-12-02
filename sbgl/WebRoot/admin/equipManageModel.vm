@@ -9,10 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
-<script src="${jsDomain}/fileUpload/swfupload.js"></script>
-<script src="${jsDomain}/fileUpload/swfupload.queue.js"></script>
-<script src="${jsDomain}/fileUpload/fileprogress.js"></script>
-<script src="${jsDomain}/fileUpload/handlers.js"></script>
+
 <!--[if lt IE 9]>
   <script src="../js/html5shiv.js"></script>
   <script src="../js/respond.min.js"></script>
@@ -20,109 +17,6 @@
 <!--[if IE 7]>
 <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
 <![endif]-->
-<!-- 初始化swfupload 对象-->
-<!--   <script type="text/javascript">
-	var upload1, upload2;
-	var equipmentid = ""
-	var uploadFileName = "";
-	var addflag = "1";
-
-	window.onload = function() {
-		upload1 = new SWFUpload({
-
-			//提交路径
-			upload_url: "${webbaseurl}/uploadFile.do",
-			//向后台传递额外的参数
-			post_params: {"name" : uploadFileName},
-			//上传文件的名称
-			file_post_name: "file",
-				
-			// 下面自己按照字面意思理解
-			file_size_limit : "102400",	// 100MB
-			file_types : "*.*",
-			file_types_description : "All Files",
-			file_upload_limit : "10",
-			file_queue_limit : "0",
-
-			// 事件处理
-			file_dialog_start_handler : fileDialogStart,
-			file_queued_handler : fileQueued,
-			file_queue_error_handler : fileQueueError,
-			file_dialog_complete_handler : fileDialogComplete,
-			upload_start_handler : uploadStart,
-			upload_progress_handler : uploadProgress,
-			upload_error_handler : uploadError,
-			upload_success_handler : uploadSuccess,
-			upload_complete_handler : uploadComplete,
-
-			// 按钮的处理
-			button_image_url : "img/uploadBtn.png",
-			button_placeholder_id : "imageUploadBtn",
-			button_width: 98,
-			button_height: 26,
-				
-			// Flash Settings
-			flash_url : "js/fileUpload/swfupload.swf",
-				
-
-			custom_settings : {
-				progressTarget : "fsUploadProgress1",
-				cancelButtonId : "btnCancel1"
-			},
-				
-			// Debug Settings
-			debug: false
-		});
-		
-		upload2 = new SWFUpload({
-
-			//提交路径
-			upload_url: "${webbaseurl}/uploadFile.do",
-			//向后台传递额外的参数
-			post_params: {"name" : uploadFileName},
-			//上传文件的名称
-			file_post_name: "file",
-				
-			// 下面自己按照字面意思理解
-			file_size_limit : "102400",	// 100MB
-			file_types : "*.*",
-			file_types_description : "All Files",
-			file_upload_limit : "10",
-			file_queue_limit : "0",
-
-			// 事件处理
-			file_dialog_start_handler : fileDialogStart,
-			file_queued_handler : fileQueued,
-			file_queue_error_handler : fileQueueError,
-			file_dialog_complete_handler : fileDialogComplete,
-			upload_start_handler : uploadStart,
-			upload_progress_handler : uploadProgress,
-			upload_error_handler : uploadError,
-			upload_success_handler : uploadSuccess,
-			upload_complete_handler : uploadComplete,
-
-			// 按钮的处理
-			button_image_url : "img/uploadBtn.png",
-			button_placeholder_id : "imageUploadBtn2",
-			button_width: 98,
-			button_height: 26,
-				
-			// Flash Settings
-			flash_url : "js/fileUpload/swfupload.swf",
-				
-
-			custom_settings : {
-				progressTarget : "fsUploadProgress1",
-				cancelButtonId : "btnCancel1"
-			},
-				
-			// Debug Settings
-			debug: false
-		});
-	}
-	    
-	</script>
--->
 </head>
 
 <body id="admin">
@@ -326,9 +220,13 @@
           <span class="btn btn-white file-input-button">
               <i class="icon-plus"></i>
               <span>添加图片</span>
-              <input id="modifyEPic" type="file" name="files[]" multiple>
+              <input id="modifyEPic" action-type="showFileNameForAlter" type="file" name="file" multiple>
           </span>
+		  <span id="imgFileForAlter"></span>
         </div>
+		<br>
+		<br>
+		<div id="files" class="files"></div>
       </div>
     </form>
   </div>
@@ -387,8 +285,9 @@
           <span class="btn btn-white file-input-button">
               <i class="icon-plus"></i>
               <span>添加图片</span>
-              <input id="inputEPic" type="file" name="files[]" multiple>
+              <input id="inputEPic" type="file" action-type="showFileNameForAdd" name="file" multiple>
           </span>
+          <span id="imgFileForAdd"></span>
         </div>
       </div>
     </form>
@@ -407,8 +306,7 @@
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
-
-
+<script src="${jsDomain}/ajaxfileupload.js"></script>
 <!--[if lt IE 10]>
   <script src="./js/jquery.placeholder.js"></script>
   <script>
@@ -495,6 +393,7 @@
 		var _this = $(this);
 		var postData = {};
 		var actionUrl = "";
+		var imgFile = "";
 		
 		if(_this.attr('action-type') == 'addModel') {
 			var modelName = $("#inputEModelName").val();
@@ -505,7 +404,7 @@
         			"equipment.administrationid": cookie.Get("id"),
         			"equipment.equipmentname": modelName,
         			"equipment.classificationid": clazzId,
-        			"equipment.equipmentdetail": memo
+        			"equipment.equipmentdetail": memo,
 					"crtModelPage": currentPageNo
         		}
     			
@@ -514,7 +413,7 @@
 				alert("型号名称不能为空！");
 				return;
 			}
-			
+			imgFile = $("#inputEPic").val();
 		}
 		
 		if(_this.attr('action-type') == 'alterModel') {
@@ -530,12 +429,39 @@
     				"equipment.equipmentid": modelIdForAlter,
     				"equipment.equipmentname": ename,
     				"equipment.classificationid": cidInput,
-    				"equipment.equipmentdetail": memo
+    				"equipment.equipmentdetail": memo,
 					"crtModelPage": currentPageNo
     			}
 				actionUrl = "${webbaseurl}/altEquipModel.do";
 			}
+			imgFile = $("#modifyEPic").val();
 		}
+		//首先进行文件上传操作
+		$.ajaxFileUpload
+		(
+			{
+				url: '${webbaseurl}/uploadFile.do',
+				secureuri: false,
+				fileElementId: 'inputEPic',
+				dataType: 'json',
+				beforeSend:function()
+				{
+					console.log("upload before");
+				},
+				complete:function()
+				{
+					console.log("upload after");
+				},				
+				success: function (data, status)
+				{
+					console.log(data);
+				},
+				error: function (data, status, e)
+				{
+					alert(e);
+				}
+			}
+		)
 		
 		jQuery.ajax({  
 		    url:actionUrl,  
@@ -594,7 +520,7 @@
 	
 	$("body").on("click", "a[action-type|=deleteModel]", function() {
 		var postData = {
-			equipInfoIds: idsForDel
+			equipInfoIds: idsForDel,
 			crtModelPage: currentPageNo
 		}
 		jQuery.ajax({  
@@ -723,6 +649,21 @@
 				alert("刷新界面失败!");
 			}
 		})
+	})
+	
+	/**
+	 *  文件上传
+	 */
+	 $("body").on("change", "input[action-type|=showFileNameForAdd]", function() {
+		var file = $("#inputEPic").val();
+		$("#imgFileForAdd").html(file);
+		$("#inputEPic").prop('disabled', true);
+	})
+	
+	 $("body").on("change", "input[action-type|=showFileNameForAlter]", function() {
+		var file = $("#modifyEPic").val();
+		$("#imgFileForAlter").html(file);
+		$("#modifyEPic").prop('disabled', true);
 	})
 </script>
 </body>

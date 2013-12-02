@@ -27,16 +27,25 @@ public class FileUploadAction  extends ActionSupport{
 	private File file;
 	private String fileFileName;
 	private String fileContentType;
-	private String equipmentid;
+	private String savedFileName;
+//	private String equipmentid;
 	
+	public String getSavedFileName() {
+		return savedFileName;
+	}
+
+	public void setSavedFileName(String savedFileName) {
+		this.savedFileName = savedFileName;
+	}
+
 	public String uploadFile() throws Exception {
-//		System.out.println("##############################################################");
-//		System.out.println("fileFileName = " + fileFileName);
+		System.out.println("##############################################################");
+		System.out.println("file name = " + file.getName());
 //		System.out.println("fileContentType = " + fileContentType);
 //		System.out.println("equipmentid = " + equipmentid);
 		String fileType = fileFileName.substring( fileFileName.indexOf('.') );
 //		String fileType = "";
-		String savedFileName = "";
+		
 		if(fileType != null) {
 			System.out.println("commonService.getCode(\"equipImgCode\").toString() = " + commonService.getCode("equipImgCode").toString());
 			System.out.println("fileType = " + fileType);
@@ -58,10 +67,10 @@ public class FileUploadAction  extends ActionSupport{
 		os.close();
 		is.close();
 		
-		Equipment e = equipService.getEquipmentById( Integer.valueOf(equipmentid) );
-		e.setImgName( fileFileName );
-		e.setImgNameSaved( savedFileName );
-		equipService.alterEquipInfo( e );
+//		Equipment e = equipService.getEquipmentById( Integer.valueOf(equipmentid) );
+//		e.setImgName( fileFileName );
+//		e.setImgNameSaved( savedFileName );
+//		equipService.alterEquipInfo( e );
 		
 		return "success";
 	}
@@ -90,11 +99,11 @@ public class FileUploadAction  extends ActionSupport{
 		this.fileContentType = fileContentType;
 	}
 
-	public String getEquipmentid() {
-		return equipmentid;
-	}
-
-	public void setEquipmentid(String equipmentid) {
-		this.equipmentid = equipmentid;
-	}
+//	public String getEquipmentid() {
+//		return equipmentid;
+//	}
+//
+//	public void setEquipmentid(String equipmentid) {
+//		this.equipmentid = equipmentid;
+//	}
 }
