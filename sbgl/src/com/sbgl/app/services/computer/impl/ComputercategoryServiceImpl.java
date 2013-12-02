@@ -134,6 +134,16 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 		return computercategoryDao.selectComputercategoryFullByConditionAndPage(showFullConditon,page);
 	}
 	
+	
+	@Override
+	public List<ComputercategoryFull> selectComputercategoryFullByCondition(String condition){
+
+		return computercategoryDao.selectComputercategoryFullByCondition(condition);
+	}
+	
+	/**
+	 * 
+	 */
 	@Override
 	public List<ComputercategoryFull> selectComputercategoryFullByConditionAndPage(String sql,Page page){
 //		page.setTotalCount(baseDao.getRowCount(Computercategory.class));

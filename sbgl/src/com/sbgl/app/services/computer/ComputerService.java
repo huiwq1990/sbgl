@@ -46,6 +46,8 @@ public interface ComputerService{
 	void updateComputermodelTo(int originalComputermodelid,
 			int toComputermodelid);
 
+	void addComputer(Computer ch, Computer en);
+
 
 	
 }

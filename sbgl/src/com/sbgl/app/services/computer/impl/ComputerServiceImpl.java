@@ -33,6 +33,20 @@ public class ComputerServiceImpl implements ComputerService{
 		baseDao.saveEntity(computer);		
 	}
 
+	
+	@Override
+	public void addComputer(Computer ch,Computer en){
+		int type = baseDao.getCode("Computertype");
+		ch.setId(baseDao.getCode("Computer"));
+		ch.setComputertype(type);
+		en.setId(baseDao.getCode("Computer"));
+		en.setComputertype(type);
+		baseDao.saveEntity(ch);	
+		baseDao.saveEntity(en);	
+	}
+	
+	
+	
 	@Override
 	public void addComputerWithId(Computer computer){
 	
