@@ -45,7 +45,7 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 
 	private Map<String, Object> session;
 	private int pageNo;
-	private String passType;
+	private String callType;
 
 	// Service
 	@Resource
@@ -61,6 +61,8 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 	List<Computercategory> parentcomputercategoryList = new ArrayList<Computercategory>();
 	List<Computercategory> computercategoryList = new ArrayList<Computercategory>();
 	List<ComputercategoryFull> computercategoryFullList = new ArrayList<ComputercategoryFull>();
+	List<ComputercategoryFull> computercategoryFullListCh = new ArrayList<ComputercategoryFull>();
+	List<ComputercategoryFull> computercategoryFullListEn = new ArrayList<ComputercategoryFull>();
 	
 	@Resource
 	private ComputermodelService computermodelService;
@@ -111,10 +113,25 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 		log.info("exec action method:manageComputercategoryFull");
 		
 //      分页查询		
+		if(pageNo ==0){
+			pageNo =1;
+		}
+		
+		
+		//设置总数量，由于是双语 除2
+		page.setTotalCount(computercategoryService.countComputercategoryRow()/2);
+		//如果页码大于总页数，重新设置
+		if(pageNo>page.getTotalpage()){
+			pageNo = page.getTotalpage();
+		}
 		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
-		//page.setTotalpage(computercategoryService.countComputercategoryRow());
-		computercategoryFullList  = computercategoryService.selectShowedComputercategoryFullByPage(page);
+		String sqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";
+		
+//		computercategoryFullList  = computercategoryService.selectShowedComputercategoryFullByPage(page);
+		computercategoryFullListCh  = computercategoryService.selectComputercategoryFullByConditionAndPage(sqlch , page);
+		
+		String sqlen = " where a.languagetype=1 order by a.computercategorytype,a.languagetype";
+		computercategoryFullListEn  = computercategoryService.selectComputercategoryFullByConditionAndPage(sqlen , page);
 		
 //		查询全部
 //		computercategoryFullList  = computercategoryService.selectComputercategoryFullAll();
@@ -127,7 +144,7 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 		if(parentcomputercategoryList == null){
 			parentcomputercategoryList = new ArrayList<Computercategory>();
 		}
-		if(passType!=null&&passType.equals("ajaxType")){
+		if(callType!=null&&callType.equals("ajaxType")){
 			return "success2";
 		}else{
 			return "success";
@@ -147,7 +164,8 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 		page.setPageNo(pageNo);
 		//设置总数量，在service中设置
 		//page.setTotalpage(computercategoryService.countComputercategoryRow());
-		computercategoryFullList  = computercategoryService.selectShowedComputercategoryFullByPage(page);
+//		computercategoryFullList  = computercategoryService.selectShowedComputercategoryFullByPage(page);
+		computercategoryFullList  = computercategoryService.selectComputercategoryFullByConditionAndPage(" order by computercategorytype,languagetype", page);
 		
 //		查询全部
 //		computercategoryFullList  = computercategoryService.selectComputercategoryFullAll();
@@ -378,12 +396,32 @@ public class ManageComputerAction extends ActionSupport implements SessionAware 
 		this.computermodelFullList = computermodelFullList;
 	}
 
-	public String getPassType() {
-		return passType;
+
+
+	public String getCallType() {
+		return callType;
 	}
 
-	public void setPassType(String passType) {
-		this.passType = passType;
+	public void setCallType(String callType) {
+		this.callType = callType;
+	}
+
+	public List<ComputercategoryFull> getComputercategoryFullListCh() {
+		return computercategoryFullListCh;
+	}
+
+	public void setComputercategoryFullListCh(
+			List<ComputercategoryFull> computercategoryFullListCh) {
+		this.computercategoryFullListCh = computercategoryFullListCh;
+	}
+
+	public List<ComputercategoryFull> getComputercategoryFullListEn() {
+		return computercategoryFullListEn;
+	}
+
+	public void setComputercategoryFullListEn(
+			List<ComputercategoryFull> computercategoryFullListEn) {
+		this.computercategoryFullListEn = computercategoryFullListEn;
 	}
 
 	

@@ -31,6 +31,7 @@ public class DateUtil {
 	public static final SimpleDateFormat worddate = new SimpleDateFormat(
 			"yyyyMMddHHmmss");
 
+	public static final String dateformatstr1 = "yyyy-MM-dd HH:mm:ss";
 	public static Date currentDate() {
 		GregorianCalendar calenda = new GregorianCalendar();
 		return calenda.getTime();
@@ -181,10 +182,17 @@ public class DateUtil {
 		return parseDate(sdf.format(calenda.getTime()) + " " + value);
 	}
 
+	public static String dateFormat(Date myDate,String fromatString){
+
+	     SimpleDateFormat myFormat = new SimpleDateFormat(fromatString); 
+	     return myFormat.format(myDate);
+
+	}
+	
 	public static Date parseDate(String dateStr) {
 		if (dateStr == null)
 			return null;
-		String[] patterns = { "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm",
+		String[] patterns = {"yyyy-MM-dd HH:mm:ss" , "yyyy-MM-dd HH:mm",
 				"yyyy:MM:dd HH:mm:ss", "yyyy-MM-dd", "dd.MM.yy HH:mm",
 				"yyyyMMdd HHmmss", "yyyyMMdd HHmm", "MM/dd/yy hh:mm a",
 				"HH:mm:ss dd.MM.yyyy", "yyyy:MM:dd", "yyyy:MM:dd HH:mm",
@@ -200,6 +208,7 @@ public class DateUtil {
 		}
 		return null;
 	}
+
 
 	public static List<String> dateRegion(String fromDate, String endDate) {
 		try {
@@ -227,6 +236,7 @@ public class DateUtil {
 		calendar.add(Calendar.DATE, day);
 		return calendar.getTime();
 	}
+	
 
 	public static String addDay2(String inDate, int day) {
 		Date datetemp = parseDate(inDate);
@@ -235,6 +245,7 @@ public class DateUtil {
 		calendar.add(Calendar.DATE, day);
 		return date.format(calendar.getTime());
 	}
+
 
 	/**
 	 * 获取某个时间段的day

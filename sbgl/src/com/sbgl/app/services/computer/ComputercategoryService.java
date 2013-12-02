@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.ComputercategoryFull;
+import com.sbgl.app.entity.Computercategoryi18n;
 import com.sbgl.util.*;
 
 public interface ComputercategoryService{
@@ -54,5 +55,16 @@ boolean isComputercategoryNameExist(String name);
 
 void addComputercategory(Computercategory chcomputercategory,
 		Computercategory encomputercategory);
+
+List<ComputercategoryFull> selectComputercategoryFullByConditionAndPage(
+		String sql, Page page);
+
+List<Computercategoryi18n> selectComputercategoryi18nByCondition(
+		String conditionSql);
+
+List<Computercategoryi18n> selectComputercategoryi18nByConditionAndPage(
+		String conditionSql, Page page);
+
+int deleteComputercategoryByType(Integer computercategoryType);
 	
 }
