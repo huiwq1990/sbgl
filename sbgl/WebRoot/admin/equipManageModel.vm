@@ -435,6 +435,8 @@
     				"equipment.equipmentid": modelIdForAlter,
     				"equipment.equipmentname": ename,
     				"equipment.classificationid": cidInput,
+					"equipment.imgName": localFileName,
+        			"equipment.imgNameSaved": savedFileName,
     				"equipment.equipmentdetail": memo,
 					"crtModelPage": currentPageNo
     			}
@@ -652,12 +654,12 @@
         dataType: 'json',
         done: function (e, data) {
             console.log(data);
-			if(data.result.message == 0) {
+			if(data.result.tag == 0) {
 				localFileName = data.files[0].name;
 				savedFileName = data.result.savedFileName;
-				$("#imgFileForAdd").html(file);
+				$("#imgFileForAdd").html(localFileName);
 				$("#inputEPic").prop('disabled', true);
-			} else if(data.result.message == 1) {
+			} else if(data.result.tag == 1) {
 				alert("上传图片失败！");
 				localFileName = "";
 				savedFileName = "";
@@ -671,12 +673,12 @@
         dataType: 'json',
         done: function (e, data) {
             console.log(data);
-			if(data.result.message == 0) {
+			if(data.result.tag == 0) {
 				localFileName = data.files[0].name;
 				savedFileName = data.result.savedFileName;
-				$("#imgFileForAlter").html(file);
+				$("#imgFileForAlter").html(localFileName);
 				$("#modifyEPic").prop('disabled', true);
-			} else if(data.result.message == 1) {
+			} else if(data.result.tag == 1) {
 				alert("上传图片失败！");
 				localFileName = "";
 				savedFileName = "";
