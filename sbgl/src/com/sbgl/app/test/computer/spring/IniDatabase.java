@@ -8,11 +8,14 @@ public class IniDatabase {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		ComputerSpringTest.intTable();
-		ComputercategorySpringTest.intTable();
-		ComputerorderSpringTest.intTable();
-		ComputerorderdetailSpringTest.intTable();
-		ComputermodelSpringTest.intTable();
+		
+//		ComputercategorySpringTest.iniDouble();
+//		ComputermodelSpringTest.iniDouble();
+//		ComputerSpringTest.iniDouble();
+//		
+//		ComputerorderSpringTest.intTable();
+//		ComputerorderdetailSpringTest.intTable();
+		ComputerstatusSpringTest.intTable();
 
 	}
 

@@ -1,6 +1,7 @@
 package com.sbgl.app.actions.computer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,11 +49,7 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	private String callType;
 
 	// Service
-	@Resource
-	private ComputerService computerService;
-	List<Computer> computerList = new ArrayList<Computer>();
-	List<ComputerFull> computerFullList = new ArrayList<ComputerFull>();
-	private Integer computerid; //entity full 的id属性名称		
+	
 	
 	@Resource
 	private ComputercategoryService computercategoryService;
@@ -73,6 +70,16 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	List<ComputermodelFull> computermodelFullListCh = new ArrayList<ComputermodelFull>();
 	List<ComputermodelFull> computermodelFullListEn = new ArrayList<ComputermodelFull>();
 	
+	
+	@Resource
+	private ComputerService computerService;
+	List<Computer> computerList = new ArrayList<Computer>();
+	List<ComputerFull> computerFullList = new ArrayList<ComputerFull>();
+	List<ComputerFull> computerFullListCh = new ArrayList<ComputerFull>();
+	List<ComputerFull> computerFullListEn = new ArrayList<ComputerFull>();
+	//key是分类信息，value是分类中的模型
+	HashMap<Integer, ArrayList<ComputermodelFull>> computermodelByComputercategoryId = new HashMap<Integer,ArrayList<ComputermodelFull>>();
+	private Integer computerid; //entity full 的id属性名称	
 	
 	@Resource
 	private ComputerorderService computerorderService;
@@ -166,28 +173,79 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	
 	
 			
-	//管理 查询
+	//pc管理 
 	public String manageComputerFull(){
 		log.info("exec action method:manageComputerFull");
+
 		
 //      分页查询		
-		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
-		//page.setTotalpage(computerService.countComputerRow());
-		computerFullList  = computerService.selectComputerFullByPage(page);
-		
-//		查询全部
-//		computerFullList  = computerService.selectComputerFullAll();
-
-		if(computerFullList == null){
-			computerFullList = new ArrayList<ComputerFull>();
+		if(pageNo ==0){
+			pageNo =1;
+		}		
+		//设置总数量，由于是双语 除2
+		page.setTotalCount(computerService.countComputerRow()/2);
+		//如果页码大于总页数，重新设置
+		if(pageNo>page.getTotalpage()){
+			pageNo = page.getTotalpage();
 		}
-//		for(int i = 0; i < computerFullList.size(); i++){
-//			System.out.println("id="+computerFullList.get(i).getLoginusername());
-//		}
-		return SUCCESS;
-	}
+		page.setPageNo(pageNo);
+		
+		
+		//查询中文的PC
+		String sqlch = " where a.languagetype=0 order by a.computertype,a.languagetype";		
+		computerFullListCh  = computerService.selectComputerFullByConditionAndPage(sqlch , page);
+		//查询英文的PC
+		String sqlen = " where a.languagetype=1 order by a.computertype,a.languagetype";
+		computerFullListEn  = computerService.selectComputerFullByConditionAndPage(sqlen , page);
+		
+		
+		//model的分类信息，只显示中文的
+		String categorysqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";
+		computercategoryFullList  = computercategoryService.selectComputercategoryFullByCondition(categorysqlch);
+		
+		categoryModelMap();
+		
+		if(computerFullListCh == null){
+			computerFullListCh = new ArrayList<ComputerFull>();
+		}
+		if(computerFullListEn == null){
+			computerFullListEn = new ArrayList<ComputerFull>();
+		}
+		if(computermodelByComputercategoryId == null){
+			computermodelByComputercategoryId = new HashMap<Integer,ArrayList<ComputermodelFull>>();
+		}
 
+		//进入管理界面直接请求，Ajax请求使用AjaxType
+		if(callType!=null&&callType.equals("ajaxType")){
+			return "success2";
+		}else{
+			return "success1";
+		}
+	}		
+	
+	public void categoryModelMap(){
+		//model的分类信息，只显示中文的
+//		String categorysqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";
+//		List<ComputercategoryFull> tempComputercategoryFullList  = computercategoryService.selectComputercategoryFullByCondition(categorysqlch);
+		
+		if(computercategoryFullList == null){
+			computermodelByComputercategoryId  = new HashMap<Integer,ArrayList<ComputermodelFull>>();
+			return ;
+		}
+		for(ComputercategoryFull computercategoryFull : computercategoryFullList){
+			int computercategoryType = computercategoryFull.getComputercategorycomputercategorytype();
+//			if(!computermodelByComputercategoryId.containsKey(computercategoryType)){		
+//				computermodelByComputercategoryId.put(computercategoryType, new ArrayList<ComputermodelFull>());
+//			}
+			String sqlch = " where a.languagetype=0 and a.computercategoryid = "+computercategoryType+" order by a.computermodeltype,a.languagetype";		
+			ArrayList<ComputermodelFull> tempComputermodelFullListCh  = (ArrayList<ComputermodelFull>) computermodelService.selectComputermodelByConditionAndPage(sqlch , page);
+			if(tempComputermodelFullListCh == null){
+				tempComputermodelFullListCh = new ArrayList<ComputermodelFull>();
+			}
+			computermodelByComputercategoryId.put(computercategoryType, tempComputermodelFullListCh);
+		}
+		
+	}
 	
 	//管理ComputermodelFull
 	public String manageComputermodelFull(){
@@ -241,7 +299,10 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	
 	
 	
-	
+	/**
+	 * 跳转到pc添加页面
+	 * @return
+	 */
 	public String toAddComputerPage(){
 		String sqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";
 		computercategoryFullList  = computercategoryService.selectComputercategoryFullByConditionAndPage(sqlch , page);
@@ -447,6 +508,32 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		this.computermodelFullListEn = computermodelFullListEn;
 	}
 
+	public List<ComputerFull> getComputerFullListCh() {
+		return computerFullListCh;
+	}
+
+	public void setComputerFullListCh(List<ComputerFull> computerFullListCh) {
+		this.computerFullListCh = computerFullListCh;
+	}
+
+	public List<ComputerFull> getComputerFullListEn() {
+		return computerFullListEn;
+	}
+
+	public void setComputerFullListEn(List<ComputerFull> computerFullListEn) {
+		this.computerFullListEn = computerFullListEn;
+	}
+
+	public HashMap<Integer, ArrayList<ComputermodelFull>> getComputermodelByComputercategoryId() {
+		return computermodelByComputercategoryId;
+	}
+
+	public void setComputermodelByComputercategoryId(
+			HashMap<Integer, ArrayList<ComputermodelFull>> computermodelByComputercategoryId) {
+		this.computermodelByComputercategoryId = computermodelByComputercategoryId;
+	}
+
+	
 	
 	
 }

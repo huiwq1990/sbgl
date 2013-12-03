@@ -27,7 +27,8 @@
 <!-- entity full manage  -->		
 		<!-- default entity full manage action -->
     	<action name="manageComputerFull" class="ManageComputerAction" method="manageComputerFull">
-        	<result name="success">/computer/computerFullManage.vm</result>
+        	<result name="success1">/computer/computerFullManage.vm</result>
+        	<result name="success2">/computer/computerFullManageContent.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
 		<!-- manage action , go to jsp page -->

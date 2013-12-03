@@ -48,6 +48,9 @@ public interface ComputerService{
 
 	void addComputer(Computer ch, Computer en);
 
+	List<ComputerFull> selectComputerFullByConditionAndPage(
+			String conditionSql, Page page);
+
 
 	
 }

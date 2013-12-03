@@ -134,7 +134,7 @@
 ##取出所有的属性名称
 #foreach($tempKey in $listRegion)
 			#set($ch = $computermodelFullList.get($tempKey))						
-                        <option value="$!ch.computercategoryid" >$!ch.computercategoryname</option>                      
+                        <option value="$!ch.computermodelid" >$!ch.computermodelname</option>                      
                         
 #end
 #end
