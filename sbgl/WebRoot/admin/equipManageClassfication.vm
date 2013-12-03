@@ -245,7 +245,7 @@
 	var alterClassId;    		//修改分类的id
 	var alterClassName;  		//修改分类的name
 	var parentId;        		//父分类id
-var classSum;        			//分类个数
+	var classSum;        		//分类个数
 	var idsForDel = "";  		//用于删除的id串
 	var needDisableIds = [];  	//用于记录已是一级分类的id，不能再将此分类添加父分类
 	//var _obj;            		//select2全局对象

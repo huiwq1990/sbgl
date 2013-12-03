@@ -102,7 +102,7 @@
 
               <div class="page pull-right clearfix">
                 <ul class="page-index nav nav-pills pull-left">
-                  <li class="record">当前分类下有<strong>$!modelCount</strong>条记录</li>
+                  <li class="record">当前分类下有<strong id="sum">$!modelCount</strong>条记录</li>
                   <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!crtModelPage/$!totalModelPages页 <b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu">
@@ -132,7 +132,7 @@
                   </tr>
                 </thead>
                 <tbody>
-				#foreach($model in $equipCourse)
+				#foreach($model in $allModelCourse)
                   <tr>
 				  #if($!model.showClass != 1)
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!model.id"></td>

@@ -404,6 +404,11 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	/**
 	 * 获取全部设备型号信息列表
 	 */
+	private List<EquipModelCourse> allModelCourse;
+	public List<EquipModelCourse> getAllModelCourse() {
+		return allModelCourse;
+	}
+	
 	private List<EquipModelCourse> equipCourse = new ArrayList<EquipModelCourse>();
 	public List<EquipModelCourse> getEquipCourse() {
 		return equipCourse;
@@ -431,9 +436,12 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			List<Equipment> allEquips = equipService.getAllEquips();
 			if(allEquips != null) {
 				modelCount = String.valueOf( allEquips.size() );
-				
-				if(allEquips.size() % 10 != 0 && allEquips.size() > 10) {
+				if(allEquips.size() == 0) {
+					totalModelPages = "1";
+				} else if(allEquips.size() % 10 != 0 && allEquips.size() > 10) {
 					totalModelPages = String.valueOf( allEquips.size() / 10 + 1 );
+				} else if(allEquips.size() % 10 == 0 && allEquips.size() < 10) {
+					totalModelPages = "1";
 				} else {
 					totalModelPages = String.valueOf( allEquips.size() / 10 );
 				}
@@ -453,6 +461,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					
 					equipCourse.add( emc );
 				}
+				
+				allModelCourse = new ArrayList<EquipModelCourse>(equipCourse);
 				
 				List<String> classIds = new ArrayList<String>();
 				List<EquipModelCourse> tempCourse = new ArrayList<EquipModelCourse>();
@@ -476,15 +486,14 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				//根据前台页面请求页码返回数据
 				if(crtModelPage != null && crtModelPage != "") {
 					int startIndex = Integer.valueOf( crtModelPage.trim() ) - 1;
-					int endIndex = (startIndex + 1) * 10 > tempCourse.size() ? tempCourse.size() : (startIndex + 1) * 10;
-					tempCourse = tempCourse.subList(startIndex*10, endIndex);
+					int endIndex = (startIndex + 1) * 10 > allModelCourse.size() ? allModelCourse.size() : (startIndex + 1) * 10;
+					allModelCourse = allModelCourse.subList(startIndex*10, endIndex);
 				}
-				
 				
 				equipCourse = tempCourse;
 			} else {
 				modelCount = "0";
-				totalModelPages = "0";
+				totalModelPages = "1";
 			}
 		
 //		returnJSON.put("allEquips", allEquips);
@@ -853,8 +862,12 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		
 		if(equipList != null) {
 			classSum = String.valueOf( equipList.size() );
-			if(equipList.size() % 10 != 0 && equipList.size() > 10) {
+			if(equipList == null || equipList.size() == 0) {
+				classSum = "1";
+			} else if(equipList.size() % 10 != 0 && equipList.size() > 10) {
 				totalPage = String.valueOf( equipList.size() / 10 + 1 );
+			} else if(equipList.size() % 10 == 0 && equipList.size() < 10) {
+				totalPage = "1";
 			} else {
 				totalPage = String.valueOf( equipList.size() / 10 );
 			}
@@ -891,7 +904,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			
 		} else {
 			classSum = "0";
-			totalPage = "0";
+			totalPage = "1";
 		}
 		return SUCCESS;
 	}
