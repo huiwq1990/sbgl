@@ -67,6 +67,12 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 		return deleteComputermodel(computermodel.getId());
 	}
 
+	@Override
+	public int deleteComputermodelByTyp(Integer computermodeltype){
+		String sql = "delete from Computermodel where computermodeltype="+computermodeltype;
+		baseDao.createSQL(sql);
+		return 1;
+	}
 	
 	@Override
 	public void updateComputermodel(Computermodel computermodel){
@@ -131,7 +137,7 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 	}
 //  分页查询full	
 	public List<ComputermodelFull> selectComputermodelFullByPage(Page page){
-		page.setTotalCount(baseDao.getRowCount(Computermodel.class));
+//		page.setTotalCount(baseDao.getRowCount(Computermodel.class));
 		return computermodelDao.selectComputermodelFullByPage(page);
 	}
 	
@@ -176,5 +182,15 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 		return null;
 	 }	
 	
+	/**
+	 * 返回Model的条件查询内容，分页信息需要在Action中设置
+	 * @param conditionSql
+	 * @param page
+	 * @return
+	 */
+	@Override
+	public List<ComputermodelFull> selectComputermodelByConditionAndPage(String conditionSql,Page page){
+		return computermodelDao.selectComputermodelFullByConditionAndPage(conditionSql, page);
+	}
 	
 }

@@ -66,5 +66,8 @@ List<Computercategoryi18n> selectComputercategoryi18nByConditionAndPage(
 		String conditionSql, Page page);
 
 int deleteComputercategoryByType(Integer computercategoryType);
+
+List<ComputercategoryFull> selectComputercategoryFullByCondition(
+		String condition);
 	
 }

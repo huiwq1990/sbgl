@@ -24,7 +24,7 @@ import com.sbgl.app.services.common.*;
 public class ComputercategorySpringTest {
 
 	public static void main(String[] args) {
-		iniDouble();
+//		iniDouble();
 //		addComputercategory();
 //		selectComputercategoryAll();
 //		deleteComputercategory();
@@ -32,7 +32,7 @@ public class ComputercategorySpringTest {
 //		updateComputercategory();
 //		selectComputercategoryById(1L);
 //		selectComputercategoryFullById(1L);
-//      selectComputercategoryFullAll();
+      selectComputercategoryFullAll();
 //		selectComputercategoryi18n();
 	}
 	
@@ -259,7 +259,9 @@ public class ComputercategorySpringTest {
 		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
 		
 		ComputercategoryService computercategoryService = (ComputercategoryService)cxt.getBean("computercategoryService");
-		List<ComputercategoryFull> objList  = computercategoryService.selectComputercategoryFullAll();
+		String categorysqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";
+		
+		List<ComputercategoryFull> objList  = computercategoryService.selectComputercategoryFullByCondition(categorysqlch);
 		if(objList == null){
 			System.out.println("objList is null");
 			return;
