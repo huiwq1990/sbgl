@@ -18,8 +18,6 @@ import com.sbgl.app.services.equipment.EquipService;
 import com.sbgl.util.PropertyUtil;
 
 public class FileUploadAction  extends ActionSupport{
-	@Resource
-	private EquipService equipService;
 	
 	@Resource
 	private CommonService commonService;
@@ -28,22 +26,22 @@ public class FileUploadAction  extends ActionSupport{
 	private String fileFileName;
 	private String fileContentType;
 	private String savedFileName;
+	private String tag;
 //	private String equipmentid;
 	
-	public String getSavedFileName() {
-		return savedFileName;
-	}
-
-	public void setSavedFileName(String savedFileName) {
-		this.savedFileName = savedFileName;
-	}
-
 	public String uploadFile() throws Exception {
-		System.out.println("##############################################################");
-		System.out.println("file name = " + file.getName());
+//		System.out.println("##############################################################");
+//		System.out.println("file name = " + file.getName());
 //		System.out.println("fileContentType = " + fileContentType);
 //		System.out.println("equipmentid = " + equipmentid);
 		String fileType = fileFileName.substring( fileFileName.indexOf('.') );
+		//拦截格式不正确的文件，仅允许保存图片格式
+		if(!fileType.toLowerCase().equals(".jpg") && !fileType.toLowerCase().equals(".png") &&!fileType.toLowerCase().equals(".gif")) {
+			tag = "1";
+			return SUCCESS;
+		} else {
+			tag = "0";
+		}
 //		String fileType = "";
 		
 		if(fileType != null) {
@@ -57,7 +55,7 @@ public class FileUploadAction  extends ActionSupport{
 		InputStream is = new FileInputStream(file);
 		String equipmentImagePath = PropertyUtil.readValue("/system.properties", "equipmentImagePath");
 		//String root = ServletActionContext.getRequest().getRealPath("/equipImage");
-		File deskFile = new File(equipmentImagePath, this.getFileFileName());
+		File deskFile = new File(equipmentImagePath, savedFileName);
 		OutputStream os = new FileOutputStream(deskFile);
 		byte[] bytefer = new byte[1024];
 		int length = 0;
@@ -72,7 +70,7 @@ public class FileUploadAction  extends ActionSupport{
 //		e.setImgNameSaved( savedFileName );
 //		equipService.alterEquipInfo( e );
 		
-		return "success";
+		return SUCCESS;
 	}
 	
 	public File getFile() {
@@ -98,7 +96,21 @@ public class FileUploadAction  extends ActionSupport{
 	public void setFileContentType(String fileContentType) {
 		this.fileContentType = fileContentType;
 	}
+	public String getTag() {
+		return tag;
+	}
 
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+	public String getSavedFileName() {
+		return savedFileName;
+	}
+
+	public void setSavedFileName(String savedFileName) {
+		this.savedFileName = savedFileName;
+	}
 //	public String getEquipmentid() {
 //		return equipmentid;
 //	}

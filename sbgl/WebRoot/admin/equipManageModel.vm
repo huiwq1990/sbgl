@@ -224,9 +224,6 @@
           </span>
 		  <span id="imgFileForAlter"></span>
         </div>
-		<br>
-		<br>
-		<div id="files" class="files"></div>
       </div>
     </form>
   </div>
@@ -247,7 +244,7 @@
       <div class="form-group">
         <label for="inputEModelName" class="col-xs-3 control-label">型号</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="inputEModelName" placeholder="设备型号（如：Arri Alexa Plus）">
+          <input type="text" name="modelName" class="form-control" id="inputEModelName" placeholder="设备型号（如：Arri Alexa Plus）">
         </div>
       </div>
       <div class="form-group">
@@ -298,6 +295,7 @@
   </div>
 </div>
 
+
     <!-- javascript
     ================================================== -->
 <script src="${jsDomain}/jquery.js"></script>
@@ -306,7 +304,10 @@
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
-<script src="${jsDomain}/ajaxfileupload.js"></script>
+<script src="${jsDomain}/fileUpload/vendor/jquery.ui.widget.js"></script>
+<script src="${jsDomain}/fileUpload/jquery.iframe-transport.js"></script>
+<script src="${jsDomain}/jquery.fileupload.js"></script>
+
 <!--[if lt IE 10]>
   <script src="./js/jquery.placeholder.js"></script>
   <script>
@@ -332,6 +333,8 @@
 	var idsForDel;
 	var currentPageNo = 1;		//当前页码
 	var totalPageNo;			//总页码
+	var localFileName;          //本地图片名称
+	var savedFileName;          //保存在服务器的图片名称
 	
 	/* 处理CheckBox选中事件用于删除处理 
 	$("input[type='checkbox']").click(function() {
@@ -394,7 +397,8 @@
 		var postData = {};
 		var actionUrl = "";
 		var imgFile = "";
-		
+		//localFileName = "";
+		//savedFileName = "";
 		if(_this.attr('action-type') == 'addModel') {
 			var modelName = $("#inputEModelName").val();
 			var clazzId = $("#inputECategory").val();
@@ -404,6 +408,8 @@
         			"equipment.administrationid": cookie.Get("id"),
         			"equipment.equipmentname": modelName,
         			"equipment.classificationid": clazzId,
+        			"equipment.imgName": localFileName,
+        			"equipment.imgNameSaved": savedFileName,
         			"equipment.equipmentdetail": memo,
 					"crtModelPage": currentPageNo
         		}
@@ -437,31 +443,7 @@
 			imgFile = $("#modifyEPic").val();
 		}
 		//首先进行文件上传操作
-		$.ajaxFileUpload
-		(
-			{
-				url: '${webbaseurl}/uploadFile.do',
-				secureuri: false,
-				fileElementId: 'inputEPic',
-				dataType: 'json',
-				beforeSend:function()
-				{
-					console.log("upload before");
-				},
-				complete:function()
-				{
-					console.log("upload after");
-				},				
-				success: function (data, status)
-				{
-					console.log(data);
-				},
-				error: function (data, status, e)
-				{
-					alert(e);
-				}
-			}
-		)
+		
 		
 		jQuery.ajax({  
 		    url:actionUrl,  
@@ -472,11 +454,12 @@
 				if(data.tag == "0") {
 					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
 					equipmentid = data.equipmentid;
+					 _this.parents('.modal').modal('toggle');
 					
 					postData = {
     					"crtModelPage": currentPageNo
             		};
-					/*
+					
 					//刷新界面数据
 					jQuery.ajax({
 						url: "${webbaseurl}/flushEquipModel.do",  
@@ -488,7 +471,7 @@
 						error: function(data,textStatus,jq) {
 							alert("刷新界面失败!");
 						}
-					})*/
+					})
 				} else {
 					var n = noty({text: data.msg, timeout: 2500, type: 'error'});
 				}
@@ -650,21 +633,59 @@
 			}
 		})
 	})
-	
-	/**
-	 *  文件上传
-	 */
-	 $("body").on("change", "input[action-type|=showFileNameForAdd]", function() {
+	/************************************************************************************
+	$("body").on("change", "input[action-type|=showFileNameForAdd]", function() {
 		var file = $("#inputEPic").val();
 		$("#imgFileForAdd").html(file);
 		$("#inputEPic").prop('disabled', true);
 	})
 	
-	 $("body").on("change", "input[action-type|=showFileNameForAlter]", function() {
+	$("body").on("change", "input[action-type|=showFileNameForAlter]", function() {
 		var file = $("#modifyEPic").val();
 		$("#imgFileForAlter").html(file);
 		$("#modifyEPic").prop('disabled', true);
 	})
+	*************************************************************************************/
+	//上传图片
+	$("#inputEPic").fileupload({
+    	url: "${webbaseurl}/uploadFile.do",
+        dataType: 'json',
+        done: function (e, data) {
+            console.log(data);
+			if(data.result.message == 0) {
+				localFileName = data.files[0].name;
+				savedFileName = data.result.savedFileName;
+				$("#imgFileForAdd").html(file);
+				$("#inputEPic").prop('disabled', true);
+			} else if(data.result.message == 1) {
+				alert("上传图片失败！");
+				localFileName = "";
+				savedFileName = "";
+			}
+            //alert(data.result.savedFileName);
+        }
+    });
+	
+    $('#modifyEPic').fileupload({
+    	url: "${webbaseurl}/uploadFile.do",
+        dataType: 'json',
+        done: function (e, data) {
+            console.log(data);
+			if(data.result.message == 0) {
+				localFileName = data.files[0].name;
+				savedFileName = data.result.savedFileName;
+				$("#imgFileForAlter").html(file);
+				$("#modifyEPic").prop('disabled', true);
+			} else if(data.result.message == 1) {
+				alert("上传图片失败！");
+				localFileName = "";
+				savedFileName = "";
+			}
+            //alert(data.result.message);
+        }
+    });
 </script>
+
+<iframe name="submit" width="0" height="0" />
 </body>
 </html>

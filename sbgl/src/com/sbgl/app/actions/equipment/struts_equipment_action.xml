@@ -83,8 +83,10 @@
         </action>
         
         <action name="uploadFile" class="com.sbgl.app.actions.upload.FileUploadAction" method="uploadFile">
-			<result type="json">
-        		<param name="root">savedFileName</param>
+			<result type="json" name="success">
+        		<param name="contentType">
+        			text/html
+        		</param>
         	</result>
 		</action>
     	
