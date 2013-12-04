@@ -449,6 +449,7 @@
 						data: postData,
 						success: function(data,textStatus,jq) {
 							$("#admin-wrap").html(data);
+							
 						},
 						error: function(data,textStatus,jq) {
 							alert("刷新界面失败!");

@@ -304,8 +304,10 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		if(curCountOfRow % 10 != 0 && curCountOfRow > 10) {
 			curPages++;
 		}
-		if(Integer.valueOf(currentPage) > curPages) {
+		if(Integer.valueOf(currentPage) > curPages && curPages > 0) {
 			currentPage = String.valueOf(curPages);
+		} else {
+			currentPage = "1";
 		}
 		
 		
@@ -396,6 +398,20 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				this.message = "删除型号失败！";
 			}
 		}
+		//当前页数判断
+		int curCountOfRow = equipService.getCountOfEquipInfo();
+		int curPages = curCountOfRow / 10;
+		if(curCountOfRow % 10 != 0 && curCountOfRow > 10) {
+			curPages++;
+		}
+		if(Integer.valueOf(crtModelPage) > curPages && curPages > 0) {
+			crtModelPage = String.valueOf(curPages);
+		} else {
+			crtModelPage = "1";
+		}
+		
+		
+		returnJSON.put("crtPage", this.crtModelPage);
 		returnJSON.put("tag", tag);
 		returnJSON.put("msg", message);
 		return SUCCESS;
@@ -440,12 +456,12 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					totalModelPages = "1";
 				} else if(allEquips.size() % 10 != 0 && allEquips.size() > 10) {
 					totalModelPages = String.valueOf( allEquips.size() / 10 + 1 );
-				} else if(allEquips.size() % 10 == 0 && allEquips.size() < 10) {
+				} else if(allEquips.size() % 10 != 0 && allEquips.size() < 10) {
 					totalModelPages = "1";
 				} else {
 					totalModelPages = String.valueOf( allEquips.size() / 10 );
 				}
-				if(crtModelPage == null || crtModelPage == "") {
+				if(crtModelPage == "0" || crtModelPage == "" || crtModelPage == null) {
 					crtModelPage = "1";
 				}
 				
@@ -458,6 +474,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					emc.setcId( String.valueOf( cf == null ? -1 : cf.getClassificationid() ) );
 					emc.setcName( cf == null ? "未分类" : cf.getName() );
 					emc.setMemo( equipment.getEquipmentdetail() );
+					emc.setImgName( equipment.getImgName() );
+					emc.setBranId( String.valueOf( equipment.getBrandid() ) );
 					
 					equipCourse.add( emc );
 				}
@@ -866,12 +884,12 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				classSum = "1";
 			} else if(equipList.size() % 10 != 0 && equipList.size() > 10) {
 				totalPage = String.valueOf( equipList.size() / 10 + 1 );
-			} else if(equipList.size() % 10 == 0 && equipList.size() < 10) {
+			} else if(equipList.size() % 10 != 0 && equipList.size() < 10) {
 				totalPage = "1";
 			} else {
 				totalPage = String.valueOf( equipList.size() / 10 );
 			}
-			if(currentPage == null || currentPage == "") {
+			if(currentPage == "0" || currentPage == "" || currentPage == null) {
 				currentPage = "1";
 			}
 			for (Equipmentclassification equipmentclassification : equipList) {

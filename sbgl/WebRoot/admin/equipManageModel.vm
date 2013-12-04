@@ -136,9 +136,9 @@
                   <tr>
 				  #if($!model.showClass != 1)
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!model.id"></td>
-                    <td>$!model.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-name="$!model.name" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo">修改</a></td>
+                    <td>$!model.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-name="$!model.name" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo" data-imgname="$!model.imgName" data-brandid="$!model.branId">修改</a></td>
 					<td>$!model.cName</td>
-					<td>双塔影视</td>
+					<td>#if($!model.branId == "1")双塔影视#end</td>
                     <td>$!model.memo</td>
 				  #end
                   </tr>
@@ -210,7 +210,7 @@
         <label for="modifyStock" class="col-xs-3 control-label">合作器材公司</label>
         <div class="col-xs-7">
           <label class="checkbox-inline">
-            <input type="checkbox" id="modifyStock1" value="s1" checked> 双塔影视
+            <input type="checkbox" id="modifyStock1" value="1" checked> 双塔影视
           </label>
         </div>
       </div>
@@ -272,7 +272,7 @@
         <label for="inputStock" class="col-xs-3 control-label">合作器材公司</label>
         <div class="col-xs-7">
           <label class="checkbox-inline">
-            <input type="checkbox" id="inputStock1" value="s1" checked> 双塔影视
+            <input type="checkbox" id="inputStock1" value="1" checked> 双塔影视
           </label>
         </div>
       </div>
@@ -330,6 +330,7 @@
 	var modelIdForAlter;
 	var modelCIdForAlter;
 	var modelMemoForAlter;
+	var modelBrandIdForAlter;
 	var idsForDel;
 	var currentPageNo = 1;		//当前页码
 	var totalPageNo;			//总页码
@@ -356,6 +357,11 @@
 		$("#inputECategory").select2("val", -1);
 		$("#inputEModelName").val("");
 		$("#inputEDescribe").val("");
+		localFileName = "";
+		savedFileName = "";
+		$("#imgFileForAdd").html("");
+		$("#inputEPic").prop('disabled', false);
+		$("#modifyEPic").prop('disabled', false);
 	});
 	
 	$("body").on("click", "input[type='checkbox']", function() {
@@ -399,15 +405,22 @@
 		var imgFile = "";
 		//localFileName = "";
 		//savedFileName = "";
+		//console.log("aa"+$("#modifyStock1").prop("checked"));
 		if(_this.attr('action-type') == 'addModel') {
 			var modelName = $("#inputEModelName").val();
 			var clazzId = $("#inputECategory").val();
 			var memo = $("#inputEDescribe").val();
+			var brandId = -1;
+			if($("#inputStock1").prop("checked")) {
+				brandId = $("#inputStock1").val();
+			}
+			
 			if(modelName != "") {
     			postData = {
         			"equipment.administrationid": cookie.Get("id"),
         			"equipment.equipmentname": modelName,
         			"equipment.classificationid": clazzId,
+        			"equipment.brandid": brandId,
         			"equipment.imgName": localFileName,
         			"equipment.imgNameSaved": savedFileName,
         			"equipment.equipmentdetail": memo,
@@ -419,15 +432,18 @@
 				alert("型号名称不能为空！");
 				return;
 			}
-			imgFile = $("#inputEPic").val();
 		}
 		
 		if(_this.attr('action-type') == 'alterModel') {
 			var ename = $("#modifyEModelName").val();
     		var cidInput = $("#modifyEquipCategory").val();
     		var memo = $("#modifyEDescribe").val();
+			var brandId = -1;
+			if($("#modifyStock1").prop("checked")) {
+				brandId = $("#modifyStock1").val();
+			}
 			
-			if(ename == modelNameForAlter && modelCIdForAlter == cidInput && modelMemoForAlter == memo) {
+			if(ename == modelNameForAlter && modelCIdForAlter == cidInput && modelMemoForAlter == memo && localFileName == "" && modelBrandIdForAlter == brandId) {
     			alert("并未做修改！");
 				return;
     		} else {
@@ -436,6 +452,7 @@
     				"equipment.equipmentname": ename,
     				"equipment.classificationid": cidInput,
 					"equipment.imgName": localFileName,
+					"equipment.brandid": brandId,
         			"equipment.imgNameSaved": savedFileName,
     				"equipment.equipmentdetail": memo,
 					"crtModelPage": currentPageNo
@@ -495,12 +512,25 @@
 		modelIdForAlter = myData.id;
 		modelCIdForAlter = myData.cid;
 		modelMemoForAlter = myData.memo;
+		modelBrandIdForAlter = myData.brandid;
 		
 		equipmentid = myData.id;
+		
+		localFileName = "";
+		savedFileName = "";
+		$("#imgFileForAlter").html(myData.imgname);
+		$("#inputEPic").prop('disabled', false);
+		$("#modifyEPic").prop('disabled', false);
 		
 		console.log("myData.name" + myData.name);
 		console.log("myData.cId" + myData.cid);
 		console.log("myData.memo" + myData.memo);
+		console.log("myData.brandid" + myData.brandid);
+		if(myData.brandid == 1) {
+			$("#modifyStock1").prop("checked", true);
+		} else {
+			$("#modifyStock1").prop("checked", false);
+		}
 	})
 	
 	$("body").on("click", "a[action-type|=deleteModel]", function() {
@@ -515,7 +545,7 @@
 		    success:function(data,textStatus,jq){  
 		    	console.log(data);
 				if(data.tag == "0") {
-					currentPageNo = data.crtModelPage
+					currentPageNo = data.crtPage;
     				var n = noty({text: data.msg, timeout: 2500, type: 'success'});
 					
 					postData = {

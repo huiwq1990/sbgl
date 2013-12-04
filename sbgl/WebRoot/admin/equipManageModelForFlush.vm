@@ -56,9 +56,9 @@
           <tr>
 		  #if($!model.showClass != 1)
             <td><input class="chk" type="checkbox" name="chk-list" value="$!model.id"></td>
-            <td>$!model.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-name="$!model.name" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo">修改</a></td>
+            <td>$!model.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-name="$!model.name" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo" data-imgname="$!model.imgName" data-brandid="$!model.branId">修改</a></td>
 			<td>$!model.cName</td>
-			<td>双塔影视</td>
+			<td>#if($!model.branId == "1")双塔影视#end</td>
             <td>$!model.memo</td>
 		  #end
           </tr>
