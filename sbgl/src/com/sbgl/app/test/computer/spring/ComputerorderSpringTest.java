@@ -23,7 +23,7 @@ import com.sbgl.app.services.common.*;
 public class ComputerorderSpringTest {
 
 	public static void main(String[] args) {
-		intTable();
+//		intTable();
 //iniDouble();
 //		addComputerorder();
 //		selectComputerorderAll();
@@ -32,7 +32,7 @@ public class ComputerorderSpringTest {
 //		updateComputerorder();
 //		selectComputerorderById(1L);
 //		selectComputerorderFullById(1L);
-//      selectComputerorderFullAll();
+      selectComputerorderFullAll();
 
 	}
 	
@@ -56,15 +56,12 @@ public class ComputerorderSpringTest {
 
 
 		try {
-			HashMap<String, Method> map = ReflectUtil.ConverBean(Computerorder.class);
-			Object obj;
+			
 			List<String> dataList = new ArrayList<String>();
 			File f = new File( "D:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computerorder");
 			dataList = FileUtils.readLines(f);
 			String[] attrs = dataList.get(0).split(",");
 			for(int i=1; i < dataList.size();i++){
-				obj = Computerorder.class.newInstance();
-
 				
 				computerorderService.addComputerorder(getObj(attrs,dataList.get(i)));
 			}
@@ -103,7 +100,7 @@ public class ComputerorderSpringTest {
 				Computerorder ch =	getObj(attrs,dataList.get(i));
 				Computerorder en =	getObj(attrs,dataList.get(i+1));
 								
-//				computerorderService.addComputerorder(ch,en);
+				computerorderService.addComputerorder(ch,en);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -136,12 +133,27 @@ public class ComputerorderSpringTest {
 					
 									if(!datas[3].trim().equals("")){
 					 method = map.get(attrs[3]);
-																method.invoke(obj,DateUtil.parseDate(datas[3].trim()));  
-										}
+																method.invoke(obj,String.valueOf(datas[3].trim()));
+ 										}
 					
 									if(!datas[4].trim().equals("")){
 					 method = map.get(attrs[4]);
 																method.invoke(obj,Integer.valueOf(datas[4].trim()));
+ 										}
+					
+									if(!datas[5].trim().equals("")){
+					 method = map.get(attrs[5]);
+																method.invoke(obj,DateUtil.parseDate(datas[5].trim()));  
+										}
+					
+									if(!datas[6].trim().equals("")){
+					 method = map.get(attrs[6]);
+																method.invoke(obj,String.valueOf(datas[6].trim()));
+ 										}
+					
+									if(!datas[7].trim().equals("")){
+					 method = map.get(attrs[7]);
+																method.invoke(obj,Integer.valueOf(datas[7].trim()));
  										}
 					
 								
@@ -247,7 +259,7 @@ public class ComputerorderSpringTest {
 			return;
 		}
 		for(int i = 0; i < objList.size(); i++){
-	//		System.out.println("id="+objList.get(i).getId());
+			System.out.println("id="+objList.get(i).getComputerorderid());
 		}
 	}
 

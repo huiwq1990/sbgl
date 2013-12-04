@@ -32,7 +32,7 @@ public class ComputerSpringTest {
 //		updateComputer();
 //		selectComputerById(1L);
 //		selectComputerFullById(1L);
-//      selectComputerFullAll();
+      selectComputerFullAll();
 
 	}
 	
@@ -263,7 +263,7 @@ public class ComputerSpringTest {
 		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
 		
 		ComputerService computerService = (ComputerService)cxt.getBean("computerService");
-		List<ComputerFull> objList  = computerService.selectComputerFullAll();
+		List<ComputerFull> objList  = computerService.selectComputerFullByCondition("");
 		if(objList == null){
 			System.out.println("objList is null");
 			return;

@@ -139,13 +139,34 @@ public class ComputerServiceImpl implements ComputerService{
 		return computerDao.selectComputerFullByPage(page);
 	}
 	
+
+	
+	// 根据条件查询查询实体
 	@Override
-	public List<ComputerFull> selectComputerFullByConditionAndPage(String conditionSql, Page page) {
-		return computerDao.selectComputerFullByConditionAndPage(conditionSql, page);
-		
+	public List<Computer> selectComputerByCondition(String condition) {
+		 return computerDao.selectComputerByCondition(condition);
 	}
 	
 	
+	//  根据条件分页查询实体        
+        @Override
+        public List<Computer>  selectComputerByConditionAndPage(String condition,final Page page) {
+              return computerDao.selectComputerByConditionAndPage(condition,page);
+        }
+	
+	
+	//条件查询full
+	@Override
+	public List<ComputerFull> selectComputerFullByCondition(String condition) {
+		return computerDao.selectComputerFullByCondition(condition);
+	}
+	
+	
+	// 查询实体full        
+        @Override
+        public List<ComputerFull>  selectComputerFullByConditionAndPage(String condition,final Page page) {
+			return computerDao.selectComputerFullByConditionAndPage(condition, page);
+		}
 	
 	
 	//根据computermodelid 查询实体

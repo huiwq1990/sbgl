@@ -13,9 +13,10 @@ public class IniDatabase {
 //		ComputermodelSpringTest.iniDouble();
 //		ComputerSpringTest.iniDouble();
 //		
-//		ComputerorderSpringTest.intTable();
+		ComputerorderSpringTest.intTable();
 //		ComputerorderdetailSpringTest.intTable();
-		ComputerstatusSpringTest.intTable();
+//		ComputerstatusSpringTest.intTable();
+		
 
 	}
 

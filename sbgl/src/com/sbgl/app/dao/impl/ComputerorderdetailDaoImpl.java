@@ -25,7 +25,7 @@ import com.sbgl.util.*;
 public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements ComputerorderdetailDao{
 
 	private static final Log log = LogFactory.getLog(ComputerorderdetailDaoImpl.class);
-	private final String basicComputerorderdetailFullSql = "select a.id as computerorderdetailid, a.computerorderid as computerorderdetailcomputerorderid, a.computermodelid as computerorderdetailcomputermodelid, a.borrownumber as computerorderdetailborrownumber, a.createtime as computerorderdetailcreatetime, a.borrowday as computerorderdetailborrowday, a.borrowperiod as computerorderdetailborrowperiod, a.computerid as computerorderdetailcomputerid, a.status as computerorderdetailstatus, b.id as computerorderid, b.serialnumber as computerorderserialnumber, b.userid as computerorderuserid, b.createtime as computerordercreatetime, b.status as computerorderstatus, c.id as computermodelid, c.computermodeltype as computermodelcomputermodeltype, c.languagetype as computermodellanguagetype, c.name as computermodelname, c.computercategoryid as computermodelcomputercategoryid, c.picpath as computermodelpicpath, c.createtime as computermodelcreatetime, c.createuserid as computermodelcreateuserid, c.computercount as computermodelcomputercount, c.availableborrowcountnumber as computermodelavailableborrowcountnumber, c.description as computermodeldescription, c.status as computermodelstatus, d.id as computerid, d.serialnumber as computerserialnumber, d.computertype as computercomputertype, d.languagetype as computerlanguagetype, d.computermodelid as computercomputermodelid, d.createtime as computercreatetime, d.createuserid as computercreateuserid, d.status as computerstatus, d.remark as computerremark from Computerorderdetail a  left join Computerorder b on a.computerorderid=b.id left join Computerorder c on a.computerorderid=c.id left join Computerorder d on a.computerorderid=d.id ";
+	private final String basicComputerorderdetailFullSql = "select a.id as computerorderdetailid, a.computerorderid as computerorderdetailcomputerorderid, a.computermodelid as computerorderdetailcomputermodelid, a.borrownumber as computerorderdetailborrownumber, a.createtime as computerorderdetailcreatetime, a.borrowday as computerorderdetailborrowday, a.borrowperiod as computerorderdetailborrowperiod, a.computerid as computerorderdetailcomputerid, a.status as computerorderdetailstatus, b.id as computerorderid, b.serialnumber as computerorderserialnumber, b.userid as computerorderuserid, b.createtime as computerordercreatetime, b.status as computerorderstatus, c.id as computermodelid, c.computermodeltype as computermodelcomputermodeltype, c.languagetype as computermodellanguagetype, c.name as computermodelname, c.computercategoryid as computermodelcomputercategoryid, c.picpath as computermodelpicpath, c.createtime as computermodelcreatetime, c.createuserid as computermodelcreateuserid, c.computercount as computermodelcomputercount, c.availableborrowcountnumber as computermodelavailableborrowcountnumber, c.description as computermodeldescription, c.status as computermodelstatus, d.id as computerid, d.serialnumber as computerserialnumber, d.computertype as computercomputertype, d.languagetype as computerlanguagetype, d.computermodelid as computercomputermodelid, d.createtime as computercreatetime, d.createuserid as computercreateuserid, d.status as computerstatus, d.remark as computerremark, d.computerstatusid as computercomputerstatusid from Computerorderdetail a  left join Computerorder b on a.computerorderid=b.id left join Computerorder c on a.computerorderid=c.id left join Computerorder d on a.computerorderid=d.id ";
 	
 	private final String basicComputerorderdetailSql = "From Computerorderdetail  ";
 	
@@ -34,7 +34,6 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	public List<Computerorderdetail> selectComputerorderdetailByCondition(String condition) {
 		final String  sql = basicComputerorderdetailSql +" " + condition;
 		
-		System.out.println(sql);
 		try {
              List l = this.getHibernateTemplate().find(sql);
 			 return l;
@@ -48,7 +47,7 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	//  根据条件分页查询实体        
         @Override
         public List<Computerorderdetail>  selectComputerorderdetailByConditionAndPage(String conditionSql,final Page page) {
-                final String  sql = basicComputerorderdetailSql+" "  +conditionSql;
+                final String  sql = basicComputerorderdetailSql  +conditionSql;
               try {
 	        
 	         Query q = this.getSession().createQuery(sql).setFirstResult(page.getPageNo()).setMaxResults(page.getPageSize());
@@ -79,7 +78,7 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 						return query.list();
 					}
 				});		
-		return null;
+		return computerorderdetailList;
 	}
 	
 	
@@ -104,7 +103,7 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
                 if (computerorderdetailList != null && !computerorderdetailList.isEmpty()) {
                         return computerorderdetailList;
                 }
-                return null;
+                return computerorderdetailList;
         }
 	
 	

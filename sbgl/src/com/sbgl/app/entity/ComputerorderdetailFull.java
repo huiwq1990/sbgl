@@ -18,7 +18,10 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 			private Integer computerorderid;
 			private String computerorderserialnumber;
 			private Integer computerorderuserid;
+			private String computerordertitle;
+			private Integer computerorderordertype;
 			private Date computerordercreatetime;
+			private String computerorderremark;
 			private Integer computerorderstatus;
 			private Integer computermodelid;
 			private Integer computermodelcomputermodeltype;
@@ -41,6 +44,7 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 			private Integer computercreateuserid;
 			private Integer computerstatus;
 			private String computerremark;
+			private Integer computercomputerstatusid;
 		
 	
 			
@@ -116,11 +120,29 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 		public Integer getComputerorderuserid(){		
 			return this.computerorderuserid;
 		}
+			public void setComputerordertitle(String computerordertitle){		
+			this.computerordertitle = computerordertitle;
+		}
+		public String getComputerordertitle(){		
+			return this.computerordertitle;
+		}
+			public void setComputerorderordertype(Integer computerorderordertype){		
+			this.computerorderordertype = computerorderordertype;
+		}
+		public Integer getComputerorderordertype(){		
+			return this.computerorderordertype;
+		}
 			public void setComputerordercreatetime(Date computerordercreatetime){		
 			this.computerordercreatetime = computerordercreatetime;
 		}
 		public Date getComputerordercreatetime(){		
 			return this.computerordercreatetime;
+		}
+			public void setComputerorderremark(String computerorderremark){		
+			this.computerorderremark = computerorderremark;
+		}
+		public String getComputerorderremark(){		
+			return this.computerorderremark;
 		}
 			public void setComputerorderstatus(Integer computerorderstatus){		
 			this.computerorderstatus = computerorderstatus;
@@ -253,6 +275,12 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 		}
 		public String getComputerremark(){		
 			return this.computerremark;
+		}
+			public void setComputercomputerstatusid(Integer computercomputerstatusid){		
+			this.computercomputerstatusid = computercomputerstatusid;
+		}
+		public Integer getComputercomputerstatusid(){		
+			return this.computercomputerstatusid;
 		}
 		
 	

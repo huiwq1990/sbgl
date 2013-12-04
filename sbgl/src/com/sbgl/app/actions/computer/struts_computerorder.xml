@@ -27,7 +27,7 @@
 <!-- entity full manage  -->		
 		<!-- default entity full manage action -->
     	<action name="manageComputerorderFull" class="ManageComputerAction" method="manageComputerorderFull">
-        	<result name="success">/computer/computerorderFullManage.vm</result>
+        	<result name="success1">/computer/computerorderFullManage.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
 		<!-- manage action , go to jsp page -->

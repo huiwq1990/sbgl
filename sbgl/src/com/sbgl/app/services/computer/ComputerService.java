@@ -51,6 +51,12 @@ public interface ComputerService{
 	List<ComputerFull> selectComputerFullByConditionAndPage(
 			String conditionSql, Page page);
 
+	List<Computer> selectComputerByCondition(String condition);
+
+	List<Computer> selectComputerByConditionAndPage(String condition, Page page);
+
+	List<ComputerFull> selectComputerFullByCondition(String condition);
+
 
 	
 }

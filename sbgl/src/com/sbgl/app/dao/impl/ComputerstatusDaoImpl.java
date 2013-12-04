@@ -16,26 +16,23 @@ import org.springframework.stereotype.Repository;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.DaoAbs;
 
-import com.sbgl.app.dao.ComputerDao;
-import com.sbgl.app.entity.Computer;
-import com.sbgl.app.entity.ComputerFull;
+import com.sbgl.app.dao.ComputerstatusDao;
+import com.sbgl.app.entity.Computerstatus;
+import com.sbgl.app.entity.ComputerstatusFull;
 import com.sbgl.util.*;
 
-@Repository("computerDao")
-public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
+@Repository("computerstatusDao")
+public class ComputerstatusDaoImpl extends HibernateDaoSupport implements ComputerstatusDao{
 
-	private static final Log log = LogFactory.getLog(ComputerDaoImpl.class);
-	//关联多个表，需要设置join id
-	private final String basicComputerFullSql = "select a.id as computerid, a.serialnumber as computerserialnumber, a.computertype as computercomputertype, a.languagetype as computerlanguagetype, a.computermodelid as computercomputermodelid, a.createtime as computercreatetime, a.createuserid as computercreateuserid, a.status as computerstatus, a.remark as computerremark, a.computerstatusid as computercomputerstatusid, b.id as computermodelid, b.computermodeltype as computermodelcomputermodeltype, b.languagetype as computermodellanguagetype, b.name as computermodelname, b.computercategoryid as computermodelcomputercategoryid, b.picpath as computermodelpicpath, b.createtime as computermodelcreatetime, b.createuserid as computermodelcreateuserid, b.computercount as computermodelcomputercount, b.availableborrowcountnumber as computermodelavailableborrowcountnumber, b.description as computermodeldescription, b.status as computermodelstatus, c.id as computerstatusid, " +
-			"c.name as computerstatusname from Computer a  left join Computermodel b on a.computermodelid=b.id " +
-			"left join Computermodel c on a.computerstatusid=c.id ";
+	private static final Log log = LogFactory.getLog(ComputerstatusDaoImpl.class);
+	private final String basicComputerstatusFullSql = "select a.id as computerstatusid, a.name as computerstatusname from Computerstatus a  ";
 	
-	private final String basicComputerSql = "From Computer  ";
+	private final String basicComputerstatusSql = "From Computerstatus  ";
 	
 	// 根据条件查询查询实体
 	@Override
-	public List<Computer> selectComputerByCondition(String condition) {
-		final String  sql = basicComputerSql +" " + condition;
+	public List<Computerstatus> selectComputerstatusByCondition(String condition) {
+		final String  sql = basicComputerstatusSql +" " + condition;
 		
 		try {
              List l = this.getHibernateTemplate().find(sql);
@@ -49,8 +46,8 @@ public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
 	
 	//  根据条件分页查询实体        
         @Override
-        public List<Computer>  selectComputerByConditionAndPage(String conditionSql,final Page page) {
-                final String  sql = basicComputerSql  +conditionSql;
+        public List<Computerstatus>  selectComputerstatusByConditionAndPage(String conditionSql,final Page page) {
+                final String  sql = basicComputerstatusSql  +conditionSql;
               try {
 	        
 	         Query q = this.getSession().createQuery(sql).setFirstResult(page.getPageNo()).setMaxResults(page.getPageSize());
@@ -66,10 +63,10 @@ public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
 	
 	//条件查询full
 	@Override
-	public List<ComputerFull> selectComputerFullByCondition(String condition) {
-		final String  sql = basicComputerFullSql +" " + condition;
+	public List<ComputerstatusFull> selectComputerstatusFullByCondition(String condition) {
+		final String  sql = basicComputerstatusFullSql +" " + condition;
 		
-		List<ComputerFull> computerList = getHibernateTemplate()
+		List<ComputerstatusFull> computerstatusList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
 					public Object doInHibernate(Session session)
 							throws HibernateException {
@@ -77,19 +74,19 @@ public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
 							//Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(YaomingFull.class));  
 						Query query = session.createSQLQuery(sql);
 						query.setResultTransformer(new EscColumnToBean(
-								ComputerFull.class));
+								ComputerstatusFull.class));
 						return query.list();
 					}
 				});		
-		return computerList;
+		return computerstatusList;
 	}
 	
 	
 	// 查询实体full        
         @Override
-        public List<ComputerFull>  selectComputerFullByConditionAndPage(String conditionSql,final Page page) {
-                final String  sql = basicComputerFullSql  +conditionSql;
-                List<ComputerFull> computerList = getHibernateTemplate()
+        public List<ComputerstatusFull>  selectComputerstatusFullByConditionAndPage(String conditionSql,final Page page) {
+                final String  sql = basicComputerstatusFullSql  +conditionSql;
+                List<ComputerstatusFull> computerstatusList = getHibernateTemplate()
                                 .executeFind(new HibernateCallback() {
                                         public Object doInHibernate(Session session)
                                                         throws HibernateException {
@@ -99,24 +96,24 @@ public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
                                                 query.setFirstResult(page.getStartNum());
                                                 query.setMaxResults(page.getPageSize());
                                                 query.setResultTransformer(new EscColumnToBean(
-                                                                ComputerFull.class));
+                                                                ComputerstatusFull.class));
                                                 return query.list();
                                         }
                                 });
-                if (computerList != null && !computerList.isEmpty()) {
-                        return computerList;
+                if (computerstatusList != null && !computerstatusList.isEmpty()) {
+                        return computerstatusList;
                 }
-                return computerList;
+                return computerstatusList;
         }
 	
 	
 	
 //  删除实体
-	public int deleteEntity(Integer computerId) {
+	public int deleteEntity(Integer computerstatusId) {
 		// TODO Auto-generated method stub		
 //		log.debug("正在删除");
         try {
-        	String hqlString="update Computer as tb set tb.status = 0 where tb.id = " +computerId; 
+        	String hqlString="update Computerstatus as tb set tb.status = 0 where tb.id = " +computerstatusId; 
         	Query query = this.getHibernateTemplate().getSessionFactory().getCurrentSession().createQuery(hqlString);    	   	
         	int ret=query.executeUpdate();
 
@@ -130,10 +127,10 @@ public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
 
 //  根据实体id查询实体full	
 	@Override
-	public ComputerFull selectComputerFullById(Integer computerId) {
-		final String  sql =  basicComputerFullSql + " where a.id = "+computerId;
+	public ComputerstatusFull selectComputerstatusFullById(Integer computerstatusId) {
+		final String  sql =  basicComputerstatusFullSql + " where a.id = "+computerstatusId;
 		
-		List<ComputerFull> computerList = getHibernateTemplate()
+		List<ComputerstatusFull> computerstatusList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
 					public Object doInHibernate(Session session)
 							throws HibernateException {
@@ -141,41 +138,41 @@ public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
 							//Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(YaomingFull.class));  
 						Query query = session.createSQLQuery(sql);
 						query.setResultTransformer(new EscColumnToBean(
-								ComputerFull.class));
+								ComputerstatusFull.class));
 						return query.list();
 					}
 				});
-		if (computerList != null && !computerList.isEmpty()) {
-			return computerList.get(0);
+		if (computerstatusList != null && !computerstatusList.isEmpty()) {
+			return computerstatusList.get(0);
 		}
 		return null;
 	}
 	
 //	查询全部实体full
 	@Override
-	public List<ComputerFull> selectComputerFullAll() {
-		final String  sql = basicComputerFullSql;
+	public List<ComputerstatusFull> selectComputerstatusFullAll() {
+		final String  sql = basicComputerstatusFullSql;
 		
-		List<ComputerFull> computerFullList = getHibernateTemplate()
+		List<ComputerstatusFull> computerstatusFullList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
 					public Object doInHibernate(Session session)
 							throws HibernateException {
 						Query query = session.createSQLQuery(sql);
 						query.setResultTransformer(new EscColumnToBean(
-								ComputerFull.class));
+								ComputerstatusFull.class));
 						return query.list();
 					}
 				});
-		if (computerFullList != null && !computerFullList.isEmpty()) {			
-			return computerFullList;
+		if (computerstatusFullList != null && !computerstatusFullList.isEmpty()) {			
+			return computerstatusFullList;
 		}
 		return null;
 	}
 //  分页查询 实体full
-	public List<ComputerFull> selectComputerFullByPage(final Page page){
-		final String  sql = basicComputerFullSql;
+	public List<ComputerstatusFull> selectComputerstatusFullByPage(final Page page){
+		final String  sql = basicComputerstatusFullSql;
 		
-		List<ComputerFull> computerFullList = getHibernateTemplate()
+		List<ComputerstatusFull> computerstatusFullList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
 					public Object doInHibernate(Session session)
 							throws HibernateException {
@@ -183,29 +180,16 @@ public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
 						query.setFirstResult(page.getStartNum());
 						query.setMaxResults(page.getPageSize());
 						query.setResultTransformer(new EscColumnToBean(
-								ComputerFull.class));
+								ComputerstatusFull.class));
 						return query.list();
 					}
 				});
-		if (computerFullList != null && !computerFullList.isEmpty()) {			
-			return computerFullList;
+		if (computerstatusFullList != null && !computerstatusFullList.isEmpty()) {			
+			return computerstatusFullList;
 		}
 		return null;
 	}
 	
 //  根据关联查询实体full
-
-	//根据关联查询实体 
-	public List<Computer> selectComputerByComputermodelId(Integer computermodelid ){
-	
-		return null;
-	}
-  
-
-	public List<ComputerFull> selectComputerFullByComputermodelId(Integer computermodelid ){
-	
-		return null;
-	}
-
  
 }
