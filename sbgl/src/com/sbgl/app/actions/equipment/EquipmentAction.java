@@ -18,10 +18,13 @@ import com.sbgl.app.actions.equipment.template.ClassficationCourse;
 import com.sbgl.app.actions.equipment.template.EquipCourse;
 import com.sbgl.app.actions.equipment.template.EquipModelCourse;
 import com.sbgl.app.actions.equipment.template.ParentClassIdName;
+import com.sbgl.app.dao.QueryResult;
 import com.sbgl.app.entity.Equipment;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Equipmentdetail;
 import com.sbgl.app.services.equipment.EquipService;
+import com.sbgl.common.HQLOption;
+import com.sbgl.common.SBGLConsistent;
 import com.sbgl.util.Page;
 
 import net.sf.json.JSONArray;
@@ -30,9 +33,6 @@ import net.sf.json.JSONArray;
 @Controller("EquipmentAction")
 public class EquipmentAction extends ActionSupport implements SessionAware {
 	private static final long serialVersionUID = 1L;
-	
-	Page page = new Page();
-	Integer pageNo=1;	
 	
 	private static final Log log = LogFactory.getLog(EquipmentAction.class);
 	@SuppressWarnings("unused")
@@ -430,6 +430,14 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		return equipCourse;
 	}
 	
+	private String classificationId;
+	public String getClassificationId() {
+		return classificationId;
+	}
+	public void setClassificationId(String classificationId) {
+		this.classificationId = classificationId;
+	}
+	
 	public String modelCount;
 	public String getModelCount() {
 		return modelCount;
@@ -449,70 +457,80 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	}
 	
 	public String getAllEquipInfoCourse() {
-			List<Equipment> allEquips = equipService.getAllEquips();
-			if(allEquips != null) {
-				modelCount = String.valueOf( allEquips.size() );
-				if(allEquips.size() == 0) {
-					totalModelPages = "1";
-				} else if(allEquips.size() % 10 != 0 && allEquips.size() > 10) {
-					totalModelPages = String.valueOf( allEquips.size() / 10 + 1 );
-				} else if(allEquips.size() % 10 != 0 && allEquips.size() < 10) {
-					totalModelPages = "1";
-				} else {
-					totalModelPages = String.valueOf( allEquips.size() / 10 );
-				}
-				if(crtModelPage == "0" || crtModelPage == "" || crtModelPage == null) {
-					crtModelPage = "1";
-				}
+		allModelCourse = new ArrayList<EquipModelCourse>();
+		
+		List<HQLOption> hqlOptionList = null;
+		if(classificationId != null) {
+			hqlOptionList = new ArrayList<HQLOption>();
+			hqlOptionList.add( new HQLOption<Integer>("classificationid", Integer.valueOf(classificationId), SBGLConsistent.HQL_OPTION_EQ, 0) );
+		}
+		
+		if(crtModelPage == "0" || crtModelPage == "" || crtModelPage == null) {
+			crtModelPage = "1";
+		}
+		Page page = new Page(Integer.valueOf(crtModelPage), 10);
+		QueryResult result = equipService.getEquipmentByPageWithOptions(hqlOptionList, page);
+		if(result != null) {
+			modelCount = String.valueOf( result.getTotalResultNum() );
+			if(result.getResultList().size() == 0) {
+				totalModelPages = "1";
+			} else if(result.getTotalResultNum() % 10 != 0 && result.getTotalResultNum() > 10) {
+				totalModelPages = String.valueOf( result.getResultList().size() / 10 + 1 );
+			} else if(result.getTotalResultNum() % 10 != 0 && result.getTotalResultNum() < 10) {
+				totalModelPages = "1";
+			} else {
+				totalModelPages = String.valueOf( result.getTotalResultNum() / 10 );
+			}
+			
+			
+			for (Equipment equipment : (List<Equipment>)result.getResultList()) {
+				EquipModelCourse emc = new EquipModelCourse();
+				emc.setId( String.valueOf( equipment.getEquipmentid() ) );
+				emc.setName( String.valueOf( equipment.getEquipmentname() ) );
 				
-				for (Equipment equipment : allEquips) {
-					EquipModelCourse emc = new EquipModelCourse();
-					emc.setId( String.valueOf( equipment.getEquipmentid() ) );
-					emc.setName( String.valueOf( equipment.getEquipmentname() ) );
+				Equipmentclassification cf = equipService.getEquipmentclassificationById( equipment.getClassificationid() );
+				emc.setcId( String.valueOf( cf == null ? -1 : cf.getClassificationid() ) );
+				emc.setcName( cf == null ? "未分类" : cf.getName() );
+				emc.setMemo( equipment.getEquipmentdetail() );
+				emc.setImgName( equipment.getImgName() );
+				emc.setBranId( String.valueOf( equipment.getBrandid() ) );
+				
+				allModelCourse.add( emc );
+			}
+			
+//			allModelCourse = new ArrayList<EquipModelCourse>(equipCourse);
+			
+			/*List<String> classIds = new ArrayList<String>();
+			List<EquipModelCourse> tempCourse = new ArrayList<EquipModelCourse>();
+			for (EquipModelCourse ec : equipCourse) {
+				String cId = ec.getcId();
+				if( !classIds.contains(cId) ) {
+					classIds.add( cId );
+					EquipModelCourse showModelClass = new EquipModelCourse();
+					showModelClass.setcName( ec.getcName() );
+					showModelClass.setShowClass("1");
+					tempCourse.add( showModelClass );
 					
-					Equipmentclassification cf = equipService.getEquipmentclassificationById( equipment.getClassificationid() );
-					emc.setcId( String.valueOf( cf == null ? -1 : cf.getClassificationid() ) );
-					emc.setcName( cf == null ? "未分类" : cf.getName() );
-					emc.setMemo( equipment.getEquipmentdetail() );
-					emc.setImgName( equipment.getImgName() );
-					emc.setBranId( String.valueOf( equipment.getBrandid() ) );
-					
-					equipCourse.add( emc );
-				}
-				
-				allModelCourse = new ArrayList<EquipModelCourse>(equipCourse);
-				
-				List<String> classIds = new ArrayList<String>();
-				List<EquipModelCourse> tempCourse = new ArrayList<EquipModelCourse>();
-				for (EquipModelCourse ec : equipCourse) {
-					String cId = ec.getcId();
-					if( !classIds.contains(cId) ) {
-						classIds.add( cId );
-						EquipModelCourse showModelClass = new EquipModelCourse();
-						showModelClass.setcName( ec.getcName() );
-						showModelClass.setShowClass("1");
-						tempCourse.add( showModelClass );
-						
-						for (EquipModelCourse equipModel : equipCourse) {
-							if(equipModel.getcId().equals( cId )) {
-								tempCourse.add( equipModel );
-							}
+					for (EquipModelCourse equipModel : equipCourse) {
+						if(equipModel.getcId().equals( cId )) {
+							tempCourse.add( equipModel );
 						}
 					}
 				}
-				
-				//根据前台页面请求页码返回数据
-				if(crtModelPage != null && crtModelPage != "") {
-					int startIndex = Integer.valueOf( crtModelPage.trim() ) - 1;
-					int endIndex = (startIndex + 1) * 10 > allModelCourse.size() ? allModelCourse.size() : (startIndex + 1) * 10;
-					allModelCourse = allModelCourse.subList(startIndex*10, endIndex);
-				}
-				
-				equipCourse = tempCourse;
-			} else {
-				modelCount = "0";
-				totalModelPages = "1";
-			}
+			}*/
+			
+			//根据前台页面请求页码返回数据
+//			if(crtModelPage != null && crtModelPage != "") {
+//				int startIndex = Integer.valueOf( crtModelPage.trim() ) - 1;
+//				int endIndex = (startIndex + 1) * 10 > allModelCourse.size() ? allModelCourse.size() : (startIndex + 1) * 10;
+//				allModelCourse = allModelCourse.subList(startIndex*10, endIndex);
+//			}
+			
+//			equipCourse = tempCourse;
+		} else {
+			modelCount = "0";
+			totalModelPages = "1";
+		}
 		
 //		returnJSON.put("allEquips", allEquips);
 //		returnJSON.put("classIdName", classIdName);

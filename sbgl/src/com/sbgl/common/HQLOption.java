@@ -2,11 +2,24 @@ package com.sbgl.common;
 
 import org.apache.poi.ss.formula.functions.T;
 
-public class HQLOption {
+public class HQLOption<T> {
 	private String propertyName;
 	private T value;
 	private int option;
 	private int type = 1;  //0为数字，1为字符串，2为日期
+	
+	public HQLOption() {
+		
+	}
+
+	public HQLOption(String propertyName, T value, int option, int type) {
+		super();
+		this.propertyName = propertyName;
+		this.value = value;
+		this.option = option;
+		this.type = type;
+	}
+	
 	public int getType() {
 		return type;
 	}

@@ -576,6 +576,7 @@
 	})
 	//向前一页翻页
 	$("body").on("click", "a[action-type|=backPage]", function() {
+		var cid = $("#select-categories").val();
 		if(currentPageNo - 1 <= 0 ) {
 			currentPageNo = 0;
 			return;
@@ -584,6 +585,7 @@
 		}
 		
 		postData = {
+			"classificationId": cid,
 			"crtModelPage": currentPageNo
 		};
 		
@@ -601,6 +603,7 @@
 	})
 	//向后一页翻页
 	$("body").on("click", "a[action-type|=nextPage]", function() {
+		var cid = $("#select-categories").val();
 		if(currentPageNo + 1 > totalPageNo ) {
 			currentPageNo = totalPageNo;
 			return;
@@ -609,6 +612,7 @@
 		}
 		
 		postData = {
+			"classificationId": cid,
 			"crtModelPage": currentPageNo
 		};
 		
@@ -626,8 +630,10 @@
 	})
 	//跳到第一页
 	$("body").on("click", "a[action-type|=goFirst]", function() {
+		var cid = $("#select-categories").val();
 		currentPageNo = 1;
 		postData = {
+			"classificationId": cid,
 			"crtModelPage": currentPageNo
 		};
 		
@@ -645,12 +651,34 @@
 	})
 	//跳到最后一页
 	$("body").on("click", "a[action-type|=goLast]", function() {
+		var cid = $("#select-categories").val();
 		var sum = $("#sum").html();
 		currentPageNo = Math.floor(sum / 10);
 		if(sum % 10 != 0 && sum > 10) {
 			currentPageNo++;
 		}
 		postData = {
+			"classificationId": cid,
+			"crtModelPage": currentPageNo
+		};
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipModel.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		})
+	})
+	//监听分类下拉菜单
+	$("body").on("change", "#select-categories", function() {
+		var cid = $("#select-categories").val();
+		
+		postData = {
+			"classificationId": cid,
 			"crtModelPage": currentPageNo
 		};
 		jQuery.ajax({

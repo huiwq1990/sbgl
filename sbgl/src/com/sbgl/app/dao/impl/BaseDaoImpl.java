@@ -1,13 +1,16 @@
 package com.sbgl.app.dao.impl;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -245,35 +248,50 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 		List<T> resultList = null;
 		String queryString = "from " + entityClass.getName() + " as m where 1=1";
 		
-		for(HQLOption option : hqlOptionList) {
-			if(option.getType() == 1) {  //字符串
-				switch( option.getOption() ) {
-					case SBGLConsistent.HQL_OPTION_EQ:
-						queryString += " and m." + option.getPropertyName() + "='" + option.getValue() + "'";
-						break;
-					case SBGLConsistent.HQL_OPTION_LK:
-						queryString += " and m." + option.getPropertyName() + " like '" + option.getValue() + "%'";
-						break;
-				}
-			} else if(option.getType() == 0) {  //数字
-				switch( option.getOption() ) {
-					case SBGLConsistent.HQL_OPTION_EQ:
-						queryString += " and m." + option.getPropertyName() + "=" + option.getValue();
-						break;
-					case SBGLConsistent.HQL_OPTION_GT:
-						queryString += " and m." + option.getPropertyName() + ">" + option.getValue();
-						break;
-					case SBGLConsistent.HQL_OPTION_LT:
-						queryString += " and m." + option.getPropertyName() + "<" + option.getValue();
-						break;
+		if(hqlOptionList != null) {
+			for(HQLOption option : hqlOptionList) {
+				if(option.getType() == 1) {  //字符串
+					switch( option.getOption() ) {
+						case SBGLConsistent.HQL_OPTION_EQ:
+							queryString += " and m." + option.getPropertyName() + "='" + option.getValue() + "'";
+							break;
+						case SBGLConsistent.HQL_OPTION_LK:
+							queryString += " and m." + option.getPropertyName() + " like '" + option.getValue() + "%'";
+							break;
+					}
+				} else if(option.getType() == 0) {  //数字
+					switch( option.getOption() ) {
+						case SBGLConsistent.HQL_OPTION_EQ:
+							queryString += " and m." + option.getPropertyName() + "=" + option.getValue();
+							break;
+						case SBGLConsistent.HQL_OPTION_GT:
+							queryString += " and m." + option.getPropertyName() + ">" + option.getValue();
+							break;
+						case SBGLConsistent.HQL_OPTION_LT:
+							queryString += " and m." + option.getPropertyName() + "<" + option.getValue();
+							break;
+					}
 				}
 			}
 		}
-		Query temp = this.getCurrentSession().createQuery(queryString);
-		int n = temp == null ? 0 : temp.list().size();
 		
-		Query q = this.getCurrentSession().createQuery(queryString).setFirstResult(page.getPageNo()).setMaxResults(page.getPageSize());
-		resultList = q.list();
+		final String hql = queryString;
+		final int curPageNo = page.getPageNo();
+		final int maxSize = page.getPageSize();
+		List list = getHibernateTemplate().executeFind(new HibernateCallback() {
+			public Object doInHibernate(Session session) throws HibernateException, SQLException {
+		    List result = session.createQuery(hql).setFirstResult(curPageNo)
+		        .setMaxResults(maxSize)
+		        .list();
+		    	return result;
+		   }
+		});
+		
+		List<T> temp = getHibernateTemplate().find(queryString);
+		int n = temp == null ? 0 : temp.size();
+		
+//		Query q = this.getCurrentSession().createQuery(queryString).setFirstResult(page.getPageNo()).setMaxResults(page.getPageSize());
+		resultList = list;
 		return new QueryResult(resultList, n);
 	}
 }
