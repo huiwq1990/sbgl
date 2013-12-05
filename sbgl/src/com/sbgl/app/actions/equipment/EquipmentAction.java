@@ -468,14 +468,14 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		if(crtModelPage == "0" || crtModelPage == "" || crtModelPage == null) {
 			crtModelPage = "1";
 		}
-		Page page = new Page(Integer.valueOf(crtModelPage), 10);
+		Page page = new Page( (Integer.valueOf(crtModelPage)-1)*10, 10 );
 		QueryResult result = equipService.getEquipmentByPageWithOptions(hqlOptionList, page);
 		if(result != null) {
 			modelCount = String.valueOf( result.getTotalResultNum() );
-			if(result.getResultList().size() == 0) {
+			if(result.getTotalResultNum() == 0) {
 				totalModelPages = "1";
 			} else if(result.getTotalResultNum() % 10 != 0 && result.getTotalResultNum() > 10) {
-				totalModelPages = String.valueOf( result.getResultList().size() / 10 + 1 );
+				totalModelPages = String.valueOf( result.getTotalResultNum() / 10 + 1 );
 			} else if(result.getTotalResultNum() % 10 != 0 && result.getTotalResultNum() < 10) {
 				totalModelPages = "1";
 			} else {

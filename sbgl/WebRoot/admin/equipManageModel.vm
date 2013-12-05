@@ -584,10 +584,17 @@
 			currentPageNo--;
 		}
 		
-		postData = {
-			"classificationId": cid,
-			"crtModelPage": currentPageNo
-		};
+		if(cid != 0) {
+    		postData = {
+    			"classificationId": cid,
+    			"crtModelPage": currentPageNo
+    		};
+		} else {
+    		postData = {
+    			"crtModelPage": currentPageNo
+    		};
+		}
+		
 		
 		jQuery.ajax({
 			url: "${webbaseurl}/flushEquipModel.do",  
@@ -604,6 +611,11 @@
 	//向后一页翻页
 	$("body").on("click", "a[action-type|=nextPage]", function() {
 		var cid = $("#select-categories").val();
+		var sum = $("#sum").html();
+		totalPageNo = Math.floor(sum / 10);
+		if(sum % 10 != 0 && sum > 10) {
+			totalPageNo++;
+		}
 		if(currentPageNo + 1 > totalPageNo ) {
 			currentPageNo = totalPageNo;
 			return;
@@ -611,10 +623,16 @@
 			currentPageNo++;
 		}
 		
-		postData = {
-			"classificationId": cid,
-			"crtModelPage": currentPageNo
-		};
+		if(cid != 0) {
+    		postData = {
+    			"classificationId": cid,
+    			"crtModelPage": currentPageNo
+    		};
+		} else {
+    		postData = {
+    			"crtModelPage": currentPageNo
+    		};
+		}
 		
 		jQuery.ajax({
 			url: "${webbaseurl}/flushEquipModel.do",  
@@ -622,6 +640,7 @@
 			data: postData,
 			success: function(data,textStatus,jq) {
 				$("#admin-wrap").html(data);
+				alert($("#select-categories").attr("class"));
 			},
 			error: function(data,textStatus,jq) {
 				alert("刷新界面失败!");
@@ -632,10 +651,17 @@
 	$("body").on("click", "a[action-type|=goFirst]", function() {
 		var cid = $("#select-categories").val();
 		currentPageNo = 1;
-		postData = {
-			"classificationId": cid,
-			"crtModelPage": currentPageNo
-		};
+		
+		if(cid != 0) {
+    		postData = {
+    			"classificationId": cid,
+    			"crtModelPage": currentPageNo
+    		};
+		} else {
+    		postData = {
+    			"crtModelPage": currentPageNo
+    		};
+		}
 		
 		jQuery.ajax({
 			url: "${webbaseurl}/flushEquipModel.do",  
@@ -657,10 +683,18 @@
 		if(sum % 10 != 0 && sum > 10) {
 			currentPageNo++;
 		}
-		postData = {
-			"classificationId": cid,
-			"crtModelPage": currentPageNo
-		};
+		
+		if(cid != 0) {
+    		postData = {
+    			"classificationId": cid,
+    			"crtModelPage": currentPageNo
+    		};
+		} else {
+    		postData = {
+    			"crtModelPage": currentPageNo
+    		};
+		}
+		
 		jQuery.ajax({
 			url: "${webbaseurl}/flushEquipModel.do",  
 			type: "post",
@@ -676,11 +710,20 @@
 	//监听分类下拉菜单
 	$("body").on("change", "#select-categories", function() {
 		var cid = $("#select-categories").val();
+		$("#select-categories").select2("val", cid);
+		alert(cid);
+		if(cid == 0) {
+			postData = {
+    			"crtModelPage": currentPageNo
+    		};
+		} else {
+    		postData = {
+    			"classificationId": cid,
+    			"crtModelPage": currentPageNo
+    		};
+		}
 		
-		postData = {
-			"classificationId": cid,
-			"crtModelPage": currentPageNo
-		};
+		
 		jQuery.ajax({
 			url: "${webbaseurl}/flushEquipModel.do",  
 			type: "post",

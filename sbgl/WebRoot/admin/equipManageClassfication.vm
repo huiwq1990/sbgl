@@ -75,7 +75,7 @@
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
       <ul class="nav nav-tabs">
         <li><a href="设备预约首页.html">器材预约</a></li>
-        <li class="active"><a href="设备管理首页.html">器材管理</a></li>
+        <li class="active"><a href="${webbaseurl}/equipManageAdmin.do">器材管理</a></li>
       </ul>
       <!--admin-wrap start-->
       <div id="admin-wrap">
@@ -509,6 +509,11 @@
 	})
 	//向后一页翻页
 	$("body").on("click", "a[action-type|=nextPage]", function() {
+		var sum = $("#sum").html();
+		totalPageNo = Math.floor(sum / 10);
+		if(sum % 10 != 0 && sum > 10) {
+			totalPageNo++;
+		}
 		if(currentPageNo + 1 > totalPageNo ) {
 			currentPageNo = totalPageNo;
 			return;
