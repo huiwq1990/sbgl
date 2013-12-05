@@ -460,7 +460,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		allModelCourse = new ArrayList<EquipModelCourse>();
 		
 		List<HQLOption> hqlOptionList = null;
-		if(classificationId != null) {
+		if(classificationId != null && !classificationId.equals("0")) {
 			hqlOptionList = new ArrayList<HQLOption>();
 			hqlOptionList.add( new HQLOption<Integer>("classificationid", Integer.valueOf(classificationId), SBGLConsistent.HQL_OPTION_EQ, 0) );
 		}
@@ -469,9 +469,11 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			crtModelPage = "1";
 		}
 		//判断是否新查询出来的页数小于上次查询的当前页数
-		if(classificationId != null) {
-			int curCount = equipService.getEquipsByClassification( Integer.valueOf(classificationId) ).size();
-			int curPages = curCount / 10;
+		int curCount = 0;
+		int curPages = 0;
+		if(classificationId != null && !classificationId.equals("0")) {
+			curCount = equipService.getEquipsByClassification( Integer.valueOf(classificationId) ).size();
+			curPages = curCount / 10;
 			if(curCount % 10 != 0 && curCount > 10) {
 				curPages++;
 			} else if(curCount % 10 != 0 && curCount < 10) {
@@ -479,9 +481,19 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			} else if(curCount == 0) {
 				curPages = 1;
 			}
-			if(Integer.valueOf( crtModelPage ) > curPages) {
-				crtModelPage = String.valueOf( curPages );
+		} else {
+			curCount = equipService.getAllEquips().size();
+			curPages = curCount / 10;
+			if(curCount % 10 != 0 && curCount > 10) {
+				curPages++;
+			} else if(curCount % 10 != 0 && curCount < 10) {
+				curPages = 1;
+			} else if(curCount == 0) {
+				curPages = 1;
 			}
+		}
+		if(Integer.valueOf( crtModelPage ) > curPages) {
+			crtModelPage = String.valueOf( curPages );
 		}
 		
 		

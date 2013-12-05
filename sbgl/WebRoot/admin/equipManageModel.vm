@@ -461,8 +461,6 @@
 			}
 			imgFile = $("#modifyEPic").val();
 		}
-		//首先进行文件上传操作
-		
 		
 		jQuery.ajax({  
 		    url:actionUrl,  
@@ -473,9 +471,12 @@
 				if(data.tag == "0") {
 					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
 					equipmentid = data.equipmentid;
-					 _this.parents('.modal').modal('toggle');
+					_this.parents('.modal').modal('toggle');
+					 
+					var cid = $("#select-categories").val();
 					
 					postData = {
+						"classificationId": cid,
     					"crtModelPage": currentPageNo
             		};
 					
@@ -486,6 +487,7 @@
 						data: postData,
 						success: function(data,textStatus,jq) { 
 							$("#admin-wrap").html(data);
+							$("#select-categories").select2("val", cid);
 						},
 						error: function(data,textStatus,jq) {
 							alert("刷新界面失败!");
@@ -545,10 +547,12 @@
 		    success:function(data,textStatus,jq){  
 		    	console.log(data);
 				if(data.tag == "0") {
+					var cid = $("#select-categories").val();
 					currentPageNo = data.crtPage;
     				var n = noty({text: data.msg, timeout: 2500, type: 'success'});
 					
 					postData = {
+						"classificationId": cid,
             			"crtModelPage": currentPageNo
             		};
 					
@@ -559,6 +563,19 @@
 						data:postData,
 						success: function(data,textStatus,jq) { 
 							$("#admin-wrap").html(data);
+							$("#select-categories").select2("val", cid);
+							
+							var sum = $("#sum").html();
+                    		totalPageNo = Math.floor(sum / 10);
+                    		if(sum % 10 != 0 && sum > 10) {
+                    			totalPageNo++;
+                    		}
+                    		if(currentPageNo + 1 > totalPageNo ) {
+                    			currentPageNo = totalPageNo;
+                    		}
+            				if(currentPageNo == 0) {
+            					currentPageNo = 1;
+            				}
 						},
 						error: function(data,textStatus,jq) {
 							alert("刷新界面失败!");
