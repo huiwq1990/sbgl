@@ -468,6 +468,23 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		if(crtModelPage == "0" || crtModelPage == "" || crtModelPage == null) {
 			crtModelPage = "1";
 		}
+		//判断是否新查询出来的页数小于上次查询的当前页数
+		if(classificationId != null) {
+			int curCount = equipService.getEquipsByClassification( Integer.valueOf(classificationId) ).size();
+			int curPages = curCount / 10;
+			if(curCount % 10 != 0 && curCount > 10) {
+				curPages++;
+			} else if(curCount % 10 != 0 && curCount < 10) {
+				curPages = 1;
+			} else if(curCount == 0) {
+				curPages = 1;
+			}
+			if(Integer.valueOf( crtModelPage ) > curPages) {
+				crtModelPage = String.valueOf( curPages );
+			}
+		}
+		
+		
 		Page page = new Page( (Integer.valueOf(crtModelPage)-1)*10, 10 );
 		QueryResult result = equipService.getEquipmentByPageWithOptions(hqlOptionList, page);
 		if(result != null) {
@@ -496,6 +513,10 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				emc.setBranId( String.valueOf( equipment.getBrandid() ) );
 				
 				allModelCourse.add( emc );
+			}
+			
+			if(Integer.valueOf( crtModelPage ) > Integer.valueOf( totalModelPages )) {
+				crtModelPage = totalModelPages;
 			}
 			
 //			allModelCourse = new ArrayList<EquipModelCourse>(equipCourse);

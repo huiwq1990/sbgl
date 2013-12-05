@@ -578,7 +578,7 @@
 	$("body").on("click", "a[action-type|=backPage]", function() {
 		var cid = $("#select-categories").val();
 		if(currentPageNo - 1 <= 0 ) {
-			currentPageNo = 0;
+			currentPageNo = 1;
 			return;
 		} else {
 			currentPageNo--;
@@ -602,6 +602,7 @@
 			data: postData,
 			success: function(data,textStatus,jq) {
 				$("#admin-wrap").html(data);
+				$("#select-categories").select2("val", cid);
 			},
 			error: function(data,textStatus,jq) {
 				alert("刷新界面失败!");
@@ -640,7 +641,7 @@
 			data: postData,
 			success: function(data,textStatus,jq) {
 				$("#admin-wrap").html(data);
-				alert($("#select-categories").attr("class"));
+				$("#select-categories").select2("val", cid);
 			},
 			error: function(data,textStatus,jq) {
 				alert("刷新界面失败!");
@@ -669,6 +670,7 @@
 			data: postData,
 			success: function(data,textStatus,jq) {
 				$("#admin-wrap").html(data);
+				$("#select-categories").select2("val", cid);
 			},
 			error: function(data,textStatus,jq) {
 				alert("刷新界面失败!");
@@ -701,6 +703,7 @@
 			data: postData,
 			success: function(data,textStatus,jq) {
 				$("#admin-wrap").html(data);
+				$("#select-categories").select2("val", cid);
 			},
 			error: function(data,textStatus,jq) {
 				alert("刷新界面失败!");
@@ -710,8 +713,6 @@
 	//监听分类下拉菜单
 	$("body").on("change", "#select-categories", function() {
 		var cid = $("#select-categories").val();
-		$("#select-categories").select2("val", cid);
-		alert(cid);
 		if(cid == 0) {
 			postData = {
     			"crtModelPage": currentPageNo
@@ -730,6 +731,20 @@
 			data: postData,
 			success: function(data,textStatus,jq) {
 				$("#admin-wrap").html(data);
+				$("#select-categories").select2("val", cid);
+				
+				var sum = $("#sum").html();
+        		totalPageNo = Math.floor(sum / 10);
+        		if(sum % 10 != 0 && sum > 10) {
+        			totalPageNo++;
+        		}
+        		if(currentPageNo + 1 > totalPageNo ) {
+        			currentPageNo = totalPageNo;
+        		}
+				if(currentPageNo == 0) {
+					currentPageNo = 1;
+				}
+				console.log("****" + currentPageNo);
 			},
 			error: function(data,textStatus,jq) {
 				alert("刷新界面失败!");
