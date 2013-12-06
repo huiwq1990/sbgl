@@ -75,7 +75,7 @@
 
       <ul class="nav nav-tabs">
         <li><a href="设备预约首页.html">器材预约</a></li>
-        <li class="active"><a href="设备管理首页.html">器材管理</a></li>
+        <li class="active"><a href=""${webbaseurl}/equipManageAdmin.do"">器材管理</a></li>
       </ul>
       <!--admin-wrap start-->
       <div id="admin-wrap">
@@ -105,28 +105,28 @@
               <div class="page pull-right clearfix">
                 <ul class="page-index nav nav-pills pull-left">
                   <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!crtDetailPage/$!totalDetailPages页<b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">最新</a></li>
-                      <li><a href="#">最旧</a></li>
+                      <li><a href="#" action-type="goFirst">最新</a></li>
+                      <li><a href="#" action-type="goLast">最旧</a></li>
                     </ul>
                   </li>              
                 </ul>
                 <div class="pagination pull-right">
                   <ul>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                    <li><a href="#" rel="tooltip" action-type="backPage" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" action-type="nextPage" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
                   </ul>
                 </div>              
               </div>
               <ul class="status-filter nav nav-pills pull-right">
-                <li class="active"><a href="#">全部($!equipDetailCourse.size())（无不显示）</a></li>
-                <li><a href="#">正常(5)</a></li>
-                <li><a href="#">借出(2)</a></li>
-                <li><a href="#">维护(2)</a></li>
-                <li><a href="#">维修(2)</a></li>
-                <li><a href="#">遗失(2)</a></li>
-                <li><a href="#">回收站(1)</a></li>
+                <li class="active"><a href="#">全部(<span id="sum">$!totalDetailSum</span>)（无不显示）</a></li>
+                <li><a href="#">正常($!normalSum)</a></li>
+                <li><a href="#">借出($!loanSum)</a></li>
+                <li><a href="#">维护($!maintSum)</a></li>
+                <li><a href="#">维修($!repairSum)</a></li>
+                <li><a href="#">遗失($!lostSum)</a></li>
+                <li><a href="#">回收站($!recycleSum)</a></li>
               </ul>
             </div><!--control-bar end-->
             <div class="panel panel-default table-responsive" id="detailDataDomain">
@@ -205,7 +205,22 @@
             <input type="text" class="form-control" id="modifyEquipId" placeholder="设备编号">
           </div>
         </div>
-        <div class="form-group">
+		<div class="form-group">
+          <label for="modifyEquipCategory" class="col-xs-3 control-label">分类</label>
+          <div class="col-xs-7">
+            <select class="select2 select-white form-control" id="modifyEquipCategory">
+              <option value="0" data-foo="fa">全部</option>
+              #foreach($clazz in $classForEquipAdd)
+				#if($!clazz.isParent == '1')
+					<optgroup label="$!clazz.name">
+				#else
+					<option value="$!clazz.id">$!clazz.name</option>
+				#end
+			 #end
+            </select>
+          </div>
+        </div>
+        <div class="form-group" id="modelForSelect">
           <label for="modifyEquipModelId" class="col-xs-3 control-label">所属设备型号</label>
           <div class="col-xs-7">
             <select class="select2 select-white form-control" id="modifyEquipModelId">
@@ -220,22 +235,6 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="modifyEquipCategory" class="col-xs-3 control-label">分类</label>
-          <div class="col-xs-7">
-            <select class="select2 select-white form-control" id="modifyEquipCategory">
-              <optgroup label="摄影摄像机">
-                <option value="2">数字摄影机</option>
-                <option value="3">数字摄像机</option>
-                <option value="4">单反</option>
-              </optgroup>
-              <optgroup label="灯具">
-                <option value="6">钨丝灯</option>
-                <option value="7">镝灯</option>
-              </optgroup>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
           <label for="modifyEquipStatus" class="col-xs-3 control-label">状态</label>
           <div class="col-xs-7">
             <select class="select2 select-white form-control" id="modifyEquipStatus">
@@ -244,7 +243,7 @@
               <option value="2">维护</option>
               <option value="3">维修</option>
               <option value="4">遗失</option>
-	      <option value="5">回收站</option>
+			  <option value="5">回收站</option>
             </select>
           </div>
         </div>
@@ -306,6 +305,8 @@
 	var detailStatus;
 	var detailMemo;
 	var idsForDel;
+	var currentPageNo = 1;		//当前页码
+	var totalPageNo;			//总页码
 	
 	/* 处理CheckBox选中事件用于删除处理 */
 	$("input[type='checkbox']").click(function() {
@@ -337,12 +338,12 @@
 		detailStatusForAlter = myData.state;
 		detailMemoForAlter = myData.memo;
 		
-		console.log("myData.id " + myData.id);
-		console.log("myData.code " + myData.code);
-		console.log("myData.modelId " + myData.mid);
-		console.log("myData.state " + myData.state);
-		console.log("myData.memo " + myData.memo);
-	})
+		//console.log("myData.id " + myData.id);
+		//console.log("myData.code " + myData.code);
+		//console.log("myData.modelId " + myData.mid);
+		//console.log("myData.state " + myData.state);
+		//console.log("myData.memo " + myData.memo);
+	});
 	
 	$('.modal').on('click', ('button.btn-primary'), function () {
 		var _this = $(this);
@@ -362,6 +363,7 @@
     				"equipmentdetail.status": dStatus,
     				"equipmentdetail.administrationid": cookie.Get("id"),
     				"equipmentdetail.usermark": dMemo
+					"currentPage": currentPageNo
     			}
     			
     			jQuery.ajax({  
@@ -374,9 +376,14 @@
         					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
         		    		_this.parents('.modal').modal('toggle');
 							
+							postData = {
+    							"currentPage": currentPageNo
+            				};
+							
 							//刷新界面数据
         					jQuery.ajax({
-        						url: "${webbaseurl}/flushEquipDetail.do",  
+        						url: "${webbaseurl}/flushEquipDetail.do",
+								data: postData,
         		    			type: "post",
         						success: function(data,textStatus,jq) { 
         							$("#admin-wrap").html(data);
@@ -395,11 +402,12 @@
     			});
     		}
 		}
-	})
+	});
 	
 	$("body").on("click", "a[action-type|=deleteDetail]", function() {
 		var postData = {
-			equipdetailIds: idsForDel
+			equipdetailIds: idsForDel,
+			currentPage: currentPageNo
 		}
 		jQuery.ajax({  
 		    url:"${webbaseurl}/deleteEquipDetail.do",  
@@ -408,12 +416,18 @@
 		    success:function(data,textStatus,jq){  
 		    	console.log(data);
 				if(data.tag == "0") {
+					currentPageNo = data.crtPage;
 					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
+					
+					postData = {
+            			"currentPage": currentPageNo
+            		};
 					
 					//刷新界面数据
 					jQuery.ajax({
 						url: "${webbaseurl}/flushEquipDetail.do",  
 		    			type: "post",
+						data:postData,
 						success: function(data,textStatus,jq) { 
 							$("#admin-wrap").html(data);
 						},
@@ -429,7 +443,207 @@
 				var n = noty({text: data.msg, timeout: 2500, type: 'error'});
 			}  
 		});
-	})
+	});
+	
+	//监听分类下拉菜单
+	$("body").on("change", "#modifyEquipCategory", function() {
+		var cid = $("#modifyEquipCategory").val();
+		console.log(cid);
+		var postData = {
+    		"seletedClassId": cid
+    	};
+		
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipDetailForSelect.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#modelForSelect").html(data);
+				//$("#inputEquipCategory").select2("val", cid);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
+	//向前一页翻页
+	$("body").on("click", "a[action-type|=backPage]", function() {
+		var cid = $("#select-categories").val();
+		if(currentPageNo - 1 <= 0 ) {
+			currentPageNo = 1;
+			return;
+		} else {
+			currentPageNo--;
+		}
+		
+		if(cid != 0) {
+    		postData = {
+    			"classificationId": cid,
+    			"crtModelPage": currentPageNo
+    		};
+		} else {
+    		postData = {
+    			"crtModelPage": currentPageNo
+    		};
+		}
+		
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipDetail.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+				$("#select-categories").select2("val", cid);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
+	//向后一页翻页
+	$("body").on("click", "a[action-type|=nextPage]", function() {
+		var cid = $("#select-categories").val();
+		var sum = $("#sum").html();
+		totalPageNo = Math.floor(sum / 10);
+		if(sum % 10 != 0 && sum > 10) {
+			totalPageNo++;
+		}
+		if(currentPageNo + 1 > totalPageNo ) {
+			currentPageNo = totalPageNo;
+			return;
+		} else {
+			currentPageNo++;
+		}
+		
+		if(cid != 0) {
+    		postData = {
+    			"classificationId": cid,
+    			"crtModelPage": currentPageNo
+    		};
+		} else {
+    		postData = {
+    			"crtModelPage": currentPageNo
+    		};
+		}
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipDetail.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+				$("#select-categories").select2("val", cid);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
+	//跳到第一页
+	$("body").on("click", "a[action-type|=goFirst]", function() {
+		var cid = $("#select-categories").val();
+		currentPageNo = 1;
+		
+		if(cid != 0) {
+    		postData = {
+    			"classificationId": cid,
+    			"crtModelPage": currentPageNo
+    		};
+		} else {
+    		postData = {
+    			"crtModelPage": currentPageNo
+    		};
+		}
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipDetail.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+				$("#select-categories").select2("val", cid);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
+	//跳到最后一页
+	$("body").on("click", "a[action-type|=goLast]", function() {
+		var cid = $("#select-categories").val();
+		var sum = $("#sum").html();
+		currentPageNo = Math.floor(sum / 10);
+		if(sum % 10 != 0 && sum > 10) {
+			currentPageNo++;
+		}
+		
+		if(cid != 0) {
+    		postData = {
+    			"classificationId": cid,
+    			"crtModelPage": currentPageNo
+    		};
+		} else {
+    		postData = {
+    			"crtModelPage": currentPageNo
+    		};
+		}
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipDetail.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+				$("#select-categories").select2("val", cid);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
+	//监听分类下拉菜单
+	$("body").on("change", "#select-categories", function() {
+		var cid = $("#select-categories").val();
+		if(cid == 0) {
+			postData = {
+    			"crtModelPage": currentPageNo
+    		};
+		} else {
+    		postData = {
+    			"classificationId": cid,
+    			"crtModelPage": currentPageNo
+    		};
+		}
+		
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipDetail.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+				$("#select-categories").select2("val", cid);
+				
+				var sum = $("#sum").html();
+        		totalPageNo = Math.floor(sum / 10);
+        		if(sum % 10 != 0 && sum > 10) {
+        			totalPageNo++;
+        		}
+        		if(currentPageNo + 1 > totalPageNo ) {
+        			currentPageNo = totalPageNo;
+        		}
+				if(currentPageNo == 0) {
+					currentPageNo = 1;
+				}
+				console.log("****" + currentPageNo);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
 </script>
 </body>
 </html>

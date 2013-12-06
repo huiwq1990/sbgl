@@ -39,9 +39,14 @@
         	<result name="success">/admin/equipManageAdminForFlush.vm</result>
         </action>
         
+        <action name="flushEquipDetailForSelect" class="EquipmentAction" method="flushEquipDetailForSelect">
+        	<result name="success">/admin/equipManageAdminForSelect.vm</result>
+        </action>
+        
         <action name="flushEquipDetailForAdd" class="EquipmentAction" method="flushEquipDetailForAdd">
         	<result name="success">/admin/equipmentManageEquipForFlush.vm</result>
         </action>
+        
     </package>
     
 </struts>    

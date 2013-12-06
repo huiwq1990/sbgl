@@ -432,8 +432,8 @@
 		    success:function(data,textStatus,jq){ 
 		    	console.log(data);
 				if(data.tag == "0") {
-					currentPageNo = data.crtPage
-					console.log("**********************" + currentPageNo);
+					currentPageNo = data.crtPage;
+					//console.log("**********************" + currentPageNo);
 					updateParentClass(data.pClass);
 					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
 					$(this).parents('.modal').modal('toggle');

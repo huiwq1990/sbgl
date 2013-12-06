@@ -104,7 +104,7 @@
                 <ul class="page-index nav nav-pills pull-left">
                   <li class="record">当前分类下有<strong id="sum">$!modelCount</strong>条记录</li>
                   <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!crtModelPage/$!totalModelPages页 <b class="caret"></b></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!crtModelPage/$!totalModelPages页<b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu">
                       <li><a href="#" action-type="goFirst">最新</a></li>
                       <li><a href="#" action-type="goLast">最旧</a></li>
@@ -502,7 +502,7 @@
 				var n = noty({text: data.msg, timeout: 2500, type: 'error'});
 			}  
 		});
-	})
+	});
 	
 	$("body").on("click", "a[action-type|=alterModelFillIn]", function() {
 		var myData = $(this).data();
@@ -533,7 +533,7 @@
 		} else {
 			$("#modifyStock1").prop("checked", false);
 		}
-	})
+	});
 	
 	$("body").on("click", "a[action-type|=deleteModel]", function() {
 		var postData = {
@@ -590,7 +590,7 @@
 				var n = noty({text: data.msg, timeout: 2500, type: 'error'});
 			}  
 		});
-	})
+	});
 	//向前一页翻页
 	$("body").on("click", "a[action-type|=backPage]", function() {
 		var cid = $("#select-categories").val();
@@ -624,8 +624,8 @@
 			error: function(data,textStatus,jq) {
 				alert("刷新界面失败!");
 			}
-		})
-	})
+		});
+	});
 	//向后一页翻页
 	$("body").on("click", "a[action-type|=nextPage]", function() {
 		var cid = $("#select-categories").val();
@@ -663,8 +663,8 @@
 			error: function(data,textStatus,jq) {
 				alert("刷新界面失败!");
 			}
-		})
-	})
+		});
+	});
 	//跳到第一页
 	$("body").on("click", "a[action-type|=goFirst]", function() {
 		var cid = $("#select-categories").val();
@@ -692,8 +692,8 @@
 			error: function(data,textStatus,jq) {
 				alert("刷新界面失败!");
 			}
-		})
-	})
+		});
+	});
 	//跳到最后一页
 	$("body").on("click", "a[action-type|=goLast]", function() {
 		var cid = $("#select-categories").val();
@@ -725,8 +725,8 @@
 			error: function(data,textStatus,jq) {
 				alert("刷新界面失败!");
 			}
-		})
-	})
+		});
+	});
 	//监听分类下拉菜单
 	$("body").on("change", "#select-categories", function() {
 		var cid = $("#select-categories").val();
@@ -766,20 +766,20 @@
 			error: function(data,textStatus,jq) {
 				alert("刷新界面失败!");
 			}
-		})
-	})
+		});
+	});
 	/************************************************************************************
 	$("body").on("change", "input[action-type|=showFileNameForAdd]", function() {
 		var file = $("#inputEPic").val();
 		$("#imgFileForAdd").html(file);
 		$("#inputEPic").prop('disabled', true);
-	})
+	});
 	
 	$("body").on("change", "input[action-type|=showFileNameForAlter]", function() {
 		var file = $("#modifyEPic").val();
 		$("#imgFileForAlter").html(file);
 		$("#modifyEPic").prop('disabled', true);
-	})
+	});
 	*************************************************************************************/
 	//上传图片
 	$("#inputEPic").fileupload({

@@ -819,10 +819,91 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	public List<EquipCourse> getEquipDetailCourse() {
 		return equipDetailCourse;
 	}
+	private String totalDetailSum;	//器材总数
+	private String normalSum;		//正常数
+	private String loanSum;			//借出数
+	private String maintSum;		//维护数
+	private String repairSum;		//维修数
+	private String lostSum;			//遗失数
+	private String recycleSum;		//回收站数
+	
+	public String getTotalDetailSum() {
+		return totalDetailSum;
+	}
+	public String getNormalSum() {
+		return normalSum;
+	}
+	public String getLoanSum() {
+		return loanSum;
+	}
+	public String getMaintSum() {
+		return maintSum;
+	}
+	public String getRepairSum() {
+		return repairSum;
+	}
+	public String getLostSum() {
+		return lostSum;
+	}
+	public String getRecycleSum() {
+		return recycleSum;
+	}
 
 	public String showAllEquipDetailCourse() {
 		equipDetailCourse = new ArrayList<EquipCourse>();
-		List<Equipmentdetail> tempList = equipService.getAllEquipmentdetail();
+		List<Equipmentdetail> tempList = null;
+		int _0 = 0, _1 = 0, _2 = 0, _3 = 0, _4 = 0, _5 = 0, _t = 0;
+		
+		
+		//如果界面按分类筛选器材
+		if(seletedClassId != null && !classificationId.equals("0")) {
+			tempList = new ArrayList<Equipmentdetail>();
+			List<Equipment> modelList = equipService.getEquipsByClassification( Integer.valueOf( seletedClassId ) );
+			if(modelList != null) {
+				List<Equipmentdetail> dList = null;
+				for (Equipment e : modelList) {
+					dList = equipService.getAllEquipmentdetailByEquipInfo( e.getEquipmentid() );
+					tempList.addAll( dList );
+				}
+			}
+		} else {
+			tempList = equipService.getAllEquipmentdetail();
+		}
+		
+		if(tempList != null && tempList.size() > 0) {
+			_t = tempList.size();
+			for (Equipmentdetail d : tempList) {
+				if( "0".equals( d.getStatus() ) ) {
+					_0 ++;
+				} else if( "1".equals( d.getStatus() ) ) {
+					_1 ++;
+				} else if( "2".equals( d.getStatus() ) ) {
+					_2 ++;
+				} else if( "3".equals( d.getStatus() ) ) {
+					_3 ++;
+				} else if( "4".equals( d.getStatus() ) ) {
+					_4 ++;
+				} else if( "5".equals( d.getStatus() ) ) {
+					_5 ++;
+				}
+			}
+			totalDetailSum = String.valueOf( _t );
+			normalSum = String.valueOf( _0 );
+			loanSum = String.valueOf( _1 );
+			maintSum = String.valueOf( _2 );
+			repairSum = String.valueOf( _3 );
+			lostSum = String.valueOf( _4 );
+			recycleSum = String.valueOf( _5 );
+		} else {
+			totalDetailSum = String.valueOf( "0" );
+			normalSum = String.valueOf( "0" );
+			loanSum = String.valueOf( "0" );
+			maintSum = String.valueOf( "0" );
+			repairSum = String.valueOf( "0" );
+			lostSum = String.valueOf( "0" );
+			recycleSum = String.valueOf( "0" );
+		}
+		
 		for (Equipmentdetail equipdetail : tempList) {
 			EquipCourse ec = new EquipCourse();
 			ec.setId( String.valueOf( equipdetail.getEquipDetailid() ) );
@@ -888,6 +969,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	public String gotoEquipManageAdmin() {
 		showAllEquipDetailCourse();
 		getAllModelForSelect(null);
+		doGetClassForEquipAdd();
 		
 		return SUCCESS;
 	}
@@ -1063,6 +1145,17 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	//刷新器材添加界面
 	public String flushEquipDetailForAdd() {
 		gotoEquipManageEquip();
+		return SUCCESS;
+	}
+	//刷新器材型号下拉列表
+	public String flushEquipDetailForSelect() {
+		Integer cId = null;
+		if( seletedClassId != null && !seletedClassId.equals("0") ) {
+			cId = Integer.valueOf( seletedClassId );
+			getAllModelForSelect(cId);
+		} else {
+			getAllModelForSelect(null);
+		}
 		return SUCCESS;
 	}
 }
