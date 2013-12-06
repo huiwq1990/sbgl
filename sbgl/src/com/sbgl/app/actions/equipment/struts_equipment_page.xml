@@ -38,6 +38,10 @@
         <action name="flushEquipDetail" class="EquipmentAction" method="flushEquipDetail">
         	<result name="success">/admin/equipManageAdminForFlush.vm</result>
         </action>
+        
+        <action name="flushEquipDetailForAdd" class="EquipmentAction" method="flushEquipDetailForAdd">
+        	<result name="success">/admin/equipmentManageEquipForFlush.vm</result>
+        </action>
     </package>
     
 </struts>    

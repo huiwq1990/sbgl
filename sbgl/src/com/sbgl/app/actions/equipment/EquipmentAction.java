@@ -425,11 +425,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		return allModelCourse;
 	}
 	
-	private List<EquipModelCourse> equipCourse = new ArrayList<EquipModelCourse>();
-	public List<EquipModelCourse> getEquipCourse() {
-		return equipCourse;
-	}
-	
 	private String classificationId;
 	public String getClassificationId() {
 		return classificationId;
@@ -465,7 +460,9 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			hqlOptionList.add( new HQLOption<Integer>("classificationid", Integer.valueOf(classificationId), SBGLConsistent.HQL_OPTION_EQ, 0) );
 		}
 		
-		if(crtModelPage == "0" || crtModelPage == "" || crtModelPage == null) {
+		if( crtModelPage != null && !crtModelPage.equals("0") && crtModelPage != "" ) {
+			
+		} else {
 			crtModelPage = "1";
 		}
 		//判断是否新查询出来的页数小于上次查询的当前页数
@@ -568,6 +565,57 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 //		returnJSON.put("allEquips", allEquips);
 //		returnJSON.put("classIdName", classIdName);
 		return SUCCESS;
+	}
+	/**
+	 * 获取用于器材添加或修改用的型号
+	 */
+	private List<EquipModelCourse> equipCourse = new ArrayList<EquipModelCourse>();
+	public List<EquipModelCourse> getEquipCourse() {
+		return equipCourse;
+	}
+	
+	private void getAllModelForSelect(Integer classificationId) {
+		List<Equipment> allModel = null;
+		if(classificationId != null) {
+			allModel = equipService.getEquipsByClassification( classificationId );
+		} else {
+			allModel = equipService.getAllEquips();
+		}
+		
+		for (Equipment equipment : allModel) {
+			EquipModelCourse emc = new EquipModelCourse();
+			emc.setId( String.valueOf( equipment.getEquipmentid() ) );
+			emc.setName( String.valueOf( equipment.getEquipmentname() ) );
+			
+			Equipmentclassification cf = equipService.getEquipmentclassificationById( equipment.getClassificationid() );
+			emc.setcId( String.valueOf( cf == null ? -1 : cf.getClassificationid() ) );
+			emc.setcName( cf == null ? "未分类" : cf.getName() );
+			emc.setMemo( equipment.getEquipmentdetail() );
+			emc.setImgName( equipment.getImgName() );
+			emc.setBranId( String.valueOf( equipment.getBrandid() ) );
+			
+			equipCourse.add( emc );
+		}
+		
+		List<String> classIds = new ArrayList<String>();
+		List<EquipModelCourse> tempCourse = new ArrayList<EquipModelCourse>();
+		for (EquipModelCourse ec : equipCourse) {
+			String cId = ec.getcId();
+			if( !classIds.contains(cId) ) {
+				classIds.add( cId );
+				EquipModelCourse showModelClass = new EquipModelCourse();
+				showModelClass.setcName( ec.getcName() );
+				showModelClass.setShowClass("1");
+				tempCourse.add( showModelClass );
+				
+				for (EquipModelCourse equipModel : equipCourse) {
+					if(equipModel.getcId().equals( cId )) {
+						tempCourse.add( equipModel );
+					}
+				}
+			}
+		}
+		equipCourse = tempCourse;
 	}
 	
 	/**
@@ -839,7 +887,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	//设备管理首页
 	public String gotoEquipManageAdmin() {
 		showAllEquipDetailCourse();
-		getAllEquipInfoCourse();
+		getAllModelForSelect(null);
 		
 		return SUCCESS;
 	}
@@ -847,8 +895,24 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	 * 设备管理-添加设备
 	 * @return
 	 */
+	private String seletedClassId;
+	public String getSeletedClassId() {
+		return seletedClassId;
+	}
+	public void setSeletedClassId(String seletedClassId) {
+		this.seletedClassId = seletedClassId;
+	}
+	
 	public String gotoEquipManageEquip() {
-		getAllEquipInfoCourse();
+		Integer cId = null;
+		if( seletedClassId != null && !seletedClassId.equals("0") ) {
+			cId = Integer.valueOf( seletedClassId );
+			getAllModelForSelect(cId);
+		} else {
+			getAllModelForSelect(null);
+		}
+		
+		doGetClassForEquipAdd();
 		
 		return SUCCESS;
 	}
@@ -996,5 +1060,9 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		gotoEquipManageModel();
 		return SUCCESS;
 	}
-
+	//刷新器材添加界面
+	public String flushEquipDetailForAdd() {
+		gotoEquipManageEquip();
+		return SUCCESS;
+	}
 }

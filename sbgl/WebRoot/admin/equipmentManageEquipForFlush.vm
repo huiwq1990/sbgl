@@ -1,0 +1,31 @@
+<label for="inputEquipModelId" class="col-lg-2 control-label">所属设备型号</label>
+<div class="col-lg-4">
+  <select class="select2 select-white form-control" id="inputEquipModelId">
+	<optgroup label="未知型号">
+	<option value="-1">未知型号</option>
+	#foreach($equip in $equipCourse)
+		#if($!equip.showClass == '1')
+			<optgroup label="$!equip.cName">
+		#else
+			<option value="$!equip.id">$!equip.name</option>
+		#end
+	#end
+  </select>
+</div>
+<script >
+	$(".select2").select2({
+		minimumResultsForSearch: 8,
+		formatResult: format,
+		escapeMarkup: function(markup) { return markup; }
+	});
+	function format(state) {
+		var originalOption = state.element;
+		
+		if ($(originalOption).data('foo') === 'sub') {
+			return "<span class='sub'>" + state.text + "</span>";
+		} else {
+			return state.text;
+		}
+	
+	}
+</script>
