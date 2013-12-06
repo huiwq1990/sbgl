@@ -250,25 +250,41 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 		
 		if(hqlOptionList != null) {
 			for(HQLOption option : hqlOptionList) {
-				if(option.getType() == 1) {  //字符串
+				if(option.getType() == SBGLConsistent.HQL_VALUE_STR) {  //字符串
 					switch( option.getOption() ) {
 						case SBGLConsistent.HQL_OPTION_EQ:
-							queryString += " and m." + option.getPropertyName() + "='" + option.getValue() + "'";
+							if(option.getJoinType() == SBGLConsistent.HQL_OPTION_AD) {
+								queryString += " and m." + option.getPropertyName() + "='" + option.getValue() + "'";
+							} else if(option.getJoinType() == SBGLConsistent.HQL_OPTION_OR) {
+								queryString += " or m." + option.getPropertyName() + "='" + option.getValue() + "'";
+							}
 							break;
 						case SBGLConsistent.HQL_OPTION_LK:
 							queryString += " and m." + option.getPropertyName() + " like '" + option.getValue() + "%'";
 							break;
 					}
-				} else if(option.getType() == 0) {  //数字
+				} else if(option.getType() == SBGLConsistent.HQL_VALUE_INT) {  //数字
 					switch( option.getOption() ) {
 						case SBGLConsistent.HQL_OPTION_EQ:
-							queryString += " and m." + option.getPropertyName() + "=" + option.getValue();
+							if(option.getJoinType() == SBGLConsistent.HQL_OPTION_AD) {
+								queryString += " and m." + option.getPropertyName() + "=" + option.getValue();
+							} else if(option.getJoinType() == SBGLConsistent.HQL_OPTION_OR) {
+								queryString += " or m." + option.getPropertyName() + "=" + option.getValue();
+							}
 							break;
 						case SBGLConsistent.HQL_OPTION_GT:
-							queryString += " and m." + option.getPropertyName() + ">" + option.getValue();
+							if(option.getJoinType() == SBGLConsistent.HQL_OPTION_AD) {
+								queryString += " and m." + option.getPropertyName() + ">" + option.getValue();
+							} else if(option.getJoinType() == SBGLConsistent.HQL_OPTION_OR) {
+								queryString += " or m." + option.getPropertyName() + ">" + option.getValue();
+							}
 							break;
 						case SBGLConsistent.HQL_OPTION_LT:
-							queryString += " and m." + option.getPropertyName() + "<" + option.getValue();
+							if(option.getJoinType() == SBGLConsistent.HQL_OPTION_AD) {
+								queryString += " and m." + option.getPropertyName() + "<" + option.getValue();
+							} else if(option.getJoinType() == SBGLConsistent.HQL_OPTION_OR) {
+								queryString += " or m." + option.getPropertyName() + "<" + option.getValue();
+							}
 							break;
 					}
 				}

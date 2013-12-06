@@ -39,13 +39,13 @@
         </div>              
       </div>
       <ul class="status-filter nav nav-pills pull-right">
-        <li class="active"><a href="#">全部(<span id="sum">$!totalDetailSum</span>)（无不显示）</a></li>
-        <li><a href="#">正常($!normalSum)</a></li>
-        <li><a href="#">借出($!loanSum)</a></li>
-        <li><a href="#">维护($!maintSum)</a></li>
-        <li><a href="#">维修($!repairSum)</a></li>
-        <li><a href="#">遗失($!lostSum)</a></li>
-        <li><a href="#">回收站($!recycleSum)</a></li>
+        <li class="active" action-type="active" id="-1" data-state="-1"><a href="#">全部(<span id="sum">$!totalDetailSum</span>)（无不显示）</a></li>
+        <li action-type="active" id="0" data-state="0"><a href="#">正常($!normalSum)</a></li>
+        <li action-type="active" id="1" data-state="1"><a href="#">借出($!loanSum)</a></li>
+        <li action-type="active" id="2" data-state="2"><a href="#">维护($!maintSum)</a></li>
+        <li action-type="active" id="3" data-state="3"><a href="#">维修($!repairSum)</a></li>
+        <li action-type="active" id="4" data-state="4"><a href="#">遗失($!lostSum)</a></li>
+        <li action-type="active" id="5" data-state="5"><a href="#">回收站($!recycleSum)</a></li>
       </ul>
     </div><!--control-bar end-->
     <div class="panel panel-default table-responsive" id="detailDataDomain">

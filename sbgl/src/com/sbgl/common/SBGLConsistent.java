@@ -19,4 +19,10 @@ public class SBGLConsistent {
 	public final static int HQL_OPTION_LT = 10;  //小于
 	public final static int HQL_OPTION_LK = 11;  //like
 	
+	public final static int HQL_OPTION_AD = 12;  //条件间与关系
+	public final static int HQL_OPTION_OR = 13;  //条件间或关系
+	
+	public final static int HQL_VALUE_STR = 14;  //条件间或关系
+	public final static int HQL_VALUE_INT = 15;  //条件间或关系
+	
 }

@@ -7,19 +7,30 @@ public class HQLOption<T> {
 	private T value;
 	private int option;
 	private int type = 1;  //0为数字，1为字符串，2为日期
+	private int joinType;
 	
+	public int getJoinType() {
+		return joinType;
+	}
+
+	public void setJoinType(int joinType) {
+		this.joinType = joinType;
+	}
+
 	public HQLOption() {
 		
 	}
 
-	public HQLOption(String propertyName, T value, int option, int type) {
+	public HQLOption(String propertyName, T value, int option, int type,
+			int joinType) {
 		super();
 		this.propertyName = propertyName;
 		this.value = value;
 		this.option = option;
 		this.type = type;
+		this.joinType = joinType;
 	}
-	
+
 	public int getType() {
 		return type;
 	}

@@ -51,6 +51,8 @@ public interface EquipService {
 	public List<Equipmentdetail> getAllEquipmentdetailByEquipInfo(Integer EquipId);
 	//查询全部器材详情
 	public List<Equipmentdetail> getAllEquipmentdetail();
+	//根据条件进行分页查询
+	public QueryResult getEquipDetailByPageWithOptions(List<HQLOption> hqlOptionList, Page page); 
 	
 	//查询器材分类总数
 	public int getCountOfEquipmentclassfication();

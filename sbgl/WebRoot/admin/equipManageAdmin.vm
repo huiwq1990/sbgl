@@ -120,13 +120,13 @@
                 </div>              
               </div>
               <ul class="status-filter nav nav-pills pull-right">
-                <li class="active"><a href="#">全部(<span id="sum">$!totalDetailSum</span>)（无不显示）</a></li>
-                <li><a href="#">正常($!normalSum)</a></li>
-                <li><a href="#">借出($!loanSum)</a></li>
-                <li><a href="#">维护($!maintSum)</a></li>
-                <li><a href="#">维修($!repairSum)</a></li>
-                <li><a href="#">遗失($!lostSum)</a></li>
-                <li><a href="#">回收站($!recycleSum)</a></li>
+                <li class="active" action-type="active" id="-1" data-state="-1"><a href="#">全部(<span id="sum">$!totalDetailSum</span>)（无不显示）</a></li>
+                <li action-type="active" id="0" data-state="0"><a href="#">正常($!normalSum)</a></li>
+                <li action-type="active" id="1" data-state="1"><a href="#">借出($!loanSum)</a></li>
+                <li action-type="active" id="2" data-state="2"><a href="#">维护($!maintSum)</a></li>
+                <li action-type="active" id="3" data-state="3"><a href="#">维修($!repairSum)</a></li>
+                <li action-type="active" id="4" data-state="4"><a href="#">遗失($!lostSum)</a></li>
+                <li action-type="active" id="5" data-state="5"><a href="#">回收站($!recycleSum)</a></li>
               </ul>
             </div><!--control-bar end-->
             <div class="panel panel-default table-responsive" id="detailDataDomain">
@@ -307,8 +307,9 @@
 	var idsForDel;
 	var currentPageNo = 1;		//当前页码
 	var totalPageNo;			//总页码
+	var selectedState = -1;		//筛选的器材状态
 	
-	/* 处理CheckBox选中事件用于删除处理 */
+	/* 处理CheckBox选中事件用于删除处理 
 	$("input[type='checkbox']").click(function() {
 		//var num = 0;
 		idsForDel = "";
@@ -316,6 +317,40 @@
 		if($(this).attr("id") === "chk-all") {
 			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
 		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true) {
+				//num++;
+				idsForDel += $(this).prop("value") + "_";
+			}
+		});
+	});*/
+	
+	$("body").on("click", "input[type='checkbox']", function() {
+		var num = 0;
+		if($(this).attr("id") === "chk-all") {
+			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
+		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true){
+				num++;  
+			}
+		});
+		if(num > 0){
+			$(".s-h").css({
+				"visibility": "visible",
+				"opacity": "1",
+				"filter": "alpha(opacity=100)"
+			});
+		} else {
+			$(".s-h").css({
+				"visibility": "hidden",
+				"opacity": "0",
+				"filter": "alpha(opacity=0)"
+			});
+		}
+		
+		idsForDel = "";
+		
 		$("input[name='chk-list']").each(function() {
 			if($(this).prop("checked") === true) {
 				//num++;
@@ -362,8 +397,9 @@
     				"equipmentdetail.equipmentid": dMid,
     				"equipmentdetail.status": dStatus,
     				"equipmentdetail.administrationid": cookie.Get("id"),
-    				"equipmentdetail.usermark": dMemo
-					"currentPage": currentPageNo
+    				"equipmentdetail.usermark": dMemo,
+					"crtDetailPage": currentPageNo,
+					"selectedState": selectedState
     			}
     			
     			jQuery.ajax({  
@@ -376,8 +412,12 @@
         					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
         		    		_this.parents('.modal').modal('toggle');
 							
+							var cid = $("#select-categories").val();
+							
 							postData = {
-    							"currentPage": currentPageNo
+								"classificationId": cid,
+    							"crtDetailPage": currentPageNo,
+								"selectedState": selectedState
             				};
 							
 							//刷新界面数据
@@ -405,9 +445,10 @@
 	});
 	
 	$("body").on("click", "a[action-type|=deleteDetail]", function() {
+		var cid = $("#select-categories").val();
 		var postData = {
 			equipdetailIds: idsForDel,
-			currentPage: currentPageNo
+			crtDetailPage: currentPageNo
 		}
 		jQuery.ajax({  
 		    url:"${webbaseurl}/deleteEquipDetail.do",  
@@ -420,7 +461,9 @@
 					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
 					
 					postData = {
-            			"currentPage": currentPageNo
+            			"crtDetailPage": currentPageNo,
+						"classificationId": cid,
+						"selectedState": selectedState
             		};
 					
 					//刷新界面数据
@@ -450,9 +493,9 @@
 		var cid = $("#modifyEquipCategory").val();
 		console.log(cid);
 		var postData = {
-    		"seletedClassId": cid
+    		"seletedClassId": cid,
+			"selectedState": selectedState
     	};
-		
 		
 		jQuery.ajax({
 			url: "${webbaseurl}/flushEquipDetailForSelect.do",  
@@ -480,11 +523,13 @@
 		if(cid != 0) {
     		postData = {
     			"classificationId": cid,
-    			"crtModelPage": currentPageNo
+    			"crtDetailPage": currentPageNo,
+				"selectedState": selectedState
     		};
 		} else {
     		postData = {
-    			"crtModelPage": currentPageNo
+    			"crtModelPage": currentPageNo,
+				"selectedState": selectedState
     		};
 		}
 		
@@ -520,11 +565,13 @@
 		if(cid != 0) {
     		postData = {
     			"classificationId": cid,
-    			"crtModelPage": currentPageNo
+    			"crtDetailPage": currentPageNo,
+				"selectedState": selectedState
     		};
 		} else {
     		postData = {
-    			"crtModelPage": currentPageNo
+    			"crtDetailPage": currentPageNo,
+				"selectedState": selectedState
     		};
 		}
 		
@@ -549,11 +596,13 @@
 		if(cid != 0) {
     		postData = {
     			"classificationId": cid,
-    			"crtModelPage": currentPageNo
+    			"crtDetailPage": currentPageNo,
+				"selectedState": selectedState
     		};
 		} else {
     		postData = {
-    			"crtModelPage": currentPageNo
+    			"crtDetailPage": currentPageNo,
+				"selectedState": selectedState
     		};
 		}
 		
@@ -582,11 +631,13 @@
 		if(cid != 0) {
     		postData = {
     			"classificationId": cid,
-    			"crtModelPage": currentPageNo
+    			"crtDetailPage": currentPageNo,
+				"selectedState": selectedState
     		};
 		} else {
     		postData = {
-    			"crtModelPage": currentPageNo
+    			"crtDetailPage": currentPageNo,
+				"selectedState": selectedState
     		};
 		}
 		
@@ -608,12 +659,14 @@
 		var cid = $("#select-categories").val();
 		if(cid == 0) {
 			postData = {
-    			"crtModelPage": currentPageNo
+    			"crtDetailPage": currentPageNo,
+				"selectedState": selectedState
     		};
 		} else {
     		postData = {
     			"classificationId": cid,
-    			"crtModelPage": currentPageNo
+    			"crtDetailPage": currentPageNo,
+				"selectedState": selectedState
     		};
 		}
 		
@@ -625,6 +678,10 @@
 			success: function(data,textStatus,jq) {
 				$("#admin-wrap").html(data);
 				$("#select-categories").select2("val", cid);
+				
+				$(".active").removeClass("active");
+				
+				$("#"+selectedState).addClass("active");
 				
 				var sum = $("#sum").html();
         		totalPageNo = Math.floor(sum / 10);
@@ -643,6 +700,13 @@
 				alert("刷新界面失败!");
 			}
 		});
+	});
+	//筛选器材状态
+	$("body").on("click", "li[action-type|=active]", function() {
+		$(".active").removeClass("active");
+		$(this).addClass("active");
+		
+		selectedState =$(this).attr("id");
 	});
 </script>
 </body>

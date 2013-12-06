@@ -512,5 +512,10 @@ public class EquipServiceImpl implements EquipService {
 			List<HQLOption> hqlOptionList, Page page) {
 		return baseDao.getEntityByPageWithOptions(Equipment.class, hqlOptionList, page);
 	}
-
+	
+	@Override
+	public QueryResult getEquipDetailByPageWithOptions(
+			List<HQLOption> hqlOptionList, Page page) {
+		return baseDao.getEntityByPageWithOptions(Equipmentdetail.class, hqlOptionList, page);
+	}
 }
