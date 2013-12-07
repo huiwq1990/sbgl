@@ -3,6 +3,12 @@
 <struts>
 	 <package name="computerorder" extends="admin">
 
+<action name="auditComputerorderdetail" class="ComputerorderdetailauditAction" method="auditComputerorderdetail">
+        	<result name="success">/computer/computerorderdetailaudit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+
+
 
 <!-- default entity manage action -->
     	<action name="manageComputerorder" class="ManageComputerAction" method="manageComputerorder">
@@ -28,6 +34,7 @@
 		<!-- default entity full manage action -->
     	<action name="manageComputerorderFull" class="ManageComputerAction" method="manageComputerorderFull">
         	<result name="success1">/computer/computerorderFullManage.vm</result>
+        	<result name="success2">/computer/computerorderFullManageContent.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
 		<!-- manage action , go to jsp page -->
