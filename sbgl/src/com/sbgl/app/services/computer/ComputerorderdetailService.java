@@ -9,7 +9,8 @@ import com.sbgl.util.*;
 public interface ComputerorderdetailService{
 	
 	public void addComputerorderdetail(Computerorderdetail computerorderdetail);
-	
+
+	public void addComputerorderdetail(Computerorderdetail ch,Computerorderdetail en);
 	public void addComputerorderdetailWithId(Computerorderdetail computerorderdetail);
 		
 	public void updateComputerorderdetail(Computerorderdetail computerorderdetail);
@@ -37,16 +38,28 @@ public interface ComputerorderdetailService{
 //  分页查询
 	public List<Computerorderdetail> selectComputerorderdetailByPage(Page page);
 	public List<ComputerorderdetailFull> selectComputerorderdetailFullByPage(Page page);
+		
+		
+		public List<Computerorderdetail> selectComputerorderdetailByCondition(String condition);
+
+        public List<Computerorderdetail>  selectComputerorderdetailByConditionAndPage(String condition,final Page page);
+	
+	//条件查询full
+	public List<ComputerorderdetailFull> selectComputerorderdetailFullByCondition(String condition);
+	
+	
+	// 查询实体full        
+        public List<ComputerorderdetailFull>  selectComputerorderdetailFullByConditionAndPage(String condition,final Page page);
+		
 	
 //根据关联查询实体	
 	public List<Computerorderdetail> selectComputerorderdetailByComputerorderId(Integer computerorderid );
+	public List<Computerorderdetail> selectComputerorderdetailByComputermodelId(Integer computermodelid );
 	public List<Computerorderdetail> selectComputerorderdetailByComputerId(Integer computerid );
 //根据关联查询实体full	
 	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerorderId(Integer computerorderid );
+	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputermodelId(Integer computermodelid );
 	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerId(Integer computerid );
-
-	List<Computerorderdetail> selectComputerorderdetailAfterNow(
-			String currentDay, int currentPeriod);
 
 		
 	

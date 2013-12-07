@@ -75,7 +75,7 @@
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
       <ul class="nav nav-tabs">
         <li><a href="设备预约首页.html">器材预约</a></li>
-        <li class="active"><a href="设备管理首页.html">器材管理</a></li>
+        <li class="active"><a href="${webbaseurl}/equipManageAdmin.do">器材管理</a></li>
       </ul>
       <!--admin-wrap start-->
       <div id="admin-wrap">
@@ -245,7 +245,7 @@
 	var alterClassId;    		//修改分类的id
 	var alterClassName;  		//修改分类的name
 	var parentId;        		//父分类id
-var classSum;        			//分类个数
+	var classSum;        		//分类个数
 	var idsForDel = "";  		//用于删除的id串
 	var needDisableIds = [];  	//用于记录已是一级分类的id，不能再将此分类添加父分类
 	//var _obj;            		//select2全局对象
@@ -432,8 +432,8 @@ var classSum;        			//分类个数
 		    success:function(data,textStatus,jq){ 
 		    	console.log(data);
 				if(data.tag == "0") {
-					currentPageNo = data.crtPage
-					console.log("**********************" + currentPageNo);
+					currentPageNo = data.crtPage;
+					//console.log("**********************" + currentPageNo);
 					updateParentClass(data.pClass);
 					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
 					$(this).parents('.modal').modal('toggle');
@@ -449,6 +449,7 @@ var classSum;        			//分类个数
 						data: postData,
 						success: function(data,textStatus,jq) {
 							$("#admin-wrap").html(data);
+							
 						},
 						error: function(data,textStatus,jq) {
 							alert("刷新界面失败!");
@@ -508,6 +509,11 @@ var classSum;        			//分类个数
 	})
 	//向后一页翻页
 	$("body").on("click", "a[action-type|=nextPage]", function() {
+		var sum = $("#sum").html();
+		totalPageNo = Math.floor(sum / 10);
+		if(sum % 10 != 0 && sum > 10) {
+			totalPageNo++;
+		}
 		if(currentPageNo + 1 > totalPageNo ) {
 			currentPageNo = totalPageNo;
 			return;

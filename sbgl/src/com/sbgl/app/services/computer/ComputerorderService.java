@@ -9,7 +9,8 @@ import com.sbgl.util.*;
 public interface ComputerorderService{
 	
 	public void addComputerorder(Computerorder computerorder);
-	
+
+	public void addComputerorder(Computerorder ch,Computerorder en);
 	public void addComputerorderWithId(Computerorder computerorder);
 		
 	public void updateComputerorder(Computerorder computerorder);
@@ -37,6 +38,19 @@ public interface ComputerorderService{
 //  分页查询
 	public List<Computerorder> selectComputerorderByPage(Page page);
 	public List<ComputerorderFull> selectComputerorderFullByPage(Page page);
+		
+		
+		public List<Computerorder> selectComputerorderByCondition(String condition);
+
+        public List<Computerorder>  selectComputerorderByConditionAndPage(String condition,final Page page);
+	
+	//条件查询full
+	public List<ComputerorderFull> selectComputerorderFullByCondition(String condition);
+	
+	
+	// 查询实体full        
+        public List<ComputerorderFull>  selectComputerorderFullByConditionAndPage(String condition,final Page page);
+		
 	
 //根据关联查询实体	
 		

@@ -259,7 +259,9 @@ public class ComputercategorySpringTest {
 		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
 		
 		ComputercategoryService computercategoryService = (ComputercategoryService)cxt.getBean("computercategoryService");
-		List<ComputercategoryFull> objList  = computercategoryService.selectComputercategoryFullAll();
+		String categorysqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";
+		
+		List<ComputercategoryFull> objList  = computercategoryService.selectComputercategoryFullByCondition(categorysqlch);
 		if(objList == null){
 			System.out.println("objList is null");
 			return;

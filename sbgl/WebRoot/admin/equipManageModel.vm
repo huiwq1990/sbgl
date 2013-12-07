@@ -9,10 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
-<script src="${jsDomain}/fileUpload/swfupload.js"></script>
-<script src="${jsDomain}/fileUpload/swfupload.queue.js"></script>
-<script src="${jsDomain}/fileUpload/fileprogress.js"></script>
-<script src="${jsDomain}/fileUpload/handlers.js"></script>
+
 <!--[if lt IE 9]>
   <script src="../js/html5shiv.js"></script>
   <script src="../js/respond.min.js"></script>
@@ -20,109 +17,6 @@
 <!--[if IE 7]>
 <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
 <![endif]-->
-<!-- 初始化swfupload 对象-->
-<!--   <script type="text/javascript">
-	var upload1, upload2;
-	var equipmentid = ""
-	var uploadFileName = "";
-	var addflag = "1";
-
-	window.onload = function() {
-		upload1 = new SWFUpload({
-
-			//提交路径
-			upload_url: "${webbaseurl}/uploadFile.do",
-			//向后台传递额外的参数
-			post_params: {"name" : uploadFileName},
-			//上传文件的名称
-			file_post_name: "file",
-				
-			// 下面自己按照字面意思理解
-			file_size_limit : "102400",	// 100MB
-			file_types : "*.*",
-			file_types_description : "All Files",
-			file_upload_limit : "10",
-			file_queue_limit : "0",
-
-			// 事件处理
-			file_dialog_start_handler : fileDialogStart,
-			file_queued_handler : fileQueued,
-			file_queue_error_handler : fileQueueError,
-			file_dialog_complete_handler : fileDialogComplete,
-			upload_start_handler : uploadStart,
-			upload_progress_handler : uploadProgress,
-			upload_error_handler : uploadError,
-			upload_success_handler : uploadSuccess,
-			upload_complete_handler : uploadComplete,
-
-			// 按钮的处理
-			button_image_url : "img/uploadBtn.png",
-			button_placeholder_id : "imageUploadBtn",
-			button_width: 98,
-			button_height: 26,
-				
-			// Flash Settings
-			flash_url : "js/fileUpload/swfupload.swf",
-				
-
-			custom_settings : {
-				progressTarget : "fsUploadProgress1",
-				cancelButtonId : "btnCancel1"
-			},
-				
-			// Debug Settings
-			debug: false
-		});
-		
-		upload2 = new SWFUpload({
-
-			//提交路径
-			upload_url: "${webbaseurl}/uploadFile.do",
-			//向后台传递额外的参数
-			post_params: {"name" : uploadFileName},
-			//上传文件的名称
-			file_post_name: "file",
-				
-			// 下面自己按照字面意思理解
-			file_size_limit : "102400",	// 100MB
-			file_types : "*.*",
-			file_types_description : "All Files",
-			file_upload_limit : "10",
-			file_queue_limit : "0",
-
-			// 事件处理
-			file_dialog_start_handler : fileDialogStart,
-			file_queued_handler : fileQueued,
-			file_queue_error_handler : fileQueueError,
-			file_dialog_complete_handler : fileDialogComplete,
-			upload_start_handler : uploadStart,
-			upload_progress_handler : uploadProgress,
-			upload_error_handler : uploadError,
-			upload_success_handler : uploadSuccess,
-			upload_complete_handler : uploadComplete,
-
-			// 按钮的处理
-			button_image_url : "img/uploadBtn.png",
-			button_placeholder_id : "imageUploadBtn2",
-			button_width: 98,
-			button_height: 26,
-				
-			// Flash Settings
-			flash_url : "js/fileUpload/swfupload.swf",
-				
-
-			custom_settings : {
-				progressTarget : "fsUploadProgress1",
-				cancelButtonId : "btnCancel1"
-			},
-				
-			// Debug Settings
-			debug: false
-		});
-	}
-	    
-	</script>
--->
 </head>
 
 <body id="admin">
@@ -146,7 +40,7 @@
         <li><a href="#">首页</a></li>
         <li><a href="#">设置</a></li>
         <li><a href="用户管理首页.html">用户</a></li>
-        <li class="active"><a href="设备管理首页.html">器材</a></li>
+        <li class="active"><a href="${webbaseurl}/equipManageAdmin.do">器材</a></li>
         <li><a href="#">内容</a></li>
       </ul>
     </div>    
@@ -180,7 +74,7 @@
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
       <ul class="nav nav-tabs">
         <li><a href="设备预约首页.html">器材预约</a></li>
-        <li class="active"><a href="设备管理首页.html">器材管理</a></li>
+        <li class="active"><a href="${webbaseurl}/equipManageAdmin.do">器材管理</a></li>
       </ul>
       <!--admin-wrap start-->
       <div id="admin-wrap">
@@ -202,25 +96,25 @@
                 </select>
               </div>
               <div class="operate-item pull-left">
-                <a href="#add-equip-model" class="btn btn-primary" data-toggle="modal" role="button">添加型号</a>
+                <a href="#add-equip-model" class="btn btn-primary" action-type="clearInput" data-toggle="modal" role="button">添加型号</a>
                 <a href="#" class="btn btn-white s-h" action-type="deleteModel"><i class="icon-trash"></i> 删除</a>
               </div>
 
               <div class="page pull-right clearfix">
                 <ul class="page-index nav nav-pills pull-left">
-                  <li class="record">当前分类下有<strong>$!equipCourse.size()</strong>条记录</li>
+                  <li class="record">当前分类下有<strong id="sum">$!modelCount</strong>条记录</li>
                   <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!crtModelPage/$!totalModelPages页<b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">最新</a></li>
-                      <li><a href="#">最旧</a></li>
+                      <li><a href="#" action-type="goFirst">最新</a></li>
+                      <li><a href="#" action-type="goLast">最旧</a></li>
                     </ul>
                   </li>              
                 </ul>
                 <div class="pagination pull-right">
                   <ul>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                    <li><a href="#" rel="tooltip" action-type="backPage" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" action-type="nextPage" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
                   </ul>
                 </div>              
               </div>
@@ -238,13 +132,13 @@
                   </tr>
                 </thead>
                 <tbody>
-				#foreach($model in $equipCourse)
+				#foreach($model in $allModelCourse)
                   <tr>
 				  #if($!model.showClass != 1)
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!model.id"></td>
-                    <td>$!model.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-name="$!model.name" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo">修改</a></td>
+                    <td>$!model.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-name="$!model.name" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo" data-imgname="$!model.imgName" data-brandid="$!model.branId">修改</a></td>
 					<td>$!model.cName</td>
-					<td>双塔影视</td>
+					<td>#if($!model.branId == "1")双塔影视#end</td>
                     <td>$!model.memo</td>
 				  #end
                   </tr>
@@ -316,7 +210,7 @@
         <label for="modifyStock" class="col-xs-3 control-label">合作器材公司</label>
         <div class="col-xs-7">
           <label class="checkbox-inline">
-            <input type="checkbox" id="modifyStock1" value="s1" checked> 双塔影视
+            <input type="checkbox" id="modifyStock1" value="1" checked> 双塔影视
           </label>
         </div>
       </div>
@@ -326,8 +220,9 @@
           <span class="btn btn-white file-input-button">
               <i class="icon-plus"></i>
               <span>添加图片</span>
-              <input id="modifyEPic" type="file" name="files[]" multiple>
+              <input id="modifyEPic" action-type="showFileNameForAlter" type="file" name="file" multiple>
           </span>
+		  <span id="imgFileForAlter"></span>
         </div>
       </div>
     </form>
@@ -349,7 +244,7 @@
       <div class="form-group">
         <label for="inputEModelName" class="col-xs-3 control-label">型号</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="inputEModelName" placeholder="设备型号（如：Arri Alexa Plus）">
+          <input type="text" name="modelName" class="form-control" id="inputEModelName" placeholder="设备型号（如：Arri Alexa Plus）">
         </div>
       </div>
       <div class="form-group">
@@ -377,7 +272,7 @@
         <label for="inputStock" class="col-xs-3 control-label">合作器材公司</label>
         <div class="col-xs-7">
           <label class="checkbox-inline">
-            <input type="checkbox" id="inputStock1" value="s1" checked> 双塔影视
+            <input type="checkbox" id="inputStock1" value="1" checked> 双塔影视
           </label>
         </div>
       </div>
@@ -387,8 +282,9 @@
           <span class="btn btn-white file-input-button">
               <i class="icon-plus"></i>
               <span>添加图片</span>
-              <input id="inputEPic" type="file" name="files[]" multiple>
+              <input id="inputEPic" type="file" action-type="showFileNameForAdd" name="file" multiple>
           </span>
+          <span id="imgFileForAdd"></span>
         </div>
       </div>
     </form>
@@ -399,6 +295,7 @@
   </div>
 </div>
 
+
     <!-- javascript
     ================================================== -->
 <script src="${jsDomain}/jquery.js"></script>
@@ -407,7 +304,9 @@
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
-
+<script src="${jsDomain}/fileUpload/vendor/jquery.ui.widget.js"></script>
+<script src="${jsDomain}/fileUpload/jquery.iframe-transport.js"></script>
+<script src="${jsDomain}/jquery.fileupload.js"></script>
 
 <!--[if lt IE 10]>
   <script src="./js/jquery.placeholder.js"></script>
@@ -431,9 +330,14 @@
 	var modelIdForAlter;
 	var modelCIdForAlter;
 	var modelMemoForAlter;
+	var modelBrandIdForAlter;
 	var idsForDel;
+	var currentPageNo = 1;		//当前页码
+	var totalPageNo;			//总页码
+	var localFileName;          //本地图片名称
+	var savedFileName;          //保存在服务器的图片名称
 	
-	/* 处理CheckBox选中事件用于删除处理 */
+	/* 处理CheckBox选中事件用于删除处理 
 	$("input[type='checkbox']").click(function() {
 		//var num = 0;
 		idsForDel = "";
@@ -447,23 +351,80 @@
 				idsForDel += $(this).prop("value") + "_";
 			}
 		});
+	});*/
+	
+	$("body").on("click", "a[action-type|=clearInput]", function() {
+		$("#inputECategory").select2("val", -1);
+		$("#inputEModelName").val("");
+		$("#inputEDescribe").val("");
+		localFileName = "";
+		savedFileName = "";
+		$("#imgFileForAdd").html("");
+		$("#inputEPic").prop('disabled', false);
+		$("#modifyEPic").prop('disabled', false);
+	});
+	
+	$("body").on("click", "input[type='checkbox']", function() {
+		var num = 0;
+		if($(this).attr("id") === "chk-all") {
+			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
+		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true){
+				num++;  
+			}
+		});
+		if(num > 0){
+			$(".s-h").css({
+				"visibility": "visible",
+				"opacity": "1",
+				"filter": "alpha(opacity=100)"
+			});
+		} else {
+			$(".s-h").css({
+				"visibility": "hidden",
+				"opacity": "0",
+				"filter": "alpha(opacity=0)"
+			});
+		}
+		
+		idsForDel = "";
+		
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true) {
+				//num++;
+				idsForDel += $(this).prop("value") + "_";
+			}
+		});
 	});
 	
 	$('.modal').on('click', ('button.btn-primary'), function () {
 		var _this = $(this);
 		var postData = {};
 		var actionUrl = "";
-		
+		var imgFile = "";
+		//localFileName = "";
+		//savedFileName = "";
+		//console.log("aa"+$("#modifyStock1").prop("checked"));
 		if(_this.attr('action-type') == 'addModel') {
 			var modelName = $("#inputEModelName").val();
 			var clazzId = $("#inputECategory").val();
 			var memo = $("#inputEDescribe").val();
+			var brandId = -1;
+			if($("#inputStock1").prop("checked")) {
+				brandId = $("#inputStock1").val();
+			}
+			
 			if(modelName != "") {
     			postData = {
         			"equipment.administrationid": cookie.Get("id"),
         			"equipment.equipmentname": modelName,
         			"equipment.classificationid": clazzId,
-        			"equipment.equipmentdetail": memo
+        			"equipment.brandid": brandId,
+        			"equipment.imgName": localFileName,
+        			"equipment.imgNameSaved": savedFileName,
+        			"equipment.equipmentdetail": memo,
+					"crtModelPage": currentPageNo
         		}
     			
     			actionUrl = "${webbaseurl}/addEquipModel.do";
@@ -471,15 +432,18 @@
 				alert("型号名称不能为空！");
 				return;
 			}
-			
 		}
 		
 		if(_this.attr('action-type') == 'alterModel') {
 			var ename = $("#modifyEModelName").val();
     		var cidInput = $("#modifyEquipCategory").val();
     		var memo = $("#modifyEDescribe").val();
+			var brandId = -1;
+			if($("#modifyStock1").prop("checked")) {
+				brandId = $("#modifyStock1").val();
+			}
 			
-			if(ename == modelNameForAlter && modelCIdForAlter == cidInput && modelMemoForAlter == memo) {
+			if(ename == modelNameForAlter && modelCIdForAlter == cidInput && modelMemoForAlter == memo && localFileName == "" && modelBrandIdForAlter == brandId) {
     			alert("并未做修改！");
 				return;
     		} else {
@@ -487,10 +451,15 @@
     				"equipment.equipmentid": modelIdForAlter,
     				"equipment.equipmentname": ename,
     				"equipment.classificationid": cidInput,
-    				"equipment.equipmentdetail": memo
+					"equipment.imgName": localFileName,
+					"equipment.brandid": brandId,
+        			"equipment.imgNameSaved": savedFileName,
+    				"equipment.equipmentdetail": memo,
+					"crtModelPage": currentPageNo
     			}
 				actionUrl = "${webbaseurl}/altEquipModel.do";
 			}
+			imgFile = $("#modifyEPic").val();
 		}
 		
 		jQuery.ajax({  
@@ -502,66 +471,23 @@
 				if(data.tag == "0") {
 					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
 					equipmentid = data.equipmentid;
-					/*
-					//刷新界面数据
-					jQuery.ajax({
-						url: "${webbaseurl}/flushEquipModel.do",  
-		    			type: "post",
-						success: function(data,textStatus,jq) { 
-							$("#admin-wrap").html(data);
-						},
-						error: function(data,textStatus,jq) {
-							alert("刷新界面失败!");
-						}
-					})*/
-				} else {
-					var n = noty({text: data.msg, timeout: 2500, type: 'error'});
-				}
-				
-	        },  
-		    error:function(data,textStatus,jq) {
-				var n = noty({text: data.msg, timeout: 2500, type: 'error'});
-			}  
-		});
-	})
-	
-	$("body").on("click", "a[action-type|=alterModelFillIn]", function() {
-		var myData = $(this).data();
-		$("#modifyEModelName").val(myData.name);
-		$("#modifyEquipCategory").select2("val", myData.cid);
-		$("#modifyEDescribe").val(myData.memo);
-		
-		modelNameForAlter = myData.name;
-		modelIdForAlter = myData.id;
-		modelCIdForAlter = myData.cid;
-		modelMemoForAlter = myData.memo;
-		
-		equipmentid = myData.id;
-		
-		console.log("myData.name" + myData.name);
-		console.log("myData.cId" + myData.cid);
-		console.log("myData.memo" + myData.memo);
-	})
-	
-	$("body").on("click", "a[action-type|=deleteModel]", function() {
-		var postData = {
-			equipInfoIds: idsForDel
-		}
-		jQuery.ajax({  
-		    url:"${webbaseurl}/delEquipModel.do",  
-		    type:"post",
-		    data:postData,
-		    success:function(data,textStatus,jq){  
-		    	console.log(data);
-				if(data.tag == "0") {
-    				var n = noty({text: data.msg, timeout: 2500, type: 'success'});
+					_this.parents('.modal').modal('toggle');
+					 
+					var cid = $("#select-categories").val();
+					
+					postData = {
+						"classificationId": cid,
+    					"crtModelPage": currentPageNo
+            		};
 					
 					//刷新界面数据
 					jQuery.ajax({
 						url: "${webbaseurl}/flushEquipModel.do",  
 		    			type: "post",
+						data: postData,
 						success: function(data,textStatus,jq) { 
 							$("#admin-wrap").html(data);
+							$("#select-categories").select2("val", cid);
 						},
 						error: function(data,textStatus,jq) {
 							alert("刷新界面失败!");
@@ -576,7 +502,325 @@
 				var n = noty({text: data.msg, timeout: 2500, type: 'error'});
 			}  
 		});
-	})
+	});
+	
+	$("body").on("click", "a[action-type|=alterModelFillIn]", function() {
+		var myData = $(this).data();
+		$("#modifyEModelName").val(myData.name);
+		$("#modifyEquipCategory").select2("val", myData.cid);
+		$("#modifyEDescribe").val(myData.memo);
+		
+		modelNameForAlter = myData.name;
+		modelIdForAlter = myData.id;
+		modelCIdForAlter = myData.cid;
+		modelMemoForAlter = myData.memo;
+		modelBrandIdForAlter = myData.brandid;
+		
+		equipmentid = myData.id;
+		
+		localFileName = "";
+		savedFileName = "";
+		$("#imgFileForAlter").html(myData.imgname);
+		$("#inputEPic").prop('disabled', false);
+		$("#modifyEPic").prop('disabled', false);
+		
+		console.log("myData.name" + myData.name);
+		console.log("myData.cId" + myData.cid);
+		console.log("myData.memo" + myData.memo);
+		console.log("myData.brandid" + myData.brandid);
+		if(myData.brandid == 1) {
+			$("#modifyStock1").prop("checked", true);
+		} else {
+			$("#modifyStock1").prop("checked", false);
+		}
+	});
+	
+	$("body").on("click", "a[action-type|=deleteModel]", function() {
+		var postData = {
+			equipInfoIds: idsForDel,
+			crtModelPage: currentPageNo
+		}
+		jQuery.ajax({  
+		    url:"${webbaseurl}/delEquipModel.do",  
+		    type:"post",
+		    data:postData,
+		    success:function(data,textStatus,jq){  
+		    	console.log(data);
+				if(data.tag == "0") {
+					var cid = $("#select-categories").val();
+					currentPageNo = data.crtPage;
+    				var n = noty({text: data.msg, timeout: 2500, type: 'success'});
+					
+					postData = {
+						"classificationId": cid,
+            			"crtModelPage": currentPageNo
+            		};
+					
+					//刷新界面数据
+					jQuery.ajax({
+						url: "${webbaseurl}/flushEquipModel.do",  
+		    			type: "post",
+						data:postData,
+						success: function(data,textStatus,jq) { 
+							$("#admin-wrap").html(data);
+							$("#select-categories").select2("val", cid);
+							
+							var sum = $("#sum").html();
+                    		totalPageNo = Math.floor(sum / 10);
+                    		if(sum % 10 != 0 && sum > 10) {
+                    			totalPageNo++;
+                    		}
+                    		if(currentPageNo + 1 > totalPageNo ) {
+                    			currentPageNo = totalPageNo;
+                    		}
+            				if(currentPageNo == 0) {
+            					currentPageNo = 1;
+            				}
+						},
+						error: function(data,textStatus,jq) {
+							alert("刷新界面失败!");
+						}
+					})
+				} else {
+					var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+				}
+				
+	        },  
+		    error:function(data,textStatus,jq) {
+				var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+			}  
+		});
+	});
+	//向前一页翻页
+	$("body").on("click", "a[action-type|=backPage]", function() {
+		var cid = $("#select-categories").val();
+		if(currentPageNo - 1 <= 0 ) {
+			currentPageNo = 1;
+			return;
+		} else {
+			currentPageNo--;
+		}
+		
+		if(cid != 0) {
+    		postData = {
+    			"classificationId": cid,
+    			"crtModelPage": currentPageNo
+    		};
+		} else {
+    		postData = {
+    			"crtModelPage": currentPageNo
+    		};
+		}
+		
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipModel.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+				$("#select-categories").select2("val", cid);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
+	//向后一页翻页
+	$("body").on("click", "a[action-type|=nextPage]", function() {
+		var cid = $("#select-categories").val();
+		var sum = $("#sum").html();
+		totalPageNo = Math.floor(sum / 10);
+		if(sum % 10 != 0 && sum > 10) {
+			totalPageNo++;
+		}
+		if(currentPageNo + 1 > totalPageNo ) {
+			currentPageNo = totalPageNo;
+			return;
+		} else {
+			currentPageNo++;
+		}
+		
+		if(cid != 0) {
+    		postData = {
+    			"classificationId": cid,
+    			"crtModelPage": currentPageNo
+    		};
+		} else {
+    		postData = {
+    			"crtModelPage": currentPageNo
+    		};
+		}
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipModel.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+				$("#select-categories").select2("val", cid);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
+	//跳到第一页
+	$("body").on("click", "a[action-type|=goFirst]", function() {
+		var cid = $("#select-categories").val();
+		currentPageNo = 1;
+		
+		if(cid != 0) {
+    		postData = {
+    			"classificationId": cid,
+    			"crtModelPage": currentPageNo
+    		};
+		} else {
+    		postData = {
+    			"crtModelPage": currentPageNo
+    		};
+		}
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipModel.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+				$("#select-categories").select2("val", cid);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
+	//跳到最后一页
+	$("body").on("click", "a[action-type|=goLast]", function() {
+		var cid = $("#select-categories").val();
+		var sum = $("#sum").html();
+		currentPageNo = Math.floor(sum / 10);
+		if(sum % 10 != 0 && sum > 10) {
+			currentPageNo++;
+		}
+		
+		if(cid != 0) {
+    		postData = {
+    			"classificationId": cid,
+    			"crtModelPage": currentPageNo
+    		};
+		} else {
+    		postData = {
+    			"crtModelPage": currentPageNo
+    		};
+		}
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipModel.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+				$("#select-categories").select2("val", cid);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
+	//监听分类下拉菜单
+	$("body").on("change", "#select-categories", function() {
+		var cid = $("#select-categories").val();
+		if(cid == 0) {
+			postData = {
+    			"crtModelPage": currentPageNo
+    		};
+		} else {
+    		postData = {
+    			"classificationId": cid,
+    			"crtModelPage": currentPageNo
+    		};
+		}
+		
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipModel.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+				$("#select-categories").select2("val", cid);
+				
+				var sum = $("#sum").html();
+        		totalPageNo = Math.floor(sum / 10);
+        		if(sum % 10 != 0 && sum > 10) {
+        			totalPageNo++;
+        		}
+        		if(currentPageNo + 1 > totalPageNo ) {
+        			currentPageNo = totalPageNo;
+        		}
+				if(currentPageNo == 0) {
+					currentPageNo = 1;
+				}
+				console.log("****" + currentPageNo);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
+	/************************************************************************************
+	$("body").on("change", "input[action-type|=showFileNameForAdd]", function() {
+		var file = $("#inputEPic").val();
+		$("#imgFileForAdd").html(file);
+		$("#inputEPic").prop('disabled', true);
+	});
+	
+	$("body").on("change", "input[action-type|=showFileNameForAlter]", function() {
+		var file = $("#modifyEPic").val();
+		$("#imgFileForAlter").html(file);
+		$("#modifyEPic").prop('disabled', true);
+	});
+	*************************************************************************************/
+	//上传图片
+	$("#inputEPic").fileupload({
+    	url: "${webbaseurl}/uploadFile.do",
+        dataType: 'json',
+        done: function (e, data) {
+            console.log(data);
+			if(data.result.tag == 0) {
+				localFileName = data.files[0].name;
+				savedFileName = data.result.savedFileName;
+				$("#imgFileForAdd").html(localFileName);
+				$("#inputEPic").prop('disabled', true);
+			} else if(data.result.tag == 1) {
+				alert("上传图片失败！");
+				localFileName = "";
+				savedFileName = "";
+			}
+            //alert(data.result.savedFileName);
+        }
+    });
+	
+    $('#modifyEPic').fileupload({
+    	url: "${webbaseurl}/uploadFile.do",
+        dataType: 'json',
+        done: function (e, data) {
+            console.log(data);
+			if(data.result.tag == 0) {
+				localFileName = data.files[0].name;
+				savedFileName = data.result.savedFileName;
+				$("#imgFileForAlter").html(localFileName);
+				$("#modifyEPic").prop('disabled', true);
+			} else if(data.result.tag == 1) {
+				alert("上传图片失败！");
+				localFileName = "";
+				savedFileName = "";
+			}
+            //alert(data.result.message);
+        }
+    });
 </script>
+
+<iframe name="submit" width="0" height="0" />
 </body>
 </html>

@@ -131,7 +131,7 @@ public class ComputercategoryDaoImpl extends HibernateDaoSupport implements Comp
 						return query.list();
 					}
 				});		
-		return null;
+		return computercategoryList;
 	}
 	
 	

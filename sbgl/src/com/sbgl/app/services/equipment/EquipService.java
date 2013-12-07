@@ -2,11 +2,14 @@ package com.sbgl.app.services.equipment;
 
 import java.util.List;
 
+import com.sbgl.app.dao.QueryResult;
 import com.sbgl.app.entity.Category;
 import com.sbgl.app.entity.Categorydetail;
 import com.sbgl.app.entity.Equipment;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Equipmentdetail;
+import com.sbgl.common.HQLOption;
+import com.sbgl.util.Page;
 
 public interface EquipService {
 	//获取器材类型总数
@@ -31,7 +34,9 @@ public interface EquipService {
 //	public List<Equipment> getEquipsByCategoryDetails(List<Categorydetail> categorydetailList);
 	//查询器材类型信息--某一分类
 	public List<Equipment> getEquipsByClassification(Integer equipmentclassificationId);
-	
+	//按条件查询并以分页方式查询
+	public QueryResult getEquipmentByPageWithOptions(List<HQLOption> hqlOptionList, Page page);
+		
 	//查询器材详情记录总数
 	public int getCountOfEquipmentdetail();
 	//添加器材详情
@@ -46,6 +51,8 @@ public interface EquipService {
 	public List<Equipmentdetail> getAllEquipmentdetailByEquipInfo(Integer EquipId);
 	//查询全部器材详情
 	public List<Equipmentdetail> getAllEquipmentdetail();
+	//根据条件进行分页查询
+	public QueryResult getEquipDetailByPageWithOptions(List<HQLOption> hqlOptionList, Page page); 
 	
 	//查询器材分类总数
 	public int getCountOfEquipmentclassfication();
@@ -67,6 +74,8 @@ public interface EquipService {
 	public Integer getCountOfEquipdetailByClassification(Integer classificationId);
 	//查询某一型号所属的分类
 	public Equipmentclassification getEquipmentclassificationByEquipmentModel(Integer equipmentModelId);
+	//按条件查询并以分页方式查询
+	public QueryResult getgetEquipmentclassificationByPageWithOptions(List<HQLOption> hqlOptionList, Page page);
 	
 	//添加品类信息
 	public Integer addCategory(Category category);

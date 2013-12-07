@@ -24,28 +24,28 @@
       <div class="page pull-right clearfix">
         <ul class="page-index nav nav-pills pull-left">
           <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!crtDetailPage/$!totalDetailPages页<b class="caret"></b></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#">最新</a></li>
-              <li><a href="#">最旧</a></li>
+              <li><a href="#" action-type="goFirst">最新</a></li>
+              <li><a href="#" action-type="goLast">最旧</a></li>
             </ul>
           </li>              
         </ul>
         <div class="pagination pull-right">
           <ul>
-            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+            <li><a href="#" rel="tooltip" action-type="backPage" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+            <li><a href="#" rel="tooltip" action-type="nextPage" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
           </ul>
         </div>              
       </div>
       <ul class="status-filter nav nav-pills pull-right">
-        <li class="active"><a href="#">全部($!equipDetailCourse.size())（无不显示）</a></li>
-        <li><a href="#">正常(5)</a></li>
-        <li><a href="#">借出(2)</a></li>
-        <li><a href="#">维护(2)</a></li>
-        <li><a href="#">维修(2)</a></li>
-        <li><a href="#">遗失(2)</a></li>
-        <li><a href="#">回收站(1)</a></li>
+        <li class="active" action-type="active" id="-1" data-state="-1"><a href="#">全部(<span id="sum">$!totalDetailSum</span>)（无不显示）</a></li>
+        <li action-type="active" id="0" data-state="0"><a href="#">正常($!normalSum)</a></li>
+        <li action-type="active" id="1" data-state="1"><a href="#">借出($!loanSum)</a></li>
+        <li action-type="active" id="2" data-state="2"><a href="#">维护($!maintSum)</a></li>
+        <li action-type="active" id="3" data-state="3"><a href="#">维修($!repairSum)</a></li>
+        <li action-type="active" id="4" data-state="4"><a href="#">遗失($!lostSum)</a></li>
+        <li action-type="active" id="5" data-state="5"><a href="#">回收站($!recycleSum)</a></li>
       </ul>
     </div><!--control-bar end-->
     <div class="panel panel-default table-responsive" id="detailDataDomain">
@@ -89,9 +89,20 @@
       
     </div>
   </div>
-<script src="${jsDomain}/jquery.js"></script>
-<script src="${jsDomain}/loader.min.js"></script>
-<script src="${jsDomain}/select2.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
-<script src="${jsDomain}/bfa.js"></script>
-<script src="${jsDomain}/jquery.noty.js"></script>
+<script >
+	$(".select2").select2({
+		minimumResultsForSearch: 8,
+		formatResult: format,
+		escapeMarkup: function(markup) { return markup; }
+	});
+	function format(state) {
+		var originalOption = state.element;
+		
+		if ($(originalOption).data('foo') === 'sub') {
+			return "<span class='sub'>" + state.text + "</span>";
+		} else {
+			return state.text;
+		}
+	
+	}
+</script>

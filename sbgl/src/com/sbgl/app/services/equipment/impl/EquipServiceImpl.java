@@ -16,6 +16,7 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Service;
 
 import com.sbgl.app.dao.BaseDao;
+import com.sbgl.app.dao.QueryResult;
 import com.sbgl.app.entity.Category;
 import com.sbgl.app.entity.Categorydetail;
 import com.sbgl.app.entity.Equipment;
@@ -23,6 +24,8 @@ import com.sbgl.app.entity.Equipmentcategory;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Equipmentdetail;
 import com.sbgl.app.services.equipment.EquipService;
+import com.sbgl.common.HQLOption;
+import com.sbgl.util.Page;
 
 @Scope("prototype") 
 @Service("equipService")
@@ -498,4 +501,21 @@ public class EquipServiceImpl implements EquipService {
 		return baseDao.getAllEntity(Equipmentclassification.class).size();
 	}
 
+	@Override
+	public QueryResult getgetEquipmentclassificationByPageWithOptions(
+			List<HQLOption> hqlOptionList, Page page) {
+		return baseDao.getEntityByPageWithOptions(Equipmentclassification.class, hqlOptionList, page);
+	}
+
+	@Override
+	public QueryResult getEquipmentByPageWithOptions(
+			List<HQLOption> hqlOptionList, Page page) {
+		return baseDao.getEntityByPageWithOptions(Equipment.class, hqlOptionList, page);
+	}
+	
+	@Override
+	public QueryResult getEquipDetailByPageWithOptions(
+			List<HQLOption> hqlOptionList, Page page) {
+		return baseDao.getEntityByPageWithOptions(Equipmentdetail.class, hqlOptionList, page);
+	}
 }

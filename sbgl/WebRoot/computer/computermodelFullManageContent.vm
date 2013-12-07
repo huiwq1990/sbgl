@@ -1,0 +1,109 @@
+   <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">型号管理</div>
+			  <div class="tips">在此页面下管理设备型号。设备型号包含每种设备的基本信息，如设备名、设备图片、设备资料介绍等等。</div>
+              <div class="filter category-filter">
+                <select id="select-categories" style="width:130px" class="select2">
+                  <option value="0" data-foo="fa">全部分类</option>
+            <option value="1" data-foo="fa">工作站</option>
+          
+            <option value="5" data-foo="fa">数字调色</option>
+          
+                </select>
+				
+				
+				
+              </div>
+              <div class="operate-item pull-left">
+                <a href="#add-equip-model" class="btn btn-primary" data-toggle="modal" role="button">添加型号</a>
+                <a href="#" class="btn btn-white s-h" action-type="deleteComputermodelButton"><i class="icon-trash"></i> 删除</a>
+              </div>
+
+              <div class="page pull-right clearfix">
+				
+				<!--page -->
+			  <div class="pagination">
+				<a href="#" class="first" data-action="first">&laquo;</a>
+				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
+				<input type="text" readonly="readonly" data-max-page="$!page.totalpage" />
+				<a href="#" class="next" data-action="next">&rsaquo;</a>
+				<a href="#" class="last" data-action="last">&raquo;</a>
+			  </div>
+			  <!-- end page -->
+				
+				
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="record">当前分类下有<strong>XX</strong>条记录</li>
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">最新</a></li>
+                      <li><a href="#">最旧</a></li>
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+                  <ul>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+            </div><!--control-bar end-->
+            <div class="panel panel-default">
+            
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="name">设备名称(型号)</th>
+                    <th class="categories">分类</th>
+                    <th class="categories">可借数量</th>
+                    <th class="describe">描述</th>
+                  </tr>
+                </thead>
+                <tbody>
+				<!--数据开始 -->
+#set($listSize = $computermodelFullListCh.size() - 1)
+##判断数据是否为空
+#if($listSize>=0)
+#set($listRegion = [0..$listSize])
+##取出所有的属性名称
+#foreach($tempKey in $listRegion)
+			#set($ch = $computermodelFullListCh.get($tempKey))
+			#set($en = $computermodelFullListEn.get($tempKey))
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!ch.computermodelid"></td>
+                    <td>$!ch.computermodelname<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" 
+						action-type="editComputermodelFillIn" 
+						data-id="$!ch.computermodelid" 
+						data-name="$!ch.computermodelname" 
+						data-computermodelid="$!ch.computermodelcomputercategoryid" 
+						data-description="$!ch.computermodeldescription" 
+						
+						data-iden="$!en.computermodelid" 
+						data-nameen="$!en.computermodelname" 
+						data-computermodeliden="$!en.computermodelcomputercategoryid" 
+						data-descriptionen="$!en.computermodeldescription">修改</a></td>
+                     <td>$!ch.computercategoryname</td>
+                     <td>3</td>
+                    <td>$!ch.computermodeldescription</td>
+                  </tr>
+#end
+#end
+                
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+
+      </div>
+      <!--equip-wrap end-->
+	  <script>
+totalpage = $page.totalpage;
+currentpagenum = $page.pageNo;
+</script>

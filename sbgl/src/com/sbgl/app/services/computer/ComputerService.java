@@ -46,6 +46,17 @@ public interface ComputerService{
 	void updateComputermodelTo(int originalComputermodelid,
 			int toComputermodelid);
 
+	void addComputer(Computer ch, Computer en);
+
+	List<ComputerFull> selectComputerFullByConditionAndPage(
+			String conditionSql, Page page);
+
+	List<Computer> selectComputerByCondition(String condition);
+
+	List<Computer> selectComputerByConditionAndPage(String condition, Page page);
+
+	List<ComputerFull> selectComputerFullByCondition(String condition);
+
 
 	
 }

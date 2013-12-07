@@ -1,4 +1,4 @@
 //如果有多对一，则配置
 //OneToMany;attrName= ;colName=;class=;
-
+ManyToOne;attrName=userid ;colName=userid;class=Loginuser;
 	

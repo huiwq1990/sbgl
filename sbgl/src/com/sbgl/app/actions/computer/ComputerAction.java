@@ -49,6 +49,9 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	Page page = new Page();
 	Integer pageNo=1;	
 	
+	
+	private String  computerSerialnumberEn;
+	private String  computerRemarkEn;
 //  manage Computer
 	public String manageComputer(){
 		log.info(logprefix+"manageComputerFull");
@@ -94,43 +97,9 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	}			
 			
 		
-	//管理
-	public String manageComputerInfo(){
-		log.info(logprefix +" manageComputer");
-		//Page page = new Page();
-		//if()
-		computerList  = computerService.selectComputerByPage(page);
-		for(int i = 0; i < computerList.size(); i++){
-		//	System.out.println("id="+computerList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}	
-			
-	public String addComputer(){	
-		log.info("Add Entity");
 
-		try {
-			Computer temp = new Computer();
-			// 将model里的属性值赋给temp
-			BeanUtils.copyProperties(temp, computer);			
-			//add your code here.
 			
-			//temp.setCreatetime(DateUtil.currentDate());
-			
-			computerService.addComputer(temp);
-			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerAction的方法：addBbstagfavourite错误"+e);
-		}
-		return "Error";
-	}
-	
+
 //  ajax add	
 	public String addComputerAjax(){	
 		log.info("Add Entity Ajax Manner");
@@ -138,17 +107,26 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 		ReturnJson returnJson = new ReturnJson();
 		
 		try {
-			Computer temp = new Computer();
+			
+			computer.setCreatetime(DateUtil.currentDate());
+			
+			Computer ch = new Computer();
+			Computer en = new Computer();
 			// 将model里的属性值赋给temp
-			BeanUtils.copyProperties(temp, computer);			
-			//add your code here.
+			BeanUtils.copyProperties(ch, computer);			
+			BeanUtils.copyProperties(en, computer);		
 			
-			//temp.setCreatetime(DateUtil.currentDate());
+			ch.setLanguagetype("0");
+	
+			en.setLanguagetype("1");
+			en.setSerialnumber(computerSerialnumberEn);
+			en.setRemark(computerRemarkEn);
 			
 			
-			computerService.addComputer(temp);
+			computerService.addComputer(ch,en);
 			
 			returnJson.setFlag(1);		
+			returnJson.setReason("添加机器成功!");
 			JSONObject jo = JSONObject.fromObject(returnJson);
 			this.returnStr = jo.toString();
 			
@@ -162,7 +140,8 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 			log.error("类ComputerAction的方法：addBbstagfavourite错误"+e);
 		}
 		
-		returnJson.setFlag(0);		
+		returnJson.setFlag(0);	
+		returnJson.setReason("添加机器失败!");
 		JSONObject jo = JSONObject.fromObject(returnJson);
 		this.returnStr = jo.toString();
 		return SUCCESS;
@@ -639,4 +618,58 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	public void setPageNo(Integer pageNo) {
 		this.pageNo = pageNo;
 	}
+
+	public ComputerService getComputerService() {
+		return computerService;
+	}
+
+	public void setComputerService(ComputerService computerService) {
+		this.computerService = computerService;
+	}
+
+	public String getActionMsg() {
+		return actionMsg;
+	}
+
+	public void setActionMsg(String actionMsg) {
+		this.actionMsg = actionMsg;
+	}
+
+	public String getLogprefix() {
+		return logprefix;
+	}
+
+	public void setLogprefix(String logprefix) {
+		this.logprefix = logprefix;
+	}
+
+	public String getComputerSerialnumberEn() {
+		return computerSerialnumberEn;
+	}
+
+	public void setComputerSerialnumberEn(String computerSerialnumberEn) {
+		this.computerSerialnumberEn = computerSerialnumberEn;
+	}
+
+	public static Log getLog() {
+		return log;
+	}
+
+	public Map<String, Object> getSession() {
+		return session;
+	}
+
+	public void setComputerid(Integer computerid) {
+		this.computerid = computerid;
+	}
+
+	public String getComputerRemarkEn() {
+		return computerRemarkEn;
+	}
+
+	public void setComputerRemarkEn(String computerRemarkEn) {
+		this.computerRemarkEn = computerRemarkEn;
+	}
+	
+	
 }

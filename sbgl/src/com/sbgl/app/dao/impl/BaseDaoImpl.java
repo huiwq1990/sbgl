@@ -1,18 +1,24 @@
 package com.sbgl.app.dao.impl;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.sbgl.app.dao.BaseDao;
+import com.sbgl.app.dao.QueryResult;
 import com.sbgl.app.entity.Maxno;
+import com.sbgl.common.HQLOption;
+import com.sbgl.common.SBGLConsistent;
 import com.sbgl.util.Page;
 
 @Repository("baseDao")
@@ -224,5 +230,84 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 	         log.error("查询失败", re);
 	         throw re;
 	      }
+	}
+
+	@Override
+	public <T> Boolean isExist(Class<T> entityClass, String propertyName, String propertyValue) {
+		List<T> l = getEntityByProperty(entityClass.getName(), propertyName, propertyValue);
+		if(l != null && l.size() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public <T> QueryResult getEntityByPageWithOptions(Class<T> entityClass,
+			List<HQLOption> hqlOptionList, Page page) {
+		List<T> resultList = null;
+		String queryString = "from " + entityClass.getName() + " as m where 1=1";
+		
+		if(hqlOptionList != null) {
+			for(HQLOption option : hqlOptionList) {
+				if(option.getType() == SBGLConsistent.HQL_VALUE_STR) {  //字符串
+					switch( option.getOption() ) {
+						case SBGLConsistent.HQL_OPTION_EQ:
+							if(option.getJoinType() == SBGLConsistent.HQL_OPTION_AD) {
+								queryString += " and m." + option.getPropertyName() + "='" + option.getValue() + "'";
+							} else if(option.getJoinType() == SBGLConsistent.HQL_OPTION_OR) {
+								queryString += " or m." + option.getPropertyName() + "='" + option.getValue() + "'";
+							}
+							break;
+						case SBGLConsistent.HQL_OPTION_LK:
+							queryString += " and m." + option.getPropertyName() + " like '" + option.getValue() + "%'";
+							break;
+					}
+				} else if(option.getType() == SBGLConsistent.HQL_VALUE_INT) {  //数字
+					switch( option.getOption() ) {
+						case SBGLConsistent.HQL_OPTION_EQ:
+							if(option.getJoinType() == SBGLConsistent.HQL_OPTION_AD) {
+								queryString += " and m." + option.getPropertyName() + "=" + option.getValue();
+							} else if(option.getJoinType() == SBGLConsistent.HQL_OPTION_OR) {
+								queryString += " or m." + option.getPropertyName() + "=" + option.getValue();
+							}
+							break;
+						case SBGLConsistent.HQL_OPTION_GT:
+							if(option.getJoinType() == SBGLConsistent.HQL_OPTION_AD) {
+								queryString += " and m." + option.getPropertyName() + ">" + option.getValue();
+							} else if(option.getJoinType() == SBGLConsistent.HQL_OPTION_OR) {
+								queryString += " or m." + option.getPropertyName() + ">" + option.getValue();
+							}
+							break;
+						case SBGLConsistent.HQL_OPTION_LT:
+							if(option.getJoinType() == SBGLConsistent.HQL_OPTION_AD) {
+								queryString += " and m." + option.getPropertyName() + "<" + option.getValue();
+							} else if(option.getJoinType() == SBGLConsistent.HQL_OPTION_OR) {
+								queryString += " or m." + option.getPropertyName() + "<" + option.getValue();
+							}
+							break;
+					}
+				}
+			}
+		}
+		
+		final String hql = queryString;
+		final int curPageNo = page.getPageNo();
+		final int maxSize = page.getPageSize();
+		List list = getHibernateTemplate().executeFind(new HibernateCallback() {
+			public Object doInHibernate(Session session) throws HibernateException, SQLException {
+		    List result = session.createQuery(hql).setFirstResult(curPageNo)
+		        .setMaxResults(maxSize)
+		        .list();
+		    	return result;
+		   }
+		});
+		
+		List<T> temp = getHibernateTemplate().find(queryString);
+		int n = temp == null ? 0 : temp.size();
+		
+//		Query q = this.getCurrentSession().createQuery(queryString).setFirstResult(page.getPageNo()).setMaxResults(page.getPageSize());
+		resultList = list;
+		return new QueryResult(resultList, n);
 	}
 }

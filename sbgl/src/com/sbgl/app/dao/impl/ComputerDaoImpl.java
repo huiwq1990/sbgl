@@ -25,7 +25,10 @@ import com.sbgl.util.*;
 public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
 
 	private static final Log log = LogFactory.getLog(ComputerDaoImpl.class);
-	private final String basicComputerFullSql = "select a.id as computerid, a.serialnumber as computerserialnumber, a.computertype as computercomputertype, a.languagetype as computerlanguagetype, a.computermodelid as computercomputermodelid, a.createtime as computercreatetime, a.createuserid as computercreateuserid, a.status as computerstatus, a.remark as computerremark, b.id as computermodelid, b.computermodeltype as computermodelcomputermodeltype, b.languagetype as computermodellanguagetype, b.name as computermodelname, b.computercategoryid as computermodelcomputercategoryid, b.picpath as computermodelpicpath, b.createtime as computermodelcreatetime, b.createuserid as computermodelcreateuserid, b.computercount as computermodelcomputercount, b.availableborrowcountnumber as computermodelavailableborrowcountnumber, b.description as computermodeldescription, b.status as computermodelstatus from Computer a  left join Computermodel b on a.computermodelid=b.id ";
+	//关联多个表，需要设置join id
+	private final String basicComputerFullSql = "select a.id as computerid, a.serialnumber as computerserialnumber, a.computertype as computercomputertype, a.languagetype as computerlanguagetype, a.computermodelid as computercomputermodelid, a.createtime as computercreatetime, a.createuserid as computercreateuserid, a.status as computerstatus, a.remark as computerremark, a.computerstatusid as computercomputerstatusid, b.id as computermodelid, b.computermodeltype as computermodelcomputermodeltype, b.languagetype as computermodellanguagetype, b.name as computermodelname, b.computercategoryid as computermodelcomputercategoryid, b.picpath as computermodelpicpath, b.createtime as computermodelcreatetime, b.createuserid as computermodelcreateuserid, b.computercount as computermodelcomputercount, b.availableborrowcountnumber as computermodelavailableborrowcountnumber, b.description as computermodeldescription, b.status as computermodelstatus, c.id as computerstatusid, " +
+			"c.name as computerstatusname from Computer a  left join Computermodel b on a.computermodelid=b.id " +
+			"left join Computermodel c on a.computerstatusid=c.id ";
 	
 	private final String basicComputerSql = "From Computer  ";
 	
@@ -78,7 +81,7 @@ public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
 						return query.list();
 					}
 				});		
-		return null;
+		return computerList;
 	}
 	
 	
@@ -103,7 +106,7 @@ public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
                 if (computerList != null && !computerList.isEmpty()) {
                         return computerList;
                 }
-                return null;
+                return computerList;
         }
 	
 	

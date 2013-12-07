@@ -85,6 +85,7 @@
 			resource="com/sbgl/app/entity/Computerorderrule.hbm.xml" />
 		<mapping
 			resource="com/sbgl/app/entity/Computerorderclassrule.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Computerstatus.hbm.xml" />
 
 
 

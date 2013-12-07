@@ -94,7 +94,22 @@
                       <input type="text" class="form-control" id="inputEquipId" placeholder="设备编号">
                     </div>
                   </div>
-                  <div class="form-group">
+				  <div class="form-group">
+                    <label for="inputEquipCategory" class="col-lg-2 control-label">分类</label>
+                    <div class="col-lg-4">
+                      <select class="select2 select-white form-control" id="inputEquipCategory">
+                        <option value="0" data-foo="fa">全部分类</option>
+                          #foreach($clazz in $classForEquipAdd)
+            				#if($!clazz.isParent == '1')
+            					<optgroup label="$!clazz.name">
+            				#else
+            					<option value="$!clazz.id">$!clazz.name</option>
+            				#end
+            			 #end
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group" id="modelForSelete">
                     <label for="inputEquipModelId" class="col-lg-2 control-label">所属设备型号</label>
                     <div class="col-lg-4">
                       <select class="select2 select-white form-control" id="inputEquipModelId">
@@ -111,23 +126,6 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="inputEquipCategory" class="col-lg-2 control-label">分类</label>
-                    <div class="col-lg-4">
-                      <select class="select2 select-white form-control" id="inputEquipCategory">
-                        <optgroup label="摄影摄像机">
-                          <option value="2">数字摄影机</option>
-                          <option value="3">数字摄像机</option>
-                          <option value="4">单反</option>
-                        </optgroup>
-                        <optgroup label="灯具">
-                          <option value="6">钨丝灯</option>
-                          <option value="7">镝灯</option>
-                        </optgroup>
-						<option value="8">xxx</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group">
                     <label for="inputEquipStatus" class="col-lg-2 control-label">状态</label>
                     <div class="col-lg-4">
                       <select class="select2 select-white form-control" id="inputEquipStatus">
@@ -136,6 +134,7 @@
                         <option value="2">维护</option>
                         <option value="3">维修</option>
                         <option value="4">遗失</option>
+                        <option value="5">回收站</option>
                       </select>
                     </div>
                   </div>
@@ -243,7 +242,30 @@
 				var n = noty({text: data.msg, timeout: 2500, type: 'error'});
 			}  
 		});
-	})
+	});
+	
+	//监听分类下拉菜单
+	$("body").on("change", "#inputEquipCategory", function() {
+		var cid = $("#inputEquipCategory").val();
+		console.log(cid);
+		var postData = {
+    		"seletedClassId": cid
+    	};
+		
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipDetailForAdd.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#modelForSelete").html(data);
+				//$("#inputEquipCategory").select2("val", cid);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
 	
 </script>
 </body>

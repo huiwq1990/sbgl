@@ -31,6 +31,20 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 		computerorder.setId(baseDao.getCode("Computerorder"));
 		baseDao.saveEntity(computerorder);		
 	}
+	
+	@Override
+	public void addComputerorder(Computerorder ch,Computerorder en){
+		
+	/*
+		int type = baseDao.getCode("Computerordertype");
+		ch.setId(baseDao.getCode("Computerorder"));
+		ch.setComputerordertype(type);
+		en.setId(baseDao.getCode("Computerorder"));
+		en.setComputerordertype(type);
+		baseDao.saveEntity(ch);	
+		baseDao.saveEntity(en);		
+	*/
+	}
 
 	@Override
 	public void addComputerorderWithId(Computerorder computerorder){
@@ -113,6 +127,34 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 		page.setTotalCount(baseDao.getRowCount(Computerorder.class));
 		return computerorderDao.selectComputerorderFullByPage(page);
 	}
+	
+	// 根据条件查询查询实体
+	@Override
+	public List<Computerorder> selectComputerorderByCondition(String condition) {
+		 return computerorderDao.selectComputerorderByCondition(condition);
+	}
+	
+	
+	//  根据条件分页查询实体        
+        @Override
+        public List<Computerorder>  selectComputerorderByConditionAndPage(String condition,final Page page) {
+              return computerorderDao.selectComputerorderByConditionAndPage(condition,page);
+        }
+	
+	
+	//条件查询full
+	@Override
+	public List<ComputerorderFull> selectComputerorderFullByCondition(String condition) {
+		return computerorderDao.selectComputerorderFullByCondition(condition);
+	}
+	
+	
+	// 查询实体full        
+        @Override
+        public List<ComputerorderFull>  selectComputerorderFullByConditionAndPage(String condition,final Page page) {
+			return computerorderDao.selectComputerorderFullByConditionAndPage(condition, page);
+		}
+	
 	
 
 }

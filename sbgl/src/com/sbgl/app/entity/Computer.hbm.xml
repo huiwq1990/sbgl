@@ -34,5 +34,8 @@
         <property name="remark" type="java.lang.String">
             <column name="remark" length="1000" />
         </property>
+        <property name="computerstatusid" type="java.lang.Integer">
+            <column name="computerstatusid" />
+        </property>
     </class>
 </hibernate-mapping>

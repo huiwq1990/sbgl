@@ -2,127 +2,209 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>添加</title>
+<title>北京电影学院摄影系 - 设备管理</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
-
-
+<link rel="stylesheet" href="${cssDomain}/jqpagination.css" type="text/css" />
 <!--[if lt IE 10]>
-  <script src="../js/jquery.placeholder.js"></script>
+  <script src="${jsDomain}/jquery.placeholder.js"></script>
   <script>
   $('input, textarea').placeholder();
   </script>
 <![endif]-->
 <!--[if lt IE 9]>
-  <script src="../js/html5shiv.js"></script>
-  <script src="../js/respond.min.js"></script>
+  <script src="${jsDomain}/html5shiv.js"></script>
+  <script src="${jsDomain}/respond.min.js"></script>
 <![endif]-->
 <!--[if IE 7]>
-<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<link rel="stylesheet" href="${cssDomain}/font-awesome-ie7.min.css">
 <![endif]-->
 </head>
 
 <body id="admin">
-
- 
+<header id="header-wrap"><!--header-wrap-->
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="http://google.com"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="#anotherAction">个人主页</a></li>
+          <li><a href="#">人脉</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div>
+    </div><!-- #BeginLibraryItem "/Library/机房subnav.lbi" -->    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">设置</a></li>
+        <li><a href="用户管理首页.html">用户</a></li>
+        <li><a href="设备预约首页.html">器材</a></li>
+        <li class="active"><a href="机房预约管理首页.html">机房</a></li>
+        <li><a href="#">内容</a></li>
+      </ul>
+    </div><!-- #EndLibraryItem --><ul class="account-wrap nav nav-pills pull-right">
+          <li class="notice dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">消息1</a></li>
+              <li><a href="#">消息2</a></li>
+            </ul>
+          </li>     
+          <li class="social dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="../img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+            <div class="dropdown-menu">
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img src="../img/photo.jpg" width="96" height="96" class="img-rounded">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+                  <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+                  <div class="setting"><a href="#">账户设置</a></div>
+                  <button class="btn btn-primary" type="button">查看个人主页</button>
+                </div>
+              </div>
+            </div>      
+          </li>
+        </ul>
+  </div>
+</header><!--/#header-wrap-->
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
-
+      <ul class="nav nav-tabs">
+        <li><a href="机房预约管理首页.html">机房预约</a></li>
+        <li class="active"><a href="机房信息管理首页.html">机房管理</a></li>
+      </ul>	  
       <!--admin-wrap start-->
       <div id="admin-wrap">
         <div id="admin-content" class="clearfix">    
             <!--control-bar start-->
             <div class="control-bar clearfix">
-              <div class="title pull-left">添加</div>
-              <div class="tips">在此页面下添加新的</div>
+              <div class="title pull-left">添加设备</div>
+              <div class="tips">在此页面下添加新的设备。…………</div>
             </div><!--control-bar end-->
             <div class="panel panel-default">
               <div class="panel-body">
- <!--Add 表单-->             
-               <form action="${webbaseurl}/addComputerAjax.action" method="post" name="AddComputerForm">
-		<div class="form-group">
-                    <label for="label_computer_id" class="col-lg-2 control-label">id</label>
+              
+                <form id="addComputerForm" action="javascript:void(0)" class="form-horizontal" role="form">
+                  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">设备号</label>
                     <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_computer_id" name="id"  placeholder="id">
+                      <input type="text" class="form-control" id="inputAddComputerSerialnumber" placeholder="设备编号">
                     </div>
                   </div>
-		<div class="form-group">
-                    <label for="label_computer_serialnumber" class="col-lg-2 control-label">serialnumber</label>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">设备英文号</label>
                     <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_computer_serialnumber" name="serialnumber"  placeholder="serialnumber">
+                      <input type="text" class="form-control" id="inputAddComputerSerialnumberEn" placeholder="设备编号">
                     </div>
                   </div>
-		<div class="form-group">
-                    <label for="label_computer_computermodelid" class="col-lg-2 control-label">computermodelid</label>
+                  <div class="form-group">
+                    <label for="inputEquipCategory" class="col-lg-2 control-label">分类</label>
                     <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_computer_computermodelid" name="computermodelid"  placeholder="computermodelid">
+                      <select class="select2 select-white form-control" id="inputAddComputerComputercategoryid">    
+#set($listSize = $computercategoryFullList.size() - 1)
+##判断数据是否为空
+#if($listSize>=0)
+#set($listRegion = [0..$listSize])
+##取出所有的属性名称
+#foreach($tempKey in $listRegion)
+			#set($ch = $computercategoryFullList.get($tempKey))						
+                        <option value="$!ch.computercategoryid" >$!ch.computercategoryname</option>                      
+                        
+#end
+#end						
+                      </select>
                     </div>
                   </div>
-		<div class="form-group">
-                    <label for="label_computer_createtime" class="col-lg-2 control-label">createtime</label>
+                  <div class="form-group">
+                    <label for="inputEquipModelId" class="col-lg-2 control-label">所属设备型号</label>
                     <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_computer_createtime" name="createtime"  placeholder="createtime">
+                      <select class="select2 select-white form-control" id="inputAddComputerComputermodelid">
+#set($listSize = $computermodelFullList.size() - 1)
+##判断数据是否为空
+#if($listSize>=0)
+#set($listRegion = [0..$listSize])
+##取出所有的属性名称
+#foreach($tempKey in $listRegion)
+			#set($ch = $computermodelFullList.get($tempKey))						
+                        <option value="$!ch.computermodelid" >$!ch.computermodelname</option>                      
+                        
+#end
+#end
+                      </select>
                     </div>
                   </div>
-		<div class="form-group">
-                    <label for="label_computer_createuserid" class="col-lg-2 control-label">createuserid</label>
+                  <div class="form-group">
+                    <label for="inputEquipStatus" class="col-lg-2 control-label">状态</label>
                     <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_computer_createuserid" name="createuserid"  placeholder="createuserid">
+                      <select class="select2 select-white form-control" id="inputAddComputerStatus">
+                        <option value="0">正常</option>
+                        <option value="1">借用</option>
+                        <option value="2">维护</option>
+                        <option value="3">维修</option>
+                      
+                      </select>
                     </div>
                   </div>
-		<div class="form-group">
-                    <label for="label_computer_status" class="col-lg-2 control-label">status</label>
+                  <div class="form-group">
+                    <label for="inputEquipRemark" class="col-lg-2 control-label">备注</label>
                     <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_computer_status" name="status"  placeholder="status">
+                      <textarea class="form-control" id="inputAddComputerRemark" rows="3"></textarea>
                     </div>
                   </div>
-		<div class="form-group">
-                    <label for="label_computer_remark" class="col-lg-2 control-label">remark</label>
+				  <div class="form-group">
+                    <label for="inputEquipRemark" class="col-lg-2 control-label">英文备注</label>
                     <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_computer_remark" name="remark"  placeholder="remark">
+                      <textarea class="form-control" id="inputAddComputerRemarkEn" rows="3"></textarea>
                     </div>
                   </div>
-	              <!--
-                 <div class="form-group">
+                  <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-4">
                       <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-                      <button type="submit" class="btn btn-primary">添 加</button>
-                   </div>
-               </div>
-			   -->
-
-               </form>
-               <div class="form-group">
-                    <div class="col-lg-offset-2 col-lg-4">
-                      <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-                      <button onClick = "addComputerAjax()" class="btn btn-primary">添 加</button>
-                   </div>
-               </div>
-
-<!--Add 表单-->                    
-
-              </div>			  
+                      <button class="btn btn-primary"  action-type="addComputerButton">添 加</button>
+					
+                    </div>
+                  </div>
+                </form>
+          
+              </div>
             </div>
           </div>
 
       </div>
       <!--equip-wrap end-->
-       <!--sidebar start-->
-      <div id="lside">
+    
+	
+	
+	
+	
+	
+	
+	
+	      <div id="lside"><!--sidebar start-->
         <form class="form-group">
-          <input type="text" class="form-control" placeholder="搜索">
+          <input type="text" class="form-control" placeholder="搜索设备">
           <i class="icon-search"></i>
         </form>
         <div class="list-group">
-          <a href="${webbaseurl}/manageComputerFull.action" class="list-group-item">管理</a>
-          <a href="${webbaseurl}/computer/computerAdd.vm" class="list-group-item">添加</a>
-          
+          <a href="机房信息管理首页.html" class="list-group-item">机房设备管理</a>
+          <a href="机房添加.html" class="list-group-item active">添加设备</a>
+          <a href="机房型号管理.html" class="list-group-item">型号管理</a>
+          <a href="机房分类管理.html" class="list-group-item">分类管理</a>
         </div>
       </div>
       <!--sidebar end-->
+	
+	
+	
+	
 
 </section>
 
@@ -133,6 +215,77 @@
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
-<script src="${jsDomain}/computer/computer.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/jquery.jqpagination.js"></script>
+
+<!--[if lt IE 10]>
+  <script src="${jsDomain}/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+
+
+
+	
+<script>	
+var cookie = { 
+  		//读取COOKIES,n为COOKIE名 
+   		Get:function(n){ 
+       		var re=new RegExp(n+'=([^;]*);?','gi');
+       	    var r=re.exec(document.cookie)||[];
+       	    return (r.length>1?r[1]:null)
+   		}
+	};
+	
+	//add computer
+	$("body").on("click", "button[action-type|=addComputerButton]", function() {
+	
+		var createuserid = cookie.Get("id");
+		var postData = {
+			"serialnumber":$('#inputAddComputerSerialnumber').val(),	
+			"computerSerialnumberEn":$('#inputAddComputerSerialnumberEn').val(),
+	 		"computermodelid":$('#inputAddComputerComputermodelid').val(),
+	 		"createuserid":createuserid,
+	 		"status":$('#inputAddComputerStatus').val(),
+	 		"remark":$('#inputAddComputerRemark').val(),
+			"computerRemarkEn":$('#inputAddComputerRemarkEn').val()
+		};
+		//alert("add computer");
+		jQuery.ajax({  
+		    url:"${webbaseurl}/addComputerAjax.${strutsaction}",  
+		    type:"post",
+		    data:postData,
+			dataType: 'json',
+			success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+				if(returnJson.flag == 1){
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});
+					clearAddForm();
+					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框					
+				}else{
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+				}
+			}		  	  
+		});
+	});
+	//end add computer
+	
+	function clearAddForm(){
+		$('#inputAddComputerSerialnumber').val("");
+		$('#inputAddComputerSerialnumberEn').val("");
+		
+	 	$('#inputAddComputerComputermodelid').select2("val","0");
+		$('#inputAddComputerComputercategoryid').select2("val","0");
+		
+	 	$('#inputAddComputerStatus').select2("val","0");
+	 	$('#inputAddComputerRemark').val("");
+		$('#inputAddComputerRemarkEn').val("");
+	}
+	
+</script>	
+
 </body>
 </html>
