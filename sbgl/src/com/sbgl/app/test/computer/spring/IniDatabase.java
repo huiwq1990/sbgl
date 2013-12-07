@@ -9,13 +9,13 @@ public class IniDatabase {
 		// TODO Auto-generated method stub
 
 		
-//		ComputercategorySpringTest.iniDouble();
-//		ComputermodelSpringTest.iniDouble();
-//		ComputerSpringTest.iniDouble();
+		ComputercategorySpringTest.iniDouble();
+		ComputermodelSpringTest.iniDouble();
+		ComputerSpringTest.iniDouble();
 //		
 		ComputerorderSpringTest.intTable();
-//		ComputerorderdetailSpringTest.intTable();
-//		ComputerstatusSpringTest.intTable();
+		ComputerorderdetailSpringTest.intTable();
+		ComputerstatusSpringTest.intTable();
 		
 
 	}
