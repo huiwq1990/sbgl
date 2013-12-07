@@ -87,11 +87,13 @@
               <div class="filter category-filter">
                 <select id="select-categories" style="width:130px" class="select2">
                   <option value="0" data-foo="fa">全部分类</option>
-				  #foreach($clazz in $classForEquipAdd)
+                  <option value="-2" data-foo="fa">未知分类</option>
+                  <option value="-1" data-foo="fa">未分类</option>
+                  #foreach($clazz in $classForEquipAdd)
     				#if($!clazz.isParent == '1')
-						<option value="1" data-foo="fa">$!clazz.name</option>
+    					<optgroup label="$!clazz.name">
     				#else
-						<option value="$!clazz.id" data-foo="sub">$!clazz.name</option>
+    					<option value="$!clazz.id">$!clazz.name</option>
     				#end
     			 #end
                 </select>
@@ -121,12 +123,12 @@
               </div>
               <ul class="status-filter nav nav-pills pull-right">
                 <li class="active" action-type="active" id="-1" data-state="-1"><a href="#">全部(<span id="sum">$!totalDetailSum</span>)（无不显示）</a></li>
-                <li action-type="active" id="0" data-state="0"><a href="#">正常($!normalSum)</a></li>
-                <li action-type="active" id="1" data-state="1"><a href="#">借出($!loanSum)</a></li>
-                <li action-type="active" id="2" data-state="2"><a href="#">维护($!maintSum)</a></li>
-                <li action-type="active" id="3" data-state="3"><a href="#">维修($!repairSum)</a></li>
-                <li action-type="active" id="4" data-state="4"><a href="#">遗失($!lostSum)</a></li>
-                <li action-type="active" id="5" data-state="5"><a href="#">回收站($!recycleSum)</a></li>
+                <li action-type="active" id="0" data-state="0"><a href="#">正常(<span id="sum0">$!normalSum</span>)</a></li>
+                <li action-type="active" id="1" data-state="1"><a href="#">借出(<span id="sum1">$!loanSum</span>)</a></li>
+                <li action-type="active" id="2" data-state="2"><a href="#">维护(<span id="sum2">$!maintSum</span>)</a></li>
+                <li action-type="active" id="3" data-state="3"><a href="#">维修(<span id="sum3">$!repairSum</span>)</a></li>
+                <li action-type="active" id="4" data-state="4"><a href="#">遗失(<span id="sum4">$!lostSum</span>)</a></li>
+                <li action-type="active" id="5" data-state="5"><a href="#">回收站(<span id="sum5">$!recycleSum</span>)</a></li>
               </ul>
             </div><!--control-bar end-->
             <div class="panel panel-default table-responsive" id="detailDataDomain">
@@ -382,6 +384,7 @@
 	
 	$('.modal').on('click', ('button.btn-primary'), function () {
 		var _this = $(this);
+		var cid = $("#select-categories").val();
 		if(_this.attr('action-type') == 'alterDetail') {
     		var dCode = $("#modifyEquipId").val();
     		var dMid = $("#modifyEquipModelId").val();
@@ -427,6 +430,11 @@
         		    			type: "post",
         						success: function(data,textStatus,jq) { 
         							$("#admin-wrap").html(data);
+									$("#select-categories").select2("val", cid);
+				
+									$(".active").removeClass("active");
+				
+									$("#"+selectedState).addClass("active");
         						},
         						error: function(data,textStatus,jq) {
         							alert("刷新界面失败!");
@@ -447,8 +455,10 @@
 	$("body").on("click", "a[action-type|=deleteDetail]", function() {
 		var cid = $("#select-categories").val();
 		var postData = {
-			equipdetailIds: idsForDel,
-			crtDetailPage: currentPageNo
+			"equipdetailIds": idsForDel,
+			"crtDetailPage": currentPageNo,
+			"classificationId": cid,
+			"selectedState": selectedState
 		}
 		jQuery.ajax({  
 		    url:"${webbaseurl}/deleteEquipDetail.do",  
@@ -457,6 +467,7 @@
 		    success:function(data,textStatus,jq){  
 		    	console.log(data);
 				if(data.tag == "0") {
+					//console.log(data);
 					currentPageNo = data.crtPage;
 					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
 					
@@ -465,6 +476,7 @@
 						"classificationId": cid,
 						"selectedState": selectedState
             		};
+					//alert(selectedState);
 					
 					//刷新界面数据
 					jQuery.ajax({
@@ -473,6 +485,11 @@
 						data:postData,
 						success: function(data,textStatus,jq) { 
 							$("#admin-wrap").html(data);
+							$("#select-categories").select2("val", cid);
+				
+            				$(".active").removeClass("active");
+            				
+            				$("#"+selectedState).addClass("active");
 						},
 						error: function(data,textStatus,jq) {
 							alert("刷新界面失败!");
@@ -519,7 +536,7 @@
 		} else {
 			currentPageNo--;
 		}
-		
+		//alert(currentPageNo);
 		if(cid != 0) {
     		postData = {
     			"classificationId": cid,
@@ -528,11 +545,10 @@
     		};
 		} else {
     		postData = {
-    			"crtModelPage": currentPageNo,
+    			"crtDetailPage": currentPageNo,
 				"selectedState": selectedState
     		};
 		}
-		
 		
 		jQuery.ajax({
 			url: "${webbaseurl}/flushEquipDetail.do",  
@@ -541,6 +557,10 @@
 			success: function(data,textStatus,jq) {
 				$("#admin-wrap").html(data);
 				$("#select-categories").select2("val", cid);
+				
+				$(".active").removeClass("active");
+				
+				$("#"+selectedState).addClass("active");
 			},
 			error: function(data,textStatus,jq) {
 				alert("刷新界面失败!");
@@ -550,18 +570,42 @@
 	//向后一页翻页
 	$("body").on("click", "a[action-type|=nextPage]", function() {
 		var cid = $("#select-categories").val();
-		var sum = $("#sum").html();
-		totalPageNo = Math.floor(sum / 10);
+		var sum = 0;
+		
+		if(selectedState == 0) {
+			sum = $("#sum0").html();
+    		totalPageNo = Math.floor(sum / 10);
+		} else if(selectedState == 1) {
+			sum = $("#sum1").html();
+    		totalPageNo = Math.floor(sum / 10);
+		} else if(selectedState == 2) {
+			sum = $("#sum2").html();
+    		totalPageNo = Math.floor(sum / 10);
+		} else if(selectedState == 3) {
+			sum = $("#sum3").html();
+    		totalPageNo = Math.floor(sum / 10);
+		} else if(selectedState == 4) {
+			sum = $("#sum4").html();
+    		totalPageNo = Math.floor(sum / 10);
+		} else if(selectedState == 5) {
+			sum = $("#sum5").html();
+    		totalPageNo = Math.floor(sum / 10);
+		} else if(selectedState == -1) {
+			sum = $("#sum").html();
+    		totalPageNo = Math.floor(sum / 10);
+		}
 		if(sum % 10 != 0 && sum > 10) {
 			totalPageNo++;
 		}
+		
+		
 		if(currentPageNo + 1 > totalPageNo ) {
 			currentPageNo = totalPageNo;
 			return;
 		} else {
 			currentPageNo++;
 		}
-		
+		//alert(currentPageNo);
 		if(cid != 0) {
     		postData = {
     			"classificationId": cid,
@@ -582,6 +626,8 @@
 			success: function(data,textStatus,jq) {
 				$("#admin-wrap").html(data);
 				$("#select-categories").select2("val", cid);
+				$(".active").removeClass("active");
+				$("#"+selectedState).addClass("active");
 			},
 			error: function(data,textStatus,jq) {
 				alert("刷新界面失败!");
@@ -613,6 +659,8 @@
 			success: function(data,textStatus,jq) {
 				$("#admin-wrap").html(data);
 				$("#select-categories").select2("val", cid);
+				$(".active").removeClass("active");
+				$("#"+selectedState).addClass("active");
 			},
 			error: function(data,textStatus,jq) {
 				alert("刷新界面失败!");
@@ -622,11 +670,35 @@
 	//跳到最后一页
 	$("body").on("click", "a[action-type|=goLast]", function() {
 		var cid = $("#select-categories").val();
-		var sum = $("#sum").html();
-		currentPageNo = Math.floor(sum / 10);
-		if(sum % 10 != 0 && sum > 10) {
-			currentPageNo++;
+		var sum = 0;
+		
+		if(selectedState == 0) {
+			sum = $("#sum0").html();
+    		totalPageNo = Math.floor(sum / 10);
+		} else if(selectedState == 1) {
+			sum = $("#sum1").html();
+    		totalPageNo = Math.floor(sum / 10);
+		} else if(selectedState == 2) {
+			sum = $("#sum2").html();
+    		totalPageNo = Math.floor(sum / 10);
+		} else if(selectedState == 3) {
+			sum = $("#sum3").html();
+    		totalPageNo = Math.floor(sum / 10);
+		} else if(selectedState == 4) {
+			sum = $("#sum4").html();
+    		totalPageNo = Math.floor(sum / 10);
+		} else if(selectedState == 5) {
+			sum = $("#sum5").html();
+    		totalPageNo = Math.floor(sum / 10);
+		} else if(selectedState == -1) {
+			sum = $("#sum").html();
+    		totalPageNo = Math.floor(sum / 10);
 		}
+		if(sum % 10 != 0 && sum > 10) {
+			totalPageNo++;
+		}
+		
+		currentPageNo = totalPageNo;
 		
 		if(cid != 0) {
     		postData = {
@@ -648,6 +720,8 @@
 			success: function(data,textStatus,jq) {
 				$("#admin-wrap").html(data);
 				$("#select-categories").select2("val", cid);
+				$(".active").removeClass("active");
+				$("#"+selectedState).addClass("active");
 			},
 			error: function(data,textStatus,jq) {
 				alert("刷新界面失败!");
@@ -657,6 +731,12 @@
 	//监听分类下拉菜单
 	$("body").on("change", "#select-categories", function() {
 		var cid = $("#select-categories").val();
+		currentPageNo = 1;
+		
+		$(".active").removeClass("active");
+		$("#-1").addClass("active");
+		selectedState = -1
+		
 		if(cid == 0) {
 			postData = {
     			"crtDetailPage": currentPageNo,
@@ -707,6 +787,52 @@
 		$(this).addClass("active");
 		
 		selectedState =$(this).attr("id");
+		currentPageNo = 1;
+		
+		var cid = $("#select-categories").val();
+		if(cid == 0) {
+			postData = {
+    			"crtDetailPage": currentPageNo,
+				"selectedState": selectedState
+    		};
+		} else {
+    		postData = {
+    			"classificationId": cid,
+    			"crtDetailPage": currentPageNo,
+				"selectedState": selectedState
+    		};
+		}
+		
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipDetail.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+				$("#select-categories").select2("val", cid);
+				
+				$(".active").removeClass("active");
+				
+				$("#"+selectedState).addClass("active");
+				
+				var sum = $("#sum").html();
+        		totalPageNo = Math.floor(sum / 10);
+        		if(sum % 10 != 0 && sum > 10) {
+        			totalPageNo++;
+        		}
+        		if(currentPageNo + 1 > totalPageNo ) {
+        			currentPageNo = totalPageNo;
+        		}
+				if(currentPageNo == 0) {
+					currentPageNo = 1;
+				}
+				console.log("****" + currentPageNo);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
 	});
 </script>
 </body>

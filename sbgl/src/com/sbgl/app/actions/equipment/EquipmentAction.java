@@ -471,28 +471,20 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		if(classificationId != null && !classificationId.equals("0")) {
 			curCount = equipService.getEquipsByClassification( Integer.valueOf(classificationId) ).size();
 			curPages = curCount / 10;
-			if(curCount % 10 != 0 && curCount > 10) {
-				curPages++;
-			} else if(curCount % 10 != 0 && curCount < 10) {
-				curPages = 1;
-			} else if(curCount == 0) {
-				curPages = 1;
-			}
 		} else {
 			curCount = equipService.getAllEquips().size();
 			curPages = curCount / 10;
-			if(curCount % 10 != 0 && curCount > 10) {
-				curPages++;
-			} else if(curCount % 10 != 0 && curCount < 10) {
-				curPages = 1;
-			} else if(curCount == 0) {
-				curPages = 1;
-			}
+		}
+		if(curCount % 10 != 0 && curCount > 10) {
+			curPages++;
+		} else if(curCount % 10 != 0 && curCount < 10) {
+			curPages = 1;
+		} else if(curCount == 0) {
+			curPages = 1;
 		}
 		if(Integer.valueOf( crtModelPage ) > curPages) {
 			crtModelPage = String.valueOf( curPages );
 		}
-		
 		
 		Page page = new Page( (Integer.valueOf(crtModelPage)-1)*10, 10 );
 		QueryResult result = equipService.getEquipmentByPageWithOptions(hqlOptionList, page);
@@ -809,18 +801,43 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			}
 		}
 		//当前页数判断
-		int curCountOfRow = equipService.getCountOfEquipmentclassfication();
+		List<HQLOption> hqlOptionList =  new ArrayList<HQLOption>();
+		if(classificationId != null && !classificationId.equals("0")) {
+			if("-2".equals(classificationId)) {  //如果是未分类的情况下
+				hqlOptionList.add( new HQLOption<Integer>("equipmentid", -1, SBGLConsistent.HQL_OPTION_EQ, SBGLConsistent.HQL_VALUE_INT, SBGLConsistent.HQL_OPTION_AD) );
+			} else {
+				List<Equipment> modelList = equipService.getEquipsByClassification( Integer.valueOf( classificationId ) );
+				StringBuffer sb = new StringBuffer();
+				if(modelList != null && modelList.size() > 0) {
+					for (Equipment e : modelList) {
+						sb.append( e.getEquipmentid() + "," );
+					}
+					hqlOptionList.add( new HQLOption<String>("equipmentid", sb.toString(), SBGLConsistent.HQL_OPTION_IN, SBGLConsistent.HQL_VALUE_INT, SBGLConsistent.HQL_OPTION_AD) );
+				}
+			}
+		}
+		if(!"-1".equals(selectedState) && selectedState != null) {
+			hqlOptionList.add( new HQLOption<String>("status", selectedState, SBGLConsistent.HQL_OPTION_EQ, SBGLConsistent.HQL_VALUE_STR, SBGLConsistent.HQL_OPTION_AD) );
+		}
+		Page page = new Page(0, 10000);
+		QueryResult result = equipService.getEquipDetailByPageWithOptions(hqlOptionList, page);
+		
+		int curCountOfRow = 0;
+		if(result != null) {
+			curCountOfRow = result.getTotalResultNum();
+		}
 		int curPages = curCountOfRow / 10;
 		if(curCountOfRow % 10 != 0 && curCountOfRow > 10) {
 			curPages++;
 		}
-		if(Integer.valueOf(currentPage) > curPages && curPages > 0) {
+		if(Integer.valueOf(crtDetailPage) > curPages && curPages > 0) {
 			crtDetailPage = String.valueOf(curPages);
 		} else {
 			crtDetailPage = "1";
 		}
 		returnJSON.put("tag", tag);
 		returnJSON.put("msg", message);
+		returnJSON.put("crtPage", crtDetailPage);
 		return SUCCESS;
 	}
 	/**
@@ -884,7 +901,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		int _0 = 0, _1 = 0, _2 = 0, _3 = 0, _4 = 0, _5 = 0, _t = 0;
 		
 		//如果界面按分类筛选器材
-		if(seletedClassId != null && !classificationId.equals("0")) {
+		/*if(seletedClassId != null && !classificationId.equals("0")) {
 			tempList = new ArrayList<Equipmentdetail>();
 			List<Equipment> modelList = equipService.getEquipsByClassification( Integer.valueOf( seletedClassId ) );
 			if(modelList != null) {
@@ -898,6 +915,44 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			}
 		} else {
 			tempList = equipService.getAllEquipmentdetail();
+		}*/
+		
+		//如果界面按器材状态筛选
+		/*if(selectedState != null && !"-1".equals( selectedState ) && tempList.size() > 0) {
+			for (int i=0; i<tempList.size(); i++) {
+				if(!tempList.get(i).getStatus().equals( selectedState )) {
+					tempList.remove( i );
+				}
+			}
+		}*/
+		List<HQLOption> hqlOptionList =  new ArrayList<HQLOption>();
+		if(classificationId != null && !classificationId.equals("0")) {
+			if("-2".equals(classificationId)) {  //如果是未分类的情况下
+				hqlOptionList.add( new HQLOption<Integer>("equipmentid", -1, SBGLConsistent.HQL_OPTION_EQ, SBGLConsistent.HQL_VALUE_INT, SBGLConsistent.HQL_OPTION_AD) );
+			} else {
+				List<Equipment> modelList = equipService.getEquipsByClassification( Integer.valueOf( classificationId ) );
+				StringBuffer sb = new StringBuffer();
+				if(modelList != null && modelList.size() > 0) {
+					for (Equipment e : modelList) {
+						sb.append( e.getEquipmentid() + "," );
+					}
+					hqlOptionList.add( new HQLOption<String>("equipmentid", sb.toString(), SBGLConsistent.HQL_OPTION_IN, SBGLConsistent.HQL_VALUE_INT, SBGLConsistent.HQL_OPTION_AD) );
+				}
+				//由于更新界面器材状态数量的需要，此时需要统计在当前分类下的各种状态的数量
+//				QueryResult tempResult = equipService.getEquipDetailByPageWithOptions(hqlOptionList, new Page(0, 10000));
+//				if(tempResult != null && tempResult.getTotalResultNum() > 0) {
+//					tempList = (List<Equipmentdetail>) tempResult.getResultList();
+//				}
+			}
+			QueryResult tempResult = equipService.getEquipDetailByPageWithOptions(hqlOptionList, new Page(0, 10000));
+			if(tempResult != null && tempResult.getTotalResultNum() > 0) {
+				tempList = (List<Equipmentdetail>) tempResult.getResultList();
+			}
+		} else {
+			QueryResult tempResult = equipService.getEquipDetailByPageWithOptions(null, new Page(0, 10000));
+			if(tempResult != null && tempResult.getTotalResultNum() > 0) {
+				tempList = (List<Equipmentdetail>) tempResult.getResultList();
+			}
 		}
 		
 		if(tempList != null && tempList.size() > 0) {
@@ -933,12 +988,46 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			lostSum = String.valueOf( "0" );
 			recycleSum = String.valueOf( "0" );
 		}
-		//如果界面按器材状态筛选
-		if(selectedState != null && !"-1".equals( selectedState ) && tempList.size() > 0) {
-			for (int i=0; i<tempList.size(); i++) {
-				if(!tempList.get(i).getStatus().equals( selectedState )) {
-					tempList.remove( i );
-				}
+		
+		if(!"-1".equals(selectedState) && selectedState != null) {
+			hqlOptionList.add( new HQLOption<String>("status", selectedState, SBGLConsistent.HQL_OPTION_EQ, SBGLConsistent.HQL_VALUE_STR, SBGLConsistent.HQL_OPTION_AD) );
+		}
+		if( crtDetailPage != null && !crtDetailPage.equals("0") && crtDetailPage != "" ) {
+			
+		} else {
+			crtDetailPage = "1";
+		}
+		Page page = new Page( (Integer.valueOf(crtDetailPage)-1)*10, 10 );
+		QueryResult result = null;
+		if(hqlOptionList.size() == 0) {
+			result = equipService.getEquipDetailByPageWithOptions(null, page);
+		} else {
+			result = equipService.getEquipDetailByPageWithOptions(hqlOptionList, page);
+		}
+		if(result != null) {
+			tempList = (List<Equipmentdetail>) result.getResultList();
+			
+//			if("0".equals(selectedState)) {
+//				normalSum = String.valueOf( result.getTotalResultNum() );
+//			} else if("1".equals(selectedState)) {
+//				loanSum = String.valueOf( result.getTotalResultNum() );
+//			} else if("2".equals(selectedState)) {
+//				maintSum = String.valueOf( result.getTotalResultNum() );
+//			} else if("3".equals(selectedState)) {
+//				repairSum = String.valueOf( result.getTotalResultNum() );
+//			} else if("4".equals(selectedState)) {
+//				lostSum = String.valueOf( result.getTotalResultNum() );
+//			} else if("5".equals(selectedState)) {
+//				recycleSum = String.valueOf( result.getTotalResultNum() );
+//			}
+			if(result.getTotalResultNum() == 0) {
+				totalDetailPages = "1";
+			} else if(result.getTotalResultNum() % 10 != 0 && result.getTotalResultNum() > 10) {
+				totalDetailPages = String.valueOf( result.getTotalResultNum() / 10 + 1 );
+			} else if(result.getTotalResultNum() % 10 != 0 && result.getTotalResultNum() < 10) {
+				totalDetailPages = "1";
+			} else {
+				totalDetailPages = String.valueOf( result.getTotalResultNum() / 10 );
 			}
 		}
 		
@@ -997,7 +1086,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			}
 		}
 		//进行分页操作
-		if(equipDetailCourse != null) {
+		/*if(equipDetailCourse != null) {
 			if(equipDetailCourse.size() == 0) {
 				totalDetailPages = "1";
 			} else if(equipDetailCourse.size() % 10 != 0 && equipDetailCourse.size() > 10) {
@@ -1019,7 +1108,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			
 		} else {
 			totalDetailPages = "1";
-		}
+		}*/
 		return SUCCESS;
 	}
 	

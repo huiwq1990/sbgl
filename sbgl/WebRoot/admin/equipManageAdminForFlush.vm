@@ -6,11 +6,13 @@
       <div class="filter category-filter">
         <select id="select-categories" style="width:130px" class="select2">
           <option value="0" data-foo="fa">全部分类</option>
-		  #foreach($clazz in $classForEquipAdd)
+          <option value="-2" data-foo="fa">未知分类</option>
+          <option value="-1" data-foo="fa">未分类</option>
+          #foreach($clazz in $classForEquipAdd)
 			#if($!clazz.isParent == '1')
-				<option value="1" data-foo="fa">$!clazz.name</option>
+				<optgroup label="$!clazz.name">
 			#else
-				<option value="$!clazz.id" data-foo="sub">$!clazz.name</option>
+				<option value="$!clazz.id">$!clazz.name</option>
 			#end
 		 #end
         </select>
@@ -40,12 +42,12 @@
       </div>
       <ul class="status-filter nav nav-pills pull-right">
         <li class="active" action-type="active" id="-1" data-state="-1"><a href="#">全部(<span id="sum">$!totalDetailSum</span>)（无不显示）</a></li>
-        <li action-type="active" id="0" data-state="0"><a href="#">正常($!normalSum)</a></li>
-        <li action-type="active" id="1" data-state="1"><a href="#">借出($!loanSum)</a></li>
-        <li action-type="active" id="2" data-state="2"><a href="#">维护($!maintSum)</a></li>
-        <li action-type="active" id="3" data-state="3"><a href="#">维修($!repairSum)</a></li>
-        <li action-type="active" id="4" data-state="4"><a href="#">遗失($!lostSum)</a></li>
-        <li action-type="active" id="5" data-state="5"><a href="#">回收站($!recycleSum)</a></li>
+        <li action-type="active" id="0" data-state="0"><a href="#">正常(<span id="sum0">$!normalSum</span>)</a></li>
+        <li action-type="active" id="1" data-state="1"><a href="#">借出(<span id="sum1">$!loanSum</span>)</a></li>
+        <li action-type="active" id="2" data-state="2"><a href="#">维护(<span id="sum2">$!maintSum</span>)</a></li>
+        <li action-type="active" id="3" data-state="3"><a href="#">维修(<span id="sum3">$!repairSum</span>)</a></li>
+        <li action-type="active" id="4" data-state="4"><a href="#">遗失(<span id="sum4">$!lostSum</span>)</a></li>
+        <li action-type="active" id="5" data-state="5"><a href="#">回收站(<span id="sum5">$!recycleSum</span>)</a></li>
       </ul>
     </div><!--control-bar end-->
     <div class="panel panel-default table-responsive" id="detailDataDomain">

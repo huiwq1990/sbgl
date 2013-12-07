@@ -260,8 +260,25 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 							}
 							break;
 						case SBGLConsistent.HQL_OPTION_LK:
-							queryString += " and m." + option.getPropertyName() + " like '" + option.getValue() + "%'";
+							if(option.getJoinType() == SBGLConsistent.HQL_OPTION_AD) {
+								queryString += " and m." + option.getPropertyName() + " like '" + option.getValue() + "%'";
+							} else if(option.getJoinType() == SBGLConsistent.HQL_OPTION_OR) {
+								queryString += " or m." + option.getPropertyName() + " like '" + option.getValue() + "%'";
+							}
 							break;
+						case SBGLConsistent.HQL_OPTION_IN:
+							String[] values = option.getValue().toString().split(",");
+							for (int i=0; i<values.length; i++) {
+								if(option.getJoinType() == SBGLConsistent.HQL_OPTION_AD) {
+									if(i == 0) {
+										queryString += " and m." + option.getPropertyName() + " in ('" + values[i] + "',";
+									} else if(i == values.length-1) {
+										queryString += "'" + values[i] + "')";
+									} else {
+										queryString += "'" + values[i] + "',";
+									}
+								}
+							}
 					}
 				} else if(option.getType() == SBGLConsistent.HQL_VALUE_INT) {  //数字
 					switch( option.getOption() ) {
@@ -286,6 +303,23 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 								queryString += " or m." + option.getPropertyName() + "<" + option.getValue();
 							}
 							break;
+						case SBGLConsistent.HQL_OPTION_IN:
+							String[] values = option.getValue().toString().split(",");
+							if(values.length == 1) {
+								queryString += " and m." + option.getPropertyName() + " in (" + Integer.valueOf(values[0]) + ")";
+							} else if(values.length > 1) {
+								for (int i=0; i<values.length; i++) {
+									if(option.getJoinType() == SBGLConsistent.HQL_OPTION_AD) {
+										if(i == 0) {
+											queryString += " and m." + option.getPropertyName() + " in (" + Integer.valueOf(values[i]) + ",";
+										} else if(i == values.length-1) {
+											queryString += Integer.valueOf(values[i]) + ")";
+										} else {
+											queryString += Integer.valueOf(values[i]) + ",";
+										}
+									}
+								}
+							}
 					}
 				}
 			}
