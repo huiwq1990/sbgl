@@ -9,22 +9,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="${cssDomain}/jqpagination.css" type="text/css" />
-<!--[if lt IE 10]>
-  <script src="${jsDomain}/jquery.placeholder.js"></script>
-  <script>
-  $('input, textarea').placeholder();
-  </script>
-<![endif]-->
+
 <!--[if lt IE 9]>
-  <script src="${jsDomain}/html5shiv.js"></script>
-  <script src="${jsDomain}/respond.min.js"></script>
+  <script src="../js/html5shiv.js"></script>
+  <script src="../js/respond.min.js"></script>
 <![endif]-->
 <!--[if IE 7]>
-<link rel="stylesheet" href="${cssDomain}/font-awesome-ie7.min.css">
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
 <![endif]-->
 </head>
-
 
 <body id="admin">
 <header id="header-wrap"><!--header-wrap-->
@@ -61,7 +54,7 @@
               <li><a href="#">消息1</a></li>
               <li><a href="#">消息2</a></li>
             </ul>
-          </li>     
+      </li>     
           <li class="social dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="../img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
             <div class="dropdown-menu">
@@ -78,119 +71,131 @@
               </div>
             </div>      
           </li>
-        </ul>
+    </ul>
   </div>
 </header><!--/#header-wrap-->
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="机房预约管理首页.html">机房预约</a></li>
-        <li ><a href="机房信息管理首页.html">机房管理</a></li>
-      </ul>	  
-	  
-      <!--admin-wrap start-->
-      <div id="admin-wrap">
-        <div id="admin-content" class="clearfix">            
-            <div class="control-bar clearfix"><!--control-bar start-->
-              <div class="title pull-left">器材预约管理</div>
-			  <div class="tips">在此页面下管理器材预约申请。</div>
-			  <!--
-              <div class="filter user-group-filter">
-                <ul class="nav nav-tabs nav-tabs-google">
-                  <li><a href="#">个人预约</a></li>
-                  <li><a href="#">教学预约</a></li>
-                  <li class="active"><a href="#">全部</a></li>
-                </ul>
-              </div>
-			  -->
+           
+      <div class="control-bar clearfix"><!--control-bar start-->
+        <div class="title pull-left">审核预约</div>     
+        <div class="pagination pull-right">
+          <ul>
+            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="上一个"><i class="icon-chevron-left"></i></a></li>
+            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="下一个"><i class="icon-chevron-right"></i></a></li>
+          </ul>
+        </div>       
+      </div><!--control-bar end-->
               
-              <div class="operate-item pull-left">
-                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
-              </div>
-
-              <div class="page pull-right clearfix">
-                <ul class="page-index nav nav-pills pull-left">
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">最新</a></li>
-                      <li><a href="#">最旧</a></li>
-                    </ul>
-                  </li>              
-                </ul>
-                <div class="pagination pull-right">
-                  <ul>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
-                  </ul>
-                </div>              
-              </div>
-              <ul class="status-filter nav nav-pills pull-right">
-                <li class="active"><a href="#">待审核(4)</a></li>
-                <li><a href="#">已完成</a></li>
-              </ul>
-            </div><!--control-bar end-->
-            <div class="panel panel-default table-responsive">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-                    <th class="id">预约号</th>
-                    <th class="user">预约人</th>
-                    <th class="title">标题</th>
-                    <th class="status">状态</th>
-                    <th class="categories">预约类型</th>
-                    <th class="remark">备注</th>
-                  </tr>
-                </thead>
-				
-                <tbody>
-#set($computerorderFullListSize = $computerorderFullList.size() - 1)
+      <div class="row">
+            <div class="control-bar col-md-12">
+              <div class="title">$!computerorderFull.computerordertitle</div>
+            </div>        
+            <div class="col-md-7">                  
+                <div class="thumbnail">
+                  <div class="hd clearfix">
+                    <h3 class="pull-left">预约单</h3>
+                    <div class="pull-right">共XX种，XX个器材</div>
+                  </div>
+                  <div class="media-list">
+##判断map是否为空
+#set($computerorderMapSize = $computerorderdetailFullMapByComputermodelId.size() - 1)
 ##判断数据是否为空
-#if($computerorderFullListSize>=0)
-#set($computerorderFullListRegion = [0..$computerorderFullListSize])
+#if($computerorderMapSize>=0)
+#set($computerorderMapRegion = [0..$computerorderMapSize])
 ##取出所有的属性名称
-#foreach($tempKey in $computerorderFullListRegion)
-			#set($temp = $computerorderFullList.get($tempKey))
-			  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
-                    <td>$!temp.computerorderserialnumber<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
-                    <td>$!temp.loginusername</td>
-                    <td><a href="${webbaseurl}/auditComputerorder.${strutsaction}?computerorderId=$!temp.computerorderid">$!temp.computerordertitle</a></td>
-                    <td></td>
-                    <td>个人</td>                    
-                    <td>$!temp.computerorderremark</td>
-                  </tr>
+#foreach($tempKey in ${computerorderdetailFullMapByComputermodelId.keySet()}) 
+			#set($tempComputerorderdetailFullList = $computerorderdetailFullMapByComputermodelId.get($tempKey))
+
+                    <div class="media">                        
+                      <div class="group-hd">
+                        <div class="group-name pull-left">$tempComputerorderdetailFullList.get(0).computermodelname</div>
+                        <div class="group-line">
+                          <hr>
+                        </div>
+                      </div>
+                      <a class="pull-left" data-toggle="modal" href="#equip-detail" role="button">
+                        <img src="../img/mac-pro-gallery1-2012.jpg" width="100" height="100">
+                      </a>
+                      <div class="media-body">
+						#foreach($temporder in $tempComputerorderdetailFullList)
+                     
+                        <p>$temporder.computerorderdetailborrowday $temporder.computerorderdetailborrowperiod $temporder.computerorderdetailborrownumber</p>
+						#end
+                      </div>
+                    </div>
 #end
 #end					
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
-                    <td>2145322<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
-                    <td>姓名</td>
-                    <td><a href="机房预约审核.html">XXX的机房预约（XX月XX日、XX日……）机房预约标题</a></td>
-                    <td>待审核</td>
-                    <td>个人</td>                    
-                    <td>预约申请人的备注信息</td>
-                  </tr>
-              
-                </tbody>
-              </table>
-              
+					
+					
+                    <div class="media">                        
+                      <div class="group-hd">
+                        <div class="group-name pull-left">DELL工作站</div>
+                        <div class="group-line">
+                          <hr>
+                        </div>
+                      </div>
+                      <a class="pull-left" data-toggle="modal" href="#equip-detail" role="button">
+                        <img src="../img/dell.jpg" width="100" height="100">
+                      </a>
+                      <div class="media-body">
+                        <p>2013年9月12日 星期一 上午</p>
+                        <p>2013年9月14日 星期三 晚上</p>
+                        <p>……</p>
+                      </div>  
+                    </div>
+                  </div>
+                </div>                  
             </div>
-          </div>
-
-      </div><!--equip-wrap end-->
-      <div id="lside"><!--sidebar start-->
-        <form class="form-group">
-          <input type="text" class="form-control" placeholder="搜索预约(订单号、姓名)">
-          <i class="icon-search"></i>
-        </form>
-        <div class="list-group">
-          <a href="设备管理首页.html" class="list-group-item active">预约管理</a>
-          <a href="设备管理-添加设备.html" class="list-group-item">教学预约</a>        
-          <a href="设备管理-型号管理.html" class="list-group-item">设置</a>
-        </div>
+            <div class="col-md-5">
+                <div class="thumbnail">
+                  <div class="hd">
+                    <h3>状态</h3>
+                  </div>
+                  <div class="caption">
+                      <div class="status">
+                      <strong>审核人可能存在的状态:</strong><br>
+                      申请人尚未提交预约申请。<br>
+                      等待您的审核。<br>
+                      ……
+                      </div>
+                      <hr>
+                      <strong>审核人可能进行的操作:</strong><br>                      
+                      <a class="btn btn-primary" href="#">审核通过</a>
+                      <a class="btn btn-white" data-toggle="modal" href="#reject" role="button">驳 回</a>
+                      <a class="btn btn-white" data-toggle="modal" href="#reject" role="button">删 除</a>
+                  </div>
+                </div>
+                <div class="thumbnail">
+                  <div class="hd">
+                    <h3>详情</h3>
+                  </div>
+                  <div class="caption">
+                    <div class="rent-detail">
+                      <span class="rent-user"><strong>申请者：<a rel="popover" class="lk" href="#" data-original-title="" title="">用户名 (我)</a></strong></span>
+                      <span class="rent-num"><strong> - 预约号：432420427</strong></span>
+                      <div class="rent-contact">联系方式：XXXXXX</div>
+                      <div class="rent-remark"><i class="icon-pencil"></i> 这里是预约备注（无则不显示）</div>
+                    </div>
+                    <hr>
+                  </div>                        
+                  <ul class="media-list">
+                    <li class="media">
+                      <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
+                        <img src="../img/photo.jpg" width="28" height="28" class="img-rounded">
+                      </a>
+                      <div class="media-body">
+                        <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">教师名</a></h5><span class="post-time" title="详细时间">下午4:53</span></div>
+                        <p>审核老师发的审核驳回说明</p>
+                      </div>
+                    </li>
+                  </ul>
+                                            
+                </div>               
+            </div>                    
       </div>
-      <!--sidebar end-->
+
+
+
 
 </section>
 
@@ -289,17 +294,14 @@
   <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
 </div>
 
-
-    <!-- javascript
+    <!-- Le javascript
     ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
-<script src="${jsDomain}/jquery.noty.js"></script>
-<script src="${jsDomain}/jquery.jqpagination.js"></script>
-
 <!--[if lt IE 10]>
   <script src="../js/jquery.placeholder.js"></script>
   <script>

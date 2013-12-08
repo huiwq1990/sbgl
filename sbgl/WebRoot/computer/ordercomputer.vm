@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 机房预约</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 10]>
+  <script src="js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script src="${jsDomain}/html5shiv.js"></script>
+  <script src="${jsDomain}/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="${cssDomain}/font-awesome-ie7.min.css">
+<![endif]-->
+
+</head>
+
+<body>
+<header id="header-wrap"><!--header-wrap-->
+  <div id="global-header">
+    <div id="logo"><a class="brand" href="#"><img src="img/logo.png" alt="北京电影学院摄影系"></a></div>
+    <div id="hdc-wrap">
+      <div class="search-wrap">
+        <form class="form-search">
+          <div class="ipt-wrap form-group"><input type="text" class="form-control"></div>
+          <button type="submit" class="btn btn-primary"><i class="icon-search"></i></button>
+        </form>
+      </div>
+    </div>
+    <ul class="account-wrap nav nav-pills pull-right">
+      <li class="notice dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">消息1</a></li>
+          <li><a href="#">消息2</a></li>
+        </ul>
+      </li>     
+      <li class="social dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="img/photo.jpg" width="48" height="48" class="img-circle"> <b class="caret"></b></a>
+        <div class="dropdown-menu">
+          <div class="media">
+            <a class="pull-left" href="#">
+              <img src="img/photo.jpg" width="96" height="96" class="img-rounded">
+            </a>
+            <div class="media-body">
+              <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+              <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+              <div class="setting"><a href="#">账户设置</a></div>
+              <button class="btn btn-primary" type="button">查看个人主页</button>
+            </div>
+          </div>
+        </div>      
+      </li>
+    </ul>
+  </div>
+  
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 器材预约 <i class="icon-chevron-right"></i></a><!-- #BeginLibraryItem "/Library/siteNav.lbi" --><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="index.html"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="#anotherAction">个人主页</a></li>
+          <li><a href="#">通讯录</a></li>
+          <li class="divider"></li>
+          <li><a href="预约首页.html">我的预约</a></li>
+          <li><a href="消息中心-站内信.html">站内信</a></li>
+          <li class="divider"></li>
+          <li><a href="admin/管理中心首页.html">管理中心</a></li>
+        </ul>
+          <!-- #EndLibraryItem --></div>
+    </div>
+    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="#">全部</a></li>
+        <li><a href="#">器材预约</a></li>
+        <li><a href="#">机房预约</a></li>
+        <li class="divider"></li>
+        <li class="active"><a href="#">预约提交</a></li>
+      </ul>
+    </div>
+  </div>
+</header><!--/#header-wrap-->
+
+<section id="main-wrap"><!--main-wrap-->
+  
+  <div id="main-content" class="clearfix"><!--main-content start--> 
+          <div class="container" id="post-equip">
+            
+            <div class="row">
+
+              <div class="post-list-warp"><!--post-list-warp start-->  
+                <div class="post-list">              
+                  <div class="control-bar"><!--control-bar start-->
+                    <div class="title">机房预约</div>
+                    <div class="tips">当前可预约 2 周内的机房设备，选择您所需要的设备、使用日期、时段及数量。</div>
+                  </div><!--control-bar end-->
+    
+
+#set($computermodelListSize = $computermodelList.size() - 1)
+#if($computermodelListSize>=0)
+#set($computermodelListRegion = [0..$computermodelListSize])
+##取出所有的属性名称
+#foreach($tempmodelindex in $computermodelListRegion)
+	#set($tempmodel = $computermodelList.get($tempmodelindex))		
+	<!--PC 某个模型的信息 -->
+	  <div class="panel panel-default">
+    
+                    <div class="row panel-body">
+                  
+                        <div class="col-md-3">
+                          <img src="img/dell.jpg" class="img-responsive">
+                        </div>
+                        <div class="col-md-9">
+                          <h3 class="equip-title">$tempmodel.name</h3>
+                          <p class="detail">一段文字描述。</p>
+                          <div class="carousel-bar">
+                            <a class="btn btn-white" href="#post-equip-2" data-slide="prev"><i class="icon-chevron-left"></i></a>
+                            <a class="btn btn-white" href="#post-equip-2" data-slide="next"><i class="icon-chevron-right"></i></a>
+                          </div>
+                          <div id="post-equip-2" class="carousel slide">
+                            <div class="carousel-inner">
+                              <div class="active item table-responsive">
+                              
+                                <table class="table">
+                                    <thead>
+                                      <tr>
+                                        <th class="time-slop">时间</th>
+                                        <th>09/14<br>周六</th>
+                                        <th>09/15<br>周日</th>
+                                        <th>09/16<br>周一</th>
+                                        <th>09/17<br>周二</th>
+                                        <th>09/18<br>周三</th>
+                                        <th>09/19<br>周四</th>
+                                        <th>09/12<br>周五</th>                      
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                     
+	
+	
+	#set($borrowperiodListSize = $borrowperiodList.size() - 1)
+	#if($borrowperiodListSize>=0)
+		#set($borrowperiodListRegion = [0..$borrowperiodListSize])
+		##取出所有的属性名称
+		#foreach($tempperiod in $borrowperiodListRegion)
+			
+			<tr>
+                                        <td class="time-slot">上午</td>
+			
+			#set($tempBorrowperiod = $borrowperiodList.get($tempperiod))		
+			#foreach($tempday in [0..$computerorderTotalOrderDay-1])
+		
+				#set($availnum = $availableBorrowModelMap.get($tempmodel.computermodeltype).get($tempBorrowperiod.id).get($tempday))
+				#if($availnum ==0)
+                       <td></td>
+				#else
+					<td class="bookable"><strong>$availnum </strong><div class="info">可预约</div></td>
+				#end                 
+					
+			#end ##end day info computerorderTotalOrderDay
+			
+			
+			 </tr>
+		#end ##end borrowperiodLis
+		#end ##end if borrowperiodListSize
+		
+		
+		       </tbody>
+                                </table>
+                              </div>
+                            </div>        
+                          </div>
+    
+                        </div>
+             
+                    </div>
+                  </div>
+		
+#end
+#end			
+				  
+                  <div class="panel panel-default">
+    
+                    <div class="row panel-body">
+                  
+                        <div class="col-md-3">
+                          <img src="img/dell.jpg" class="img-responsive">
+                        </div>
+                        <div class="col-md-9">
+                          <h3 class="equip-title">DELL 工作站</h3>
+                          <p class="detail">一段文字描述。</p>
+                          <div class="carousel-bar">
+                            <a class="btn btn-white" href="#post-equip-2" data-slide="prev"><i class="icon-chevron-left"></i></a>
+                            <a class="btn btn-white" href="#post-equip-2" data-slide="next"><i class="icon-chevron-right"></i></a>
+                          </div>
+                          <div id="post-equip-2" class="carousel slide">
+                            <div class="carousel-inner">
+                              <div class="active item table-responsive">
+                              
+                                <table class="table">
+                                    <thead>
+                                      <tr>
+                                        <th class="time-slop">时间</th>
+                                        <th>09/14<br>周六</th>
+                                        <th>09/15<br>周日</th>
+                                        <th>09/16<br>周一</th>
+                                        <th>09/17<br>周二</th>
+                                        <th>09/18<br>周三</th>
+                                        <th>09/19<br>周四</th>
+                                        <th>09/12<br>周五</th>                      
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td class="time-slot">上午</td>
+                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
+                                        <td></td>
+                                      </tr>
+                                      <tr>
+                                        <td class="time-slot">下午</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
+                                        <td></td>
+                                      </tr>
+                                      <tr>
+                                        <td class="time-slot">晚上</td>
+                                        <td></td>
+                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
+                                      </tr>
+                                    </tbody>
+                                </table>
+                              
+                              </div>
+                              <div class="item table-responsive">
+                                <table class="table">
+                                    <thead>
+                                      <tr>
+                                        <th class="time-slop">时间</th>
+                                        <th>09/14<br>周六</th>
+                                        <th>09/15<br>周日</th>
+                                        <th>09/16<br>周一</th>
+                                        <th>09/17<br>周二</th>
+                                        <th>09/18<br>周三</th>
+                                        <th>09/19<br>周四</th>
+                                        <th>09/12<br>周五</th>                      
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td class="time-slot">上午</td>
+                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
+                                        <td></td>
+                                      </tr>
+                                      <tr>
+                                        <td class="time-slot">下午</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
+                                        <td></td>
+                                      </tr>
+                                      <tr>
+                                        <td class="time-slot">晚上</td>
+                                        <td></td>
+                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
+                                      </tr>
+                                    </tbody>
+                                </table>
+                              </div>
+                            </div>        
+                          </div>
+    
+                        </div>
+             
+                    </div>
+                  </div>
+				 <!--end>
+                </div>
+              </div><!--post-list-warp end-->
+              
+              <div class="post-sidebar-warp"><!--post-sidebar-warp start-->
+                <div id="post-sidebar" class="thumbnail wizard">
+                  <h3>预约单</h3>
+                  <div id="rent-list">
+                    <p class="no-add">尚未添加任何预约项。</p>
+                    <div class="post-equip-group" data-name="MAC工作站">
+                      <div class="group-hd">
+                        <div class="group-name pull-left">MAC工作站</div>
+                        <div class="group-line">
+                          <hr>
+                        </div>
+                      </div>
+                      <div class="group-body">
+                        <div class="row" id="123432"><div class="item-name">9月12日 星期一 上午</div><div class="item-ctrl spinner input-group"><span class="input-group-btn"><button type="button" class="btn btn-link spinner-down"><i class="icon-minus"></i></button></span><input type="text" class="spinner-input form-control" maxlength="1"><span class="input-group-btn"><button type="button" class="btn btn-link spinner-up"><i class="icon-plus"></i></button></span><span class="input-group-btn"><button type="button" class="btn btn-link close"><i class="icon-remove"></i></button></span></div></div>
+                      </div>
+                    
+                    
+                    </div>
+                    <div class="post-equip-group" data-name="DELL工作站">
+                      <div class="group-hd">
+                        <div class="group-name pull-left">DELL工作站</div>
+                        <div class="group-line">
+                          <hr>
+                        </div>
+                      </div>
+                      <div class="group-body">
+                        <div class="row" id="123432"><div class="item-name">9月12日 星期一 上午</div><div class="item-ctrl spinner input-group"><span class="input-group-btn"><button type="button" class="btn btn-link spinner-down"><i class="icon-minus"></i></button></span><input type="text" class="spinner-input form-control" maxlength="1"><span class="input-group-btn"><button type="button" class="btn btn-link spinner-up"><i class="icon-plus"></i></button></span><span class="input-group-btn"><button type="button" class="btn btn-link close"><i class="icon-remove"></i></button></span></div></div>
+                      </div>                    
+                    </div>
+                  </div>
+                  <div class="form-actions actions">  
+                    <button type="button" class="btn btn-white btn-clear">清 空</button>
+                    <button type="button" class="btn btn-primary">提交预约</button>
+                  </div>
+                </div>
+              </div><!--post-sidebar-warp start-->
+            </div>           
+            
+
+          </div>
+  </div>
+  <!---main-content end-->
+</section>
+
+
+
+   <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/bootstrap-datepicker.js"></script>
+<script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="${jsDomain}/xdate.js"></script>
+
+<!--[if lt IE 10]>
+  <script src="${jsDomain}/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<script>
+function CreatePostBookingTable(rowCount,cellCount,startDate) {
+	var tableName = "MAC工作站"
+	var tableContainer = $("<table class='table' data-table-name='" + tableName + "'></table>");
+	var index = 0;				// 单元格索引
+	var html = "";
+	var num = 9;				// 可预约数
+	var day;
+	var week;
+	var bookInfo = "<strong>"+ num + "</strong><div class='info'>可预约</div>"
+	html =
+		"<thead>" +
+		"<tr>";
+	for(var i = 0; i< cellCount; i++) {			// 生成表头（时间）
+		if(i == 0) {
+			html += "<th class='time-slot'>" + "时间" + "</th>";
+		}
+		else {			
+			day = startDate.toString('MM/d');
+			week = startDate.toString('dddd');
+			html += "<th>" + day + "<br/>" + week + "</th>";
+			startDate.addDays(1);
+		}
+	}
+	html +=
+		"</tr>" +
+		"</thead>";
+	  
+	html +=
+		"<thead>";
+	for(var i = 0; i < (rowCount - 1); i++) {
+		html += "<tr>";
+		for(var j = 0; j < cellCount; j++) {
+			if(j == 0) {
+				html += "<td class='time-slot'>";
+				switch(i)
+				{
+				case 0:
+					html += "上午";
+					break;
+				case 1:
+					html += "下午";
+					break;
+				case 2:
+					html += "晚上";
+					break;
+				}
+				html += "</td>";
+			}
+			else {
+				index++;
+				html += "<td class='bookable' data-index='" + index + "' data-slot='" + i + "' data-max-num='9'>" + bookInfo + "</td>";				  
+			} // if
+		} // for 
+		html += "</tr>";
+	}// for
+	html += "</tbody>";
+  
+	$(tableContainer).appendTo($("#createtable"));
+	$(html).appendTo(tableContainer);
+}
+function getBookingTime(bookingData, startDate) {
+	var index = bookingData.index;
+	var timeSlot = bookingData.slot;
+	var timeSlotStr = "";
+	var selectedDate = "";
+	// 第几星期(上、下 、晚 7 * 3)
+	var weekTimes = parseInt(index / 21) + 1;
+	if (index % (7 * 3) == 0) {
+		weekTimes = weekTimes - 1;	
+	}
+	var dayWeekIndex = index % 7;								// 7天内的第几天		
+	if (dayWeekIndex == 0) {
+		dayWeekIndex = 7;							// 第7天
+	}
+	var dayIndex = 7 * ( weekTimes - 1 ) + dayWeekIndex;				// 第几天
+	
+	switch(timeSlot)
+	{
+	case 0:
+		timeSlotStr = "上午";
+		break;
+	case 1:
+		timeSlotStr = "下午";
+		break;
+	case 2:
+		timeSlotStr = "晚上";
+		break;
+	}
+	startDate.addDays(dayIndex - 1);
+	var date = startDate.toString('MMMd日 dddd');
+	selectedDate = date + " " + timeSlotStr;
+	//alert(timeSlotStr + ", index=" + index + ", weekTimes=" + weekTimes + ", dayWeekIndex=" + dayWeekIndex + ", dayIndex=" + dayIndex);
+	return selectedDate;
+}
+  
+$(window).load(function(){
+	XDate.locales['zh-CN'] = {
+		monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+		monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+		dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六']
+	};
+	XDate.defaultLocale = 'zh-CN';
+	var startDate = new XDate();
+	CreatePostBookingTable(4, 8, startDate);
+  
+	$('#datepicker').datepicker({
+		language: 'zh-CN',
+		format: 'yyyy-mm-dd',
+		todayHighlight: true,
+	});
+	$('.carousel').carousel({
+		interval: false
+	});
+
+});
+</script>
+</body>
+</html>
