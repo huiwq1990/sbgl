@@ -69,13 +69,15 @@ public interface EquipService {
 	//查询某一一级分类下的所有二级器材分类
 	public List<Equipmentclassification> getAllChildEquipmentclassificationsByParentId(Integer equipmentclassificationId);
 	//查询分类下器材模型的数量
-	public Integer getCountOfEquipByClassification(Integer classificationId);
+	public Integer getCountOfEquipByClassification(Integer classificationId, Boolean isParent);
 	//查询分类下所有设备的数量
-	public Integer getCountOfEquipdetailByClassification(Integer classificationId);
+	public Integer getCountOfEquipdetailByClassification(Integer classificationId, Boolean isParent);
 	//查询某一型号所属的分类
 	public Equipmentclassification getEquipmentclassificationByEquipmentModel(Integer equipmentModelId);
 	//按条件查询并以分页方式查询
 	public QueryResult getgetEquipmentclassificationByPageWithOptions(List<HQLOption> hqlOptionList, Page page);
+	//查询该分类名称是否已经存在
+	public Boolean isExistThisClassification(String classificationName);
 	
 	//添加品类信息
 	public Integer addCategory(Category category);

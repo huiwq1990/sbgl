@@ -79,16 +79,23 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	public String addEquipmentclassification() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
-		long returnCode = equipService.addEquipmentclassification( equipClassforAdd );
-		if( returnCode != -1 ) {
-			this.tag = "0";
-			this.message = "分类保存成功！";
-			gotoEquipManageClassfiction();  //获取最新一集分类信息返回页面
+		Boolean isExist = equipService.isExistThisClassification( equipClassforAdd.getName() );
+		if( !isExist ) {
+			long returnCode = equipService.addEquipmentclassification( equipClassforAdd );
+			if( returnCode != -1 ) {
+				this.tag = "0";
+				this.message = "分类保存成功！";
+				gotoEquipManageClassfiction();  //获取最新一集分类信息返回页面
+			} else {
+				this.tag = "1";
+				this.message = "分类保存失败！";
+				log.error("################ 保存器材分类失败！ ################");
+			}
 		} else {
-			this.tag = "1";
-			this.message = "分类保存失败！";
-			log.error("################ 保存器材分类失败！ ################");
+			this.tag = "100";
+			this.message = "该分类已经存在！";
 		}
+		
 		returnJSON.put("tag", tag);
 		returnJSON.put("msg", message);
 		returnJSON.put("pClass", JSONArray.fromObject(allParent));
@@ -208,8 +215,13 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				if(classfication.getParentid() != 0) {
 					cc.setId( String.valueOf( classfication.getClassificationid() ) );
 					cc.setName( classfication.getName() );
-					cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification(classfication.getClassificationid()) ) );
-					cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification(classfication.getClassificationid() ) ) );
+					if( classfication.getParentid() == 0 ) {
+						cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification(classfication.getClassificationid(), true ) ) );
+						cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification(classfication.getClassificationid(), true ) ) );
+					} else {
+						cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification(classfication.getClassificationid(), false ) ) );
+						cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification(classfication.getClassificationid(), false ) ) );
+					}
 					cc.setpName( idNameMap.get( classfication.getParentid() ) );
 					classCourse.add( cc );
 				}
@@ -681,52 +693,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	public String alterEquipmentdetail() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
-		if(equipmentdetail.getEquipmentid() != -1) {  //不是未知型号
-			Equipmentdetail temp = equipService.getEquipmentdetail( equipmentdetail.getEquipDetailid() );
-			Equipment equip = equipService.getEquipmentById( equipmentdetail.getEquipmentid() );
-			
-			String stateCodeStr = equipmentdetail.getStatus();
-			String stateCodeOld = temp.getStatus();
-			
-			Integer activeNum = equip.getActivenum() == null ? 0 : equip.getActivenum();
-			Integer maintainNum = equip.getMaintainnum() == null ? 0 : equip.getMaintainnum();
-			Integer repairNum = equip.getRepairnum() == null ? 0 : equip.getRepairnum();
-			Integer losedNum = equip.getLosednum() == null ? 0 : equip.getLosednum();
-			Integer recycleNum = equip.getRecyclingnum() == null ? 0 : equip.getRecyclingnum();
-			
-			if(stateCodeStr.equals("0")) {
-				activeNum += 1;
-			} else if(stateCodeStr.equals("1")) {
-				//TODO 借出如何获取和存储借出数量
-			} else if(stateCodeStr.equals("2")) {
-				maintainNum += 1;
-			} else if(stateCodeStr.equals("3")) {
-				repairNum += 1;
-			} else if(stateCodeStr.equals("4")) {
-				losedNum += 1;
-			} else if(stateCodeStr.equals("5")) {
-				recycleNum += 1;
-			}
-			if(stateCodeOld.equals("0")) {
-				activeNum -= 1;
-			} else if(stateCodeOld.equals("1")) {
-				//TODO 借出如何获取和存储借出数量
-			} else if(stateCodeOld.equals("2")) {
-				maintainNum -= 1;
-			} else if(stateCodeOld.equals("3")) {
-				repairNum -= 1;
-			} else if(stateCodeOld.equals("4")) {
-				losedNum -= 1;
-			} else if(stateCodeOld.equals("5")) {
-				recycleNum -= 1;
-			}
-			equip.setActivenum( activeNum );
-			equip.setMaintainnum( maintainNum );
-			equip.setRepairnum( repairNum );
-			equip.setLosednum( losedNum );
-			equip.setRecyclingnum( recycleNum );
-			equipService.alterEquipInfo( equip );
-		}
 		
 		long returnCode = equipService.alterEquipmentdetail( equipmentdetail );
 		if( returnCode != -1 ) {
@@ -760,37 +726,37 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		String[] ids = equipdetailIds.split("_");
 		for (String id : ids) {
 			Integer oneId = Integer.valueOf( id );
-			
-			Equipmentdetail ed = equipService.getEquipmentdetail( oneId );
-			if(ed.getEquipmentid() != -1) {  //不是未知型号
-				Equipment equip = equipService.getEquipmentById( ed.getEquipmentid() );
-				Integer activeNum = equip.getActivenum() == null ? 0 : equip.getActivenum();
-				Integer maintainNum = equip.getMaintainnum() == null ? 0 : equip.getMaintainnum();
-				Integer repairNum = equip.getRepairnum() == null ? 0 : equip.getRepairnum();
-				Integer losedNum = equip.getLosednum() == null ? 0 : equip.getLosednum();
-				Integer recycleNum = equip.getRecyclingnum() == null ? 0 : equip.getRecyclingnum();
-				
-				String stateCodeStr = ed.getStatus();
-				if(stateCodeStr.equals("0")) {
-					activeNum -= 1;
-				} else if(stateCodeStr.equals("1")) {
-					//TODO 借出如何获取和存储借出数量
-				} else if(stateCodeStr.equals("2")) {
-					maintainNum -= 1;
-				} else if(stateCodeStr.equals("3")) {
-					repairNum -= 1;
-				} else if(stateCodeStr.equals("4")) {
-					losedNum -= 1;
-				} else if(stateCodeStr.equals("5")) {
-					recycleNum -= 1;
-				}
-				equip.setActivenum( activeNum );
-				equip.setMaintainnum( maintainNum );
-				equip.setRepairnum( repairNum );
-				equip.setLosednum( losedNum );
-				equip.setRecyclingnum( recycleNum );
-				equipService.alterEquipInfo( equip );
-			}
+//			
+//			Equipmentdetail ed = equipService.getEquipmentdetail( oneId );
+//			if(ed.getEquipmentid() != -1) {  //不是未知型号
+//				Equipment equip = equipService.getEquipmentById( ed.getEquipmentid() );
+//				Integer activeNum = equip.getActivenum() == null ? 0 : equip.getActivenum();
+//				Integer maintainNum = equip.getMaintainnum() == null ? 0 : equip.getMaintainnum();
+//				Integer repairNum = equip.getRepairnum() == null ? 0 : equip.getRepairnum();
+//				Integer losedNum = equip.getLosednum() == null ? 0 : equip.getLosednum();
+//				Integer recycleNum = equip.getRecyclingnum() == null ? 0 : equip.getRecyclingnum();
+//				
+//				String stateCodeStr = ed.getStatus();
+//				if(stateCodeStr.equals("0")) {
+//					activeNum -= 1;
+//				} else if(stateCodeStr.equals("1")) {
+//					//TODO 借出如何获取和存储借出数量
+//				} else if(stateCodeStr.equals("2")) {
+//					maintainNum -= 1;
+//				} else if(stateCodeStr.equals("3")) {
+//					repairNum -= 1;
+//				} else if(stateCodeStr.equals("4")) {
+//					losedNum -= 1;
+//				} else if(stateCodeStr.equals("5")) {
+//					recycleNum -= 1;
+//				}
+//				equip.setActivenum( activeNum );
+//				equip.setMaintainnum( maintainNum );
+//				equip.setRepairnum( repairNum );
+//				equip.setLosednum( losedNum );
+//				equip.setRecyclingnum( recycleNum );
+//				equipService.alterEquipInfo( equip );
+//			}
 			
 			if( equipService.deleteEquipmentdetail( oneId ) ) {
 				this.tag = "0";
@@ -1251,8 +1217,13 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				ClassficationCourse cc = new ClassficationCourse();
 				cc.setId( String.valueOf( classfication.getClassificationid() ) );
 				cc.setName( classfication.getName() );
-				cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification(classfication.getClassificationid()) ) );
-				cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification(classfication.getClassificationid() ) ) );
+				if( classfication.getParentid() == 0 ) {
+					cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification(classfication.getClassificationid(), true ) ) );
+					cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification(classfication.getClassificationid(), true ) ) );
+				} else {
+					cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification(classfication.getClassificationid(), false ) ) );
+					cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification(classfication.getClassificationid(), false ) ) );
+				}
 				cc.setpId( String.valueOf( classfication.getParentid() ) );
 				cc.setpName( idNameMap.get( classfication.getParentid() ) == null ? "无" : idNameMap.get( classfication.getParentid() ) );
 				allClassCourse.add( cc );

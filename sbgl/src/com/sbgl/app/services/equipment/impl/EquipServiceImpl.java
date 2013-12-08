@@ -189,6 +189,28 @@ public class EquipServiceImpl implements EquipService {
 		Integer id = baseDao.getCode("equipDetailId");
 		equipmentdetail.setEquipDetailid( id );
 		equipmentdetail.setMakedate( new Date() );
+		//判断当前添加器材的型号，更新型号表相关统计字段
+		Equipment e = null;
+		if( equipmentdetail.getEquipmentid() != -1 && equipmentdetail.getEquipmentid() != null ) {
+			e = this.getEquipmentById( equipmentdetail.getEquipmentid() );
+			if( e.getEquipmentnum() == null ) {  //总的器材数量
+				e.setEquipmentnum( 1 );
+			} else {
+				e.setEquipmentnum( e.getEquipmentnum() + 1 );
+			}
+			if( "0".equals( equipmentdetail.getStatus() ) || "1".equals( equipmentdetail.getStatus() ) ) {  //细分器材状态数量
+				e.setActivenum( e.getActivenum()==null ? 0 : e.getActivenum() + 1 );
+			} else if( "2".equals( equipmentdetail.getStatus() ) ) {
+				e.setMaintainnum( e.getMaintainnum()==null ? 0 : e.getMaintainnum() + 1 );
+			} else if( "3".equals( equipmentdetail.getStatus() ) ) {
+				e.setRepairnum( e.getRepairnum()==null ? 0 : e.getRepairnum() + 1 );
+			} else if( "4".equals( equipmentdetail.getStatus() ) ) {
+				e.setLosednum( e.getLosednum()==null ? 0 : e.getLosednum() + 1 );
+			} else if( "5".equals( equipmentdetail.getStatus() ) ) {
+				e.setRecyclingnum( e.getRecyclingnum()==null ? 0 : e.getRecyclingnum() + 1 );
+			}
+			this.alterEquipInfo( e );
+		}
 		try {
 			baseDao.saveEntity( equipmentdetail );
 		} catch (RuntimeException re) {
@@ -199,9 +221,10 @@ public class EquipServiceImpl implements EquipService {
 
 	@Override
 	public Integer alterEquipmentdetail(Equipmentdetail equipmentdetail) {
-		// TODO Auto-generated method stub
 		Integer id = equipmentdetail.getEquipDetailid();
 		Equipmentdetail storeEquipmentdetail = baseDao.getEntityById(Equipmentdetail.class, id);
+		Integer oldEquipStatus = new Integer( storeEquipmentdetail.getStatus() );
+		Integer oldEquipid = new Integer( storeEquipmentdetail.getEquipmentid() );
 		
 		storeEquipmentdetail.setEquipserial( equipmentdetail.getEquipserial() );
 		storeEquipmentdetail.setEquipmentid( equipmentdetail.getEquipmentid() );
@@ -211,6 +234,69 @@ public class EquipServiceImpl implements EquipService {
 		storeEquipmentdetail.setModifydate( new Date() );
 		storeEquipmentdetail.setSysremark( equipmentdetail.getSysremark() );
 		storeEquipmentdetail.setUsermark( equipmentdetail.getUsermark() );
+		//判断当前添加器材的型号，更新型号表相关统计字段
+		Equipment e = null;
+		if( oldEquipid == -1 && equipmentdetail.getEquipmentid() != -1 ) {  //从没有型号变为有型号
+			e = this.getEquipmentById( equipmentdetail.getEquipmentid() );
+			e.setEquipmentnum( e.getEquipmentnum()==null ? 0 : e.getEquipmentnum() + 1 );
+			if( "0".equals( equipmentdetail.getStatus() ) || "1".equals( equipmentdetail.getStatus() ) ) {  //细分器材状态数量
+				e.setActivenum( e.getActivenum()==null ? 0 : e.getActivenum() + 1 );
+			} else if( "2".equals( equipmentdetail.getStatus() ) ) {
+				e.setMaintainnum( e.getMaintainnum()==null ? 0 : e.getMaintainnum() + 1 );
+			} else if( "3".equals( equipmentdetail.getStatus() ) ) {
+				e.setRepairnum( e.getRepairnum()==null ? 0 : e.getRepairnum() + 1 );
+			} else if( "4".equals( equipmentdetail.getStatus() ) ) {
+				e.setLosednum( e.getLosednum()==null ? 0 : e.getLosednum() + 1 );
+			} else if( "5".equals( equipmentdetail.getStatus() ) ) {
+				e.setRecyclingnum( e.getRecyclingnum()==null ? 0 : e.getRecyclingnum() + 1 );
+			}
+			this.alterEquipInfo( e );
+		} else if( oldEquipid != -1 && equipmentdetail.getEquipmentid() == -1 ) { //从有型号变为没有型号
+			e = this.getEquipmentById( oldEquipid );
+			e.setEquipmentnum( e.getEquipmentnum() - 1 );
+			if( "0".equals( oldEquipStatus ) || "1".equals( oldEquipStatus ) ) {  //细分器材状态数量
+				e.setActivenum( e.getActivenum() - 1 );
+			} else if( "2".equals( oldEquipStatus ) ) {
+				e.setMaintainnum( e.getMaintainnum() - 1 );
+			} else if( "3".equals( oldEquipStatus ) ) {
+				e.setRepairnum( e.getRepairnum() - 1 );
+			} else if( "4".equals( oldEquipStatus ) ) {
+				e.setLosednum( e.getLosednum() - 1 );
+			} else if( "5".equals( oldEquipStatus ) ) {
+				e.setRecyclingnum( e.getRecyclingnum() - 1 );
+			}
+			this.alterEquipInfo( e );
+		} else if( oldEquipid != -1 && equipmentdetail.getEquipmentid() != -1 && 
+				   oldEquipid != equipmentdetail.getEquipmentid() ) {  //型号不相同
+			e = this.getEquipmentById( equipmentdetail.getEquipmentid() );
+			e.setEquipmentnum( e.getEquipmentnum() + 1 );
+			if( "0".equals( equipmentdetail.getStatus() ) || "1".equals( equipmentdetail.getStatus() ) ) {  //细分器材状态数量
+				e.setActivenum( e.getActivenum()==null ? 0 : e.getActivenum() + 1 );
+			} else if( "2".equals( equipmentdetail.getStatus() ) ) {
+				e.setMaintainnum( e.getMaintainnum()==null ? 0 : e.getMaintainnum() + 1 );
+			} else if( "3".equals( equipmentdetail.getStatus() ) ) {
+				e.setRepairnum( e.getRepairnum()==null ? 0 : e.getRepairnum() + 1 );
+			} else if( "4".equals( equipmentdetail.getStatus() ) ) {
+				e.setLosednum( e.getLosednum()==null ? 0 : e.getLosednum() + 1 );
+			} else if( "5".equals( equipmentdetail.getStatus() ) ) {
+				e.setRecyclingnum( e.getRecyclingnum()==null ? 0 : e.getRecyclingnum() + 1 );
+			}
+			this.alterEquipInfo( e );
+			e = this.getEquipmentById( oldEquipid );
+			e.setEquipmentnum( e.getEquipmentnum() - 1 );
+			if( "0".equals( oldEquipStatus ) || "1".equals( oldEquipStatus ) ) {  //细分器材状态数量
+				e.setActivenum( e.getActivenum() - 1 );
+			} else if( "2".equals( oldEquipStatus ) ) {
+				e.setMaintainnum( e.getMaintainnum() - 1 );
+			} else if( "3".equals( oldEquipStatus ) ) {
+				e.setRepairnum( e.getRepairnum() - 1 );
+			} else if( "4".equals( oldEquipStatus ) ) {
+				e.setLosednum( e.getLosednum() - 1 );
+			} else if( "5".equals( oldEquipStatus ) ) {
+				e.setRecyclingnum( e.getRecyclingnum() - 1 );
+			}
+			this.alterEquipInfo( e );
+		}
 		
 		try {
 			baseDao.updateEntity( storeEquipmentdetail );
@@ -222,7 +308,28 @@ public class EquipServiceImpl implements EquipService {
 
 	@Override
 	public boolean deleteEquipmentdetail(Integer equipmentdetailId) {
-		// TODO Auto-generated method stub
+		//判断当前添加器材的型号，更新型号表相关统计字段
+		Equipmentdetail d = this.getEquipmentdetail( equipmentdetailId );
+		Equipment e = null;
+		if( d.getEquipmentid() != -1 && d.getEquipmentid() != null ) {
+			e = this.getEquipmentById( d.getEquipmentid() );
+			if( e.getEquipmentnum() != null ) {  //总的器材数量
+				e.setEquipmentnum( e.getEquipmentnum() - 1 );
+			}
+			
+			if( "0".equals( d.getStatus() ) || "1".equals( d.getStatus() ) ) {  //细分器材状态数量
+				e.setActivenum( e.getActivenum() - 1 );
+			} else if( "2".equals( d.getStatus() ) ) {
+				e.setMaintainnum( e.getMaintainnum() - 1 );
+			} else if( "3".equals( d.getStatus() ) ) {
+				e.setRepairnum( e.getRepairnum() - 1 );
+			} else if( "4".equals( d.getStatus() ) ) {
+				e.setLosednum( e.getLosednum() - 1 );
+			} else if( "5".equals( d.getStatus() ) ) {
+				e.setRecyclingnum( e.getRecyclingnum() - 1 );
+			}
+			this.alterEquipInfo( e );
+		}
 		boolean flag = false;
 		Equipmentdetail storeEquipmentdetail = baseDao.getEntityById(Equipmentdetail.class, equipmentdetailId);
 		try {
@@ -317,36 +424,75 @@ public class EquipServiceImpl implements EquipService {
 	}
 	
 	@Override
-	public Integer getCountOfEquipByClassification(Integer classificationId) {
-		final String modelCountSQL = "select count(*) from Equipment where classificationid = " + classificationId;
-		BigInteger EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException{
-				Query query = session.createSQLQuery(modelCountSQL);
-				return query.list().get(0); 
+	public Integer getCountOfEquipByClassification(Integer classificationId, Boolean isParent) {
+		if( isParent ) {
+			int totalSum = 0;
+			List<Equipmentclassification> childrenList = this.getAllChildEquipmentclassificationsByParentId( classificationId );
+			if( childrenList != null && childrenList.size() > 0 ) {
+				for (Equipmentclassification c : childrenList) {
+					final String modelCountSQL = "select count(1) from Equipment where classificationid = " + c.getClassificationid();
+					BigInteger EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
+						public Object doInHibernate(Session session) throws HibernateException{
+							Query query = session.createSQLQuery(modelCountSQL);
+							return query.list().get(0); 
+						}
+					});
+					if(EquipSum != null) {
+						totalSum += EquipSum.intValue();
+					}
+				}
 			}
-		});
-		if(EquipSum != null) {
-			return EquipSum.intValue();
+			return totalSum;
 		} else {
-			return 0;
+			final String modelCountSQL = "select count(1) from Equipment where classificationid = " + classificationId;
+			BigInteger EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
+				public Object doInHibernate(Session session) throws HibernateException{
+					Query query = session.createSQLQuery(modelCountSQL);
+					return query.list().get(0); 
+				}
+			});
+			if(EquipSum != null) {
+				return EquipSum.intValue();
+			} else {
+				return 0;
+			}
 		}
 	}
 	
 	@Override
-	public Integer getCountOfEquipdetailByClassification(Integer classificationId) {
-		final String equipCountSQL = "select sum(equipmentnum) from Equipment  where classificationid = " + classificationId;
-		BigInteger EquipdetailSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
-			public Object doInHibernate(Session session) throws HibernateException{
-				Query query = session.createSQLQuery(equipCountSQL);
-				return query.list().get(0); 
+	public Integer getCountOfEquipdetailByClassification(Integer classificationId, Boolean isParent) {
+		if( isParent ) {
+			int totalSum = 0;
+			List<Equipmentclassification> childrenList = this.getAllChildEquipmentclassificationsByParentId( classificationId );
+			if( childrenList != null && childrenList.size() > 0 ) {
+				for (Equipmentclassification c : childrenList) {
+					final String modelCountSQL = "select sum(equipmentnum) from Equipment where classificationid = " + c.getClassificationid();
+					BigDecimal EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
+						public Object doInHibernate(Session session) throws HibernateException{
+							Query query = session.createSQLQuery(modelCountSQL);
+							return query.list().get(0); 
+						}
+					});
+					if(EquipSum != null) {
+						totalSum += EquipSum.intValue();
+					}
+				}
 			}
-		});
-		if(EquipdetailSum != null) {
-			return EquipdetailSum.intValue();
+			return totalSum;
 		} else {
-			return 0;
+			final String equipCountSQL = "select sum(equipmentnum) from Equipment  where classificationid = " + classificationId;
+			BigDecimal EquipdetailSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
+				public Object doInHibernate(Session session) throws HibernateException{
+					Query query = session.createSQLQuery(equipCountSQL);
+					return query.list().get(0); 
+				}
+			});
+			if(EquipdetailSum != null) {
+				return EquipdetailSum.intValue();
+			} else {
+				return 0;
+			}
 		}
-		
 	}
 	
 	@Override
@@ -517,5 +663,10 @@ public class EquipServiceImpl implements EquipService {
 	public QueryResult getEquipDetailByPageWithOptions(
 			List<HQLOption> hqlOptionList, Page page) {
 		return baseDao.getEntityByPageWithOptions(Equipmentdetail.class, hqlOptionList, page);
+	}
+
+	@Override
+	public Boolean isExistThisClassification(String classificationName) {
+		return baseDao.isExist(Equipmentclassification.class, "name", classificationName);
 	}
 }
