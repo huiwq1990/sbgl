@@ -1,6 +1,6 @@
 package com.sbgl.app.entity;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * Equipment entity. @author MyEclipse Persistence Tools
@@ -14,12 +14,10 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 	private Integer equipmentid;
 	private String equipmentname;
 	private Integer brandid;
-	private String imgNameSaved;
-	private String imgName;
 	private Integer classificationid;
 	private Integer administrationid;
-	private Date makedate;
-	private Date modifydate;
+	private Timestamp makedate;
+	private Timestamp modifydate;
 	private Integer equipmentnum;
 	private Integer activenum;
 	private Integer maintainnum;
@@ -29,6 +27,10 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 	private String equipmentdetail;
 	private Integer category;
 	private String remark;
+	private String lanType;
+	private Integer comId;
+	private String imgNameSaved;
+	private String imgName;
 
 	// Constructors
 
@@ -43,17 +45,15 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 
 	/** full constructor */
 	public Equipment(Integer equipmentid, String equipmentname,
-			Integer brandid, String imgNameSaved, String imgName,
-			Integer classificationid, Integer administrationid,
-			Date makedate, Date modifydate, Integer equipmentnum,
-			Integer activenum, Integer maintainnum, Integer repairnum,
-			Integer losednum, Integer recyclingnum, String equipmentdetail,
-			Integer category, String remark) {
+			Integer brandid, Integer classificationid,
+			Integer administrationid, Timestamp makedate, Timestamp modifydate,
+			Integer equipmentnum, Integer activenum, Integer maintainnum,
+			Integer repairnum, Integer losednum, Integer recyclingnum,
+			String equipmentdetail, Integer category, String remark,
+			String lanType, Integer comId, String imgNameSaved, String imgName) {
 		this.equipmentid = equipmentid;
 		this.equipmentname = equipmentname;
 		this.brandid = brandid;
-		this.imgNameSaved = imgNameSaved;
-		this.imgName = imgName;
 		this.classificationid = classificationid;
 		this.administrationid = administrationid;
 		this.makedate = makedate;
@@ -67,6 +67,10 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 		this.equipmentdetail = equipmentdetail;
 		this.category = category;
 		this.remark = remark;
+		this.lanType = lanType;
+		this.comId = comId;
+		this.imgNameSaved = imgNameSaved;
+		this.imgName = imgName;
 	}
 
 	// Property accessors
@@ -95,22 +99,6 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 		this.brandid = brandid;
 	}
 
-	public String getImgNameSaved() {
-		return this.imgNameSaved;
-	}
-
-	public void setImgNameSaved(String imgNameSaved) {
-		this.imgNameSaved = imgNameSaved;
-	}
-
-	public String getImgName() {
-		return this.imgName;
-	}
-
-	public void setImgName(String imgName) {
-		this.imgName = imgName;
-	}
-
 	public Integer getClassificationid() {
 		return this.classificationid;
 	}
@@ -127,19 +115,19 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 		this.administrationid = administrationid;
 	}
 
-	public Date getMakedate() {
+	public Timestamp getMakedate() {
 		return this.makedate;
 	}
 
-	public void setMakedate(Date makedate) {
+	public void setMakedate(Timestamp makedate) {
 		this.makedate = makedate;
 	}
 
-	public Date getModifydate() {
+	public Timestamp getModifydate() {
 		return this.modifydate;
 	}
 
-	public void setModifydate(Date modifydate) {
+	public void setModifydate(Timestamp modifydate) {
 		this.modifydate = modifydate;
 	}
 
@@ -213,6 +201,38 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getLanType() {
+		return this.lanType;
+	}
+
+	public void setLanType(String lanType) {
+		this.lanType = lanType;
+	}
+
+	public Integer getComId() {
+		return this.comId;
+	}
+
+	public void setComId(Integer comId) {
+		this.comId = comId;
+	}
+
+	public String getImgNameSaved() {
+		return this.imgNameSaved;
+	}
+
+	public void setImgNameSaved(String imgNameSaved) {
+		this.imgNameSaved = imgNameSaved;
+	}
+
+	public String getImgName() {
+		return this.imgName;
+	}
+
+	public void setImgName(String imgName) {
+		this.imgName = imgName;
 	}
 
 }

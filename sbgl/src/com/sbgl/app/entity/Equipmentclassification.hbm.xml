@@ -16,14 +16,20 @@
         <property name="name" type="java.lang.String">
             <column name="name" length="200" />
         </property>
-        <property name="maketime" type="java.util.Date">
-            <column name="maketime"  />
+        <property name="maketime" type="java.sql.Timestamp">
+            <column name="maketime" length="19" />
         </property>
-        <property name="modifytime" type="java.util.Date">
-            <column name="modifytime"  />
+        <property name="modifytime" type="java.sql.Timestamp">
+            <column name="modifytime" length="19" />
         </property>
         <property name="userid" type="java.lang.Integer">
             <column name="userid" />
+        </property>
+        <property name="lanType" type="java.lang.String">
+            <column name="lanType" length="2" />
+        </property>
+        <property name="comId" type="java.lang.Integer">
+            <column name="comId" />
         </property>
     </class>
 </hibernate-mapping>

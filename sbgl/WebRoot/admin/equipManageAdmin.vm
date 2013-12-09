@@ -226,6 +226,7 @@
           <label for="modifyEquipModelId" class="col-xs-3 control-label">所属设备型号</label>
           <div class="col-xs-7">
             <select class="select2 select-white form-control" id="modifyEquipModelId">
+			  <option value="-1">未知型号</option>
 			  #foreach($equip in $equipCourse)
 			    #if($!equip.showClass == '1')
 				  <optgroup label="$!equip.cName">
@@ -363,6 +364,25 @@
 	
 	$("body").on("click", "a[action-type|=alterDetailFillIn]", function() {
 		var myData = $(this).data();
+		
+		var postData = {
+    		"seletedClassId": 0,
+			"selectedState": selectedState
+    	};
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipDetailForSelect.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#modelForSelect").html(data);
+				$("#modifyEquipCategory").select2("val", 0);
+				$("#modifyEquipModelId").select2("val", myData.mid);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
 		
 		$("#modifyEquipId").val(myData.code);
 		$("#modifyEquipModelId").select2("val", myData.mid);

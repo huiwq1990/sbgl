@@ -13,14 +13,24 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer equipDetailid;
-	private String equipserial;
 	private Integer equipmentid;
 	private String status;
 	private Integer administrationid;
-	private Date makedate;
-	private Date modifydate;
+	private Timestamp makedate;
+	private Timestamp modifydate;
 	private String sysremark;
 	private String usermark;
+	private Date manufactureDate;
+	private Date acquireDate;
+	private String manufacturer;
+	private String supplyer;
+	private Float worth;
+	private String manageDept;
+	private String manager;
+	private String storagePlace;
+	private String lanType;
+	private Integer comId;
+	private Integer equipserial;
 
 	// Constructors
 
@@ -34,12 +44,14 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Equipmentdetail(Integer equipDetailid, String equipserial,
-			Integer equipmentid, String status, Integer administrationid,
-			Timestamp makedate, Timestamp modifydate, String sysremark,
-			String usermark) {
+	public Equipmentdetail(Integer equipDetailid, Integer equipmentid,
+			String status, Integer administrationid, Timestamp makedate,
+			Timestamp modifydate, String sysremark, String usermark,
+			Date manufactureDate, Date acquireDate, String manufacturer,
+			String supplyer, Float worth, String manageDept, String manager,
+			String storagePlace, String lanType, Integer comId,
+			Integer equipserial) {
 		this.equipDetailid = equipDetailid;
-		this.equipserial = equipserial;
 		this.equipmentid = equipmentid;
 		this.status = status;
 		this.administrationid = administrationid;
@@ -47,6 +59,17 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.modifydate = modifydate;
 		this.sysremark = sysremark;
 		this.usermark = usermark;
+		this.manufactureDate = manufactureDate;
+		this.acquireDate = acquireDate;
+		this.manufacturer = manufacturer;
+		this.supplyer = supplyer;
+		this.worth = worth;
+		this.manageDept = manageDept;
+		this.manager = manager;
+		this.storagePlace = storagePlace;
+		this.lanType = lanType;
+		this.comId = comId;
+		this.equipserial = equipserial;
 	}
 
 	// Property accessors
@@ -57,14 +80,6 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setEquipDetailid(Integer equipDetailid) {
 		this.equipDetailid = equipDetailid;
-	}
-
-	public String getEquipserial() {
-		return this.equipserial;
-	}
-
-	public void setEquipserial(String equipserial) {
-		this.equipserial = equipserial;
 	}
 
 	public Integer getEquipmentid() {
@@ -91,19 +106,19 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.administrationid = administrationid;
 	}
 
-	public Date getMakedate() {
+	public Timestamp getMakedate() {
 		return this.makedate;
 	}
 
-	public void setMakedate(Date makedate) {
+	public void setMakedate(Timestamp makedate) {
 		this.makedate = makedate;
 	}
 
-	public Date getModifydate() {
+	public Timestamp getModifydate() {
 		return this.modifydate;
 	}
 
-	public void setModifydate(Date modifydate) {
+	public void setModifydate(Timestamp modifydate) {
 		this.modifydate = modifydate;
 	}
 
@@ -121,6 +136,94 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setUsermark(String usermark) {
 		this.usermark = usermark;
+	}
+
+	public Date getManufactureDate() {
+		return this.manufactureDate;
+	}
+
+	public void setManufactureDate(Date manufactureDate) {
+		this.manufactureDate = manufactureDate;
+	}
+
+	public Date getAcquireDate() {
+		return this.acquireDate;
+	}
+
+	public void setAcquireDate(Date acquireDate) {
+		this.acquireDate = acquireDate;
+	}
+
+	public String getManufacturer() {
+		return this.manufacturer;
+	}
+
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
+	}
+
+	public String getSupplyer() {
+		return this.supplyer;
+	}
+
+	public void setSupplyer(String supplyer) {
+		this.supplyer = supplyer;
+	}
+
+	public Float getWorth() {
+		return this.worth;
+	}
+
+	public void setWorth(Float worth) {
+		this.worth = worth;
+	}
+
+	public String getManageDept() {
+		return this.manageDept;
+	}
+
+	public void setManageDept(String manageDept) {
+		this.manageDept = manageDept;
+	}
+
+	public String getManager() {
+		return this.manager;
+	}
+
+	public void setManager(String manager) {
+		this.manager = manager;
+	}
+
+	public String getStoragePlace() {
+		return this.storagePlace;
+	}
+
+	public void setStoragePlace(String storagePlace) {
+		this.storagePlace = storagePlace;
+	}
+
+	public String getLanType() {
+		return this.lanType;
+	}
+
+	public void setLanType(String lanType) {
+		this.lanType = lanType;
+	}
+
+	public Integer getComId() {
+		return this.comId;
+	}
+
+	public void setComId(Integer comId) {
+		this.comId = comId;
+	}
+
+	public Integer getEquipserial() {
+		return this.equipserial;
+	}
+
+	public void setEquipserial(Integer equipserial) {
+		this.equipserial = equipserial;
 	}
 
 }

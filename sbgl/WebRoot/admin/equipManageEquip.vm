@@ -212,6 +212,11 @@
 		console.log("modelId" + modelId);
 		console.log("memo" + memo);
 		console.log("administrationid" + cookie.Get("id"));
+		
+		if(detailNum == "") {
+			alert("设备号不能为空!");
+			return;
+		}
 		var postData = {
 			"equipmentdetail.administrationid": cookie.Get("id"),
 			"equipmentdetail.equipserial": detailNum,

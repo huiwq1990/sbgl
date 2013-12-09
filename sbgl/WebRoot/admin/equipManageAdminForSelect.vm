@@ -1,6 +1,7 @@
 <label for="modifyEquipModelId" class="col-xs-3 control-label">所属设备型号</label>
   <div class="col-xs-7">
     <select class="select2 select-white form-control" id="modifyEquipModelId">
+	  <option value="-1">未知型号</option>
 	  #foreach($equip in $equipCourse)
 	    #if($!equip.showClass == '1')
 		  <optgroup label="$!equip.cName">

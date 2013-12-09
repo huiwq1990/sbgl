@@ -1,6 +1,6 @@
 package com.sbgl.app.entity;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * Equipmentclassification entity. @author MyEclipse Persistence Tools
@@ -14,9 +14,11 @@ public class Equipmentclassification extends com.sbgl.app.dao.DaoAbs implements
 	private Integer classificationid;
 	private Integer parentid;
 	private String name;
-	private Date maketime;
-	private Date modifytime;
+	private Timestamp maketime;
+	private Timestamp modifytime;
 	private Integer userid;
+	private String lanType;
+	private Integer comId;
 
 	// Constructors
 
@@ -31,14 +33,16 @@ public class Equipmentclassification extends com.sbgl.app.dao.DaoAbs implements
 
 	/** full constructor */
 	public Equipmentclassification(Integer classificationid, Integer parentid,
-			String name, Date maketime, Date modifytime,
-			Integer userid) {
+			String name, Timestamp maketime, Timestamp modifytime,
+			Integer userid, String lanType, Integer comId) {
 		this.classificationid = classificationid;
 		this.parentid = parentid;
 		this.name = name;
 		this.maketime = maketime;
 		this.modifytime = modifytime;
 		this.userid = userid;
+		this.lanType = lanType;
+		this.comId = comId;
 	}
 
 	// Property accessors
@@ -67,19 +71,19 @@ public class Equipmentclassification extends com.sbgl.app.dao.DaoAbs implements
 		this.name = name;
 	}
 
-	public Date getMaketime() {
+	public Timestamp getMaketime() {
 		return this.maketime;
 	}
 
-	public void setMaketime(Date maketime) {
+	public void setMaketime(Timestamp maketime) {
 		this.maketime = maketime;
 	}
 
-	public Date getModifytime() {
+	public Timestamp getModifytime() {
 		return this.modifytime;
 	}
 
-	public void setModifytime(Date modifytime) {
+	public void setModifytime(Timestamp modifytime) {
 		this.modifytime = modifytime;
 	}
 
@@ -89,6 +93,22 @@ public class Equipmentclassification extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setUserid(Integer userid) {
 		this.userid = userid;
+	}
+
+	public String getLanType() {
+		return this.lanType;
+	}
+
+	public void setLanType(String lanType) {
+		this.lanType = lanType;
+	}
+
+	public Integer getComId() {
+		return this.comId;
+	}
+
+	public void setComId(Integer comId) {
+		this.comId = comId;
 	}
 
 }

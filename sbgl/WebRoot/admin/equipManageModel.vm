@@ -444,7 +444,7 @@
 			}
 			
 			if(ename == modelNameForAlter && modelCIdForAlter == cidInput && modelMemoForAlter == memo && localFileName == "" && modelBrandIdForAlter == brandId) {
-    			alert("并未做修改！");
+    			alert("并未做修改或等待图片上传完毕！");
 				return;
     		} else {
 				postData = {
