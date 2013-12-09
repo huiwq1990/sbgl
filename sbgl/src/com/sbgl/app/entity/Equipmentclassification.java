@@ -1,6 +1,7 @@
 package com.sbgl.app.entity;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Equipmentclassification entity. @author MyEclipse Persistence Tools
@@ -14,8 +15,8 @@ public class Equipmentclassification extends com.sbgl.app.dao.DaoAbs implements
 	private Integer classificationid;
 	private Integer parentid;
 	private String name;
-	private Timestamp maketime;
-	private Timestamp modifytime;
+	private Date maketime;
+	private Date modifytime;
 	private Integer userid;
 	private String lanType;
 	private Integer comId;
@@ -71,19 +72,19 @@ public class Equipmentclassification extends com.sbgl.app.dao.DaoAbs implements
 		this.name = name;
 	}
 
-	public Timestamp getMaketime() {
+	public Date getMaketime() {
 		return this.maketime;
 	}
 
-	public void setMaketime(Timestamp maketime) {
+	public void setMaketime(Date maketime) {
 		this.maketime = maketime;
 	}
 
-	public Timestamp getModifytime() {
+	public Date getModifytime() {
 		return this.modifytime;
 	}
 
-	public void setModifytime(Timestamp modifytime) {
+	public void setModifytime(Date modifytime) {
 		this.modifytime = modifytime;
 	}
 

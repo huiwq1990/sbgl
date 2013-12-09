@@ -124,7 +124,7 @@
 				  #foreach($clazz in $allClassCourse)
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!clazz.id"></td>
-                    <td>$!clazz.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button" action-type="modifyClass" data-id="$!clazz.id" data-pId="$!clazz.pId" data-name="$!clazz.name" data-pName="$!clazz.pName">修改</a></td>
+                    <td>$!clazz.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button" action-type="modifyClass" data-id="$!clazz.id" data-pId="$!clazz.pId" data-name="$!clazz.name" data-pName="$!clazz.pName" data-idEN="$!clazz.idEN" data-nameEN="$!clazz.nameEN" data-comId="$!clazz.comId">修改</a></td>
                     <td>$!clazz.pName</td>
                     <td>$!clazz.modelCount</td>
                     <td>$!clazz.equipCount</td>
@@ -171,6 +171,12 @@
           <input type="text" class="form-control" id="inputCategoryName" placeholder="设备类型（如：数字摄影机）">
         </div>
       </div>
+	  <div class="form-group">
+        <label for="inputCategoryName" class="col-xs-3 control-label">英文分类名称</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="inputCategoryNameEN" placeholder="eg: Camera">
+        </div>
+      </div>
       <div class="form-group">
         <label for="inputFaCategoryId" class="col-xs-3 control-label">所属父级分类</label>
         <div class="col-xs-7">
@@ -201,6 +207,12 @@
         <label for="modifyCategoryName" class="col-xs-3 control-label">分类名称</label>
         <div class="col-xs-7">
           <input type="text" class="form-control" id="modifyCategoryName" placeholder="输入新的分类名称">
+        </div>
+      </div>
+	  <div class="form-group">
+        <label for="modifyCategoryName" class="col-xs-3 control-label">英文分类名称</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="modifyCategoryNameEN" placeholder="输入新的分类名称">
         </div>
       </div>
       <div class="form-group">
@@ -243,7 +255,10 @@
 	var currentPageNo = 1;		//当前页码
 	var totalPageNo;			//总页码
 	var alterClassId;    		//修改分类的id
+	var alterClassIdEN;    		//修改英文分类的id
 	var alterClassName;  		//修改分类的name
+	var alterClassNameEN;  		//修改英文分类的name
+	var comId;	        		//联合id
 	var parentId;        		//父分类id
 	var classSum;        		//分类个数
 	var idsForDel = "";  		//用于删除的id串
@@ -279,6 +294,7 @@
 	$("body").on("click", "a[action-type|=clearInput]", function() {
 		$("#inputFaCategoryId").select2("val", 0);
 		$("#inputCategoryName").val("");
+		$("#inputCategoryNameEN").val("");
 	});
 	
 	$("body").on("click", "input[type='checkbox']", function() {
@@ -323,6 +339,7 @@
 	    
 	    if(_this.attr('action-type') == 'addClass') {
 	        var className = $("#inputCategoryName").val();
+	        var classNameEN = $("#inputCategoryNameEN").val();
     		var pId = $("#inputFaCategoryId").val();
     		var userId = cookie.Get("id");
     		
@@ -331,22 +348,28 @@
     				"equipClassforAdd.parentid": pId,
     				"equipClassforAdd.name": className,
     				"equipClassforAdd.userid": userId,
+    				"equipClassforAdd.lanType": "CH",
+    				"equipClassforAddEN.parentid": pId,
+    				"equipClassforAddEN.name": classNameEN,
+    				"equipClassforAddEN.userid": userId,
+    				"equipClassforAddEN.lanType": "EN",
 					"currentPage": currentPageNo
     			}
     			actionUrl = "${webbaseurl}/addClassification.do";
     			
     		} else {
-    			alert("分类名称不能为空！");
+    			alert("中文分类名称不能为空！");
 				return;
     		}
 	    }
 	    
 	    if(_this.attr('action-type') == 'alterClass') {
 	        var newClassName = $("#modifyCategoryName").val() == "" ? alterClassName : $("#modifyCategoryName").val();
+	        var newClassNameEN = $("#modifyCategoryNameEN").val() == "" ? alterClassNameEN : $("#modifyCategoryNameEN").val();
     		var parentClassId = $("#modifyFaCategoryId").val();
     		var userId=cookie.Get("id");
     		
-    		if(alterClassName == newClassName && parentClassId == parentId) {
+    		if(alterClassName == newClassName && parentClassId == parentId && alterClassNameEN == newClassNameEN) {
     			alert("并未做修改！");
 				return;
     		} else {
@@ -354,6 +377,9 @@
         			"equipClassforAltert.name": newClassName,
         			"equipClassforAltert.classificationid": alterClassId,
         			"equipClassforAltert.parentid": parentClassId,
+        			"equipClassforAltertEN.name": newClassNameEN,
+        			"equipClassforAltertEN.classificationid": alterClassIdEN,
+					"equipClassforAltertEN.parentid": parentClassId,
         			"equipClassforAltert.userid": userId,
 					"currentPage": currentPageNo
         		};
@@ -402,8 +428,11 @@
 		var myData = $(this).data();
 		
 		alterClassId = myData.id;
+		alterClassIdEN = myData.iden;
 		alterClassName = myData.name;
+		alterClassNameEN = myData.nameen;
 		parentId = myData.pid;
+		comId = myData.comid;
 		
 		console.log(parentId);
 		
@@ -414,8 +443,10 @@
 		}
 		
 		$("#modifyFaCategoryId").select2("val", myData.pid);
+		$("#modifyFaCategoryIdEN").select2("val", myData.piden);
 		
 		$("#modifyCategoryName").val(myData.name);
+		$("#modifyCategoryNameEN").val(myData.nameen);
 	})
 	
 	$("body").on("click", "a[action-type|=delClass]", function() {

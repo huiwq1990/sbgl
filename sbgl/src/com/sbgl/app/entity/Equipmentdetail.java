@@ -16,8 +16,8 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 	private Integer equipmentid;
 	private String status;
 	private Integer administrationid;
-	private Timestamp makedate;
-	private Timestamp modifydate;
+	private Date makedate;
+	private Date modifydate;
 	private String sysremark;
 	private String usermark;
 	private Date manufactureDate;
@@ -106,19 +106,19 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.administrationid = administrationid;
 	}
 
-	public Timestamp getMakedate() {
+	public Date getMakedate() {
 		return this.makedate;
 	}
 
-	public void setMakedate(Timestamp makedate) {
+	public void setMakedate(Date makedate) {
 		this.makedate = makedate;
 	}
 
-	public Timestamp getModifydate() {
+	public Date getModifydate() {
 		return this.modifydate;
 	}
 
-	public void setModifydate(Timestamp modifydate) {
+	public void setModifydate(Date modifydate) {
 		this.modifydate = modifydate;
 	}
 
