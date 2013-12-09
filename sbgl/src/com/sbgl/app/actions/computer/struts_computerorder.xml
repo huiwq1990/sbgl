@@ -4,7 +4,7 @@
 	 <package name="computerorder" extends="admin">
 
 <!-- 审核订单 -->
-<action name="auditComputerorder" class="ManageComputerorder" method="auditComputerorder">
+<action name="toAuditComputerorderPage" class="ManageComputerorder" method="toAuditComputerorderPage">
         	<result name="success">/computer/computerorderaudit.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
@@ -15,6 +15,12 @@
         	<result name="error">/error.vm</result> 
 </action>
 
+<!-- 用户查看自己的预约 -->
+<action name="toComputerorderIndexPage" class="ManageComputerorder" method="toComputerorderIndexPage">
+        	<result name="success">/computer/computerorderindex.vm</result>
+        
+        	<result name="error">/error.vm</result> 
+        </action>
 
 
 <!-- default entity manage action -->
@@ -232,6 +238,14 @@
 				<param name="root">returnStr</param>
 			</result>
         </action>
+        
+        
+       <action name="auditComputerorderAjax" class="ComputerorderAction" method="auditComputerorderAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        
       
 	</package>
 

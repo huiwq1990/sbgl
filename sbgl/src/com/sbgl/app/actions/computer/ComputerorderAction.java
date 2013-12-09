@@ -49,6 +49,8 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	Page page = new Page();
 	Integer pageNo=1;	
 	
+//	public int auditStatus;//审核结果
+	
 //  manage Computerorder
 	public String manageComputerorder(){
 		log.info(logprefix+"manageComputerorderFull");
@@ -308,6 +310,39 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	}
 	
 	
+	//审核表单，修改表单状态
+	public String auditComputerorderAjax(){
+		log.info(logprefix + "auditComputerorderAjax,id="+computerorder.getId());
+		ReturnJson returnJson = new ReturnJson();
+		try {
+			if(computerorder.getId() != null && computerorder.getId() > 0){				
+				Computerorder tempComputerorder = computerorderService.selectComputerorderById(computerorder.getId());
+//              修改状态				
+  				tempComputerorder.setStatus(computerorder.getStatus());
+			
+				computerorderService.updateComputerorder(tempComputerorder);		
+				returnJson.setFlag(1);		
+				returnJson.setReason("审核完成");
+				JSONObject jo = JSONObject.fromObject(returnJson);
+				this.returnStr = jo.toString();
+				return SUCCESS;
+				
+			}else{
+				actionMsg = getText("viewComputerorderFail");
+				log.info(logprefix + "updateComputerorderAjax fail");
+			}			
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			log.error("类ComputerorderAction的方法：viewComputerorder错误"+e);
+		}
+
+			returnJson.setFlag(0);		
+			JSONObject jo = JSONObject.fromObject(returnJson);
+			this.returnStr = jo.toString();
+			return SUCCESS;
+	}
+	
 	/**
 	
 	编辑实体 action的方法，首先获取entity的信息，返回到编辑页面
@@ -515,6 +550,10 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 		}
 		return SUCCESS;
 	}
+	
+	
+	
+	
 
 
 
