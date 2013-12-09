@@ -16,10 +16,10 @@
         <property name="name" type="java.lang.String">
             <column name="name" length="200" />
         </property>
-        <property name="maketime" type="java.sql.Timestamp">
+        <property name="maketime" type="java.util.Date">
             <column name="maketime" length="19" />
         </property>
-        <property name="modifytime" type="java.sql.Timestamp">
+        <property name="modifytime" type="java.util.Date">
             <column name="modifytime" length="19" />
         </property>
         <property name="userid" type="java.lang.Integer">

@@ -69,27 +69,51 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	 * 添加分类信息
 	 */
 	private Equipmentclassification equipClassforAdd;
+	private Equipmentclassification equipClassforAddEN;
 	public Equipmentclassification getEquipClassforAdd() {
 		return equipClassforAdd;
 	}
 	public void setEquipClassforAdd(Equipmentclassification equipClassforAdd) {
 		this.equipClassforAdd = equipClassforAdd;
 	}
+	public Equipmentclassification getEquipClassforAddEN() {
+		return equipClassforAddEN;
+	}
+	public void setEquipClassforAddEN(Equipmentclassification equipClassforAddEN) {
+		this.equipClassforAddEN = equipClassforAddEN;
+	}
 
 	public String addEquipmentclassification() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		Boolean isExist = equipService.isExistThisClassification( equipClassforAdd.getName() );
-		if( !isExist ) {
+		Boolean isExistEN = equipService.isExistThisClassification( equipClassforAddEN.getName() );
+		if( !isExist && !isExistEN ) {
+			int comId = equipService.getClassificationComId();
+			equipClassforAdd.setComId( comId );
+			equipClassforAddEN.setComId( comId );
+			
 			long returnCode = equipService.addEquipmentclassification( equipClassforAdd );
-			if( returnCode != -1 ) {
-				this.tag = "0";
-				this.message = "分类保存成功！";
-				gotoEquipManageClassfiction();  //获取最新一集分类信息返回页面
-			} else {
+			long returnCodeEN = equipService.addEquipmentclassification( equipClassforAddEN );
+			if( returnCode != -1 && returnCodeEN == -1 ) {
+				equipService.deleteEquipmentclassification( (int)returnCode );
+				this.tag = "1";
+				this.message = "中文分类保存失败！";
+				log.error("################ 保存英文器材分类失败！ ################");
+				//gotoEquipManageClassfiction();  //获取最新一集分类信息返回页面
+			} else if( returnCode == -1 && returnCodeEN != -1 ) {
+				equipService.deleteEquipmentclassification( (int)returnCodeEN );
+				this.tag = "1";
+				this.message = "英文分类保存失败！";
+				log.error("################ 保存英文器材分类失败！ ################");
+			} else if( returnCode == -1 && returnCodeEN == -1 ) {
 				this.tag = "1";
 				this.message = "分类保存失败！";
 				log.error("################ 保存器材分类失败！ ################");
+			} else if( returnCode != -1 && returnCodeEN != -1 ) {
+				gotoEquipManageClassfiction();  //获取最新一集分类信息返回页面
+				this.tag = "0";
+				this.message = "分类保存成功！";
 			}
 		} else {
 			this.tag = "100";
@@ -107,18 +131,27 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	 * 使用添加分类的参数 equipmentclassification 作为传入变量
 	 */
 	private Equipmentclassification equipClassforAltert;
+	private Equipmentclassification equipClassforAltertEN;
 	public Equipmentclassification getEquipClassforAltert() {
 		return equipClassforAltert;
 	}
 	public void setEquipClassforAltert(Equipmentclassification equipClassforAltert) {
 		this.equipClassforAltert = equipClassforAltert;
 	}
+	public Equipmentclassification getEquipClassforAltertEN() {
+		return equipClassforAltertEN;
+	}
+	public void setEquipClassforAltertEN(
+			Equipmentclassification equipClassforAltertEN) {
+		this.equipClassforAltertEN = equipClassforAltertEN;
+	}
 
 	public String alterEquipmentclassification() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		long returnCode = equipService.alterEquipmentclassification( equipClassforAltert );
-		if( returnCode != -1) {
+		long returnCodeEN = equipService.alterEquipmentclassification( equipClassforAltertEN );
+		if( returnCode != -1 && returnCodeEN != -1) {
 			this.tag = "0";
 			gotoEquipManageClassfiction();  //获取最新一集分类信息返回页面
 			this.message = "分类修改成功！";
@@ -1193,9 +1226,9 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		List<Equipmentclassification> equipList =  equipService.getAllEquipmentclassifications();
 		
 		if(equipList != null) {
-			classSum = String.valueOf( equipList.size() );
+			classSum = String.valueOf( equipList.size() / 2 );
 			if(equipList == null || equipList.size() == 0) {
-				classSum = "1";
+				totalPage = "1";
 			} else if(equipList.size() % 10 != 0 && equipList.size() > 10) {
 				totalPage = String.valueOf( equipList.size() / 10 + 1 );
 			} else if(equipList.size() % 10 != 0 && equipList.size() < 10) {
@@ -1207,35 +1240,68 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				currentPage = "1";
 			}
 			for (Equipmentclassification equipmentclassification : equipList) {
-				String name = equipmentclassification.getName();
-				Integer parentId = equipmentclassification.getParentid();
-				if( parentId == 0 ) {
-					idNameMap.put(equipmentclassification.getClassificationid(), name);
+				if( "CH".equals( equipmentclassification.getLanType() ) ) {
+					String name = equipmentclassification.getName();
+					Integer parentId = equipmentclassification.getParentid();
+					if( parentId == 0 ) {
+						idNameMap.put(equipmentclassification.getClassificationid(), name);
+					}
 				}
 			}
+			List<ClassficationCourse> tempCourse = new ArrayList<ClassficationCourse>();
 			for (Equipmentclassification classfication : equipList) {
-				ClassficationCourse cc = new ClassficationCourse();
-				cc.setId( String.valueOf( classfication.getClassificationid() ) );
-				cc.setName( classfication.getName() );
-				if( classfication.getParentid() == 0 ) {
-					cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification(classfication.getClassificationid(), true ) ) );
-					cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification(classfication.getClassificationid(), true ) ) );
-				} else {
-					cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification(classfication.getClassificationid(), false ) ) );
-					cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification(classfication.getClassificationid(), false ) ) );
+				if( "CH".equals( classfication.getLanType() ) ) {
+					ClassficationCourse cc = new ClassficationCourse();
+					cc.setId( String.valueOf( classfication.getClassificationid() ) );
+					cc.setName( classfication.getName() );
+					if( classfication.getParentid() == 0 ) {
+						cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification( classfication.getClassificationid(), true ) ) );
+						cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification( classfication.getClassificationid(), true ) ) );
+					} else {
+						cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification( classfication.getClassificationid(), false ) ) );
+						cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification( classfication.getClassificationid(), false ) ) );
+					}
+					cc.setpId( String.valueOf( classfication.getParentid() ) );
+					cc.setpName( idNameMap.get( classfication.getParentid() ) == null ? "无" : idNameMap.get( classfication.getParentid() ) );
+					cc.setComId( String.valueOf( classfication.getComId() ) );
+					tempCourse.add( cc );
+					
+					if(classfication.getParentid() == 0) {
+						allParent.add( new ParentClassIdName( classfication.getClassificationid(), classfication.getName() ) );
+					}
 				}
-				cc.setpId( String.valueOf( classfication.getParentid() ) );
-				cc.setpName( idNameMap.get( classfication.getParentid() ) == null ? "无" : idNameMap.get( classfication.getParentid() ) );
-				allClassCourse.add( cc );
-				
-				if(classfication.getParentid() == 0) {
-					allParent.add( new ParentClassIdName( classfication.getClassificationid(), classfication.getName() ) );
+			}
+			List<ClassficationCourse> tempCourseEN = new ArrayList<ClassficationCourse>();
+			for (Equipmentclassification classfication : equipList) {
+				if( "EN".equals( classfication.getLanType() ) ) {
+					ClassficationCourse cc = new ClassficationCourse();
+					cc.setIdEN( String.valueOf( classfication.getClassificationid() ) );
+					cc.setNameEN( classfication.getName() );
+					cc.setComId( String.valueOf( classfication.getComId() ) );
+					tempCourseEN.add( cc );
+				}
+			}
+			for (ClassficationCourse c1 : tempCourse) {
+				for (ClassficationCourse c2 : tempCourseEN) {
+					if( c1.getComId().equals(c2.getComId()) ) {
+						ClassficationCourse cc = new ClassficationCourse();
+						cc.setComId( c1.getComId() );
+						cc.setEquipCount( c1.getEquipCount() );
+						cc.setId( c1.getId() );
+						cc.setIdEN( c2.getIdEN() );
+						cc.setModelCount( c1.getModelCount() );
+						cc.setName( c1.getName() );
+						cc.setNameEN( c2.getNameEN() );
+						cc.setpId( c1.getpId() );
+						cc.setpName( c1.getpName() );
+						allClassCourse.add( cc );
+					}
 				}
 			}
 			//根据前台页面请求页码返回数据
 			if(currentPage != null && currentPage != "") {
 				int startIndex = Integer.valueOf( currentPage.trim() ) - 1;
-				int endIndex = (startIndex + 1) * 10 > equipList.size() ? equipList.size() : (startIndex + 1) * 10;
+				int endIndex = (startIndex + 1) * 10 > equipList.size()/2 ? equipList.size()/2 : (startIndex + 1) * 10;
 				allClassCourse = allClassCourse.subList(startIndex*10, endIndex);
 			}
 			

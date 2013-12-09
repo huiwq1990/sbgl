@@ -78,6 +78,8 @@ public interface EquipService {
 	public QueryResult getgetEquipmentclassificationByPageWithOptions(List<HQLOption> hqlOptionList, Page page);
 	//查询该分类名称是否已经存在
 	public Boolean isExistThisClassification(String classificationName);
+	//获取联合主键
+	public Integer getClassificationComId();
 	
 	//添加品类信息
 	public Integer addCategory(Category category);
