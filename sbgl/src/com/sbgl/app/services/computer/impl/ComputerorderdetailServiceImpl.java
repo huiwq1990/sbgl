@@ -1,12 +1,14 @@
 package com.sbgl.app.services.computer.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
+import com.sbgl.app.actions.computer.ComputerConfig;
 import com.sbgl.app.dao.ComputerorderdetailDao;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.util.*;
@@ -195,5 +197,33 @@ public class ComputerorderdetailServiceImpl implements ComputerorderdetailServic
 	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerId(Integer computerid ) {
 		return computerorderdetailDao.selectComputerorderdetailFullByComputerId(computerid );
 	}
+	
+	
+	
+	  /**
+     * 取出所有的预约单，预约时间大于currentDay
+     * 并且 小于预约期限
+     * @param day
+     * @param period
+     * @return
+     * select * from computerorderdetail where ((borrowday = "2013-10-02 00:00:00" and borrowperiod >=1) or (borrowday > "2013-10-02 00:00:00"))
+
+     */
+    @Override
+    public List<Computerorderdetail> selectComputerorderdetailAfterNow(String currentDay,int currentPeriod){
+
+            int computerorderTotalOrderDay = ComputerConfig.computerorderTotalOrderDay;
+            int computerorderTotalOrderPeriod = ComputerConfig.computerorderTotalOrderPeriod;
+            Date curDate = DateUtil.parseDate(currentDay);
+            Date endDate = DateUtil.addDay(curDate, computerorderTotalOrderDay);
+            String endate = DateUtil.dateFormat(endDate,DateUtil.dateformatstr1);
+            String cond = "where ((borrowday = '" + currentDay+"' and borrowperiod >="+currentPeriod+") or (borrowday > '" + currentDay+"'))";
+            cond += "and ((borrowday < '" + endate+"') and (borrowperiod >="+computerorderTotalOrderPeriod+") )";
+//            cond = " ";
+    System.out.println(cond);
+            return computerorderdetailDao.selectComputerorderdetailByCondition(cond);
+
+    }
+    
 
 }

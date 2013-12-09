@@ -7,7 +7,7 @@ public class PeriodUtil {
 		
 		for(int i=0; i<workTime.length;i++){
 			if(hour < workTime[i][0] || (hour == workTime[i][0] && min < workTime[i][1])){
-				return i;
+				return i+1;
 			}
 		}
 		return 0;

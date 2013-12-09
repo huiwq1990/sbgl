@@ -59,6 +59,14 @@ public interface ComputermodelService{
 
 	int deleteComputermodelByTyp(Integer computermodeltype);
 
+	List<Computermodel> selectComputermodelByCondition(String conditionSql);
+
+	List<ComputermodelFull> selectComputermodelFullByConditionAndPage(
+			String conditionSql, Page page);
+
+	List<ComputermodelFull> selectComputermodelFullByCondition(
+			String conditionSql);
+
 	
 		
 	

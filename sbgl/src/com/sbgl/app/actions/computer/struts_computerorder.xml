@@ -3,10 +3,17 @@
 <struts>
 	 <package name="computerorder" extends="admin">
 
-<action name="auditComputerorderdetail" class="ComputerorderdetailauditAction" method="auditComputerorderdetail">
-        	<result name="success">/computer/computerorderdetailaudit.vm</result>
+<!-- 审核订单 -->
+<action name="auditComputerorder" class="ManageComputerorder" method="auditComputerorder">
+        	<result name="success">/computer/computerorderaudit.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
+        
+<!-- 转向下单页面 -->
+<action name="toOderComputerPage" class="OrderComputerAction" method="toOderComputerPage">
+        	<result name="success">/computer/ordercomputer.vm</result>
+        	<result name="error">/error.vm</result> 
+</action>
 
 
 

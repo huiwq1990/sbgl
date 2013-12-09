@@ -14,6 +14,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 
 
+import com.sbgl.app.actions.computer.ComputerConfig;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
@@ -23,7 +24,7 @@ import com.sbgl.app.services.common.*;
 public class ComputerorderdetailSpringTest {
 
 	public static void main(String[] args) {
-		intTable();
+//		intTable();
 //iniDouble();
 //		addComputerorderdetail();
 //		selectComputerorderdetailAll();
@@ -33,6 +34,8 @@ public class ComputerorderdetailSpringTest {
 //		selectComputerorderdetailById(1L);
 //		selectComputerorderdetailFullById(1L);
 //      selectComputerorderdetailFullAll();
+		
+		auditComputeroder();
 
 	}
 	
@@ -269,6 +272,27 @@ public class ComputerorderdetailSpringTest {
 		}
 	}
 
+
+	
+	public static void auditComputeroder(){
+		
+		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
+		
+		ComputerorderdetailService computerorderdetailService = (ComputerorderdetailService)cxt.getBean("computerorderdetailService");
+		
+		String computerorderId = "1";
+		String sql = " where a.computerorderid = "+computerorderId  + " and c.languagetype="+ComputerConfig.languagech ;
+		List<ComputerorderdetailFull> computerorderdetailFullList = computerorderdetailService.selectComputerorderdetailFullByCondition(sql);
+		
+		if(computerorderdetailFullList == null){
+			System.out.println("objList is null");
+			return;
+		}
+		for(int i = 0; i < computerorderdetailFullList.size(); i++){
+			System.out.println("id="+computerorderdetailFullList.get(i).getComputerorderdetailid() + "  " +computerorderdetailFullList.get(i).getComputermodelname() );
+		}
+	}
+	
 //	分页查询	
 		public static void selectComputerorderdetailByPage(){
 		
