@@ -75,25 +75,31 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 	@Resource
 	private ComputerorderService computerorderService;
 
-
-
-
-
 	List<ComputerorderFull> computerorderFullList = new ArrayList<ComputerorderFull>();
 
 	private String logprefix = "exec method";
 	
 	
 	int currentPeriod ;
-	int computerorderTotalOrderDay ;
+//	int computerorderTotalOrderDay ;
+	int computeroderadvanceorderday;
+	int computerodertablercolumn;
 	List<Borrowperiod> borrowperiodList   = new ArrayList<Borrowperiod>();
 	HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> availableBorrowModelMap = new HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> ();
 	
 	List<Borrowperiod> showtimeList   = new ArrayList<Borrowperiod>();
 	
+	
+
 	public String toOderComputerPage(){
+		String currentlanguagetype = "0";
+		String getAllComputermodelFullTypeSql = " where a.languagetype="+currentlanguagetype+" ";
+//		String conditionSql = " where ";
+		computermodelFullList = computermodelService.selectComputermodelFullByCondition(getAllComputermodelFullTypeSql );
 		
 		calculate();
+		
+		
 		
 		System.out.println(borrowperiodList.size());
 		return SUCCESS;
@@ -107,7 +113,13 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 //		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
 //		ComputermodelService computermodelService = (ComputermodelService)cxt.getBean("computermodelService");
 //		
-		 computerorderTotalOrderDay = ComputerConfig.computerorderTotalOrderDay;
+		computeroderadvanceorderday = ComputerConfig.computeroderadvanceorderday;
+		computerodertablercolumn = ComputerConfig.computerodertablercolumn;
+		if(computeroderadvanceorderday%computerodertablercolumn !=0){
+			computeroderadvanceorderday = (computeroderadvanceorderday/computerodertablercolumn + 1) * computerodertablercolumn ;
+			
+		}
+		System.out.println("computeroderadvanceorderday "+computeroderadvanceorderday);
 //		int computerorderTotalOrderPeriod = ComputerConfig.computerorderTotalOrderPeriod;
 		
 //			设置当前时间
@@ -146,7 +158,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 				dayInfo.add(todaynum);
 				
 				
-				for(int tempday=1; tempday < computerorderTotalOrderDay; tempday++){	
+				for(int tempday=1; tempday < computeroderadvanceorderday; tempday++){	
 					
 //					int num = 0;
 //					//对于今天过去的时间段处理
@@ -170,7 +182,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 			for(int tempperiod=0; tempperiod < borrowperiodList.size(); tempperiod++){
 				Borrowperiod tempBorrowperiod = borrowperiodList.get(tempperiod);
 				System.out.println(tempBorrowperiod.getPeroidname());
-				for(int tempday=0; tempday < computerorderTotalOrderDay; tempday++){				
+				for(int tempday=0; tempday < computeroderadvanceorderday; tempday++){				
 					
 					System.out.print(availableBorrowModelMap.get(tempmodel.getComputermodeltype()).get(tempBorrowperiod.getId()).get(tempday)+"  ");
 				}	
@@ -215,7 +227,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 			Computermodel tempmodel =  computermodelList.get(tempmodelindex);
 			for(int tempperiod=0; tempperiod < borrowperiodList.size(); tempperiod++){
 				Borrowperiod tempBorrowperiod = borrowperiodList.get(tempperiod);
-				for(int tempday=0; tempday < computerorderTotalOrderDay; tempday++){				
+				for(int tempday=0; tempday < computeroderadvanceorderday; tempday++){				
 					
 					System.out.print(availableBorrowModelMap.get(tempmodel.getComputermodeltype()).get(tempBorrowperiod.getId()).get(tempday)+"  ");
 				}	
@@ -487,14 +499,42 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 
 
 
-	public int getComputerorderTotalOrderDay() {
-		return computerorderTotalOrderDay;
+
+
+
+
+	public int getCurrentPeriod() {
+		return currentPeriod;
 	}
 
 
 
-	public void setComputerorderTotalOrderDay(int computerorderTotalOrderDay) {
-		this.computerorderTotalOrderDay = computerorderTotalOrderDay;
+	public void setCurrentPeriod(int currentPeriod) {
+		this.currentPeriod = currentPeriod;
+	}
+
+
+
+	public int getComputeroderadvanceorderday() {
+		return computeroderadvanceorderday;
+	}
+
+
+
+	public void setComputeroderadvanceorderday(int computeroderadvanceorderday) {
+		this.computeroderadvanceorderday = computeroderadvanceorderday;
+	}
+
+
+
+	public int getComputerodertablercolumn() {
+		return computerodertablercolumn;
+	}
+
+
+
+	public void setComputerodertablercolumn(int computerodertablercolumn) {
+		this.computerodertablercolumn = computerodertablercolumn;
 	}
 
 
