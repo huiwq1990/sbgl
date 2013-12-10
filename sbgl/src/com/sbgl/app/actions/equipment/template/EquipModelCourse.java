@@ -2,13 +2,17 @@ package com.sbgl.app.actions.equipment.template;
 
 public class EquipModelCourse {
 	private String id;
+	private String idEN;
 	private String name;
+	private String nameEN;
 	private String cId;
 	private String cName;
 	private String branId;
 	private String memo;
+	private String memoEN;
 	private String showClass;
 	private String imgName;
+	private String comId;
 	
 	public String getId() {
 		return id;
@@ -57,6 +61,30 @@ public class EquipModelCourse {
 	}
 	public void setBranId(String branId) {
 		this.branId = branId;
+	}
+	public String getIdEN() {
+		return idEN;
+	}
+	public void setIdEN(String idEN) {
+		this.idEN = idEN;
+	}
+	public String getNameEN() {
+		return nameEN;
+	}
+	public void setNameEN(String nameEN) {
+		this.nameEN = nameEN;
+	}
+	public String getMemoEN() {
+		return memoEN;
+	}
+	public void setMemoEN(String memoEN) {
+		this.memoEN = memoEN;
+	}
+	public String getComId() {
+		return comId;
+	}
+	public void setComId(String comId) {
+		this.comId = comId;
 	}
 	
 	

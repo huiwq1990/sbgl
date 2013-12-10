@@ -88,8 +88,11 @@ public class EquipServiceImpl implements EquipService {
 		// TODO Auto-generated method stub
 		boolean flag = false;
 		Equipment storeEquip = baseDao.getEntityById(Equipment.class, equipId);
+		List<Equipment> needToDeleteList =  baseDao.getEntityByProperty(Equipment.class.getName(), "comId", String.valueOf( storeEquip.getComId() ));
 		try {
-			baseDao.deleteEntity( storeEquip );
+			for (Equipment e : needToDeleteList) {
+				baseDao.deleteEntity( e );
+			}
 			flag = true;
 		} catch (RuntimeException re) {
 			flag = false;
@@ -675,5 +678,20 @@ public class EquipServiceImpl implements EquipService {
 	@Override
 	public Integer getClassificationComId() {
 		return baseDao.getCode( "equipClassificationComId" );
+	}
+
+	@Override
+	public List<Equipmentclassification> getAllCHEquipmentclassifications() {
+		return baseDao.getEntityByProperty(Equipmentclassification.class.getName(), "lanType", "CH");
+	}
+
+	@Override
+	public boolean isExistEquipment(String EquipName) {
+		return baseDao.isExist(Equipment.class, "equipmentname", EquipName);
+	}
+
+	@Override
+	public Integer getEquipmentComId() {
+		return baseDao.getCode( "equipComId" );
 	}
 }

@@ -36,7 +36,11 @@ public interface EquipService {
 	public List<Equipment> getEquipsByClassification(Integer equipmentclassificationId);
 	//按条件查询并以分页方式查询
 	public QueryResult getEquipmentByPageWithOptions(List<HQLOption> hqlOptionList, Page page);
-		
+	//查询该型号是否已经存在
+	public boolean isExistEquipment(String EquipName);
+	//获取联合主键
+	public Integer getEquipmentComId();
+	
 	//查询器材详情记录总数
 	public int getCountOfEquipmentdetail();
 	//添加器材详情
@@ -66,6 +70,8 @@ public interface EquipService {
 	public Equipmentclassification getEquipmentclassificationById(Integer equipmentclassificationId);
 	//查询全部器材分类
 	public List<Equipmentclassification> getAllEquipmentclassifications();
+	//查询全部中文名称的器材分类
+	public List<Equipmentclassification> getAllCHEquipmentclassifications();
 	//查询某一一级分类下的所有二级器材分类
 	public List<Equipmentclassification> getAllChildEquipmentclassificationsByParentId(Integer equipmentclassificationId);
 	//查询分类下器材模型的数量
