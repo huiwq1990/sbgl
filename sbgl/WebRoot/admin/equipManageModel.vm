@@ -86,6 +86,7 @@
               <div class="filter category-filter">
                 <select id="select-categories" style="width:130px" class="select2">
                   <option value="0" data-foo="fa">全部分类</option>
+                  <option value="-1" data-foo="fa">未分类</option>
                   #foreach($clazz in $classForEquipAdd)
     				#if($!clazz.isParent == '1')
     					<optgroup label="$!clazz.name">
@@ -447,6 +448,7 @@
 			}
 			
 			if(modelName != "") {
+				//console.log("**********" + modelName);
     			postData = {
         			"equipment.administrationid": cookie.Get("id"),
         			"equipment.equipmentname": modelName,

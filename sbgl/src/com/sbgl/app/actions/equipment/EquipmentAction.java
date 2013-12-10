@@ -390,8 +390,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	public String addEquipInfo() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
-		Boolean isExist = equipService.isExistEquipment(equipment.getEquipmentname() );
-		Boolean isExistEN = equipService.isExistEquipment(equipmentEN.getEquipmentname() );
+		Boolean isExist = equipService.isExistEquipment( equipment.getEquipmentname() );
+		Boolean isExistEN = equipService.isExistEquipment( equipmentEN.getEquipmentname() );
 		
 		if(!isExist && !isExistEN) {
 			int comId = equipService.getEquipmentComId();
