@@ -153,20 +153,20 @@
 	#set($borrowperiodListSize = $borrowperiodList.size() - 1)
 	#if($borrowperiodListSize>=0)
 		#set($borrowperiodListRegion = [0..$borrowperiodListSize])
-		##取出所有的属性名称
+		##所有时间段 上午、中午、晚上 取出所有的属性名称
 		#foreach($tempperiod in $borrowperiodListRegion)
-			
+			#set($tempBorrowperiod = $borrowperiodList.get($tempperiod))##取出某个时间段
 			<tr>
                                         <td class="time-slot">上午</td>
 			
-			#set($tempBorrowperiod = $borrowperiodList.get($tempperiod))		
-			#foreach($tempday in [0..$computerorderTotalOrderDay-1])
-		
+			##对于可以借的每一天		
+			#foreach($tempday in [0..$computerorderTotalOrderDay-1])		
 				#set($availnum = $availableBorrowModelMap.get($tempmodel.computermodeltype).get($tempBorrowperiod.id).get($tempday))
 				#if($availnum ==0)
                        <td></td>
 				#else
-					<td class="bookable"><strong>$availnum </strong><div class="info">可预约</div></td>
+					
+					<td class="bookable" data-index="$tempday" data-slot="$tempperiod" data-max-num="$availnum">可预约</td>
 				#end                 
 					
 			#end ##end day info computerorderTotalOrderDay

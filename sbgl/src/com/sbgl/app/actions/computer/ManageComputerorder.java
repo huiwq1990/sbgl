@@ -8,12 +8,14 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.struts2.interceptor.SessionAware;
+import org.jfree.util.Log;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.entity.ComputermodelFull;
+import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
@@ -26,14 +28,16 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,M
 
 	@Resource
 	private ComputerorderService computerorderService;
+	int computerorderId;//订单的id
+	//获取订单信息
+	ComputerorderFull computerorderFull;
+	List<Computerorder> computerorderList = new ArrayList<Computerorder>();
+	List<ComputerorderFull> computerorderFullList = new ArrayList<ComputerorderFull>();
 	
 	@Resource
 	private ComputerorderdetailService computerorderdetailService;
 	
-	int computerorderId;//订单的id
-	//获取订单信息
 
-	ComputerorderFull computerorderFull;
 	
 	List<Computerorderdetail> computerorderdetailList = new ArrayList<Computerorderdetail>();
 	List<ComputerorderdetailFull> computerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
@@ -43,9 +47,15 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,M
 	 * 审核订单
 	 * @return
 	 */
-	public String auditComputerorder(){
+	public String toAuditComputerorderPage(){
 		
 		computerorderFull = computerorderService.selectComputerorderFullById(computerorderId);
+		//如果找不到相应的预约单，返回错误
+		if(computerorderFull == null){
+//			Log.info("");
+			return "PageNotFound";
+		}
+		
 		String sql = " where a.computerorderid = "+computerorderId  + " and c.languagetype="+ComputerConfig.languagech ;
 		computerorderdetailFullList = computerorderdetailService.selectComputerorderdetailFullByCondition(sql);
 //		System.out.println("computerorderdetailFullList size:"+computerorderdetailFullList.size());
@@ -72,6 +82,22 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,M
 		return SUCCESS;
 	}
 	
+	
+	
+	public String toComputerorderIndexPage(){
+		
+		//根据用户查询预约单
+		int userid = 1;
+		String selordersql = "  where a.userid="+userid;
+		computerorderFullList = computerorderService.selectComputerorderFullByCondition(selordersql);
+		
+//		String sql = " where a.computerorderid = "+computerorderId  + " and c.languagetype="+ComputerConfig.languagech ;
+		if(computerorderFullList==null){
+			computerorderFullList = new ArrayList<ComputerorderFull>();
+		}
+		
+		return SUCCESS;
+	}
 	
 	
 	@Override
@@ -172,6 +198,31 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,M
 	public void setComputerorderdetailFullMapByComputermodelId(
 			HashMap<Integer, ArrayList<ComputerorderdetailFull>> computerorderdetailFullMapByComputermodelId) {
 		this.computerorderdetailFullMapByComputermodelId = computerorderdetailFullMapByComputermodelId;
+	}
+
+
+
+	public List<Computerorder> getComputerorderList() {
+		return computerorderList;
+	}
+
+
+
+	public void setComputerorderList(List<Computerorder> computerorderList) {
+		this.computerorderList = computerorderList;
+	}
+
+
+
+	public List<ComputerorderFull> getComputerorderFullList() {
+		return computerorderFullList;
+	}
+
+
+
+	public void setComputerorderFullList(
+			List<ComputerorderFull> computerorderFullList) {
+		this.computerorderFullList = computerorderFullList;
 	}
 
 	
