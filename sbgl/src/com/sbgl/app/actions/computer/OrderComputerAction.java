@@ -1,6 +1,7 @@
 package com.sbgl.app.actions.computer;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,7 +90,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 	
 	List<Borrowperiod> showtimeList   = new ArrayList<Borrowperiod>();
 	
-	
+	HashMap<Integer,ArrayList<String>> showDateMap = new HashMap<Integer,ArrayList<String>>();
 
 	public String toOderComputerPage(){
 		String currentlanguagetype = "0";
@@ -105,7 +106,20 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 		return SUCCESS;
 	}
 	
-	
+	public void buildShowDate(Date curDate){
+		int weeknum = computeroderadvanceorderday/computerodertablercolumn;
+		for(int i=0; i< weeknum;i++){
+			
+			
+			ArrayList<String> weekStr = new ArrayList<String>();
+			for(int col =0; col <computerodertablercolumn; col++ ){
+				Date date = DateUtil.addDay(curDate, i*computerodertablercolumn + col);
+				String dayStr = DateUtil.dateFormat( date , "MM/dd");
+				weekStr.add(dayStr);
+			}
+			showDateMap.put(i, weekStr);
+		}
+	}
 	
 	public  void calculate() {
 		// TODO Auto-generated method stub
@@ -113,12 +127,15 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 //		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
 //		ComputermodelService computermodelService = (ComputermodelService)cxt.getBean("computermodelService");
 //		
+		//设置提前预约的天数
 		computeroderadvanceorderday = ComputerConfig.computeroderadvanceorderday;
+//		设备预约表格显示的列数，默认是7
 		computerodertablercolumn = ComputerConfig.computerodertablercolumn;
+//		调整预约时间，使时间是7的倍数
 		if(computeroderadvanceorderday%computerodertablercolumn !=0){
-			computeroderadvanceorderday = (computeroderadvanceorderday/computerodertablercolumn + 1) * computerodertablercolumn ;
-			
+			computeroderadvanceorderday = (computeroderadvanceorderday/computerodertablercolumn + 1) * computerodertablercolumn ;			
 		}
+		
 		System.out.println("computeroderadvanceorderday "+computeroderadvanceorderday);
 //		int computerorderTotalOrderPeriod = ComputerConfig.computerorderTotalOrderPeriod;
 		
@@ -127,6 +144,9 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 			 currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(DateUtil.parseDate(currentDay));
 			 System.out.println("currentPeriod: "+currentPeriod);
 		 
+			 
+			 buildShowDate(DateUtil.parseDate(currentDay));	 
+			 
 		//取得所有PC类型的当前库存数量
 		String currentlanguagetype = "0";
 		String getAllComputermodelTypeSql = " where languagetype="+currentlanguagetype+" ";
@@ -246,6 +266,9 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 
 
 
+	
+	
+	
 	public Map<String, Object> getSession() {
 		return session;
 	}
@@ -547,6 +570,14 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 
 	public void setShowtimeList(List<Borrowperiod> showtimeList) {
 		this.showtimeList = showtimeList;
+	}
+
+	public HashMap<Integer, ArrayList<String>> getShowDateMap() {
+		return showDateMap;
+	}
+
+	public void setShowDateMap(HashMap<Integer, ArrayList<String>> showDateMap) {
+		this.showDateMap = showDateMap;
 	}
 	
 	

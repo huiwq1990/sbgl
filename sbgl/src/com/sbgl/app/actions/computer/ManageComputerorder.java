@@ -48,11 +48,12 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,M
 	 * @return
 	 */
 	public String toAuditComputerorderPage(){
-		
+		System.out.println("toAuditComputerorderPage "+ computerorderId);
 		computerorderFull = computerorderService.selectComputerorderFullById(computerorderId);
 		//如果找不到相应的预约单，返回错误
 		if(computerorderFull == null){
 //			Log.info("");
+			System.out.println("wrong");
 			return "PageNotFound";
 		}
 		
