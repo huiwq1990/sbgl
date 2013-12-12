@@ -57,6 +57,10 @@ public interface EquipService {
 	public List<Equipmentdetail> getAllEquipmentdetail();
 	//根据条件进行分页查询
 	public QueryResult getEquipDetailByPageWithOptions(List<HQLOption> hqlOptionList, Page page); 
+	//查询是否该器材已经存在
+	public boolean isExistEquipDetial(int assetNumber);
+	//获取联合主键
+	public Integer getEquipDetailComId();
 	
 	//查询器材分类总数
 	public int getCountOfEquipmentclassfication();

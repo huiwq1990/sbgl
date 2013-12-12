@@ -230,6 +230,17 @@ public class EquipServiceImpl implements EquipService {
 		Integer oldEquipid = new Integer( storeEquipmentdetail.getEquipmentid() );
 		
 		storeEquipmentdetail.setEquipserial( equipmentdetail.getEquipserial() );
+		storeEquipmentdetail.setAcquireDate( equipmentdetail.getAcquireDate() );
+		storeEquipmentdetail.setWorth( equipmentdetail.getWorth() );
+		storeEquipmentdetail.setAssetNumber( equipmentdetail.getAssetNumber() );
+		storeEquipmentdetail.setUseManageDept( equipmentdetail.getUseManageDept() );
+		storeEquipmentdetail.setManager( equipmentdetail.getManager() );
+		storeEquipmentdetail.setManufactureDate( equipmentdetail.getManufactureDate() );
+		storeEquipmentdetail.setManufacturer( equipmentdetail.getManufacturer() );
+		storeEquipmentdetail.setStoragePlace( equipmentdetail.getStoragePlace() );
+		storeEquipmentdetail.setStoragePosition( equipmentdetail.getStoragePosition() );
+		storeEquipmentdetail.setStorenumber( equipmentdetail.getStorenumber() );
+		storeEquipmentdetail.setSupplyer( equipmentdetail.getSupplyer() );
 		storeEquipmentdetail.setEquipmentid( equipmentdetail.getEquipmentid() );
 		storeEquipmentdetail.setStatus( equipmentdetail.getStatus() );
 		storeEquipmentdetail.setAdministrationid( equipmentdetail.getAdministrationid() );
@@ -272,7 +283,7 @@ public class EquipServiceImpl implements EquipService {
 		} else if( oldEquipid != -1 && equipmentdetail.getEquipmentid() != -1 && 
 				   oldEquipid != equipmentdetail.getEquipmentid() ) {  //型号不相同
 			e = this.getEquipmentById( equipmentdetail.getEquipmentid() );
-			e.setEquipmentnum( e.getEquipmentnum() + 1 );
+			e.setEquipmentnum( e.getEquipmentnum()==null ? 0 : e.getEquipmentnum() + 1 );
 			if( "0".equals( equipmentdetail.getStatus() ) || "1".equals( equipmentdetail.getStatus() ) ) {  //细分器材状态数量
 				e.setActivenum( e.getActivenum()==null ? 0 : e.getActivenum() + 1 );
 			} else if( "2".equals( equipmentdetail.getStatus() ) ) {
@@ -694,4 +705,16 @@ public class EquipServiceImpl implements EquipService {
 	public Integer getEquipmentComId() {
 		return baseDao.getCode( "equipComId" );
 	}
+
+	@Override
+	public boolean isExistEquipDetial(int assetNumber) {
+		return baseDao.isExist(Equipmentdetail.class, "assetNumber", String.valueOf(assetNumber));
+	}
+
+	@Override
+	public Integer getEquipDetailComId() {
+		return baseDao.getCode( "equipDetailComId" );
+	}
+	
+	
 }

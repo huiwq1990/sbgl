@@ -34,8 +34,8 @@
         </ul>
         <div class="pagination pull-right">
           <ul>
-            <li><a href="#" rel="tooltip" action-type="backPage" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-            <li><a href="#" rel="tooltip" action-type="nextPage" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+            <li><a href="#" rel="tooltip" action-type="backPage" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-left"></i></a></li>
+            <li><a href="#" rel="tooltip" action-type="nextPage" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-right"></i></a></li>
           </ul>
         </div>              
       </div>

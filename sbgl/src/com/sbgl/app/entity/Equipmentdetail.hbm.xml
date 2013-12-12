@@ -46,8 +46,8 @@
         <property name="worth" type="java.lang.Float">
             <column name="worth" precision="12" scale="0" />
         </property>
-        <property name="manageDept" type="java.lang.String">
-            <column name="manageDept" length="100" />
+        <property name="useManageDept" type="java.lang.String">
+            <column name="useManageDept" length="100" />
         </property>
         <property name="manager" type="java.lang.String">
             <column name="manager" length="20" />
@@ -55,14 +55,23 @@
         <property name="storagePlace" type="java.lang.String">
             <column name="storagePlace" length="200" />
         </property>
+        <property name="storagePosition" type="java.lang.String">
+            <column name="storagePosition" length="200" />
+        </property>
         <property name="lanType" type="java.lang.String">
             <column name="lanType" length="2" />
         </property>
         <property name="comId" type="java.lang.Integer">
             <column name="comId" />
         </property>
-        <property name="equipserial" type="java.lang.Integer">
-            <column name="equipserial" />
+        <property name="storenumber" type="java.lang.Integer">
+            <column name="storenumber" />
+        </property>
+        <property name="equipserial" type="java.lang.String">
+            <column name="equipserial" length="50" />
+        </property>
+        <property name="assetNumber" type="java.lang.Integer">
+            <column name="assetNumber" />
         </property>
     </class>
 </hibernate-mapping>

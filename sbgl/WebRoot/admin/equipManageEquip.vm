@@ -82,16 +82,82 @@
             <!--control-bar start-->
             <div class="control-bar clearfix">
               <div class="title pull-left">添加设备</div>
-              <div class="tips">在此页面下添加新的设备。…………</div>
+              <div class="tips">在此页面下添加新的设备。</div>
             </div><!--control-bar end-->
             <div class="panel panel-default">
               <div class="panel-body">
               
                 <form class="form-horizontal" action="javascript:void(0)" role="form">
                   <div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">设备号</label>
+                    <label for="inputEquipId" class="col-lg-2 control-label">资产编号</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="inputEquipId" placeholder="设备编号">
+                      <input type="text" class="form-control" id="assetNumber" placeholder="资产编号">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">库存条码</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="storenumber" placeholder="库存条码">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">设备机身编号</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="equipserial" placeholder="设备机身编号">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">设备生产日期</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="manufactureDate" placeholder="日期格式：1970-01-01">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">取得日期</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="acquireDate" placeholder="日期格式：1970-01-01">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">生产厂商</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="manufacturer" placeholder="生产厂商">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">供货厂商</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="supplyer" placeholder="供货厂商">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">价值</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="worth" placeholder="格式：0.00">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">使用/管理部门</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="useManageDept" placeholder="使用与管理部门">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">管理人</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="manager" placeholder="管理人姓名">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">存放地点</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="storagePlace" placeholder="存放地点">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">存放位置</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="storagePosition" placeholder="存放位置">
                     </div>
                   </div>
 				  <div class="form-group">
@@ -203,26 +269,68 @@
 	
 	$("body").on("click", "button[action-type|=addEquipDetail]", function() {
 		var _this = $(this);
-		var detailNum = $("#inputEquipId").val();
+		var equipserial = $("#equipserial").val();
 		var modelId = $("#inputEquipModelId").val();
 		var state = $("#inputEquipStatus").val();
 		var memo = $("#inputEquipRemark").val();
+		var manufactureDate = $("#manufactureDate").val();
+		var acquireDate = $("#acquireDate").val();
+		var manufacturer = $("#manufacturer").val();
+		var supplyer = $("#supplyer").val();
+		var worth = $("#worth").val();
+		var useManageDept = $("#useManageDept").val();
+		var manager = $("#manager").val();
+		var storagePlace = $("#storagePlace").val();
+		var storagePosition = $("#storagePosition").val();
+		var storenumber = $("#storenumber").val();
+		var assetNumber = $("#assetNumber").val();
+		
+		var regex = /^[0-9]*$/;
+		var ret = regex.test(storenumber);
+		if(ret == false) {
+			alert("库存条码必须输入数字！");
+			return;
+		}
+		var ret1 = regex.test(assetNumber);
+		if(ret1 == false) {
+			alert("资产编号必须输入数字！");
+			return;
+		}
+		var regex2 = /^[0-9]+(.[0-9]{2})?$/;
+		var ret3 = regex2.test(worth);
+		if(ret3 == false) {
+			alert("金额输入格式错误！");
+			return;
+		}
+		/*
 		console.log("detailNum " + detailNum);
 		console.log("state" + state);
 		console.log("modelId" + modelId);
 		console.log("memo" + memo);
 		console.log("administrationid" + cookie.Get("id"));
+		*/
 		
-		if(detailNum == "") {
-			alert("设备号不能为空!");
+		if(assetNumber == "") {
+			alert("资产编号不能为空!");
 			return;
 		}
 		var postData = {
 			"equipmentdetail.administrationid": cookie.Get("id"),
-			"equipmentdetail.equipserial": detailNum,
+			"equipmentdetail.equipserial": equipserial,
 			"equipmentdetail.equipmentid": modelId,
 			"equipmentdetail.status": state,
-			"equipmentdetail.usermark": memo
+			"equipmentdetail.usermark": memo,
+			"manufactureDateStr": manufactureDate,
+			"acquireDateStr": acquireDate,
+			"equipmentdetail.manufacturer": manufacturer,
+			"equipmentdetail.supplyer": supplyer,
+			"equipmentdetail.worth": worth,
+			"equipmentdetail.useManageDept": useManageDept,
+			"equipmentdetail.manager": manager,
+			"equipmentdetail.storagePlace": storagePlace,
+			"equipmentdetail.storagePosition": storagePosition,
+			"equipmentdetail.storenumber": storenumber,
+			"equipmentdetail.assetNumber": assetNumber
 		}
 	
 		jQuery.ajax({  

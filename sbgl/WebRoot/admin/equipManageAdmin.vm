@@ -116,8 +116,8 @@
                 </ul>
                 <div class="pagination pull-right">
                   <ul>
-                    <li><a href="#" rel="tooltip" action-type="backPage" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-                    <li><a href="#" rel="tooltip" action-type="nextPage" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                    <li><a href="#" rel="tooltip" action-type="backPage" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" action-type="nextPage" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-right"></i></a></li>
                   </ul>
                 </div>              
               </div>
@@ -137,10 +137,14 @@
                 <thead>
                   <tr>
                     <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-                    <th class="id">编号</th>
-                    <th class="name">设备名称(型号)</th>
-                    <th class="categories">分类</th>
-                    <th class="status">状态</th>
+                    <th class="id">资产编号</th>
+                    <th class="status">机身编号</th>
+                    <th class="id">设备名称(型号)</th>
+                    <th class="id">分类</th>
+					<th class="status">状态</th>
+                    <th class="id">使用/管理部门</th>
+                    <th class="status">管理人</th>
+                    <th class="id">存放地点</th>
                     <th class="remark">备注</th>
                   </tr>
                 </thead>
@@ -148,8 +152,9 @@
 				  #foreach($equipDetail in $equipDetailCourse)
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!equipDetail.id"></td>
-                    <td>$!equipDetail.code<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="alterDetailFillIn" data-id="$!equipDetail.id" data-code="$!equipDetail.code" data-mid="$!equipDetail.modelId" data-state="$!equipDetail.state" data-memo="$!equipDetail.memo">修改</a></td>
-                    <td>$!equipDetail.modelName</td>
+                    <td>$!equipDetail.assetNumber<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="alterDetailFillIn" data-id="$!equipDetail.id" data-code="$!equipDetail.code" data-mid="$!equipDetail.modelId" data-state="$!equipDetail.state" data-memo="$!equipDetail.memo" data-mDate="$!equipDetail.mDate" data-aDate="$!equipDetail.aDate" data-manufacturer="$!equipDetail.manufacturer" data-supplyer="$!equipDetail.supplyer" data-worth="$!equipDetail.worth" data-useManageDept="$!equipDetail.useManageDept" data-manager="$!equipDetail.manager" data-storagePlace="$!equipDetail.storagePlace" data-storagePosition="$!equipDetail.storagePosition" data-storenumber="$!equipDetail.storenumber" data-equipserial="$!equipDetail.equipserial" data-assetNumber="$!equipDetail.assetNumber">修改</a></td>
+                    <td>$!equipDetail.equipserial</td>
+					<td>$!equipDetail.modelName</td>
 					<td>$!equipDetail.className</td>
 					#if($!equipDetail.state == 0)
 						<td>正常</td>
@@ -164,6 +169,9 @@
 					#elseif($!equipDetail.state == 5)
 						<td>回收站</td>
 					#end
+                    <td>$!equipDetail.useManageDept</td>
+                    <td>$!equipDetail.manager</td>
+                    <td>$!equipDetail.storagePlace</td>
                     <td>$!equipDetail.memo</td>
                   </tr>
                   #end
@@ -202,9 +210,75 @@
       <p>修改设备。</p>
       <form class="form-horizontal" role="form">
         <div class="form-group">
-          <label for="modifyEquipId" class="col-xs-3 control-label">设备号</label>
+          <label for="modifyEquipId" class="col-xs-3 control-label">资产编号</label>
           <div class="col-xs-7">
-            <input type="text" class="form-control" id="modifyEquipId" placeholder="设备编号">
+            <input type="text" class="form-control" id="assetNumber" placeholder="资产编号">
+          </div>
+        </div>
+		<div class="form-group">
+          <label for="modifyEquipId" class="col-xs-3 control-label">库存条码</label>
+          <div class="col-xs-7">
+            <input type="text" class="form-control" id="storenumber" placeholder="库存条码">
+          </div>
+        </div>
+		<div class="form-group">
+          <label for="modifyEquipId" class="col-xs-3 control-label">设备机身编号</label>
+          <div class="col-xs-7">
+            <input type="text" class="form-control" id="equipserial" placeholder="设备机身编号">
+          </div>
+        </div>
+		<div class="form-group">
+          <label for="modifyEquipId" class="col-xs-3 control-label">设备生产日期</label>
+          <div class="col-xs-7">
+            <input type="text" class="form-control" id="manufactureDate" placeholder="日期格式：1970-01-01">
+          </div>
+        </div>
+		<div class="form-group">
+          <label for="modifyEquipId" class="col-xs-3 control-label">取得日期</label>
+          <div class="col-xs-7">
+            <input type="text" class="form-control" id="acquireDate" placeholder="日期格式：1970-01-01">
+          </div>
+        </div>
+		<div class="form-group">
+          <label for="modifyEquipId" class="col-xs-3 control-label">生产厂商</label>
+          <div class="col-xs-7">
+            <input type="text" class="form-control" id="manufacturer" placeholder="生产厂商">
+          </div>
+        </div>
+		<div class="form-group">
+          <label for="modifyEquipId" class="col-xs-3 control-label">供货厂商</label>
+          <div class="col-xs-7">
+            <input type="text" class="form-control" id="supplyer" placeholder="供货厂商">
+          </div>
+        </div>
+		<div class="form-group">
+          <label for="modifyEquipId" class="col-xs-3 control-label">价值</label>
+          <div class="col-xs-7">
+            <input type="text" class="form-control" id="worth" placeholder="格式：0.00">
+          </div>
+        </div>
+		<div class="form-group">
+          <label for="modifyEquipId" class="col-xs-3 control-label">使用/管理部门</label>
+          <div class="col-xs-7">
+            <input type="text" class="form-control" id="useManageDept" placeholder="使用与管理部门">
+          </div>
+        </div>
+		<div class="form-group">
+          <label for="modifyEquipId" class="col-xs-3 control-label">管理人</label>
+          <div class="col-xs-7">
+            <input type="text" class="form-control" id="manager" placeholder="管理人姓名">
+          </div>
+        </div>
+		<div class="form-group">
+          <label for="modifyEquipId" class="col-xs-3 control-label">存放地点</label>
+          <div class="col-xs-7">
+            <input type="text" class="form-control" id="storagePlace" placeholder="存放地点">
+          </div>
+        </div>
+		<div class="form-group">
+          <label for="modifyEquipId" class="col-xs-3 control-label">存放位置</label>
+          <div class="col-xs-7">
+            <input type="text" class="form-control" id="storagePosition" placeholder="存放位置">
           </div>
         </div>
 		<div class="form-group">
@@ -384,16 +458,27 @@
 			}
 		});
 		
-		$("#modifyEquipId").val(myData.code);
+		$("#assetNumber").val(myData.assetnumber);
+		$("#storenumber").val(myData.storenumber);
+		$("#equipserial").val(myData.equipserial);
+		$("#manufactureDate").val(myData.mdate);
+		$("#acquireDate").val(myData.adate);
+		$("#manufacturer").val(myData.manufacturer);
+		$("#supplyer").val(myData.supplyer);
+		$("#worth").val(myData.worth);
+		$("#useManageDept").val(myData.usemanagedept);
+		$("#manager").val(myData.manager);
+		$("#storagePlace").val(myData.storageplace);
+		$("#storagePosition").val(myData.storageposition);
 		$("#modifyEquipModelId").select2("val", myData.mid);
 		$("#modifyEquipStatus").select2("val", myData.state);
 		$("#modifyEquipRemark").val(myData.memo);
 		
 		detailIdForAlter = myData.id;
-		detailCodeForALter = myData.code
-		detailMIdForAlter = myData.mid;
-		detailStatusForAlter = myData.state;
-		detailMemoForAlter = myData.memo;
+		//detailCodeForALter = myData.code
+		//detailMIdForAlter = myData.mid;
+		//detailStatusForAlter = myData.state;
+		//detailMemoForAlter = myData.memo;
 		
 		//console.log("myData.id " + myData.id);
 		//console.log("myData.code " + myData.code);
@@ -406,17 +491,58 @@
 		var _this = $(this);
 		var cid = $("#select-categories").val();
 		if(_this.attr('action-type') == 'alterDetail') {
-    		var dCode = $("#modifyEquipId").val();
+    		var an = $("#assetNumber").val();
+            var sn = $("#storenumber").val();
+            var es = $("#equipserial").val();
+            var md = $("#manufactureDate").val();
+            var ad = $("#acquireDate").val();
+            var mf = $("#manufacturer").val();
+            var sp = $("#supplyer").val();
+            var wt = $("#worth").val();
+            var ud = $("#useManageDept").val();
+            var mg = $("#manager").val();
+            var st = $("#storagePlace").val();
+    		var ss = $("#storagePosition").val();
+    		//var dCode = $("#modifyEquipId").val();
     		var dMid = $("#modifyEquipModelId").val();
     		var dStatus = $("#modifyEquipStatus").val();
     		var dMemo = $("#modifyEquipRemark").val();
+			
+			var regex = /^[0-9]*$/;
+    		var ret = regex.test(sn);
+    		if(ret == false) {
+    			alert("库存条码必须输入数字！");
+    			return;
+    		}
+    		var ret1 = regex.test(an);
+    		if(ret1 == false) {
+    			alert("资产编号必须输入数字！");
+    			return;
+    		}
+    		var regex2 = /^[0-9]+(.[0-9]{2})?$/;
+    		var ret3 = regex2.test(wt);
+    		if(ret3 == false) {
+    			alert("金额输入格式错误！");
+    			return;
+    		}
     		
-    		if(dCode == detailCodeForALter && dMid == detailMIdForAlter && dStatus == detailStatusForAlter && dMemo == detailMemoForAlter) {
+    		if(dMid == detailMIdForAlter && dStatus == detailStatusForAlter && dMemo == detailMemoForAlter) {
     			alert("并未做修改！");
     		} else {
     			var postData = {
     				"equipmentdetail.equipDetailid": detailIdForAlter,
-    				"equipmentdetail.equipserial": dCode,
+    				"equipmentdetail.assetNumber": an,
+    				"manufactureDateStr": md,
+    				"acquireDateStr": ad,
+    				"equipmentdetail.manufacturer": mf,
+    				"equipmentdetail.supplyer": sp,
+    				"equipmentdetail.worth": wt,
+    				"equipmentdetail.useManageDept": ud,
+    				"equipmentdetail.manager": mg,
+    				"equipmentdetail.storagePlace": st,
+    				"equipmentdetail.storagePosition": ss,
+    				"equipmentdetail.storenumber": sn,
+    				"equipmentdetail.equipserial": es,
     				"equipmentdetail.equipmentid": dMid,
     				"equipmentdetail.status": dStatus,
     				"equipmentdetail.administrationid": cookie.Get("id"),

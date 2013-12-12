@@ -25,12 +25,15 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 	private String manufacturer;
 	private String supplyer;
 	private Float worth;
-	private String manageDept;
+	private String useManageDept;
 	private String manager;
 	private String storagePlace;
+	private String storagePosition;
 	private String lanType;
 	private Integer comId;
-	private Integer equipserial;
+	private Integer storenumber;
+	private String equipserial;
+	private Integer assetNumber;
 
 	// Constructors
 
@@ -48,9 +51,10 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 			String status, Integer administrationid, Timestamp makedate,
 			Timestamp modifydate, String sysremark, String usermark,
 			Date manufactureDate, Date acquireDate, String manufacturer,
-			String supplyer, Float worth, String manageDept, String manager,
-			String storagePlace, String lanType, Integer comId,
-			Integer equipserial) {
+			String supplyer, Float worth, String useManageDept, String manager,
+			String storagePlace, String storagePosition, String lanType,
+			Integer comId, Integer storenumber, String equipserial,
+			Integer assetNumber) {
 		this.equipDetailid = equipDetailid;
 		this.equipmentid = equipmentid;
 		this.status = status;
@@ -64,12 +68,15 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.manufacturer = manufacturer;
 		this.supplyer = supplyer;
 		this.worth = worth;
-		this.manageDept = manageDept;
+		this.useManageDept = useManageDept;
 		this.manager = manager;
 		this.storagePlace = storagePlace;
+		this.storagePosition = storagePosition;
 		this.lanType = lanType;
 		this.comId = comId;
+		this.storenumber = storenumber;
 		this.equipserial = equipserial;
+		this.assetNumber = assetNumber;
 	}
 
 	// Property accessors
@@ -178,12 +185,12 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.worth = worth;
 	}
 
-	public String getManageDept() {
-		return this.manageDept;
+	public String getUseManageDept() {
+		return this.useManageDept;
 	}
 
-	public void setManageDept(String manageDept) {
-		this.manageDept = manageDept;
+	public void setUseManageDept(String useManageDept) {
+		this.useManageDept = useManageDept;
 	}
 
 	public String getManager() {
@@ -202,6 +209,14 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.storagePlace = storagePlace;
 	}
 
+	public String getStoragePosition() {
+		return this.storagePosition;
+	}
+
+	public void setStoragePosition(String storagePosition) {
+		this.storagePosition = storagePosition;
+	}
+
 	public String getLanType() {
 		return this.lanType;
 	}
@@ -218,12 +233,28 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.comId = comId;
 	}
 
-	public Integer getEquipserial() {
+	public Integer getStorenumber() {
+		return this.storenumber;
+	}
+
+	public void setStorenumber(Integer storenumber) {
+		this.storenumber = storenumber;
+	}
+
+	public String getEquipserial() {
 		return this.equipserial;
 	}
 
-	public void setEquipserial(Integer equipserial) {
+	public void setEquipserial(String equipserial) {
 		this.equipserial = equipserial;
+	}
+
+	public Integer getAssetNumber() {
+		return this.assetNumber;
+	}
+
+	public void setAssetNumber(Integer assetNumber) {
+		this.assetNumber = assetNumber;
 	}
 
 }

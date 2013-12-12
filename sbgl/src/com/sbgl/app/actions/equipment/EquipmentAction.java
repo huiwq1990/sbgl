@@ -1,6 +1,9 @@
 package com.sbgl.app.actions.equipment;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -695,59 +698,130 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	 *        2.器材状态说明：0-正常；1-借出；2-维护；3-维修；4-遗失；5-回收站
 	 */
 	private Equipmentdetail equipmentdetail;
+	private Equipmentdetail equipmentdetailEN;
 	public Equipmentdetail getEquipmentdetail() {
 		return equipmentdetail;
 	}
 	public void setEquipmentdetail(Equipmentdetail equipmentdetail) {
 		this.equipmentdetail = equipmentdetail;
 	}
-	
+	public Equipmentdetail getEquipmentdetailEN() {
+		return equipmentdetailEN;
+	}
+	public void setEquipmentdetailEN(Equipmentdetail equipmentdetailEN) {
+		this.equipmentdetailEN = equipmentdetailEN;
+	}
+	private String manufactureDateStr;
+	public String getManufactureDateStr() {
+		return manufactureDateStr;
+	}
+	public void setManufactureDateStr(String manufactureDateStr) {
+		this.manufactureDateStr = manufactureDateStr;
+	}
+	private String acquireDateStr;
 
+	public String getAcquireDateStr() {
+		return acquireDateStr;
+	}
+	public void setAcquireDateStr(String acquireDateStr) {
+		this.acquireDateStr = acquireDateStr;
+	}
 	public String addEquipdetail() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
-		long returnCode = equipService.addEquipmentdetail( equipmentdetail );
+		Date mDate = null;
+		Date aDate = null;
 		
-		if(equipmentdetail.getEquipmentid() != -1) {  //不是未知型号
-			Equipment equip = equipService.getEquipmentById(  equipmentdetail.getEquipmentid() );
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		try {
+			mDate = sdf.parse(manufactureDateStr);
+			aDate = sdf.parse(acquireDateStr);
+		} catch (ParseException e) {
+			this.tag = "200";
+			this.message = "请检查输入日期格式是否正确！";
+			returnJSON.put("tag", tag);
+			returnJSON.put("msg", message);
+			return SUCCESS;
+		}
+		
+		Boolean isExist = equipService.isExistEquipDetial( equipmentdetail.getAssetNumber() );
+		
+		if(!isExist) {
+			/*int comId = equipService.getEquipDetailComId();
+			equipmentdetail.setComId( comId );
+			equipmentdetailEN.setComId( comId );*/
+			equipmentdetail.setManufactureDate( mDate );
+			equipmentdetail.setAcquireDate( aDate );
+			long returnCode = equipService.addEquipmentdetail( equipmentdetail );
+//			long returnCodeEN = equipService.addEquipmentdetail( equipmentdetailEN );
 			
-			String stateCodeStr = equipmentdetail.getStatus();
-			Integer activeNum = equip.getActivenum() == null ? 0 : equip.getActivenum();
-			Integer maintainNum = equip.getMaintainnum() == null ? 0 : equip.getMaintainnum();
-			Integer repairNum = equip.getRepairnum() == null ? 0 : equip.getRepairnum();
-			Integer losedNum = equip.getLosednum() == null ? 0 : equip.getLosednum();
-			Integer recycleNum = equip.getRecyclingnum() == null ? 0 : equip.getRecyclingnum();
-			
-			if(stateCodeStr.equals("0")) {
-				activeNum += 1;
-			} else if(stateCodeStr.equals("1")) {
-				//TODO 借出如何获取和存储借出数量
-			} else if(stateCodeStr.equals("2")) {
-				maintainNum += 1;
-			} else if(stateCodeStr.equals("3")) {
-				repairNum += 1;
-			} else if(stateCodeStr.equals("4")) {
-				losedNum += 1;
-			} else if(stateCodeStr.equals("5")) {
-				recycleNum += 1;
+			if( returnCode != -1 ) {
+//				equipService.deleteEquipmentdetail( (int)returnCode );
+				this.tag = "1";
+				this.message = "添加设备失败！";
+//			} else if( returnCode == -1 && returnCodeEN != -1) {
+//				equipService.deleteEquipmentdetail( (int)returnCodeEN );
+//				this.tag = "1";
+//				this.message = "添加中文设备失败！";
+//				log.error("################ 保存设备失败！ ################");
+//			} else if( returnCode == -1 && returnCodeEN == -1) {
+//				this.tag = "1";
+//				this.message = "添加中文和英文设备失败！";
+//				log.error("################ 保存设备失败！ ################");
+			} else if( returnCode != -1 ) {
+				this.tag = "0";
+				this.message = "添加设备成功！";
 			}
-			equip.setActivenum( activeNum );
-			equip.setMaintainnum( maintainNum );
-			equip.setRepairnum( repairNum );
-			equip.setLosednum( losedNum );
-			equip.setRecyclingnum( recycleNum );
-			equipService.alterEquipInfo( equip );
+			
+			if(equipmentdetail.getEquipmentid() != -1) {  //不是未知型号
+				Equipment equip = equipService.getEquipmentById(  equipmentdetail.getEquipmentid() );
+				
+				String stateCodeStr = equipmentdetail.getStatus();
+				Integer activeNum = equip.getActivenum() == null ? 0 : equip.getActivenum();
+				Integer maintainNum = equip.getMaintainnum() == null ? 0 : equip.getMaintainnum();
+				Integer repairNum = equip.getRepairnum() == null ? 0 : equip.getRepairnum();
+				Integer losedNum = equip.getLosednum() == null ? 0 : equip.getLosednum();
+				Integer recycleNum = equip.getRecyclingnum() == null ? 0 : equip.getRecyclingnum();
+				
+				if(stateCodeStr.equals("0")) {
+					activeNum += 1;
+				} else if(stateCodeStr.equals("1")) {
+					//TODO 借出如何获取和存储借出数量
+				} else if(stateCodeStr.equals("2")) {
+					maintainNum += 1;
+				} else if(stateCodeStr.equals("3")) {
+					repairNum += 1;
+				} else if(stateCodeStr.equals("4")) {
+					losedNum += 1;
+				} else if(stateCodeStr.equals("5")) {
+					recycleNum += 1;
+				}
+				equip.setActivenum( activeNum );
+				equip.setMaintainnum( maintainNum );
+				equip.setRepairnum( repairNum );
+				equip.setLosednum( losedNum );
+				equip.setRecyclingnum( recycleNum );
+				equipService.alterEquipInfo( equip );
+			}
+			
+			
+			if( returnCode != -1 ) {
+				this.tag = "0";
+				this.message = "器材添加成功！";
+			} else {
+				this.tag = "1";
+				this.message = "器材添加失败！";
+				log.error("################ 保存设备失败！ ################");
+			}
+			
+		} else if(isExist) {
+			this.tag = "100";
+			this.message = "所填设备已经存在！";
 		}
 		
 		
-		if( returnCode != -1 ) {
-			this.tag = "0";
-			this.message = "器材添加成功！";
-		} else {
-			this.tag = "1";
-			this.message = "器材添加失败！";
-			log.error("################ 保存设备失败！ ################");
-		}
+		
 		returnJSON.put("tag", tag);
 		returnJSON.put("msg", message);
 		return SUCCESS;
@@ -760,6 +834,23 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	public String alterEquipmentdetail() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
+		Date mDate = null;
+		Date aDate = null;
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		try {
+			mDate = sdf.parse(manufactureDateStr);
+			aDate = sdf.parse(acquireDateStr);
+		} catch (ParseException e) {
+			this.tag = "200";
+			this.message = "请检查输入日期格式是否正确！";
+			returnJSON.put("tag", tag);
+			returnJSON.put("msg", message);
+			return SUCCESS;
+		}
+		equipmentdetail.setAcquireDate( aDate );
+		equipmentdetail.setManufactureDate( mDate );
 		
 		long returnCode = equipService.alterEquipmentdetail( equipmentdetail );
 		if( returnCode != -1 ) {
@@ -1063,7 +1154,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				totalDetailPages = String.valueOf( result.getTotalResultNum() / 10 );
 			}
 		}
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		for (Equipmentdetail equipdetail : tempList) {
 			EquipCourse ec = new EquipCourse();
 			ec.setId( String.valueOf( equipdetail.getEquipDetailid() ) );
@@ -1074,7 +1165,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				ec.setModelName( "未知型号" );
 				ec.setClassId( String.valueOf( -1 ) );
 				ec.setClassName( "未知分类" );
-				ec.setCode( String.valueOf( equipdetail.getEquipserial() ) );
+//				ec.setCode( String.valueOf( equipdetail.getEquipserial() ) );
 				ec.setState( String.valueOf( equipdetail.getStatus() ) );
 				if(equipdetail.getSysremark() != null && equipdetail.getUsermark() != null) {
 					ec.setMemo( equipdetail.getSysremark() + " " + equipdetail.getUsermark());
@@ -1085,6 +1176,18 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				} else {
 					ec.setMemo("");
 				}
+				ec.setaDate( equipdetail.getAcquireDate()==null?"":sdf.format( equipdetail.getAcquireDate() ) );
+				ec.setAssetNumber( String.valueOf( equipdetail.getAssetNumber() ) );
+				ec.setEquipserial( equipdetail.getEquipserial() );
+				ec.setManager( equipdetail.getManager() );
+				ec.setManufacturer( equipdetail.getManufacturer() );
+				ec.setmDate( equipdetail.getManufactureDate()==null?"":sdf.format( equipdetail.getManufactureDate() ) );
+				ec.setStoragePlace( equipdetail.getStoragePlace() );
+				ec.setStoragePosition( equipdetail.getStoragePosition() );
+				ec.setStorenumber( String.valueOf( equipdetail.getStorenumber() ) );
+				ec.setSupplyer( equipdetail.getSupplyer() );
+				ec.setUseManageDept( equipdetail.getUseManageDept() );
+				ec.setWorth( String.valueOf( equipdetail.getWorth() ) );
 				
 				equipDetailCourse.add( ec );
 			} else {
@@ -1103,7 +1206,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 						ec.setClassId(  String.valueOf( -1 ) );
 						ec.setClassName( "未分类" );
 					}
-					ec.setCode( String.valueOf( equipdetail.getEquipserial() ) );
+//					ec.setCode( String.valueOf( equipdetail.getEquipserial() ) );
 					ec.setState( String.valueOf( equipdetail.getStatus() ) );
 					if(equipdetail.getSysremark() != null && equipdetail.getUsermark() != null) {
 						ec.setMemo( equipdetail.getSysremark() + " " + equipdetail.getUsermark());
@@ -1114,6 +1217,19 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					} else {
 						ec.setMemo("");
 					}
+					ec.setaDate( equipdetail.getAcquireDate()==null?"":sdf.format( equipdetail.getAcquireDate() ) );
+					ec.setAssetNumber( String.valueOf( equipdetail.getAssetNumber() ) );
+					ec.setEquipserial( equipdetail.getEquipserial() );
+					ec.setManager( equipdetail.getManager() );
+					ec.setManufacturer( equipdetail.getManufacturer() );
+					ec.setmDate( equipdetail.getManufactureDate()==null?"":sdf.format( equipdetail.getManufactureDate() ) );
+					ec.setStoragePlace( equipdetail.getStoragePlace() );
+					ec.setStoragePosition( equipdetail.getStoragePosition() );
+					ec.setStorenumber( String.valueOf( equipdetail.getStorenumber() ) );
+					ec.setSupplyer( equipdetail.getSupplyer() );
+					ec.setUseManageDept( equipdetail.getUseManageDept() );
+					ec.setWorth( String.valueOf( equipdetail.getWorth() ) );
+					
 					equipDetailCourse.add( ec );
 				}
 			}
