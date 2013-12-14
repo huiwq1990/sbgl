@@ -146,23 +146,27 @@
 		#set($borrowperiodListRegion = [0..$borrowperiodListSize])
 		
 								<!--tabel start-->
-							  <div class=" item table-responsive">
-                              
+								##激活第一个表格
+								#if($tempweektableindex ==0)
+									<div class="active item table-responsive">
+								#else
+								<div class=" item table-responsive">
+								#end
                                 <table class="table" data-table-name="$tempmodel.name">
+									
                                     <thead>
                                       <tr>
                                         <th class="time-slop">时间</th>
-                                        <th>09/14<br>周六</th>
-                                        <th>09/15<br>周日</th>
-                                        <th>09/16<br>周一</th>
-                                        <th>09/17<br>周二</th>
-                                        <th>09/18<br>周三</th>
-                                        <th>09/19<br>周四</th>
-                                        <th>09/12<br>周五</th>                      
+										##所有时间段 上午、中午、晚上 取出所有的属性名称
+										#set($weekdayRegion = [0..$computerodertablercolumn-1])
+										#set($weekDateList = $showDateMap.get($tempweektableindex))
+										#foreach($tempday in $weekdayRegion)
+                                        <th><br>$weekDateList.get($tempday)</th>
+                                        #end                
                                       </tr>
                                     </thead>
                                     <tbody>
-										##所有时间段 上午、中午、晚上 取出所有的属性名称
+		##所有时间段 上午、中午、晚上 取出所有的属性名称
 		#foreach($tempperiod in $borrowperiodListRegion)
 			#set($tempBorrowperiod = $borrowperiodList.get($tempperiod))##取出某个时间段				
                  <tr>
