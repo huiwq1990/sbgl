@@ -471,7 +471,7 @@
 		$("#storagePlace").val(myData.storageplace);
 		$("#storagePosition").val(myData.storageposition);
 		$("#modifyEquipModelId").select2("val", myData.mid);
-		//$("#modifyEquipCategory").select2("val", myData.classid);
+		$("#modifyEquipCategory").select2("val", myData.classid);
 		$("#modifyEquipStatus").select2("val", myData.state);
 		$("#modifyEquipRemark").val(myData.memo);
 		

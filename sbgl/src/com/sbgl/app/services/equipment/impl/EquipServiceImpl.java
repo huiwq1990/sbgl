@@ -483,22 +483,24 @@ public class EquipServiceImpl implements EquipService {
 			List<Equipmentclassification> childrenList = this.getAllChildEquipmentclassificationsByParentId( classificationId );
 			if( childrenList != null && childrenList.size() > 0 ) {
 				for (Equipmentclassification c : childrenList) {
-					final String modelCountSQL = "select sum(equipmentnum) from Equipment where classificationid = " + c.getClassificationid();
-					BigDecimal EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
-						public Object doInHibernate(Session session) throws HibernateException{
-							Query query = session.createSQLQuery(modelCountSQL);
-							return query.list().get(0); 
+					if( "CH".equals( c.getLanType() ) ) {
+						final String modelCountSQL = "select count(1) from Equipmentdetail where classificationid = " + c.getClassificationid();
+						BigInteger EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
+							public Object doInHibernate(Session session) throws HibernateException{
+								Query query = session.createSQLQuery(modelCountSQL);
+								return query.list().get(0); 
+							}
+						});
+						if(EquipSum != null) {
+							totalSum += EquipSum.intValue();
 						}
-					});
-					if(EquipSum != null) {
-						totalSum += EquipSum.intValue();
 					}
 				}
 			}
 			return totalSum;
 		} else {
-			final String equipCountSQL = "select sum(equipmentnum) from Equipment  where classificationid = " + classificationId;
-			BigDecimal EquipdetailSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
+			final String equipCountSQL = "select count(1) from Equipmentdetail  where classificationid = " + classificationId;
+			BigInteger EquipdetailSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
 				public Object doInHibernate(Session session) throws HibernateException{
 					Query query = session.createSQLQuery(equipCountSQL);
 					return query.list().get(0); 

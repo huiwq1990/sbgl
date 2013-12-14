@@ -125,6 +125,7 @@ public class FileUploadAction  extends ActionSupport {
                     		Equipmentclassification ecEN = new Equipmentclassification();
                     		
                     		if( !equipService.isExistThisClassification( row.getCell(3).getStringCellValue() ) ) {
+                    			
                     			int comeId = equipService.getClassificationComId();
                         		ec.setName( row.getCell(3).getStringCellValue() );
                         		ecEN.setName( row.getCell(3).getStringCellValue() );
@@ -141,26 +142,36 @@ public class FileUploadAction  extends ActionSupport {
                     	if(row.getCell(4).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(4) != null && row.getCell(3).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(3) != null) {  //一二级分类不为空
                     		Equipmentclassification ec = new Equipmentclassification();
                     		Equipmentclassification ecEN = new Equipmentclassification();
-                    		
-                    		if( !equipService.isExistThisClassification( row.getCell(4).getStringCellValue()+"(资产名称)" ) || !equipService.isExistThisClassification( row.getCell(4).getStringCellValue() ) ) {
-                    			int comeId = equipService.getClassificationComId();
-                        		Equipmentclassification pEc = equipService.getEquipmentclassificationByName( row.getCell(3).getStringCellValue() );
-                        		if(row.getCell(4).getStringCellValue().equals( row.getCell(3).getStringCellValue() ) && row.getCell(4).getCellType() == row.getCell(3).getCellType()) {  //一二级分类名称相同时
-                        			ec.setName( row.getCell(4).getStringCellValue()+"(资产名称)" );
+                    		if( row.getCell(4).getStringCellValue().equals( row.getCell(3).getStringCellValue() ) ) {
+                    			if( !equipService.isExistThisClassification( row.getCell(4).getStringCellValue()+"(资产名称)" ) ) {
+                    				int comeId = equipService.getClassificationComId();
+                            		Equipmentclassification pEc = equipService.getEquipmentclassificationByName( row.getCell(3).getStringCellValue() );
+                    				ec.setName( row.getCell(4).getStringCellValue()+"(资产名称)" );
                             		ecEN.setName( row.getCell(4).getStringCellValue()+"(资产名称)" );
-                        		} else {
-                        			ec.setName( row.getCell(4).getStringCellValue() );
+                            		ec.setParentid( pEc == null ? 0 : pEc.getClassificationid() );
+                            		ecEN.setParentid( pEc == null ? 0 : pEc.getClassificationid() );
+                            		ec.setLanType( "CH" );
+                            		ecEN.setLanType( "EN" );
+                            		ec.setComId( comeId );
+                            		ecEN.setComId( comeId );
+                            		equipService.addEquipmentclassification( ec );
+                            		equipService.addEquipmentclassification( ecEN );
+                    			}
+                    		} else {
+                    			if( !equipService.isExistThisClassification( row.getCell(4).getStringCellValue() ) ) {
+                    				int comeId = equipService.getClassificationComId();
+                            		Equipmentclassification pEc = equipService.getEquipmentclassificationByName( row.getCell(3).getStringCellValue() );
+                    				ec.setName( row.getCell(4).getStringCellValue() );
                             		ecEN.setName( row.getCell(4).getStringCellValue() );
-                        		}
-                        		ec.setParentid( pEc == null ? 0 : pEc.getClassificationid() );
-                        		ecEN.setParentid( pEc == null ? 0 : pEc.getClassificationid() );
-                        		ec.setLanType( "CH" );
-                        		ecEN.setLanType( "EN" );
-                        		ec.setComId( comeId );
-                        		ecEN.setComId( comeId );
-                    			
-                    			equipService.addEquipmentclassification( ec );
-                        		equipService.addEquipmentclassification( ecEN );
+                            		ec.setParentid( pEc == null ? 0 : pEc.getClassificationid() );
+                            		ecEN.setParentid( pEc == null ? 0 : pEc.getClassificationid() );
+                            		ec.setLanType( "CH" );
+                            		ecEN.setLanType( "EN" );
+                            		ec.setComId( comeId );
+                            		ecEN.setComId( comeId );
+                            		equipService.addEquipmentclassification( ec );
+                            		equipService.addEquipmentclassification( ecEN );
+                    			}
                     		}
                     	}
                     	
@@ -198,80 +209,81 @@ public class FileUploadAction  extends ActionSupport {
                 		
                 		
                 		detail.setAssetNumber( Integer.valueOf( row.getCell(2).getStringCellValue() ) );
-                		if(row.getCell(1).getCellType() == Cell.CELL_TYPE_NUMERIC && row.getCell(1) != null ) {
-                			detail.setStorenumber( (int)row.getCell(1).getNumericCellValue() );
-                    	}
-                		if(row.getCell(1).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(1) != null ) {
-                			detail.setStorenumber( Integer.valueOf( row.getCell(1).getStringCellValue() ) );
-                		}
-                		if(row.getCell(4).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(4) != null && row.getCell(3).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(3) != null) {
-                			String className = "";
-                			if(row.getCell(4).getStringCellValue().equals( row.getCell(3).getStringCellValue() ) && row.getCell(4).getCellType() == row.getCell(3).getCellType()) {  //一二级分类名称相同时
-                				className =  row.getCell(4).getStringCellValue()+"(资产名称)";
-                    		} else {
-                    			className =  row.getCell(4).getStringCellValue() ;
-                    		}
-                			Equipmentclassification ec = equipService.getEquipmentclassificationByName( className );
-                			detail.setClassificationid( ec.getClassificationid() );
-                		}
-                		if(row.getCell(5).getCellType() == Cell.CELL_TYPE_NUMERIC && row.getCell(5) != null ) {
-                    		detail.setEquipserial( String.valueOf( row.getCell(5).getNumericCellValue() ) );
-                    	}
-                		if(row.getCell(5).getCellType() == Cell.CELL_TYPE_STRING  && row.getCell(5) != null ) {
-                			detail.setEquipserial( row.getCell(5).getStringCellValue() );
-                		}
-                    	if(row.getCell(6).getCellType() == Cell.CELL_TYPE_STRING  && row.getCell(6) != null ) {
-                    		Date mDate = null;
-                    		try {
-                    			mDate = sdf.parse( row.getCell(6).getStringCellValue() );
-                    			detail.setManufactureDate( mDate );
-                    		} catch (ParseException e) {
-                    			
-                    		}
-                    	}
-                    	if(row.getCell(7).getCellType() == Cell.CELL_TYPE_STRING  && row.getCell(7) != null ) {
-                    		Date aDate = null;
-                    		try {
-                    			aDate = sdf.parse( row.getCell(7).getStringCellValue() );
-                    			detail.setAcquireDate( aDate );
-                    		} catch (ParseException e) {
-                    			
-                    		}
-                    	}
-                    	if(row.getCell(8).getCellType() == Cell.CELL_TYPE_STRING  && row.getCell(8) != null ) {
-                    		detail.setManufacturer( row.getCell(8).getStringCellValue() );
-                    	}
-                    	if(row.getCell(9).getCellType() == Cell.CELL_TYPE_STRING  && row.getCell(8) != null ) {
-                    		if( !"*".equals( row.getCell(9).getStringCellValue() ) ) {
-                    			Equipment e = equipService.getEquipmentByName( row.getCell(9).getStringCellValue() );
-                    			detail.setEquipmentid( e.getEquipmentid() );
-                    		} else {
-                    			detail.setEquipmentid( -1 );
-                    		}
-                    	}
-                    	if(row.getCell(11).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(11) != null ) {
-                    		detail.setSupplyer( row.getCell(11).getStringCellValue() );
-                    	}
-                    	if(row.getCell(12).getCellType() == Cell.CELL_TYPE_NUMERIC && row.getCell(12) != null ) {
-                    		detail.setWorth( (float)row.getCell(12).getNumericCellValue() );
-                    	}
-                    	if(row.getCell(13).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(13) != null ) {
-                    		detail.setUseManageDept( row.getCell(13).getStringCellValue() );
-                    	}
-                    	if(row.getCell(14).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(14) != null ) {
-                    		detail.setManager( row.getCell(14).getStringCellValue() );
-                    	}
-                    	if(row.getCell(15).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(15) != null ) {
-                    		detail.setStoragePlace( row.getCell(15).getStringCellValue() );
-                    	}
-                    	if(row.getCell(16).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(16) != null ) {
-                    		detail.setStoragePosition( row.getCell(16).getStringCellValue() );
-                    	}
-                    	if(row.getCell(18).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(18) != null ) {
-                    		detail.setUsermark( row.getCell(18).getStringCellValue() );
-                    	}
-                    	detail.setStatus( "0" );
-                    	if(!equipService.isExistEquipDetial( detail.getAssetNumber() )) {
+                		if(!equipService.isExistEquipDetial( detail.getAssetNumber() )) {
+	                		if(row.getCell(1).getCellType() == Cell.CELL_TYPE_NUMERIC && row.getCell(1) != null ) {
+	                			detail.setStorenumber( (int)row.getCell(1).getNumericCellValue() );
+	                    	}
+	                		if(row.getCell(1).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(1) != null ) {
+	                			detail.setStorenumber( Integer.valueOf( row.getCell(1).getStringCellValue() ) );
+	                		}
+	                		if(row.getCell(4).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(4) != null && row.getCell(3).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(3) != null) {
+	                			String className = "";
+	                			if(row.getCell(4).getStringCellValue().equals( row.getCell(3).getStringCellValue() ) && row.getCell(4).getCellType() == row.getCell(3).getCellType()) {  //一二级分类名称相同时
+	                				className =  row.getCell(4).getStringCellValue()+"(资产名称)";
+	                    		} else {
+	                    			className =  row.getCell(4).getStringCellValue() ;
+	                    		}
+	                			Equipmentclassification ec = equipService.getEquipmentclassificationByName( className );
+	                			detail.setClassificationid( ec.getClassificationid() );
+	                		}
+	                		if(row.getCell(5).getCellType() == Cell.CELL_TYPE_NUMERIC && row.getCell(5) != null ) {
+	                    		detail.setEquipserial( String.valueOf( row.getCell(5).getNumericCellValue() ) );
+	                    	}
+	                		if(row.getCell(5).getCellType() == Cell.CELL_TYPE_STRING  && row.getCell(5) != null ) {
+	                			detail.setEquipserial( row.getCell(5).getStringCellValue() );
+	                		}
+	                    	if(row.getCell(6).getCellType() == Cell.CELL_TYPE_STRING  && row.getCell(6) != null ) {
+	                    		Date mDate = null;
+	                    		try {
+	                    			mDate = sdf.parse( row.getCell(6).getStringCellValue() );
+	                    			detail.setManufactureDate( mDate );
+	                    		} catch (ParseException e) {
+	                    			
+	                    		}
+	                    	}
+	                    	if(row.getCell(7).getCellType() == Cell.CELL_TYPE_STRING  && row.getCell(7) != null ) {
+	                    		Date aDate = null;
+	                    		try {
+	                    			aDate = sdf.parse( row.getCell(7).getStringCellValue() );
+	                    			detail.setAcquireDate( aDate );
+	                    		} catch (ParseException e) {
+	                    			
+	                    		}
+	                    	}
+	                    	if(row.getCell(8).getCellType() == Cell.CELL_TYPE_STRING  && row.getCell(8) != null ) {
+	                    		detail.setManufacturer( row.getCell(8).getStringCellValue() );
+	                    	}
+	                    	if(row.getCell(9).getCellType() == Cell.CELL_TYPE_STRING  && row.getCell(8) != null ) {
+	                    		if( !"*".equals( row.getCell(9).getStringCellValue() ) ) {
+	                    			Equipment e = equipService.getEquipmentByName( row.getCell(9).getStringCellValue() );
+	                    			detail.setEquipmentid( e.getEquipmentid() );
+	                    		} else {
+	                    			detail.setEquipmentid( -1 );
+	                    		}
+	                    	}
+	                    	if(row.getCell(11).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(11) != null ) {
+	                    		detail.setSupplyer( row.getCell(11).getStringCellValue() );
+	                    	}
+	                    	if(row.getCell(12).getCellType() == Cell.CELL_TYPE_NUMERIC && row.getCell(12) != null ) {
+	                    		detail.setWorth( (float)row.getCell(12).getNumericCellValue() );
+	                    	}
+	                    	if(row.getCell(13).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(13) != null ) {
+	                    		detail.setUseManageDept( row.getCell(13).getStringCellValue() );
+	                    	}
+	                    	if(row.getCell(14).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(14) != null ) {
+	                    		detail.setManager( row.getCell(14).getStringCellValue() );
+	                    	}
+	                    	if(row.getCell(15).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(15) != null ) {
+	                    		detail.setStoragePlace( row.getCell(15).getStringCellValue() );
+	                    	}
+	                    	if(row.getCell(16).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(16) != null ) {
+	                    		detail.setStoragePosition( row.getCell(16).getStringCellValue() );
+	                    	}
+	                    	if(row.getCell(18).getCellType() == Cell.CELL_TYPE_STRING && row.getCell(18) != null ) {
+	                    		detail.setUsermark( row.getCell(18).getStringCellValue() );
+	                    	}
+	                    	detail.setStatus( "0" );
+                    	
                     		equipService.addEquipmentdetail( detail );
                     	}
                 	}
