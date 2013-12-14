@@ -83,6 +83,16 @@
             <div class="control-bar clearfix">
               <div class="title pull-left">添加设备</div>
               <div class="tips">在此页面下添加新的设备。</div>
+			  <div class="operate-item pull-left">
+			  <div class="col-xs-7">
+                <span class="btn btn-white file-input-button">
+                  <i class="icon-plus"></i>
+                  <span>上传Excel文件</span>
+                  <input id="uploadExcel" type="file" name="file" multiple>
+                </span>
+    		    <span id="imgFileForAlter"></span>
+              </div>	
+              </div>
             </div><!--control-bar end-->
             <div class="panel panel-default">
               <div class="panel-body">
@@ -250,6 +260,9 @@
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/fileUpload/vendor/jquery.ui.widget.js"></script>
+<script src="${jsDomain}/fileUpload/jquery.iframe-transport.js"></script>
+<script src="${jsDomain}/jquery.fileupload.js"></script>
 
 <!--[if lt IE 10]>
   <script src="./js/jquery.placeholder.js"></script>
@@ -284,6 +297,7 @@
 		var storagePosition = $("#storagePosition").val();
 		var storenumber = $("#storenumber").val();
 		var assetNumber = $("#assetNumber").val();
+		var ci = $("#inputEquipCategory").val();
 		
 		var regex = /^[0-9]*$/;
 		var ret = regex.test(storenumber);
@@ -330,6 +344,7 @@
 			"equipmentdetail.storagePlace": storagePlace,
 			"equipmentdetail.storagePosition": storagePosition,
 			"equipmentdetail.storenumber": storenumber,
+			"equipmentdetail.classificationid": ci,
 			"equipmentdetail.assetNumber": assetNumber
 		}
 	
@@ -379,6 +394,26 @@
 			}
 		});
 	});
+	
+	$('#uploadExcel').fileupload({
+    	url: "${webbaseurl}/uploadExcelFile.do",
+        dataType: 'json',
+		change: function (e, data) {
+        	$("#submitBtnForAlter").attr("disabled", "disabled");
+    	},
+        done: function (e, data) {
+			$("#submitBtnForAlter").removeAttr("disabled");
+            console.log(data);
+			if(data.result.tag == 0) {
+				alert("数据已经添加到数据库中！");
+			} else if(data.result.tag == 1) {
+				alert(data.result.msg);
+			} else {
+				alert("上传Excel失败！");
+			}
+            //alert(data.result.message);
+        }
+    });
 	
 </script>
 </body>

@@ -22,6 +22,8 @@ public interface EquipService {
 	public boolean deleteEquipInfo(Integer equipId);
 	//查询器材类型信息-id
 	public Equipment getEquipmentById(Integer equipId);
+	//查询器材类型信息-name
+	public Equipment getEquipmentByName(String name);
 	//查询器材类型信息--所有器材类型
 	public List<Equipment> getAllEquips();
 	//查询器材类型信息--拥有某一品类
@@ -72,6 +74,8 @@ public interface EquipService {
 	public boolean deleteEquipmentclassification(Integer equipmentclassificationId);
 	//查询单个分类
 	public Equipmentclassification getEquipmentclassificationById(Integer equipmentclassificationId);
+	//查询具体名称分类
+	public Equipmentclassification getEquipmentclassificationByName(String name);
 	//查询全部器材分类
 	public List<Equipmentclassification> getAllEquipmentclassifications();
 	//查询全部中文名称的器材分类

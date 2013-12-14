@@ -876,9 +876,11 @@
 				$("#imgFileForAlter").html(localFileName);
 				$("#modifyEPic").prop('disabled', true);
 			} else if(data.result.tag == 1) {
-				alert("上传图片失败！");
+				alert(data.result.msg);
 				localFileName = "";
 				savedFileName = "";
+			} else {
+				alert("上传图片失败！");
 			}
             //alert(data.result.message);
         }

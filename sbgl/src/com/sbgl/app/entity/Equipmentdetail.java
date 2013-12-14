@@ -34,6 +34,7 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 	private Integer storenumber;
 	private String equipserial;
 	private Integer assetNumber;
+	private Integer classificationid;
 
 	// Constructors
 
@@ -54,7 +55,7 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 			String supplyer, Float worth, String useManageDept, String manager,
 			String storagePlace, String storagePosition, String lanType,
 			Integer comId, Integer storenumber, String equipserial,
-			Integer assetNumber) {
+			Integer assetNumber, Integer classificationid) {
 		this.equipDetailid = equipDetailid;
 		this.equipmentid = equipmentid;
 		this.status = status;
@@ -77,6 +78,7 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.storenumber = storenumber;
 		this.equipserial = equipserial;
 		this.assetNumber = assetNumber;
+		this.classificationid = classificationid;
 	}
 
 	// Property accessors
@@ -255,6 +257,14 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setAssetNumber(Integer assetNumber) {
 		this.assetNumber = assetNumber;
+	}
+
+	public Integer getClassificationid() {
+		return this.classificationid;
+	}
+
+	public void setClassificationid(Integer classificationid) {
+		this.classificationid = classificationid;
 	}
 
 }

@@ -19,10 +19,10 @@
         <property name="administrationid" type="java.lang.Integer">
             <column name="administrationid" />
         </property>
-        <property name="makedate" type="java.util.Date">
+        <property name="makedate" type="java.sql.Timestamp">
             <column name="makedate" length="19" />
         </property>
-        <property name="modifydate" type="java.util.Date">
+        <property name="modifydate" type="java.sql.Timestamp">
             <column name="modifydate" length="19" />
         </property>
         <property name="sysremark" type="java.lang.String">
@@ -72,6 +72,9 @@
         </property>
         <property name="assetNumber" type="java.lang.Integer">
             <column name="assetNumber" />
+        </property>
+        <property name="classificationid" type="java.lang.Integer">
+            <column name="classificationid" />
         </property>
     </class>
 </hibernate-mapping>

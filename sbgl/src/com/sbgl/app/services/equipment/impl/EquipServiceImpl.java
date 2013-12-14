@@ -248,6 +248,7 @@ public class EquipServiceImpl implements EquipService {
 		storeEquipmentdetail.setModifydate( new Date() );
 		storeEquipmentdetail.setSysremark( equipmentdetail.getSysremark() );
 		storeEquipmentdetail.setUsermark( equipmentdetail.getUsermark() );
+		storeEquipmentdetail.setClassificationid( equipmentdetail.getClassificationid() );
 		//判断当前添加器材的型号，更新型号表相关统计字段
 		Equipment e = null;
 		if( oldEquipid == -1 && equipmentdetail.getEquipmentid() != -1 ) {  //从没有型号变为有型号
@@ -714,6 +715,18 @@ public class EquipServiceImpl implements EquipService {
 	@Override
 	public Integer getEquipDetailComId() {
 		return baseDao.getCode( "equipDetailComId" );
+	}
+
+	@Override
+	public Equipmentclassification getEquipmentclassificationByName(String name) {
+		List<Equipmentclassification> resultList = baseDao.getEntityByProperty(Equipmentclassification.class.getName(), "name", name);
+		return (Equipmentclassification) (resultList != null ? resultList.get(0) : null);
+	}
+
+	@Override
+	public Equipment getEquipmentByName(String name) {
+		List<Equipment> resultList = baseDao.getEntityByProperty(Equipment.class.getName(), "equipmentname", name);
+		return (Equipment) (resultList != null ? resultList.get(0) : null);
 	}
 	
 	

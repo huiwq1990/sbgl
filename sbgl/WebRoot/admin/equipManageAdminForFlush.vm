@@ -58,8 +58,8 @@
                     <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
                     <th class="id">资产编号</th>
                     <th class="status">机身编号</th>
-                    <th class="id">设备名称(型号)</th>
-                    <th class="id">分类</th>
+                    <th class="id">型号</th>
+                    <th class="id">分类名称</th>
 					<th class="status">状态</th>
                     <th class="id">使用/管理部门</th>
                     <th class="status">管理人</th>

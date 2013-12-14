@@ -657,18 +657,20 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		}
 		
 		for (Equipment equipment : allModel) {
-			EquipModelCourse emc = new EquipModelCourse();
-			emc.setId( String.valueOf( equipment.getEquipmentid() ) );
-			emc.setName( String.valueOf( equipment.getEquipmentname() ) );
-			
-			Equipmentclassification cf = equipService.getEquipmentclassificationById( equipment.getClassificationid() );
-			emc.setcId( String.valueOf( cf == null ? -1 : cf.getClassificationid() ) );
-			emc.setcName( cf == null ? "未分类" : cf.getName() );
-			emc.setMemo( equipment.getEquipmentdetail() );
-			emc.setImgName( equipment.getImgName() );
-			emc.setBranId( String.valueOf( equipment.getBrandid() ) );
-			
-			equipCourse.add( emc );
+			if("CH".equals( equipment.getLanType() )) {
+				EquipModelCourse emc = new EquipModelCourse();
+				emc.setId( String.valueOf( equipment.getEquipmentid() ) );
+				emc.setName( String.valueOf( equipment.getEquipmentname() ) );
+				
+				Equipmentclassification cf = equipService.getEquipmentclassificationById( equipment.getClassificationid() );
+				emc.setcId( String.valueOf( cf == null ? -1 : cf.getClassificationid() ) );
+				emc.setcName( cf == null ? "未分类" : cf.getName() );
+				emc.setMemo( equipment.getEquipmentdetail() );
+				emc.setImgName( equipment.getImgName() );
+				emc.setBranId( String.valueOf( equipment.getBrandid() ) );
+				
+				equipCourse.add( emc );
+			}
 		}
 		
 		List<String> classIds = new ArrayList<String>();
@@ -773,37 +775,37 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				this.tag = "0";
 				this.message = "添加设备成功！";
 			}
-			
-			if(equipmentdetail.getEquipmentid() != -1) {  //不是未知型号
-				Equipment equip = equipService.getEquipmentById(  equipmentdetail.getEquipmentid() );
-				
-				String stateCodeStr = equipmentdetail.getStatus();
-				Integer activeNum = equip.getActivenum() == null ? 0 : equip.getActivenum();
-				Integer maintainNum = equip.getMaintainnum() == null ? 0 : equip.getMaintainnum();
-				Integer repairNum = equip.getRepairnum() == null ? 0 : equip.getRepairnum();
-				Integer losedNum = equip.getLosednum() == null ? 0 : equip.getLosednum();
-				Integer recycleNum = equip.getRecyclingnum() == null ? 0 : equip.getRecyclingnum();
-				
-				if(stateCodeStr.equals("0")) {
-					activeNum += 1;
-				} else if(stateCodeStr.equals("1")) {
-					//TODO 借出如何获取和存储借出数量
-				} else if(stateCodeStr.equals("2")) {
-					maintainNum += 1;
-				} else if(stateCodeStr.equals("3")) {
-					repairNum += 1;
-				} else if(stateCodeStr.equals("4")) {
-					losedNum += 1;
-				} else if(stateCodeStr.equals("5")) {
-					recycleNum += 1;
-				}
-				equip.setActivenum( activeNum );
-				equip.setMaintainnum( maintainNum );
-				equip.setRepairnum( repairNum );
-				equip.setLosednum( losedNum );
-				equip.setRecyclingnum( recycleNum );
-				equipService.alterEquipInfo( equip );
-			}
+//			
+//			if(equipmentdetail.getEquipmentid() != -1) {  //不是未知型号
+//				Equipment equip = equipService.getEquipmentById(  equipmentdetail.getEquipmentid() );
+//				
+//				String stateCodeStr = equipmentdetail.getStatus();
+//				Integer activeNum = equip.getActivenum() == null ? 0 : equip.getActivenum();
+//				Integer maintainNum = equip.getMaintainnum() == null ? 0 : equip.getMaintainnum();
+//				Integer repairNum = equip.getRepairnum() == null ? 0 : equip.getRepairnum();
+//				Integer losedNum = equip.getLosednum() == null ? 0 : equip.getLosednum();
+//				Integer recycleNum = equip.getRecyclingnum() == null ? 0 : equip.getRecyclingnum();
+//				
+//				if(stateCodeStr.equals("0")) {
+//					activeNum += 1;
+//				} else if(stateCodeStr.equals("1")) {
+//					//TODO 借出如何获取和存储借出数量
+//				} else if(stateCodeStr.equals("2")) {
+//					maintainNum += 1;
+//				} else if(stateCodeStr.equals("3")) {
+//					repairNum += 1;
+//				} else if(stateCodeStr.equals("4")) {
+//					losedNum += 1;
+//				} else if(stateCodeStr.equals("5")) {
+//					recycleNum += 1;
+//				}
+//				equip.setActivenum( activeNum );
+//				equip.setMaintainnum( maintainNum );
+//				equip.setRepairnum( repairNum );
+//				equip.setLosednum( losedNum );
+//				equip.setRecyclingnum( recycleNum );
+//				equipService.alterEquipInfo( equip );
+//			}
 			
 			
 			if( returnCode != -1 ) {
@@ -1162,77 +1164,54 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			if(equipdetail.getEquipmentid() == -1) {  //如果该器材未知型号
 				
 				ec.setModelId( String.valueOf( -1 ) );
-				ec.setModelName( "未知型号" );
-				ec.setClassId( String.valueOf( -1 ) );
-				ec.setClassName( "未知分类" );
+				ec.setModelName( "*" );
+//				ec.setClassId( String.valueOf( -1 ) );
+//				ec.setClassName( "未知分类" );
 //				ec.setCode( String.valueOf( equipdetail.getEquipserial() ) );
-				ec.setState( String.valueOf( equipdetail.getStatus() ) );
-				if(equipdetail.getSysremark() != null && equipdetail.getUsermark() != null) {
-					ec.setMemo( equipdetail.getSysremark() + " " + equipdetail.getUsermark());
-				} else if(equipdetail.getSysremark() == null && equipdetail.getUsermark() != null) {
-					ec.setMemo(equipdetail.getUsermark());
-				} else if(equipdetail.getSysremark() != null && equipdetail.getUsermark() == null) {
-					ec.setMemo( equipdetail.getSysremark());
-				} else {
-					ec.setMemo("");
-				}
-				ec.setaDate( equipdetail.getAcquireDate()==null?"":sdf.format( equipdetail.getAcquireDate() ) );
-				ec.setAssetNumber( String.valueOf( equipdetail.getAssetNumber() ) );
-				ec.setEquipserial( equipdetail.getEquipserial() );
-				ec.setManager( equipdetail.getManager() );
-				ec.setManufacturer( equipdetail.getManufacturer() );
-				ec.setmDate( equipdetail.getManufactureDate()==null?"":sdf.format( equipdetail.getManufactureDate() ) );
-				ec.setStoragePlace( equipdetail.getStoragePlace() );
-				ec.setStoragePosition( equipdetail.getStoragePosition() );
-				ec.setStorenumber( String.valueOf( equipdetail.getStorenumber() ) );
-				ec.setSupplyer( equipdetail.getSupplyer() );
-				ec.setUseManageDept( equipdetail.getUseManageDept() );
-				ec.setWorth( String.valueOf( equipdetail.getWorth() ) );
-				
-				equipDetailCourse.add( ec );
 			} else {
 				Equipment e = equipService.getEquipmentById( equipdetail.getEquipmentid() );
 			
 				if(e != null) {
 					ec.setModelId( String.valueOf( e.getEquipmentid() ) );
 					ec.setModelName( e.getEquipmentname() );
-					if(e.getClassificationid() != -1) { //该设备有分类
-						Equipmentclassification ecf = equipService.getEquipmentclassificationByEquipmentModel( equipdetail.getEquipmentid() );
-						if(ecf != null) {
-							ec.setClassId(  String.valueOf( ecf.getClassificationid() ) );
-							ec.setClassName( ecf.getName() );
-						}
-					} else {
-						ec.setClassId(  String.valueOf( -1 ) );
-						ec.setClassName( "未分类" );
-					}
 //					ec.setCode( String.valueOf( equipdetail.getEquipserial() ) );
-					ec.setState( String.valueOf( equipdetail.getStatus() ) );
-					if(equipdetail.getSysremark() != null && equipdetail.getUsermark() != null) {
-						ec.setMemo( equipdetail.getSysremark() + " " + equipdetail.getUsermark());
-					} else if(equipdetail.getSysremark() == null && equipdetail.getUsermark() != null) {
-						ec.setMemo(equipdetail.getUsermark());
-					} else if(equipdetail.getSysremark() != null && equipdetail.getUsermark() == null) {
-						ec.setMemo( equipdetail.getSysremark());
-					} else {
-						ec.setMemo("");
-					}
-					ec.setaDate( equipdetail.getAcquireDate()==null?"":sdf.format( equipdetail.getAcquireDate() ) );
-					ec.setAssetNumber( String.valueOf( equipdetail.getAssetNumber() ) );
-					ec.setEquipserial( equipdetail.getEquipserial() );
-					ec.setManager( equipdetail.getManager() );
-					ec.setManufacturer( equipdetail.getManufacturer() );
-					ec.setmDate( equipdetail.getManufactureDate()==null?"":sdf.format( equipdetail.getManufactureDate() ) );
-					ec.setStoragePlace( equipdetail.getStoragePlace() );
-					ec.setStoragePosition( equipdetail.getStoragePosition() );
-					ec.setStorenumber( String.valueOf( equipdetail.getStorenumber() ) );
-					ec.setSupplyer( equipdetail.getSupplyer() );
-					ec.setUseManageDept( equipdetail.getUseManageDept() );
-					ec.setWorth( String.valueOf( equipdetail.getWorth() ) );
 					
-					equipDetailCourse.add( ec );
 				}
 			}
+			if(equipdetail.getClassificationid() != -1) { //该设备有分类
+				Equipmentclassification ecf = equipService.getEquipmentclassificationById( equipdetail.getClassificationid() );
+				if(ecf != null) {
+					ec.setClassId(  String.valueOf( ecf.getClassificationid() ) );
+					ec.setClassName( ecf.getName() );
+				}
+			} else {
+				ec.setClassId(  String.valueOf( -1 ) );
+				ec.setClassName( "未分类" );
+			}
+			ec.setState( String.valueOf( equipdetail.getStatus() ) );
+			if(equipdetail.getSysremark() != null && equipdetail.getUsermark() != null) {
+				ec.setMemo( equipdetail.getSysremark() + " " + equipdetail.getUsermark());
+			} else if(equipdetail.getSysremark() == null && equipdetail.getUsermark() != null) {
+				ec.setMemo(equipdetail.getUsermark());
+			} else if(equipdetail.getSysremark() != null && equipdetail.getUsermark() == null) {
+				ec.setMemo( equipdetail.getSysremark());
+			} else {
+				ec.setMemo("");
+			}
+			ec.setaDate( equipdetail.getAcquireDate()==null?"":sdf.format( equipdetail.getAcquireDate() ) );
+			ec.setAssetNumber( String.valueOf( equipdetail.getAssetNumber() ) );
+			ec.setEquipserial( equipdetail.getEquipserial() );
+			ec.setManager( equipdetail.getManager() );
+			ec.setManufacturer( equipdetail.getManufacturer() );
+			ec.setmDate( equipdetail.getManufactureDate()==null?"":sdf.format( equipdetail.getManufactureDate() ) );
+			ec.setStoragePlace( equipdetail.getStoragePlace() );
+			ec.setStoragePosition( equipdetail.getStoragePosition() );
+			ec.setStorenumber( String.valueOf( equipdetail.getStorenumber() ) );
+			ec.setSupplyer( equipdetail.getSupplyer() );
+			ec.setUseManageDept( equipdetail.getUseManageDept() );
+			ec.setWorth( String.valueOf( equipdetail.getWorth() ) );
+			
+			equipDetailCourse.add( ec );
 		}
 		//进行分页操作
 		/*if(equipDetailCourse != null) {
@@ -1310,23 +1289,27 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	private void doGetClassForEquipAdd() {
 		List<Equipmentclassification> ecList = equipService.getAllCHEquipmentclassifications();  //获取全部中文名称的分类
 		for (Equipmentclassification ec : ecList) {
-			if(ec.getParentid() == 0) {
-				ClassficationCourse cc = new ClassficationCourse();
-				cc.setId( String.valueOf( ec.getClassificationid() ) );
-				cc.setName( ec.getName() );
-				cc.setpId( "0" );
-				cc.setIsParent( "1" );
-				classForEquipAdd.add( cc );
-				
-				List<Equipmentclassification> tempList = equipService.getAllChildEquipmentclassificationsByParentId( ec.getClassificationid() );
-				if(tempList != null) {
-					for (Equipmentclassification ec2 : tempList) {
-						ClassficationCourse cc2 = new ClassficationCourse();
-						cc2.setId( String.valueOf( ec2.getClassificationid() ) );
-						cc2.setName( ec2.getName() );
-						cc2.setpId( String.valueOf( ec2.getParentid() ) );
-						cc2.setIsParent( "0" );
-						classForEquipAdd.add( cc2 );
+			if("CH".equals( ec.getLanType() )) {
+				if(ec.getParentid() == 0) {
+					ClassficationCourse cc = new ClassficationCourse();
+					cc.setId( String.valueOf( ec.getClassificationid() ) );
+					cc.setName( ec.getName() );
+					cc.setpId( "0" );
+					cc.setIsParent( "1" );
+					classForEquipAdd.add( cc );
+					
+					List<Equipmentclassification> tempList = equipService.getAllChildEquipmentclassificationsByParentId( ec.getClassificationid() );
+					if(tempList != null) {
+						for (Equipmentclassification ec2 : tempList) {
+							if("CH".equals( ec2.getLanType() )) {
+								ClassficationCourse cc2 = new ClassficationCourse();
+								cc2.setId( String.valueOf( ec2.getClassificationid() ) );
+								cc2.setName( ec2.getName() );
+								cc2.setpId( String.valueOf( ec2.getParentid() ) );
+								cc2.setIsParent( "0" );
+								classForEquipAdd.add( cc2 );
+							}
+						}
 					}
 				}
 			}
