@@ -25,9 +25,10 @@ import com.sbgl.util.*;
 public class ComputermodelDaoImpl extends HibernateDaoSupport implements ComputermodelDao{
 
 	private static final Log log = LogFactory.getLog(ComputermodelDaoImpl.class);
-	private final String basicComputermodelFullSql = "select a.id as computermodelid, a.computermodeltype as computermodelcomputermodeltype, a.languagetype as computermodellanguagetype, a.name as computermodelname, a.computercategoryid as computermodelcomputercategoryid, a.picpath as computermodelpicpath, a.createtime as computermodelcreatetime, a.createuserid as computermodelcreateuserid, a.computercount as computermodelcomputercount, a.availableborrowcountnumber as computermodelavailableborrowcountnumber, a.description as computermodeldescription, a.status as computermodelstatus, b.id as computercategoryid, b.computercategorytype as computercategorycomputercategorytype, b.languagetype as computercategorylanguagetype, b.parentcomputercategoryid as computercategoryparentcomputercategoryid, b.name as computercategoryname, b.createtime as computercategorycreatetime, b.createuserid as computercategorycreateuserid, b.status as computercategorystatus from Computermodel a  left join Computercategory b on a.computercategoryid=b.id ";
+	private final String basicComputermodelFullSql = "select a.id as computermodelid, a.computermodeltype as computermodelcomputermodeltype, a.languagetype as computermodellanguagetype, a.name as computermodelname, a.computercategoryid as computermodelcomputercategoryid, a.picpath as computermodelpicpath, a.createtime as computermodelcreatetime, a.createuserid as computermodelcreateuserid, a.computercount as computermodelcomputercount, a.availableborrowcountnumber as computermodelavailableborrowcountnumber, a.description as computermodeldescription, a.status as computermodelstatus, b.id as computercategoryid, b.computercategorytype as computercategorycomputercategorytype, b.languagetype as computercategorylanguagetype, b.parentcomputercategoryid as computercategoryparentcomputercategoryid, b.name as computercategoryname, b.createtime as computercategorycreatetime, b.createuserid as computercategorycreateuserid, b.status as computercategorystatus from Computermodel a " +
+			" left join Computercategory b on a.computercategoryid=b.computercategorytype ";
 	
-	private final String basicComputermodelSql = "From Computermodel  ";
+	private final String basicComputermodelSql = "From Computermodel  as a ";
 	
 	// 根据条件查询查询实体
 	@Override
@@ -65,7 +66,7 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
 	@Override
 	public List<ComputermodelFull> selectComputermodelFullByCondition(String condition) {
 		final String  sql = basicComputermodelFullSql +" " + condition;
-		
+		System.out.println(sql);
 		List<ComputermodelFull> computermodelList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
 					public Object doInHibernate(Session session)
@@ -78,7 +79,7 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
 						return query.list();
 					}
 				});		
-		return null;
+		return computermodelList;
 	}
 	
 	

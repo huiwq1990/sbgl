@@ -54,7 +54,7 @@ public interface ComputermodelService{
 
 	void addComputermodel(Computermodel ch, Computermodel en);
 
-	List<ComputermodelFull> selectComputermodelByConditionAndPage(
+	List<Computermodel> selectComputermodelByConditionAndPage(
 			String conditionSql, Page page);
 
 	int deleteComputermodelByTyp(Integer computermodeltype);

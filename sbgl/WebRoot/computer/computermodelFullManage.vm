@@ -97,12 +97,18 @@
               <div class="title pull-left">型号管理</div>
 			  <div class="tips">在此页面下管理设备型号。设备型号包含每种设备的基本信息，如设备名、设备图片、设备资料介绍等等。</div>
               <div class="filter category-filter">
-                <select id="select-categories" style="width:130px" class="select2">
-                  <option value="0" data-foo="fa">全部分类</option>
-            <option value="1" data-foo="fa">工作站</option>
-          
-            <option value="5" data-foo="fa">数字调色</option>
-          
+                <select id="select-categories" name="computercategoryid" style="width:130px" class="select2" onchange="getComputermodelById(this[selectedIndex].value);">
+					<option value="0" data-foo="fa">全部分类</option>
+#set($computercategoryListSize = $computercategoryList.size() - 1)
+##判断数据是否为空
+#if($computercategoryListSize>=0)
+#set($computercategoryListRegion = [0..$computercategoryListSize])
+##取出所有的属性名称
+#foreach($tempKey in $computercategoryListRegion)	
+	#set($temp = $computercategoryList.get($tempKey))
+					 <option value="$temp.computercategorytype" data-foo="fa" >$temp.name</option>
+#end
+#end         
                 </select>
 				
 				
@@ -115,15 +121,7 @@
 
               <div class="page pull-right clearfix">
 				
-				<!--page -->
-			  <div class="pagination">
-				<a href="#" class="first" data-action="first">&laquo;</a>
-				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
-				<input type="text" readonly="readonly" data-max-page="$!page.totalpage" />
-				<a href="#" class="next" data-action="next">&rsaquo;</a>
-				<a href="#" class="last" data-action="last">&raquo;</a>
-			  </div>
-			  <!-- end page -->
+		
 				
 				
                 <ul class="page-index nav nav-pills pull-left">
@@ -144,6 +142,11 @@
                 </div>              
               </div>
             </div><!--control-bar end-->
+			
+			
+			<div id ="refreshComputermodelTable">
+		
+			
             <div class="panel panel-default">
             
               <table class="table table-hover">
@@ -167,7 +170,7 @@
 			#set($ch = $computermodelFullListCh.get($tempKey))
 			#set($en = $computermodelFullListEn.get($tempKey))
                   <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="$!ch.computermodeltype"></td>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!ch.computermodelcomputermodeltype"></td>
                     <td>$!ch.computermodelname<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" 
 						action-type="editComputermodelFillIn" 
 						data-id="$!ch.computermodelid" 
@@ -190,7 +193,19 @@
               </table>
 
             </div>
-          </div>
+			
+						<!--page -->
+			  <div class="pagination">
+				<a href="#" class="first" data-action="first">&laquo;</a>
+				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
+				<input type="text" readonly="readonly" data-max-page="$!page.totalpage" />
+				<a href="#" class="next" data-action="next">&rsaquo;</a>
+				<a href="#" class="last" data-action="last">&raquo;</a>
+			  </div>
+			  <!-- end page -->
+				</div><!-- end refreshComputermodelTable -->
+				
+				</div>
 
       </div>
       <!--equip-wrap end-->
@@ -249,9 +264,16 @@
         <label for="modifyEquipCategory" class="col-xs-3 control-label">分类</label>
         <div class="col-xs-7">
          <select class="select2 select-white form-control" id="inputEditComputermodelComputercategoryid">
-           #foreach($tempcomputercategory in $computercategoryFullList)
-            <option value="$!tempcomputercategory.computercategoryid" >$!tempcomputercategory.computercategoryname</option>
-           #end
+#set($computercategoryListSize = $computercategoryList.size() - 1)
+##判断数据是否为空
+#if($computercategoryListSize>=0)
+#set($computercategoryListRegion = [0..$computercategoryListSize])
+##取出所有的属性名称
+#foreach($tempKey in $computercategoryListRegion)	
+	#set($temp = $computercategoryList.get($tempKey))
+					 <option value="$temp.computercategorytype" data-foo="fa" >$temp.name</option>
+#end
+#end 
           </select>
         </div>
       </div>
@@ -312,9 +334,16 @@
         <div class="col-xs-7">
           <select class="select2 select-white form-control" id="addComputermodelComputercategoryid">
 			 <option value="1000" >数据库中不存在的分类</option>
-			#foreach($tempcomputercategory in $computercategoryFullList)
-            <option value="$!tempcomputercategory.computercategoryid" >$!tempcomputercategory.computercategoryname</option>
-           #end
+#set($computercategoryListSize = $computercategoryList.size() - 1)
+##判断数据是否为空
+#if($computercategoryListSize>=0)
+#set($computercategoryListRegion = [0..$computercategoryListSize])
+##取出所有的属性名称
+#foreach($tempKey in $computercategoryListRegion)	
+	#set($temp = $computercategoryList.get($tempKey))
+					 <option value="$temp.computercategorytype" data-foo="fa" >$temp.name</option>
+#end
+#end 
           </select>
         </div>
       </div>
@@ -383,6 +412,8 @@
 	//当前页
 var currentpagenum=1;
 var totalpage=$page.totalpage;
+var computercategorytype = 0;
+
 	var editComputermodelId;
 	var editComputermodelName;
 	
@@ -595,7 +626,6 @@ $('.modal').on('click', ('button.btn-primary'), function () {
      	   // do something with the page variable
 			currentpagenum = page;
 			refreshComputermodelTable();
-		
     	}
 	});
 	
@@ -604,10 +634,13 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 			jQuery.ajax({  
 		    url: '${webbaseurl}/manageComputermodelFull.action',  
 		    type: "post",
-		    data:{pageNo:currentpagenum,callType:'ajaxType'},
+		    data:{	pageNo:currentpagenum,
+					callType:'ajaxType',
+					computercategorytype : computercategorytype
+					},
 		    dataType: 'html',
 			success: function(data){
-				$("#admin-wrap").html(data);
+				$("#refreshComputermodelTable").html(data);
 				
 				//设置分页绑定事件
 				$('.pagination').jqPagination({
@@ -616,14 +649,21 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 					current_page:currentpagenum,
 					paged: function(page) {     	  
 						currentpagenum = page;
-						refreshComputermodelTable();
-		
+						refreshComputermodelTable();		
     				}
 				});
 				}		  	  
 			});		
 	}
 
+	
+//更改model的分类	
+function getComputermodelById(tcomputercategoryid){
+	alert(tcomputercategoryid);
+	computercategorytype = tcomputercategoryid;
+	currentpagenum = 1;
+	refreshComputermodelTable();
+}
 
 	
 	

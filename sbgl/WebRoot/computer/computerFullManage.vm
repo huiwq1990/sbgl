@@ -87,14 +87,14 @@
               <div class="title pull-left">机房管理</div>
 			  <div class="tips">在此页面下管理机房信息，如机房设备的添加、修改、删除及维护等。</div>
               <div class="filter category-filter">
-                <select id="select-categories" style="width:130px" class="select2">
-                 <option value="0" data-foo="fa">全部分类</option>
+                <select id="select-categories" style="width:130px" class="select2"  onchange="getComputerByComputermodelId(this[selectedIndex].value);">
+                 <option value="0-0" data-foo="fa">全部分类</option>
   
 #foreach($categoryfull in ${computercategoryFullList})
-	<option value="$categoryfull.computercategorycomputercategorytype" data-foo="fa">$categoryfull.computercategoryname</option>
+	<option value="$!categoryfull.computercategorycomputercategorytype;0" data-foo="fa">$categoryfull.computercategoryname</option>
     #set($modelList = $computermodelByComputercategoryId.get($categoryfull.computercategorycomputercategorytype))
-	#foreach($modelfull in ${modelList})
-                  <option value="$!modelfull.computermodelcomputermodeltype" data-foo="sub">$!modelfull.computermodelname</option>
+	#foreach($model in ${modelList})
+                  <option value="$!categoryfull.computercategorycomputercategorytype;$!model.computermodeltype" data-foo="sub">$!model.name</option>
 	#end	
 	#end
                   
@@ -122,14 +122,14 @@
                 </div>              
               </div>
               <ul class="status-filter nav nav-pills pull-right">
-                <li class="active"><a href="#">全部(10)（无不显示）</a></li>
-                <li><a href="#">空闲(5)</a></li>
-                <li><a href="#">预约/使用中(2)</a></li>
-                <li><a href="#">维护(2)</a></li>
-                <li><a href="#">维修(2)</a></li>             
-                <li><a href="#">回收站(1)</a></li>
+                <li class="active"><a href="#" onclick = "getComputerByComputerstatusId(0)">全部</a></li>
+#foreach($computerstatus in ${computerstatusFullList})	
+                <li><a href="#" onclick = "getComputerByComputerstatusId($computerstatus.computerstatusid)">$computerstatus.computerstatusname</a></li>
+#end  
               </ul>
             </div><!--control-bar end-->
+			
+			<div id="refreshComputerTableDiv">
             <div class="panel panel-default table-responsive">                          
               <table class="table table-hover">
                 <thead>
@@ -162,6 +162,7 @@
                   </tr>				  
 #end
 #end
+<!--
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="2"></td>
                     <td>2145321<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
@@ -169,10 +170,23 @@
                     <td>工作站</td>
                     <td>预约/使用中</td>
                     <td><a rel="popover" class="lk" href="#" data-original-title="" title="">XXX</a>于2013-10-11至2013-10-15借用</a>。</td>
-                  </tr>                
+                  </tr>        
+				  -->
                 </tbody>
               </table>              
             </div>
+			
+			<!--page -->
+			  <div class="pagination">
+				<a href="#" class="first" data-action="first">&laquo;</a>
+				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
+				<input type="text" readonly="readonly" data-max-page="$!page.totalpage" />
+				<a href="#" class="next" data-action="next">&rsaquo;</a>
+				<a href="#" class="last" data-action="last">&raquo;</a>
+			  </div>
+			  <!-- end page -->
+				</div> <!-- end refreshComputerTableDiv-->
+			
         </div>
 
   </div><!--equip-wrap end-->
@@ -297,5 +311,94 @@
   $('input, textarea').placeholder();
   </script>
 <![endif]-->
+
+
+
+
+
+
+<script>
+
+var cookie = { 
+  		//读取COOKIES,n为COOKIE名 
+   		Get:function(n){ 
+       		var re=new RegExp(n+'=([^;]*);?','gi');
+       	    var r=re.exec(document.cookie)||[];
+       	    return (r.length>1?r[1]:null)
+   		}
+	};
+	
+	//当前页
+var currentpagenum=1;
+var totalpage=$page.totalpage;
+var computercategorytype = 0;
+var computermodeltype = 0;
+var computerstatusid = 0;
+
+	
+//换页时调用方法
+$('.pagination').jqPagination({
+    	paged: function(page) {
+     	   // do something with the page variable
+			currentpagenum = page;
+			refreshComputerTable();
+    	}
+	});
+	
+//刷新数据
+function refreshComputerTable(){
+			jQuery.ajax({  
+		    url: '${webbaseurl}/manageComputerFull.action',  
+		    type: "post",
+		    data:{	pageNo:currentpagenum,
+					callType:'ajaxType',
+					computerstatusid : computerstatusid,
+					computermodeltype:computermodeltype,
+					computercategorytype: computercategorytype
+					},
+		    dataType: 'html',
+			success: function(data){
+				$("#refreshComputerTableDiv").html(data);
+				
+				//设置分页绑定事件
+				$('.pagination').jqPagination({
+					link_string	: '/?page={page_number}',
+					max_page	: totalpage,
+					current_page:currentpagenum,
+					paged: function(page) {     	  
+						currentpagenum = page;
+						refreshComputerTable();		
+    				}
+				});
+				}		  	  
+			});		
+}//end refreshComputerTable
+
+	
+//根据状态获取Computer
+function getComputerByComputerstatusId(statusid){
+	//alert(statusid);
+	computerstatusid = statusid;
+	currentpagenum = 1;
+	refreshComputerTable();
+}
+
+
+//根据model获取Computer
+function getComputerByComputermodelId(computermodel){
+	strs=computermodel.split(";"); //字符分割  
+	computercategorytype = strs[0];
+	computermodeltype = strs[1];
+	//alert(computercategorytype);
+	//alert(computermodeltype);
+	currentpagenum = 1;
+	refreshComputerTable();
+}
+
+</script>
+
+
+
+
 </body>
 </html>

@@ -56,8 +56,7 @@ boolean isComputercategoryNameExist(String name);
 void addComputercategory(Computercategory chcomputercategory,
 		Computercategory encomputercategory);
 
-List<ComputercategoryFull> selectComputercategoryFullByConditionAndPage(
-		String sql, Page page);
+
 
 List<Computercategoryi18n> selectComputercategoryi18nByCondition(
 		String conditionSql);
@@ -67,7 +66,25 @@ List<Computercategoryi18n> selectComputercategoryi18nByConditionAndPage(
 
 int deleteComputercategoryByType(Integer computercategoryType);
 
-List<ComputercategoryFull> selectComputercategoryFullByCondition(
-		String condition);
+
+
+
+
+public List<Computercategory> selectComputercategoryByCondition(String condition);
+
+public List<Computercategory>  selectComputercategoryByConditionAndPage(String condition,final Page page);
+
+//条件查询full
+public List<ComputercategoryFull> selectComputercategoryFullByCondition(String condition);
+
+
+// 查询实体full        
+public List<ComputercategoryFull>  selectComputercategoryFullByConditionAndPage(String condition,final Page page);
+
+
+
+
+
+
 	
 }

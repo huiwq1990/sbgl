@@ -22,6 +22,12 @@
         	<result name="error">/error.vm</result> 
         </action>
 
+<!-- 进行预约 -->
+<action name="orderComputer" class="OrderComputerAction" method="orderComputer">
+        	<result name="success">/computer/computerorderindex.vm</result>
+        
+        	<result name="error">/error.vm</result> 
+        </action>
 
 <!-- default entity manage action -->
     	<action name="manageComputerorder" class="ManageComputerAction" method="manageComputerorder">

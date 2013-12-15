@@ -8,7 +8,7 @@ import java.util.List;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
-import com.sbgl.app.actions.computer.ComputerConfig;
+import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.dao.ComputerorderdetailDao;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.util.*;

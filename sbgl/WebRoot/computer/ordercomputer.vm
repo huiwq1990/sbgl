@@ -170,8 +170,8 @@
 		#foreach($tempperiod in $borrowperiodListRegion)
 			#set($tempBorrowperiod = $borrowperiodList.get($tempperiod))##取出某个时间段				
                  <tr>
-                                        <td class="time-slot">上午</td>
-			
+					<td class="time-slot">$tempBorrowperiod.peroidname</td>
+					
 			##对于可以借的每一天		
 			#foreach($tempday in [0..$computerodertablercolumn-1])		
 				#set($thisday =$tempweektableindex * $computerodertablercolumn+$tempday )
@@ -201,58 +201,7 @@
 <!-- end 构建所有Table-->
 		
 		
-		<!--tabel start-->
-							  <div class=" item table-responsive">
-                              
-                                <table class="table" data-table-name="$tempmodel.name">
-                                    <thead>
-                                      <tr>
-                                        <th class="time-slop">时间</th>
-                                        <th>09/14<br>周六</th>
-                                        <th>09/15<br>周日</th>
-                                        <th>09/16<br>周一</th>
-                                        <th>09/17<br>周二</th>
-                                        <th>09/18<br>周三</th>
-                                        <th>09/19<br>周四</th>
-                                        <th>09/12<br>周五</th>                      
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr>
-                                        <td class="time-slot">上午</td>
-                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
-                                        <td></td>
-                                      </tr>
-                                      <tr>
-                                        <td class="time-slot">下午</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
-                                        <td></td>
-                                      </tr>
-                                      <tr>
-                                        <td class="time-slot">晚上</td>
-                                        <td></td>
-                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
-                                      </tr>
-                                    </tbody>
-                                </table>
-                              
-                              </div>
-							  <!--tabel end-->
+		
 					
 							  
                             </div>        
@@ -272,40 +221,21 @@
               </div><!--post-list-warp end-->
               
               <div class="post-sidebar-warp"><!--post-sidebar-warp start-->
-                <div id="post-sidebar" class="thumbnail wizard">
+                <form action="orderComputer.action">
+			   <div id="post-sidebar" class="thumbnail wizard">
                   <h3>预约单</h3>
+				 
                   <div id="rent-list">
                     <p class="no-add">尚未添加任何预约项。</p>
-                    <div class="post-equip-group" data-name="MAC工作站">
-                      <div class="group-hd">
-                        <div class="group-name pull-left">MAC工作站</div>
-                        <div class="group-line">
-                          <hr>
-                        </div>
-                      </div>
-                      <div class="group-body">
-                        <div class="row" id="123432"><div class="item-name">9月12日 星期一 上午</div><div class="item-ctrl spinner input-group"><span class="input-group-btn"><button type="button" class="btn btn-link spinner-down"><i class="icon-minus"></i></button></span><input type="text" class="spinner-input form-control" maxlength="1"><span class="input-group-btn"><button type="button" class="btn btn-link spinner-up"><i class="icon-plus"></i></button></span><span class="input-group-btn"><button type="button" class="btn btn-link close"><i class="icon-remove"></i></button></span></div></div>
-                      </div>
-                    
-                    
-                    </div>
-                    <div class="post-equip-group" data-name="DELL工作站">
-                      <div class="group-hd">
-                        <div class="group-name pull-left">DELL工作站</div>
-                        <div class="group-line">
-                          <hr>
-                        </div>
-                      </div>
-                      <div class="group-body">
-                        <div class="row" id="123432"><div class="item-name">9月12日 星期一 上午</div><div class="item-ctrl spinner input-group"><span class="input-group-btn"><button type="button" class="btn btn-link spinner-down"><i class="icon-minus"></i></button></span><input type="text" class="spinner-input form-control" maxlength="1"><span class="input-group-btn"><button type="button" class="btn btn-link spinner-up"><i class="icon-plus"></i></button></span><span class="input-group-btn"><button type="button" class="btn btn-link close"><i class="icon-remove"></i></button></span></div></div>
-                      </div>                    
-                    </div>
+                  
                   </div>
                   <div class="form-actions actions">  
                     <button type="button" class="btn btn-white btn-clear">清 空</button>
-                    <button type="button" class="btn btn-primary">提交预约</button>
+                    <button type="submit" class="btn btn-primary">提交预约</button>
                   </div>
                 </div>
+				</from>
+				
               </div><!--post-sidebar-warp start-->
             </div>           
             
@@ -408,7 +338,7 @@ function getBookingTime(bookingData, startDate) {
 	switch(timeSlot)
 	{
 	case 0:
-		timeSlotStr = "上午";
+		timeSlotStr = "2上午";
 		break;
 	case 1:
 		timeSlotStr = "下午";

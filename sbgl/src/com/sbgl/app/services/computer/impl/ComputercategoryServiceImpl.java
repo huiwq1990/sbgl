@@ -134,23 +134,7 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 		return computercategoryDao.selectComputercategoryFullByConditionAndPage(showFullConditon,page);
 	}
 	
-	
-	@Override
-	public List<ComputercategoryFull> selectComputercategoryFullByCondition(String condition){
 
-		return computercategoryDao.selectComputercategoryFullByCondition(condition);
-	}
-	
-	/**
-	 * 
-	 */
-	@Override
-	public List<ComputercategoryFull> selectComputercategoryFullByConditionAndPage(String sql,Page page){
-//		page.setTotalCount(baseDao.getRowCount(Computercategory.class));
-//		String showFullConditon = " a.id > 0";
-		return computercategoryDao.selectComputercategoryFullByConditionAndPage(sql,page);
-	}
-	
 	
 	
 	public int countComputercategoryRow(){
@@ -206,4 +190,35 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 	public List<Computercategoryi18n> selectComputercategoryi18nByConditionAndPage(String conditionSql,final Page page){
 		return computercategoryDao.selectComputercategoryi18nByConditionAndPage(conditionSql, page);
 	}
+	
+	
+	
+	// 根据条件查询查询实体
+	@Override
+	public List<Computercategory> selectComputercategoryByCondition(String condition) {
+		 return computercategoryDao.selectComputercategoryByCondition(condition);
+	}
+	
+	
+	//  根据条件分页查询实体        
+        @Override
+        public List<Computercategory>  selectComputercategoryByConditionAndPage(String condition,final Page page) {
+              return computercategoryDao.selectComputercategoryByConditionAndPage(condition,page);
+        }
+	
+	
+	//条件查询full
+	@Override
+	public List<ComputercategoryFull> selectComputercategoryFullByCondition(String condition) {
+		return computercategoryDao.selectComputercategoryFullByCondition(condition);
+	}
+	
+	
+	// 查询实体full        
+        @Override
+        public List<ComputercategoryFull>  selectComputercategoryFullByConditionAndPage(String condition,final Page page) {
+			return computercategoryDao.selectComputercategoryFullByConditionAndPage(condition, page);
+		}
+	
+	
 }

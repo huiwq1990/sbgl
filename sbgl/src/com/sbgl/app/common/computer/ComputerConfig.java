@@ -1,4 +1,4 @@
-package com.sbgl.app.actions.computer;
+package com.sbgl.app.common.computer;
 
 public class ComputerConfig {
 	//预约提前时间
