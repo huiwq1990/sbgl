@@ -271,6 +271,7 @@
   </script>
 <![endif]-->
 <script>
+	var n = {};					//提示
 	var cookie = { 
   		//读取COOKIES,n为COOKIE名 
    		Get:function(n){ 
@@ -355,7 +356,7 @@
 		    success:function(data,textStatus,jq){  
 		    	console.log(data);
 				if(data.tag == "0") {
-					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
+					n = noty({text: data.msg, timeout: 2500, type: 'success'});
 		    		_this.parents('.modal').modal('toggle');
 					
 					$("#inputEquipId").val("");
@@ -363,7 +364,7 @@
             		$("#inputEquipStatus").select2("val", 0);
             		$("#inputEquipRemark").val("");
 				} else {
-					var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+					n = noty({text: data.msg, timeout: 2500, type: 'error'});
 				}
 	        },  
 		    error:function(data,textStatus,jq) {
@@ -399,11 +400,11 @@
     	url: "${webbaseurl}/uploadExcelFile.do",
         dataType: 'json',
 		change: function (e, data) {
-        	$("#submitBtnForAlter").attr("disabled", "disabled");
+        	n = noty({text: "请等待数据添加完成！", type: 'success'});
     	},
         done: function (e, data) {
-			$("#submitBtnForAlter").removeAttr("disabled");
-            console.log(data);
+			 n.close();
+            //console.log(data);
 			if(data.result.tag == 0) {
 				alert("数据已经添加到数据库中！");
 			} else if(data.result.tag == 1) {
