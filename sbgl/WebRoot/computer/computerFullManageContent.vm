@@ -1,4 +1,4 @@
-	<div id="refreshComputerTableDiv">
+			<div id="refreshComputerTableDiv">
             <div class="panel panel-default table-responsive">                          
               <table class="table table-hover">
                 <thead>
@@ -22,8 +22,22 @@
 			#set($ch = $computerFullListCh.get($tempKey))
 			#set($en = $computerFullListEn.get($tempKey))					
                   <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
-                    <td>$ch.computerserialnumber<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!ch.computercomputertype"></td>
+                    <td>$ch.computerserialnumber<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button"
+						action-type="editComputerFillIn" 
+						data-id="$!ch.computerid" 
+						data-serialnumber="$!ch.computerserialnumber"
+						data-remark="$!ch.computerremark"
+						
+						data-computermodelid="$!ch.computercomputermodelid" 
+						data-computerstatusid="$!ch.computercomputerstatusid" 
+						
+						data-iden="$!en.computerid" 
+						data-serialnumberen="$!en.computerserialnumber"						
+						data-remarken="$!en.computerremark"
+						
+						
+						>修改</a></td>
                     <td>$ch.computermodelname</td>
                     <td>工作站</td>
                     <td>$!ch.computerstatusname</td>
@@ -39,7 +53,7 @@
                     <td>工作站</td>
                     <td>预约/使用中</td>
                     <td><a rel="popover" class="lk" href="#" data-original-title="" title="">XXX</a>于2013-10-11至2013-10-15借用</a>。</td>
-                  </tr>   
+                  </tr>        
 				  -->
                 </tbody>
               </table>              
@@ -55,7 +69,6 @@
 			  </div>
 			  <!-- end page -->
 				</div> <!-- end refreshComputerTableDiv-->
-			
 				
  <script>
 totalpage = $page.totalpage;

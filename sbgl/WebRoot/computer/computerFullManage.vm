@@ -88,7 +88,7 @@
 			  <div class="tips">在此页面下管理机房信息，如机房设备的添加、修改、删除及维护等。</div>
               <div class="filter category-filter">
                 <select id="select-categories" style="width:130px" class="select2"  onchange="getComputerByComputermodelId(this[selectedIndex].value);">
-                 <option value="0-0" data-foo="fa">全部分类</option>
+                 <option value="0;0" data-foo="fa">全部分类</option>
   
 #foreach($categoryfull in ${computercategoryFullList})
 	<option value="$!categoryfull.computercategorycomputercategorytype;0" data-foo="fa">$categoryfull.computercategoryname</option>
@@ -102,7 +102,7 @@
               </div>              
               <div class="operate-item pull-left">
                 <a href="机房添加.html" class="btn btn-primary">添加设备</a>
-                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+                <a href="#" class="btn btn-white s-h" action-type="deleteComputerButton"><i class="icon-trash"></i> 删除</a>
               </div>
               <div class="page pull-right clearfix">
                 <ul class="page-index nav nav-pills pull-left">
@@ -153,8 +153,22 @@
 			#set($ch = $computerFullListCh.get($tempKey))
 			#set($en = $computerFullListEn.get($tempKey))					
                   <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
-                    <td>$ch.computerserialnumber<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!ch.computercomputertype"></td>
+                    <td>$ch.computerserialnumber<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button"
+						action-type="editComputerFillIn" 
+						data-id="$!ch.computerid" 
+						data-serialnumber="$!ch.computerserialnumber"
+						data-remark="$!ch.computerremark"
+						
+						data-computermodelid="$!ch.computercomputermodelid" 
+						data-computerstatusid="$!ch.computercomputerstatusid" 
+						
+						data-iden="$!en.computerid" 
+						data-serialnumberen="$!en.computerserialnumber"						
+						data-remarken="$!en.computerremark"
+						
+						
+						>修改</a></td>
                     <td>$ch.computermodelname</td>
                     <td>工作站</td>
                     <td>$!ch.computerstatusname</td>
@@ -219,66 +233,95 @@
   <div class="modal-body">
       <p>修改设备。</p>
       <form class="form-horizontal" role="form">
-        <div class="form-group">
-          <label for="modifyEquipId" class="col-xs-3 control-label">设备号</label>
-          <div class="col-xs-7">
-            <input type="text" class="form-control" id="modifyEquipId" placeholder="设备编号" value="242424">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="modifyEquipModelId" class="col-xs-3 control-label">所属设备型号</label>
-          <div class="col-xs-7">
-            <select class="select2 select-white form-control" id="modifyEquipModelId">
-             
-            <option value="1" data-foo="fa">工作站</option>
-            <option value="2" data-foo="sub">Dell工作站</option>
-            <option value="3" data-foo="sub">MAC Pro工作站</option>
-          
-            <option value="5" data-foo="fa">数字调色</option>
-            <option value="6" data-foo="sub">达芬奇</option>
-            <option value="7" data-foo="sub">宽泰</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="modifyEquipCategory" class="col-xs-3 control-label">分类</label>
-          <div class="col-xs-7">
-            <select class="select2 select-white form-control" id="modifyEquipCategory">
-             <option value="1" >工作站</option>
-			     <option value="5" >数字调色</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="modifyEquipStatus" class="col-xs-3 control-label">状态</label>
-          <div class="col-xs-7">
-            <select class="select2 select-white form-control" id="modifyEquipStatus">
-#set($computerorderFullListSize = $computerorderFullList.size() - 1)
+	
+		 <input id="inputEditComputerId" type="hidden" val=""></input>
+	   <input id="inputEditComputerIdEn" type="hidden" val=""></input>
+		<div class="form-group">
+                    <label for="inputEquipId" class="col-lg-3 control-label">设备号</label>
+                    <div class="col-xs-7">
+                      <input type="text" class="form-control" id="inputEditComputerSerialnumber" placeholder="设备编号">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-3 control-label">设备英文号</label>
+                    <div class="col-xs-7">
+                      <input type="text" class="form-control" id="inputEditComputerSerialnumberEn" placeholder="设备编号">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEquipCategory" class="col-lg-3 control-label">分类</label>
+                    <div class="col-xs-7">
+                      <select class="select2 select-white form-control" id="inputEditComputerComputercategoryid">    
+#set($listSize = $computercategoryFullList.size() - 1)
 ##判断数据是否为空
-#if($computerorderFullListSize>=0)
-#set($computerorderFullListRegion = [0..$computerorderFullListSize])
+#if($listSize>=0)
+#set($listRegion = [0..$listSize])
 ##取出所有的属性名称
-#foreach($tempKey in $computerorderFullListRegion)
-			#set($temp = $computerorderFullList.get($tempKey))
-			 <option value="$!temp.computerstatusid">$!temp.computerstatusname</option> 
+#foreach($tempKey in $listRegion)
+			#set($ch = $computercategoryFullList.get($tempKey))						
+                        <option value="$!ch.computercategoryid" >$!ch.computercategoryname</option>                      
+                        
 #end
-#end				        
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="modifyEquipRemark" class="col-xs-3 control-label">备注</label>
-          <div class="col-xs-7">
-            <textarea class="form-control" id="modifyEquipRemark" rows="3"></textarea>
-          </div>
-        </div>
+#end						
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEquipModelId" class="col-lg-3 control-label">所属设备型号</label>
+                    <div class="col-xs-7">
+                      <select class="select2 select-white form-control" id="inputEditComputerComputermodelid">
+               
+#foreach($categoryfull in ${computercategoryFullList})
+	<option value="$!categoryfull.computercategorycomputercategorytype;0" data-foo="fa">$categoryfull.computercategoryname</option>
+    #set($modelList = $computermodelByComputercategoryId.get($categoryfull.computercategorycomputercategorytype))
+	#foreach($model in ${modelList})
+                  <option value="$!model.computermodeltype" data-foo="sub">$!model.name</option>
+	#end	
+	#end
+                  
+                </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEquipStatus" class="col-lg-3 control-label">状态</label>
+                    <div class="col-xs-7">
+                      <select class="select2 select-white form-control" id="inputEditComputerStatus">                     
+#foreach($computerstatus in ${computerstatusFullList})	
+	 <option value="$computerstatus.computerstatusid">$computerstatus.computerstatusname</option>
+#end  						
+                      
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEquipRemark" class="col-lg-3 control-label">备注</label>
+                    <div class="col-xs-7">
+                      <textarea class="form-control" id="inputEditComputerRemark" rows="3"></textarea>
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipRemark" class="col-lg-3 control-label">英文备注</label>
+                    <div class="col-xs-7">
+                      <textarea class="form-control" id="inputEditComputerRemarkEn" rows="3"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-offset-2 col-xs-7">
+                      <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+                      <button class="btn btn-primary"  action-type="addComputerButton">添 加</button>
+					
+                    </div>
+                  </div>
+		
+		
       </form>
     </div>
   <div class="modal-footer">
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary">确 定</button>
+    <button class="btn btn-primary" action-type="updateComputerButton">确 定</button>
   </div>
 </div>
+<!--end 修改 -->
 
 <div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
   <img src="../img/cover-img.jpg" class="cover" alt="封面照片">
@@ -327,8 +370,9 @@ var cookie = {
        	    return (r.length>1?r[1]:null)
    		}
 	};
-	
-	//当前页
+//删除的id str
+var idsForDel;	
+//当前页
 var currentpagenum=1;
 var totalpage=$page.totalpage;
 var computercategorytype = 0;
@@ -390,11 +434,138 @@ function getComputerByComputermodelId(computermodel){
 	computercategorytype = strs[0];
 	computermodeltype = strs[1];
 	//alert(computercategorytype);
-	//alert(computermodeltype);
+//	alert(computermodeltype);
 	currentpagenum = 1;
 	refreshComputerTable();
 }
 
+
+
+//处理删除监听,构建删除id的str
+	$("body").on("click", "input[type='checkbox']", function() {
+		var num = 0;
+		if($(this).attr("id") === "chk-all") {
+			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
+		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true){
+				num++;  
+			}
+		});
+		if(num > 0){
+			$(".s-h").css({
+				"visibility": "visible",
+				"opacity": "1",
+				"filter": "alpha(opacity=100)"
+			});
+		} else {
+			$(".s-h").css({
+				"visibility": "hidden",
+				"opacity": "0",
+				"filter": "alpha(opacity=0)"
+			});
+		}
+		
+		idsForDel = "";
+		
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true) {
+				//num++;
+				idsForDel += $(this).prop("value") + ";";
+			}
+		});
+	});
+	//end checkbox
+	
+	
+
+	//delete
+	$("body").on("click", "a[action-type|=deleteComputerButton]", function() {
+		idsForDel = idsForDel.substring(0,idsForDel.length-1);
+		var postData = {
+			computerIdsForDel: idsForDel
+		}
+		//alert(idsForDel);
+		jQuery.ajax({  
+		    url:"${webbaseurl}/deleteComputerFullAjax.${strutsaction}",  
+		    type:"post",
+		    data:postData,
+			dataType: 'json',
+			success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+				if(returnJson.flag == 1){
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});		
+					refreshComputerTable();
+					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框					
+				}else{
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+				}
+			}		  	  
+		});
+	});
+	//end delete 分类
+	
+	
+	
+	
+//选择修改按钮，填充修改弹出框
+	$("body").on("click", "a[action-type|=editComputerFillIn]", function() {
+		var myData = $(this).data();
+		
+		$("#inputEditComputerId").val(myData.id);		
+		$("#inputEditComputerIdEn").val(myData.iden);	
+		$("#inputEditComputerSerialnumber").val(myData.serialnumber);		
+		$('#inputEditComputerSerialnumberEn').val(myData.serialnumberen);
+
+		$('#inputEditComputerComputermodelid').select2("val",myData.computermodelid);
+		$('#inputEditComputerStatus').select2("val",myData.computerstatusid);
+		
+		$('#inputEditComputerRemark').val(myData.remark);
+		$('#inputEditComputerRemarkEn').val(myData.remarken);
+		
+		
+	});
+// end 填充修改框
+
+//更新分类
+	$("body").on("click", "button[action-type|=updateComputerButton]", function() {
+		var _this = $(this);
+//alert( $("inputEditComputerSerialnumber").val());
+			var postData = {
+			
+				computermodelid : $("#inputEditComputerComputermodelid").val(),
+				computerstatusid : $('#inputEditComputerStatus').val(),
+				
+				id : $("#inputEditComputerId").val(),
+				computerIdEn : $("#inputEditComputerIdEn").val(),
+				
+				serialnumber :  $("#inputEditComputerSerialnumber").val(),
+				computerSerialnumberEn :  $("#inputEditComputerSerialnumberEn").val(),
+				
+				remark : $('#inputEditComputerRemark').val(),
+				computerRemarkEn : $('#inputEditComputerRemarkEn').val()
+			}
+			
+			jQuery.ajax({  
+			    url:"${webbaseurl}/updateComputerAjax.${strutsaction}",  
+			    type:"post",
+			    data:postData,
+			  	dataType: 'json',
+				success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+				if(returnJson.flag == 1){
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+					console.log('this is :'+$(this));
+					refreshComputerTable();
+				}else{
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
+				}
+		}	});	  
+
+	})
+	//end update
 </script>
 
 

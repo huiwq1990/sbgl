@@ -58,5 +58,9 @@ public interface ComputerService{
 	List<ComputerFull> selectComputerFullByCondition(String condition);
 
 
+
+	int deleteComputerByType(Integer type);
+
+
 	
 }
