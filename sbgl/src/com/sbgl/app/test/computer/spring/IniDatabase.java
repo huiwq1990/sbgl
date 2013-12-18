@@ -16,7 +16,8 @@ public class IniDatabase {
 //		ComputerorderSpringTest.intTable();
 //		ComputerorderdetailSpringTest.intTable();
 //		ComputerstatusSpringTest.intTable();
-		
+		ComputerorderclassruleSpringTest.intTable();
+		ComputerorderclassruledetailSpringTest.intTable();
 
 	}
 

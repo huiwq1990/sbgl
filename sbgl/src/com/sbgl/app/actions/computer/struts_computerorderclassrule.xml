@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="computerorderclassrule" extends="admin">
+	 
+<!-- 创建课程预约 -->
+    	<action name="createComputerorderclassrule" class="ManageComputerAction" method="createComputerorderclassrule">
+        	<result name="success">/computer/computerorderclassruleManage.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+        
+<!--查看规则-->		
+        <action name="viewComputerorderclassruleFull" class="ManageComputerorderclassrule" method="viewComputerorderclassruleFull">
+        	<result name="success">/computer/computerorderclassruleFullView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+
+
+<!-- default entity manage action -->
+    	<action name="manageComputerorderclassrule" class="ManageComputerAction" method="manageComputerorderclassrule">
+        	<result name="success">/computer/computerorderclassruleManage.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+
+<!-- entity full manage  -->		
+		<!-- default entity full manage action -->
+    	<action name="manageComputerorderclassruleFull" class="ManageComputerAction" method="manageComputerorderclassruleFull">
+        	<result name="success">/computer/computerorderclassruleFullManage.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+
+		
+		
+<!--添加实体-->
+    	<action name="addComputerorderclassrule" class="ComputerorderclassruleAction" method="addComputerorderclassrule">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerorderclassrule</param>
+			</result>
+        </action>
+		<!--
+    	<action name="addComputerorderclassruleJsp" class="ComputerorderclassruleAction" method="addComputerorderclassrule">
+        	<result type="redirectAction">
+				<param name="actionName">selectComputerorderclassruleAll</param>
+			</result>
+        </action>		
+    	<action name="addComputerorderclassruleVm" class="ComputerorderclassruleAction" method="addComputerorderclassrule">
+        	<result type="redirectAction">
+				<param name="actionName">selectComputerorderclassruleAll</param>
+			</result>
+        </action>		
+		
+		-->
+<!--edit entity-->
+        <action name="editComputerorderclassrule" class="ComputerorderclassruleAction" method="editComputerorderclassrule">
+        	<result name="success">/computer/computerorderclassruleEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="editComputerorderclassruleJsp" class="ComputerorderclassruleAction" method="editComputerorderclassrule">
+        	<result name="success">/computer/computerorderclassruleEdit.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="editComputerorderclassruleVm" class="ComputerorderclassruleAction" method="editComputerorderclassrule">
+        	<result name="success">/computer/computerorderclassruleEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>		
+<!--edit entity full-->
+        <action name="editComputerorderclassruleFull" class="ComputerorderclassruleAction" method="editComputerorderclassruleFull">
+        	<result name="success">/computer/computerorderclassruleFullEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="editComputerorderclassruleFullJsp" class="ComputerorderclassruleAction" method="editComputerorderclassruleFull">
+        	<result name="success">/computer/computerorderclassruleFullEdit.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="editComputerorderclassruleFullVm" class="ComputerorderclassruleAction" method="editComputerorderclassruleFull">
+        	<result name="success">/computer/computerorderclassruleFullEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+<!--del-->
+        <!--del entity-->
+        <action name="deleteComputerorderclassrule" class="ComputerorderclassruleAction" method="deleteComputerorderclassrule">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerorderclassrule</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteComputerorderclassruleFull" class="ComputerorderclassruleAction" method="deleteComputerorderclassruleFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerorderclassruleFull</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--更新实体-->
+        <action name="updateComputerorderclassrule" class="ComputerorderclassruleAction" method="updateComputerorderclassrule">
+        	<result name="success">/computer/computerorderclassruleUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerorderclassruleJsp" class="ComputerorderclassruleAction" method="updateComputerorderclassrule">
+        	<result name="success">/computer/computerorderclassruleUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerorderclassruleVm" class="ComputerorderclassruleAction" method="updateComputerorderclassrule">
+        	<result name="success">/computer/computerorderclassruleUpdate.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+<!--update entity full-->
+        <action name="updateComputerorderclassruleFull" class="ComputerorderclassruleAction" method="updateComputerorderclassrule">
+        	<result name="success">/computer/computerorderclassruleFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerorderclassruleFullJsp" class="ComputerorderclassruleAction" method="updateComputerorderclassrule">
+        	<result name="success">/computer/computerorderclassruleFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerorderclassruleFullVm" class="ComputerorderclassruleAction" method="updateComputerorderclassrule">
+        	<result name="success">/computer/computerorderclassruleFullUpdate.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+<!--根据id查询实体-->
+        <action name="selectComputerorderclassruleById" class="ComputerorderclassruleAction" method="selectComputerorderclassruleById">
+        	<result name="success">/computer/computerorderclassruleView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+	
+
+	
+		
+        <!--查询全部实体-->
+        <action name="selectComputerorderclassruleAll" class="ComputerorderclassruleAction" method="selectComputerorderclassruleAll">
+			<result name="success">/computer/computerorderclassrule.jsp</result>
+			<result name="error">/error.vm</result>
+		</action>
+	
+
+		
+		
+<!--根据id查询实体full-->
+
+		<action name="selectComputerorderclassruleFullById" class="ComputerorderclassruleAction" method="selectComputerorderclassruleFullById">
+		  	<result name="success">/computer/computerorderclassruleViewFull.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+
+		
+		
+        <!--查询全部实体full-->
+        <action name="selectComputerorderclassruleFullAll" class="ComputerorderclassruleAction" method="selectComputerorderclassruleFullAll">
+			<result name="success">/computer/computerorderclassruleManage.vm</result>
+			<result name="error">/error.vm</result>
+		</action>
+		
+	
+		
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="computerorderclassruleAjax" extends="json-default">
+    	<action name="addComputerorderclassruleAjax" class="ComputerorderclassruleAction" method="addComputerorderclassruleAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        <action name="deleteComputerorderclassruleAjax" class="ComputerorderclassruleAction" method="deleteComputerorderclassruleAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteComputerorderclassruleFullAjax" class="ComputerorderclassruleAction" method="deleteComputerorderclassruleFullAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+    	<action name="updateComputerorderclassruleAjax" class="ComputerorderclassruleAction" method="updateComputerorderclassruleAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
+	</package>
+
+</struts>

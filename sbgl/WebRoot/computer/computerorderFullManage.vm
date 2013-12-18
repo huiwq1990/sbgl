@@ -173,8 +173,13 @@
 						<td>待审核</td>
 						#else 
 							<td>错误</td>
-							#end
-                    <td>个人</td>                    
+					 #end
+					 
+					 #if($!temp.computerorderordertype == $ClassOrder)
+                    <td>课程</td>   
+					#else 
+							<td>个人</td>
+					 #end
                     <td>$!page.totalpage $!temp.computerorderremark</td>
                   </tr>
 #end

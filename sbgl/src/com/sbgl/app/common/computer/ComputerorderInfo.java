@@ -9,4 +9,10 @@ public class ComputerorderInfo {
 	public static int ComputerorderStatusAduitReject = 2;
 	public static int ComputerorderStatusAduitDel = 3;
 	public static int ComputerorderStatusAduitWait = 4;
+	
+	
+//	个人预约
+	public static final int IndividualOrder = 1;
+//	课程预约
+	public static final int ClassOrder = 2;
 }

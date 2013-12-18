@@ -30,12 +30,15 @@ import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
+import com.sbgl.app.entity.Computerorderclassrule;
+import com.sbgl.app.entity.ComputerorderclassruleFull;
 import com.sbgl.app.entity.Computerstatus;
 import com.sbgl.app.entity.ComputerstatusFull;
 import com.sbgl.app.services.computer.ComputerService;
 import com.sbgl.app.services.computer.ComputercategoryService;
 import com.sbgl.app.services.computer.ComputermodelService;
 import com.sbgl.app.services.computer.ComputerorderService;
+import com.sbgl.app.services.computer.ComputerorderclassruleService;
 import com.sbgl.app.services.computer.ComputerstatusService;
 import com.sbgl.util.ComputerDirective;
 import com.sbgl.util.Page;
@@ -112,9 +115,22 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	List<Computerstatus> computerstatusList = new ArrayList<Computerstatus>();
 	List<ComputerstatusFull> computerstatusFullList = new ArrayList<ComputerstatusFull>();
 	
+	
+	
+	@Resource
+	private ComputerorderclassruleService computerorderclassruleService;
+	private Computerorderclassrule computerorderclassrule = new Computerorderclassrule();//实例化一个模型
+	private ComputerorderclassruleFull computerorderclassruleFull = new ComputerorderclassruleFull();//实例化一个模型
+	List<Computerorderclassrule> computerorderclassruleList = new ArrayList<Computerorderclassrule>();
+	List<ComputerorderclassruleFull> computerorderclassruleFullList = new ArrayList<ComputerorderclassruleFull>();
+	
+	
 	private String logprefix = "exec method";
 	Page page = new Page();
 
+	
+	
+	
 	
 	
 			
@@ -476,7 +492,7 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	}
 	
 	
-	//管理 查询
+	//管理PC状态
 	public String manageComputerstatusFull(){
 		log.info("exec action method:manageComputerstatusFull");
 		
@@ -498,6 +514,34 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		return SUCCESS;
 	}			
 			
+	
+	
+	//管理课程预约规则
+	public String manageComputerorderclassruleFull(){
+		log.info("exec action method:manageComputerorderclassruleFull");
+		
+//      分页查询		
+		page.setPageNo(pageNo);
+		//设置总数量，在service中设置
+		//page.setTotalpage(computerorderclassruleService.countComputerorderclassruleRow());
+		computerorderclassruleFullList  = computerorderclassruleService.selectComputerorderclassruleFullByPage(page);
+		
+//		查询全部
+//		computerorderclassruleFullList  = computerorderclassruleService.selectComputerorderclassruleFullAll();
+
+		if(computerorderclassruleFullList == null){
+			computerorderclassruleFullList = new ArrayList<ComputerorderclassruleFull>();
+		}
+//		for(int i = 0; i < computerorderclassruleFullList.size(); i++){
+//			System.out.println("id="+computerorderclassruleFullList.get(i).getLoginusername());
+//		}
+		return SUCCESS;
+	}			
+	
+	public String createComputerorderclassrule(){
+		
+		return SUCCESS;
+	}
 	
 	@Override
 	public void setSession(Map<String, Object> arg0) {
@@ -824,6 +868,51 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 
 	public void setComputerstatusid(int computerstatusid) {
 		this.computerstatusid = computerstatusid;
+	}
+
+	public ComputerorderclassruleService getComputerorderclassruleService() {
+		return computerorderclassruleService;
+	}
+
+	public void setComputerorderclassruleService(
+			ComputerorderclassruleService computerorderclassruleService) {
+		this.computerorderclassruleService = computerorderclassruleService;
+	}
+
+	public Computerorderclassrule getComputerorderclassrule() {
+		return computerorderclassrule;
+	}
+
+	public void setComputerorderclassrule(
+			Computerorderclassrule computerorderclassrule) {
+		this.computerorderclassrule = computerorderclassrule;
+	}
+
+	public ComputerorderclassruleFull getComputerorderclassruleFull() {
+		return computerorderclassruleFull;
+	}
+
+	public void setComputerorderclassruleFull(
+			ComputerorderclassruleFull computerorderclassruleFull) {
+		this.computerorderclassruleFull = computerorderclassruleFull;
+	}
+
+	public List<Computerorderclassrule> getComputerorderclassruleList() {
+		return computerorderclassruleList;
+	}
+
+	public void setComputerorderclassruleList(
+			List<Computerorderclassrule> computerorderclassruleList) {
+		this.computerorderclassruleList = computerorderclassruleList;
+	}
+
+	public List<ComputerorderclassruleFull> getComputerorderclassruleFullList() {
+		return computerorderclassruleFullList;
+	}
+
+	public void setComputerorderclassruleFullList(
+			List<ComputerorderclassruleFull> computerorderclassruleFullList) {
+		this.computerorderclassruleFullList = computerorderclassruleFullList;
 	}
 
 

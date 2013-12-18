@@ -96,7 +96,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 	
 	HashMap<Integer,ArrayList<String>> showDateMap = new HashMap<Integer,ArrayList<String>>();
 
-	public String toOderComputerPage(){
+	public String toOrderComputerPage(){
 		String currentlanguagetype = "0";
 		String getAllComputermodelFullTypeSql = " where a.languagetype="+currentlanguagetype+" ";
 //		String conditionSql = " where ";
