@@ -113,7 +113,7 @@
                   <div class="col-3">                  
                       <div class="thumbnail">
                         <div class="hd clearfix">
-                          <h4 class="pull-left"><a class="lk" href="设备预约详细内容页.html">$!temp.computerordertitle</a></h4>
+                          <h4 class="pull-left"><a class="lk" href="${webbaseurl}/viewComputerorder.action?computerorderId=$temp.computerorderid">$!temp.computerordertitle</a></h4>
                         </div>
                         <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> 设备预约<br/>个人预约</div>
                         <div class="caption">

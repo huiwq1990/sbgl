@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
@@ -84,8 +85,11 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,M
 	}
 	
 	
-	
-	public String toComputerorderIndexPage(){
+	/**
+	 * 查看借用清单列表
+	 * @return
+	 */
+	public String computerorderList(){
 		
 		//根据用户查询预约单
 		int userid = 1;
@@ -99,6 +103,53 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,M
 		
 		return SUCCESS;
 	}
+	
+	
+	
+	/**
+	 * 查看订单详情
+	 * @return
+	 */
+	public String viewComputerorder(){
+		System.out.println("viewComputerorder "+ computerorderId);
+		computerorderFull = computerorderService.selectComputerorderFullById(computerorderId);
+		//如果找不到相应的预约单，返回错误
+		if(computerorderFull == null){
+//			Log.info("");
+			System.out.println("wrong");
+			return "PageNotFound";
+		}
+		
+		String sql = " where a.computerorderid = "+computerorderId  + " and c.languagetype="+ComputerConfig.languagech ;
+		computerorderdetailFullList = computerorderdetailService.selectComputerorderdetailFullByCondition(sql);
+//		System.out.println("computerorderdetailFullList size:"+computerorderdetailFullList.size());
+		
+		if(computerorderdetailFullList==null){
+			computerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
+		}
+		for (int i = 0; i < computerorderdetailFullList.size(); i++) {
+			int tempComputermodelId = computerorderdetailFullList.get(i).getComputerorderdetailcomputermodelid();
+			if(computerorderdetailFullMapByComputermodelId.containsKey(tempComputermodelId)){
+				computerorderdetailFullMapByComputermodelId.get(tempComputermodelId).add(computerorderdetailFullList.get(i));
+			}else{
+				ArrayList<ComputerorderdetailFull> tempComputerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
+				tempComputerorderdetailFullList.add(computerorderdetailFullList.get(i));
+				computerorderdetailFullMapByComputermodelId.put(tempComputermodelId,tempComputerorderdetailFullList);
+			}
+		}
+		
+		if(computerorderdetailFullMapByComputermodelId == null){
+			computerorderdetailFullMapByComputermodelId = new HashMap<Integer,ArrayList<ComputerorderdetailFull>>();
+		}
+		System.out.println("computerorderdetailFullMapByComputermodelId size:"+computerorderdetailFullMapByComputermodelId.size());
+		
+		return SUCCESS;
+	}
+	
+	
+	
+	
+	
 	
 	
 	@Override

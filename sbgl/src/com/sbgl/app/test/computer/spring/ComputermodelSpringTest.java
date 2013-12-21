@@ -14,6 +14,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 
 
+import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.app.services.computer.ComputermodelService;
@@ -24,7 +25,7 @@ public class ComputermodelSpringTest {
 
 	public static void main(String[] args) {
 //		intTable();
-iniDouble();
+//iniDouble();
 //		addComputermodel();
 //		selectComputermodelAll();
 //		deleteComputermodel();
@@ -32,7 +33,7 @@ iniDouble();
 //		updateComputermodel();
 //		selectComputermodelById(1L);
 //		selectComputermodelFullById(1L);
-//      selectComputermodelFullAll();
+      selectComputermodelFullAll();
 
 	}
 	
@@ -242,7 +243,8 @@ iniDouble();
 		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
 		
 		ComputermodelService computermodelService = (ComputermodelService)cxt.getBean("computermodelService");
-		List<Computermodel> objList  = computermodelService.selectComputermodelAll();
+		 String countsql = " where a.languagetype="+ComputerConfig.languagech;
+		List<Computermodel> objList  = computermodelService.selectComputermodelByCondition(countsql);
 		for(int i = 0; i < objList.size(); i++){
 			System.out.println("id="+objList.get(i).getId());
 		}
@@ -278,13 +280,19 @@ iniDouble();
 		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
 		
 		ComputermodelService computermodelService = (ComputermodelService)cxt.getBean("computermodelService");
-		List<ComputermodelFull> objList  = computermodelService.selectComputermodelFullAll();
+		String sql = " where a.languagetype="+ComputerConfig.languagech+" order by a.computermodeltype,a.languagetype";
+//		String sqlch =  " where a.languagetype="+ComputerConfig.languagech+" order by a.computermodeltype,a.languagetype";
+//		String sqlch = " where a.languagetype="+ComputerConfig.languagech+" and b.languagetype="+ComputerConfig.languagech+"  order by a.computermodeltype,a.languagetype";
+		String sqlch = " where a.languagetype="+ComputerConfig.languagech+" and b.languagetype="+ComputerConfig.languagech+" and a.computercategoryid=1  order by a.computermodeltype,a.languagetype";
+		
+		
+		List<ComputermodelFull> objList  = computermodelService.selectComputermodelFullByCondition(sqlch);
 		if(objList == null){
 			System.out.println("objList is null");
 			return;
 		}
 		for(int i = 0; i < objList.size(); i++){
-	//		System.out.println("id="+objList.get(i).getId());
+			System.out.println("id="+objList.get(i).getComputermodelname());
 		}
 	}
 

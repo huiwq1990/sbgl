@@ -125,11 +125,18 @@
                 </div>              
               </div>
               <ul class="status-filter nav nav-pills pull-right">
-                <li class="active"><a href="#">待审核(4)</a></li>
-                <li><a href="#">已完成</a></li>
+				
+			    <li class="active"><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitAll)">全部</a></li>
+				
+				<li><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitPass)">审核通过</a></li>
+                <li><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitWait)">待审核</a></li>
+				<li><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitReject)">驳回</a></li>
+				<li><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitDel)">删除</a></li>
               </ul>
             </div><!--control-bar end-->
             <div class="panel panel-default table-responsive">
+				
+			<div id="computerordermanagetable" >
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -156,17 +163,24 @@
                     <td>$!temp.computerorderserialnumber<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
                     <td>$!temp.loginusername</td>
                     <td><a href="${webbaseurl}/toAuditComputerorderPage.${strutsaction}?computerorderId=$!temp.computerorderid">$!temp.computerordertitle</a></td>
-                    #if($!temp.computerorderstatus ==1)
+                     #if($!temp.computerorderstatus == $ComputerorderStatusAduitPass)
 						<td>审核通过</td>
-					#elseif($!temp.computerorderstatus ==2)
+					#elseif($!temp.computerorderstatus ==$ComputerorderStatusAduitReject)
 						<td>驳回</td>
-						#elseif($!temp.computerorderstatus ==3)
+						#elseif($!temp.computerorderstatus ==$ComputerorderStatusAduitDel)
 						<td>删除</td>
-						#else
-							<td>待审核</td>
-							#end
-                    <td>个人</td>                    
-                    <td>$!temp.computerorderremark</td>
+						#elseif($!temp.computerorderstatus ==$ComputerorderStatusAduitWait)
+						<td>待审核</td>
+						#else 
+							<td>错误</td>
+					 #end
+					 
+					 #if($!temp.computerorderordertype == $ClassOrder)
+                    <td>课程</td>   
+					#else 
+							<td>个人</td>
+					 #end
+                    <td>$!page.totalpage $!temp.computerorderremark</td>
                   </tr>
 #end
 #end					
@@ -182,7 +196,19 @@
               
                 </tbody>
               </table>
-              
+				
+			   <!--page -->
+			  <div class="pagination">
+				<a href="#" class="first" data-action="first">&laquo;</a>
+				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
+				<input type="text" readonly="readonly" data-max-page="$!page.totalpage" />
+				<a href="#" class="next" data-action="next">&rsaquo;</a>
+				<a href="#" class="last" data-action="last">&raquo;</a>
+			  </div>
+			  <!-- end page -->
+			 </div> <!--end computerordermanagetable-->
+			  
+			  
             </div>
           </div>
 
@@ -235,5 +261,69 @@
   $('input, textarea').placeholder();
   </script>
 <![endif]-->
+<script>
+var cookie = { 
+  		//读取COOKIES,n为COOKIE名 
+   		Get:function(n){ 
+       		var re=new RegExp(n+'=([^;]*);?','gi');
+       	    var r=re.exec(document.cookie)||[];
+       	    return (r.length>1?r[1]:null)
+   		}
+	};
+
+//分页信息
+var currentpagenum=1;
+var totalpage=$page.totalpage;
+var computerorderStatus = $computerorderStatus;
+//换页时调用方法
+$('.pagination').jqPagination({
+    	paged: function(page) {
+     	   // do something with the page variable
+		   alert("next page");
+			currentpagenum = page;
+			refreshComputerorderTable();
+    	}
+});
+//刷新换页后的信息
+function refreshComputerorderTable(){
+			jQuery.ajax({  
+		    url: '${webbaseurl}/manageComputerorderFull.action',  
+		    type: "post",
+		    data:{	pageNo : currentpagenum,
+					callType:'ajaxType',
+					computerorderStatus : computerorderStatus
+					},
+		    dataType: 'html',
+			success: function(data){
+				//alert("refreshing");
+				$("#computerordermanagetable").html(data);
+				
+				$('.pagination').jqPagination({
+					link_string	: '/?page={page_number}',
+					max_page	: totalpage,
+					current_page:currentpagenum,
+					paged: function(page) {     	  
+						currentpagenum = page;
+						computerorderStatus : computerorderStatus;
+						refreshComputerorderTable();
+		
+    				}
+				});
+				}		  	  
+			});		
+}
+
+
+function getComputerorderByAuditStatus(status){
+	//alert("getComputerorderByAuditStatus");
+	currentpagenum = 1;
+	computerorderStatus = status;
+	
+	refreshComputerorderTable();
+}
+
+
+
+</script>
 </body>
 </html>

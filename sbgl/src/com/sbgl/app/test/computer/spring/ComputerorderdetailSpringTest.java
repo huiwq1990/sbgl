@@ -14,7 +14,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 
 
-import com.sbgl.app.actions.computer.ComputerConfig;
+import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.services.computer.ComputerorderdetailService;

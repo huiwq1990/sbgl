@@ -300,7 +300,7 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	//ajax 修改
 	public String updateComputercategoryAjax(){
 		log.info(logprefix + "updateComputercategoryAjax,id=");
-		ReturnJson returnJson = new ReturnJson();
+		
 		try {
 			
 //			ch

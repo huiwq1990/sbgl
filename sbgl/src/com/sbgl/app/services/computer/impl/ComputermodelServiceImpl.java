@@ -189,8 +189,8 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 	 * @return
 	 */
 	@Override
-	public List<ComputermodelFull> selectComputermodelByConditionAndPage(String conditionSql,Page page){
-		return computermodelDao.selectComputermodelFullByConditionAndPage(conditionSql, page);
+	public List<Computermodel> selectComputermodelByConditionAndPage(String conditionSql,Page page){
+		return computermodelDao.selectComputermodelByConditionAndPage(conditionSql, page);
 	}
 	
 	@Override

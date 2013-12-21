@@ -56,17 +56,12 @@ public class ComputerorderclassruleSpringTest {
 
 
 		try {
-			HashMap<String, Method> map = ReflectUtil.ConverBean(Computerorderclassrule.class);
-			Object obj;
+			
 			List<String> dataList = new ArrayList<String>();
 			File f = new File( "D:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computerorderclassrule");
 			dataList = FileUtils.readLines(f);
 			String[] attrs = dataList.get(0).split(",");
 			for(int i=1; i < dataList.size();i++){
-				obj = Computerorderclassrule.class.newInstance();
-
-				String[] datas = dataList.get(i).split(",");
-				
 				
 				computerorderclassruleService.addComputerorderclassrule(getObj(attrs,dataList.get(i)));
 			}

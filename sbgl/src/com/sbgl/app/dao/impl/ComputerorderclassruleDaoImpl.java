@@ -78,7 +78,7 @@ public class ComputerorderclassruleDaoImpl extends HibernateDaoSupport implement
 						return query.list();
 					}
 				});		
-		return null;
+		return computerorderclassruleList;
 	}
 	
 	
@@ -103,7 +103,7 @@ public class ComputerorderclassruleDaoImpl extends HibernateDaoSupport implement
                 if (computerorderclassruleList != null && !computerorderclassruleList.isEmpty()) {
                         return computerorderclassruleList;
                 }
-                return null;
+                return computerorderclassruleList;
         }
 	
 	

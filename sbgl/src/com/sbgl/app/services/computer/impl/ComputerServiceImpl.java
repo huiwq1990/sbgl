@@ -69,7 +69,18 @@ public class ComputerServiceImpl implements ComputerService{
 	public int deleteComputer(Computer computer) {
 		return deleteComputer(computer.getId());
 	}
-
+	
+	/**
+	 * 根据类型删除
+	 * @param computermodeltype
+	 * @return
+	 */
+	@Override
+	public int deleteComputerByType(Integer type){
+		String sql = "delete from Computer where computertype="+type;
+		baseDao.createSQL(sql);
+		return 1;
+	}
 	
 	@Override
 	public void updateComputer(Computer computer){

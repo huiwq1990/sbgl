@@ -49,9 +49,15 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	Page page = new Page();
 	Integer pageNo=1;	
 	
-	
+
+	private int  computerIdEn;
 	private String  computerSerialnumberEn;
 	private String  computerRemarkEn;
+	
+	ReturnJson returnJson = new ReturnJson();
+	//删除
+	String computerIdsForDel;
+	
 //  manage Computer
 	public String manageComputer(){
 		log.info(logprefix+"manageComputerFull");
@@ -147,80 +153,65 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 		return SUCCESS;
 	}
 
-//删除
-	public String deleteComputer( ){
-		try{
-			if(computer.getId() != null && computer.getId() > 0){
-				computerService.deleteComputer(computer.getId());
-				actionMsg = getText("deleteComputerSuccess");
-			}else{
-				System.out.println("删除的id不存在");
-				actionMsg = getText("deleteComputerFail");
-			}
-			
-			return SUCCESS;
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerAction的方法：deleteComputer错误"+e);
-		}
-		return "Error";
-	}
-	
-//删除Ajax
-	public String deleteComputerAjax( ){
-		try{
-			if(computer.getId() != null && computer.getId() >= 0){
-				computerService.deleteComputer(computer.getId());				
-			}
-			
-			return "IdNotExist";
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerAction的方法：deleteComputer错误"+e);
-		}
-		return "Error";
-	}
 
-	
-//	del entityfull
-	public String deleteComputerFull(){
-		try {
+	//del entityfull Ajax
+	public String deleteComputerFullAjax( ){
+		log.info(logprefix + "deleteComputercategoryFullAjax");
+		ReturnJson returnJson = new ReturnJson();
 		
-			Integer getId = computer.getId();
-			if(getId != null && getId < 0){
-				log.info("删除的id不规范");
-				return "Error";
+		try{
+			String ids[] = computerIdsForDel.split(";");
+			for(int i=0; i < ids.length;i++){
+				
+				Integer typeId = Integer.valueOf(ids[i]);			
+				log.info(typeId);
+				//检查id
+				/*
+				if(tempDelId == null || tempDelId < 0){
+					returnJson.setFlag(0);
+					returnJson.setReason("删除的id不规范");
+					log.info("删除的id不规范");
+					JSONObject jo = JSONObject.fromObject(returnJson);
+					this.returnStr = jo.toString();
+					return SUCCESS;
+				}	
+				//del
+				Computercategory temp = computercategoryService.selectComputercategoryById(typeId);			
+				if (temp != null) {			
+					//将相应的PC类型分类设置成-1
+					computermodelService.updateCategoryComputermodel(typeId);
+					computercategoryService.deleteComputercategory(typeId);
+					
+				} else {
+					log.info("删除的id不存在");		
+					returnJson.setFlag(0);
+					returnJson.setReason("删除的id不存在");
+					JSONObject jo = JSONObject.fromObject(returnJson);
+					this.returnStr = jo.toString();
+					return SUCCESS;
+				}
+				*/
+//				computermodService.updateCategoryComputermodel(typeId);
+				computerService.deleteComputerByType(typeId);
+				
+				
+				
 			}
-		
-		
-			Computer temp = computerService.selectComputerById(getId);
-			if (temp != null) {
-				computerService.deleteComputer(getId);
-				return SUCCESS;
-			} else {
-				log.info("删除的id不存在");
-				return "Error";
-			}
+			returnJson.setFlag(1);
+			returnJson.setReason("删除成功!");
+			JSONObject jo = JSONObject.fromObject(returnJson);
+			this.returnStr = jo.toString();
+			return SUCCESS;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "Error";
-	}
-	
-	//del entityfull Ajax
-	public String deleteComputerFullAjax( ){
-		try{
-			if(computer.getId() != null && computer.getId() >= 0){
-				computerService.deleteComputer(computer.getId());				
-			}
-			
-			return "IdNotExist";
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerAction的方法：deleteComputer错误"+e);
-		}
-		return "Error";
+		
+		returnJson.setFlag(0);
+		returnJson.setReason("删除的内部错误");
+		JSONObject jo = JSONObject.fromObject(returnJson);
+		this.returnStr = jo.toString();
+		return SUCCESS;
 	}
 
 //修改
@@ -251,40 +242,41 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	
 	//ajax 修改
 	public String updateComputerAjax(){
-		log.info(logprefix + "updateComputerAjax,id="+computer.getId());
-		ReturnJson returnJson = new ReturnJson();
+		log.info(logprefix + "updateComputerAjax,id="+computer.getId()+"  " + computerIdEn+"  end");
+
 		try {
-			if(computer.getId() != null && computer.getId() > 0){				
-				Computer tempComputer = computerService.selectComputerById(computer.getId());
-				
-				
-//              选择能更改的属性，与界面一致	
-  				tempComputer.setSerialnumber(computer.getSerialnumber());
-  				tempComputer.setComputermodelid(computer.getComputermodelid());
-  				tempComputer.setCreatetime(computer.getCreatetime());
-  				tempComputer.setCreateuserid(computer.getCreateuserid());
-  				tempComputer.setStatus(computer.getStatus());
-  				tempComputer.setRemark(computer.getRemark());
- 
-				
-				computerService.updateComputer(tempComputer);		
-				returnJson.setFlag(1);		
-				JSONObject jo = JSONObject.fromObject(returnJson);
-				this.returnStr = jo.toString();
-				//actionMsg = getText("viewComputerSuccess");
-				return SUCCESS;
-				
-			}else{
-				actionMsg = getText("viewComputerFail");
-				log.info(logprefix + "updateComputerAjax fail");
-			}			
+			
+			System.out.println("computer.getSerialnumber()"+computer.getSerialnumber());
+//			ch
+			Computer tempComputer = computerService.selectComputerById(computer.getId());
+			tempComputer.setSerialnumber(computer.getSerialnumber());
+			tempComputer.setComputermodelid(computer.getComputermodelid());			
+			tempComputer.setComputerstatusid(computer.getComputerstatusid());
+			tempComputer.setRemark(computer.getRemark());
+		
+			computerService.updateComputer(tempComputer);
+//			en
+			tempComputer = computerService.selectComputerById(computerIdEn);
+			tempComputer.setSerialnumber(computerSerialnumberEn);
+			tempComputer.setComputermodelid(computer.getComputermodelid());			
+			tempComputer.setComputerstatusid(computer.getComputerstatusid());
+			tempComputer.setRemark(computerRemarkEn);
+			computerService.updateComputer(tempComputer);
+			
+			returnJson.setFlag(1);		
+			returnJson.setReason("修改成功!");
+			JSONObject jo = JSONObject.fromObject(returnJson);				
+			this.returnStr = jo.toString();
+			//actionMsg = getText("viewComputercategorySuccess");
+			return SUCCESS;
 			
 		}catch(Exception e){
 			e.printStackTrace();
 			log.error("类ComputerAction的方法：viewComputer错误"+e);
 		}
 
-			returnJson.setFlag(0);		
+			returnJson.setFlag(0);	
+			returnJson.setReason("修改失败");
 			JSONObject jo = JSONObject.fromObject(returnJson);
 			this.returnStr = jo.toString();
 			return SUCCESS;
@@ -669,6 +661,30 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 
 	public void setComputerRemarkEn(String computerRemarkEn) {
 		this.computerRemarkEn = computerRemarkEn;
+	}
+
+	public ReturnJson getReturnJson() {
+		return returnJson;
+	}
+
+	public void setReturnJson(ReturnJson returnJson) {
+		this.returnJson = returnJson;
+	}
+
+	public String getComputerIdsForDel() {
+		return computerIdsForDel;
+	}
+
+	public void setComputerIdsForDel(String computerIdsForDel) {
+		this.computerIdsForDel = computerIdsForDel;
+	}
+
+	public int getComputerIdEn() {
+		return computerIdEn;
+	}
+
+	public void setComputerIdEn(int computerIdEn) {
+		this.computerIdEn = computerIdEn;
 	}
 	
 	

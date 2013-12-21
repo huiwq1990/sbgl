@@ -4,24 +4,30 @@
 	 <package name="computerorder" extends="admin">
 
 <!-- 审核订单 -->
-<action name="toAuditComputerorderPage" class="ManageComputerorder" method="toAuditComputerorderPage">
+		<action name="toAuditComputerorderPage" class="ManageComputerorder" method="toAuditComputerorderPage">
         	<result name="success">/computer/computerorderaudit.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
         
 <!-- 转向下单页面 -->
-<action name="toOderComputerPage" class="OrderComputerAction" method="toOderComputerPage">
+<action name="toOrderComputerPage" class="OrderComputerAction" method="toOrderComputerPage">
         	<result name="success">/computer/ordercomputer.vm</result>
         	<result name="error">/error.vm</result> 
 </action>
 
-<!-- 用户查看自己的预约 -->
-<action name="toComputerorderIndexPage" class="ManageComputerorder" method="toComputerorderIndexPage">
+		<!-- 用户查看自己的预约列表-->
+		<action name="computerorderList" class="ManageComputerorder" method="computerorderList">
         	<result name="success">/computer/computerorderindex.vm</result>
         
         	<result name="error">/error.vm</result> 
         </action>
-
+       
+<!-- 进行预约 -->
+<action name="orderComputer" class="OrderComputerAction" method="orderComputer">
+        	<result name="success">/computer/computerorderindex.vm</result>
+        
+        	<result name="error">/error.vm</result> 
+        </action>
 
 <!-- default entity manage action -->
     	<action name="manageComputerorder" class="ManageComputerAction" method="manageComputerorder">
@@ -81,32 +87,7 @@
         </action>		
 		
 		-->
-<!--edit entity-->
-        <action name="editComputerorder" class="ComputerorderAction" method="editComputerorder">
-        	<result name="success">/computer/computerorderEdit.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<action name="editComputerorderJsp" class="ComputerorderAction" method="editComputerorder">
-        	<result name="success">/computer/computerorderEdit.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<action name="editComputerorderVm" class="ComputerorderAction" method="editComputerorder">
-        	<result name="success">/computer/computerorderEdit.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>		
-<!--edit entity full-->
-        <action name="editComputerorderFull" class="ComputerorderAction" method="editComputerorderFull">
-        	<result name="success">/computer/computerorderFullEdit.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<action name="editComputerorderFullJsp" class="ComputerorderAction" method="editComputerorderFull">
-        	<result name="success">/computer/computerorderFullEdit.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<action name="editComputerorderFullVm" class="ComputerorderAction" method="editComputerorderFull">
-        	<result name="success">/computer/computerorderFullEdit.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
+
 		
 		
 <!--del-->
@@ -158,37 +139,15 @@
         	<result name="success">/computer/computerorderView.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
-		
-<!-- View entity-->		
-        <action name="viewComputerorder" class="ComputerorderAction" method="viewComputerorder">
-        	<result name="success">/computer/computerorderView.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<!--go to view jsp-->
-		<action name="viewComputerorderJsp" class="ComputerorderAction" method="viewComputerorder">
-        	<result name="success">/computer/computerorderView.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<!-- go to view vm-->
-		<action name="viewComputerorderVm" class="ComputerorderAction" method="viewComputerorder">
+
+ <!-- 用户查看自己的预约 详情-->
+		<action name="viewComputerorder" class="ManageComputerorder" method="viewComputerorder">
         	<result name="success">/computer/computerorderView.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>		
-<!-- View entity full-->		
-        <action name="viewComputerorderFull" class="ComputerorderAction" method="viewComputerorderFull">
-        	<result name="success">/computer/computerorderFullView.vm</result>
+        
         	<result name="error">/error.vm</result> 
         </action>
-		<!--go to view jsp-->
-		<action name="viewComputerorderFullJsp" class="ComputerorderAction" method="viewComputerorderFull">
-        	<result name="success">/computer/computerorderFullView.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<!-- go to view vm-->
-		<action name="viewComputerorderFullVm" class="ComputerorderAction" method="viewComputerorderFull">
-        	<result name="success">/computer/computerorderFullView.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>		
+
+	
 		
         <!--查询全部实体-->
         <action name="selectComputerorderAll" class="ComputerorderAction" method="selectComputerorderAll">

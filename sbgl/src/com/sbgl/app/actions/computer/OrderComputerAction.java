@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.common.computer.BorrowperiodUtil;
+import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.Borrowperiod;
 import com.sbgl.app.entity.Computer;
 import com.sbgl.app.entity.ComputerFull;
@@ -77,6 +78,9 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 	private ComputerorderService computerorderService;
 
 	List<ComputerorderFull> computerorderFullList = new ArrayList<ComputerorderFull>();
+	
+	
+	List<String> ordernum = new ArrayList<String>();
 
 	private String logprefix = "exec method";
 	
@@ -92,7 +96,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 	
 	HashMap<Integer,ArrayList<String>> showDateMap = new HashMap<Integer,ArrayList<String>>();
 
-	public String toOderComputerPage(){
+	public String toOrderComputerPage(){
 		String currentlanguagetype = "0";
 		String getAllComputermodelFullTypeSql = " where a.languagetype="+currentlanguagetype+" ";
 //		String conditionSql = " where ";
@@ -266,7 +270,14 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 
 
 
-	
+	public String orderComputer(){
+		System.out.println("orderComputer");
+		for(int i=0; i < ordernum.size(); i++){
+			System.out.println(ordernum.get(i));
+		}
+		
+		return SUCCESS;
+	}
 	
 	
 	public Map<String, Object> getSession() {
@@ -334,6 +345,14 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 	}
 
 
+
+	public List<String> getOrdernum() {
+		return ordernum;
+	}
+
+	public void setOrdernum(List<String> ordernum) {
+		this.ordernum = ordernum;
+	}
 
 	public void setComputerFullList(List<ComputerFull> computerFullList) {
 		this.computerFullList = computerFullList;
