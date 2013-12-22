@@ -3202,7 +3202,7 @@ DESTINATION 0 新宋体,8,N</a:FontList>
 </o:ReferenceSymbol>
 <o:ReferenceSymbol Id="o10">
 <a:ModificationDate>1375707775</a:ModificationDate>
-<a:Rect>((31060,-71498), (39439,-49936))</a:Rect>
+<a:Rect>((33047,-71498), (37452,-49936))</a:Rect>
 <a:ListOfPoints>((37452,-49936),(37452,-60295),(33047,-60295),(33047,-71498))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>1</a:ArrowStyle>
@@ -3421,7 +3421,7 @@ DESTINATION 0 新宋体,8,N</a:FontList>
 <o:ReferenceSymbol Id="o40">
 <a:CreationDate>1364801698</a:CreationDate>
 <a:ModificationDate>1375705750</a:ModificationDate>
-<a:Rect>((-7818,-53332), (39380,-52638))</a:Rect>
+<a:Rect>((-7818,-53485), (39380,-52485))</a:Rect>
 <a:ListOfPoints>((39380,-52638),(10399,-52638),(10399,-53332),(-7818,-53332))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>1</a:ArrowStyle>
@@ -3443,7 +3443,7 @@ DESTINATION 0 新宋体,8,N</a:FontList>
 <o:ReferenceSymbol Id="o42">
 <a:CreationDate>1364801757</a:CreationDate>
 <a:ModificationDate>1375705750</a:ModificationDate>
-<a:Rect>((-10227,-55092), (36714,-54104))</a:Rect>
+<a:Rect>((-10227,-55098), (36714,-54098))</a:Rect>
 <a:ListOfPoints>((36714,-55092),(13910,-55092),(13910,-54104),(-10227,-54104))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>1</a:ArrowStyle>
@@ -3619,8 +3619,8 @@ DESTINATION 0 新宋体,8,N</a:FontList>
 <o:ReferenceSymbol Id="o62">
 <a:CreationDate>1368702243</a:CreationDate>
 <a:ModificationDate>1375586847</a:ModificationDate>
-<a:Rect>((-52865,-11914), (-51470,-640))</a:Rect>
-<a:ListOfPoints>((-52865,-640),(-52865,-5867),(-51470,-5867),(-51470,-11914))</a:ListOfPoints>
+<a:Rect>((-52516,-11914), (-51439,-640))</a:Rect>
+<a:ListOfPoints>((-52516,-640),(-52516,-5867),(-51439,-5867),(-51439,-11914))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>1</a:ArrowStyle>
 <a:LineColor>12615680</a:LineColor>
@@ -3729,7 +3729,7 @@ DESTINATION 0 新宋体,8,N</a:FontList>
 <o:ReferenceSymbol Id="o80">
 <a:CreationDate>1375260978</a:CreationDate>
 <a:ModificationDate>1375260978</a:ModificationDate>
-<a:Rect>((84109,-19502), (94870,-19052))</a:Rect>
+<a:Rect>((84109,-19777), (94870,-18777))</a:Rect>
 <a:ListOfPoints>((94870,-19277),(84109,-19277))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>1</a:ArrowStyle>
@@ -3839,7 +3839,7 @@ DESTINATION 0 新宋体,8,N</a:FontList>
 <o:ReferenceSymbol Id="o95">
 <a:CreationDate>1376316580</a:CreationDate>
 <a:ModificationDate>1376709402</a:ModificationDate>
-<a:Rect>((60136,4111), (76411,4561))</a:Rect>
+<a:Rect>((60136,3836), (76411,4836))</a:Rect>
 <a:ListOfPoints>((76411,4336),(60136,4336))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>1</a:ArrowStyle>
@@ -3883,7 +3883,7 @@ DESTINATION 0 新宋体,8,N</a:FontList>
 <o:ReferenceSymbol Id="o102">
 <a:CreationDate>1376318531</a:CreationDate>
 <a:ModificationDate>1376709402</a:ModificationDate>
-<a:Rect>((48286,16184), (57961,16634))</a:Rect>
+<a:Rect>((48286,15909), (57961,16909))</a:Rect>
 <a:ListOfPoints>((57961,16409),(48286,16409))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>1</a:ArrowStyle>
@@ -4510,7 +4510,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:CreationDate>1367889183</a:CreationDate>
 <a:ModificationDate>1376724927</a:ModificationDate>
 <a:IconMode>-1</a:IconMode>
-<a:Rect>((-56066,-15864), (-45150,-10316))</a:Rect>
+<a:Rect>((-55873,-15864), (-45343,-10316))</a:Rect>
 <a:LineColor>12615680</a:LineColor>
 <a:FillColor>16570034</a:FillColor>
 <a:ShadowColor>12632256</a:ShadowColor>
@@ -4560,7 +4560,7 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:CreationDate>1368278405</a:CreationDate>
 <a:ModificationDate>1376724927</a:ModificationDate>
 <a:IconMode>-1</a:IconMode>
-<a:Rect>((-55325,-1570), (-46341,3153))</a:Rect>
+<a:Rect>((-54553,-1570), (-47113,3153))</a:Rect>
 <a:LineColor>12615680</a:LineColor>
 <a:FillColor>16570034</a:FillColor>
 <a:ShadowColor>12632256</a:ShadowColor>
