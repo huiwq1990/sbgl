@@ -12,7 +12,7 @@ import com.sbgl.app.entity.Usergrouprelation;
 import com.sbgl.app.services.user.UserGroupRelationService;
 
 @Scope("prototype") 
-@Service("equipService")
+@Service("userGroupRelationService")
 public class UserGroupRelationServiceImpl implements UserGroupRelationService {
 	@Resource
 	private BaseDao baseDao;

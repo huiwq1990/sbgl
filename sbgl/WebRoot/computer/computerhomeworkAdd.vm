@@ -7,12 +7,12 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="css/global.css" rel="stylesheet" type="text/css" />
-<link href="js/editor/themes/default/default.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+<link href="${jsDomain}/editor/themes/default/default.css" rel="stylesheet" type="text/css" />
 
 <!--[if lt IE 10]>
-  <script src="js/jquery.placeholder.js"></script>
+  <script src="${jsDomain}/jquery.placeholder.js"></script>
   <script>
   $('input, textarea').placeholder();
   </script>
@@ -224,36 +224,29 @@
     </div>
     <div class="tabbable tabs-left">
       <ul class="nav nav-tabs">
-        <li class="active"><a href="#lA" data-toggle="tab">摄影机</a></li>
-        <li><a href="#lB" data-toggle="tab">镜头</a></li>
-        <li><a href="#lC" data-toggle="tab">灯具</a></li>
-        <li><a href="#lD" data-toggle="tab">器材一级分类</a></li>
+		#foreach($categoryfull in ${computercategoryList})
+			<li><a href="#$!categoryfull.computercategorytype" data-toggle="tab">$!categoryfull.name</a></li>
+		#end
+        
       </ul>
       <div class="tab-content">
-        <div class="tab-pane active" id="lA">
+		
+		#foreach($category in ${computercategoryList})
+			#set($categoryid = $category.computercategorytype)
+		<div class="tab-pane" id="$!categoryid">
           <div class="row model-list">
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="111" data-is-select="false"><i class="icon-check-empty icon-large"></i>ARRI ALEXA</div>
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="222" data-is-select="false"><i class="icon-check-empty icon-large"></i>RED EPIC</div>
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="333" data-is-select="false"><i class="icon-check-empty icon-large"></i>RED SCARLET</div>
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="2" data-model-id="444" data-is-select="false"><i class="icon-check-empty icon-large"></i>EOS 5D MARK II</div>
+			#set($modelList = $computermodelByComputercategoryId.get($categoryid))
+			
+			#foreach($model in $modelList)
+			<div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="$model.computermodeltype" data-is-select="false"><i class="icon-check-empty icon-large"></i>$model.name</div>
+			#end           
           </div>
         </div>
-        <div class="tab-pane" id="lB">
-          <div class="row model-list">
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="7777" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 18mm/T3.6</div>
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="8888" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 21mm/T2.9</div>
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="9999" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 25mm/T2.9</div>
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="2" data-model-id="0000" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 28mm/T2.1</div>
-          </div>
-        </div>
-        <div class="tab-pane" id="lC">
-          <p>列表3</p>
-        </div>
-        <div class="tab-pane" id="lD">
-          <p>列表4</p>
-        </div>
-      </div>
-    </div>
+		#end
+		
+      
+      </div><!--content-->
+    </div><!--left-->
   </div>
   <div class="modal-footer">
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
@@ -263,13 +256,13 @@
 
     <!-- Le javascript
     ================================================== -->
-<script src="js/jquery.js"></script>
-<script src="js/loader.min.js"></script>
-<script src="js/bootstrap-hover-dropdown.min.js"></script>
-<script src="js/select2.js"></script>
-<script src="js/bfa.js"></script>
-<script src="js/editor/kindeditor-min.js"></script>
-<script src="js/editor/lang/zh_CN.js"></script>
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/editor/kindeditor-min.js"></script>
+<script src="${jsDomain}/editor/lang/zh_CN.js"></script>
 
 <script>
 	$("#inputSendTo").select2({

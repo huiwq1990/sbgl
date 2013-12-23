@@ -13,7 +13,7 @@ import com.sbgl.app.entity.Usergroup;
 import com.sbgl.app.services.user.GroupService;
 
 @Scope("prototype") 
-@Service("equipService")
+@Service("groupService")
 public class GroupServiceImpl implements GroupService {
 	@Resource
 	private BaseDao baseDao;

@@ -12,7 +12,7 @@ import com.sbgl.app.entity.Worker;
 import com.sbgl.app.services.user.WorkerService;
 
 @Scope("prototype") 
-@Service("equipService")
+@Service("workerService")
 public class WorkerServiceImpl implements WorkerService {
 	@Resource
 	private BaseDao baseDao;

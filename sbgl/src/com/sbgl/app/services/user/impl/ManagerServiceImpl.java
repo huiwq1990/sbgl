@@ -12,7 +12,7 @@ import com.sbgl.app.entity.Administrator;
 import com.sbgl.app.services.user.ManagerService;
 
 @Scope("prototype") 
-@Service("equipService")
+@Service("managerService")
 public class ManagerServiceImpl implements ManagerService {
 	@Resource
 	private BaseDao baseDao;

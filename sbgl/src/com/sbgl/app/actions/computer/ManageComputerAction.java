@@ -143,6 +143,8 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	
 	
 	
+	
+	
 	private String logprefix = "exec method";
 	Page page = new Page();
 
@@ -563,24 +565,30 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	
 	
 	//跳转到添加作业界面
+	/**
+	 * 返回参数
+	 * computercategoryList
+	 * computermodelByComputercategoryId
+	 */
 	public String toAddComputerhomeworkPage(){
 		log.info("exec action method: toAddComputerhomeworkPage");
 		
-//      分页查询		
-		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
-		//page.setTotalpage(computerhomeworkService.countComputerhomeworkRow());
-		computerhomeworkFullList  = computerhomeworkService.selectComputerhomeworkFullByPage(page);
-		
-//		查询全部
-//		computerhomeworkFullList  = computerhomeworkService.selectComputerhomeworkFullAll();
 
-		if(computerhomeworkFullList == null){
-			computerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
+//		获取全部分类信息
+		String categorysqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";	
+		computercategoryList  = computercategoryService.selectComputercategoryByCondition(categorysqlch);
+//		获取全部模型信息
+		String modelsqlen = " where a.languagetype=1 order by a.computermodeltype,a.languagetype";
+		computermodelList  =  computermodelService.selectComputermodelByCondition(modelsqlen);
+		
+//		将模型与分类关联
+		computermodelByComputercategoryId = ComputerActionUtil.categoryModelMap(computermodelList);
+	
+		
+		if(computercategoryList == null){
+			computercategoryList = new ArrayList<Computercategory>();
 		}
-//		for(int i = 0; i < computerhomeworkFullList.size(); i++){
-//			System.out.println("id="+computerhomeworkFullList.get(i).getLoginusername());
-//		}
+		
 		return SUCCESS;
 	}	
 	
