@@ -13,9 +13,10 @@ public class Usergroup extends com.sbgl.app.dao.DaoAbs implements
 
 	private Integer id;
 	private String name;
-	private String ownerid;
-	private Date createtime;
+	private String ownerId;
+	private Date createTime;
 	private Integer status;
+	private Integer type;
 
 	// Constructors
 
@@ -29,13 +30,14 @@ public class Usergroup extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Usergroup(Integer id, String name, String ownerid,
-			Date createtime, Integer status) {
+	public Usergroup(Integer id, String name, String ownerId,
+			Date createTime, Integer status, Integer type) {
 		this.id = id;
 		this.name = name;
-		this.ownerid = ownerid;
-		this.createtime = createtime;
+		this.ownerId = ownerId;
+		this.createTime = createTime;
 		this.status = status;
+		this.type = type;
 	}
 
 	// Property accessors
@@ -56,20 +58,20 @@ public class Usergroup extends com.sbgl.app.dao.DaoAbs implements
 		this.name = name;
 	}
 
-	public String getOwnerid() {
-		return this.ownerid;
+	public String getOwnerId() {
+		return this.ownerId;
 	}
 
-	public void setOwnerid(String ownerid) {
-		this.ownerid = ownerid;
+	public void setOwnerId(String ownerId) {
+		this.ownerId = ownerId;
 	}
 
-	public Date getCreatetime() {
-		return this.createtime;
+	public Date getCreateTime() {
+		return this.createTime;
 	}
 
-	public void setCreatetime(Date createtime) {
-		this.createtime = createtime;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
 	public Integer getStatus() {
@@ -78,6 +80,14 @@ public class Usergroup extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public Integer getType() {
+		return this.type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 }
