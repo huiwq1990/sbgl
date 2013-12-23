@@ -89,6 +89,7 @@
 		<mapping
 			resource="com/sbgl/app/entity/Computerorderclassruledetail.hbm.xml" />
 		<mapping resource="com/sbgl/app/entity/Clazz.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Usergroup.hbm.xml" />
 
 
 
