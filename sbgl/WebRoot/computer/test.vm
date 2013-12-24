@@ -45,6 +45,10 @@
 <br>
 
 <a href="http://localhost:8080/sbgl/toAddComputerPage.action">toAddComputerPage.action</a>
+<br>
+<br>
+
+<a href="http://localhost:8080/sbgl/manageComputerorderclassruleFull.action">manageComputerorderclassruleFull.action</a>
 
 
 	</body>

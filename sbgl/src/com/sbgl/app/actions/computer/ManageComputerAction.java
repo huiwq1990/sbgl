@@ -26,6 +26,10 @@ import com.sbgl.app.entity.Computer;
 import com.sbgl.app.entity.ComputerFull;
 import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.ComputercategoryFull;
+import com.sbgl.app.entity.Computerhomework;
+import com.sbgl.app.entity.ComputerhomeworkFull;
+import com.sbgl.app.entity.Computerhomeworkreceiver;
+import com.sbgl.app.entity.ComputerhomeworkreceiverFull;
 import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.app.entity.Computerorder;
@@ -36,6 +40,8 @@ import com.sbgl.app.entity.Computerstatus;
 import com.sbgl.app.entity.ComputerstatusFull;
 import com.sbgl.app.services.computer.ComputerService;
 import com.sbgl.app.services.computer.ComputercategoryService;
+import com.sbgl.app.services.computer.ComputerhomeworkService;
+import com.sbgl.app.services.computer.ComputerhomeworkreceiverService;
 import com.sbgl.app.services.computer.ComputermodelService;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.services.computer.ComputerorderclassruleService;
@@ -108,14 +114,11 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	//前台传参，获取某类型的Order
 	int computerorderStatus;
 	
-	
 	@Resource
 	private ComputerstatusService computerstatusService;
 	int computerstatusid = 0;
 	List<Computerstatus> computerstatusList = new ArrayList<Computerstatus>();
 	List<ComputerstatusFull> computerstatusFullList = new ArrayList<ComputerstatusFull>();
-	
-	
 	
 	@Resource
 	private ComputerorderclassruleService computerorderclassruleService;
@@ -123,6 +126,23 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	private ComputerorderclassruleFull computerorderclassruleFull = new ComputerorderclassruleFull();//实例化一个模型
 	List<Computerorderclassrule> computerorderclassruleList = new ArrayList<Computerorderclassrule>();
 	List<ComputerorderclassruleFull> computerorderclassruleFullList = new ArrayList<ComputerorderclassruleFull>();
+	
+	@Resource
+	private ComputerhomeworkService computerhomeworkService;	
+	private Computerhomework computerhomework = new Computerhomework();//实例化一个模型
+	private ComputerhomeworkFull computerhomeworkFull = new ComputerhomeworkFull();//实例化一个模型
+	private List<Computerhomework> computerhomeworkList = new ArrayList<Computerhomework>();
+	private List<ComputerhomeworkFull> computerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
+	
+	@Resource
+	private ComputerhomeworkreceiverService computerhomeworkreceiverService;
+	private Computerhomeworkreceiver computerhomeworkreceiver = new Computerhomeworkreceiver();//实例化一个模型
+	private ComputerhomeworkreceiverFull computerhomeworkreceiverFull = new ComputerhomeworkreceiverFull();//实例化一个模型
+	private List<Computerhomeworkreceiver> computerhomeworkreceiverList = new ArrayList<Computerhomeworkreceiver>();
+	private List<ComputerhomeworkreceiverFull> computerhomeworkreceiverFullList = new ArrayList<ComputerhomeworkreceiverFull>();
+	
+	
+	
 	
 	
 	private String logprefix = "exec method";
@@ -542,6 +562,89 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		
 		return SUCCESS;
 	}
+	
+	
+	//跳转到添加作业界面
+	/**
+	 * 返回参数
+	 * computercategoryList
+	 * computermodelByComputercategoryId
+	 */
+	public String toAddComputerhomeworkPage(){
+		log.info("exec action method: toAddComputerhomeworkPage");
+		
+
+//		获取全部分类信息
+		String categorysqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";	
+		computercategoryList  = computercategoryService.selectComputercategoryByCondition(categorysqlch);
+//		获取全部模型信息
+		String modelsqlen = " where a.languagetype=1 order by a.computermodeltype,a.languagetype";
+		computermodelList  =  computermodelService.selectComputermodelByCondition(modelsqlen);
+		
+//		将模型与分类关联
+		computermodelByComputercategoryId = ComputerActionUtil.categoryModelMap(computermodelList);
+	
+		
+		if(computercategoryList == null){
+			computercategoryList = new ArrayList<Computercategory>();
+		}
+		
+		return SUCCESS;
+	}	
+	
+	
+	
+	//管理作业
+	public String manageComputerhomeworkFull(){
+		log.info("exec action method:manageComputerhomeworkFull");
+		
+//      分页查询		
+		page.setPageNo(pageNo);
+		//设置总数量，在service中设置
+		//page.setTotalpage(computerhomeworkService.countComputerhomeworkRow());
+		computerhomeworkFullList  = computerhomeworkService.selectComputerhomeworkFullByPage(page);
+		
+//		查询全部
+//		computerhomeworkFullList  = computerhomeworkService.selectComputerhomeworkFullAll();
+
+		if(computerhomeworkFullList == null){
+			computerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
+		}
+//		for(int i = 0; i < computerhomeworkFullList.size(); i++){
+//			System.out.println("id="+computerhomeworkFullList.get(i).getLoginusername());
+//		}
+		return SUCCESS;
+	}			
+			
+	
+	//管理作业接受人
+	public String manageComputerhomeworkreceiverFull(){
+		log.info("exec action method:manageComputerhomeworkreceiverFull");
+		
+//      分页查询		
+		page.setPageNo(pageNo);
+		//设置总数量，在service中设置
+		//page.setTotalpage(computerhomeworkreceiverService.countComputerhomeworkreceiverRow());
+		computerhomeworkreceiverFullList  = computerhomeworkreceiverService.selectComputerhomeworkreceiverFullByPage(page);
+		
+//		查询全部
+//		computerhomeworkreceiverFullList  = computerhomeworkreceiverService.selectComputerhomeworkreceiverFullAll();
+
+		if(computerhomeworkreceiverFullList == null){
+			computerhomeworkreceiverFullList = new ArrayList<ComputerhomeworkreceiverFull>();
+		}
+//		for(int i = 0; i < computerhomeworkreceiverFullList.size(); i++){
+//			System.out.println("id="+computerhomeworkreceiverFullList.get(i).getLoginusername());
+//		}
+		return SUCCESS;
+	}			
+			
+	
+	
+	
+	
+	
+	
 	
 	@Override
 	public void setSession(Map<String, Object> arg0) {

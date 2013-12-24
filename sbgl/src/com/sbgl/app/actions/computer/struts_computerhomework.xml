@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="computerhomework" extends="admin">
+
+<!-- 跳转到添加作业界面 -->
+    	<action name="toAddComputerhomeworkPage" class="ManageComputerAction" method="toAddComputerhomeworkPage">
+        	<result name="success">/computer/computerhomeworkAdd.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+        
+
+<!-- default entity manage action -->
+    	<action name="manageComputerhomework" class="ManageComputerAction" method="manageComputerhomework">
+        	<result name="success">/computer/computerhomeworkManage.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- entity full manage  -->		
+		<!-- default entity full manage action -->
+    	<action name="manageComputerhomeworkFull" class="ManageComputerAction" method="manageComputerhomeworkFull">
+        	<result name="success">/computer/computerhomeworkFullManage.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+<!--edit entity-->
+        <action name="editComputerhomework" class="ComputerhomeworkAction" method="editComputerhomework">
+        	<result name="success">/computer/computerhomeworkEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!--edit entity full-->
+        <action name="editComputerhomeworkFull" class="ComputerhomeworkAction" method="editComputerhomeworkFull">
+        	<result name="success">/computer/computerhomeworkFullEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>	
+		
+<!--del-->
+        <!--del entity-->
+        <action name="deleteComputerhomework" class="ComputerhomeworkAction" method="deleteComputerhomework">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerhomework</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteComputerhomeworkFull" class="ComputerhomeworkAction" method="deleteComputerhomeworkFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerhomeworkFull</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--更新实体-->
+        <action name="updateComputerhomework" class="ComputerhomeworkAction" method="updateComputerhomework">
+        	<result name="success">/computer/computerhomeworkUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+
+<!--update entity full-->
+        <action name="updateComputerhomeworkFull" class="ComputerhomeworkAction" method="updateComputerhomework">
+        	<result name="success">/computer/computerhomeworkFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+<!--根据id查询实体-->
+        <action name="selectComputerhomeworkById" class="ComputerhomeworkAction" method="selectComputerhomeworkById">
+        	<result name="success">/computer/computerhomeworkView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity-->		
+        <action name="viewComputerhomework" class="ComputerhomeworkAction" method="viewComputerhomework">
+        	<result name="success">/computer/computerhomeworkView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--go to view jsp-->
+		<action name="viewComputerhomeworkJsp" class="ComputerhomeworkAction" method="viewComputerhomework">
+        	<result name="success">/computer/computerhomeworkView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!-- go to view vm-->
+		<action name="viewComputerhomeworkVm" class="ComputerhomeworkAction" method="viewComputerhomework">
+        	<result name="success">/computer/computerhomeworkView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>		
+<!-- View entity full-->		
+        <action name="viewComputerhomeworkFull" class="ComputerhomeworkAction" method="viewComputerhomeworkFull">
+        	<result name="success">/computer/computerhomeworkFullView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--go to view jsp-->
+		<action name="viewComputerhomeworkFullJsp" class="ComputerhomeworkAction" method="viewComputerhomeworkFull">
+        	<result name="success">/computer/computerhomeworkFullView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!-- go to view vm-->
+		<action name="viewComputerhomeworkFullVm" class="ComputerhomeworkAction" method="viewComputerhomeworkFull">
+        	<result name="success">/computer/computerhomeworkFullView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>		
+		
+        <!--查询全部实体-->
+        <action name="selectComputerhomeworkAll" class="ComputerhomeworkAction" method="selectComputerhomeworkAll">
+			<result name="success">/computer/computerhomework.jsp</result>
+			<result name="error">/error.vm</result>
+		</action>
+	
+
+		
+		
+<!--根据id查询实体full-->
+
+		<action name="selectComputerhomeworkFullById" class="ComputerhomeworkAction" method="selectComputerhomeworkFullById">
+		  	<result name="success">/computer/computerhomeworkViewFull.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+
+		
+		
+        <!--查询全部实体full-->
+        <action name="selectComputerhomeworkFullAll" class="ComputerhomeworkAction" method="selectComputerhomeworkFullAll">
+			<result name="success">/computer/computerhomeworkManage.vm</result>
+			<result name="error">/error.vm</result>
+		</action>
+		
+	
+		
+
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="computerhomeworkAjax" extends="json-default">
+    	<action name="addComputerhomeworkAjax" class="ComputerhomeworkAction" method="addComputerhomeworkAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        <action name="deleteComputerhomeworkAjax" class="ComputerhomeworkAction" method="deleteComputerhomeworkAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteComputerhomeworkFullAjax" class="ComputerhomeworkAction" method="deleteComputerhomeworkFullAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+    	<action name="updateComputerhomeworkAjax" class="ComputerhomeworkAction" method="updateComputerhomeworkAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
+	</package>
+
+</struts>
