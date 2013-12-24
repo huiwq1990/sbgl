@@ -12,7 +12,7 @@ import com.sbgl.app.entity.Student;
 import com.sbgl.app.services.user.StudentService;
 
 @Scope("prototype") 
-@Service("equipService")
+@Service("studentService")
 public class StudentServiceImpl implements StudentService {
 	@Resource
 	private BaseDao baseDao;

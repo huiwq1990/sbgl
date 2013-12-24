@@ -12,7 +12,7 @@ import com.sbgl.app.entity.Clazz;
 import com.sbgl.app.services.user.ClazzService;
 
 @Scope("prototype") 
-@Service("equipService")
+@Service("clazzService")
 public class ClazzServiceImpl implements ClazzService {
 	@Resource
 	private BaseDao baseDao;
@@ -61,6 +61,11 @@ public class ClazzServiceImpl implements ClazzService {
 	public List<Clazz> getAllClazz() {
 		List<Clazz> resultList = baseDao.getAllEntity( Clazz.class );
 		return resultList;
+	}
+
+	@Override
+	public boolean isExistClazzName(String clazzName) {
+		return baseDao.isExist(Clazz.class, "classname", clazzName);
 	}
 
 }

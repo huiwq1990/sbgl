@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="clazzAjax" extends="json-default">
+	 	<action name="addClazz" class="ClazzAction" method="addClazz">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+        
+        <action name="alterClazz" class="ClazzAction" method="alterClazz">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+        
+        <action name="deleteClazz" class="ClazzAction" method="deleteClazz">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+        
+        <action name="getAllClazz" class="ClazzAction" method="getAllClazz">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+     </package>
+</struts>

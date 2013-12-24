@@ -12,4 +12,6 @@ public interface ClazzService {
 	public int deleteClazz(int clazzId);
 	//获取全部班级信息
 	public List<Clazz> getAllClazz();
+	//判断是否存在该班级名称
+	public boolean isExistClazzName(String clazzName);
 }
