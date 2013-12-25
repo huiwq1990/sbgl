@@ -21,6 +21,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputerorderclassruleService;
+import com.sbgl.app.services.computer.ComputerorderclassruledetailService;
 import com.sbgl.util.*;
 
 
@@ -47,9 +48,19 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 	private Integer computerorderclassruleid; //entity full 的id属性名称		
 	private String logprefix = "exec action method:";		
 	Page page = new Page();
-	Integer pageNo=1;	
+	Integer pageNo=1;
+	
+	
+	
+	@Resource
+	private ComputerorderclassruledetailService computerorderclassruledetailService;
+	
+	
 	ReturnJson returnJson = new ReturnJson();
 	String computerorderclassruleIdsForDel;
+	
+//	规则允许借的pc
+	String allowedPcIds;
 	
 //  manage Computerorderclassrule
 	public String manageComputerorderclassrule(){
@@ -143,14 +154,21 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 			Computerorderclassrule temp = new Computerorderclassrule();
 			// 将model里的属性值赋给temp
 			BeanUtils.copyProperties(temp, computerorderclassrule);			
-			//add your code here.
-			
-			//temp.setCreatetime(DateUtil.currentDate());
-			
-			
+		
+			temp.setCreatetime(DateUtil.currentDate());
+				
 			computerorderclassruleService.addComputerorderclassrule(temp);
 			
+			String[] pcid = allowedPcIds.split(";");
+			for (int i = 0; i < pcid.length; i++) {
+				Computerorderclassruledetail c = new Computerorderclassruledetail();
+				c.setAllowedcomputermodelid(Integer.valueOf(pcid[i]));
+				c.setComputerorderclassruleid(temp.getId());
+				computerorderclassruledetailService.addComputerorderclassruledetail(c);
+			}
+			
 			returnJson.setFlag(1);		
+			returnJson.setReason("添加规则成功");
 			JSONObject jo = JSONObject.fromObject(returnJson);
 			this.returnStr = jo.toString();
 			
@@ -161,10 +179,11 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 			e.printStackTrace();
 		}catch(Exception e){
 			e.printStackTrace();
-			log.error("类ComputerorderclassruleAction的方法：addBbstagfavourite错误"+e);
+			log.error("类ComputerorderclassruleAction的方法：addComputerorderclassruleAjax错误"+e);
 		}
 		
-		returnJson.setFlag(0);		
+		returnJson.setFlag(0);	
+		returnJson.setReason("错误");
 		JSONObject jo = JSONObject.fromObject(returnJson);
 		this.returnStr = jo.toString();
 		return SUCCESS;
@@ -581,4 +600,70 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
         public void setComputerorderclassruleIdsForDel(String computerorderclassruleIdsForDel) {
                 this.computerorderclassruleIdsForDel = computerorderclassruleIdsForDel;
         }
+
+		public ComputerorderclassruleService getComputerorderclassruleService() {
+			return computerorderclassruleService;
+		}
+
+		public void setComputerorderclassruleService(
+				ComputerorderclassruleService computerorderclassruleService) {
+			this.computerorderclassruleService = computerorderclassruleService;
+		}
+
+		public String getActionMsg() {
+			return actionMsg;
+		}
+
+		public void setActionMsg(String actionMsg) {
+			this.actionMsg = actionMsg;
+		}
+
+		public String getLogprefix() {
+			return logprefix;
+		}
+
+		public void setLogprefix(String logprefix) {
+			this.logprefix = logprefix;
+		}
+
+		public ComputerorderclassruledetailService getComputerorderclassruledetailService() {
+			return computerorderclassruledetailService;
+		}
+
+		public void setComputerorderclassruledetailService(
+				ComputerorderclassruledetailService computerorderclassruledetailService) {
+			this.computerorderclassruledetailService = computerorderclassruledetailService;
+		}
+
+		public ReturnJson getReturnJson() {
+			return returnJson;
+		}
+
+		public void setReturnJson(ReturnJson returnJson) {
+			this.returnJson = returnJson;
+		}
+
+		public String getAllowedPcIds() {
+			return allowedPcIds;
+		}
+
+		public void setAllowedPcIds(String allowedPcIds) {
+			this.allowedPcIds = allowedPcIds;
+		}
+
+		public static Log getLog() {
+			return log;
+		}
+
+		public Map<String, Object> getSession() {
+			return session;
+		}
+
+		public void setComputerorderclassruleid(Integer computerorderclassruleid) {
+			this.computerorderclassruleid = computerorderclassruleid;
+		}
+        
+        
+   
+        
 }

@@ -98,7 +98,7 @@
       <div class="container" id="msg">
         <div class="row">
           <div class="col-md-12">
-            <form role="form">
+            <form role="form" action="${webbaseurl}/addComputerhomework.${strutsaction}">
               <div class="control-bar"><!--control-bar start-->
                 <div class="title">布置新教学任务</div>
               </div>
@@ -107,7 +107,7 @@
                 <div class="send-to-warp">
                   <div class="form-group send-to">
                     <label class="sr-only" for="inputSendTo">收件人</label>
-                    <input type="text" id="inputSendTo" class="send-to form-control input-lg" placeholder="添加收件人">
+                    <input type="text" id="inputSendTo" name="receiverUserIds" class="send-to form-control input-lg" placeholder="添加收件人">
                   </div>
                 </div>
                 <div class="form-group user-group">
@@ -118,11 +118,11 @@
                 <div class="send-to-warp">
                   <div class="form-group send-to">
                     <label class="sr-only" for="inputEquipRule">课程规则</label>
-                      <select class="select2 select-white form-control input-lg" id="inputEquipRule" data-placeholder="选择课程规则">
+                      <select class="select2 select-white form-control input-lg" id="inputEquipRule" name="computerorderclassruleid" data-placeholder="选择课程规则">
                         <option></option>
                         <optgroup label="MV、广告创作">
-                          <option value="AK">规则1</option>
-                          <option value="HI">规则2</option>
+                          <option value="1">规则1</option>
+                          <option value="2">规则2</option>
                         </optgroup>
                         <optgroup label="故事片创作">
                           <option value="CA">规则1</option>
@@ -139,11 +139,11 @@
               </div>
               <div class="form-group send-title">
                 <label class="sr-only" for="inputMsgTitle">主题</label>
-                <input type="text" class="form-control input-lg" id="inputMsgTitle" placeholder="添加主题">
+                <input type="text" class="form-control input-lg" id="inputMsgTitle" name="name" placeholder="添加主题">
               </div>
               <div class="msg-content-warp">
                 <div class="msg-content panel panel-default">
-                  <textarea name="content" id="inputContent" style="width:100%;height:300px;visibility:hidden;"></textarea>                
+                  <textarea name="content" id="inputContent" name="content" style="width:100%;height:300px;visibility:hidden;"></textarea>                
                 </div>
               </div>
               <div class="form-group attach-file-warp">
@@ -226,8 +226,7 @@
       <ul class="nav nav-tabs">
 		#foreach($categoryfull in ${computercategoryList})
 			<li><a href="#$!categoryfull.computercategorytype" data-toggle="tab">$!categoryfull.name</a></li>
-		#end
-        
+		#end        
       </ul>
       <div class="tab-content">
 		
@@ -296,20 +295,78 @@
 			$(this).data('isSelect', 'false');
 		}
 	});
+	
+	//创建课程规则 提交
 	$('body').on('click', ('#createEquipRule #submit'), function () {
 		var courseId = $('#inputCourseName').select2('val');
 		if (courseId == '') {
 			courseId = -1;	
 		}
 		var ruleName = $('#inputRuleName').val();
-		alert(courseId + ',' + ruleName);
+		//alert(courseId + ',' + ruleName);
+		var pcIds = "";
 		$('.model-list > .list-item').each(function(index, elem) {
 			if($(elem).data('isSelect')) {
             	var myData = $(elem).data();
-				alert(myData.modelId);
+				pcIds += myData.modelId+";";				
 			}
         });
-	});
+		pcIds = pcIds.substring(0,pcIds.length-1);
+		//alert(pcIds);
+		
+		var postData = {
+			classid : courseId,
+			name : ruleName,
+			allowedPcIds : pcIds
+			
+		};
+		
+		jQuery.ajax({  
+		    url:"${webbaseurl}/addComputerorderclassruleAjax.${strutsaction}",  
+		    type:"post",
+		    data:postData,
+			dataType: 'json',
+			success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+				if(returnJson.flag == 1){
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});	
+					refreshComputercategoryTable();
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+					console.log('this is :'+$(this));
+					
+				}else{
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
+				}
+							}		  	  
+		}); //end jquery
+		
+	});//end add classrule
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </script>
 
 	

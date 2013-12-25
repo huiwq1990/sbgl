@@ -21,6 +21,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputerhomeworkService;
+import com.sbgl.app.services.computer.ComputerhomeworkreceiverService;
 import com.sbgl.util.*;
 
 
@@ -48,6 +49,16 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 	private String logprefix = "exec action method:";		
 	Page page = new Page();
 	Integer pageNo=1;	
+	
+	
+	@Resource
+	private ComputerhomeworkreceiverService computerhomeworkreceiverService;
+	
+	
+//	add homework	
+	String receiverUserIds;//接收者
+	String classruleId;//课程规则
+	
 	ReturnJson returnJson = new ReturnJson();
 	String computerhomeworkIdsForDel;
 	
@@ -116,10 +127,18 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 			// 将model里的属性值赋给temp
 			BeanUtils.copyProperties(temp, computerhomework);			
 			//add your code here.
-			
-			//temp.setCreatetime(DateUtil.currentDate());
+			temp.setCreateuserid(0);
+			temp.setCreatetime(DateUtil.currentDate());
 			
 			computerhomeworkService.addComputerhomework(temp);
+			
+			String[] userIds = receiverUserIds.split(";");
+			for (int i = 0; i < userIds.length; i++) {
+				Computerhomeworkreceiver chr = new Computerhomeworkreceiver();
+				chr.setComputerhomeworkid(temp.getId());
+				chr.setUserid(Integer.valueOf(userIds[i]));
+				computerhomeworkreceiverService.addComputerhomeworkreceiver(chr);
+			}
 			
 			return SUCCESS;
 		} catch (IllegalAccessException e) {
@@ -607,4 +626,75 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
         public void setComputerhomeworkIdsForDel(String computerhomeworkIdsForDel) {
                 this.computerhomeworkIdsForDel = computerhomeworkIdsForDel;
         }
+
+		public ComputerhomeworkService getComputerhomeworkService() {
+			return computerhomeworkService;
+		}
+
+		public void setComputerhomeworkService(
+				ComputerhomeworkService computerhomeworkService) {
+			this.computerhomeworkService = computerhomeworkService;
+		}
+
+		public String getActionMsg() {
+			return actionMsg;
+		}
+
+		public void setActionMsg(String actionMsg) {
+			this.actionMsg = actionMsg;
+		}
+
+		public String getLogprefix() {
+			return logprefix;
+		}
+
+		public void setLogprefix(String logprefix) {
+			this.logprefix = logprefix;
+		}
+
+		public ComputerhomeworkreceiverService getComputerhomeworkreceiverService() {
+			return computerhomeworkreceiverService;
+		}
+
+		public void setComputerhomeworkreceiverService(
+				ComputerhomeworkreceiverService computerhomeworkreceiverService) {
+			this.computerhomeworkreceiverService = computerhomeworkreceiverService;
+		}
+
+		public String getReceiverUserIds() {
+			return receiverUserIds;
+		}
+
+		public void setReceiverUserIds(String receiverUserIds) {
+			this.receiverUserIds = receiverUserIds;
+		}
+
+		public String getClassruleId() {
+			return classruleId;
+		}
+
+		public void setClassruleId(String classruleId) {
+			this.classruleId = classruleId;
+		}
+
+		public ReturnJson getReturnJson() {
+			return returnJson;
+		}
+
+		public void setReturnJson(ReturnJson returnJson) {
+			this.returnJson = returnJson;
+		}
+
+		public static Log getLog() {
+			return log;
+		}
+
+		public Map<String, Object> getSession() {
+			return session;
+		}
+
+		public void setComputerhomeworkid(Integer computerhomeworkid) {
+			this.computerhomeworkid = computerhomeworkid;
+		}
+        
 }
