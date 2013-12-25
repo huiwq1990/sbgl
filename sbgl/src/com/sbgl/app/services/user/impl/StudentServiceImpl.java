@@ -71,4 +71,15 @@ public class StudentServiceImpl implements StudentService {
 		return resultList;
 	}
 
+	@Override
+	public boolean isExistStudentCode(String stuCode) {
+		return baseDao.isExist(Student.class, "studentid", stuCode);
+	}
+
+	@Override
+	public Student getStudentById(int stuId) {
+		Student stu = baseDao.getEntityById(Student.class, stuId);
+		return stu;
+	}
+
 }

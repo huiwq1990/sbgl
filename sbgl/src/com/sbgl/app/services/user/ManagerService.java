@@ -13,4 +13,8 @@ public interface ManagerService {
 	public int deleteManager(int administratorId);
 	//获取全部管理员
 	public List<Administrator> getAllManager();
+	//根据ID获取管理员
+	public Administrator getManagerById(int managerId);
+	//判断管理员编号是否存在
+	public boolean isExistManagerCode(String managerCode);
 }

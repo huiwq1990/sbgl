@@ -12,4 +12,6 @@ public interface GroupService {
 	public int deleteUsergroup(int usergroupId);
 	//获取全部分组信息
 	public List<Usergroup> getAllUserGroup();
+	//判断用户组名是否已经存在
+	public boolean isExistGroupName(String groupName);
 }

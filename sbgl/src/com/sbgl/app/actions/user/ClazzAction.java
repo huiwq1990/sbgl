@@ -57,7 +57,7 @@ public class ClazzAction extends ActionSupport implements SessionAware {
 	 * @param clazz
 	 * @return
 	 */
-	public String addClazz(Clazz clazz) {
+	public String addClazz() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		
@@ -87,7 +87,7 @@ public class ClazzAction extends ActionSupport implements SessionAware {
 	 * @param clazz
 	 * @return
 	 */
-	public String alterClazz(Clazz clazz) {
+	public String alterClazz() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		

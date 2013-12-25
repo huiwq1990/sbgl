@@ -68,4 +68,9 @@ public class GroupServiceImpl implements GroupService {
 		return resultList;
 	}
 
+	@Override
+	public boolean isExistGroupName(String groupName) {
+		return baseDao.isExist(Usergroup.class, "name", groupName);
+	}
+
 }

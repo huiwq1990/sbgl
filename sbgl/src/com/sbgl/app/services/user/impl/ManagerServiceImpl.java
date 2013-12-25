@@ -70,4 +70,15 @@ public class ManagerServiceImpl implements ManagerService {
 		return resultList;
 	}
 
+	@Override
+	public Administrator getManagerById(int managerId) {
+		Administrator admin = baseDao.getEntityById(Administrator.class, managerId);
+		return admin;
+	}
+
+	@Override
+	public boolean isExistManagerCode(String managerCode) {
+		return baseDao.isExist(Administrator.class, "administratorid", managerCode);
+	}
+
 }

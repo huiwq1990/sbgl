@@ -11,22 +11,22 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sbgl.app.entity.Teacher;
 import com.sbgl.app.entity.Usergroup;
 import com.sbgl.app.entity.Usergrouprelation;
-import com.sbgl.app.entity.Worker;
+import com.sbgl.app.services.user.TeacherService;
 import com.sbgl.app.services.user.UserGroupRelationService;
-import com.sbgl.app.services.user.WorkerService;
 
 @Scope("prototype") 
-@Controller("workerAction")
-public class WorkerAction extends ActionSupport implements SessionAware {
+@Controller("teacherAction")
+public class TeacherAction extends ActionSupport implements SessionAware {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -7759632650510859924L;
+	private static final long serialVersionUID = 4530418513044716330L;
 
 	@Resource
-	private WorkerService workerService;
+	private TeacherService teacherService;
 	
 	@Resource
 	private UserGroupRelationService userGroupRelationService;
@@ -50,15 +50,14 @@ public class WorkerAction extends ActionSupport implements SessionAware {
 		return returnJSON;
 	}
 	
-	//保存和修改其他人员使用的参数对象
-	private Worker worker;
-	public Worker getWorker() {
-		return worker;
+	//保存和修改教师使用的参数对象
+	private Teacher teacher;
+	public Teacher getTeacher() {
+		return teacher;
 	}
-	public void setWorker(Worker worker) {
-		this.worker = worker;
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
 	}
-
 	//用户保存用户分组信息的参数对象
 	private Usergroup group;
 	public Usergroup getGroup() {
@@ -68,31 +67,31 @@ public class WorkerAction extends ActionSupport implements SessionAware {
 		this.group = group;
 	}
 	/**
-	 * 添加其他用户信息
+	 * 添加教师信息
 	 * @return
 	 */
-	public String addWorker() {
+	public String addTeacher() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		
-		Boolean isExist = workerService.isExistWorkerCode( worker.getWorkid() );
+		Boolean isExist = teacherService.isExistTeacherCode( teacher.getTeacherid() );
 		
 		if(!isExist) {
-			int returnCode = workerService.addWorker( worker );
+			int returnCode = teacherService.addTeacher( teacher );
 			if(returnCode == -1) {
 				this.tag = "1";
-				this.message = "添加其他人员信息失败！";
+				this.message = "添加教师信息失败！";
 			} else {
 				Usergrouprelation ugr = new Usergrouprelation();
 				ugr.setGroupid( group.getId() );
 				ugr.setUserid( returnCode );
 				userGroupRelationService.addUserGroupRelation( ugr );
 				this.tag = "0";
-				this.message = "添加其他人员信息成功！";
+				this.message = "添加教师信息成功！";
 			}
 		} else {
 			this.tag = "2";
-			this.message = "所添加的其他人员编号已经存在！";
+			this.message = "所添加的教师工号已经存在！";
 		}
 		
 		returnJSON.put("tag", tag);
@@ -101,24 +100,24 @@ public class WorkerAction extends ActionSupport implements SessionAware {
 	}
 	
 	/**
-	 * 修改其他人员信息
+	 * 修改教师信息
 	 * @return
 	 */
 	public String alterStudent() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		
-		int returnCode = workerService.alterWorker( worker );
+		int returnCode = teacherService.alterTeacher( teacher );
 		
 		if(returnCode == -1) {
 			this.tag = "1";
-			this.message = "修改其他人员信息失败！";
+			this.message = "修改教师信息失败！";
 		} else {
-			Usergrouprelation ugr = userGroupRelationService.getRelationByUserId( worker.getId() );
+			Usergrouprelation ugr = userGroupRelationService.getRelationByUserId( teacher.getId() );
 			ugr.setGroupid( group.getId() );
 			userGroupRelationService.alterUserGroupRelation( ugr );
 			this.tag = "0";
-			this.message = "修改其他人员信息成功！";
+			this.message = "修改教师信息成功！";
 		}
 		
 		returnJSON.put("tag", tag);
@@ -127,30 +126,30 @@ public class WorkerAction extends ActionSupport implements SessionAware {
 	}
 	
 	/**
-	 * 按照id字符串删除其他人员信息
+	 * 按照id字符串删除教师信息
 	 * @return
 	 */
-	private String workerIds;
-	public String getWorkerIds() {
-		return workerIds;
+	private String teacherIds;
+	public String getTeacherIds() {
+		return teacherIds;
 	}
-	public void setWorkerIds(String workerIds) {
-		this.workerIds = workerIds;
+	public void setTeacherIds(String teacherIds) {
+		this.teacherIds = teacherIds;
 	}
 	public String deleteTeacher() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
-		String[] ids = workerIds.split("_");
+		String[] ids = teacherIds.split("_");
 		
 		for (String id : ids) {
 			Integer oneId = Integer.valueOf( id );
-			Worker wk = workerService.getWorkerById( oneId );
-			Usergrouprelation temp = userGroupRelationService.getRelationByUserId( wk.getId() );
-			if(workerService.deleteWorker( oneId ) == 0 && userGroupRelationService.deleteUserGroupRelation( temp.getId() ) == 0) {
-				this.message = "删除其他人员信息成功！";
+			Teacher tc = teacherService.getTeacherById( oneId );
+			Usergrouprelation temp = userGroupRelationService.getRelationByUserId( tc.getId() );
+			if(teacherService.deleteTeacher( oneId ) == 0 && userGroupRelationService.deleteUserGroupRelation( temp.getId() ) == 0) {
+				this.message = "删除教师信息成功！";
 				this.tag = "0";
 			} else {
-				this.message = "删除其他人员信息失败！";
+				this.message = "删除教师信息失败！";
 				this.tag = "1";
 			}
 		}
@@ -161,15 +160,15 @@ public class WorkerAction extends ActionSupport implements SessionAware {
 	}
 	
 	/**
-	 * 获取全部其他人员
+	 * 获取全部教师
 	 * @return
 	 */
-	private List<Worker> allWorkerList;
-	public List<Worker> getAllWorkerList() {
-		return allWorkerList;
+	private List<Teacher> allTeacherList;
+	public List<Teacher> getAllTeacherList() {
+		return allTeacherList;
 	}
 	public String getAllTeacher() {
-		allWorkerList = workerService.getAllWorker();
+		allTeacherList = teacherService.getAllTeacher();
 		return SUCCESS;
 	}
 }

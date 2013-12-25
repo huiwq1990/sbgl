@@ -12,4 +12,8 @@ public interface WorkerService {
 	public int deleteWorker(int workerId);
 	//获取全部其他用户信息
 	public List<Worker> getAllWorker();
+	//判断其他用户编号是否存在
+	public boolean isExistWorkerCode(String workerCode);
+	//根据ID查找其他用户
+	public Worker getWorkerById(int workerId);
 }

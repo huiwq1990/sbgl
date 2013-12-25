@@ -69,4 +69,15 @@ public class WorkerServiceImpl implements WorkerService {
 		return resultList;
 	}
 
+	@Override
+	public boolean isExistWorkerCode(String workerCode) {
+		return baseDao.isExist(Worker.class, "workid", workerCode);
+	}
+
+	@Override
+	public Worker getWorkerById(int workerId) {
+		Worker worker = baseDao.getEntityById(Worker.class, workerId);
+		return worker;
+	}
+
 }
