@@ -83,7 +83,7 @@
         <li><a href="#">首页</a></li>
         <li><a href="#">设置</a></li>
         <li class="active"><a href="#">用户</a></li>
-        <li><a href="设备管理首页.html">设备</a></li>
+        <li><a href="#">设备</a></li>
         <li><a href="#">内容</a></li>
       </ul>
     </div>
@@ -97,194 +97,153 @@
         <div id="admin-content" class="clearfix">    
             <!--control-bar start-->
             <div class="control-bar clearfix">
-              <div class="title pull-left">用户管理</div>
-              <div class="tips">在此页面下管理用户信息，如用户的添加、修改、删除及用户组的管理。</div>
-              <!-- <div class="filter user-group-filter">
-                <ul class="nav nav-tabs nav-tabs-google">
-                  <li><a href="#">其他</a></li>
-                  <li><a href="#">教师</a></li>
-                  <li><a href="#">学生</a></li>
-                  <li class="active"><a href="#">全部</a></li>
-                  
-                </ul>
-              </div> -->
+              <div class="title pull-left">用户组管理</div>
+              <div class="tips">在此页面下添加新的用户组或者管理现有用户组。…………</div>
               <div class="operate-item pull-left">
-                <a href="用户管理-添加用户.html" class="btn btn-primary">添加用户</a>
+                <a href="#add-equip-category" class="btn btn-primary" data-toggle="modal" role="button">添加用户组</a>
                 <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
               </div>
-
-              <div class="page pull-right clearfix">
-                <ul class="page-index nav nav-pills pull-left">
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">最新</a></li>
-                      <li><a href="#">最旧</a></li>
-                    </ul>
-                  </li>              
-                </ul>
-                <div class="pagination pull-right">
-                  <ul>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
-                  </ul>
-                </div>              
-              </div>
-              <ul class="status-filter nav nav-pills pull-right">
-                <li class="active"><a href="#">全部(10)</a></li>
-                <li><a href="#">学生(5)</a></li>
-                <li><a href="#">教师(2)</a></li>
-                <li><a href="#">其他(2)</a></li>
-                <li><a href="#">管理员(2)</a></li>
-              </ul>
             </div><!--control-bar end-->
-            <div class="panel panel-default">              
+            <div class="panel panel-default">
+            
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-                    <th class="name">编号</th>
-                    <th class="username">用户名</th>
-                    <th class="user-group">用户组</th>
-                    <th class="admin-group">类别</th>
-                    <th class="operate">电话</th>
+                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="name">名称</th>
+                    <th class="f-category">组分类</th>
+                    <th class="model-num"></th>
+                    <th class="equip-num"></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
-                    <td>2145322<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button">修改</a></td>
-                    <td>Arri Alexa Plus</td>
-                    <td>学生 - 本科</td>
-                    <td>正常</td>
-                    <td><a href="">修改</a> <a href="">删除</a></td>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>本科<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
+                    <td>学生</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>硕士<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
+                    <td>学生</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>博士<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
+                    <td>学生</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>在职<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
+                    <td>教师</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>Arizona<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
+                    <td>其他</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>Colorado<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
+                    <td>其他</td>
+                    <td></td>
+                    <td></td>
                   </tr>
                 </tbody>
               </table>
+              
             </div>
           </div>
 
       </div>
-      <!--equip-wrap end-->
-
+      <!--admin-wrap end-->
       <!--sidebar start-->
       <div id="lside">
         <!-- <form class="form-group">
           <input type="text" class="form-control" placeholder="搜索设备">
           <i class="icon-search"></i>
-        </form> -->
+        </form>  -->      
         <div class="list-group">
-          <a href="用户管理首页.html" class="list-group-item active">用户管理</a>
+          <a href="用户管理首页.html" class="list-group-item">用户管理</a>
           <a href="用户管理-添加用户.html" class="list-group-item">添加用户</a>
           <a href="用户管理-用户组.html" class="list-group-item">用户组</a>
           <a href="用户管理-班级管理.html" class="list-group-item">班级管理</a>
           <!-- <a href="用户管理-发送通知.html" class="list-group-item">发送通知</a> -->
           <a href="用户管理-管理员管理.html" class="list-group-item">管理员管理</a>
           <a href="用户管理-添加管理员.html" class="list-group-item">添加管理员</a>
-          <a href="用户管理-管理组.html" class="list-group-item">管理组</a>
+          <a href="用户管理-管理组.html" class="list-group-item active">管理组</a>
           <!-- <a href="用户管理-用户认证.html" class="list-group-item">用户认证</a> -->
         </div>
+
       </div>
       <!--sidebar end-->
 
 </section>
 
 <!-- Modal -->
-<div id="modify-model" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+<div id="add-equip-category" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">添加用户组</h3>
+  </div>
+  <div class="modal-body">
+    <p>添加组信息。</p>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="inputCategoryName" class="col-xs-3 control-label">组名称</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="inputCategoryName" placeholder="用户组名称">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputFaCategoryId" class="col-xs-3 control-label">类别</label>
+        <div class="col-xs-7">
+          <select class="select2 select-white form-control" id="inputFaCategoryId">
+		    <option value="2">学生</option>
+            <option value="6">教师</option>
+            <option value="-1">其他</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary">确 定</button>
+  </div>
+</div>       
+<div id="modify-equip-category" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
     <h3 id="myModalLabel">修改</h3>
   </div>
   <div class="modal-body">
-    <p>这里是修改用户相关信息。</p>
+    <p>修改当前选定的组信息。</p>
     <form class="form-horizontal" role="form">
-	  <div class="form-group">
-        <label for="modifyStock" class="col-xs-3 control-label">编号</label>
+      <div class="form-group">
+        <label for="modifyCategoryName" class="col-xs-3 control-label">组名称</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="inputStuNum" placeholder="学生学号或教师编号">
+          <input type="text" class="form-control" id="modifyCategoryName" placeholder="用户组名称">
         </div>
       </div>
       <div class="form-group">
-        <label for="modifyEModelName" class="col-xs-3 control-label">真实姓名</label>
+        <label for="modifyFaCategoryId" class="col-xs-3 control-label">类别</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="inputTrueName" placeholder="真实姓名">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="modifyEquipCategory" class="col-xs-3 control-label">性别</label>
-        <div class="col-xs-7">
-          <select class="select2 form-control" id="inputStuClass">
-			<option value="0">男</option>
-			<option value="1">女</option>
-		  </select>
-        </div>
-      </div>
-	  <div class="form-group">
-        <label for="modifyEquipCategory" class="col-xs-3 control-label">密码</label>
-        <div class="col-xs-7">
-          <input type="text" class="form-control" id="inputPassword1" placeholder="登录密码">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="modifyEDescribe" class="col-xs-3 control-label">用户组</label>
-        <div class="col-xs-7">
-          <select class="select2 form-control" id="inputUserGroup">
-		  <optgroup label="学生">
-			<option value="1">本科</option>
-			<option value="2">硕士</option>
-			<option value="3">博士</option>
-		  </optgroup>
-		  <optgroup label="教师">
-			<option value="4">在职</option>
-			<option value="5">退休</option>
-		  </optgroup>
-		  <optgroup label="其他">
-			<option value="6">Arizona</option>
-			<option value="7">Colorado</option>
-		  </optgroup>
-		  </select>
-        </div>
-      </div>
-	  <div class="form-group">
-        <label for="modifyStock" class="col-xs-3 control-label">班级</label>
-        <div class="col-xs-7">
-          <select class="select2 form-control" id="inputStuClass">
-		  <optgroup label="学生">
-			<option value="1">本科</option>
-			<option value="2">硕士</option>
-			<option value="3">博士</option>
-		  </optgroup>
-		  <optgroup label="教师">
-			<option value="4">在职</option>
-			<option value="5">退休</option>
-		  </optgroup>
-		  <optgroup label="其他">
-			<option value="6">Arizona</option>
-			<option value="7">Colorado</option>
-		  </optgroup>
-		  </select>
-        </div>
-      </div>
-	  <div class="form-group">
-        <label for="modifyEquipCategory" class="col-xs-3 control-label">电话</label>
-        <div class="col-xs-7">
-          <input type="text" class="form-control" id="inputPassword1" placeholder="联系电话或手机">
-        </div>
-      </div>
-	  <div class="form-group">
-        <label for="modifyEquipCategory" class="col-xs-3 control-label">邮箱</label>
-        <div class="col-xs-7">
-          <input type="text" class="form-control" id="inputPassword1" placeholder="常用邮箱地址">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="modifyEPic" class="col-xs-3 control-label">头像</label>
-        <div class="col-xs-7">
-          <span class="btn btn-white file-input-button">
-              <i class="icon-plus"></i>
-              <span>添加图片</span>
-              <input id="modifyEPic" type="file" name="files[]" multiple>
-          </span>
+          <select class="select2 select-white form-control" id="modifyFaCategoryId">
+		    <option value="2">学生</option>
+            <option value="6">教师</option>
+            <option value="-1">其他</option>
+          </select>
         </div>
       </div>
     </form>
@@ -295,6 +254,7 @@
   </div>
 </div>
 
+
     <!-- javascript
     ================================================== -->
 <script src="../js/jquery.js"></script>
@@ -302,6 +262,5 @@
 <script src="../js/select2.js"></script>
 <script src="../js/bootstrap-hover-dropdown.min.js"></script>
 <script src="../js/bfa.js"></script>
-
 </body>
 </html>
