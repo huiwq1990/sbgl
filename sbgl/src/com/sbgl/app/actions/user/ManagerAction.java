@@ -19,7 +19,7 @@ import com.sbgl.app.services.user.UserGroupRelationService;
 
 
 @Scope("prototype") 
-@Controller("managerAction")
+@Controller("ManagerAction")
 public class ManagerAction extends ActionSupport implements SessionAware {
 	/**
 	 * 
@@ -167,6 +167,22 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 	}
 	public String getAllTeacher() {
 		allManagerList = managerService.getAllManager();
+		return SUCCESS;
+	}
+	
+	/**
+	 * 页面访问
+	 */
+	public String gotoUserManageAdmin() {
+		
+		return SUCCESS;
+	}
+	public String gotoUserManageAdminAdd() {
+		
+		return SUCCESS;
+	}
+	public String gotoUserManageAdminGroup() {
+		
 		return SUCCESS;
 	}
 }

@@ -18,7 +18,7 @@ import com.sbgl.app.services.user.StudentService;
 import com.sbgl.app.services.user.UserGroupRelationService;
 
 @Scope("prototype") 
-@Controller("studentAction")
+@Controller("StudentAction")
 public class StudentAction extends ActionSupport implements SessionAware {
 
 	/**
@@ -171,6 +171,22 @@ public class StudentAction extends ActionSupport implements SessionAware {
 	}
 	public String getAllStudent() {
 		allStuList = studentService.getAllStudent();
+		return SUCCESS;
+	}
+	
+	/**
+	 * 页面访问
+	 */
+	public String gotoUserManageUser() {
+		
+		return SUCCESS;
+	}
+	public String gotoUserManageUserAdd() {
+		
+		return SUCCESS;
+	}
+	public String gotoUserManageUserGroup() {
+		
 		return SUCCESS;
 	}
 }

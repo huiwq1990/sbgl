@@ -15,7 +15,7 @@ import com.sbgl.app.entity.Clazz;
 import com.sbgl.app.services.user.ClazzService;
 
 @Scope("prototype") 
-@Controller("clazzAction")
+@Controller("ClazzAction")
 public class ClazzAction extends ActionSupport implements SessionAware {
 	@Resource
 	private ClazzService clazzService;
@@ -150,6 +150,13 @@ public class ClazzAction extends ActionSupport implements SessionAware {
 	
 	public String getAllClazz() {
 		allClazzList = clazzService.getAllClazz();
+		return SUCCESS;
+	}
+	/**
+	 * 页面访问
+	 */
+	public String gotoUserManageClass() {
+		
 		return SUCCESS;
 	}
 }

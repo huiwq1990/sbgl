@@ -2,15 +2,27 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 
-	 <package name="clazz"  extends="struts-default">
-	 	<action name="userManageClass" class="ClazzAction" method="gotoUserManageClass">
+	<package name="manager"  extends="struts-default">
+	 	<action name="userManageAdmin" class="ManagerAction" method="gotoUserManageAdmin">
         	<result name="success">
-        		/user/userManageClass.vm
+        		/user/userManageAdmin.vm
+        	</result>
+        </action>
+        
+        <action name="userManageAdminAdd" class="ManagerAction" method="gotoUserManageAdminAdd">
+        	<result name="success">
+        		/user/userManageAddAdmin.vm
+        	</result>
+        </action>
+        
+        <action name="userManageAdminGroup" class="ManagerAction" method="gotoUserManageAdminGroup">
+        	<result name="success">
+        		/user/userManageAdminGroup.vm
         	</result>
         </action>
 	 </package>
-
-	 <package name="clazzAjax" extends="json-default">
+	 
+	<!--  <package name="clazzAjax" extends="json-default">
 	 	<action name="addClazz" class="ClazzAction" method="addClazz">
         	<result type="json">
         		<param name="root">returnJSON</param>
@@ -34,5 +46,5 @@
         		<param name="root">returnJSON</param>
         	</result>
         </action>
-     </package>
+     </package> -->
 </struts>
