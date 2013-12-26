@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>管理</title>
+<title>北京电影学院摄影系 - 设备管理</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -10,12 +10,6 @@
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
-<!--[if lt IE 10]>
-  <script src="../js/jquery.placeholder.js"></script>
-  <script>
-  $('input, textarea').placeholder();
-  </script>
-<![endif]-->
 <!--[if lt IE 9]>
   <script src="../js/html5shiv.js"></script>
   <script src="../js/respond.min.js"></script>
@@ -26,130 +20,174 @@
 </head>
 
 <body id="admin">
-
-<a href="${webbaseurl}/manageComputerhomeworkFull.action">返回管理</a>
+<header id="header-wrap"><!--header-wrap-->
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a>
+        <!-- #BeginLibraryItem "/Library/siteNav.lbi" -->
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="../index.html"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="#anotherAction">个人主页</a></li>
+          <li><a href="#">通讯录</a></li>
+          <li class="divider"></li>
+          <li><a href="../预约首页.html">我的预约</a></li>
+          <li><a href="../消息中心-站内信.html">站内信</a></li>
+          <li class="divider"></li>
+          <li><a href="管理中心首页.html">管理中心</a></li>
+        </ul>
+      <!-- #EndLibraryItem --> </div>
+    </div><!-- #BeginLibraryItem "/Library/机房subnav.lbi" -->    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">设置</a></li>
+        <li><a href="用户管理首页.html">用户</a></li>
+        <li><a href="设备预约首页.html">器材</a></li>
+        <li class="active"><a href="机房预约管理首页.html">机房</a></li>
+        <li><a href="#">内容</a></li>
+      </ul>
+    </div><!-- #EndLibraryItem --><ul class="account-wrap nav nav-pills pull-right">
+          <li class="notice dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">消息1</a></li>
+              <li><a href="#">消息2</a></li>
+            </ul>
+      </li>     
+          <li class="social dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="../img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+            <div class="dropdown-menu">
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img src="../img/photo.jpg" width="96" height="96" class="img-rounded">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+                  <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+                  <div class="setting"><a href="#">账户设置</a></div>
+                  <button class="btn btn-primary" type="button">查看个人主页</button>
+                </div>
+              </div>
+            </div>      
+          </li>
+    </ul>
+  </div>
+</header><!--/#header-wrap-->
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
+           
+      <div class="control-bar clearfix"><!--control-bar start-->
+        <div class="title pull-left">作业查看</div>     
+        <div class="pagination pull-right">
+          <ul>
+            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="上一个"><i class="icon-chevron-left"></i></a></li>
+            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="下一个"><i class="icon-chevron-right"></i></a></li>
+          </ul>
+        </div>       
+      </div><!--control-bar end-->
+              
+      <div class="row">
+            <div class="control-bar col-md-12">
+              <div class="title">$!computerorderFull.computerordertitle  </div>
+            </div>        
+            <div class="col-md-5">                  
+                <div class="thumbnail">
+                  <div class="hd clearfix">
+                    <h3 class="pull-left">允许借的PC</h3>
+                    <div class="pull-right">共XX种，XX个器材</div>
+                  </div>
+                  <div class="media-list">
 
-      <!--admin-wrap start-->
-      <div id="admin-wrap">
-        <div id="admin-content" class="clearfix">    
+#set($computerorderclassruledetailFullListSize = $computerorderclassruledetailFullList.size() - 1)
+##判断数据是否为空
+#if($computerorderclassruledetailFullListSize>=0)
+#set($computerorderclassruledetailFullListRegion = [0..$computerorderclassruledetailFullListSize])
+##取出所有的属性名称
+#foreach($tempKey in $computerorderclassruledetailFullListRegion)
+			#set($temp = $computerorderclassruledetailFullList.get($tempKey))
+                  <div class="media">                        
+                      <div class="group-hd">
+                        <div class="group-name pull-left">$temp.computermodelname</div>
+                        <div class="group-line">
+                          <hr>
+                        </div>
+                      </div>
+                      <a class="pull-left" data-toggle="modal" href="#equip-detail" role="button">
+                        <img src="../img/mac-pro-gallery1-2012.jpg" width="100" height="100">
+                      </a>
+                  
+                    </div>
+#end
+#end
 
-            <div class="panel panel-default">
 
-				
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    
-                    <th class="name">属性</th>
-                    <th class="f-category">属性值</th>
-                    
-                  </tr>
-                </thead>
-                <tbody>					
-		          <tr>
-                   
-                    <td>computerhomeworkid</td>
-                    <td>$!computerhomeworkFull.computerhomeworkid</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>computerhomeworkname</td>
-                    <td>$!computerhomeworkFull.computerhomeworkname</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>computerhomeworkcomputerorderclassruleid</td>
-                    <td>$!computerhomeworkFull.computerhomeworkcomputerorderclassruleid</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>computerhomeworkcontent</td>
-                    <td>$!computerhomeworkFull.computerhomeworkcontent</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>computerhomeworkcreateuserid</td>
-                    <td>$!computerhomeworkFull.computerhomeworkcreateuserid</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>computerhomeworkattachment</td>
-                    <td>$!computerhomeworkFull.computerhomeworkattachment</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>computerhomeworkstatus</td>
-                    <td>$!computerhomeworkFull.computerhomeworkstatus</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>computerhomeworkcreatetime</td>
-                    <td>$!computerhomeworkFull.computerhomeworkcreatetime</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>computerorderclassruleid</td>
-                    <td>$!computerhomeworkFull.computerorderclassruleid</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>computerorderclassrulename</td>
-                    <td>$!computerhomeworkFull.computerorderclassrulename</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>computerorderclassruleclassname</td>
-                    <td>$!computerhomeworkFull.computerorderclassruleclassname</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>computerorderclassruleclassid</td>
-                    <td>$!computerhomeworkFull.computerorderclassruleclassid</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>computerorderclassruleorderstarttime</td>
-                    <td>$!computerhomeworkFull.computerorderclassruleorderstarttime</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>computerorderclassruleorderendtime</td>
-                    <td>$!computerhomeworkFull.computerorderclassruleorderendtime</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>computerorderclassruleavailableordertime</td>
-                    <td>$!computerhomeworkFull.computerorderclassruleavailableordertime</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>computerorderclassrulecreateuserid</td>
-                    <td>$!computerhomeworkFull.computerorderclassrulecreateuserid</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>computerorderclassrulecreatetime</td>
-                    <td>$!computerhomeworkFull.computerorderclassrulecreatetime</td>                    
-                  </tr>               
-		          <tr>
-                   
-                    <td>computerorderclassrulestatus</td>
-                    <td>$!computerhomeworkFull.computerorderclassrulestatus</td>                    
-                  </tr>               
-                </tbody>
-              </table>
-			  
-			  
+                
+					  </div>
+                </div>                  
             </div>
-          </div>
-
+            <div class="col-md-7">
+                <div class="thumbnail">
+                  <div class="hd">
+                    <h3>状态</h3>
+                  </div>
+                  <div class="caption">
+                      <div class="status">
+                      <strong>审核人可能存在的状态:</strong><br>
+               
+                      </div>
+                      <hr>
+                      <strong>审核人可能进行的操作:</strong><br>                      
+                      <a class="btn btn-primary" onclick="auditOrder( $computerorderFull.computerorderid ,1)" href="#">审核通过</a>
+                      <a class="btn btn-white" onclick="auditOrder( $computerorderFull.computerorderid ,2)" data-toggle="modal" href="#reject" role="button">驳 回</a>
+                      <a class="btn btn-white" onclick="auditOrder( $computerorderFull.computerorderid ,3)" data-toggle="modal" href="#reject" role="button">删 除</a>
+                  </div>
+                </div>
+                <div class="thumbnail">
+                  <div class="hd">
+                    <h3>详情</h3>
+                  </div>
+                  <div class="caption">
+                    <div class="rent-detail">
+                     <div class="name">作业名称：$computerhomeworkFull.computerhomeworkname</div>
+                      <div class="rent-remark"><i class="icon-pencil"></i></div>
+                    </div>
+                    <hr>
+                  </div>                        
+                  <ul class="media-list">
+                    <li class="media">
+                      <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
+                        <img src="../img/photo.jpg" width="28" height="28" class="img-rounded">
+                      </a>
+                      <div class="media-body">
+                        <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">教师名</a></h5><span class="post-time" title="详细时间">下午4:53</span></div>
+                        <p>审核老师发的审核驳回说明</p>
+                      </div>
+                    </li>
+                  </ul>
+                                            
+                </div>               
+            </div>                    
       </div>
-     
+
+
+
 
 </section>
 
 
+
+<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
+  <img src="../img/cover-img.jpg" class="cover" alt="封面照片">
+  <div class="cover-layout"></div>
+  <div class="avatar"><img src="../img/photo.jpg" width="80" height="80" class="img-circle"></div>
+  <div class="user-wrap">
+    <div class="user-name"><a href="#">用户名</a></div>
+    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
+    <div class="user-info">职务等信息</div>
+    <div class="user-info">地点</div>
+  </div>
+  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
+</div>
 
     <!-- Le javascript
     ================================================== -->
@@ -158,9 +196,33 @@
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
-<script src="${jsDomain}/computer/computerhomework.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
 <script>
-	$("#modifyFaCategoryId").select2("val","2");
+
+function auditOrder(id,status){
+	jQuery.ajax({  
+		url: '${webbaseurl}/auditComputerorderAjax.action',  
+		type: "post",
+		data:{id:id,status:status},
+		dataType: 'json',
+		success: function(data){
+		
+			var returnJson = jQuery.parseJSON(data); 
+			
+			if(returnJson.flag == 1){
+				alert(returnJson.reason);
+			}
+		}		  	  
+		});
+
+}
+
 </script>
 </body>
 </html>

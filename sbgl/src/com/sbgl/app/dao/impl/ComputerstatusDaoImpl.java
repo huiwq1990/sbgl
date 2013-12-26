@@ -27,7 +27,7 @@ public class ComputerstatusDaoImpl extends HibernateDaoSupport implements Comput
 	private static final Log log = LogFactory.getLog(ComputerstatusDaoImpl.class);
 	private final String basicComputerstatusFullSql = "select a.id as computerstatusid, a.name as computerstatusname from Computerstatus a  ";
 	
-	private final String basicComputerstatusSql = "From Computerstatus  ";
+	private final String basicComputerstatusSql = "From Computerstatus as a ";
 	
 	// 根据条件查询查询实体
 	@Override

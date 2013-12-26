@@ -22,6 +22,7 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputerhomeworkService;
 import com.sbgl.app.services.computer.ComputerhomeworkreceiverService;
+import com.sbgl.app.services.computer.ComputerorderclassruledetailService;
 import com.sbgl.util.*;
 
 
@@ -51,16 +52,70 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 	Integer pageNo=1;	
 	
 	
-	@Resource
-	private ComputerhomeworkreceiverService computerhomeworkreceiverService;
-	
+
 	
 //	add homework	
 	String receiverUserIds;//接收者
 	String classruleId;//课程规则
 	
+
+	
 	ReturnJson returnJson = new ReturnJson();
 	String computerhomeworkIdsForDel;
+	
+	
+	
+	
+	@Resource
+	private ComputerhomeworkreceiverService computerhomeworkreceiverService;
+	private Computerhomeworkreceiver computerhomeworkreceiver = new Computerhomeworkreceiver();//实例化一个模型
+	private ComputerhomeworkreceiverFull computerhomeworkreceiverFull = new ComputerhomeworkreceiverFull();//实例化一个模型
+	private List<Computerhomeworkreceiver> computerhomeworkreceiverList = new ArrayList<Computerhomeworkreceiver>();
+	private List<ComputerhomeworkreceiverFull> computerhomeworkreceiverFullList = new ArrayList<ComputerhomeworkreceiverFull>();
+	
+	@Resource
+	private ComputerorderclassruledetailService computerorderclassruledetailService;	
+	private Computerorderclassruledetail computerorderclassruledetail = new Computerorderclassruledetail();//实例化一个模型
+	private Computerorderclassruledetail computerorderclassruledetailModel = new Computerorderclassruledetail();//实例化一个模型
+	private ComputerorderclassruledetailFull computerorderclassruledetailFull = new ComputerorderclassruledetailFull();//实例化一个模型
+	List<Computerorderclassruledetail> computerorderclassruledetailList = new ArrayList<Computerorderclassruledetail>();
+	List<ComputerorderclassruledetailFull> computerorderclassruledetailFullList = new ArrayList<ComputerorderclassruledetailFull>();
+	
+	//作业收件箱
+	public String toComputerhomeworkInboxPage(){
+//		log.info(logprefix +" toComputerhomeworkInboxPage");
+		int userid = 1;
+		
+		String receivesql = " where a.userid ="+userid;
+		computerhomeworkreceiverList = computerhomeworkreceiverService.selectComputerhomeworkreceiverByCondition(receivesql);
+		
+		if(computerhomeworkreceiverList!= null && computerhomeworkreceiverList.size() > 0){
+//			select * from computerhomework as a where a.id in (1,2)
+			String homeworksql = " where a.id ";
+			String homeworkids = "";
+			for(int i=0; i<computerhomeworkreceiverList.size();i++){
+				homeworkids += computerhomeworkreceiverList.get(i).getComputerhomeworkid()+",";
+			}
+			homeworkids = homeworkids.substring(0,homeworkids.length()-1);
+			
+			homeworksql = homeworksql + " in (" +homeworkids+") ";
+			System.out.println(homeworksql);
+			computerhomeworkFullList  = computerhomeworkService.selectComputerhomeworkFullByCondition(homeworksql);
+		}
+
+		
+		
+		if(computerhomeworkreceiverList == null){
+			computerhomeworkreceiverList = new ArrayList<Computerhomeworkreceiver>();
+		}
+		if(computerhomeworkFullList == null){
+			 computerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
+		}
+		
+		return SUCCESS;
+	}
+	
+	
 	
 //  manage Computerhomework
 	public String manageComputerhomework(){
@@ -107,17 +162,7 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 	}			
 			
 		
-	//管理
-	public String manageComputerhomeworkInfo(){
-		log.info(logprefix +" manageComputerhomework");
-		//Page page = new Page();
-		//if()
-		computerhomeworkList  = computerhomeworkService.selectComputerhomeworkByPage(page);
-		for(int i = 0; i < computerhomeworkList.size(); i++){
-		//	System.out.println("id="+computerhomeworkList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}	
+
 			
 	public String addComputerhomework(){	
 		log.info("Add Entity");
@@ -472,27 +517,37 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 	public String viewComputerhomeworkFull() {
 				
 		try {
-			int getId = computerhomework.getId();
-			log.info(this.logprefix + ";id=" + getId);
 			
-			if (getId < 0) {
+			if (computerhomeworkid <= 0) {
 				log.error("error,id小于0不规范");
 				return "error";
 			}	
 			
-			ComputerhomeworkFull temComputerhomeworkFull = computerhomeworkService.selectComputerhomeworkFullById(getId);				
-			if(temComputerhomeworkFull!=null){				
-				BeanUtils.copyProperties(computerhomeworkFull,temComputerhomeworkFull);
-				return SUCCESS;				
+			String condition = " where a.id = "+computerhomeworkid;
+			List<ComputerhomeworkFull> tempList = computerhomeworkService.selectComputerhomeworkFullByCondition(condition );
+			
+			if(tempList!=null && tempList.size() >0){
+				
 			}else{
-				log.error("error,查询实体不存在。");
-				return "Error";
-			}			
+				return "error";
+			}
+			
+			computerhomeworkFull = tempList.get(0);
+//			System.out.println(tempList.size() + " "+computerhomeworkFull.getComputerorderclassruleid());
+			
+//			查询作业可以借的PC
+			int ruleId = computerhomeworkFull.getComputerorderclassruleid();
+			if(ruleId > 0){
+				String borrowPcSql  = " where a.id = "+ ruleId;
+				computerorderclassruledetailFullList = computerorderclassruledetailService.selectComputerorderclassruledetailFullByCondition(borrowPcSql);				
+			}
+			
+			if(computerorderclassruledetailFullList == null){
+				computerorderclassruledetailFullList = new ArrayList<ComputerorderclassruledetailFull>();
+			}
+			
+			return SUCCESS;
 
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();			
 		}
@@ -696,5 +751,137 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 		public void setComputerhomeworkid(Integer computerhomeworkid) {
 			this.computerhomeworkid = computerhomeworkid;
 		}
+
+
+
+		public Computerhomeworkreceiver getComputerhomeworkreceiver() {
+			return computerhomeworkreceiver;
+		}
+
+
+
+		public void setComputerhomeworkreceiver(
+				Computerhomeworkreceiver computerhomeworkreceiver) {
+			this.computerhomeworkreceiver = computerhomeworkreceiver;
+		}
+
+
+
+		public ComputerhomeworkreceiverFull getComputerhomeworkreceiverFull() {
+			return computerhomeworkreceiverFull;
+		}
+
+
+
+		public void setComputerhomeworkreceiverFull(
+				ComputerhomeworkreceiverFull computerhomeworkreceiverFull) {
+			this.computerhomeworkreceiverFull = computerhomeworkreceiverFull;
+		}
+
+
+
+		public List<Computerhomeworkreceiver> getComputerhomeworkreceiverList() {
+			return computerhomeworkreceiverList;
+		}
+
+
+
+		public void setComputerhomeworkreceiverList(
+				List<Computerhomeworkreceiver> computerhomeworkreceiverList) {
+			this.computerhomeworkreceiverList = computerhomeworkreceiverList;
+		}
+
+
+
+		public List<ComputerhomeworkreceiverFull> getComputerhomeworkreceiverFullList() {
+			return computerhomeworkreceiverFullList;
+		}
+
+
+
+		public void setComputerhomeworkreceiverFullList(
+				List<ComputerhomeworkreceiverFull> computerhomeworkreceiverFullList) {
+			this.computerhomeworkreceiverFullList = computerhomeworkreceiverFullList;
+		}
+
+
+
+		public ComputerorderclassruledetailService getComputerorderclassruledetailService() {
+			return computerorderclassruledetailService;
+		}
+
+
+
+		public void setComputerorderclassruledetailService(
+				ComputerorderclassruledetailService computerorderclassruledetailService) {
+			this.computerorderclassruledetailService = computerorderclassruledetailService;
+		}
+
+
+
+		public Computerorderclassruledetail getComputerorderclassruledetail() {
+			return computerorderclassruledetail;
+		}
+
+
+
+		public void setComputerorderclassruledetail(
+				Computerorderclassruledetail computerorderclassruledetail) {
+			this.computerorderclassruledetail = computerorderclassruledetail;
+		}
+
+
+
+		public Computerorderclassruledetail getComputerorderclassruledetailModel() {
+			return computerorderclassruledetailModel;
+		}
+
+
+
+		public void setComputerorderclassruledetailModel(
+				Computerorderclassruledetail computerorderclassruledetailModel) {
+			this.computerorderclassruledetailModel = computerorderclassruledetailModel;
+		}
+
+
+
+		public ComputerorderclassruledetailFull getComputerorderclassruledetailFull() {
+			return computerorderclassruledetailFull;
+		}
+
+
+
+		public void setComputerorderclassruledetailFull(
+				ComputerorderclassruledetailFull computerorderclassruledetailFull) {
+			this.computerorderclassruledetailFull = computerorderclassruledetailFull;
+		}
+
+
+
+		public List<Computerorderclassruledetail> getComputerorderclassruledetailList() {
+			return computerorderclassruledetailList;
+		}
+
+
+
+		public void setComputerorderclassruledetailList(
+				List<Computerorderclassruledetail> computerorderclassruledetailList) {
+			this.computerorderclassruledetailList = computerorderclassruledetailList;
+		}
+
+
+
+		public List<ComputerorderclassruledetailFull> getComputerorderclassruledetailFullList() {
+			return computerorderclassruledetailFullList;
+		}
+
+
+
+		public void setComputerorderclassruledetailFullList(
+				List<ComputerorderclassruledetailFull> computerorderclassruledetailFullList) {
+			this.computerorderclassruledetailFullList = computerorderclassruledetailFullList;
+		}
+		
+		
         
 }

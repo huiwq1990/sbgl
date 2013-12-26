@@ -34,7 +34,7 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 		"left join Computermodel c on a.computermodelid=c.computermodeltype" ;//+
 //		" left join Computer d on a.computerid=d.computertype ";
 	
-	private final String basicComputerorderdetailSql = "From Computerorderdetail  ";
+	private final String basicComputerorderdetailSql = "From Computerorderdetail as a ";
 	
 	// 根据条件查询查询实体
 	@Override

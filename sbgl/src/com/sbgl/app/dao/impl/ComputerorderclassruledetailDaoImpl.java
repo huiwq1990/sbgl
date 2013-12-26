@@ -29,7 +29,7 @@ public class ComputerorderclassruledetailDaoImpl extends HibernateDaoSupport imp
 			"from Computerorderclassruledetail a  " +
 			"left join Computermodel b on a.allowedcomputermodelid=b.computermodeltype ";
 	
-	private final String basicComputerorderclassruledetailSql = "From Computerorderclassruledetail  ";
+	private final String basicComputerorderclassruledetailSql = "From Computerorderclassruledetail as a  ";
 	
 	// 根据条件查询查询实体
 	@Override

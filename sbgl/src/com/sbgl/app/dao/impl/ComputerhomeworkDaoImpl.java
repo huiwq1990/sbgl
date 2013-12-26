@@ -27,7 +27,7 @@ public class ComputerhomeworkDaoImpl extends HibernateDaoSupport implements Comp
 	private static final Log log = LogFactory.getLog(ComputerhomeworkDaoImpl.class);
 	private final String basicComputerhomeworkFullSql = "select a.id as computerhomeworkid, a.name as computerhomeworkname, a.computerorderclassruleid as computerhomeworkcomputerorderclassruleid, a.content as computerhomeworkcontent, a.createuserid as computerhomeworkcreateuserid, a.attachment as computerhomeworkattachment, a.status as computerhomeworkstatus, a.createtime as computerhomeworkcreatetime, b.id as computerorderclassruleid, b.name as computerorderclassrulename, b.classname as computerorderclassruleclassname, b.classid as computerorderclassruleclassid, b.orderstarttime as computerorderclassruleorderstarttime, b.orderendtime as computerorderclassruleorderendtime, b.availableordertime as computerorderclassruleavailableordertime, b.createuserid as computerorderclassrulecreateuserid, b.createtime as computerorderclassrulecreatetime, b.status as computerorderclassrulestatus from Computerhomework a  left join Computerorderclassrule b on a.computerorderclassruleid=b.id ";
 	
-	private final String basicComputerhomeworkSql = "From Computerhomework  ";
+	private final String basicComputerhomeworkSql = "From Computerhomework as a  ";
 	
 	// 根据条件查询查询实体
 	@Override

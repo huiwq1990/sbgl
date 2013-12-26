@@ -34,21 +34,7 @@
         	<result name="success">/computer/computerorderManage.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
-		<!-- default entity manage action -->
-    	<action name="manageComputerorderInfo" class="ManageComputerAction" method="manageComputerorderInfo">
-        	<result name="success">/computer/computerorderManage.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<!-- manage action , go to jsp page -->
-    	<action name="manageComputerorderJsp" class="ManageComputerAction" method="manageComputerorder">
-        	<result name="success">/computer/computerorderManage.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>		
-		<!-- manage action , go to vm page -->
-    	<action name="manageComputerorderVm" class="ManageComputerAction" method="manageComputerorder">
-        	<result name="success">/computer/computerorderManage.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>		
+
 <!-- entity full manage  -->		
 		<!-- default entity full manage action -->
     	<action name="manageComputerorderFull" class="ManageComputerAction" method="manageComputerorderFull">
@@ -56,16 +42,6 @@
         	<result name="success2">/computer/computerorderFullManageContent.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
-		<!-- manage action , go to jsp page -->
-    	<action name="manageComputerorderFullJsp" class="ManageComputerAction" method="manageComputerorderFull">
-        	<result name="success">/computer/computerorderFullManage.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>		
-		<!-- manage action , go to vm page -->
-    	<action name="manageComputerorderFullVm" class="ManageComputerAction" method="manageComputerorderFull">
-        	<result name="success">/computer/computerorderFullManage.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>	
 		
 		
 <!--添加实体-->
@@ -74,20 +50,7 @@
 				<param name="actionName">manageComputerorder</param>
 			</result>
         </action>
-		<!--
-    	<action name="addComputerorderJsp" class="ComputerorderAction" method="addComputerorder">
-        	<result type="redirectAction">
-				<param name="actionName">selectComputerorderAll</param>
-			</result>
-        </action>		
-    	<action name="addComputerorderVm" class="ComputerorderAction" method="addComputerorder">
-        	<result type="redirectAction">
-				<param name="actionName">selectComputerorderAll</param>
-			</result>
-        </action>		
 		
-		-->
-
 		
 		
 <!--del-->
@@ -147,33 +110,8 @@
         	<result name="error">/error.vm</result> 
         </action>
 
-	
-		
-        <!--查询全部实体-->
-        <action name="selectComputerorderAll" class="ComputerorderAction" method="selectComputerorderAll">
-			<result name="success">/computer/computerorder.jsp</result>
-			<result name="error">/error.vm</result>
-		</action>
-	
 
-		
-		
-<!--根据id查询实体full-->
 
-		<action name="selectComputerorderFullById" class="ComputerorderAction" method="selectComputerorderFullById">
-		  	<result name="success">/computer/computerorderViewFull.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-
-		
-		
-        <!--查询全部实体full-->
-        <action name="selectComputerorderFullAll" class="ComputerorderAction" method="selectComputerorderFullAll">
-			<result name="success">/computer/computerorderManage.vm</result>
-			<result name="error">/error.vm</result>
-		</action>
-		
-	
 		
 		
     </package>

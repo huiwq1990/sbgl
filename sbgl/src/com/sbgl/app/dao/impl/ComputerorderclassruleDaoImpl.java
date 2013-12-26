@@ -27,7 +27,7 @@ public class ComputerorderclassruleDaoImpl extends HibernateDaoSupport implement
 	private static final Log log = LogFactory.getLog(ComputerorderclassruleDaoImpl.class);
 	private final String basicComputerorderclassruleFullSql = "select a.id as computerorderclassruleid, a.name as computerorderclassrulename, a.classname as computerorderclassruleclassname, a.classid as computerorderclassruleclassid, a.orderstarttime as computerorderclassruleorderstarttime, a.orderendtime as computerorderclassruleorderendtime, a.availableordertime as computerorderclassruleavailableordertime, a.createuserid as computerorderclassrulecreateuserid, a.createtime as computerorderclassrulecreatetime, a.status as computerorderclassrulestatus from Computerorderclassrule a  ";
 	
-	private final String basicComputerorderclassruleSql = "From Computerorderclassrule  ";
+	private final String basicComputerorderclassruleSql = "From Computerorderclassrule as a ";
 	
 	// 根据条件查询查询实体
 	@Override
