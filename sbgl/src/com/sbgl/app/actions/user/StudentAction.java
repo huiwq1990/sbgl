@@ -14,6 +14,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.entity.Student;
 import com.sbgl.app.entity.Usergroup;
 import com.sbgl.app.entity.Usergrouprelation;
+import com.sbgl.app.services.user.GroupService;
 import com.sbgl.app.services.user.StudentService;
 import com.sbgl.app.services.user.UserGroupRelationService;
 
@@ -28,6 +29,8 @@ public class StudentAction extends ActionSupport implements SessionAware {
 
 	@Resource
 	private StudentService studentService;
+	@Resource
+	private GroupService groupService;
 	
 	@Resource
 	private UserGroupRelationService userGroupRelationService;
@@ -185,8 +188,16 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		
 		return SUCCESS;
 	}
+	
+	private List<Usergroup> allGroupList;
+	public List<Usergroup> getAllGroupList() {
+		return allGroupList;
+	}
+	public void setAllGroupList(List<Usergroup> allGroupList) {
+		this.allGroupList = allGroupList;
+	}
 	public String gotoUserManageUserGroup() {
-		
+		allGroupList = groupService.getAllUserGroup();
 		return SUCCESS;
 	}
 }

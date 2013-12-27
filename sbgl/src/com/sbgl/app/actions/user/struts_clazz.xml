@@ -8,9 +8,27 @@
         		/user/userManageClass.vm
         	</result>
         </action>
+        
+        <action name="addClazz" class="ClazzAction" method="addClazz">
+        	<result name="success">
+        		/user/userManageClassForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="alterClazz" class="ClazzAction" method="alterClazz">
+        	<result name="success">
+        		/user/userManageClassForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="deleteClazz" class="ClazzAction" method="deleteClazz">
+        	<result name="success">
+        		/user/userManageClassForFlush.vm
+        	</result>
+        </action>
 	 </package>
 
-	 <package name="clazzAjax" extends="json-default">
+	<!--  <package name="clazzAjax" extends="json-default">
 	 	<action name="addClazz" class="ClazzAction" method="addClazz">
         	<result type="json">
         		<param name="root">returnJSON</param>
@@ -34,5 +52,5 @@
         		<param name="root">returnJSON</param>
         	</result>
         </action>
-     </package>
+     </package> -->
 </struts>

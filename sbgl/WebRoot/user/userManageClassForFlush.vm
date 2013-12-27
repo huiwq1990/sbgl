@@ -1,0 +1,30 @@
+<div id="admin-content" class="clearfix">    
+    <!--control-bar start-->
+    <div class="control-bar clearfix">
+      <div class="title pull-left">班级管理</div>
+      <div class="tips">在此页面下添加新班级组或者管理现有班级。</div>
+      <div class="operate-item pull-left">
+        <a href="#add-equip-category" class="btn btn-primary" action-type="clearInput" data-toggle="modal" role="button">添加班级</a>
+        <a href="#" class="btn btn-white s-h" action-type="delClazz"><i class="icon-trash"></i> 删除</a>
+      </div>
+    </div><!--control-bar end-->
+    <div class="panel panel-default">
+    
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+            <th class="name">班级名称</th>
+          </tr>
+        </thead>
+        <tbody>
+		  #foreach($clazz in $allClazzList)
+          <tr>
+            <td><input class="chk" type="checkbox" name="chk-list"  value="$!clazz.classId"></td>
+            <td>$!clazz.classname<a class="btn btn-white btn-mini" action-type="beforeModify" data-id="$!clazz.classId" data-name="$!clazz.classname" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
+          </tr>
+		  #end
+        </tbody>
+      </table>
+    </div>
+  </div>

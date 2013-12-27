@@ -69,6 +69,7 @@ public class ClazzAction extends ActionSupport implements SessionAware {
 				this.tag = "1";
 				this.message = "添加班级信息失败！";
 			} else {
+				getAllClazz();
 				this.tag = "0";
 				this.message = "添加班级信息成功！";
 			}
@@ -97,6 +98,7 @@ public class ClazzAction extends ActionSupport implements SessionAware {
 			this.tag = "1";
 			this.message = "修改班级信息失败！";
 		} else {
+			getAllClazz();
 			this.tag = "0";
 			this.message = "修改班级信息成功！";
 		}
@@ -128,6 +130,7 @@ public class ClazzAction extends ActionSupport implements SessionAware {
 			if(clazzService.deleteClazz(oneId) == 0) {
 				this.message = "删除班级成功！";
 				this.tag = "0";
+				getAllClazz();
 			} else {
 				this.message = "删除班级失败！";
 				this.tag = "1";
@@ -156,7 +159,7 @@ public class ClazzAction extends ActionSupport implements SessionAware {
 	 * 页面访问
 	 */
 	public String gotoUserManageClass() {
-		
+		getAllClazz();
 		return SUCCESS;
 	}
 }

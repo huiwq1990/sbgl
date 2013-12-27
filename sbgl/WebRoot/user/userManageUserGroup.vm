@@ -98,10 +98,10 @@
             <!--control-bar start-->
             <div class="control-bar clearfix">
               <div class="title pull-left">用户组管理</div>
-              <div class="tips">在此页面下添加新的用户组或者管理现有用户组。…………</div>
+              <div class="tips">在此页面下添加新的用户组或者管理现有用户组。</div>
               <div class="operate-item pull-left">
-                <a href="#add-equip-category" class="btn btn-primary" data-toggle="modal" role="button">添加用户组</a>
-                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+                <a href="#add-equip-category" class="btn btn-primary" action-type="clearInput" data-toggle="modal" role="button">添加用户组</a>
+                <a href="#" class="btn btn-white s-h" action-type="delUserGroup"><i class="icon-trash"></i> 删除</a>
               </div>
             </div><!--control-bar end-->
             <div class="panel panel-default">
@@ -112,53 +112,24 @@
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
                     <th class="name">名称</th>
                     <th class="f-category">组分类</th>
-                    <th class="model-num"></th>
-                    <th class="equip-num"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>本科<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
-                    <td>学生</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>硕士<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
-                    <td>学生</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>博士<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
-                    <td>学生</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>在职<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
-                    <td>教师</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>Arizona<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
-                    <td>其他</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>Colorado<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
-                    <td>其他</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
+				  #foreach($group in $allGroupList)
+				    #if($group.type != 0)
+					  <tr>
+                        <td><input class="chk" type="checkbox" name="chk-list" value="$!group.id"></td>
+                        <td>$!group.name<a class="btn btn-white btn-mini" action-type="beforeModify" data-id="$!group.id" data-name="$!group.name" data-type="$!group.type" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
+						#if($!group.type == 2)
+						<td>学生</td>
+						#elseif($!group.type == 6)
+						<td>教师</td>
+						#elseif($!group.type == -1)
+						<td>其他</td>
+						#end
+                  	 </tr>
+				    #end
+                  #end
                 </tbody>
               </table>
               
@@ -202,13 +173,13 @@
       <div class="form-group">
         <label for="inputCategoryName" class="col-xs-3 control-label">组名称</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="inputCategoryName" placeholder="用户组名称">
+          <input type="text" class="form-control" id="inputGroupName" placeholder="用户组名称">
         </div>
       </div>
       <div class="form-group">
         <label for="inputFaCategoryId" class="col-xs-3 control-label">类别</label>
         <div class="col-xs-7">
-          <select class="select2 select-white form-control" id="inputFaCategoryId">
+          <select class="select2 select-white form-control" id="inputTypeId">
 		    <option value="2">学生</option>
             <option value="6">教师</option>
             <option value="-1">其他</option>
@@ -219,7 +190,7 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary">确 定</button>
+    <button class="btn btn-primary" action-type="addGroup">确 定</button>
   </div>
 </div>       
 <div id="modify-equip-category" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
@@ -233,13 +204,13 @@
       <div class="form-group">
         <label for="modifyCategoryName" class="col-xs-3 control-label">组名称</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="modifyCategoryName" placeholder="用户组名称">
+          <input type="text" class="form-control" id="modifyGroupName" placeholder="用户组名称">
         </div>
       </div>
       <div class="form-group">
         <label for="modifyFaCategoryId" class="col-xs-3 control-label">类别</label>
         <div class="col-xs-7">
-          <select class="select2 select-white form-control" id="modifyFaCategoryId">
+          <select class="select2 select-white form-control" id="modifyTypeId">
 		    <option value="2">学生</option>
             <option value="6">教师</option>
             <option value="-1">其他</option>
@@ -250,7 +221,7 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary">确 定</button>
+    <button class="btn btn-primary" action-type="modifyGroup">确 定</button>
   </div>
 </div>
 
@@ -264,5 +235,155 @@
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 
+<script>
+	var alterGroupName;		//修改组的原名称
+	var alterGroupId;		//修改组的id
+	var alterGroupId;		//修改组的类别
+	var idsForDel = "";  	//用于删除的id串
+	
+	var cookie = { 
+		//读取COOKIES,n为COOKIE名 
+		Get:function(n){ 
+    		var re=new RegExp(n+'=([^;]*);?','gi');
+    	    var r=re.exec(document.cookie)||[];
+    	    return (r.length>1?r[1]:null)
+		}
+	};
+	
+	$("body").on("click", "a[action-type|=clearInput]", function() {
+		$("#inputGroupName").val("");
+	});
+	
+	$("body").on("click", "input[type='checkbox']", function() {
+		var num = 0;
+		if($(this).attr("id") === "chk-all") {
+			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
+		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true){
+				num++;  
+			}
+		});
+		if(num > 0){
+			$(".s-h").css({
+				"visibility": "visible",
+				"opacity": "1",
+				"filter": "alpha(opacity=100)"
+			});
+		} else {
+			$(".s-h").css({
+				"visibility": "hidden",
+				"opacity": "0",
+				"filter": "alpha(opacity=0)"
+			});
+		}
+		
+		idsForDel = "";
+		
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true) {
+				//num++;
+				idsForDel += $(this).prop("value") + "_";
+			}
+		});
+	});
+	
+	$("body").on("click", "a[action-type|=beforeModify]", function() {
+		var myData = $(this).data();
+		
+		alterGroupId = myData.id;
+		alterGroupName = myData.name;
+		alterGroupType = myData.type;
+		
+		$("#modifyGroupName").val(alterGroupName);
+		$("#modifyTypeId").select2("val", alterGroupType);
+		
+		console.log(alterGroupId);
+		console.log(alterGroupName);
+		console.log(alterGroupType);
+		
+	});
+	
+	$('.modal').on('click', ('button.btn-primary'), function () {
+		var _this = $(this);
+		var postData = {};
+		var actionUrl = "";
+		var tip = "";
+	    
+	    if(_this.attr('action-type') == 'addGroup') {
+	        var groupName = $("#inputGroupName").val();
+	        var groupType = $("#inputTypeId").val();
+    		
+    		if(groupName != "") {
+    			postData = {
+    				"group.name": groupName,
+    				"group.type": groupType,
+    				"group.ownerId": cookie.Get("id")
+    			}
+    			actionUrl = "${webbaseurl}/addUserGroup.do";
+    			tip = "添加用户组成功！";
+    		} else {
+    			alert("组名称不能为空！");
+				return;
+    		}
+	    }
+		
+		if(_this.attr('action-type') == 'modifyClazz') {
+	        var newGroupName = $("#modifyGroupName").val() == "" ? alterGroupName : $("#modifyClazzName").val();
+	        var newGroupType = $("#modifyTypeId").val();
+    		
+    		if(alterClazzName == newClazzName && newGroupType == alterGroupType) {
+    			alert("并未做修改！");
+				return;
+    		} else {
+    			postData = {
+					"group.id": alterGroupId,
+					"group.name": newGroupName,
+    				"group.type": newGroupType
+        		};
+				actionUrl = "${webbaseurl}/alterUserGroup.do";
+				tip = "修改用户组成功！";
+    		}
+	    }
+		
+		jQuery.ajax({  
+		    url: actionUrl,  
+		    type: "post",
+		    data: postData,
+		    success:function(data,textStatus,jq) {  
+			    var n = noty({text: tip, timeout: 2500, type: 'success'});
+			    _this.parents('.modal').modal('toggle');
+				$("#admin-wrap").html(data);
+	        },  
+		    error:function(data,textStatus,jq){
+		        var n = noty({text: "系统错误，操作失败，请联系管理员！", timeout: 2500, type: 'error'});
+		    }  
+		});
+	});
+	
+	$("body").on("click", "a[action-type|=delClazz]", function() {
+		//alert(idsForDel);
+		var postData = {
+			groupIds: idsForDel,
+		}
+			
+		jQuery.ajax({  
+		    url: "${webbaseurl}/delUserGroup.do",  
+		    type: "post",
+		    data: postData,
+		    success:function(data,textStatus,jq){ 
+				var n = noty({text: "删除用户组成功！", timeout: 2500, type: 'success'});
+				//$(this).parents('.modal').modal('toggle');
+				$("#admin-wrap").html(data);
+				
+	        },  
+		    error:function(data,textStatus,jq){
+    			var n = noty({text: "系统异常，请联系系统管理员！", timeout: 2500, type: 'error'});
+			}  
+		});
+	});
+</script>
+
+</script>
 </body>
 </html>

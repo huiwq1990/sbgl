@@ -20,5 +20,23 @@
         		/user/userManageUserGroup.vm
         	</result>
         </action>
+        
+        <action name="addUserGroup" class="GroupAction" method="addGroup">
+        	<result name="success">
+        		/user/userManageUserGroupForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="alterUserGroup" class="GroupAction" method="alterGroup()">
+        	<result name="success">
+        		/user/userManageUserGroupForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="delUserGroup" class="GroupAction" method="deleteGroup()">
+        	<result name="success">
+        		/user/userManageUserGroupForFlush.vm
+        	</result>
+        </action>
 	 </package>
 </struts>

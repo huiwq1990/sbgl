@@ -15,7 +15,7 @@ import com.sbgl.app.entity.Usergroup;
 import com.sbgl.app.services.user.GroupService;
 
 @Scope("prototype") 
-@Controller("groupAction")
+@Controller("GroupAction")
 public class GroupAction extends ActionSupport implements SessionAware {
 	/**
 	 * 
@@ -70,6 +70,7 @@ public class GroupAction extends ActionSupport implements SessionAware {
 				this.tag = "1";
 				this.message = "添加用户组信息失败！";
 			} else {
+				getAllGroup();
 				this.tag = "0";
 				this.message = "添加用户组信息成功！";
 			}
@@ -97,6 +98,7 @@ public class GroupAction extends ActionSupport implements SessionAware {
 			this.tag = "1";
 			this.message = "修改用户组信息失败！";
 		} else {
+			getAllGroup();
 			this.tag = "0";
 			this.message = "修改用户组信息成功！";
 		}
@@ -125,6 +127,7 @@ public class GroupAction extends ActionSupport implements SessionAware {
 		for (String id : ids) {
 			Integer oneId = Integer.valueOf( id );
 			if(groupService.deleteUsergroup( oneId ) == 0) {
+				getAllGroup();
 				this.message = "删除用户组成功！";
 				this.tag = "0";
 			} else {
@@ -142,13 +145,16 @@ public class GroupAction extends ActionSupport implements SessionAware {
 	 * 获取全部用户组信息
 	 * @return
 	 */
-	private List<Usergroup> allClazzList;
-	public List<Usergroup> getAllClazzList() {
-		return allClazzList;
+	private List<Usergroup> allGroupList;
+	public List<Usergroup> getAllGroupList() {
+		return allGroupList;
+	}
+	public void setAllGroupList(List<Usergroup> allGroupList) {
+		this.allGroupList = allGroupList;
 	}
 	
 	public String getAllGroup() {
-		allClazzList = groupService.getAllUserGroup();
+		allGroupList = groupService.getAllUserGroup();
 		return SUCCESS;
 	}
 }

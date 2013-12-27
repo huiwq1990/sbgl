@@ -100,8 +100,8 @@
               <div class="title pull-left">班级管理</div>
               <div class="tips">在此页面下添加新班级组或者管理现有班级。</div>
               <div class="operate-item pull-left">
-                <a href="#add-equip-category" class="btn btn-primary" data-toggle="modal" role="button">添加班级</a>
-                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+                <a href="#add-equip-category" class="btn btn-primary" action-type="clearInput" data-toggle="modal" role="button">添加班级</a>
+                <a href="#" class="btn btn-white s-h" action-type="delClazz"><i class="icon-trash"></i> 删除</a>
               </div>
             </div><!--control-bar end-->
             <div class="panel panel-default">
@@ -111,36 +111,17 @@
                   <tr>
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
                     <th class="name">班级名称</th>
-                    <th class="f-category"></th>
-                    <th class="model-num"></th>
-                    <th class="equip-num"></th>
                   </tr>
                 </thead>
                 <tbody>
+				  #foreach($clazz in $allClazzList)
                   <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>一班<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><input class="chk" type="checkbox" name="chk-list"  value="$!clazz.classId"></td>
+                    <td>$!clazz.classname<a class="btn btn-white btn-mini" action-type="beforeModify" data-id="$!clazz.classId" data-name="$!clazz.classname" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
                   </tr>
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>二班<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>三班<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
+				  #end
                 </tbody>
               </table>
-              
             </div>
           </div>
 
@@ -181,14 +162,14 @@
       <div class="form-group">
         <label for="inputCategoryName" class="col-xs-3 control-label">班级名称</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="inputCategoryName" placeholder="班级名">
+          <input type="text" class="form-control" id="inputClazzName" placeholder="班级名">
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary">确 定</button>
+    <button class="btn btn-primary" action-type="addClazz">确 定</button>
   </div>
 </div>       
 <div id="modify-equip-category" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
@@ -202,14 +183,14 @@
       <div class="form-group">
         <label for="modifyCategoryName" class="col-xs-3 control-label">班级名称</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="modifyCategoryName" placeholder="班级名">
+          <input type="text" class="form-control" id="modifyClazzName" placeholder="班级名">
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary">确 定</button>
+    <button class="btn btn-primary" action-type="modifyClazz">确 定</button>
   </div>
 </div>
 
@@ -223,5 +204,147 @@
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 
+<script>
+	var alterClazzName;		//修改班级的原名称
+	var alterClazzId;		//修改班级的id
+	var idsForDel = "";  	//用于删除的id串
+	
+	var cookie = { 
+		//读取COOKIES,n为COOKIE名 
+		Get:function(n){ 
+    		var re=new RegExp(n+'=([^;]*);?','gi');
+    	    var r=re.exec(document.cookie)||[];
+    	    return (r.length>1?r[1]:null)
+		}
+	};
+	
+	$("body").on("click", "a[action-type|=clearInput]", function() {
+		$("#inputClazzName").val("");
+	});
+	
+	$("body").on("click", "input[type='checkbox']", function() {
+		var num = 0;
+		if($(this).attr("id") === "chk-all") {
+			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
+		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true){
+				num++;  
+			}
+		});
+		if(num > 0){
+			$(".s-h").css({
+				"visibility": "visible",
+				"opacity": "1",
+				"filter": "alpha(opacity=100)"
+			});
+		} else {
+			$(".s-h").css({
+				"visibility": "hidden",
+				"opacity": "0",
+				"filter": "alpha(opacity=0)"
+			});
+		}
+		
+		idsForDel = "";
+		
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true) {
+				//num++;
+				idsForDel += $(this).prop("value") + "_";
+			}
+		});
+	});
+	
+	$("body").on("click", "a[action-type|=beforeModify]", function() {
+		var myData = $(this).data();
+		
+		alterClazzId = myData.id;
+		alterClazzName = myData.name;
+		
+		$("#modifyClazzName").val(alterClazzName);
+		
+		console.log(alterClazzId);
+		console.log(alterClazzName);
+	});
+	
+	$('.modal').on('click', ('button.btn-primary'), function () {
+		var _this = $(this);
+		var postData = {};
+		var actionUrl = "";
+		var tip = "";
+	    
+	    if(_this.attr('action-type') == 'addClazz') {
+	        var className = $("#inputClazzName").val();
+    		
+    		if(className != "") {
+    			postData = {
+    				"clazz.classname": className
+    			}
+    			actionUrl = "${webbaseurl}/addClazz.do";
+    			tip = "添加班级成功！";
+    		} else {
+    			alert("班级名称不能为空！");
+				return;
+    		}
+	    }
+		
+		if(_this.attr('action-type') == 'modifyClazz') {
+	        var newClazzName = $("#modifyClazzName").val() == "" ? alterClassName : $("#modifyClazzName").val();
+    		
+    		if(alterClazzName == newClazzName) {
+    			alert("并未做修改！");
+				return;
+    		} else {
+    			postData = {
+					"clazz.classId": alterClazzId,
+        			"clazz.classname": newClazzName
+        		};
+				actionUrl = "${webbaseurl}/alterClazz.do";
+				tip = "修改班级成功！";
+    		}
+	    }
+		
+		jQuery.ajax({  
+		    url: actionUrl,  
+		    type: "post",
+		    data: postData,
+		    success:function(data,textStatus,jq) {  
+			    var n = noty({text: tip, timeout: 2500, type: 'success'});
+			    _this.parents('.modal').modal('toggle');
+				$("#admin-wrap").html(data);
+	        },  
+		    error:function(data,textStatus,jq){
+		        var n = noty({text: "系统错误，操作失败，请联系管理员！", timeout: 2500, type: 'error'});
+		    }  
+		});
+	});
+	
+	$("body").on("click", "a[action-type|=delClazz]", function() {
+		//alert(idsForDel);
+		var postData = {
+			clazzIds: idsForDel,
+		}
+			
+		jQuery.ajax({  
+		    url: "${webbaseurl}/deleteClazz.do",  
+		    type: "post",
+		    data: postData,
+		    success:function(data,textStatus,jq){ 
+				var n = noty({text: "删除班级成功！", timeout: 2500, type: 'success'});
+				//$(this).parents('.modal').modal('toggle');
+				$("#admin-wrap").html(data);
+				
+	        },  
+		    error:function(data,textStatus,jq){
+    			var n = noty({text: "系统异常，请联系系统管理员！", timeout: 2500, type: 'error'});
+			}  
+		});
+	});
+	
+	
+</script>
+
+</script>
 </body>
 </html>
