@@ -18,7 +18,7 @@ import com.sbgl.app.services.user.TeacherService;
 import com.sbgl.app.services.user.UserGroupRelationService;
 
 @Scope("prototype") 
-@Controller("teacherAction")
+@Controller("TeacherAction")
 public class TeacherAction extends ActionSupport implements SessionAware {
 	/**
 	 * 
@@ -103,7 +103,7 @@ public class TeacherAction extends ActionSupport implements SessionAware {
 	 * 修改教师信息
 	 * @return
 	 */
-	public String alterStudent() {
+	public String alterTeacher() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		

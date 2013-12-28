@@ -102,15 +102,29 @@
             </div><!--control-bar end-->
             <div class="panel panel-default">
               <div class="panel-body">
-                
                 <form class="form-horizontal" role="form">
+				  <div class="form-group">
+                    <label for="inputStuNum" class="col-lg-2 control-label">编号</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="inputStuNum" placeholder="学生学号或教师编号">
+                    </div>
+                  </div>
                   <div class="form-group">
                     <label for="inputTrueName" class="col-lg-2 control-label">真实姓名</label>
                     <div class="col-lg-4">
                       <input type="text" class="form-control" id="inputTrueName" placeholder="真实姓名">
                     </div>
                   </div>
-                  <div class="form-group">
+				  <div class="form-group">
+                    <label for="inputStuSex" class="col-lg-2 control-label">性别</label>
+                    <div class="col-lg-4">
+                      <select class="select2 form-control" id="inputStuSex">
+            			<option value="0">男</option>
+            			<option value="1">女</option>
+            		  </select>
+                    </div>
+                  </div>
+				  <div class="form-group">
                     <label for="inputPassword1" class="col-lg-2 control-label">密码</label>
                     <div class="col-lg-4">
                       <input type="text" class="form-control" id="inputPassword1" placeholder="登录密码">
@@ -120,46 +134,60 @@
                     <label for="inputUserGroup" class="col-lg-2 control-label">用户组</label>
                     <div class="col-lg-4">
                       <select class="select2 form-control" id="inputUserGroup">
-                      <optgroup label="学生">
-                        <option value="1">本科</option>
-                        <option value="2">硕士</option>
-                        <option value="3">博士</option>
-                      </optgroup>
-                      <optgroup label="教师">
-                        <option value="4">在职</option>
-                        <option value="5">退休</option>
-                      </optgroup>
-                      <optgroup label="其他">
-                        <option value="6">Arizona</option>
-                        <option value="7">Colorado</option>
-                      </optgroup>
+						<optgroup label="学生">
+						#foreach($item in $allGroupList)
+						  #if($!item.type == "2")
+							<option value=$!item.id>$!item.name</option>
+						  #end
+						#end
+						</optgroup>
+						<optgroup label="教师">
+						#foreach($item in $allGroupList)
+						  #if($!item.type == 6)
+							<option value=$!item.id>$!item.name</option>
+						  #end
+						#end
+						</optgroup>
+						<optgroup label="其他">
+						#foreach($item in $allGroupList)
+						  #if($!item.type == -1)
+							<option value=$!item.id>$!item.name</option>
+						  #end
+						#end
+						</optgroup>	
                       </select>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <label for="inputStuNum" class="col-lg-2 control-label">学号</label>
+				  <div class="form-group">
+                    <label for="modifyEquipCategory" class="col-lg-2 control-label">可否借阅</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="inputStuNum" placeholder="系统默认登录用户名">
+                      <select class="select2 form-control" id="inputStuCould">
+            			<option value="0">是</option>
+            			<option value="1">否</option>
+            		  </select>
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputStuClass" class="col-lg-2 control-label">班级</label>
                     <div class="col-lg-4">
                       <select class="select2 form-control" id="inputStuClass">
-                      <optgroup label="学生">
-                        <option value="1">本科</option>
-                        <option value="2">硕士</option>
-                        <option value="3">博士</option>
-                      </optgroup>
-                      <optgroup label="教师">
-                        <option value="4">在职</option>
-                        <option value="5">退休</option>
-                      </optgroup>
-                      <optgroup label="其他">
-                        <option value="6">Arizona</option>
-                        <option value="7">Colorado</option>
-                      </optgroup>
+						<option value=-1>无</option>
+						#foreach($clazz in $clazzList)
+							<option value=$!clazz.classId>$!clazz.classname</option>
+						#end
                       </select>
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="modifyEquipCategory" class="col-lg-2 control-label">电话</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="inputTel" placeholder="联系电话或手机">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="modifyEquipCategory" class="col-lg-2 control-label">邮箱</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="inputMail" placeholder="常用邮箱地址">
                     </div>
                   </div>
                   <div class="form-group">
@@ -168,14 +196,14 @@
                       <span class="btn btn-white file-input-button">
                           <i class="icon-plus"></i>
                           <span>添加图片</span>
-                          <input id="inputEPic" type="file" name="files[]" multiple>
+                          <input id="inputPhoto" type="file" name="file" multiple>
                       </span>
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-4">
                       <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-                      <button type="submit" class="btn btn-primary">添 加</button>
+                      <button id="submitBtnForAdd" type="submit" class="btn btn-primary" action-type="addUser">添 加</button>
                     </div>
                   </div>
                 </form>
@@ -217,6 +245,178 @@
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/fileUpload/vendor/jquery.ui.widget.js"></script>
+<script src="${jsDomain}/fileUpload/jquery.iframe-transport.js"></script>
+<script src="${jsDomain}/jquery.fileupload.js"></script>
 
+<script>
+	var isStu = true;		//判断是否是学生，初始化为true
+	var isTea = false;		//判读是否是教师
+	var isWkr = false;		//判读是否是其他
+	var savedFileName;      //保存在服务器的图片名称
+	var n = {};				//提示
+	
+	var cookie = { 
+  		//读取COOKIES,n为COOKIE名 
+   		Get:function(n){ 
+       		var re=new RegExp(n+'=([^;]*);?','gi');
+       	    var r=re.exec(document.cookie)||[];
+       	    return (r.length>1?r[1]:null)
+   		}
+	};
+	
+	$("body").on("click", "button[action-type|=addUser]", function() {
+		var _this = $(this);
+		var userCode = $("#inputStuNum").val();
+		var userName = $("#inputTrueName").val();
+		var userSex = $("#inputStuSex").val();
+		var userPass = $("#inputPassword1").val();
+		var userGroup = $("#inputUserGroup").val();
+		var userClazz = $("#inputStuClass").val();
+		var userTel = $("#inputTel").val();
+		var userMail = $("#inputMail").val();
+		var userCould = $("#inputStuCould").val();
+		
+		/*
+		console.log("detailNum " + detailNum);
+		console.log("state" + state);
+		console.log("modelId" + modelId);
+		console.log("memo" + memo);
+		console.log("administrationid" + cookie.Get("id"));
+		*/
+		
+		if(userCode == "") {
+			alert("编号不能为空!");
+			return;
+		}
+		if(userName == "") {
+			alert("姓名不能为空!");
+			return;
+		}
+		
+		var postData = {};
+		var url = "";
+		if(isStu) {
+			postData = {
+    			"student.studentid": userCode,
+    			"student.name": userName,
+    			"student.gender": userSex,
+    			"student.telephone": userTel,
+    			"student.email": userMail,
+    			"student.photo": savedFileName,
+    			"student.password": userPass,
+    			"student.classid": userClazz,
+    			"student.couldborrow": userCould
+    		};
+			url = "${webbaseurl}/addStu.do";
+		} else if(isTea) {
+    		postData = {
+    			"teacher.teacherid": password,
+    			"teacher.name": userName,
+    			"teacher.gender": userSex,
+    			"teacher.telephone": userTel,
+    			"teacher.email": userMail,
+    			"teacher.photo": savedFileName,
+    			"teacher.password": userPass
+    		};
+			url = "${webbaseurl}/addTea.do";
+		} else if(isWkr) {
+			postData = {
+    			"worker.teacherid": password,
+    			"worker.name": userName,
+    			"worker.gender": userSex,
+    			"worker.telephone": userTel,
+    			"worker.email": userMail,
+    			"worker.photo": savedFileName,
+    			"worker.password": userPass
+    		};
+			url = "${webbaseurl}/addWkr.do";
+		} else {
+			return;
+		}
+		
+		jQuery.ajax({  
+		    url: url,  
+		    type: "post",
+		    data: postData,
+		    success:function(data,textStatus,jq){  
+		    	console.log(data);
+				if(data.tag == "0") {
+					n = noty({text: data.msg, timeout: 2500, type: 'success'});
+		    		_this.parents('.modal').modal('toggle');
+					
+					$("#inputStuNum").val("");
+                    $("#inputTrueName").val("");
+                    $("#inputStuSex").select2("val", 0);
+                    $("#inputPassword1").val("");
+                    $("#inputUserGroup").select2("val", -1);
+                    $("#inputStuClass").select2("val", -1);
+                    $("#inputTel").val("");
+                    $("#inputMail").val("");
+					
+				} else {
+					n = noty({text: data.msg, timeout: 2500, type: 'error'});
+				}
+	        },  
+		    error:function(data,textStatus,jq) {
+				    n = noty({text: data.msg, timeout: 2500, type: 'error'});
+			}  
+		});
+	});
+	
+	$('#inputPhoto').fileupload({
+    	url: "${webbaseurl}/uploadUserPhoto.do",
+        dataType: 'json',
+		change: function (e, data) {
+			$("#submitBtnForAdd").attr("disabled", "disabled");
+        	n = noty({text: "请等待头像上传完成！", type: 'success'});
+    	},
+        done: function (e, data) {
+			n.close();
+			console.log(n);
+			 $("#submitBtnForAdd").removeAttr("disabled");
+			if(data.result.tag == 0) {
+				alert("图片上传完成！");
+				savedFileName = data.result.savedFileName;
+			} else if(data.result.tag == 1) {
+				alert(data.result.msg);
+				savedFileName = "";
+			} else {
+				alert("上传图片失败！");
+			}
+            //alert(data.result.message);
+        }
+    });
+	
+	//监听分类下拉菜单
+	$("body").on("change", "#inputUserGroup", function() {
+		var gId = $("#inputUserGroup").val();
+		console.log(gId);
+		var postData = {
+    		"groupId": gId
+    	};
+		
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/isStuGroup.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				if(data.groupType == "2") {
+					$("#inputStuClass").attr("disabled", false);
+					$("#inputStuCould").attr("disabled", false);
+				} else {
+					$("#inputStuClass").attr("disabled", true);
+					$("#inputStuCould").attr("disabled", true);
+				}
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
+</script>
+
+</script>
 </body>
 </html>

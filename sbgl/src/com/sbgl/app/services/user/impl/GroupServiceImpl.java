@@ -22,6 +22,7 @@ public class GroupServiceImpl implements GroupService {
 	public int addUserGroup(Usergroup usergroup) {
 		int id = baseDao.getCode("usergroupId");
 		usergroup.setId( id );
+		usergroup.setCreateTime(new Date());
 		
 		try {
 			baseDao.saveEntity( usergroup );
@@ -36,7 +37,6 @@ public class GroupServiceImpl implements GroupService {
 		int id = usergroup.getId();
 		Usergroup storeUsergroup = baseDao.getEntityById(Usergroup.class, id);
 		
-		storeUsergroup.setCreateTime( new Date() );
 		storeUsergroup.setName( usergroup.getName() );
 		storeUsergroup.setOwnerId( usergroup.getOwnerId() );
 		storeUsergroup.setStatus( usergroup.getStatus() );
@@ -71,6 +71,11 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public boolean isExistGroupName(String groupName) {
 		return baseDao.isExist(Usergroup.class, "name", groupName);
+	}
+
+	@Override
+	public Usergroup getUserGroupByid(int groupId) {
+		return baseDao.getEntityById(Usergroup.class, groupId);
 	}
 
 }

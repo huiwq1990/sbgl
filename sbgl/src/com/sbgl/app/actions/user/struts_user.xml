@@ -27,15 +27,105 @@
         	</result>
         </action>
         
-        <action name="alterUserGroup" class="GroupAction" method="alterGroup()">
+        <action name="alterUserGroup" class="GroupAction" method="alterGroup">
         	<result name="success">
         		/user/userManageUserGroupForFlush.vm
         	</result>
         </action>
         
-        <action name="delUserGroup" class="GroupAction" method="deleteGroup()">
+        <action name="delUserGroup" class="GroupAction" method="deleteGroup">
         	<result name="success">
         		/user/userManageUserGroupForFlush.vm
+        	</result>
+        </action>
+        
+	 </package>
+	 
+	 <package name="userajax" extends="json-default">
+	 	<action name="uploadUserPhoto" class="com.sbgl.app.actions.upload.FileUploadAction" method="uploadUserPhoto">
+			<result type="json" name="success">
+        		<param name="contentType">
+        			text/html
+        		</param>
+        	</result>
+		</action>
+		
+		<action name="addStu" class="StudentAction" method="addStudent">
+        	<result type="json" name="success">
+        		<param name="contentType">
+        			text/html
+        		</param>
+        	</result>
+        </action>
+        
+        <action name="alterStu" class="StudentAction" method="alterStudent">
+        	<result type="json" name="success">
+        		<param name="contentType">
+        			text/html
+        		</param>
+        	</result>
+        </action>
+        
+        <action name="delStu" class="StudentAction" method="deleteStudent">
+        	<result type="json" name="success">
+        		<param name="contentType">
+        			text/html
+        		</param>
+        	</result>
+        </action>
+        
+        <action name="addTea" class="TeacherAction" method="addTeacher">
+        	<result type="json" name="success">
+        		<param name="contentType">
+        			text/html
+        		</param>
+        	</result>
+        </action>
+        
+        <action name="alterTea" class="TeacherAction" method="alterTeacher">
+        	<result type="json" name="success">
+        		<param name="contentType">
+        			text/html
+        		</param>
+        	</result>
+        </action>
+        
+        <action name="delTea" class="TeacherAction" method="deleteTeacher">
+        	<result type="json" name="success">
+        		<param name="contentType">
+        			text/html
+        		</param>
+        	</result>
+        </action>
+        
+        <action name="addWkr" class="WorkerAction" method="addWorker">
+        	<result type="json" name="success">
+        		<param name="contentType">
+        			text/html
+        		</param>
+        	</result>
+        </action>
+        
+        <action name="alterWkr" class="WorkerAction" method="alterWorker">
+        	<result type="json" name="success">
+        		<param name="contentType">
+        			text/html
+        		</param>
+        	</result>
+        </action>
+        
+        <action name="delWkr" class="WorkerAction" method="deleteWorker">
+        	<result type="json" name="success">
+        		<param name="contentType">
+        			text/html
+        		</param>
+        	</result>
+        </action>
+        
+        <!-- 用于判断用户组所属的类别 -->
+        <action name="isStuGroup" class="StudentAction" method="isStuGroup">
+        	<result type="json" name="success">
+        		<param name="root">returnJSON</param>
         	</result>
         </action>
 	 </package>

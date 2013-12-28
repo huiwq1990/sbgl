@@ -70,7 +70,6 @@ public class GroupAction extends ActionSupport implements SessionAware {
 				this.tag = "1";
 				this.message = "添加用户组信息失败！";
 			} else {
-				getAllGroup();
 				this.tag = "0";
 				this.message = "添加用户组信息成功！";
 			}
@@ -78,7 +77,7 @@ public class GroupAction extends ActionSupport implements SessionAware {
 			this.tag = "2";
 			this.message = "所添加的用户组信息已经存在！";
 		}
-		
+		getAllGroup();
 		returnJSON.put("tag", tag);
 		returnJSON.put("msg", message);
 		return SUCCESS;
@@ -98,11 +97,10 @@ public class GroupAction extends ActionSupport implements SessionAware {
 			this.tag = "1";
 			this.message = "修改用户组信息失败！";
 		} else {
-			getAllGroup();
 			this.tag = "0";
 			this.message = "修改用户组信息成功！";
 		}
-		
+		getAllGroup();
 		returnJSON.put("tag", tag);
 		returnJSON.put("msg", message);
 		return SUCCESS;
@@ -127,7 +125,6 @@ public class GroupAction extends ActionSupport implements SessionAware {
 		for (String id : ids) {
 			Integer oneId = Integer.valueOf( id );
 			if(groupService.deleteUsergroup( oneId ) == 0) {
-				getAllGroup();
 				this.message = "删除用户组成功！";
 				this.tag = "0";
 			} else {
@@ -135,7 +132,7 @@ public class GroupAction extends ActionSupport implements SessionAware {
 				this.tag = "1";
 			}
 		}
-		
+		getAllGroup();
 		returnJSON.put("tag", tag);
 		returnJSON.put("msg", message);
 		return SUCCESS;

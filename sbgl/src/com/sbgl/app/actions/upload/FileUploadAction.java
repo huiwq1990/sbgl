@@ -91,6 +91,39 @@ public class FileUploadAction  extends ActionSupport {
 		return SUCCESS;
 	}
 	
+	public String uploadUserPhoto() throws Exception {
+		String fileType = fileFileName.substring( fileFileName.indexOf('.') );
+		//拦截格式不正确的文件，仅允许保存图片格式
+		System.out.println("++++++++++++++++++++++++++++++++++++" + fileType);
+		if(!fileType.toLowerCase().equals(".jpg") && !fileType.toLowerCase().equals(".png") &&!fileType.toLowerCase().equals(".gif")) {
+			tag = "1";
+			msg = "请上传图片格式的文件(JPG、PNG、GIF)！";
+			return SUCCESS;
+		} else {
+			tag = "0";
+		}
+		
+		if(fileType != null) {
+			savedFileName = commonService.getCode("userImgCode").toString() + fileType;
+		} else {
+			savedFileName = fileFileName;
+		}
+		
+		InputStream is = new FileInputStream(file);
+		String userImagePath = PropertyUtil.readValue("/system.properties", "userImagePath");
+		//String root = ServletActionContext.getRequest().getRealPath("/equipImage");
+		File deskFile = new File(userImagePath, savedFileName);
+		OutputStream os = new FileOutputStream(deskFile);
+		byte[] bytefer = new byte[1024];
+		int length = 0;
+		while ((length = is.read(bytefer)) != -1) {
+			os.write(bytefer, 0, length);
+		}
+		os.close();
+		is.close();
+		return SUCCESS;
+	}
+	
 	public String uploadExcelFile() throws Exception {
 		String fileType = fileFileName.substring( fileFileName.indexOf('.') );
 		if(!fileType.toLowerCase().equals(".xls") && !fileType.toLowerCase().equals(".xlsx")) {

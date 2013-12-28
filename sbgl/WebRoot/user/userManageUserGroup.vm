@@ -252,6 +252,7 @@
 	
 	$("body").on("click", "a[action-type|=clearInput]", function() {
 		$("#inputGroupName").val("");
+		$("#inputTypeId").select2("val", 2);
 	});
 	
 	$("body").on("click", "input[type='checkbox']", function() {
@@ -328,11 +329,14 @@
     		}
 	    }
 		
-		if(_this.attr('action-type') == 'modifyClazz') {
-	        var newGroupName = $("#modifyGroupName").val() == "" ? alterGroupName : $("#modifyClazzName").val();
+		if(_this.attr('action-type') == 'modifyGroup') {
+	        var newGroupName = $("#modifyGroupName").val() == "" ? alterGroupName : $("#modifyGroupName").val();
 	        var newGroupType = $("#modifyTypeId").val();
+			
+			//alert(newGroupName);
+			//alert(newGroupType);
     		
-    		if(alterClazzName == newClazzName && newGroupType == alterGroupType) {
+    		if(alterGroupName == newGroupName && newGroupType == alterGroupType) {
     			alert("并未做修改！");
 				return;
     		} else {
@@ -361,7 +365,7 @@
 		});
 	});
 	
-	$("body").on("click", "a[action-type|=delClazz]", function() {
+	$("body").on("click", "a[action-type|=delUserGroup]", function() {
 		//alert(idsForDel);
 		var postData = {
 			groupIds: idsForDel,

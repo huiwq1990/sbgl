@@ -14,4 +14,6 @@ public interface GroupService {
 	public List<Usergroup> getAllUserGroup();
 	//判断用户组名是否已经存在
 	public boolean isExistGroupName(String groupName);
+	//根据Id获取分组
+	public Usergroup getUserGroupByid(int groupId);
 }

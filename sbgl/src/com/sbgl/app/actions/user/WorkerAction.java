@@ -18,7 +18,7 @@ import com.sbgl.app.services.user.UserGroupRelationService;
 import com.sbgl.app.services.user.WorkerService;
 
 @Scope("prototype") 
-@Controller("workerAction")
+@Controller("WorkerAction")
 public class WorkerAction extends ActionSupport implements SessionAware {
 	/**
 	 * 
@@ -104,7 +104,7 @@ public class WorkerAction extends ActionSupport implements SessionAware {
 	 * 修改其他人员信息
 	 * @return
 	 */
-	public String alterStudent() {
+	public String alterWorker() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		
@@ -137,7 +137,7 @@ public class WorkerAction extends ActionSupport implements SessionAware {
 	public void setWorkerIds(String workerIds) {
 		this.workerIds = workerIds;
 	}
-	public String deleteTeacher() {
+	public String deleteWorker() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		String[] ids = workerIds.split("_");

@@ -1,5 +1,6 @@
 package com.sbgl.app.actions.user;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,9 +12,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sbgl.app.entity.Clazz;
 import com.sbgl.app.entity.Student;
 import com.sbgl.app.entity.Usergroup;
 import com.sbgl.app.entity.Usergrouprelation;
+import com.sbgl.app.services.user.ClazzService;
 import com.sbgl.app.services.user.GroupService;
 import com.sbgl.app.services.user.StudentService;
 import com.sbgl.app.services.user.UserGroupRelationService;
@@ -29,6 +32,8 @@ public class StudentAction extends ActionSupport implements SessionAware {
 
 	@Resource
 	private StudentService studentService;
+	@Resource
+	private ClazzService clazzService;
 	@Resource
 	private GroupService groupService;
 	
@@ -184,8 +189,30 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		
 		return SUCCESS;
 	}
+	
+	private List<Clazz> clazzList;
+	public List<Clazz> getClazzList() {
+		return clazzList;
+	}
 	public String gotoUserManageUserAdd() {
-		
+		clazzList = clazzService.getAllClazz();
+		allGroupList = new ArrayList<Usergroup>();
+		List<Usergroup> tempList = groupService.getAllUserGroup();
+		List<Usergroup> subList1 = new ArrayList<Usergroup>();
+		List<Usergroup> subList2 = new ArrayList<Usergroup>();
+		List<Usergroup> subList3 = new ArrayList<Usergroup>();
+		for (Usergroup up : tempList) {
+			if(up.getType() == 2) {
+				subList1.add( up );
+			} else if(up.getType() == 6) {
+				subList2.add( up );
+			} else if(up.getType() == -1) {
+				subList3.add( up );
+			}
+		}
+		allGroupList.addAll( subList1 );
+		allGroupList.addAll( subList2 );
+		allGroupList.addAll( subList3 );
 		return SUCCESS;
 	}
 	
@@ -193,11 +220,31 @@ public class StudentAction extends ActionSupport implements SessionAware {
 	public List<Usergroup> getAllGroupList() {
 		return allGroupList;
 	}
-	public void setAllGroupList(List<Usergroup> allGroupList) {
-		this.allGroupList = allGroupList;
-	}
 	public String gotoUserManageUserGroup() {
 		allGroupList = groupService.getAllUserGroup();
+		return SUCCESS;
+	}
+	
+	/**
+	 * 判断该用户组所属的类别
+	 */
+	public String groupId;
+	public String getGroupId() {
+		return groupId;
+	}
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+	public String isStuGroup() {
+		returnJSON = null;
+		returnJSON = new HashMap<String,Object>();
+		
+		if(groupId != null && !"".equals(groupId)) {
+			
+		}
+		Usergroup group = groupService.getUserGroupByid( Integer.valueOf( groupId.trim() ) );
+		
+		returnJSON.put("groupType", group.getType());
 		return SUCCESS;
 	}
 }
