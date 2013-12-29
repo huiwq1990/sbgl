@@ -25,7 +25,8 @@
 <!-- entity full manage  -->		
 		<!-- default entity full manage action -->
     	<action name="manageComputerhomeworkFull" class="ManageComputerAction" method="manageComputerhomeworkFull">
-        	<result name="success">/computer/computerhomeworkFullManage.vm</result>
+        	<result name="success1">/computer/computerhomeworkFullManage.vm</result>
+        	<result name="success2">/computer/computerhomeworkFullManageContent.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
 	

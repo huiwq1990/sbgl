@@ -2,26 +2,27 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>管理</title>
+<title>北京电影学院摄影系 - 消息中心</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
-
+<link href="${jsDomain}/editor/themes/default/default.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="${cssDomain}/jqpagination.css" type="text/css" />
 <!--[if lt IE 10]>
-  <script src="../js/jquery.placeholder.js"></script>
+  <script src="${jsDomain}/jquery.placeholder.js"></script>
   <script>
   $('input, textarea').placeholder();
   </script>
 <![endif]-->
 <!--[if lt IE 9]>
-  <script src="../js/html5shiv.js"></script>
-  <script src="../js/respond.min.js"></script>
+  <script src="${jsDomain}/html5shiv.js"></script>
+  <script src="${jsDomain}/respond.min.js"></script>
 <![endif]-->
 <!--[if IE 7]>
-<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<link rel="stylesheet" href="${cssDomain}/font-awesome-ie7.min.css">
 <![endif]-->
 </head>
 
@@ -91,11 +92,9 @@
             <div class="control-bar clearfix"><!--control-bar start-->
               <div class="title pull-left">管理</div>
 			  <div class="tips">在此页面下管理信息，如设备的添加、修改、删除及维护等。</div>
-              <div class="filter category-filter">
-				
-				
-				<!--
+			  <!--
 				将来用于根据课程查找作业
+              <div class="filter category-filter">
                 <select id="select-categories" style="width:130px" class="select2">
                   <option value="0" data-foo="fa">全部分类</option>
                   <option value="1" data-foo="fa">摄影摄像机</option>
@@ -106,9 +105,9 @@
                   <option value="6" data-foo="sub">钨丝灯</option>
                   <option value="7" data-foo="sub">镝灯</option>
                 </select>
-				-->
+				
               </div>
-              
+              -->
               <div class="operate-item pull-left">
                 <a href="" class="btn btn-primary">添加</a>
                 <a href="#" class="btn btn-white s-h" action-type="deleteComputerhomeworkButton"><i class="icon-trash"></i> 删除</a>
@@ -136,11 +135,9 @@
               -->
             </div> <!--control-bar end-->
 			
-            <div class="panel panel-default table-responsive">
-
-				<!--刷新数据-->
-				<div id="refreshComputerhomeworkTable">
-<!--管理内容从这里开始 -->
+			<!--刷新数据-->
+			<div id="refreshComputerhomeworkTableDiv">
+            <div class="panel panel-default table-responsive"><!--管理内容从这里开始 -->
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -198,15 +195,21 @@
 					<td><a href="${webbaseurl}/editComputerhomeworkFull.action?id=$!tempcomputerhomework.computerhomeworkid">修改</a></td>
 -->                 
                   </tr>
-#end            
-           
+#end                      
                 </tbody>
               </table>
-
-
-				</div> <!--end 刷新数据-->
-
-            </div>
+			  
+			      <!--page -->
+			  <div class="pagination">
+				<a href="#" class="first" data-action="first">&laquo;</a>
+				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
+				<input type="text" readonly="readonly" data-max-page="$!page.totalpage" />
+				<a href="#" class="next" data-action="next">&rsaquo;</a>
+				<a href="#" class="last" data-action="last">&raquo;</a>
+			  </div><!-- end page -->
+			  
+				</div> <!--end table div-->
+            </div><!--end refreshComputerhomeworkTableDiv 刷新数据-->
           </div>
 
       </div>
@@ -318,6 +321,12 @@
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/jquery.jqpagination.js"></script>
+<script src="${jsDomain}/editor/kindeditor-min.js"></script>
+<script src="${jsDomain}/editor/lang/zh_CN.js"></script>
+
 <script>
 	$("#modifyFaCategoryId").select2("val","2");
 </script>
@@ -507,6 +516,44 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 			});
 	})
 	//end delete 分类
+	
+	
+		
+//换页时调用方法
+$('.pagination').jqPagination({
+    	paged: function(page) {
+     	   // do something with the page variable
+			currentpagenum = page;
+			refreshComputerhomeworkTable();
+    	}
+	});
+	
+//刷新数据
+function refreshComputerhomeworkTable(){
+			jQuery.ajax({  
+		    url: '${webbaseurl}/manageComputerhomeworkFull.action',  
+		    type: "post",
+		    data:{	
+					pageNo:currentpagenum,
+					callType:'ajaxType'					
+					},
+		    dataType: 'html',
+			success: function(data){
+				$("#refreshComputerhomeworkTableDiv").html(data);
+				
+				//设置分页绑定事件
+				$('.pagination').jqPagination({
+					link_string	: '/?page={page_number}',
+					max_page	: totalpage,
+					current_page:currentpagenum,
+					paged: function(page) {     	  
+						currentpagenum = page;
+						refreshComputerhomeworkTable();		
+    				}
+				});
+				}		  	  
+			});		
+}//end refreshComputerhomeworkTable
 	
 	
 </script>

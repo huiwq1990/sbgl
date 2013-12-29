@@ -516,10 +516,17 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	public String manageComputerstatusFull(){
 		log.info("exec action method:manageComputerstatusFull");
 		
-//      分页查询		
+//      分页查询	
+		if(pageNo ==0){
+			pageNo =1;
+		}
+		page.setTotalCount(computerstatusService.countComputerstatusRow());
+		if(page.getTotalpage() < pageNo){
+			pageNo = page.getTotalpage();
+		}
 		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
-		//page.setTotalpage(computerstatusService.countComputerstatusRow());
+		
+		
 		computerstatusFullList  = computerstatusService.selectComputerstatusFullByPage(page);
 		
 //		查询全部
@@ -531,7 +538,11 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 //		for(int i = 0; i < computerstatusFullList.size(); i++){
 //			System.out.println("id="+computerstatusFullList.get(i).getLoginusername());
 //		}
-		return SUCCESS;
+		if(callType!=null&&callType.equals("ajaxType")){
+			return "success2";
+		}else{
+			return "success1";
+		}
 	}			
 			
 	
@@ -540,11 +551,18 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	public String manageComputerorderclassruleFull(){
 		log.info("exec action method:manageComputerorderclassruleFull");
 		
-//      分页查询		
+//      分页查询	
+		if(pageNo ==0){
+			pageNo =1;
+		}
+		page.setTotalCount(computerorderclassruleService.countComputerorderclassruleRow());
+		if(page.getTotalpage() < pageNo){
+			pageNo = page.getTotalpage();
+		}
 		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
+		
 		//page.setTotalpage(computerorderclassruleService.countComputerorderclassruleRow());
-		computerorderclassruleFullList  = computerorderclassruleService.selectComputerorderclassruleFullByPage(page);
+		computerorderclassruleFullList  = computerorderclassruleService.selectComputerorderclassruleFullByConditionAndPage("", page);
 		
 //		查询全部
 //		computerorderclassruleFullList  = computerorderclassruleService.selectComputerorderclassruleFullAll();
@@ -555,8 +573,34 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 //		for(int i = 0; i < computerorderclassruleFullList.size(); i++){
 //			System.out.println("id="+computerorderclassruleFullList.get(i).getLoginusername());
 //		}
-		return SUCCESS;
+		if(callType!=null&&callType.equals("ajaxType")){
+			return "success2";
+		}else{
+			return "success1";
+		}
 	}			
+	
+	
+	
+	public String toAddComputerorderclassrulePage(){
+//		获取全部分类信息
+		String categorysqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";	
+		computercategoryList  = computercategoryService.selectComputercategoryByCondition(categorysqlch);
+//		获取全部模型信息
+		String modelsqlen = " where a.languagetype=1 order by a.computermodeltype,a.languagetype";
+		computermodelList  =  computermodelService.selectComputermodelByCondition(modelsqlen);
+		
+//		将模型与分类关联
+		computermodelByComputercategoryId = ComputerActionUtil.categoryModelMap(computermodelList);
+	
+		
+		if(computercategoryList == null){
+			computercategoryList = new ArrayList<Computercategory>();
+		}
+		
+		return SUCCESS;
+	}
+	
 	
 	public String createComputerorderclassrule(){
 		
@@ -584,9 +628,14 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 //		将模型与分类关联
 		computermodelByComputercategoryId = ComputerActionUtil.categoryModelMap(computermodelList);
 	
+//		查询可以选择的预约规则
+		computerorderclassruleFullList  = computerorderclassruleService.selectComputerorderclassruleFullByCondition("");
 		
 		if(computercategoryList == null){
 			computercategoryList = new ArrayList<Computercategory>();
+		}
+		if(computerorderclassruleFullList == null){
+			computerorderclassruleFullList = new ArrayList<ComputerorderclassruleFull>();
 		}
 		
 		return SUCCESS;
@@ -598,12 +647,18 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	public String manageComputerhomeworkFull(){
 		log.info("exec action method:manageComputerhomeworkFull");
 		
-//      分页查询		
+//      分页查询	
+		if(pageNo ==0){
+			pageNo =1;
+		}
+		page.setTotalCount(computerhomeworkService.countComputerhomeworkRow());
+		if(page.getTotalpage() < pageNo){
+			pageNo = page.getTotalpage();
+		}
 		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
-		//page.setTotalpage(computerhomeworkService.countComputerhomeworkRow());
-		computerhomeworkFullList  = computerhomeworkService.selectComputerhomeworkFullByPage(page);
 		
+		computerhomeworkFullList  = computerhomeworkService.selectComputerhomeworkFullByConditionAndPage("", page);
+		System.out.println("computerhomeworkFullList.size"+computerhomeworkFullList.size());
 //		查询全部
 //		computerhomeworkFullList  = computerhomeworkService.selectComputerhomeworkFullAll();
 
@@ -613,7 +668,11 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 //		for(int i = 0; i < computerhomeworkFullList.size(); i++){
 //			System.out.println("id="+computerhomeworkFullList.get(i).getLoginusername());
 //		}
-		return SUCCESS;
+		if(callType!=null&&callType.equals("ajaxType")){
+			return "success2";
+		}else{
+			return "success1";
+		}
 	}			
 			
 	
@@ -621,10 +680,16 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	public String manageComputerhomeworkreceiverFull(){
 		log.info("exec action method:manageComputerhomeworkreceiverFull");
 		
-//      分页查询		
+//      分页查询	
+		if(pageNo ==0){
+			pageNo =1;
+		}
+		page.setTotalCount(computerhomeworkreceiverService.countComputerhomeworkreceiverRow());
+		if(page.getTotalpage() < pageNo){
+			pageNo = page.getTotalpage();
+		}
 		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
-		//page.setTotalpage(computerhomeworkreceiverService.countComputerhomeworkreceiverRow());
+		
 		computerhomeworkreceiverFullList  = computerhomeworkreceiverService.selectComputerhomeworkreceiverFullByPage(page);
 		
 //		查询全部
@@ -636,7 +701,12 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 //		for(int i = 0; i < computerhomeworkreceiverFullList.size(); i++){
 //			System.out.println("id="+computerhomeworkreceiverFullList.get(i).getLoginusername());
 //		}
-		return SUCCESS;
+		
+		if(callType!=null&&callType.equals("ajaxType")){
+			return "success2";
+		}else{
+			return "success1";
+		}
 	}			
 			
 	

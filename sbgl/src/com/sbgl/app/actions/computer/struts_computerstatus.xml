@@ -14,32 +14,15 @@
         	<result name="success">/computer/computerstatusManage.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
-		<!-- manage action , go to jsp page -->
-    	<action name="manageComputerstatusJsp" class="ManageComputerAction" method="manageComputerstatus">
-        	<result name="success">/computer/computerstatusManage.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>		
-		<!-- manage action , go to vm page -->
-    	<action name="manageComputerstatusVm" class="ManageComputerAction" method="manageComputerstatus">
-        	<result name="success">/computer/computerstatusManage.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>		
+		
 <!-- entity full manage  -->		
 		<!-- default entity full manage action -->
     	<action name="manageComputerstatusFull" class="ManageComputerAction" method="manageComputerstatusFull">
-        	<result name="success">/computer/computerstatusFullManage.vm</result>
+        	<result name="success1">/computer/computerstatusFullManage.vm</result>
+        	<result name="success2">/computer/computerstatusFullManageContent.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
-		<!-- manage action , go to jsp page -->
-    	<action name="manageComputerstatusFullJsp" class="ManageComputerAction" method="manageComputerstatusFull">
-        	<result name="success">/computer/computerstatusFullManage.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>		
-		<!-- manage action , go to vm page -->
-    	<action name="manageComputerstatusFullVm" class="ManageComputerAction" method="manageComputerstatusFull">
-        	<result name="success">/computer/computerstatusFullManage.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>	
+	
 		
 		
 <!--添加实体-->

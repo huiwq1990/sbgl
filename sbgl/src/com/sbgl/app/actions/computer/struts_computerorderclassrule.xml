@@ -8,6 +8,12 @@
         	<result name="success">/computer/computerorderclassruleManage.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
+
+<!-- 创建课程预约 -->
+    	<action name="toAddComputerorderclassrulePage" class="ManageComputerAction" method="toAddComputerorderclassrulePage">
+        	<result name="success">/computer/computerorderclassruleAdd.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
         
 <!--查看规则-->		
         <action name="viewComputerorderclassruleFull" class="ManageComputerorderclassrule" method="viewComputerorderclassruleFull">
@@ -18,14 +24,16 @@
 
 <!-- default entity manage action -->
     	<action name="manageComputerorderclassrule" class="ManageComputerAction" method="manageComputerorderclassrule">
-        	<result name="success">/computer/computerorderclassruleManage.vm</result>
+        	<result name="success1">/computer/computerorderclassruleManage.vm</result>
+        	<result name="success2">/computer/computerorderclassruleManageContent.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
 
 <!-- entity full manage  -->		
 		<!-- default entity full manage action -->
     	<action name="manageComputerorderclassruleFull" class="ManageComputerAction" method="manageComputerorderclassruleFull">
-        	<result name="success">/computer/computerorderclassruleFullManage.vm</result>
+        	<result name="success1">/computer/computerorderclassruleFullManage.vm</result>
+        	<result name="success2">/computer/computerorderclassruleFullManageContent.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
 

@@ -60,7 +60,9 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 	String computerorderclassruleIdsForDel;
 	
 //	规则允许借的pc
-	String allowedPcIds;
+	private String allowborrowpcids;
+	private String orderstarttime;
+	private String orderendtime;
 	
 //  manage Computerorderclassrule
 	public String manageComputerorderclassrule(){
@@ -153,13 +155,16 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 		try {
 			Computerorderclassrule temp = new Computerorderclassrule();
 			// 将model里的属性值赋给temp
-			BeanUtils.copyProperties(temp, computerorderclassrule);			
+//			BeanUtils.copyProperties(temp, computerorderclassrule);			
 		
+			temp.setOrderstarttime(DateUtil.parseDate(orderstarttime));
+			System.out.println("orderstarttimeorderstarttime"+orderstarttime);
+			temp.setOrderendtime(DateUtil.parseDate(orderendtime));
 			temp.setCreatetime(DateUtil.currentDate());
-				
+			
 			computerorderclassruleService.addComputerorderclassrule(temp);
 			
-			String[] pcid = allowedPcIds.split(";");
+			String[] pcid = allowborrowpcids.split(";");
 			for (int i = 0; i < pcid.length; i++) {
 				Computerorderclassruledetail c = new Computerorderclassruledetail();
 				c.setAllowedcomputermodelid(Integer.valueOf(pcid[i]));
@@ -173,11 +178,7 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 			this.returnStr = jo.toString();
 			
 			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
+		} catch(Exception e){
 			e.printStackTrace();
 			log.error("类ComputerorderclassruleAction的方法：addComputerorderclassruleAjax错误"+e);
 		}
@@ -643,12 +644,13 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 			this.returnJson = returnJson;
 		}
 
-		public String getAllowedPcIds() {
-			return allowedPcIds;
+
+		public String getAllowborrowpcids() {
+			return allowborrowpcids;
 		}
 
-		public void setAllowedPcIds(String allowedPcIds) {
-			this.allowedPcIds = allowedPcIds;
+		public void setAllowborrowpcids(String allowborrowpcids) {
+			this.allowborrowpcids = allowborrowpcids;
 		}
 
 		public static Log getLog() {
@@ -661,6 +663,22 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 
 		public void setComputerorderclassruleid(Integer computerorderclassruleid) {
 			this.computerorderclassruleid = computerorderclassruleid;
+		}
+
+		public String getOrderstarttime() {
+			return orderstarttime;
+		}
+
+		public void setOrderstarttime(String orderstarttime) {
+			this.orderstarttime = orderstarttime;
+		}
+
+		public String getOrderendtime() {
+			return orderendtime;
+		}
+
+		public void setOrderendtime(String orderendtime) {
+			this.orderendtime = orderendtime;
 		}
         
         

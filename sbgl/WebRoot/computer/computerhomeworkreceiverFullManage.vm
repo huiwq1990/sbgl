@@ -444,6 +444,43 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 	//end delete 分类
 	
 	
+	
+	//换页时调用方法
+$('.pagination').jqPagination({
+    	paged: function(page) {
+     	   // do something with the page variable
+			currentpagenum = page;
+			refreshComputerorderclassruleTable();
+    	}
+	});
+	
+//刷新数据
+function refreshComputerorderclassruleTable(){
+			jQuery.ajax({  
+		    url: '${webbaseurl}/manageComputerorderclassruleFull.action',  
+		    type: "post",
+		    data:{	
+					pageNo:currentpagenum,
+					callType:'ajaxType'					
+					},
+		    dataType: 'html',
+			success: function(data){
+				$("#refreshComputerTableDiv").html(data);
+				
+				//设置分页绑定事件
+				$('.pagination').jqPagination({
+					link_string	: '/?page={page_number}',
+					max_page	: totalpage,
+					current_page:currentpagenum,
+					paged: function(page) {     	  
+						currentpagenum = page;
+						refreshComputerorderclassruleTable();		
+    				}
+				});
+				}		  	  
+			});		
+}//end refreshComputerorderclassruleTable
+	
 </script>
 
 
