@@ -306,31 +306,34 @@
     			"student.password": userPass,
     			"student.classid": userClazz,
     			"student.couldBorrow": userCould,
-				"group.id": userGroup
+				"group.id": userGroup,
+				"group.type": 2
     		};
 			url = "${webbaseurl}/addStu.do";
 		} else if(isTea) {
     		postData = {
-    			"teacher.teacherid": password,
+    			"teacher.teacherId": userCode,
     			"teacher.name": userName,
     			"teacher.gender": userSex,
     			"teacher.telephone": userTel,
     			"teacher.email": userMail,
     			"teacher.photo": savedFileName,
     			"teacher.password": userPass,
-				"group.id": userGroup
+				"group.id": userGroup,
+				"group.type": 6
     		};
 			url = "${webbaseurl}/addTea.do";
 		} else if(isWkr) {
 			postData = {
-    			"worker.teacherid": password,
+    			"worker.workId": userCode,
     			"worker.name": userName,
     			"worker.gender": userSex,
     			"worker.telephone": userTel,
     			"worker.email": userMail,
     			"worker.photo": savedFileName,
     			"worker.password": userPass,
-				"group.id": userGroup
+				"group.id": userGroup,
+				"group.type": -1
     		};
 			url = "${webbaseurl}/addWkr.do";
 		} else {
@@ -342,10 +345,10 @@
 		    type: "post",
 		    data: postData,
 		    success:function(data,textStatus,jq){  
-				alert(data.tag);
+				//alert(data.tag);
 		    	console.log(data);
 				if(data.tag == "0") {
-					alert(data.msg);
+					//alert(data.msg);
 					n = noty({text: data.msg, timeout: 2500, type: 'success'});
 		    		_this.parents('.modal').modal('toggle');
 					
@@ -353,7 +356,7 @@
                     $("#inputTrueName").val("");
                     $("#inputStuSex").select2("val", 0);
                     $("#inputPassword1").val("");
-                    $("#inputUserGroup").select2("val", -1);
+                    $("#inputUserGroup").select2("val", 0);
                     $("#inputStuClass").select2("val", -1);
                     $("#inputTel").val("");
                     $("#inputMail").val("");

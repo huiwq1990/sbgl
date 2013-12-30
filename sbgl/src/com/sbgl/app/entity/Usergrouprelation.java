@@ -13,6 +13,7 @@ public class Usergrouprelation extends com.sbgl.app.dao.DaoAbs implements
 	private Integer groupId;
 	private Integer userId;
 	private Integer status;
+	private Integer groupType;
 
 	// Constructors
 
@@ -27,11 +28,12 @@ public class Usergrouprelation extends com.sbgl.app.dao.DaoAbs implements
 
 	/** full constructor */
 	public Usergrouprelation(Integer id, Integer groupId, Integer userId,
-			Integer status) {
+			Integer status, Integer groupType) {
 		this.id = id;
 		this.groupId = groupId;
 		this.userId = userId;
 		this.status = status;
+		this.groupType = groupType;
 	}
 
 	// Property accessors
@@ -66,6 +68,14 @@ public class Usergrouprelation extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public Integer getGroupType() {
+		return this.groupType;
+	}
+
+	public void setGroupType(Integer groupType) {
+		this.groupType = groupType;
 	}
 
 }

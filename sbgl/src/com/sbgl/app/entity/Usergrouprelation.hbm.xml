@@ -19,5 +19,8 @@
         <property name="status" type="java.lang.Integer">
             <column name="status" />
         </property>
+        <property name="groupType" type="java.lang.Integer">
+            <column name="groupType" />
+        </property>
     </class>
 </hibernate-mapping>

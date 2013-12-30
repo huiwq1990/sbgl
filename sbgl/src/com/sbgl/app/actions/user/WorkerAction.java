@@ -86,6 +86,7 @@ public class WorkerAction extends ActionSupport implements SessionAware {
 				Usergrouprelation ugr = new Usergrouprelation();
 				ugr.setGroupId( group.getId() );
 				ugr.setUserId( returnCode );
+				ugr.setGroupType( group.getType() );
 				userGroupRelationService.addUserGroupRelation( ugr );
 				this.tag = "0";
 				this.message = "添加其他人员信息成功！";

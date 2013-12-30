@@ -85,6 +85,7 @@ public class TeacherAction extends ActionSupport implements SessionAware {
 				Usergrouprelation ugr = new Usergrouprelation();
 				ugr.setGroupId( group.getId() );
 				ugr.setUserId( returnCode );
+				ugr.setGroupType( group.getType() );
 				userGroupRelationService.addUserGroupRelation( ugr );
 				this.tag = "0";
 				this.message = "添加教师信息成功！";
