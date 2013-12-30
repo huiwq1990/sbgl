@@ -168,8 +168,7 @@
                   <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-4">
                       <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-                      <button class="btn btn-primary"  action-type="addComputerButton">添 加</button>
-					
+                      <button class="btn btn-primary"  action-type="addComputerButton">添 加</button>					
                     </div>
                   </div>
                 </form>

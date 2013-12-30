@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,19 +9,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
-
+<link rel="stylesheet" href="${cssDomain}/jqpagination.css" type="text/css" />
 <!--[if lt IE 10]>
-  <script src="../js/jquery.placeholder.js"></script>
+  <script src="${jsDomain}/jquery.placeholder.js"></script>
   <script>
   $('input, textarea').placeholder();
   </script>
 <![endif]-->
 <!--[if lt IE 9]>
-  <script src="../js/html5shiv.js"></script>
-  <script src="../js/respond.min.js"></script>
+  <script src="${jsDomain}/html5shiv.js"></script>
+  <script src="${jsDomain}/respond.min.js"></script>
 <![endif]-->
 <!--[if IE 7]>
-<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<link rel="stylesheet" href="${cssDomain}/font-awesome-ie7.min.css">
 <![endif]-->
 </head>
 
@@ -92,7 +91,8 @@
             <div class="control-bar clearfix"><!--control-bar start-->
               <div class="title pull-left">管理</div>
 			  <div class="tips">在此页面下管理信息，如设备的添加、修改、删除及维护等。</div>
-              <div class="filter category-filter">
+              <!--
+			  <div class="filter category-filter">
                 <select id="select-categories" style="width:130px" class="select2">
                   <option value="0" data-foo="fa">全部分类</option>
                   <option value="1" data-foo="fa">摄影摄像机</option>
@@ -104,12 +104,14 @@
                   <option value="7" data-foo="sub">镝灯</option>
                 </select>
               </div>
-              
+              -->
+			  
               <div class="operate-item pull-left">
                 <a href="" class="btn btn-primary">添加</a>
                 <a href="#" class="btn btn-white s-h" action-type="deleteComputerorderclassruleButton"><i class="icon-trash"></i> 删除</a>
               </div>
 
+			  <!--
               <div class="page pull-right clearfix">
                 <ul class="page-index nav nav-pills pull-left">
                   <li class="dropdown">
@@ -136,20 +138,24 @@
                 <li><a href="#">遗失(2)</a></li>
                 <li><a href="#">回收站(1)</a></li>
               </ul>
+			  -->
+			  
             </div><!--control-bar end-->
+			
+			
+			<div id ="refreshComputerorderclassruleTableDiv">
             <div class="panel panel-default table-responsive">
 
 <!--管理内容从这里开始 -->
 
-				<form id="formComputerorderclassruleManage" action="${webbaseurl}/manageComputerorderclassruleFull.action" method="get">
-
-              <table class="table table-hover">
+              <table class="table table-hover"><!--管理Table开始-->
                 <thead>
                   <tr>
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
 
-             <th class="name">computerorderclassruleid</th>
-             <th class="name">computerorderclassrulename</th>
+             <th class="name">序号</th>
+             <th class="name">规则名称</th>
+			 <!--
              <th class="name">computerorderclassruleclassname</th>
              <th class="name">computerorderclassruleclassid</th>
              <th class="name">computerorderclassruleorderstarttime</th>
@@ -158,9 +164,11 @@
              <th class="name">computerorderclassrulecreateuserid</th>
              <th class="name">computerorderclassrulecreatetime</th>
              <th class="name">computerorderclassrulestatus</th>
+			
                    <th class="name">View</th>
 				   <th class="name">Del</th>
 				   <th class="name">Edit</th>
+				    -->
                   </tr>
                 </thead>
                 <tbody>					
@@ -170,7 +178,7 @@
                   <tr>
                    <td><input class="chk" type="checkbox" name="chk-list" value="$!tempcomputerorderclassrule.computerorderclassruleid"></td>
 					<!--修改属性-->
-                    <td>$!tempcomputerorderclassrule.computerorderclassrulename<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="editComputerorderclassruleFillIn" 
+                    <td>$!tempcomputerorderclassrule.computerorderclassruleid<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="editComputerorderclassruleFillIn" 
 						
 						
 																								data-id="$!tempcomputerorderclassrule.computerorderclassruleid"                           
@@ -185,8 +193,8 @@
 												data-status="$!tempcomputerorderclassrule.computerorderclassrulestatus"                           
 												>修改</a></td>    
 						
-<td>$!tempcomputerorderclassrule.computerorderclassruleid</td>
 <td>$!tempcomputerorderclassrule.computerorderclassrulename</td>
+<!--
 <td>$!tempcomputerorderclassrule.computerorderclassruleclassname</td>
 <td>$!tempcomputerorderclassrule.computerorderclassruleclassid</td>
 <td>$!tempcomputerorderclassrule.computerorderclassruleorderstarttime</td>
@@ -197,20 +205,26 @@
 <td>$!tempcomputerorderclassrule.computerorderclassrulestatus</td>
 					<td><a href="${webbaseurl}/viewComputerorderclassruleFull.action?id=$!tempcomputerorderclassrule.computerorderclassruleid">查看</a></td> 
 					<td><a href="${webbaseurl}/deleteComputerorderclassruleFull.action?id=$!tempcomputerorderclassrule.computerorderclassruleid">删除</a></td>			
-					<td><a href="${webbaseurl}/editComputerorderclassruleFull.action?id=$!tempcomputerorderclassrule.computerorderclassruleid">修改</a></td>
-                 
+		<td><a href="${webbaseurl}/editComputerorderclassruleFull.action?id=$!tempcomputerorderclassrule.computerorderclassruleid">修改</a></td>
+ 	-->		                
                   </tr>
 #end            
            
                 </tbody>
-              </table>
-  		  
-#getPageHtml("formId=formComputerorderclassruleManage" "parameters=pageNo:$page.pageNo,pageSize:$page.pageSize,totalCount:$page.totalCount,pageviewcount:$page.pageviewcount,vmpath:common/page.vm")
-
-</form>
-
-            </div>
-          </div>
+              </table><!--管理Table开始-->
+			  
+			    <!--page -->
+			  <div class="pagination">
+				<a href="#" class="first" data-action="first">&laquo;</a>
+				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
+				<input type="text" readonly="readonly" data-max-page="$!page.totalpage" />
+				<a href="#" class="next" data-action="next">&rsaquo;</a>
+				<a href="#" class="last" data-action="last">&raquo;</a>
+			  </div><!-- end page -->
+            </div><!-- end table div -->
+	</div> <!-- end refreshComputerorderclassruleTableDiv-->
+			  
+			  </div>
 
       </div>
       <!--equip-wrap end-->
@@ -328,16 +342,25 @@
 </div>
 
 
-    <!-- Le javascript
+
+    <!-- javascript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
-<script>
-	$("#modifyFaCategoryId").select2("val","2");
-</script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/jquery.jqpagination.js"></script>
+
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+
+
 
 
 
@@ -533,6 +556,43 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 	})
 	//end delete 分类
 	
+	
+	
+	//换页时调用方法
+$('.pagination').jqPagination({
+    	paged: function(page) {
+     	   // do something with the page variable
+			currentpagenum = page;
+			refreshComputerorderclassruleTable();
+    	}
+	});
+	
+//刷新数据
+function refreshComputerorderclassruleTable(){
+			jQuery.ajax({  
+		    url: '${webbaseurl}/manageComputerorderclassruleFull.action',  
+		    type: "post",
+		    data:{	
+					pageNo:currentpagenum,
+					callType:'ajaxType'					
+					},
+		    dataType: 'html',
+			success: function(data){
+				$("#refreshComputerorderclassruleTableDiv").html(data);
+				
+				//设置分页绑定事件
+				$('.pagination').jqPagination({
+					link_string	: '/?page={page_number}',
+					max_page	: totalpage,
+					current_page:currentpagenum,
+					paged: function(page) {     	  
+						currentpagenum = page;
+						refreshComputerorderclassruleTable();		
+    				}
+				});
+				}		  	  
+			});		
+}//end refreshComputerorderclassruleTable
 	
 </script>
 

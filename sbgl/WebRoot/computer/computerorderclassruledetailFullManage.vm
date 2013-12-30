@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
-
+<link rel="stylesheet" href="${cssDomain}/jqpagination.css" type="text/css" />
 <!--[if lt IE 10]>
   <script src="../js/jquery.placeholder.js"></script>
   <script>
@@ -92,6 +92,7 @@
             <div class="control-bar clearfix"><!--control-bar start-->
               <div class="title pull-left">管理</div>
 			  <div class="tips">在此页面下管理信息，如设备的添加、修改、删除及维护等。</div>
+			  <!-- 分类
               <div class="filter category-filter">
                 <select id="select-categories" style="width:130px" class="select2">
                   <option value="0" data-foo="fa">全部分类</option>
@@ -104,12 +105,12 @@
                   <option value="7" data-foo="sub">镝灯</option>
                 </select>
               </div>
-              
+              -->
               <div class="operate-item pull-left">
                 <a href="" class="btn btn-primary">添加</a>
                 <a href="#" class="btn btn-white s-h" action-type="deleteComputerorderclassruledetailButton"><i class="icon-trash"></i> 删除</a>
               </div>
-
+			  <!-- 分页
               <div class="page pull-right clearfix">
                 <ul class="page-index nav nav-pills pull-left">
                   <li class="dropdown">
@@ -136,6 +137,7 @@
                 <li><a href="#">遗失(2)</a></li>
                 <li><a href="#">回收站(1)</a></li>
               </ul>
+			  -->
             </div><!--control-bar end-->
             <div class="panel panel-default table-responsive">
 

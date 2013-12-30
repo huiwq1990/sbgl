@@ -55,12 +55,10 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 
 	
 //	add homework	
-	String receiverUserIds;//接收者
-	String classruleId;//课程规则
-	
+	private String receiverids;//接收者
 
-	
-	ReturnJson returnJson = new ReturnJson();
+
+// del 
 	String computerhomeworkIdsForDel;
 	
 	
@@ -80,6 +78,8 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 	private ComputerorderclassruledetailFull computerorderclassruledetailFull = new ComputerorderclassruledetailFull();//实例化一个模型
 	List<Computerorderclassruledetail> computerorderclassruledetailList = new ArrayList<Computerorderclassruledetail>();
 	List<ComputerorderclassruledetailFull> computerorderclassruledetailFullList = new ArrayList<ComputerorderclassruledetailFull>();
+	
+	ReturnJson returnJson = new ReturnJson();
 	
 	//作业收件箱
 	public String toComputerhomeworkInboxPage(){
@@ -173,18 +173,18 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 			BeanUtils.copyProperties(temp, computerhomework);			
 			//add your code here.
 			temp.setCreateuserid(0);
-			temp.setCreatetime(DateUtil.currentDate());
-			
-			computerhomeworkService.addComputerhomework(temp);
-			
-			String[] userIds = receiverUserIds.split(";");
-			for (int i = 0; i < userIds.length; i++) {
-				Computerhomeworkreceiver chr = new Computerhomeworkreceiver();
-				chr.setComputerhomeworkid(temp.getId());
-				chr.setUserid(Integer.valueOf(userIds[i]));
-				computerhomeworkreceiverService.addComputerhomeworkreceiver(chr);
-			}
-			
+//			temp.setCreatetime(DateUtil.currentDate());
+//			
+//			computerhomeworkService.addComputerhomework(temp);
+//			
+//			String[] userIds = receiverUserIds.split(";");
+//			for (int i = 0; i < userIds.length; i++) {
+//				Computerhomeworkreceiver chr = new Computerhomeworkreceiver();
+//				chr.setComputerhomeworkid(temp.getId());
+//				chr.setUserid(Integer.valueOf(userIds[i]));
+//				computerhomeworkreceiverService.addComputerhomeworkreceiver(chr);
+//			}
+//			
 			return SUCCESS;
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
@@ -207,14 +207,22 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 			Computerhomework temp = new Computerhomework();
 			// 将model里的属性值赋给temp
 			BeanUtils.copyProperties(temp, computerhomework);			
-			//add your code here.
+			temp.setCreatetime(DateUtil.currentDate());
 			
-			//temp.setCreatetime(DateUtil.currentDate());
-			
-			
+//			先添加homework，再添加接收者
 			computerhomeworkService.addComputerhomework(temp);
 			
-			returnJson.setFlag(1);		
+			String[] userIds = receiverids.split(";");
+			for (int i = 0; i < userIds.length; i++) {
+				Computerhomeworkreceiver chr = new Computerhomeworkreceiver();
+				chr.setComputerhomeworkid(temp.getId());
+				chr.setUserid(Integer.valueOf(userIds[i]));
+				computerhomeworkreceiverService.addComputerhomeworkreceiver(chr);
+			}
+			
+			
+			returnJson.setFlag(1);
+			returnJson.setReason("添加成功");
 			JSONObject jo = JSONObject.fromObject(returnJson);
 			this.returnStr = jo.toString();
 			
@@ -228,7 +236,8 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 			log.error("类ComputerhomeworkAction的方法：addBbstagfavourite错误"+e);
 		}
 		
-		returnJson.setFlag(0);		
+		returnJson.setFlag(0);
+		returnJson.setReason("添加失败");
 		JSONObject jo = JSONObject.fromObject(returnJson);
 		this.returnStr = jo.toString();
 		return SUCCESS;
@@ -716,21 +725,19 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 			this.computerhomeworkreceiverService = computerhomeworkreceiverService;
 		}
 
-		public String getReceiverUserIds() {
-			return receiverUserIds;
+	
+
+		public String getReceiverids() {
+			return receiverids;
 		}
 
-		public void setReceiverUserIds(String receiverUserIds) {
-			this.receiverUserIds = receiverUserIds;
+
+
+		public void setReceiverids(String receiverids) {
+			this.receiverids = receiverids;
 		}
 
-		public String getClassruleId() {
-			return classruleId;
-		}
 
-		public void setClassruleId(String classruleId) {
-			this.classruleId = classruleId;
-		}
 
 		public ReturnJson getReturnJson() {
 			return returnJson;

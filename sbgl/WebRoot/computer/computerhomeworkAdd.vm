@@ -18,11 +18,11 @@
   </script>
 <![endif]-->
 <!--[if lt IE 9]>
-  <script src="js/html5shiv.js"></script>
-  <script src="js/respond.min.js"></script>
+  <script src="${jsDomain}/html5shiv.js"></script>
+  <script src="${jsDomain}/respond.min.js"></script>
 <![endif]-->
 <!--[if IE 7]>
-<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<link rel="stylesheet" href="${cssDomain}/font-awesome-ie7.min.css">
 <![endif]-->
 </head>
 
@@ -98,26 +98,30 @@
       <div class="container" id="msg">
         <div class="row">
           <div class="col-md-12">
-            <form role="form" action="${webbaseurl}/addComputerhomework.${strutsaction}">
-              <div class="control-bar"><!--control-bar start-->
+			
+			<form id="addForm" action="javascript:void(0)" class="form-horizontal" role="form">
+                        <div class="control-bar"><!--control-bar start-->
                 <div class="title">布置新教学任务</div>
               </div>
               <!--control-bar end-->
               <div class="row">
-                <div class="send-to-warp">
+				<div class="send-to-warp">
                   <div class="form-group send-to">
                     <label class="sr-only" for="inputSendTo">收件人</label>
-                    <input type="text" id="inputSendTo" name="receiverUserIds" class="send-to form-control input-lg" placeholder="添加收件人">
+                    <input type="text" id="input_sendtoids" name="receiverUserIds" class="send-to form-control input-lg" placeholder="添加收件人" value="1;2">
                   </div>
                 </div>
                 <div class="form-group user-group">
                   <a href="#userGroup" role="button" class="btn btn-white btn-large btn-block" data-toggle="modal"><i class="icon-group"> +</i></a>
                 </div>
               </div>
-              <div class="row">
+			  
+			  
+              <div class="row"><!--  sel 课程规则选择-->
                 <div class="send-to-warp">
                   <div class="form-group send-to">
                     <label class="sr-only" for="inputEquipRule">课程规则</label>
+					<!--
                       <select class="select2 select-white form-control input-lg" id="inputEquipRule" name="computerorderclassruleid" data-placeholder="选择课程规则">
                         <option></option>
                         <optgroup label="MV、广告创作">
@@ -131,19 +135,27 @@
                           <option value="WA">规则4</option>
                         </optgroup>
                       </select>
+					  -->
+					<select class="select2 select-white form-control input-lg" id="input_computerorderclassruleid" name="computerorderclassruleid" data-placeholder="选择课程规则">
+                       
+					   #foreach($rule in ${computerorderclassruleFullList})
+						<option value="$rule.computerorderclassruleid">$rule.computerorderclassrulename</option>
+                       #end
+                      </select>
                   </div>
                 </div>
                 <div class="form-group user-group">
                   <a href="#createEquipRule" role="button" class="btn btn-white btn-large btn-block" data-toggle="modal">新建 +</a>
                 </div>
-              </div>
+              </div><!-- end sel 课程规则选择-->
+			  
               <div class="form-group send-title">
                 <label class="sr-only" for="inputMsgTitle">主题</label>
-                <input type="text" class="form-control input-lg" id="inputMsgTitle" name="name" placeholder="添加主题">
+                <input type="text" class="form-control input-lg" id="input_name" name="name" placeholder="添加主题">
               </div>
               <div class="msg-content-warp">
                 <div class="msg-content panel panel-default">
-                  <textarea name="content" id="inputContent" name="content" style="width:100%;height:300px;visibility:hidden;"></textarea>                
+                  <textarea name="content" id="input_content" style="width:100%;height:300px;visibility:hidden;"></textarea>                
                 </div>
               </div>
               <div class="form-group attach-file-warp">
@@ -161,7 +173,7 @@
                 </label>
               </div>    
               <a class="btn btn-white" href="">取 消</a>
-              <button type="submit" class="btn btn-primary">发 送</button>
+              <button  class="btn btn-primary" action-type="addComputerhomeworkButton">发 送</button>
             </form>
           </div>
         </div>
@@ -257,9 +269,11 @@
     ================================================== -->
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/jquery.jqpagination.js"></script>
 <script src="${jsDomain}/editor/kindeditor-min.js"></script>
 <script src="${jsDomain}/editor/lang/zh_CN.js"></script>
 
@@ -317,7 +331,7 @@
 		var postData = {
 			classid : courseId,
 			name : ruleName,
-			allowedPcIds : pcIds
+			allowborrowpcids : pcIds
 			
 		};
 		
@@ -345,11 +359,51 @@
 	
 	
 	
+	//添加作业
+	$("body").on("click", "button[action-type|=addComputerhomeworkButton]", function() {
+			
+			var input_sendtoids = $('#input_sendtoids').val();		
+			var input_computerorderclassruleid = $('#input_computerorderclassruleid').val();
+			var input_name = $('#input_name').val();
+			var input_content = $('#input_content').val();
+			
+			//alert(input_content);
+			
+			var postData = {
+				"receiverids": input_sendtoids,
+				"computerorderclassruleid": input_computerorderclassruleid,
+				"name": input_name,
+				"content": input_content
+			};
+			
+			jQuery.ajax({  
+			    url:"${webbaseurl}/addComputerhomeworkAjax.${strutsaction}",  
+			    type:"post",
+			    data:postData,
+			  	dataType: 'json',
+				success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+				if(returnJson.flag == 1){
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});
+					clearInput();
+				}else{
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
+				}
+		}	});		  	  
+
+	})
+	//end 添加作业
 	
 	
 	
 	
-	
+	//清空数据
+	function clearInput(){
+		$('#input_sendtoids').val("");
+		$('#input_computerorderclassruleid').val("");
+		$('#input_name').val("");
+		$('#input_content').val("");
+	}
 	
 	
 	
