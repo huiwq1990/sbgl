@@ -88,17 +88,23 @@
 		<mapping resource="com/sbgl/app/entity/Computerstatus.hbm.xml" />
 		<mapping
 			resource="com/sbgl/app/entity/Computerorderclassruledetail.hbm.xml" />
-			
-	<mapping
+
+		<mapping
 			resource="com/sbgl/app/entity/Computerhomework.hbm.xml" />
 		<mapping
 			resource="com/sbgl/app/entity/Computerhomeworkreceiver.hbm.xml" />
 
 
-			
-			
+
+
 		<mapping resource="com/sbgl/app/entity/Clazz.hbm.xml" />
 		<mapping resource="com/sbgl/app/entity/Usergroup.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Worker.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Teacher.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Student.hbm.xml" />
+		<mapping
+			resource="com/sbgl/app/entity/Usergrouprelation.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Administrator.hbm.xml" />
 
 
 

@@ -10,11 +10,11 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <property name="groupid" type="java.lang.Integer">
-            <column name="groupid" />
+        <property name="groupId" type="java.lang.Integer">
+            <column name="groupId" />
         </property>
-        <property name="userid" type="java.lang.Integer">
-            <column name="userid" />
+        <property name="userId" type="java.lang.Integer">
+            <column name="userId" />
         </property>
         <property name="status" type="java.lang.Integer">
             <column name="status" />

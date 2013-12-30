@@ -1,5 +1,6 @@
 package com.sbgl.app.entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -31,7 +32,7 @@ public class Usergroup extends com.sbgl.app.dao.DaoAbs implements
 
 	/** full constructor */
 	public Usergroup(Integer id, String name, String ownerId,
-			Date createTime, Integer status, Integer type) {
+			Timestamp createTime, Integer status, Integer type) {
 		this.id = id;
 		this.name = name;
 		this.ownerId = ownerId;

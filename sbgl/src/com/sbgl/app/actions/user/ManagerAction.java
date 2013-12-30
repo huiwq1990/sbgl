@@ -72,7 +72,7 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		
-		Boolean isExist = managerService.isExistManagerCode( manager.getAdministratorid() );
+		Boolean isExist = managerService.isExistManagerCode( manager.getAdministratorId() );
 		
 		if(!isExist) {
 			int returnCode = managerService.addManager( manager );
@@ -81,8 +81,8 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 				this.message = "添加管理员信息失败！";
 			} else {
 				Usergrouprelation ugr = new Usergrouprelation();
-				ugr.setGroupid( group.getId() );
-				ugr.setUserid( returnCode );
+				ugr.setGroupId( group.getId() );
+				ugr.setUserId( returnCode );
 				userGroupRelationService.addUserGroupRelation( ugr );
 				this.tag = "0";
 				this.message = "添加管理员信息成功！";
@@ -112,7 +112,7 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 			this.message = "修改管理员信息失败！";
 		} else {
 			Usergrouprelation ugr = userGroupRelationService.getRelationByUserId( manager.getId() );
-			ugr.setGroupid( group.getId() );
+			ugr.setGroupId( group.getId() );
 			userGroupRelationService.alterUserGroupRelation( ugr );
 			this.tag = "0";
 			this.message = "修改管理员信息成功！";

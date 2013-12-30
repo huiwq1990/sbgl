@@ -40,7 +40,7 @@ public class TeacherServiceImpl implements TeacherService {
 		storeTeacher.setName( teacher.getName() );
 		storeTeacher.setPassword( teacher.getPassword() );
 		storeTeacher.setPhoto( teacher.getPhoto() );
-		storeTeacher.setTeacherid( teacher.getTeacherid() );
+		storeTeacher.setTeacherId( teacher.getTeacherId() );
 		storeTeacher.setTelephone( teacher.getTelephone() );
 		storeTeacher.setEmail( teacher.getEmail() );
 		

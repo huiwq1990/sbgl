@@ -41,7 +41,7 @@ public class WorkerServiceImpl implements WorkerService {
 		storeWorker.setPassword( worker.getPassword() );
 		storeWorker.setPhoto( worker.getPhoto() );
 		storeWorker.setTelephone( worker.getTelephone() );
-		storeWorker.setWorkid( worker.getWorkid() );
+		storeWorker.setWorkId( worker.getWorkId() );
 		
 		try {
 			baseDao.updateEntity( storeWorker );

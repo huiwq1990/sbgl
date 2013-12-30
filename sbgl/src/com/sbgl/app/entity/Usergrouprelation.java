@@ -10,8 +10,8 @@ public class Usergrouprelation extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer id;
-	private Integer groupid;
-	private Integer userid;
+	private Integer groupId;
+	private Integer userId;
 	private Integer status;
 
 	// Constructors
@@ -26,11 +26,11 @@ public class Usergrouprelation extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Usergrouprelation(Integer id, Integer groupid, Integer userid,
+	public Usergrouprelation(Integer id, Integer groupId, Integer userId,
 			Integer status) {
 		this.id = id;
-		this.groupid = groupid;
-		this.userid = userid;
+		this.groupId = groupId;
+		this.userId = userId;
 		this.status = status;
 	}
 
@@ -44,20 +44,20 @@ public class Usergrouprelation extends com.sbgl.app.dao.DaoAbs implements
 		this.id = id;
 	}
 
-	public Integer getGroupid() {
-		return this.groupid;
+	public Integer getGroupId() {
+		return this.groupId;
 	}
 
-	public void setGroupid(Integer groupid) {
-		this.groupid = groupid;
+	public void setGroupId(Integer groupId) {
+		this.groupId = groupId;
 	}
 
-	public Integer getUserid() {
-		return this.userid;
+	public Integer getUserId() {
+		return this.userId;
 	}
 
-	public void setUserid(Integer userid) {
-		this.userid = userid;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public Integer getStatus() {

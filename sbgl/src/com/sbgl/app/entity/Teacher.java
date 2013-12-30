@@ -10,7 +10,7 @@ public class Teacher extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer id;
-	private String teacherid;
+	private String teacherId;
 	private String name;
 	private String gender;
 	private String telephone;
@@ -30,10 +30,10 @@ public class Teacher extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Teacher(Integer id, String teacherid, String name, String gender,
+	public Teacher(Integer id, String teacherId, String name, String gender,
 			String telephone, String email, String photo, String password) {
 		this.id = id;
-		this.teacherid = teacherid;
+		this.teacherId = teacherId;
 		this.name = name;
 		this.gender = gender;
 		this.telephone = telephone;
@@ -52,12 +52,12 @@ public class Teacher extends com.sbgl.app.dao.DaoAbs implements
 		this.id = id;
 	}
 
-	public String getTeacherid() {
-		return this.teacherid;
+	public String getTeacherId() {
+		return this.teacherId;
 	}
 
-	public void setTeacherid(String teacherid) {
-		this.teacherid = teacherid;
+	public void setTeacherId(String teacherId) {
+		this.teacherId = teacherId;
 	}
 
 	public String getName() {

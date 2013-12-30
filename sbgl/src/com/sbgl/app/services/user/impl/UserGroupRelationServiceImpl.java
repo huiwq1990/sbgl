@@ -35,9 +35,9 @@ public class UserGroupRelationServiceImpl implements UserGroupRelationService {
 		int id = userGroupRelation.getId();
 		Usergrouprelation storeRelation = baseDao.getEntityById(Usergrouprelation.class, id);
 		
-		storeRelation.setGroupid( userGroupRelation.getGroupid() );
+		storeRelation.setGroupId( userGroupRelation.getGroupId() );
 		storeRelation.setStatus( userGroupRelation.getStatus() );
-		storeRelation.setUserid( userGroupRelation.getUserid() );
+		storeRelation.setUserId( userGroupRelation.getUserId() );
 		
 		try {
 			baseDao.updateEntity( storeRelation );

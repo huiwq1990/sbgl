@@ -10,7 +10,7 @@ public class Student extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer id;
-	private String studentid;
+	private String studentId;
 	private String name;
 	private String gender;
 	private String telephone;
@@ -18,7 +18,7 @@ public class Student extends com.sbgl.app.dao.DaoAbs implements
 	private String photo;
 	private String password;
 	private Integer classid;
-	private String couldborrow;
+	private String couldBorrow;
 
 	// Constructors
 
@@ -32,11 +32,11 @@ public class Student extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Student(Integer id, String studentid, String name, String gender,
+	public Student(Integer id, String studentId, String name, String gender,
 			String telephone, String email, String photo, String password,
-			Integer classid, String couldborrow) {
+			Integer classid, String couldBorrow) {
 		this.id = id;
-		this.studentid = studentid;
+		this.studentId = studentId;
 		this.name = name;
 		this.gender = gender;
 		this.telephone = telephone;
@@ -44,7 +44,7 @@ public class Student extends com.sbgl.app.dao.DaoAbs implements
 		this.photo = photo;
 		this.password = password;
 		this.classid = classid;
-		this.couldborrow = couldborrow;
+		this.couldBorrow = couldBorrow;
 	}
 
 	// Property accessors
@@ -57,12 +57,12 @@ public class Student extends com.sbgl.app.dao.DaoAbs implements
 		this.id = id;
 	}
 
-	public String getStudentid() {
-		return this.studentid;
+	public String getStudentId() {
+		return this.studentId;
 	}
 
-	public void setStudentid(String studentid) {
-		this.studentid = studentid;
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
 	}
 
 	public String getName() {
@@ -121,12 +121,12 @@ public class Student extends com.sbgl.app.dao.DaoAbs implements
 		this.classid = classid;
 	}
 
-	public String getCouldborrow() {
-		return this.couldborrow;
+	public String getCouldBorrow() {
+		return this.couldBorrow;
 	}
 
-	public void setCouldborrow(String couldborrow) {
-		this.couldborrow = couldborrow;
+	public void setCouldBorrow(String couldBorrow) {
+		this.couldBorrow = couldBorrow;
 	}
 
 }

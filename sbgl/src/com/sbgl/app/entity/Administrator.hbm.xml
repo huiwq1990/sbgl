@@ -10,8 +10,8 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <property name="administratorid" type="java.lang.String">
-            <column name="administratorid" length="15" />
+        <property name="administratorId" type="java.lang.String">
+            <column name="administratorId" length="15" />
         </property>
         <property name="name" type="java.lang.String">
             <column name="name" length="100" />

@@ -102,7 +102,7 @@
             </div><!--control-bar end-->
             <div class="panel panel-default">
               <div class="panel-body">
-                <form class="form-horizontal" role="form">
+                <form class="form-horizontal" action="javascript:void(0)" role="form">
 				  <div class="form-group">
                     <label for="inputStuNum" class="col-lg-2 control-label">编号</label>
                     <div class="col-lg-4">
@@ -203,7 +203,7 @@
                   <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-4">
                       <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-                      <button id="submitBtnForAdd" type="submit" class="btn btn-primary" action-type="addUser">添 加</button>
+                      <button id="submitBtnForAdd" class="btn btn-primary" action-type="addUser">添 加</button>
                     </div>
                   </div>
                 </form>
@@ -248,6 +248,12 @@
 <script src="${jsDomain}/fileUpload/vendor/jquery.ui.widget.js"></script>
 <script src="${jsDomain}/fileUpload/jquery.iframe-transport.js"></script>
 <script src="${jsDomain}/jquery.fileupload.js"></script>
+<!--[if lt IE 10]>
+  <script src="./js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
 
 <script>
 	var isStu = true;		//判断是否是学生，初始化为true
@@ -277,13 +283,6 @@
 		var userMail = $("#inputMail").val();
 		var userCould = $("#inputStuCould").val();
 		
-		/*
-		console.log("detailNum " + detailNum);
-		console.log("state" + state);
-		console.log("modelId" + modelId);
-		console.log("memo" + memo);
-		console.log("administrationid" + cookie.Get("id"));
-		*/
 		
 		if(userCode == "") {
 			alert("编号不能为空!");
@@ -298,7 +297,7 @@
 		var url = "";
 		if(isStu) {
 			postData = {
-    			"student.studentid": userCode,
+    			"student.studentId": userCode,
     			"student.name": userName,
     			"student.gender": userSex,
     			"student.telephone": userTel,
@@ -306,7 +305,8 @@
     			"student.photo": savedFileName,
     			"student.password": userPass,
     			"student.classid": userClazz,
-    			"student.couldborrow": userCould
+    			"student.couldBorrow": userCould,
+				"group.id": userGroup
     		};
 			url = "${webbaseurl}/addStu.do";
 		} else if(isTea) {
@@ -317,7 +317,8 @@
     			"teacher.telephone": userTel,
     			"teacher.email": userMail,
     			"teacher.photo": savedFileName,
-    			"teacher.password": userPass
+    			"teacher.password": userPass,
+				"group.id": userGroup
     		};
 			url = "${webbaseurl}/addTea.do";
 		} else if(isWkr) {
@@ -328,7 +329,8 @@
     			"worker.telephone": userTel,
     			"worker.email": userMail,
     			"worker.photo": savedFileName,
-    			"worker.password": userPass
+    			"worker.password": userPass,
+				"group.id": userGroup
     		};
 			url = "${webbaseurl}/addWkr.do";
 		} else {
@@ -340,8 +342,10 @@
 		    type: "post",
 		    data: postData,
 		    success:function(data,textStatus,jq){  
+				alert(data.tag);
 		    	console.log(data);
 				if(data.tag == "0") {
+					alert(data.msg);
 					n = noty({text: data.msg, timeout: 2500, type: 'success'});
 		    		_this.parents('.modal').modal('toggle');
 					
@@ -374,7 +378,7 @@
         done: function (e, data) {
 			n.close();
 			console.log(n);
-			 $("#submitBtnForAdd").removeAttr("disabled");
+			$("#submitBtnForAdd").removeAttr("disabled");
 			if(data.result.tag == 0) {
 				alert("图片上传完成！");
 				savedFileName = data.result.savedFileName;
@@ -402,13 +406,27 @@
 			type: "post",
 			data: postData,
 			success: function(data,textStatus,jq) {
+				//alert(data.groupType);
 				if(data.groupType == "2") {
 					$("#inputStuClass").attr("disabled", false);
 					$("#inputStuCould").attr("disabled", false);
-				} else {
+					isStu = true;
+        			isTea = false;
+        			isWkr = false;
+				} else if(data.groupType == "6") {
 					$("#inputStuClass").attr("disabled", true);
 					$("#inputStuCould").attr("disabled", true);
+					isStu = false;
+        			isTea = true;
+        			isWkr = false;
+				} else if(data.groupType == "-1") {
+					$("#inputStuClass").attr("disabled", true);
+					$("#inputStuCould").attr("disabled", true);
+					isStu = false;
+        			isTea = false;
+        			isWkr = true;
 				}
+				console.log(isStu + isTea + isWkr);
 			},
 			error: function(data,textStatus,jq) {
 				alert("刷新界面失败!");

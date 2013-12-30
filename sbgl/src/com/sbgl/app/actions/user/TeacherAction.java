@@ -74,7 +74,7 @@ public class TeacherAction extends ActionSupport implements SessionAware {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		
-		Boolean isExist = teacherService.isExistTeacherCode( teacher.getTeacherid() );
+		Boolean isExist = teacherService.isExistTeacherCode( teacher.getTeacherId() );
 		
 		if(!isExist) {
 			int returnCode = teacherService.addTeacher( teacher );
@@ -83,8 +83,8 @@ public class TeacherAction extends ActionSupport implements SessionAware {
 				this.message = "添加教师信息失败！";
 			} else {
 				Usergrouprelation ugr = new Usergrouprelation();
-				ugr.setGroupid( group.getId() );
-				ugr.setUserid( returnCode );
+				ugr.setGroupId( group.getId() );
+				ugr.setUserId( returnCode );
 				userGroupRelationService.addUserGroupRelation( ugr );
 				this.tag = "0";
 				this.message = "添加教师信息成功！";
@@ -114,7 +114,7 @@ public class TeacherAction extends ActionSupport implements SessionAware {
 			this.message = "修改教师信息失败！";
 		} else {
 			Usergrouprelation ugr = userGroupRelationService.getRelationByUserId( teacher.getId() );
-			ugr.setGroupid( group.getId() );
+			ugr.setGroupId( group.getId() );
 			userGroupRelationService.alterUserGroupRelation( ugr );
 			this.tag = "0";
 			this.message = "修改教师信息成功！";

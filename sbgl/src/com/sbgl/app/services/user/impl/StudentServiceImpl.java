@@ -36,13 +36,13 @@ public class StudentServiceImpl implements StudentService {
 		Student storeStu = baseDao.getEntityById(Student.class, id);
 		
 		storeStu.setClassid( student.getClassid() );
-		storeStu.setCouldborrow( student.getCouldborrow() );
+		storeStu.setCouldBorrow( student.getCouldBorrow() );
 		storeStu.setEmail( student.getEmail() );
 		storeStu.setGender( student.getGender() );
 		storeStu.setName( student.getName() );
 		storeStu.setPassword( student.getPassword() );
 		storeStu.setPhoto( student.getPhoto() );
-		storeStu.setStudentid( student.getStudentid() );
+		storeStu.setStudentId( student.getStudentId() );
 		storeStu.setTelephone( student.getTelephone() );
 		
 		try {
@@ -73,7 +73,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public boolean isExistStudentCode(String stuCode) {
-		return baseDao.isExist(Student.class, "studentid", stuCode);
+		return baseDao.isExist(Student.class, "studentId", stuCode);
 	}
 
 	@Override

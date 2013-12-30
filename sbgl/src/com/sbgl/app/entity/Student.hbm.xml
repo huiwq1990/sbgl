@@ -10,8 +10,8 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <property name="studentid" type="java.lang.String">
-            <column name="studentid" length="15" />
+        <property name="studentId" type="java.lang.String">
+            <column name="studentId" length="15" />
         </property>
         <property name="name" type="java.lang.String">
             <column name="name" length="100" />
@@ -34,8 +34,8 @@
         <property name="classid" type="java.lang.Integer">
             <column name="classid" />
         </property>
-        <property name="couldborrow" type="java.lang.String">
-            <column name="couldborrow" length="1" />
+        <property name="couldBorrow" type="java.lang.String">
+            <column name="couldBorrow" length="1" />
         </property>
     </class>
 </hibernate-mapping>

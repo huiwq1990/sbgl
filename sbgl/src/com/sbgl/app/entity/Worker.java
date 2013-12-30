@@ -10,7 +10,7 @@ public class Worker extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer id;
-	private String workid;
+	private String workId;
 	private String name;
 	private String gender;
 	private String telephone;
@@ -30,10 +30,10 @@ public class Worker extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Worker(Integer id, String workid, String name, String gender,
+	public Worker(Integer id, String workId, String name, String gender,
 			String telephone, String email, String photo, String password) {
 		this.id = id;
-		this.workid = workid;
+		this.workId = workId;
 		this.name = name;
 		this.gender = gender;
 		this.telephone = telephone;
@@ -52,12 +52,12 @@ public class Worker extends com.sbgl.app.dao.DaoAbs implements
 		this.id = id;
 	}
 
-	public String getWorkid() {
-		return this.workid;
+	public String getWorkId() {
+		return this.workId;
 	}
 
-	public void setWorkid(String workid) {
-		this.workid = workid;
+	public void setWorkId(String workId) {
+		this.workId = workId;
 	}
 
 	public String getName() {

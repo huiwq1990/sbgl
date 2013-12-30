@@ -35,7 +35,7 @@ public class ManagerServiceImpl implements ManagerService {
 		int id = administrator.getId();
 		Administrator storeAdministrator = baseDao.getEntityById(Administrator.class, id);
 		
-		storeAdministrator.setAdministratorid( administrator.getAdministratorid() );
+		storeAdministrator.setAdministratorId( administrator.getAdministratorId() );
 		storeAdministrator.setEmail( administrator.getEmail() );
 		storeAdministrator.setGender( administrator.getGender() );
 		storeAdministrator.setName( administrator.getName() );

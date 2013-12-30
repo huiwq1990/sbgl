@@ -10,7 +10,7 @@ public class Administrator extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer id;
-	private String administratorid;
+	private String administratorId;
 	private String name;
 	private String gender;
 	private String telephone;
@@ -31,11 +31,11 @@ public class Administrator extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Administrator(Integer id, String administratorid, String name,
+	public Administrator(Integer id, String administratorId, String name,
 			String gender, String telephone, String email, String photo,
 			Integer privilege, String password) {
 		this.id = id;
-		this.administratorid = administratorid;
+		this.administratorId = administratorId;
 		this.name = name;
 		this.gender = gender;
 		this.telephone = telephone;
@@ -55,12 +55,12 @@ public class Administrator extends com.sbgl.app.dao.DaoAbs implements
 		this.id = id;
 	}
 
-	public String getAdministratorid() {
-		return this.administratorid;
+	public String getAdministratorId() {
+		return this.administratorId;
 	}
 
-	public void setAdministratorid(String administratorid) {
-		this.administratorid = administratorid;
+	public void setAdministratorId(String administratorId) {
+		this.administratorId = administratorId;
 	}
 
 	public String getName() {

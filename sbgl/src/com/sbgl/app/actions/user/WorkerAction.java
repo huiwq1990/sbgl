@@ -75,7 +75,7 @@ public class WorkerAction extends ActionSupport implements SessionAware {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		
-		Boolean isExist = workerService.isExistWorkerCode( worker.getWorkid() );
+		Boolean isExist = workerService.isExistWorkerCode( worker.getWorkId() );
 		
 		if(!isExist) {
 			int returnCode = workerService.addWorker( worker );
@@ -84,8 +84,8 @@ public class WorkerAction extends ActionSupport implements SessionAware {
 				this.message = "添加其他人员信息失败！";
 			} else {
 				Usergrouprelation ugr = new Usergrouprelation();
-				ugr.setGroupid( group.getId() );
-				ugr.setUserid( returnCode );
+				ugr.setGroupId( group.getId() );
+				ugr.setUserId( returnCode );
 				userGroupRelationService.addUserGroupRelation( ugr );
 				this.tag = "0";
 				this.message = "添加其他人员信息成功！";
@@ -115,7 +115,7 @@ public class WorkerAction extends ActionSupport implements SessionAware {
 			this.message = "修改其他人员信息失败！";
 		} else {
 			Usergrouprelation ugr = userGroupRelationService.getRelationByUserId( worker.getId() );
-			ugr.setGroupid( group.getId() );
+			ugr.setGroupId( group.getId() );
 			userGroupRelationService.alterUserGroupRelation( ugr );
 			this.tag = "0";
 			this.message = "修改其他人员信息成功！";
