@@ -293,6 +293,20 @@
 			return;
 		}
 		
+		var regex = /^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,3}|[0-9]{1,3})(\]?)$/;
+		var ret1 = regex.test(userMail);
+		if(ret1 == false) {
+			alert("邮箱地址格式错误！");
+			return;
+		}
+		
+		var regex2 = /(^[0-9]+-)?[0-9]+$/;
+		var ret3 = regex2.test(userTel);
+		if(ret3 == false) {
+			alert("请输入正确的联系方式！");
+			return;
+		}
+		
 		var postData = {};
 		var url = "";
 		if(isStu) {
@@ -376,10 +390,10 @@
         dataType: 'json',
 		change: function (e, data) {
 			$("#submitBtnForAdd").attr("disabled", "disabled");
-        	n = noty({text: "请等待头像上传完成！", type: 'success'});
+        	n = noty({text: "请等待头像上传完成！", timeout: 1000, type: 'success'});
     	},
         done: function (e, data) {
-			n.close();
+			//n.close();
 			console.log(n);
 			$("#submitBtnForAdd").removeAttr("disabled");
 			if(data.result.tag == 0) {
