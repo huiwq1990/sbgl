@@ -3,11 +3,17 @@
 <struts>
 	 <package name="computerhomework" extends="admin">
 
-<!-- 跳转到作业查看界面 -->
+<!-- 学生跳转到作业查看界面 -->
     	<action name="toComputerhomeworkInboxPage" class="ComputerhomeworkAction" method="toComputerhomeworkInboxPage">
         	<result name="success">/computer/computerhomeworkInbox.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
+<!-- 学生跳转到作业详情查看界面 -->       
+     	<action name="checkComputerhomework" class="ComputerhomeworkAction" method="checkComputerhomework">
+        	<result name="success">/computer/computerhomeworkCheck.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>       
+        
 
 <!-- 跳转到添加作业界面 -->
     	<action name="toAddComputerhomeworkPage" class="ManageComputerAction" method="toAddComputerhomeworkPage">

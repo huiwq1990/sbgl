@@ -755,6 +755,93 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		this.computerorderService = computerorderService;
 	}
 
+	public ComputerhomeworkService getComputerhomeworkService() {
+		return computerhomeworkService;
+	}
+
+	public void setComputerhomeworkService(
+			ComputerhomeworkService computerhomeworkService) {
+		this.computerhomeworkService = computerhomeworkService;
+	}
+
+	public Computerhomework getComputerhomework() {
+		return computerhomework;
+	}
+
+	public void setComputerhomework(Computerhomework computerhomework) {
+		this.computerhomework = computerhomework;
+	}
+
+	public ComputerhomeworkFull getComputerhomeworkFull() {
+		return computerhomeworkFull;
+	}
+
+	public void setComputerhomeworkFull(ComputerhomeworkFull computerhomeworkFull) {
+		this.computerhomeworkFull = computerhomeworkFull;
+	}
+
+	public List<Computerhomework> getComputerhomeworkList() {
+		return computerhomeworkList;
+	}
+
+	public void setComputerhomeworkList(List<Computerhomework> computerhomeworkList) {
+		this.computerhomeworkList = computerhomeworkList;
+	}
+
+	public List<ComputerhomeworkFull> getComputerhomeworkFullList() {
+		return computerhomeworkFullList;
+	}
+
+	public void setComputerhomeworkFullList(
+			List<ComputerhomeworkFull> computerhomeworkFullList) {
+		this.computerhomeworkFullList = computerhomeworkFullList;
+	}
+
+	public ComputerhomeworkreceiverService getComputerhomeworkreceiverService() {
+		return computerhomeworkreceiverService;
+	}
+
+	public void setComputerhomeworkreceiverService(
+			ComputerhomeworkreceiverService computerhomeworkreceiverService) {
+		this.computerhomeworkreceiverService = computerhomeworkreceiverService;
+	}
+
+	public Computerhomeworkreceiver getComputerhomeworkreceiver() {
+		return computerhomeworkreceiver;
+	}
+
+	public void setComputerhomeworkreceiver(
+			Computerhomeworkreceiver computerhomeworkreceiver) {
+		this.computerhomeworkreceiver = computerhomeworkreceiver;
+	}
+
+	public ComputerhomeworkreceiverFull getComputerhomeworkreceiverFull() {
+		return computerhomeworkreceiverFull;
+	}
+
+	public void setComputerhomeworkreceiverFull(
+			ComputerhomeworkreceiverFull computerhomeworkreceiverFull) {
+		this.computerhomeworkreceiverFull = computerhomeworkreceiverFull;
+	}
+
+	public List<Computerhomeworkreceiver> getComputerhomeworkreceiverList() {
+		return computerhomeworkreceiverList;
+	}
+
+	public void setComputerhomeworkreceiverList(
+			List<Computerhomeworkreceiver> computerhomeworkreceiverList) {
+		this.computerhomeworkreceiverList = computerhomeworkreceiverList;
+	}
+
+	public List<ComputerhomeworkreceiverFull> getComputerhomeworkreceiverFullList() {
+		return computerhomeworkreceiverFullList;
+	}
+
+	public void setComputerhomeworkreceiverFullList(
+			List<ComputerhomeworkreceiverFull> computerhomeworkreceiverFullList) {
+		this.computerhomeworkreceiverFullList = computerhomeworkreceiverFullList;
+	}
+
 	public List<Computer> getComputerList() {
 		return computerList;
 	}

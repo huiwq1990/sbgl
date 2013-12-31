@@ -269,6 +269,9 @@
 				var timeStr = getBookingTime(bookingData, startDate);
 				var id = bookingData.index;
 				var maxNum = bookingData.maxNum;
+				var orderpcid = bookingData.pcid;
+				var orderdate = bookingData.date;
+				var orderperiod = bookingData.slot;
 				var groupHtml = 
 					'<div class="post-equip-group" data-name=' + groupName + '>' +
 						'<div class="group-hd">' +
@@ -276,7 +279,7 @@
 							'<div class="group-line"><hr></div>' +
 						'</div>' +
 						'<div class="group-body">' +
-						'</div>'
+						'</div>'+
 					'</div>';
 				var html = 
 				  '<div class="row" id=' + id + '>' + 
@@ -285,7 +288,7 @@
 						  '<span class="input-group-btn">' + 
 							  '<button type="button" class="btn btn-link spinner-down"><i class="icon-minus"></i></button>' + 
 						  '</span>' + 
-						  '<input type="text" class="spinner-input form-control">' + 
+						  '<input name="pcorderinfo" orderpcid="'+orderpcid+'" orderdate="'+orderdate+'" orderperiod="'+orderperiod+'" type="text" class="spinner-input form-control">' + 
 						  '<span class="input-group-btn">' + 
 							  '<button type="button" class="btn btn-link spinner-up"><i class="icon-plus"></i></button>' +
 						  '</span>' + 

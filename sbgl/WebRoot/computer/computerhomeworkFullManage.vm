@@ -83,8 +83,8 @@
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
 
       <ul class="nav nav-tabs">
-        <li><a href="设备预约首页.html">器材预约</a></li>
-        <li class="active"><a href="设备管理首页.html">器材管理</a></li>
+        
+        <li class="active"><a href="">机房作业管理</a></li>
       </ul>
       <!--admin-wrap start-->
       <div id="admin-wrap">
@@ -135,9 +135,13 @@
               -->
             </div> <!--control-bar end-->
 			
-			<!--刷新数据-->
-			<div id="refreshComputerhomeworkTableDiv">
+			
             <div class="panel panel-default table-responsive"><!--管理内容从这里开始 -->
+			
+				<!--刷新数据-->
+			<div id="refreshComputerhomeworkTableDiv">
+				
+			<div id="tableDiv">
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -156,7 +160,7 @@
                   <tr>
                    <td><input class="chk" type="checkbox" name="chk-list" value="$!tempcomputerhomework.computerhomeworkid"></td>
 					<!--修改属性-->
-                    <td>$!tempcomputerhomework.computerhomeworkname<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="editComputerhomeworkFillIn" 
+                    <td>$!tempcomputerhomework.computerhomeworkid<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="editComputerhomeworkFillIn" 
 						
 						
 																								data-id="$!tempcomputerhomework.computerhomeworkid"                           
@@ -168,8 +172,8 @@
 												data-status="$!tempcomputerhomework.computerhomeworkstatus"                           
 												data-createtime="$!tempcomputerhomework.computerhomeworkcreatetime"                           
 												>修改</a></td>    
-					<td>$!tempcomputerhomework.computerhomeworkid</td>
-					<td>$!tempcomputerhomework.computerhomeworkname</td>
+					
+					<td><a href="${webbaseurl}/viewComputerhomeworkFull.action?computerhomeworkid=$tempcomputerhomework.computerhomeworkid">$!tempcomputerhomework.computerhomeworkname</a></td>
 					<td>$!tempcomputerhomework.computerorderclassrulename</td>
 <!--						
 <td>$!tempcomputerhomework.computerhomeworkid</td>
@@ -198,7 +202,7 @@
 #end                      
                 </tbody>
               </table>
-			  
+				  </div><!--end table div-->
 			      <!--page -->
 			  <div class="pagination">
 				<a href="#" class="first" data-action="first">&laquo;</a>
@@ -208,8 +212,9 @@
 				<a href="#" class="last" data-action="last">&raquo;</a>
 			  </div><!-- end page -->
 			  
-				</div> <!--end table div-->
             </div><!--end refreshComputerhomeworkTableDiv 刷新数据-->
+			
+			</div> 
           </div>
 
       </div>
@@ -223,7 +228,7 @@
         </form>
         <div class="list-group">
           <a href="${webbaseurl}/manageComputerhomeworkFull.action" class="list-group-item">管理</a>
-          <a href="${webbaseurl}/computer/computerhomeworkAdd.vm" class="list-group-item">添加</a>
+          <a href="${webbaseurl}/toAddComputerhomeworkPage.action" class="list-group-item">添加</a>
           
         </div>
       </div>

@@ -95,6 +95,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 	List<Borrowperiod> showtimeList   = new ArrayList<Borrowperiod>();
 	
 	HashMap<Integer,ArrayList<String>> showDateMap = new HashMap<Integer,ArrayList<String>>();
+	HashMap<Integer,ArrayList<String>> dateMap = new HashMap<Integer,ArrayList<String>>();
 
 	public String toOrderComputerPage(){
 		String currentlanguagetype = "0";
@@ -114,14 +115,17 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 		int weeknum = computeroderadvanceorderday/computerodertablercolumn;
 		for(int i=0; i< weeknum;i++){
 			
-			
+			ArrayList<String> time = new ArrayList<String>();
 			ArrayList<String> weekStr = new ArrayList<String>();
 			for(int col =0; col <computerodertablercolumn; col++ ){
 				Date date = DateUtil.addDay(curDate, i*computerodertablercolumn + col);
 				String dayStr = DateUtil.dateFormat( date , "MM/dd");
+				String timeStr = DateUtil.dateFormat( date , "yyyy-MM-dd");
 				weekStr.add(dayStr);
+				time.add(timeStr);
 			}
 			showDateMap.put(i, weekStr);
+			dateMap.put(i, time);
 		}
 	}
 	
@@ -597,6 +601,14 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 
 	public void setShowDateMap(HashMap<Integer, ArrayList<String>> showDateMap) {
 		this.showDateMap = showDateMap;
+	}
+
+	public HashMap<Integer, ArrayList<String>> getDateMap() {
+		return dateMap;
+	}
+
+	public void setDateMap(HashMap<Integer, ArrayList<String>> dateMap) {
+		this.dateMap = dateMap;
 	}
 	
 	

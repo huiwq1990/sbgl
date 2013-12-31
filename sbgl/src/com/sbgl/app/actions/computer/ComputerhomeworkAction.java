@@ -516,6 +516,53 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 		return "error";
 
 	}	
+	/**
+	 * 学生查看作业信息
+	 * view ComputerhomeworkFull
+	 * need give parmeter id
+	 * get id from modle,
+	 * @return
+	 */
+		
+	public String checkComputerhomework() {
+					
+			try {
+				
+				if (computerhomeworkid <= 0) {
+					log.error("error,id小于0不规范");
+					return "error";
+				}	
+				
+				String condition = " where a.id = "+computerhomeworkid;
+				List<ComputerhomeworkFull> tempList = computerhomeworkService.selectComputerhomeworkFullByCondition(condition );
+				
+				if(tempList!=null && tempList.size() >0){
+					
+				}else{
+					return "error";
+				}
+				
+				computerhomeworkFull = tempList.get(0);
+//				System.out.println(tempList.size() + " "+computerhomeworkFull.getComputerorderclassruleid());
+				
+//				查询作业可以借的PC
+				int ruleId = computerhomeworkFull.getComputerorderclassruleid();
+				if(ruleId > 0){
+					String borrowPcSql  = " where a.id = "+ ruleId;
+					computerorderclassruledetailFullList = computerorderclassruledetailService.selectComputerorderclassruledetailFullByCondition(borrowPcSql);				
+				}
+				
+				if(computerorderclassruledetailFullList == null){
+					computerorderclassruledetailFullList = new ArrayList<ComputerorderclassruledetailFull>();
+				}
+				
+				return SUCCESS;
+
+			} catch (Exception e) {
+				e.printStackTrace();			
+			}
+			return "Error";
+		}	
 
 /**
  * view ComputerhomeworkFull

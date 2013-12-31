@@ -113,7 +113,7 @@
                   <div class="col-3">                  
                       <div class="thumbnail">
                         <div class="hd clearfix">
-                          <h4 class="pull-left"><a class="lk" href="${webbaseurl}/viewComputerhomeworkFull.action?computerhomeworkid=$temp.computerhomeworkid">$!temp.computerhomeworkname</a></h4>
+                          <h4 class="pull-left"><a class="lk" href="${webbaseurl}/checkComputerhomework.action?computerhomeworkid=$temp.computerhomeworkid">$!temp.computerhomeworkname</a></h4>
                         </div>
                         <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> 设备预约<br/>个人预约</div>
                         <div class="caption">

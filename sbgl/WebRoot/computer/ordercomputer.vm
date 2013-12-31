@@ -160,6 +160,8 @@
 										##所有时间段 上午、中午、晚上 取出所有的属性名称
 										#set($weekdayRegion = [0..$computerodertablercolumn-1])
 										#set($weekDateList = $showDateMap.get($tempweektableindex))
+										#set($trueDateList = $dateMap.get($tempweektableindex))
+										
 										#foreach($tempday in $weekdayRegion)
                                         <th><br>$weekDateList.get($tempday)</th>
                                         #end                
@@ -179,8 +181,8 @@
 				#if($availnum ==0)
                        <td></td>
 				#else
-					
-					<td class="bookable" data-index="$tempday" data-slot="$tempperiod" data-max-num="$availnum">$availnum<br/>可预约</td>
+					#set($tableindex = $tempweektableindex*21 + $tempperiod*7 + $tempday)
+					<td class="bookable" data-index="$tableindex" data-pcid="$tempmodel.id" data-date="$trueDateList.get($tempday)" data-slot="$tempperiod" data-max-num="$availnum">$availnum<br/>可预约</td>
 				#end                 
 					
 			#end ##end day info computerorderTotalOrderDay
@@ -221,7 +223,7 @@
               </div><!--post-list-warp end-->
               
               <div class="post-sidebar-warp"><!--post-sidebar-warp start-->
-                <form action="orderComputer.action">
+                <form action="javascript:void(0)">
 			   <div id="post-sidebar" class="thumbnail wizard">
                   <h3>预约单</h3>
 				 
@@ -231,7 +233,7 @@
                   </div>
                   <div class="form-actions actions">  
                     <button type="button" class="btn btn-white btn-clear">清 空</button>
-                    <button type="submit" class="btn btn-primary">提交预约</button>
+                    <button action-type="orderComputerButton"  class="btn btn-primary">提交预约</button>
                   </div>
                 </div>
 				</from>
@@ -322,6 +324,7 @@ function CreatePostBookingTable(rowCount,cellCount,startDate) {
 function getBookingTime(bookingData, startDate) {
 	var index = bookingData.index;
 	var timeSlot = bookingData.slot;
+	var curdate = bookingData.date;
 	var timeSlotStr = "";
 	var selectedDate = "";
 	// 第几星期(上、下 、晚 7 * 3)
@@ -338,7 +341,7 @@ function getBookingTime(bookingData, startDate) {
 	switch(timeSlot)
 	{
 	case 0:
-		timeSlotStr = "2上午";
+		timeSlotStr = "上午";
 		break;
 	case 1:
 		timeSlotStr = "下午";
@@ -349,7 +352,7 @@ function getBookingTime(bookingData, startDate) {
 	}
 	startDate.addDays(dayIndex - 1);
 	var date = startDate.toString('MMMd日 dddd');
-	selectedDate = date + " " + timeSlotStr;
+	selectedDate = curdate + " " + timeSlotStr;
 	//alert(timeSlotStr + ", index=" + index + ", weekTimes=" + weekTimes + ", dayWeekIndex=" + dayWeekIndex + ", dayIndex=" + dayIndex);
 	return selectedDate;
 }
@@ -374,6 +377,61 @@ $(window).load(function(){
 		interval: false
 	});
 
+	
+	
+	
+	
+	
+	
+	
+	
+
+	var str="";
+//提交预约单
+	$("body").on("click", "button[action-type|=orderComputerButton]", function() {
+		str = "";
+		$("input[name='pcorderinfo']").each(function() {
+			
+				str += $(this).attr("orderpcid") +","+ $(this).prop("value") +","+$(this).attr("orderdate")+","+$(this).attr("orderperiod")+ ";";
+			
+		});
+	
+		alert(str);
+	
+	
+		var createuserid = cookie.Get("id");
+		var postData = {
+			
+		};
+		//alert("add computer");
+		jQuery.ajax({  
+		    url:"${webbaseurl}/.${strutsaction}",  
+		    type:"post",
+		    data:postData,
+			dataType: 'json',
+			success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+				if(returnJson.flag == 1){
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});
+					clearAddForm();
+					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框					
+				}else{
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+				}
+			}		  	  
+		});
+	});
+//end Order
+	
+	
+	
+	
+	
+	
+	
+	
+	
 });
 </script>
 </body>
