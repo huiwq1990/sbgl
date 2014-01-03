@@ -12,14 +12,19 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sbgl.app.actions.user.template.UserCourse;
 import com.sbgl.app.entity.Clazz;
 import com.sbgl.app.entity.Student;
+import com.sbgl.app.entity.Teacher;
 import com.sbgl.app.entity.Usergroup;
 import com.sbgl.app.entity.Usergrouprelation;
+import com.sbgl.app.entity.Worker;
 import com.sbgl.app.services.user.ClazzService;
 import com.sbgl.app.services.user.GroupService;
 import com.sbgl.app.services.user.StudentService;
+import com.sbgl.app.services.user.TeacherService;
 import com.sbgl.app.services.user.UserGroupRelationService;
+import com.sbgl.app.services.user.WorkerService;
 
 @Scope("prototype") 
 @Controller("StudentAction")
@@ -36,6 +41,10 @@ public class StudentAction extends ActionSupport implements SessionAware {
 	private ClazzService clazzService;
 	@Resource
 	private GroupService groupService;
+	@Resource
+	private TeacherService teacherService;
+	@Resource
+	private WorkerService workerService;
 	
 	@Resource
 	private UserGroupRelationService userGroupRelationService;
@@ -123,7 +132,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 			this.tag = "1";
 			this.message = "修改学生信息失败！";
 		} else {
-			Usergrouprelation ugr = userGroupRelationService.getRelationByUserId( student.getId() );
+			Usergrouprelation ugr = userGroupRelationService.getRelationByType( student.getId(), 2 );
 			ugr.setGroupId( group.getId() );
 			userGroupRelationService.alterUserGroupRelation( ugr );
 			this.tag = "0";
@@ -155,7 +164,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		for (String id : ids) {
 			Integer oneId = Integer.valueOf( id );
 			Student stu = studentService.getStudentById( oneId );
-			Usergrouprelation temp = userGroupRelationService.getRelationByUserId( stu.getId() );
+			Usergrouprelation temp = userGroupRelationService.getRelationByType( stu.getId(), 2 );
 			if(studentService.deleteStudent( oneId ) == 0 && userGroupRelationService.deleteUserGroupRelation( temp.getId() ) == 0) {
 				this.message = "删除学生信息成功！";
 				this.tag = "0";
@@ -186,8 +195,133 @@ public class StudentAction extends ActionSupport implements SessionAware {
 	/**
 	 * 页面访问
 	 */
+	private List<UserCourse> allUserList;
+	private String sum;
+	public String getSum() {
+		return sum;
+	}
+	private String sum1;
+	public String getSum1() {
+		return sum1;
+	}
+	private String sum2;
+	public String getSum2() {
+		return sum2;
+	}
+	private String sum3;
+	public String getSum3() {
+		return sum3;
+	}
+
+	private String totalPage;
+	public String getTotalPage() {
+		return totalPage;
+	}
+
+	private String curPage;
+	public String getCurPage() {
+		return curPage;
+	}
+	public void setCurPage(String curPage) {
+		this.curPage = curPage;
+	}
+
+	private Integer gType;
+	public Integer getgType() {
+		return gType;
+	}
+	public void setgType(Integer gType) {
+		this.gType = gType;
+	}
+	
+	public List<UserCourse> getAllUserList() {
+		return allUserList;
+	}
+	
 	public String gotoUserManageUser() {
+		allUserList = new ArrayList<UserCourse>();
+		List<Student> sList = studentService.getAllStudent();
+		List<Teacher> tList = teacherService.getAllTeacher();
+		List<Worker> wList = workerService.getAllWorker();
 		
+		sum1 = String.valueOf( sList.size() );
+		sum2 = String.valueOf( tList.size() );
+		sum3 = String.valueOf( wList.size() );
+		
+		for(Student s : sList) {
+			Usergrouprelation ugr = userGroupRelationService.getRelationByType( s.getId(), 2 );
+			Usergroup ug = null;
+			Clazz clazz = null;
+			if(ugr != null) {
+				ug = groupService.getUserGroupByid( ugr.getGroupId() );
+			}
+			if(s.getClassid() != -1) {
+				clazz = clazzService.getClazzById( s.getClassid() );
+			}
+			
+			UserCourse uc = new UserCourse(String.valueOf( s.getId() ),
+										   s.getGender(),
+										   s.getStudentId(),
+										   s.getName(),
+										   s.getPassword(),
+										   String.valueOf( ugr == null ? "-1" : ug.getId() ),
+										   ugr == null ? "无分组" : ug.getName(),
+										   "2",
+										   String.valueOf( s.getClassid() ),
+										   s.getClassid() == -1 ? "无班级" : clazz.getClassname(),
+										   s.getTelephone(),
+										   s.getEmail()
+										   );
+			allUserList.add( uc );
+			
+		}
+		
+		for(Teacher t : tList) {
+			Usergrouprelation ugr = userGroupRelationService.getRelationByType( t.getId(), 6 );
+			Usergroup ug = null;
+			if(ugr != null) {
+				ug = groupService.getUserGroupByid( ugr.getGroupId() );
+			}
+			
+			UserCourse uc = new UserCourse(String.valueOf( t.getId() ),
+										   t.getGender(),
+										   t.getTeacherId(),
+										   t.getName(),
+										   t.getPassword(),
+										   String.valueOf( ugr == null ? "-1" : ug.getId() ),
+										   ugr == null ? "无分组" : ug.getName(),
+										   "6",
+										   "",
+										   "",
+										   t.getTelephone(),
+										   t.getEmail()
+										   );
+			allUserList.add( uc );
+		}
+		
+		for(Worker w : wList) {
+			Usergrouprelation ugr = userGroupRelationService.getRelationByType( w.getId(), -1 );
+			Usergroup ug = null;
+			if(ugr != null) {
+				ug = groupService.getUserGroupByid( ugr.getGroupId() );
+			}
+			
+			UserCourse uc = new UserCourse(String.valueOf( w.getId() ),
+										   w.getGender(),
+										   w.getWorkId(),
+										   w.getName(),
+										   w.getPassword(),
+										   String.valueOf( ugr == null ? "-1" : ug.getId() ),
+										   ugr == null ? "无分组" : ug.getName(),
+										   "-1",
+										   "",
+										   "",
+										   w.getTelephone(),
+										   w.getEmail()
+										   );
+			allUserList.add( uc );
+		}
+		sum = String.valueOf( allUserList.size() );
 		return SUCCESS;
 	}
 	

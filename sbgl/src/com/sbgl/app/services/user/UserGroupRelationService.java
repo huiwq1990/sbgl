@@ -13,6 +13,6 @@ public interface UserGroupRelationService {
 	public int deleteUserGroupRelation(int userGroupRelationId);
 	//获取全部用户-分组关系信息
 	public List<Usergrouprelation> getAllUserGroupRelation();
-	//根据用户ID获取关系信息
-	public Usergrouprelation getRelationByUserId(int userId);
+	//根据用户ID和组类型获取关系信息
+	public Usergrouprelation getRelationByType(int userId, int groupType);
 }

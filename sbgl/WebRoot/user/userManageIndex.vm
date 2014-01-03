@@ -131,11 +131,10 @@
                 </div>              
               </div>
               <ul class="status-filter nav nav-pills pull-right">
-                <li class="active"><a href="#">全部(10)</a></li>
-                <li><a href="#">学生(5)</a></li>
-                <li><a href="#">教师(2)</a></li>
-                <li><a href="#">其他(2)</a></li>
-                <li><a href="#">管理员(2)</a></li>
+                <li class="active"><a href="#">全部(<span id="totalSum">$!sum</span>)</a></li>
+                <li><a href="#">学生(<span id="sSum">$!sum1</span>)</a></li>
+                <li><a href="#">教师(<span id="tSum">$!sum2</span>)</a></li>
+                <li><a href="#">其他(<span id="wSum">$!sum3</span>)</a></li>
               </ul>
             </div><!--control-bar end-->
             <div class="panel panel-default">              
@@ -151,14 +150,22 @@
                   </tr>
                 </thead>
                 <tbody>
+				  #foreach($user in $allUserList)
                   <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
-                    <td>2145322<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button">修改</a></td>
-                    <td>Arri Alexa Plus</td>
-                    <td>学生 - 本科</td>
-                    <td>正常</td>
-                    <td><a href="">修改</a> <a href="">删除</a></td>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!user.id"></td>
+                    <td>$!user.userCode<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button">修改</a></td>
+                    <td>$!user.userName</td>
+                    <td>$!user.userGroupName</td>
+					#if($!user.userGroupType == 2)
+						<td>学生</td>
+					#elseif($!user.userGroupType == 6)
+						<td>教师</td>
+					#elseif($!user.userGroupType == -1)
+						<td>其他</td>
+					#end
+                    <td>$!user.tel</td>
                   </tr>
+				  #end
                 </tbody>
               </table>
             </div>

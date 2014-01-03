@@ -14,4 +14,6 @@ public interface ClazzService {
 	public List<Clazz> getAllClazz();
 	//判断是否存在该班级名称
 	public boolean isExistClazzName(String clazzName);
+	//根据id获取班级
+	public Clazz getClazzById(int clazzId);
 }

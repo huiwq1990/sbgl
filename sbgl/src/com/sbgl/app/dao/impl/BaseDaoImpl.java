@@ -157,6 +157,11 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 	      }
 	}
 	
+	public <T> List<T> executeHQL(String hql) {
+		List<T> resultList = getHibernateTemplate().find(hql);
+		return resultList;
+	}
+	
 	
 	public <T> void createSQL(String sql) {
 		// TODO Auto-generated method stub

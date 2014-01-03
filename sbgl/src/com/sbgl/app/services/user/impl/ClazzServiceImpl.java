@@ -68,4 +68,9 @@ public class ClazzServiceImpl implements ClazzService {
 		return baseDao.isExist(Clazz.class, "classname", clazzName);
 	}
 
+	@Override
+	public Clazz getClazzById(int clazzId) {
+		return baseDao.getEntityById(Clazz.class, clazzId);
+	}
+
 }

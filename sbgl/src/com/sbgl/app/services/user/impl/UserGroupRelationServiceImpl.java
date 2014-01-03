@@ -66,9 +66,11 @@ public class UserGroupRelationServiceImpl implements UserGroupRelationService {
 	}
 
 	@Override
-	public Usergrouprelation getRelationByUserId(int userId) {
-		Usergrouprelation ugr = (Usergrouprelation) baseDao.getEntityByProperty(Usergrouprelation.class.getName(), "userid", String.valueOf(userId) );
-		return ugr;
+	public Usergrouprelation getRelationByType(int userId, int groupType) {
+		String hql = "from Usergrouprelation as m where m.userId = " + userId + "and m.groupType = " + groupType;
+		List<Usergrouprelation> resultList = baseDao.executeHQL( hql );
+		return resultList != null && resultList.size() > 0 ? resultList.get(0) : null;
 	}
+
 
 }

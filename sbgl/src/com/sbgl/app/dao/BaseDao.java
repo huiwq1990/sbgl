@@ -17,6 +17,7 @@ public interface BaseDao {
 	
 	public <T> void updateEntity(T entity);
 	public <T> List<T> getAllEntity (java.lang.Class<T> entityClass);
+	public <T> List<T> executeHQL(String hql);
 	public <T> T getEntityById(java.lang.Class<T> entityClass,Serializable id);
 	public  Session getCurrentSession();
 	public HibernateTemplate getHibernateTemplate();
