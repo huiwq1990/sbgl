@@ -13,15 +13,14 @@ public class UserCourse {
 	private String clazzName;
 	private String tel;
 	private String mail;
+	private String canBorrow;
+	private String photo;
 	
-	public UserCourse() {
-		super();
-	}
-
 	public UserCourse(String id, String gender, String userCode,
 			String userName, String userPass, String userGroupId,
-			String userGroupName, String userGroupType, String clazzId, String clazzName, String tel,
-			String mail) {
+			String userGroupName, String userGroupType, String clazzId,
+			String clazzName, String tel, String mail, String canBorrow,
+			String photo) {
 		super();
 		this.id = id;
 		this.gender = gender;
@@ -35,8 +34,14 @@ public class UserCourse {
 		this.clazzName = clazzName;
 		this.tel = tel;
 		this.mail = mail;
+		this.canBorrow = canBorrow;
+		this.photo = photo;
 	}
-	
+
+	public UserCourse() {
+		super();
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -112,5 +117,19 @@ public class UserCourse {
 		this.userGroupType = userGroupType;
 	}
 	
+	public String getCanBorrow() {
+		return canBorrow;
+	}
+
+	public void setCanBorrow(String canBorrow) {
+		this.canBorrow = canBorrow;
+	}
 	
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
 }

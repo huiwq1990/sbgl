@@ -239,6 +239,8 @@ public class StudentAction extends ActionSupport implements SessionAware {
 	}
 	
 	public String gotoUserManageUser() {
+		gotoUserManageUserAdd();
+		
 		allUserList = new ArrayList<UserCourse>();
 		List<Student> sList = studentService.getAllStudent();
 		List<Teacher> tList = teacherService.getAllTeacher();
@@ -270,7 +272,9 @@ public class StudentAction extends ActionSupport implements SessionAware {
 										   String.valueOf( s.getClassid() ),
 										   s.getClassid() == -1 ? "无班级" : clazz.getClassname(),
 										   s.getTelephone(),
-										   s.getEmail()
+										   s.getEmail(),
+										   s.getCouldBorrow(),
+										   s.getPhoto()
 										   );
 			allUserList.add( uc );
 			
@@ -294,7 +298,9 @@ public class StudentAction extends ActionSupport implements SessionAware {
 										   "",
 										   "",
 										   t.getTelephone(),
-										   t.getEmail()
+										   t.getEmail(),
+										   "not",
+										   t.getPhoto()
 										   );
 			allUserList.add( uc );
 		}
@@ -317,7 +323,9 @@ public class StudentAction extends ActionSupport implements SessionAware {
 										   "",
 										   "",
 										   w.getTelephone(),
-										   w.getEmail()
+										   w.getEmail(),
+										   "not",
+										   w.getPhoto()
 										   );
 			allUserList.add( uc );
 		}
