@@ -152,7 +152,7 @@
                 <tbody>
 				  #foreach($user in $allUserList)
                   <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="$!user.id"></td>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!user.id;$!user.userGroupType"></td>
                     <td>$!user.userCode<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="beforeModify" data-id="$!user.id" data-code="$!user.userCode" data-name="$!user.userName" data-sex="$!user.gender" data-pass="$!user.userPass" data-gid="$!user.userGroupId" data-gname="$!user.userGroupName" data-gtype="$!user.userGroupType"data-cid="$!user.clazzId" data-cname="$!user.clazzName" data-tel="$!user.tel" data-mail="$!user.mail" data-can="$!user.canBorrow" data-pic="$!user.photo">修改</a></td>
                     <td>$!user.userName</td>
                     <td>$!user.userGroupName</td>
@@ -337,7 +337,9 @@
 	var alterMail;			//修改邮箱地址
 	var alterCan;			//修改是否可借
 	var alterPhoto;			//修改头像
-	var idsForDel = "";  	//用于删除的id串
+	var idsForDel1 = "";  	//用于学生删除的id串
+	var idsForDel2 = "";  	//用于教师删除的id串
+	var idsForDel3 = "";  	//用于其它人员删除的id串
 	
     var savedFileName = ""; //保存在服务器的图片名称
 	var n = {};				//提示
@@ -379,12 +381,29 @@
 			});
 		}
 		
-		idsForDel = "";
+		idsForDel1 = "";
+		idsForDel2 = "";
+		idsForDel3 = "";
 		
 		$("input[name='chk-list']").each(function() {
 			if($(this).prop("checked") === true) {
 				//num++;
-				idsForDel += $(this).prop("value") + "_";
+				var val = $(this).prop("value");
+				var id = val.split(";")[0];
+				var type = val.split(";")[1];
+				console.log(id+"$$$$$$$$");
+				console.log(type+"********");
+				
+				if(type == 2) {
+					idsForDel1 += id + "_";
+				} else if(type == 6) {
+					idsForDel2 += id + "_";
+				} else if(type == -1) {
+					idsForDel3 += id + "_";
+				}
+				console.log(idsForDel1+"1********");
+				console.log(idsForDel2+"2********");
+				console.log(idsForDel3+"3********");
 			}
 		});
 	});
@@ -435,6 +454,9 @@
 		if(alterGroupId != -1) {
 			$("#inputUserGroup").select2("val", alterGroupId);
 		}
+		$("#inputUserGroup").attr("disabled", true);
+		
+		
 		$("#inputStuNum").val(alterUserCode);
 		$("#inputTrueName").val(alterUserName);
 		$("#inputStuSex").val(alterUserGender);
@@ -626,6 +648,94 @@
 				alert("刷新界面失败!");
 			}
 		});
+	});
+	
+	$("body").on("click", "a[action-type|=delUser]", function() {
+		//alert(idsForDel);
+		var actionUrl = "";
+		var tip = "";
+		/*
+		if(isStu) {
+			postData = {
+				stuIds: idsForDel1
+    		};
+			actionUrl = "${webbaseurl}/delStu.do";
+			tip = "删除学生信息成功！";
+		} else if(isTea) {
+			postData = {
+				teacherIds: idsForDel2
+    		};
+			actionUrl = "${webbaseurl}/delTea.do";
+			tip = "删除教师信息成功！";
+		} else if(isWkr) {
+			postData = {
+				workerIds: idsForDel3
+    		};
+			actionUrl = "${webbaseurl}/delWkr.do";
+			tip = "删除其他人员信息成功！";
+		}
+		*/
+		if(idsForDel1 != "") {
+			postData = {
+				stuIds: idsForDel1
+    		};
+    		jQuery.ajax({  
+    		    url: "${webbaseurl}/delStu.do",  
+    		    type: "post",
+    		    data: postData,
+    		    success:function(data,textStatus,jq){ 
+    				var n = noty({text: "删除学生信息成功", timeout: 2500, type: 'success'});
+    				//$(this).parents('.modal').modal('toggle');
+    				//$("#admin-wrap").html(data);
+    				
+    	        },  
+    		    error:function(data,textStatus,jq){
+        			var n = noty({text: "系统异常，请联系系统管理员！", timeout: 2500, type: 'error'});
+    			}  
+    		});
+		}
+		
+		if(idsForDel2 != "") {
+			postData = {
+				teacherIds: idsForDel2
+    		};
+    		jQuery.ajax({  
+    		    url: "${webbaseurl}/delTea.do",  
+    		    type: "post",
+    		    data: postData,
+    		    success:function(data,textStatus,jq){ 
+    				var n = noty({text: "删除教师信息成功！", timeout: 2500, type: 'success'});
+    				//$(this).parents('.modal').modal('toggle');
+    				//$("#admin-wrap").html(data);
+    				
+    	        },  
+    		    error:function(data,textStatus,jq){
+        			var n = noty({text: "系统异常，请联系系统管理员！", timeout: 2500, type: 'error'});
+    			}  
+    		});
+		}
+		
+		
+		if(idsForDel3 != "") {
+			postData = {
+				workerIds: idsForDel3
+    		};
+    		jQuery.ajax({  
+    		    url: "${webbaseurl}/delWkr.do",  
+    		    type: "post",
+    		    data: postData,
+    		    success:function(data,textStatus,jq){ 
+    				var n = noty({text: "删除其他人员信息成功！", timeout: 2500, type: 'success'});
+    				//$(this).parents('.modal').modal('toggle');
+    				//$("#admin-wrap").html(data);
+    				
+    	        },  
+    		    error:function(data,textStatus,jq){
+        			var n = noty({text: "系统异常，请联系系统管理员！", timeout: 2500, type: 'error'});
+    			}  
+    		});
+		}
+		
 	});
 </script>
 
