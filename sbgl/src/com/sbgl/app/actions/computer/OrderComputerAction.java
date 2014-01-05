@@ -1,5 +1,6 @@
 package com.sbgl.app.actions.computer;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -8,6 +9,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONObject;
+
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.SessionAware;
@@ -26,8 +30,10 @@ import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.ComputercategoryFull;
 import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.entity.ComputermodelFull;
+import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
 import com.sbgl.app.entity.Computerorderdetail;
+import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.services.computer.ComputerService;
 import com.sbgl.app.services.computer.ComputercategoryService;
 import com.sbgl.app.services.computer.ComputermodelService;
@@ -36,6 +42,7 @@ import com.sbgl.app.services.computer.ComputerorderdetailService;
 import com.sbgl.util.ComputerDirective;
 import com.sbgl.util.DateUtil;
 import com.sbgl.util.Page;
+import com.sbgl.util.ReturnJson;
 import com.sbgl.util.SpringUtil;
 
 
@@ -58,9 +65,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 	
 	@Resource
 	private ComputercategoryService computercategoryService;
-	@Resource
-	private ComputerorderdetailService computerorderdetailService;
-	
+
 	//父级分类的list
 	List<Computercategory> parentcomputercategoryList = new ArrayList<Computercategory>();
 	List<Computercategory> computercategoryList = new ArrayList<Computercategory>();
@@ -73,17 +78,31 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 	List<ComputermodelFull> computermodelFullList = new ArrayList<ComputermodelFull>();
 	
 	
+	@Resource
+	private ComputerorderService computerorderService;	
+	private Computerorder computerorder = new Computerorder();//实例化一个模型
+	private ComputerorderFull computerorderFull = new ComputerorderFull();//实例化一个模型
+	List<Computerorder> computerorderList = new ArrayList<Computerorder>();
+	List<ComputerorderFull> computerorderFullList = new ArrayList<ComputerorderFull>();
+	private Integer computerorderid; //entity full 的id属性名称		
 	
 	@Resource
-	private ComputerorderService computerorderService;
-
-	List<ComputerorderFull> computerorderFullList = new ArrayList<ComputerorderFull>();
+	private ComputerorderdetailService computerorderdetailService;	
+	private Computerorderdetail computerorderdetail = new Computerorderdetail();//实例化一个模型
+	private ComputerorderdetailFull computerorderdetailFull = new ComputerorderdetailFull();//实例化一个模型	
+	List<Computerorderdetail> computerorderdetailList = new ArrayList<Computerorderdetail>();
+	List<ComputerorderdetailFull> computerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
+	private Integer computerorderdetailid; //entity full 的id属性名称		
 	
 	
 	List<String> ordernum = new ArrayList<String>();
 
 	private String logprefix = "exec method";
-	
+
+//	全局参数
+	private String actionMsg; // Action间传递的消息参数
+	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
+	private String userid;
 	
 	int currentPeriod ;
 //	int computerorderTotalOrderDay ;
@@ -97,6 +116,11 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 	HashMap<Integer,ArrayList<String>> showDateMap = new HashMap<Integer,ArrayList<String>>();
 	HashMap<Integer,ArrayList<String>> dateMap = new HashMap<Integer,ArrayList<String>>();
 
+	
+//	提交预约表单的参数
+	private String orderInfoStr;
+	
+	
 	public String toOrderComputerPage(){
 		String currentlanguagetype = "0";
 		String getAllComputermodelFullTypeSql = " where a.languagetype="+currentlanguagetype+" ";
@@ -609,6 +633,113 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 
 	public void setDateMap(HashMap<Integer, ArrayList<String>> dateMap) {
 		this.dateMap = dateMap;
+	}
+
+	public Computerorder getComputerorder() {
+		return computerorder;
+	}
+
+	public void setComputerorder(Computerorder computerorder) {
+		this.computerorder = computerorder;
+	}
+
+	public ComputerorderFull getComputerorderFull() {
+		return computerorderFull;
+	}
+
+	public void setComputerorderFull(ComputerorderFull computerorderFull) {
+		this.computerorderFull = computerorderFull;
+	}
+
+	public List<Computerorder> getComputerorderList() {
+		return computerorderList;
+	}
+
+	public void setComputerorderList(List<Computerorder> computerorderList) {
+		this.computerorderList = computerorderList;
+	}
+
+	public Integer getComputerorderid() {
+		return computerorderid;
+	}
+
+	public void setComputerorderid(Integer computerorderid) {
+		this.computerorderid = computerorderid;
+	}
+
+	public Computerorderdetail getComputerorderdetail() {
+		return computerorderdetail;
+	}
+
+	public void setComputerorderdetail(Computerorderdetail computerorderdetail) {
+		this.computerorderdetail = computerorderdetail;
+	}
+
+	public ComputerorderdetailFull getComputerorderdetailFull() {
+		return computerorderdetailFull;
+	}
+
+	public void setComputerorderdetailFull(
+			ComputerorderdetailFull computerorderdetailFull) {
+		this.computerorderdetailFull = computerorderdetailFull;
+	}
+
+	public List<Computerorderdetail> getComputerorderdetailList() {
+		return computerorderdetailList;
+	}
+
+	public void setComputerorderdetailList(
+			List<Computerorderdetail> computerorderdetailList) {
+		this.computerorderdetailList = computerorderdetailList;
+	}
+
+	public List<ComputerorderdetailFull> getComputerorderdetailFullList() {
+		return computerorderdetailFullList;
+	}
+
+	public void setComputerorderdetailFullList(
+			List<ComputerorderdetailFull> computerorderdetailFullList) {
+		this.computerorderdetailFullList = computerorderdetailFullList;
+	}
+
+	public Integer getComputerorderdetailid() {
+		return computerorderdetailid;
+	}
+
+	public void setComputerorderdetailid(Integer computerorderdetailid) {
+		this.computerorderdetailid = computerorderdetailid;
+	}
+
+	public String getActionMsg() {
+		return actionMsg;
+	}
+
+	public void setActionMsg(String actionMsg) {
+		this.actionMsg = actionMsg;
+	}
+
+	public String getReturnStr() {
+		return returnStr;
+	}
+
+	public void setReturnStr(String returnStr) {
+		this.returnStr = returnStr;
+	}
+
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
+	public String getOrderInfoStr() {
+		return orderInfoStr;
+	}
+
+	public void setOrderInfoStr(String orderInfoStr) {
+		this.orderInfoStr = orderInfoStr;
 	}
 	
 	

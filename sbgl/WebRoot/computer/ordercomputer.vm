@@ -182,7 +182,7 @@
                        <td></td>
 				#else
 					#set($tableindex = $tempweektableindex*21 + $tempperiod*7 + $tempday)
-					<td class="bookable" data-index="$tableindex" data-pcid="$tempmodel.id" data-date="$trueDateList.get($tempday)" data-slot="$tempperiod" data-max-num="$availnum">$availnum<br/>可预约</td>
+					<td class="bookable" data-index="$tableindex" data-pcid="$tempmodel.id" data-date="$trueDateList.get($tempday)" data-slot="$tempperiod" data-pcname = "$tempmodel.name" data-max-num="$availnum">$availnum<br/>可预约</td>
 				#end                 
 					
 			#end ##end day info computerorderTotalOrderDay
@@ -233,7 +233,7 @@
                   </div>
                   <div class="form-actions actions">  
                     <button type="button" class="btn btn-white btn-clear">清 空</button>
-                    <button action-type="orderComputerButton"  class="btn btn-primary">提交预约</button>
+                    <button action-type="confirmComputerButton"  class="btn btn-primary">提交预约</button>
                   </div>
                 </div>
 				</from>
@@ -259,6 +259,7 @@
 <script src="${jsDomain}/bootstrap-datepicker.js"></script>
 <script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
 <script src="${jsDomain}/xdate.js"></script>
+<script src="${jsDomain}/computer/computerutil.js"></script>
 
 <script>
 function CreatePostBookingTable(rowCount,cellCount,startDate) {
@@ -376,51 +377,43 @@ $(window).load(function(){
 	$('.carousel').carousel({
 		interval: false
 	});
-
-	
-	
-	
-	
-	
-	
-	
 	
 
-	var str="";
+	
 //提交预约单
-	$("body").on("click", "button[action-type|=orderComputerButton]", function() {
-		str = "";
-		$("input[name='pcorderinfo']").each(function() {
-			
-				str += $(this).attr("orderpcid") +","+ $(this).prop("value") +","+$(this).attr("orderdate")+","+$(this).attr("orderperiod")+ ";";
-			
+	$("body").on("click", "button[action-type|=confirmComputerButton]", function() {
+		var str = "";
+		$("input[name='pcorderinfo']").each(function() {			
+				str += $(this).attr("orderpcid") +","+ $(this).prop("value") +","+$(this).attr("orderdate")+","+$(this).attr("orderperiod")+","+$(this).attr("orderpcname")+ ";";			
 		});
 	
-		alert(str);
-	
-	
-		var createuserid = cookie.Get("id");
-		var postData = {
 			
+		str = str.substring(0,str.length-1);
+	
+		var createuserid = cookie.getUserId();
+		//alert(createuserid);
+		var postData = {
+			userid : createuserid,
+			orderInfoStr : str			
 		};
-		//alert("add computer");
+		
 		jQuery.ajax({  
-		    url:"${webbaseurl}/.${strutsaction}",  
+		    url:"${webbaseurl}/computerorderFormConfirm.${strutsaction}",  
 		    type:"post",
 		    data:postData,
 			dataType: 'json',
 			success: function(data){
 				var returnJson = jQuery.parseJSON(data); 
 				if(returnJson.flag == 1){
-					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});
-					clearAddForm();
-					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框					
+					//var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					//$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框
+					location.href = "${webbaseurl}/toComputerorderConfirmPage.${strutsaction}";
 				}else{
 					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
 					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
 				}
 			}		  	  
-		});
+		});//end jquery
 	});
 //end Order
 	

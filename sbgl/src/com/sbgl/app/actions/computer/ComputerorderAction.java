@@ -21,6 +21,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputerorderService;
+import com.sbgl.app.services.computer.ComputerorderdetailService;
 import com.sbgl.util.*;
 
 
@@ -35,19 +36,32 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	
 	//Service	
 	@Resource
-	private ComputerorderService computerorderService;
-	
+	private ComputerorderService computerorderService;	
 	private Computerorder computerorder = new Computerorder();//实例化一个模型
-	private Computerorder computerorderModel = new Computerorder();//实例化一个模型
+	private Computerorder computerorderModel= new Computerorder();//实例化一个模型
 	private ComputerorderFull computerorderFull = new ComputerorderFull();//实例化一个模型
 	private String actionMsg; // Action间传递的消息参数
 	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
 	List<Computerorder> computerorderList = new ArrayList<Computerorder>();
 	List<ComputerorderFull> computerorderFullList = new ArrayList<ComputerorderFull>();
 	private Integer computerorderid; //entity full 的id属性名称		
+	
+	
+	@Resource
+	private ComputerorderdetailService computerorderdetailService;	
+	private Computerorderdetail computerorderdetail = new Computerorderdetail();//实例化一个模型
+	private ComputerorderdetailFull computerorderdetailFull = new ComputerorderdetailFull();//实例化一个模型	
+	List<Computerorderdetail> computerorderdetailList = new ArrayList<Computerorderdetail>();
+	List<ComputerorderdetailFull> computerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
+	private Integer computerorderdetailid; //entity full 的id属性名称		
+	
+	
+	
 	private String logprefix = "exec action method:";		
 	Page page = new Page();
 	Integer pageNo=1;	
+	
+
 	
 //	public int auditStatus;//审核结果
 	
@@ -95,47 +109,12 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 		return SUCCESS;
 	}			
 			
-		
-	//管理
-	public String manageComputerorderInfo(){
-		log.info(logprefix +" manageComputerorder");
-		//Page page = new Page();
-		//if()
-		computerorderList  = computerorderService.selectComputerorderByPage(page);
-		for(int i = 0; i < computerorderList.size(); i++){
-		//	System.out.println("id="+computerorderList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}	
-			
-	public String addComputerorder(){	
-		log.info("Add Entity");
-
-		try {
-			Computerorder temp = new Computerorder();
-			// 将model里的属性值赋给temp
-			BeanUtils.copyProperties(temp, computerorder);			
-			//add your code here.
-			
-			//temp.setCreatetime(DateUtil.currentDate());
-			
-			computerorderService.addComputerorder(temp);
-			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerorderAction的方法：addBbstagfavourite错误"+e);
-		}
-		return "Error";
-	}
 	
 //  ajax add	
 	public String addComputerorderAjax(){	
 		log.info("Add Entity Ajax Manner");
+		
+//		List<>
 		
 		ReturnJson returnJson = new ReturnJson();
 		

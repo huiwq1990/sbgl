@@ -11,7 +11,7 @@
             <generator class="assigned" />
         </id>
         <property name="serialnumber" type="java.lang.String">
-            <column name="serialnumber" length="12" />
+            <column name="serialnumber" length="100" />
         </property>
         <property name="userid" type="java.lang.Integer">
             <column name="userid" />

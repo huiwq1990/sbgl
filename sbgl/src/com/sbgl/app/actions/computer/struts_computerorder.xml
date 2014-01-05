@@ -3,6 +3,17 @@
 <struts>
 	 <package name="computerorder" extends="admin">
 
+<!-- 用户点击预约按钮后，跳转到预约确认界面 -->
+		<action name="toComputerorderConfirmPage" class="ManageComputerorder" method="toComputerorderConfirmPage">
+        	<result name="success">/computer/computerorderConfirm.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+<!--预约成功界面 -->
+		<action name="toComputerorderSuccessPage" class="ManageComputerorder" method="toComputerorderSuccessPage">
+        	<result name="success">/computer/computerorderSuccess.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>        
+
 <!-- 审核订单 -->
 		<action name="toAuditComputerorderPage" class="ManageComputerorder" method="toAuditComputerorderPage">
         	<result name="success">/computer/computerorderaudit.vm</result>
@@ -118,7 +129,15 @@
     
     <!-- Ajax方式 -->
     <package name="computerorderAjax" extends="json-default">
-    	<action name="addComputerorderAjax" class="ComputerorderAction" method="addComputerorderAjax">
+    
+    <!-- 预约单审核审核 -->
+    	<action name="computerorderFormConfirm" class="ManageComputerorder" method="computerorderFormConfirm">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+    
+    	<action name="addComputerorderAjax" class="ManageComputerorder" method="addComputerorderAjax">
         	<result type="json">
 				<param name="root">returnStr</param>
 			</result>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 设备管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 10]>
+  <script src="js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body>
+<header id="header-wrap"><!--header-wrap-->
+  <div id="global-header">
+    <div id="logo"><a class="brand" href="#"><img src="img/logo.png" alt="北京电影学院摄影系"></a></div>
+    <div id="hdc-wrap">
+      <div class="search-wrap">
+        <form class="form-search">
+          <div class="ipt-wrap form-group"><input type="text" class="form-control"></div>
+          <button type="submit" class="btn btn-primary"><i class="icon-search"></i></button>
+        </form>
+      </div>
+    </div>
+    <ul class="account-wrap nav nav-pills pull-right">
+      <li class="notice dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">消息1</a></li>
+          <li><a href="#">消息2</a></li>
+        </ul>
+      </li>     
+      <li class="social dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="img/photo.jpg" width="48" height="48" class="img-circle"> <b class="caret"></b></a>
+        <div class="dropdown-menu">
+          <div class="media">
+            <a class="pull-left" href="#">
+              <img src="img/photo.jpg" width="96" height="96" class="img-rounded">
+            </a>
+            <div class="media-body">
+              <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+              <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+              <div class="setting"><a href="#">账户设置</a></div>
+              <button class="btn btn-primary" type="button">查看个人主页</button>
+            </div>
+          </div>
+        </div>      
+      </li>
+    </ul>
+  </div>
+  
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 器材预约 <i class="icon-chevron-right"></i></a><!-- #BeginLibraryItem "/Library/siteNav.lbi" --><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="index.html"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="#anotherAction">个人主页</a></li>
+          <li><a href="#">通讯录</a></li>
+          <li class="divider"></li>
+          <li><a href="预约首页.html">我的预约</a></li>
+          <li><a href="消息中心-站内信.html">站内信</a></li>
+          <li class="divider"></li>
+          <li><a href="admin/管理中心首页.html">管理中心</a></li>
+        </ul>
+          <!-- #EndLibraryItem --></div>
+    </div>
+    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="#">全部</a></li>
+        <li><a href="#">设备预约</a></li>
+        <li><a href="#">机房预约</a></li>
+        <li class="divider"></li>
+        <li class="active"><a href="#">提交预约</a></li>
+      </ul>
+    </div>
+  </div>
+</header><!--/#header-wrap-->
+
+<section id="main-wrap"><!--main-wrap-->
+  <!--main-content start-->
+  <div id="main-content" class="clearfix">
+      <!--equip-wrap start-->
+   
+          
+          <div class="container">
+            
+            <div class="row">
+                  <div class="control-bar col-md-12">
+                    <div class="title">机房预约信息确认</div>
+                  </div>
+     
+				  
+				   <div class="col-md-7">                  
+                <div class="thumbnail">
+                  <div class="hd clearfix">
+                    <h3 class="pull-left">预约单</h3>
+                    <div class="pull-right">共XX种，XX个器材</div>
+                  </div>
+                  <div class="media-list">
+##判断map是否为空
+#set($computerorderMapSize = $computerorderdetailFullMapByComputermodelId.size() - 1)
+##判断数据是否为空
+#if($computerorderMapSize>=0)
+#set($computerorderMapRegion = [0..$computerorderMapSize])
+##取出所有的属性名称
+#foreach($tempKey in ${computerorderdetailFullMapByComputermodelId.keySet()}) 
+			#set($tempComputerorderdetailFullList = $computerorderdetailFullMapByComputermodelId.get($tempKey))
+
+                    <div class="media">                        
+                      <div class="group-hd">
+                        <div class="group-name pull-left">$tempComputerorderdetailFullList.get(0).computermodelname</div>
+                        <div class="group-line">
+                          <hr>
+                        </div>
+                      </div>
+                      <a class="pull-left" data-toggle="modal" href="#equip-detail" role="button">
+                        <img src="../img/mac-pro-gallery1-2012.jpg" width="100" height="100">
+                      </a>
+                      <div class="media-body">
+						#foreach($temporder in $tempComputerorderdetailFullList)
+                     
+                        <p>$temporder.computerorderdetailborrowday $temporder.computerorderdetailborrowperiod $temporder.computerorderdetailborrownumber</p>
+						#end
+                      </div>
+                    </div>
+#end
+#end					
+					
+				
+                  </div>
+                </div>                  
+            </div>
+				  
+				  
+                  <div class="col-md-5">
+                      <div class="thumbnail">
+                        <div class="hd">
+                          <h3>详情</h3>
+                        </div>
+                        <div class="caption">
+                          <span class="rent-user">申请者：<a rel="popover" class="lk" href="#">用户名（我）</a></span>
+                          <div class="rent-type">预约类型：个人预约</div>
+                        </div>
+                        <hr />
+                        <div class="hd"><h3>标题 <small>（可选，系统根据预约时间生成默认标题）</small></h3></div>
+                        <div class="caption"><input type="text" id="inputAddComputerorderTitle" class="form-control" placeholder="XXX的机房预约（XX月XX日、XX月XX日）"></div>
+                        <div class="hd"><h3>备注 <small>有什么需要备注说明的？例如使用目的相关说明（可选）</small></h3></div>
+                        <div class="caption"><textarea class="form-control" id="inputAddComputerorderRemark"  rows="3" placeholder="预约备注"></textarea></div>
+                        <div class="form-actions actions">  
+                          <button type="button" action-type="" class="btn btn-white">返回修改</button>
+                          
+						   <button type="button" action-type="orderComputerButton" class="btn btn-white">提交预约</button>
+                        </div>
+                      </div>               
+                  </div>                  
+            </div>           
+            
+
+          </div>
+  </div>
+  <!---main-content end-->
+</section>
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<script>
+var cookie = { 
+  		//读取COOKIES,n为COOKIE名 
+   		Get:function(n){ 
+       		var re=new RegExp(n+'=([^;]*);?','gi');
+       	    var r=re.exec(document.cookie)||[];
+       	    return (r.length>1?r[1]:null)
+   		}
+	};	
+	
+
+//提交预约单
+	$("body").on("click", "button[action-type|=orderComputerButton]", function() {
+	
+		var createuserid = cookie.Get("id");
+		var postData = {
+			title : $("#inputAddComputerorderTitle").val(),
+			remark : $("#inputAddComputerorderRemark").val()	
+		};
+		
+		jQuery.ajax({  
+		    url:"${webbaseurl}/addComputerorderAjax.${strutsaction}",  
+		    type:"post",
+		    data:postData,
+			dataType: 'json',
+			success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+				if(returnJson.flag == 1){					
+					location.href = "${webbaseurl}/toComputerorderSuccessPage.${strutsaction}";
+				}else{
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+				}
+			}		  	  
+		});//end jquery
+	});
+//end Order
+
+
+</script>
+<!-- Modal -->
+<div id="equip-detail" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">设备详情</h3>
+  </div>
+  <div class="modal-body">
+    <p>这里是设备详细页，不包含设备每天最大可预约数量</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">关 闭</button>
+  </div>
+</div>
+
+<div id="reject" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">操作</h3>
+  </div>
+  <div class="modal-body">
+    <p>这里是驳回操作相关提示说明</p>
+    <input class="input-block-level" type="text" placeholder="在此输入驳回理由">
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary">提交驳回</button>
+  </div>
+</div>
+
+<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
+  <img src="img/cover-img.jpg" class="cover" alt="封面照片" />
+  <div class="cover-layout"></div>
+  <div class="avatar"><img src="img/photo.jpg" width="80" height="80" class="img-circle"></div>
+  <div class="user-wrap">
+    <div class="user-name"><a href="#">用户名</a></div>
+    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
+    <div class="user-info">职务等信息</div>
+    <div class="user-info">地点</div>
+  </div>
+  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
+</div>
+
+
+</body>
+</html>

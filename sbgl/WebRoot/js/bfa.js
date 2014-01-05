@@ -267,9 +267,12 @@
 				var groupName = $(this).parents("table").data("tableName");
 				var startDate = new XDate();
 				var timeStr = getBookingTime(bookingData, startDate);
-				var id = bookingData.index;
+				
 				var maxNum = bookingData.maxNum;
 				var orderpcid = bookingData.pcid;
+//				修改后防止添加冲突
+				var id = orderpcid + "_"+bookingData.index;
+				var orderpcname = bookingData.pcname;
 				var orderdate = bookingData.date;
 				var orderperiod = bookingData.slot;
 				var groupHtml = 
@@ -288,7 +291,7 @@
 						  '<span class="input-group-btn">' + 
 							  '<button type="button" class="btn btn-link spinner-down"><i class="icon-minus"></i></button>' + 
 						  '</span>' + 
-						  '<input name="pcorderinfo" orderpcid="'+orderpcid+'" orderdate="'+orderdate+'" orderperiod="'+orderperiod+'" type="text" class="spinner-input form-control">' + 
+						  '<input name="pcorderinfo" orderpcid="'+orderpcid+'" orderdate="'+orderdate+'" orderperiod="'+orderperiod+'" orderpcname="'+orderpcname+'" type="text" class="spinner-input form-control">' + 
 						  '<span class="input-group-btn">' + 
 							  '<button type="button" class="btn btn-link spinner-up"><i class="icon-plus"></i></button>' +
 						  '</span>' + 
