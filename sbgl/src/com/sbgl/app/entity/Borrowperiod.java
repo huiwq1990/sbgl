@@ -5,6 +5,7 @@ public class Borrowperiod {
 	int id;
 	int periodnum;
 	String peroidname;
+//	int t
 	public int getId() {
 		return id;
 	}

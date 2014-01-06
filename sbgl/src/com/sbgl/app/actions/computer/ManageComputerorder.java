@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONObject;
 
@@ -22,6 +24,8 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.common.computer.ComputerConfig;
+import com.sbgl.app.common.computer.ComputerorderInfo;
+import com.sbgl.app.common.computer.ComputerorderdetailInfo;
 import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
@@ -37,7 +41,7 @@ import com.sbgl.util.ReturnJson;
 public class ManageComputerorder extends ActionSupport implements SessionAware,CookiesAware,ModelDriven<Computerorder> {
 	private static final Log log = LogFactory.getLog(ManageComputerorder.class);
 	private Map<String, Object> session;
-	private Map<String, String> cookie;
+	private Map<String, String> cookiesMap;
 
 	@Resource
 	private ComputerorderService computerorderService;	
@@ -62,6 +66,15 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	
 	
 	
+	private int ComputerorderStatusAduitAll = ComputerorderInfo.ComputerorderStatusAduitAll;
+	private int ComputerorderStatusAduitPass = ComputerorderInfo.ComputerorderStatusAduitPass;
+	private int ComputerorderStatusAduitReject = ComputerorderInfo.ComputerorderStatusAduitReject;
+	private int ComputerorderStatusAduitDel = ComputerorderInfo.ComputerorderStatusAduitDel;
+	private int ComputerorderStatusAduitWait = ComputerorderInfo.ComputerorderStatusAduitWait;
+	private int IndividualOrder = ComputerorderInfo.IndividualOrder;
+	private int ClassOrder = ComputerorderInfo.IndividualOrder;
+	
+	
 //	全局参数
 	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
 	private String userid;
@@ -73,7 +86,7 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	
 	
 	/**
-	 * 审核订单
+	 * 跳转到订单审核界面
 	 * @return
 	 */
 	public String toAuditComputerorderPage(){
@@ -119,8 +132,17 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	 */
 	public String computerorderList(){
 		
+		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
+		String uidStr = ComputerUtil.getCookieValue(cookies, ComputerConfig.cookieuserid);
 		//根据用户查询预约单
-		int userid = Integer.valueOf(cookie.get(ComputerConfig.cookieuserid));
+//		if(cookiesMap==null){
+//			System.out.println("null");
+//		}
+//		String uidStr = cookiesMap.get(ComputerConfig.cookieuserid);
+		if(uidStr == null || !ComputerUtil.isNumber(uidStr)){
+			return "error";
+		}
+		int userid = Integer.valueOf(uidStr);
 		
 		String selordersql = "  where a.userid="+userid;
 		computerorderFullList = computerorderService.selectComputerorderFullByCondition(selordersql);
@@ -281,7 +303,7 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 		if(computerorderdetailFullMapByComputermodelId == null){
 			computerorderdetailFullMapByComputermodelId = new HashMap<Integer,ArrayList<ComputerorderdetailFull>>();
 		}
-		System.out.println("computerorderdetailFullMapByComputermodelId"+computerorderdetailFullMapByComputermodelId.get(1).size());
+//		System.out.println("computerorderdetailFullMapByComputermodelId"+computerorderdetailFullMapByComputermodelId.get(1).size());
 		
 //		for (int i = 0; i < computerorderdetailList.size(); i++) {
 //			int tempComputermodelId = computerorderdetailList.get(i).getComputermodelid();
@@ -315,11 +337,7 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	public String addComputerorderAjax(){	
 		log.info("Add Entity Ajax Manner");
 		ReturnJson returnJson = new ReturnJson();
-		
-		
-				
-//			List<>
-			
+					
 		try {
 			Computerorder temp = new Computerorder();
 			// 将model里的属性值赋给temp
@@ -331,12 +349,14 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 //			temp.setUserid(Integer.valueOf(userid));
 			temp.setUserid(Integer.valueOf("1"));
 			temp.setCreatetime(DateUtil.currentDate());
+			temp.setStatus(ComputerorderInfo.ComputerorderStatusAduitWait);
 			computerorderService.addComputerorder(temp);
 			
 			computerorderdetailList = (ArrayList<Computerorderdetail>)session.get("computerorderdetailList");
 			for(int i=0 ; i < computerorderdetailList.size();i++){
 				Computerorderdetail cd = computerorderdetailList.get(i);
 				cd.setComputerorderid(temp.getId());
+				cd.setStatus(ComputerorderInfo.ComputerorderStatusAduitWait);
 				computerorderdetailService.addComputerorderdetail(cd);
 			}
 			
@@ -605,11 +625,85 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	}
 
 
-	@Override
-	public void setCookiesMap(Map<String, String> arg0) {
-		// TODO Auto-generated method stub
-		this.cookie = arg0;
+	public Map<String, String> getCookiesMap() {
+		return cookiesMap;
 	}
+
+
+	public void setCookiesMap(Map<String, String> cookiesMap) {
+		this.cookiesMap = cookiesMap;
+	}
+
+
+	public int getComputerorderStatusAduitAll() {
+		return ComputerorderStatusAduitAll;
+	}
+
+
+	public void setComputerorderStatusAduitAll(int computerorderStatusAduitAll) {
+		ComputerorderStatusAduitAll = computerorderStatusAduitAll;
+	}
+
+
+	public int getComputerorderStatusAduitPass() {
+		return ComputerorderStatusAduitPass;
+	}
+
+
+	public void setComputerorderStatusAduitPass(int computerorderStatusAduitPass) {
+		ComputerorderStatusAduitPass = computerorderStatusAduitPass;
+	}
+
+
+	public int getComputerorderStatusAduitReject() {
+		return ComputerorderStatusAduitReject;
+	}
+
+
+	public void setComputerorderStatusAduitReject(int computerorderStatusAduitReject) {
+		ComputerorderStatusAduitReject = computerorderStatusAduitReject;
+	}
+
+
+	public int getComputerorderStatusAduitDel() {
+		return ComputerorderStatusAduitDel;
+	}
+
+
+	public void setComputerorderStatusAduitDel(int computerorderStatusAduitDel) {
+		ComputerorderStatusAduitDel = computerorderStatusAduitDel;
+	}
+
+
+	public int getComputerorderStatusAduitWait() {
+		return ComputerorderStatusAduitWait;
+	}
+
+
+	public void setComputerorderStatusAduitWait(int computerorderStatusAduitWait) {
+		ComputerorderStatusAduitWait = computerorderStatusAduitWait;
+	}
+
+
+	public int getIndividualOrder() {
+		return IndividualOrder;
+	}
+
+
+	public void setIndividualOrder(int individualOrder) {
+		IndividualOrder = individualOrder;
+	}
+
+
+	public int getClassOrder() {
+		return ClassOrder;
+	}
+
+
+	public void setClassOrder(int classOrder) {
+		ClassOrder = classOrder;
+	}
+
 
 	
 }

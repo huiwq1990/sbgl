@@ -21,6 +21,7 @@ public class SbglFilterDispatcher extends FilterDispatcher {
 	    private static String sbglpath = PropertyUtil.readValue("/system.properties", "sbglpath");
 	    private static String webbaseurl = PropertyUtil.readValue("/system.properties", "webbaseurl");
 	    private static String equipmentImagePath = PropertyUtil.readValue("/system.properties", "equipmentImagePath");
+	    private static String computerImagePath = PropertyUtil.readValue("/system.properties", "computerImagePath");
 	    private static String strutsaction = PropertyUtil.readValue("/system.properties", "strutsaction");
 	    ActionContext cnaplicaction = ActionContext.getContext();
 	@Override
@@ -47,6 +48,7 @@ public class SbglFilterDispatcher extends FilterDispatcher {
 		request.setAttribute("webbaseurl", webbaseurl);
 		
 		request.setAttribute("equipmentImagePath", equipmentImagePath);
+		request.setAttribute("computerImagePath", computerImagePath);
 		
 		request.setAttribute("strutsaction", strutsaction);
 		super.doFilter(request, arg1, arg2);

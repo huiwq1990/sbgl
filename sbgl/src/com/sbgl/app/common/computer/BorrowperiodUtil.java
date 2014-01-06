@@ -70,19 +70,19 @@ public class BorrowperiodUtil {
 		List<Borrowperiod> periodList = new ArrayList<Borrowperiod>();
 		
 		Borrowperiod p2 = new Borrowperiod();
-		p2.setId(2);
+		p2.setId(0);
 		p2.setPeriodnum(2);
 		p2.setPeroidname("上午");
 		periodList.add(p2);
 		
 		Borrowperiod p4 = new Borrowperiod();
-		p4.setId(4);
+		p4.setId(1);
 		p4.setPeriodnum(4);
 		p4.setPeroidname("下午");
 		periodList.add(p4);
 		
 		Borrowperiod p6 = new Borrowperiod();
-		p6.setId(6);
+		p6.setId(2);
 		p6.setPeriodnum(6);
 		p6.setPeroidname("晚上");
 		periodList.add(p6);

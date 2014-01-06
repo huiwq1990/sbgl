@@ -15,7 +15,7 @@ public class ComputerUtil {
 		return  UUID.randomUUID().toString();      
 	}
 
-	public String getCookieValue(Cookie[] cookies, String str) {
+	public static String getCookieValue(Cookie[] cookies, String str) {
 		  String result = null;
 		  for (Cookie cookie : cookies) {
 		   if (cookie.getName().equals(str)) {
@@ -25,6 +25,16 @@ public class ComputerUtil {
 		  }
 		  return result;
 	}
+	
+
+	public static boolean isNumber(String number) {
+		if(number.matches("\\d(\\.\\d+)?")){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	
 	  public static void main(String[] args) {      
 	        UUID uuid = UUID.randomUUID();      

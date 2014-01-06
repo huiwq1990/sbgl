@@ -38,5 +38,7 @@ public List<Computerorderdetail> selectComputerorderdetailByCondition(String con
 	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputermodelId(Integer computermodelid );
 	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerId(Integer computerid );
 
+	int deleteComputerorderdetailByCondition(String condition);
+
  
 }

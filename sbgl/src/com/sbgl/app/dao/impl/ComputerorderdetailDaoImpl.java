@@ -36,6 +36,8 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	
 	private final String basicComputerorderdetailSql = "From Computerorderdetail as a ";
 	
+	private final String basicComputerorderdetailDelSql = "delete from  Computerorderdetail as a ";
+	
 	// 根据条件查询查询实体
 	@Override
 	public List<Computerorderdetail> selectComputerorderdetailByCondition(String condition) {
@@ -131,6 +133,25 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
             throw re;
         }
 	}
+	
+	@Override
+	public int deleteComputerorderdetailByCondition(String condition) {
+		// TODO Auto-generated method stub		
+//		log.debug("正在删除");
+        try {
+        	String hqlString=basicComputerorderdetailDelSql + " " +condition;  
+        	Query query = this.getHibernateTemplate().getSessionFactory().getCurrentSession().createQuery(hqlString);    	   	
+        	int ret=query.executeUpdate();
+
+            log.debug("删除:"+ret);
+            return ret;
+        } catch (RuntimeException re) {
+            log.error("删除失败", re);
+            throw re;
+        }
+	}
+	
+	
 
 //  根据实体id查询实体full	
 	@Override

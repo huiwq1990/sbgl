@@ -143,11 +143,15 @@
 			</result>
         </action>
         <action name="deleteComputerorderAjax" class="ComputerorderAction" method="deleteComputerorderAjax">
-        	<result type="json"></result>
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
         </action>
 <!--del entityfull ajax -->		
 		<action name="deleteComputerorderFullAjax" class="ComputerorderAction" method="deleteComputerorderFullAjax">
-        	<result type="json"></result>
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
         </action>
     	<action name="updateComputerorderAjax" class="ComputerorderAction" method="updateComputerorderAjax">
         	<result type="json">

@@ -183,7 +183,7 @@
 						data-computermodeliden="$!en.computermodelcomputercategoryid" 
 						data-descriptionen="$!en.computermodeldescription">修改</a></td>
                      <td>$!ch.computercategoryname</td>
-                     <td>3</td>
+                     <td>$!ch.computermodelavailableborrowcountnumber</td>
                     <td>$!ch.computermodeldescription</td>
                   </tr>
 #end

@@ -67,6 +67,8 @@ public interface ComputermodelService{
 	List<ComputermodelFull> selectComputermodelFullByCondition(
 			String conditionSql);
 
+	int execSql(String sql);
+
 	
 		
 	

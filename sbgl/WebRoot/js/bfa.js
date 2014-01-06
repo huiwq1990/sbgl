@@ -276,7 +276,7 @@
 				var orderdate = bookingData.date;
 				var orderperiod = bookingData.slot;
 				var groupHtml = 
-					'<div class="post-equip-group" data-name=' + groupName + '>' +
+					'<div class="post-equip-group" data-name="' + groupName + '" >' +
 						'<div class="group-hd">' +
 							'<div class="group-name pull-left">' + groupName + '</div>' +
 							'<div class="group-line"><hr></div>' +

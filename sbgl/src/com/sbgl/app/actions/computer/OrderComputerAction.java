@@ -181,7 +181,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 			 
 		//取得所有PC类型的当前库存数量
 		String currentlanguagetype = "0";
-		String getAllComputermodelTypeSql = " where languagetype="+currentlanguagetype+" ";
+		String getAllComputermodelTypeSql = " where a.languagetype="+currentlanguagetype+" ";
 		computermodelList = computermodelService.selectComputermodelByCondition(getAllComputermodelTypeSql);
 		for (int i = 0; i < computermodelList.size(); i++) {
 			System.out.println("当前可借数量id=" + computermodelList.get(i).getId() + "  " + " 名称："+ computermodelList.get(i).getName()
@@ -191,8 +191,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 		//所有可借时间段信息
 //		Map<Integer,Borrowperiod> periodMap = BorrowperiodUtil.getBorrowperiodMap();
 		borrowperiodList =  BorrowperiodUtil.getBorrowperiodList();
-		//初始化每个型号每个时段可借数量数组，
-		
+		//初始化每个型号每个时段可借数量数组，		
 		for(int tempmodelindex=0;tempmodelindex<computermodelList.size();tempmodelindex++){
 			Computermodel tempmodel =  computermodelList.get(tempmodelindex);
 			HashMap<Integer,ArrayList<Integer>> periodDayAvailInfo = new HashMap<Integer,ArrayList<Integer>>();
@@ -202,7 +201,8 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 				
 				//对于今天过去的时间段处理
 				int todaynum = 0;
-				if(tempBorrowperiod.getId() < currentPeriod ){
+//				System.out.println("period "+tempBorrowperiod.getPeriodnum());
+				if(tempBorrowperiod.getPeriodnum() < currentPeriod ){
 					todaynum = 0;
 				}else{
 					todaynum = tempmodel.getAvailableborrowcountnumber();
@@ -230,7 +230,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 		
 		for(int tempmodelindex=0;tempmodelindex<computermodelList.size();tempmodelindex++){
 			Computermodel tempmodel =  computermodelList.get(tempmodelindex);
-			System.out.println(tempmodel.getName());
+			System.out.println(tempmodel.getName()+"   ");
 			for(int tempperiod=0; tempperiod < borrowperiodList.size(); tempperiod++){
 				Borrowperiod tempBorrowperiod = borrowperiodList.get(tempperiod);
 				System.out.println(tempBorrowperiod.getPeroidname());
@@ -269,7 +269,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 		//根据预约清单计算当前可借数量			
 		for(Computerorderdetail od : computerorderdetailList){
 				int between = DateUtil.daysBetween(DateUtil.parseDate(currentDay),od.getBorrowday());
-				System.out.println(od.getId());
+				System.out.println("model: "+od.getComputermodelid()+"; day: "+od.getBorrowday()+"; period: "+od.getBorrowperiod());
 				int newcount = availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).get(between) - od.getBorrownumber();
 				 availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).set(between, newcount);
 		}

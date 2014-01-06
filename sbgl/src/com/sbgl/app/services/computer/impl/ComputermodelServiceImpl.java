@@ -208,4 +208,12 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 	public List<ComputermodelFull> selectComputermodelFullByConditionAndPage(String conditionSql,Page page){
 		return computermodelDao.selectComputermodelFullByConditionAndPage(conditionSql, page);
 	}
+	
+	@Override
+	public int execSql(String sql) {
+//		String sql = "delete from Computerorderdetail " + condition;
+		baseDao.createSQL(sql);
+		return 1;
+		
+	}
 }

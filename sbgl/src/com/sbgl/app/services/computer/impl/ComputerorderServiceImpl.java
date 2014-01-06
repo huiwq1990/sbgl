@@ -55,13 +55,11 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 //  根据id删除实体	
 	@Override
 	public int deleteComputerorder(Integer computerorderId){
-		Computerorder computerorder = new Computerorder();
-		computerorder.setId(computerorderId);
-		//return computerorderDao.deleteEntity(computerorderId);	
-		//baseDao.deleteEntityById(Computerorder.class,computerorderId);
-		baseDao.deleteEntity(computerorder);
+		String sql = "delete from Computerorder where id="+computerorderId;
+		baseDao.createSQL(sql);
 		return 1;
 	}
+	
 
 //  根据实体删除实体
 	@Override

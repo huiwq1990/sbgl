@@ -64,6 +64,10 @@ public interface ComputerorderdetailService{
 	List<Computerorderdetail> selectComputerorderdetailAfterNow(
 			String currentDay, int currentPeriod);
 
+	int deleteComputerorderdetailByCondition(String condition);
+
+	int execSql(String sql);
+
 		
 	
 	

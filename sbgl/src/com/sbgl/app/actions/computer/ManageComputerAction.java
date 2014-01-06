@@ -104,11 +104,14 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 
 	@Resource
 	private ComputerorderService computerorderService;
-	int ComputerorderStatusAduitAll = ComputerorderInfo.ComputerorderStatusAduitAll;
-	int ComputerorderStatusAduitPass = ComputerorderInfo.ComputerorderStatusAduitPass;
-	int ComputerorderStatusAduitReject = ComputerorderInfo.ComputerorderStatusAduitReject;
-	int ComputerorderStatusAduitDel = ComputerorderInfo.ComputerorderStatusAduitDel;
-	int ComputerorderStatusAduitWait = ComputerorderInfo.ComputerorderStatusAduitWait;
+	private int ComputerorderStatusAduitAll = ComputerorderInfo.ComputerorderStatusAduitAll;
+	private int ComputerorderStatusAduitPass = ComputerorderInfo.ComputerorderStatusAduitPass;
+	private int ComputerorderStatusAduitReject = ComputerorderInfo.ComputerorderStatusAduitReject;
+	private int ComputerorderStatusAduitDel = ComputerorderInfo.ComputerorderStatusAduitDel;
+	private int ComputerorderStatusAduitWait = ComputerorderInfo.ComputerorderStatusAduitWait;
+	private int IndividualOrder = ComputerorderInfo.IndividualOrder;
+	private int ClassOrder = ComputerorderInfo.IndividualOrder;
+	
 	List<Computerorder> computerorderList = new ArrayList<Computerorder>();
 	List<ComputerorderFull> computerorderFullList = new ArrayList<ComputerorderFull>();
 	//前台传参，获取某类型的Order
@@ -1173,6 +1176,22 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	public void setComputerorderclassruleFullList(
 			List<ComputerorderclassruleFull> computerorderclassruleFullList) {
 		this.computerorderclassruleFullList = computerorderclassruleFullList;
+	}
+
+	public int getIndividualOrder() {
+		return IndividualOrder;
+	}
+
+	public void setIndividualOrder(int individualOrder) {
+		IndividualOrder = individualOrder;
+	}
+
+	public int getClassOrder() {
+		return ClassOrder;
+	}
+
+	public void setClassOrder(int classOrder) {
+		ClassOrder = classOrder;
 	}
 
 

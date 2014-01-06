@@ -9,6 +9,7 @@ import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
 import com.sbgl.app.common.computer.ComputerConfig;
+import com.sbgl.app.common.computer.ComputerorderdetailInfo;
 import com.sbgl.app.dao.ComputerorderdetailDao;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.util.*;
@@ -71,6 +72,13 @@ public class ComputerorderdetailServiceImpl implements ComputerorderdetailServic
 		return deleteComputerorderdetail(computerorderdetail.getId());
 	}
 
+	@Override
+	public int deleteComputerorderdetailByCondition(String condition) {
+		String sql = "delete from Computerorderdetail " + condition;
+		baseDao.createSQL(sql);
+		return 1;
+		
+	}
 	
 	@Override
 	public void updateComputerorderdetail(Computerorderdetail computerorderdetail){
@@ -212,18 +220,29 @@ public class ComputerorderdetailServiceImpl implements ComputerorderdetailServic
     @Override
     public List<Computerorderdetail> selectComputerorderdetailAfterNow(String currentDay,int currentPeriod){
 
-            int computerorderTotalOrderDay = ComputerConfig.computerorderTotalOrderDay;
-            int computerorderTotalOrderPeriod = ComputerConfig.computerorderTotalOrderPeriod;
+            int computerorderTotalOrderDay = ComputerConfig.computeroderadvanceorderday;
+//            int computerorderTotalOrderPeriod = ComputerConfig.computerorderTotalOrderPeriod;
             Date curDate = DateUtil.parseDate(currentDay);
             Date endDate = DateUtil.addDay(curDate, computerorderTotalOrderDay);
             String endate = DateUtil.dateFormat(endDate,DateUtil.dateformatstr1);
-            String cond = "where ((borrowday = '" + currentDay+"' and borrowperiod >="+currentPeriod+") or (borrowday > '" + currentDay+"'))";
-            cond += "and ((borrowday < '" + endate+"') and (borrowperiod >="+computerorderTotalOrderPeriod+") )";
+            String cond = "where ( (borrowday = '" + currentDay+"' and borrowperiod >="+currentPeriod+") or ";
+            cond +=  "             ((borrowday > '" + currentDay+"') and (borrowday < '" + endate+"') )";
+            cond +=  "            ) and ";
+            cond +=  "            ( status in ("+ComputerorderdetailInfo.ComputerorderdetailStatusAduitPass+","+ComputerorderdetailInfo.ComputerorderdetailStatusAduitWait+") ) ";
 //            cond = " ";
     System.out.println(cond);
             return computerorderdetailDao.selectComputerorderdetailByCondition(cond);
 
     }
     
+    
+	@Override
+	public int execSql(String sql) {
+//		String sql = "delete from Computerorderdetail " + condition;
+		baseDao.createSQL(sql);
+		return 1;
+		
+	}
+	
 
 }

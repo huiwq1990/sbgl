@@ -21,6 +21,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputerService;
+import com.sbgl.app.services.computer.ComputermodelService;
 import com.sbgl.util.*;
 
 
@@ -45,6 +46,22 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	List<Computer> computerList = new ArrayList<Computer>();
 	List<ComputerFull> computerFullList = new ArrayList<ComputerFull>();
 	private Integer computerid; //entity full 的id属性名称		
+	
+	
+//	添加pc时需要修改model
+	@Resource
+	private ComputermodelService computermodelService;
+	int computermodeltype = 0;
+	List<Computermodel> computermodelList = new ArrayList<Computermodel>();
+	List<ComputermodelFull> computermodelFullList = new ArrayList<ComputermodelFull>();
+	List<ComputermodelFull> computermodelFullListCh = new ArrayList<ComputermodelFull>();
+	List<ComputermodelFull> computermodelFullListEn = new ArrayList<ComputermodelFull>();
+	
+	
+	
+	
+	
+	
 	private String logprefix = "exec action method:";		
 	Page page = new Page();
 	Integer pageNo=1;	
@@ -131,6 +148,11 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 			
 			computerService.addComputer(ch,en);
 			
+			int s = ch.getStatus();
+			if(s==1 || s==2){
+				Computermodel cm = computermodelService.selectComputermodelById(ch.getComputermodelid());
+				computermodelService.execSql(" update Computermodel set availableborrowcountnumber="+(cm.getAvailableborrowcountnumber()+1)+"  where computermodeltype = "+ch.getComputermodelid());
+			}
 			returnJson.setFlag(1);		
 			returnJson.setReason("添加机器成功!");
 			JSONObject jo = JSONObject.fromObject(returnJson);
