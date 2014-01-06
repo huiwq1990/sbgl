@@ -295,14 +295,14 @@
 		
 		var regex = /^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,3}|[0-9]{1,3})(\]?)$/;
 		var ret1 = regex.test(userMail);
-		if(ret1 == false) {
+		if(userMail != "" && ret1 == false) {
 			alert("邮箱地址格式错误！");
 			return;
 		}
 		
 		var regex2 = /(^[0-9]+-)?[0-9]+$/;
 		var ret3 = regex2.test(userTel);
-		if(ret3 == false) {
+		if(userTel != "" && ret3 == false) {
 			alert("请输入正确的联系方式！");
 			return;
 		}

@@ -39,6 +39,12 @@
         	</result>
         </action>
         
+        <action name="flushIndex" class="StudentAction" method="gotoIndex">
+        	<result name="success">
+        		/user/userManageIndexForFlush.vm
+        	</result>
+        </action>
+        
 	 </package>
 	 
 	 <package name="userajax" extends="json-default">
