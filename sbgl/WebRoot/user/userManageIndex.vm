@@ -730,8 +730,6 @@
     		    data: postData,
     		    success:function(data,textStatus,jq){ 
     				var n = noty({text: "删除其他人员信息成功！", timeout: 2500, type: 'success'});
-    				//$(this).parents('.modal').modal('toggle');
-    				//$("#admin-wrap").html(data);
     				
     	        },  
     		    error:function(data,textStatus,jq){
@@ -739,6 +737,31 @@
     			}  
     		});
 		}
+		
+		//删除成功刷新界面
+		postData = {
+			"type": selectedType,
+			"curPage": -1
+		};
+		//alert(selectedType);
+		//alert(curPage);
+		jQuery.ajax({
+			url: "${webbaseurl}/flushIndex.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+				
+				$(".active").removeClass("active");
+				$("#"+selectedType).addClass("active");
+				
+				totalPage = $("#tp").html();
+				curPage = $("#cp").html();
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
 		
 	});
 	
