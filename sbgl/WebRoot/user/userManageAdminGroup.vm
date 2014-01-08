@@ -98,7 +98,7 @@
             <!--control-bar start-->
             <div class="control-bar clearfix">
               <div class="title pull-left">管理员组管理</div>
-              <div class="tips">在此页面下添加新的用户组或者管理现有用户组。</div>
+              <div class="tips">在此页面下添加新的管理员组或者管理现有用户组。</div>
               <div class="operate-item pull-left">
                 <a href="#add-equip-category" class="btn btn-primary" action-type="clearInput" data-toggle="modal" role="button">添加管理员组</a>
                 <a href="#" class="btn btn-white s-h" action-type="delUserGroup"><i class="icon-trash"></i> 删除</a>
@@ -318,7 +318,7 @@
     				"group.ownerId": cookie.Get("id")
     			}
     			actionUrl = "${webbaseurl}/addAdminGroup.do";
-    			tip = "添加用户组成功！";
+    			tip = "添加管理员组成功！";
     		} else {
     			alert("组名称不能为空！");
 				return;
@@ -342,7 +342,7 @@
     				"group.type": newGroupType
         		};
 				actionUrl = "${webbaseurl}/alterAdminGroup.do";
-				tip = "修改用户组成功！";
+				tip = "修改管理员组成功！";
     		}
 	    }
 		
@@ -365,6 +365,7 @@
 		//alert(idsForDel);
 		var postData = {
 			groupIds: idsForDel,
+			whichGroup: 1
 		}
 			
 		jQuery.ajax({  
@@ -372,7 +373,7 @@
 		    type: "post",
 		    data: postData,
 		    success:function(data,textStatus,jq){ 
-				var n = noty({text: "删除用户组成功！", timeout: 2500, type: 'success'});
+				var n = noty({text: "删除管理员组成功！", timeout: 2500, type: 'success'});
 				//$(this).parents('.modal').modal('toggle');
 				$("#admin-wrap").html(data);
 				
