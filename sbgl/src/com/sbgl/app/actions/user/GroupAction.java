@@ -27,8 +27,9 @@ public class GroupAction extends ActionSupport implements SessionAware {
 	
 	@SuppressWarnings("unused")
 	private Map<String, Object> session;
-	private String tag;     //返回执行结果 0-成功 1-失败
-	private String message; //返回信息
+	private String tag;     		//返回执行结果 0-成功 1-失败
+	private String message; 		//返回信息
+	private int whichGroup = 0;		//0为用户组；1为管理员组
 
 	@Override
 	public void setSession(Map<String, Object> session) {
@@ -72,6 +73,12 @@ public class GroupAction extends ActionSupport implements SessionAware {
 			} else {
 				this.tag = "0";
 				this.message = "添加用户组信息成功！";
+				
+				if(group.getType() == 2 || group.getType() == 6 || group.getType() == -1) {
+					whichGroup = 0;
+				} else {
+					whichGroup = 1;
+				}
 			}
 		} else {
 			this.tag = "2";
@@ -151,7 +158,21 @@ public class GroupAction extends ActionSupport implements SessionAware {
 	}
 	
 	public String getAllGroup() {
-		allGroupList = groupService.getAllUserGroup();
+		List<Usergroup> tempList = groupService.getAllUserGroup();
+		
+		if(whichGroup == 0) {
+			for (Usergroup ug : tempList) {
+				if(ug.getType() == 2 || ug.getType() == 6 || ug.getType() == -1) {
+					allGroupList.add( ug );
+				}
+			}
+		} else {
+			for (Usergroup ug : tempList) {
+				if(ug.getType() == 7 || ug.getType() == 8) {
+					allGroupList.add( ug );
+				}
+			}
+		}
 		return SUCCESS;
 	}
 }

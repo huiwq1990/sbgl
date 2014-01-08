@@ -1,5 +1,6 @@
 package com.sbgl.app.actions.user;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.entity.Administrator;
 import com.sbgl.app.entity.Usergroup;
 import com.sbgl.app.entity.Usergrouprelation;
+import com.sbgl.app.services.user.GroupService;
 import com.sbgl.app.services.user.ManagerService;
 import com.sbgl.app.services.user.UserGroupRelationService;
 
@@ -28,6 +30,8 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 
 	@Resource
 	private ManagerService managerService;
+	@Resource
+	private GroupService groupService;
 
 	@Resource
 	private UserGroupRelationService userGroupRelationService;
@@ -135,7 +139,7 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 	public void setManagerIds(String managerIds) {
 		this.managerIds = managerIds;
 	}
-	public String deleteTeacher() {
+	public String deleteManager() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		String[] ids = managerIds.split("_");
@@ -162,10 +166,6 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 	 * 获取全部管理员
 	 * @return
 	 */
-	private List<Administrator> allManagerList;
-	public List<Administrator> getAllManagerList() {
-		return allManagerList;
-	}
 	public String getAllTeacher() {
 		allManagerList = managerService.getAllManager();
 		return SUCCESS;
@@ -174,6 +174,10 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 	/**
 	 * 页面访问
 	 */
+	private List<Usergroup> allGroupList;
+	public List<Usergroup> getAllGroupList() {
+		return allGroupList;
+	}
 	public String gotoUserManageAdmin() {
 		
 		return SUCCESS;
@@ -182,7 +186,19 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 		
 		return SUCCESS;
 	}
+	
+	private List<Administrator> allManagerList;
+	public List<Administrator> getAllManagerList() {
+		return allManagerList;
+	}
 	public String gotoUserManageAdminGroup() {
+		allGroupList = new ArrayList<Usergroup>();
+		List<Usergroup> tempList = groupService.getAllUserGroup();
+		for (Usergroup ug : tempList) {
+			if(ug.getType() == 7 || ug.getType() == 8) {
+				allGroupList.add( ug );
+			}
+		}
 		
 		return SUCCESS;
 	}

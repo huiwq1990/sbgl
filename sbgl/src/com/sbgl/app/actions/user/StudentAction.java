@@ -403,7 +403,14 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		return allGroupList;
 	}
 	public String gotoUserManageUserGroup() {
-		allGroupList = groupService.getAllUserGroup();
+		allGroupList = new ArrayList<Usergroup>();
+		List<Usergroup> tempList = groupService.getAllUserGroup();
+		for (Usergroup ug : tempList) {
+			if(ug.getType() == 2 || ug.getType() == 6 || ug.getType() == -1) {
+				allGroupList.add( ug );
+			}
+		}
+		
 		return SUCCESS;
 	}
 	

@@ -20,6 +20,24 @@
         		/user/userManageAdminGroup.vm
         	</result>
         </action>
+        
+        <action name="addAdminGroup" class="GroupAction" method="addGroup">
+        	<result name="success">
+        		/user/userManageAdminGroupForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="alterAdminGroup" class="GroupAction" method="alterGroup">
+        	<result name="success">
+        		/user/userManageAdminGroupForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="delAdminGroup" class="GroupAction" method="deleteGroup">
+        	<result name="success">
+        		/user/userManageAdminGroupForFlush.vm
+        	</result>
+        </action>
 	 </package>
 	 
 	<!--  <package name="clazzAjax" extends="json-default">
