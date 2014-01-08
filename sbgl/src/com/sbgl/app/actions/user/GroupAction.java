@@ -1,5 +1,6 @@
 package com.sbgl.app.actions.user;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -159,6 +160,7 @@ public class GroupAction extends ActionSupport implements SessionAware {
 	
 	public String getAllGroup() {
 		List<Usergroup> tempList = groupService.getAllUserGroup();
+		allGroupList = new ArrayList<Usergroup>();
 		
 		if(whichGroup == 0) {
 			for (Usergroup ug : tempList) {
@@ -173,6 +175,7 @@ public class GroupAction extends ActionSupport implements SessionAware {
 				}
 			}
 		}
+		
 		return SUCCESS;
 	}
 }
