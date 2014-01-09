@@ -28,19 +28,10 @@
 		<!-- default entity full manage action -->
     	<action name="manageComputercategoryFull" class="ManageComputerAction" method="manageComputercategoryFull">
         	<result name="success">/computer/computercategoryFullManage.vm</result>
-        	<result name="success2">/computer/computercategorycontent.vm</result>
+        	<result name="success2">/computer/computercategoryFullManageContent.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
-		<!-- manage action , go to jsp page -->
-    	<action name="manageComputercategoryFullJsp" class="ManageComputerAction" method="manageComputercategoryFull">
-        	<result name="success">/computer/computercategoryFullManage.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>		
-		<!-- manage action , go to vm page -->
-    	<action name="manageComputercategoryFullVm" class="ManageComputerAction" method="manageComputercategoryFull">
-        	<result name="success">/computer/computercategoryFullManage.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>	
+	
 		
 		
 <!--添加实体-->

@@ -16,4 +16,8 @@ public class ComputerConfig {
 	
 	public static int languagech = 0;
 	public static int languageen = 1;
+	
+//	未分类的类型
+	public final static int computercategorynotclassifyid = -1;
+	
 }

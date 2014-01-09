@@ -31,8 +31,11 @@ import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
+import com.sbgl.app.entity.Computerstatus;
+import com.sbgl.app.entity.ComputerstatusFull;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
+import com.sbgl.app.services.computer.ComputerstatusService;
 import com.sbgl.util.DateUtil;
 import com.sbgl.util.ReturnJson;
 
@@ -64,6 +67,13 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	HashMap<Integer, ArrayList<Computerorderdetail>> computerorderdetailMapByComputermodelId = new HashMap<Integer,ArrayList<Computerorderdetail>>();
 	HashMap<Integer, ArrayList<ComputerorderdetailFull>> computerorderdetailFullMapByComputermodelId = new HashMap<Integer,ArrayList<ComputerorderdetailFull>>();
 	
+	
+	
+	@Resource
+	private ComputerstatusService computerstatusService;
+	int computerstatusid = 0;
+	List<Computerstatus> computerstatusList = new ArrayList<Computerstatus>();
+	List<ComputerstatusFull> computerstatusFullList = new ArrayList<ComputerstatusFull>();
 	
 	
 	private int ComputerorderStatusAduitAll = ComputerorderInfo.ComputerorderStatusAduitAll;
@@ -103,6 +113,8 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 		computerorderdetailFullList = computerorderdetailService.selectComputerorderdetailFullByCondition(sql);
 //		System.out.println("computerorderdetailFullList size:"+computerorderdetailFullList.size());
 		
+//		computerstatusList  = computerstatusService.selectComputerstatusByCondition("");
+		computerstatusFullList = computerstatusService.selectComputerstatusFullByCondition(" ");
 		if(computerorderdetailFullList==null){
 			computerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
 		}
@@ -702,6 +714,47 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 
 	public void setClassOrder(int classOrder) {
 		ClassOrder = classOrder;
+	}
+
+
+	public ComputerstatusService getComputerstatusService() {
+		return computerstatusService;
+	}
+
+
+	public void setComputerstatusService(ComputerstatusService computerstatusService) {
+		this.computerstatusService = computerstatusService;
+	}
+
+
+	public int getComputerstatusid() {
+		return computerstatusid;
+	}
+
+
+	public void setComputerstatusid(int computerstatusid) {
+		this.computerstatusid = computerstatusid;
+	}
+
+
+	public List<Computerstatus> getComputerstatusList() {
+		return computerstatusList;
+	}
+
+
+	public void setComputerstatusList(List<Computerstatus> computerstatusList) {
+		this.computerstatusList = computerstatusList;
+	}
+
+
+	public List<ComputerstatusFull> getComputerstatusFullList() {
+		return computerstatusFullList;
+	}
+
+
+	public void setComputerstatusFullList(
+			List<ComputerstatusFull> computerstatusFullList) {
+		this.computerstatusFullList = computerstatusFullList;
 	}
 
 
