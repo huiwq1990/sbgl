@@ -183,7 +183,7 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	public String gotoUserManageAdminAdd() {
-		
+		gotoUserManageAdminGroup();
 		return SUCCESS;
 	}
 	
@@ -195,7 +195,7 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 		allGroupList = new ArrayList<Usergroup>();
 		List<Usergroup> tempList = groupService.getAllUserGroup();
 		for (Usergroup ug : tempList) {
-			if(ug.getType() == 7 || ug.getType() == 8) {
+			if(ug.getType() == 8) {
 				allGroupList.add( ug );
 			}
 		}
