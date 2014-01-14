@@ -38,6 +38,19 @@
         		/user/userManageAdminGroupForFlush.vm
         	</result>
         </action>
+        
+        
+        <action name="alterManager" class="ManagerAction" method="alterManager">
+        	<result name="success">
+        		/user/userManageAdminForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="deleteManager" class="ManagerAction" method="deleteManager">
+        	<result name="success">
+        		/user/userManageAdminForFlush.vm
+        	</result>
+        </action>
 	 </package>
 	 
 	 <package name="managerAjax" extends="json-default">
@@ -54,18 +67,5 @@
         		<param name="root">returnJSON</param>
         	</result>
         </action>
-        
-        <action name="alterManager" class="ManagerAction" method="alterManager">
-        	<result type="json">
-        		<param name="root">returnJSON</param>
-        	</result>
-        </action>
-        
-        <action name="deleteManager" class="ManagerAction" method="deleteManager">
-        	<result type="json">
-        		<param name="root">returnJSON</param>
-        	</result>
-        </action>
-        
      </package>
 </struts>

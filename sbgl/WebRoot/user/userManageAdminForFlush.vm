@@ -1,0 +1,80 @@
+<div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">管理员管理</div>
+              <div class="tips">在此页面下管理管理员信息，如用管理员添加、修改、删除。</div>
+              <!-- <div class="filter user-group-filter">
+                <ul class="nav nav-tabs nav-tabs-google">
+                  <li><a href="#">其他</a></li>
+                  <li><a href="#">教师</a></li>
+                  <li><a href="#">学生</a></li>
+                  <li class="active"><a href="#">全部</a></li>
+                  
+                </ul>
+              </div> -->
+              <div class="operate-item pull-left">
+                <a href="${webbaseurl}/userManageAdminAdd.do" class="btn btn-primary">添加管理员</a>
+                <a href="#" class="btn btn-white s-h" action-type="delUser"><i class="icon-trash"></i> 删除</a>
+              </div>
+
+              <!--<div class="page pull-right clearfix">
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第<span id="cp">$!curPage</span>/<span id="tp">$!totalPage</span>页 <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#" action-type="goFirst">最新</a></li>
+                      <li><a href="#" action-type="goLast">最旧</a></li>
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+                  <ul>
+                    <li><a href="#" rel="tooltip" action-type="backPage" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" action-type="nextPage" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+              <ul class="status-filter nav nav-pills pull-right">
+                <li class="active" action-type="active" id="0"><a href="#">全部(<span id="totalSum">$!sum</span>)</a></li>
+                <li action-type="active" id="2"><a href="#">学生(<span id="sSum">$!sum1</span>)</a></li>
+                <li action-type="active" id="6"><a href="#">教师(<span id="tSum">$!sum2</span>)</a></li>
+                <li action-type="active" id="-1"><a href="#">其他(<span id="wSum">$!sum3</span>)</a></li>
+              </ul>-->
+            </div><!--control-bar end-->
+            <div class="panel panel-default">              
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="name">编号</th>
+                    <th class="username">用户名</th>
+                    <th class="user-group">管理组</th>
+                    <th class="user-group">权限</th>
+                    <th class="operate">电话</th>
+                  </tr>
+                </thead>
+                <tbody>
+				  #foreach($user in $allManagerList)
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!user.id;$!user.userGroupType"></td>
+                    <td>$!user.userCode<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="beforeModify" data-id="$!user.id" data-code="$!user.userCode" data-name="$!user.userName" data-sex="$!user.gender" data-pass="$!user.userPass" data-gid="$!user.userGroupId" data-gname="$!user.userGroupName" data-tel="$!user.tel" data-mail="$!user.mail" data-pic="$!user.photo" data-privi="$!user.privilege">修改</a></td>
+                    <td>$!user.userName</td>
+                    <td>$!user.userGroupName</td>
+					#if($!user.privilege == 0)
+						<td>无</td>
+					#elseif($!user.privilege == 1)
+						<td>查看库存</td>
+					#elseif($!user.privilege == 2)
+						<td>录入数据</td>
+					#elseif($!user.privilege == 3)
+						<td>修改订单</td>
+					#elseif($!user.privilege == 4)
+						<td>超级管理</td>
+					#end
+                    <td>$!user.tel</td>
+                  </tr>
+				  #end
+                </tbody>
+              </table>
+            </div>
+          </div>
