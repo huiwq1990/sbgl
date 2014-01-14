@@ -101,7 +101,7 @@
                 </select>
               </div>              
               <div class="operate-item pull-left">
-                <a href="机房添加.html" class="btn btn-primary">添加设备</a>
+                <a href="${webbaseurl}/toAddComputerPage.action" class="btn btn-primary">添加设备</a>
                 <a href="#" class="btn btn-white s-h" action-type="deleteComputerButton"><i class="icon-trash"></i> 删除</a>
               </div>
               <div class="page pull-right clearfix">
