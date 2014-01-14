@@ -111,7 +111,7 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 //			return SUCCESS;
 //		}
 		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-		String uidStr = ComputerUtil.getCookieValue(cookies, ComputerConfig.cookieuserid);
+		String uidStr = ComputerCookieUtil.getCookieValue(cookies, ComputerConfig.cookieuserid);
 		
 		try {
 			Computercategory tempCh = new Computercategory();		

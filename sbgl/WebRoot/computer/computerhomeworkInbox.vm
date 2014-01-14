@@ -98,34 +98,32 @@
           
           <div class="col3 container">
             <div class="control-bar clearfix">
-              <div class="title pull-left">进行中的预约</div>
+              <div class="title pull-left">新作业</div>
               <a class="btn btn-primary pull-right" href="#selectRentType" role="button" data-toggle="modal">创建预约</a>
             </div>
             <div class="row">
       
-#set($computerhomeworkFullListSize = $computerhomeworkFullList.size() - 1)
+#set($computerhomeworkFullListSize = $newComputerhomeworkFullList.size() - 1)
 ##判断数据是否为空
 #if($computerhomeworkFullListSize>=0)
 #set($computerhomeworkFullListRegion = [0..$computerhomeworkFullListSize])
 ##取出所有的属性名称
 #foreach($tempKey in $computerhomeworkFullListRegion)
-			#set($temp = $computerhomeworkFullList.get($tempKey))
+			#set($temp = $newComputerhomeworkFullList.get($tempKey))
                   <div class="col-3">                  
                       <div class="thumbnail">
                         <div class="hd clearfix">
                           <h4 class="pull-left"><a class="lk" href="${webbaseurl}/checkComputerhomework.action?computerhomeworkid=$temp.computerhomeworkid">$!temp.computerhomeworkname</a></h4>
                         </div>
-                        <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> 设备预约<br/>个人预约</div>
+                        <div class="t-r label label-important"><i class="icon-camera-retro icon-large"></i> 机房预约</div>
                         <div class="caption">
                           <div class="rent-info">
-                            <div class="rent-num">预约号：432420427（无则不显示）</div>
-                            <div class="rent-time"><i class="icon-time"></i> 2013年10月18日 - 2013年10月23日（无则不显示）</div>
-                            <div class="rent-remark"><i class="icon-pencil"></i> 这里是预约备注（无则不显示）附近开发就给你说拉刚接完福建武平如果奋力反击我的积分我觉得怕人家分邱娥国该恶风哥怕阿娇大家都疯狂了</div>
+                           
+                            <div class="rent-time"><i class="icon-time"></i>  </div>
+                            <div class="rent-remark"><i class="icon-pencil"></i> $temp.computerhomeworkcontent</div>
                           </div>
                           <hr />
-                          <div class="rent-status clearfix">
-                            <div class="status pull-left"><span class="label label-info">状态</span> 等待审核</div>
-                          </div>
+                         
                         </div>
                       </div>                  
                   </div>
@@ -140,36 +138,34 @@
             </div>
             <div class="row thumbnails">
       
+#set($computerhomeworkFullListSize = $finishComputerhomeworkFullList.size() - 1)
+##判断数据是否为空
+#if($computerhomeworkFullListSize>=0)
+#set($computerhomeworkFullListRegion = [0..$computerhomeworkFullListSize])
+##取出所有的属性名称
+#foreach($tempKey in $computerhomeworkFullListRegion)
+			#set($temp = $finishComputerhomeworkFullList.get($tempKey))
                   <div class="col-3">                  
                       <div class="thumbnail">
-                        <div class="hd">
-                          <h4><a class="lk" href="设备预约详细内容页.html">2013年10月18日-23日设备预约</a></h4>
+                        <div class="hd clearfix">
+                          <h4 class="pull-left"><a class="lk" href="${webbaseurl}/checkComputerhomework.action?computerhomeworkid=$temp.computerhomeworkid">$!temp.computerhomeworkname</a></h4>
                         </div>
-                        <div class="t-r label label-important"><i class="icon-camera-retro icon-large"></i> 设备预约<br/>个人预约</div>
+                        <div class="t-r label label-important"><i class="icon-camera-retro icon-large"></i> 机房预约</div>
                         <div class="caption">
                           <div class="rent-info">
-                            <div class="rent-num">预约号：432420427（无则不显示）</div>
-                            <div class="rent-time"><i class="icon-time"></i> 2013年10月18日 - 2013年10月23日（无则不显示）</div>
-                            <div class="rent-remark"><i class="icon-pencil"></i> 这里是预约备注（无则不显示）</div>
+                           
+                              <div class="rent-time"><i class="icon-time"></i>  </div>
+                            <div class="rent-remark"><i class="icon-pencil"></i> $temp.computerhomeworkcontent</div>
                           </div>
+                          <hr />
+                         
                         </div>
                       </div>                  
                   </div>
-                  <div class="col-3">                  
-                      <div class="thumbnail">
-                        <div class="hd">
-                          <h4><a class="lk" href="设备预约详细内容页.html">数字摄影技术第11周设备申请</a></h4>
-                        </div>
-                        <div class="t-r label label-important"><i class="icon-camera-retro icon-large"></i> 设备预约<br/>个人预约</div>
-                        <div class="caption">
-                          <div class="rent-info">
-                            <div class="rent-num">预约号：432420427（无则不显示）</div>
-                            <div class="rent-time"><i class="icon-time"></i> 2013年10月18日 - 2013年10月23日（无则不显示）</div>
-                            <div class="rent-remark"><i class="icon-pencil"></i> 这里是预约备注（无则不显示）</div>
-                          </div>
-                        </div>
-                      </div>                  
-                  </div>
+#end
+#end		
+				  
+				  
             </div>            
             
 

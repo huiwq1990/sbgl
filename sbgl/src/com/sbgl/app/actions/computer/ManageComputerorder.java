@@ -145,13 +145,13 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	public String computerorderList(){
 		
 		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-		String uidStr = ComputerUtil.getCookieValue(cookies, ComputerConfig.cookieuserid);
+		String uidStr = ComputerCookieUtil.getCookieValue(cookies, ComputerConfig.cookieuserid);
 		//根据用户查询预约单
 //		if(cookiesMap==null){
 //			System.out.println("null");
 //		}
 //		String uidStr = cookiesMap.get(ComputerConfig.cookieuserid);
-		if(uidStr == null || !ComputerUtil.isNumber(uidStr)){
+		if(uidStr == null ){
 			return "error";
 		}
 		int userid = Integer.valueOf(uidStr);
@@ -355,7 +355,7 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 			// 将model里的属性值赋给temp
 			BeanUtils.copyProperties(temp, computerorder);
 			System.out.println("computerordertitle"+computerorder.getTitle());
-			String uuid = ComputerUtil.genSerialnumber("");
+			String uuid = ComputerCookieUtil.genSerialnumber("");
 			temp.setSerialnumber(uuid);
 			session.put("computerorderSerialnumber", uuid);
 //			temp.setUserid(Integer.valueOf(userid));

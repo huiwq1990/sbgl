@@ -10,7 +10,7 @@ public class IniDatabase {
 
 		
 //		ComputercategorySpringTest.iniDouble();
-//		ComputermodelSpringTest.iniDouble();
+		ComputermodelSpringTest.iniDouble();
 //		ComputerSpringTest.iniDouble();
 //	
 //		ComputerorderSpringTest.intTable();
@@ -21,8 +21,8 @@ public class IniDatabase {
 //		ComputerorderclassruleSpringTest.intTable();
 //		ComputerorderclassruledetailSpringTest.intTable();
 		
-		ComputerhomeworkSpringTest.intTable();
-		ComputerhomeworkreceiverSpringTest.intTable();
+//		ComputerhomeworkSpringTest.intTable();
+//		ComputerhomeworkreceiverSpringTest.intTable();
 
 	}
 

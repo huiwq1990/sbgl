@@ -9,8 +9,11 @@ import net.sf.json.JSONObject;
 
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -19,6 +22,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputerhomeworkService;
 import com.sbgl.app.services.computer.ComputerhomeworkreceiverService;
@@ -51,7 +55,8 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 	Page page = new Page();
 	Integer pageNo=1;	
 	
-	
+	private List<ComputerhomeworkFull> newComputerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
+	private List<ComputerhomeworkFull> finishComputerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
 
 	
 //	add homework	
@@ -66,10 +71,12 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 	
 	@Resource
 	private ComputerhomeworkreceiverService computerhomeworkreceiverService;
-	private Computerhomeworkreceiver computerhomeworkreceiver = new Computerhomeworkreceiver();//实例化一个模型
-	private ComputerhomeworkreceiverFull computerhomeworkreceiverFull = new ComputerhomeworkreceiverFull();//实例化一个模型
+	private Computerhomeworkreceiver computerhomeworkreceiver = new Computerhomeworkreceiver();
+	private ComputerhomeworkreceiverFull computerhomeworkreceiverFull = new ComputerhomeworkreceiverFull();
 	private List<Computerhomeworkreceiver> computerhomeworkreceiverList = new ArrayList<Computerhomeworkreceiver>();
 	private List<ComputerhomeworkreceiverFull> computerhomeworkreceiverFullList = new ArrayList<ComputerhomeworkreceiverFull>();
+	
+	
 	
 	@Resource
 	private ComputerorderclassruledetailService computerorderclassruledetailService;	
@@ -81,36 +88,60 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 	
 	ReturnJson returnJson = new ReturnJson();
 	
-	//作业收件箱
+//	学生查看作业收件箱
 	public String toComputerhomeworkInboxPage(){
-//		log.info(logprefix +" toComputerhomeworkInboxPage");
-		int userid = 1;
+		log.info(logprefix +" toComputerhomeworkInboxPage");
 		
-		String receivesql = " where a.userid ="+userid;
+		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
+		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
+		if(uidStr==null || uidStr.trim().equals("")){
+			return "error";
+		}
+		
+		String receivesql = " where a.userid ="+uidStr;
 		computerhomeworkreceiverList = computerhomeworkreceiverService.selectComputerhomeworkreceiverByCondition(receivesql);
 		
-		if(computerhomeworkreceiverList!= null && computerhomeworkreceiverList.size() > 0){
-//			select * from computerhomework as a where a.id in (1,2)
-			String homeworksql = " where a.id ";
-			String homeworkids = "";
-			for(int i=0; i<computerhomeworkreceiverList.size();i++){
-				homeworkids += computerhomeworkreceiverList.get(i).getComputerhomeworkid()+",";
+		String newhomeworksql =  "";
+		String finishehomeworksql = "";
+		if(computerhomeworkreceiverList == null || computerhomeworkreceiverList.size() == 0){
+			if(newComputerhomeworkFullList == null){
+				newComputerhomeworkFullList =  new ArrayList<ComputerhomeworkFull>();
 			}
-			homeworkids = homeworkids.substring(0,homeworkids.length()-1);
+			if(finishComputerhomeworkFullList == null){
+				finishComputerhomeworkFullList= new ArrayList<ComputerhomeworkFull>();
+			}
 			
-			homeworksql = homeworksql + " in (" +homeworkids+") ";
-			System.out.println(homeworksql);
-			computerhomeworkFullList  = computerhomeworkService.selectComputerhomeworkFullByCondition(homeworksql);
+			return SUCCESS;
 		}
-
+			for(int i=0; i<computerhomeworkreceiverList.size();i++){
+				if(computerhomeworkreceiverList.get(i).getHasorder()==null || computerhomeworkreceiverList.get(i).getHasorder() != 1){
+					newhomeworksql += computerhomeworkreceiverList.get(i).getComputerhomeworkid()+",";
+				}else{
+					
+					finishehomeworksql += computerhomeworkreceiverList.get(i).getComputerhomeworkid()+",";
+				}
+				
+			}
 		
-		
-		if(computerhomeworkreceiverList == null){
-			computerhomeworkreceiverList = new ArrayList<Computerhomeworkreceiver>();
-		}
-		if(computerhomeworkFullList == null){
-			 computerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
-		}
+			if(finishehomeworksql.length() > 1){
+				finishehomeworksql = finishehomeworksql.substring(0,finishehomeworksql.length()-1);
+				finishehomeworksql = " where a.id in (" +finishehomeworksql+") ";
+				finishComputerhomeworkFullList = computerhomeworkService.selectComputerhomeworkFullByCondition(finishehomeworksql);
+			}
+			
+			if(newhomeworksql.length() > 1){
+				newhomeworksql = newhomeworksql.substring(0,newhomeworksql.length()-1);
+				newhomeworksql = " where a.id in (" +newhomeworksql+") ";
+				newComputerhomeworkFullList = computerhomeworkService.selectComputerhomeworkFullByCondition(newhomeworksql);
+			}
+			
+			
+			if(newComputerhomeworkFullList == null){
+				newComputerhomeworkFullList =  new ArrayList<ComputerhomeworkFull>();
+			}
+			if(finishComputerhomeworkFullList == null){
+				finishComputerhomeworkFullList= new ArrayList<ComputerhomeworkFull>();
+			}
 		
 		return SUCCESS;
 	}
@@ -548,7 +579,7 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 //				查询作业可以借的PC
 				int ruleId = computerhomeworkFull.getComputerorderclassruleid();
 				if(ruleId > 0){
-					String borrowPcSql  = " where a.id = "+ ruleId;
+					String borrowPcSql  = " where a.computerorderclassruleid = "+ ruleId+ " and b.languagetype = 0";
 					computerorderclassruledetailFullList = computerorderclassruledetailService.selectComputerorderclassruledetailFullByCondition(borrowPcSql);				
 				}
 				
@@ -934,6 +965,32 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 		public void setComputerorderclassruledetailFullList(
 				List<ComputerorderclassruledetailFull> computerorderclassruledetailFullList) {
 			this.computerorderclassruledetailFullList = computerorderclassruledetailFullList;
+		}
+
+
+
+		public List<ComputerhomeworkFull> getNewComputerhomeworkFullList() {
+			return newComputerhomeworkFullList;
+		}
+
+
+
+		public void setNewComputerhomeworkFullList(
+				List<ComputerhomeworkFull> newComputerhomeworkFullList) {
+			this.newComputerhomeworkFullList = newComputerhomeworkFullList;
+		}
+
+
+
+		public List<ComputerhomeworkFull> getFinishComputerhomeworkFullList() {
+			return finishComputerhomeworkFullList;
+		}
+
+
+
+		public void setFinishComputerhomeworkFullList(
+				List<ComputerhomeworkFull> finishComputerhomeworkFullList) {
+			this.finishComputerhomeworkFullList = finishComputerhomeworkFullList;
 		}
 		
 		

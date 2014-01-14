@@ -9,6 +9,9 @@ public class ComputerhomeworkreceiverFull extends DaoAbs implements java.io.Seri
 			private Integer computerhomeworkreceiverid;
 			private Integer computerhomeworkreceivercomputerhomeworkid;
 			private Integer computerhomeworkreceiveruserid;
+			private Integer computerhomeworkreceiverhasview;
+			private Integer computerhomeworkreceiverhasorder;
+			private Integer computerhomeworkreceiverstatus;
 			private Integer loginuserid;
 			private String loginusername;
 			private Date loginusercreatetime;
@@ -33,6 +36,24 @@ public class ComputerhomeworkreceiverFull extends DaoAbs implements java.io.Seri
 		}
 		public Integer getComputerhomeworkreceiveruserid(){		
 			return this.computerhomeworkreceiveruserid;
+		}
+			public void setComputerhomeworkreceiverhasview(Integer computerhomeworkreceiverhasview){		
+			this.computerhomeworkreceiverhasview = computerhomeworkreceiverhasview;
+		}
+		public Integer getComputerhomeworkreceiverhasview(){		
+			return this.computerhomeworkreceiverhasview;
+		}
+			public void setComputerhomeworkreceiverhasorder(Integer computerhomeworkreceiverhasorder){		
+			this.computerhomeworkreceiverhasorder = computerhomeworkreceiverhasorder;
+		}
+		public Integer getComputerhomeworkreceiverhasorder(){		
+			return this.computerhomeworkreceiverhasorder;
+		}
+			public void setComputerhomeworkreceiverstatus(Integer computerhomeworkreceiverstatus){		
+			this.computerhomeworkreceiverstatus = computerhomeworkreceiverstatus;
+		}
+		public Integer getComputerhomeworkreceiverstatus(){		
+			return this.computerhomeworkreceiverstatus;
 		}
 			public void setLoginuserid(Integer loginuserid){		
 			this.loginuserid = loginuserid;

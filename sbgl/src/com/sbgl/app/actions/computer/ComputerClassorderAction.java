@@ -154,9 +154,11 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 	 * @return
 	 */
 	public String toComputerClassorderPage(){
-		computerorderclassruleid = 1;
+		
+		log.info("exec toComputerClassorderPage");
+//		computerorderclassruleid = 1;
 		if(computerorderclassruleid == null || computerorderclassruleid<=0){
-			System.out.println(computerorderclassruleid);
+			System.out.println("computerorderclassruleid"+computerorderclassruleid);
 			return "error";
 		}
 		
@@ -168,15 +170,17 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 		
 //		查询课程规则
 		computerorderclassruleList = computerorderclassruleService.selectComputerorderclassruleByCondition( " where a.id = "+computerorderclassruleid+" " );
-		if(computerorderclassruleList == null || computerorderclassruleList.size() != 0){
+		if(computerorderclassruleList == null || computerorderclassruleList.size() != 1){
+			log.info("课程规则的id错误");
 			return "error";
 		}
 		computerorderclassrule = computerorderclassruleList.get(0);
 		
 		
-		if(currentDate.after(computerorderclassrule.getOrderstarttime()) && currentDate.before(computerorderclassrule.getOrderendtime())){
+		if(currentDate.after(computerorderclassrule.getOrderendtime()) || currentDate.before(computerorderclassrule.getOrderstarttime())){
 			actionMsg = "超出预约范围";
-			return SUCCESS;
+			log.info("超出预约范围");
+			return "error";
 		}
 		
 //		查询可以预约的器材
@@ -188,26 +192,28 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 		if(computerorderclassruledetailList == null || computerorderclassruledetailList.size() == 0){
 			computermodelList = new ArrayList<Computermodel>();
 			actionMsg = "没有可以预约的PC";
-			return SUCCESS;
+			log.info("没有可以预约的PC");
+			return "error";
 		}
 		
 //		可借出的pc model id
 		String borrowPcModelStr = "";
 		for (int i = 0; i < computerorderclassruledetailList.size(); i++) {
-			borrowPcModelStr += computerorderclassruledetailList.get(i) + ",";
+			borrowPcModelStr += computerorderclassruledetailList.get(i).getAllowedcomputermodelid() + ",";
 		}
 		borrowPcModelStr = borrowPcModelStr.substring(0,borrowPcModelStr.length()-1);
 		
 //		获取语言
-		String currentlanguagetype = (String) session.get(ComputerConfig.sessionLanguagetype);
+		int currentlanguagetype = ComputerActionUtil.getLanguagetype((String) session.get(ComputerConfig.sessionLanguagetype));		
 		
 //		获取可以借出的PC模型信息
-		String getAvailableComputermodelFullTypeSql = " where a.languagetype="+currentlanguagetype+" & a.computermodeltype in (" + borrowPcModelStr +") ";
+		String getAvailableComputermodelFullTypeSql = " where a.languagetype="+currentlanguagetype+" and a.computermodeltype in (" + borrowPcModelStr +") ";
 //		String conditionSql = " where ";
-		computermodelFullList = computermodelService.selectComputermodelFullByCondition(getAvailableComputermodelFullTypeSql);
+//		computermodelFullList = computermodelService.selectComputermodelFullByCondition(getAvailableComputermodelFullTypeSql);
+		computermodelList = computermodelService.selectComputermodelByCondition(getAvailableComputermodelFullTypeSql);
 		
 		calculate(computerorderclassrule,currentDate,currentDateStr );
-		System.out.println(borrowperiodList.size());
+//		System.out.println(borrowperiodList.size());
 		return SUCCESS;
 	}
 
@@ -238,6 +244,7 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 //		
 		//设置提前预约的天数
 		computeroderadvanceorderday = DateUtil.daysBetween(DateUtil.currentDate(), computerorderclassrule.getOrderendtime());
+		int trueadvanceday = computeroderadvanceorderday;
 //		设备预约表格显示的列数，默认是7
 		computerodertablercolumn = ComputerConfig.computerodertablercolumn;
 //		调整预约时间，使时间是7的倍数
@@ -259,17 +266,18 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 //		String getAllComputermodelTypeSql = " where a.languagetype="+currentlanguagetype+" ";
 //		computermodelList = computermodelService.selectComputermodelByCondition(getAllComputermodelTypeSql);
 		
-//		for (int i = 0; i < computermodelFullList.size(); i++) {
-//			System.out.println("当前可借数量id=" + computermodelList.get(i).getId() + "  " + " 名称："+ computermodelList.get(i).getName()
-//					+ computermodelList.get(i).getAvailableborrowcountnumber());
-//		}
+		for (int i = 0; i < computermodelFullList.size(); i++) {
+			System.out.println("当前可借数量id=" + computermodelList.get(i).getId() + "  " + " 名称："+ computermodelList.get(i).getName()
+					+ computermodelList.get(i).getAvailableborrowcountnumber());
+		}
 		
 		//所有可借时间段信息
 //		Map<Integer,Borrowperiod> periodMap = BorrowperiodUtil.getBorrowperiodMap();
 		borrowperiodList =  BorrowperiodUtil.getBorrowperiodList();
 		//初始化每个型号每个时段可借数量数组，		
-		for(int tempmodelindex=0;tempmodelindex<computermodelFullList.size();tempmodelindex++){
-			ComputermodelFull tempmodelFull =  computermodelFullList.get(tempmodelindex);//full list已经赋值
+		for(int tempmodelindex=0;tempmodelindex<computermodelList.size();tempmodelindex++){
+//			ComputermodelFull tempmodelFull =  computermodelFullList.get(tempmodelindex);//full list已经赋值
+			Computermodel tempmodel =  computermodelList.get(tempmodelindex);//full list已经赋值
 			HashMap<Integer,ArrayList<Integer>> periodDayAvailInfo = new HashMap<Integer,ArrayList<Integer>>();
 			for(int tempperiod=0; tempperiod < borrowperiodList.size(); tempperiod++){
 				Borrowperiod tempBorrowperiod = borrowperiodList.get(tempperiod);
@@ -281,7 +289,8 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 				if(tempBorrowperiod.getPeriodnum() < currentPeriod ){
 					todaynum = 0;
 				}else{
-					todaynum = tempmodelFull.getComputermodelavailableborrowcountnumber();
+//					todaynum = tempmodelFull.getComputermodelavailableborrowcountnumber();
+					todaynum = tempmodel.getAvailableborrowcountnumber();
 				}
 				dayInfo.add(todaynum);
 				
@@ -295,11 +304,18 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 //					}else if(currentPeriod<=4){
 //						availableBorrowModelMap.get(2).get(key)
 //					}
-					dayInfo.add( tempmodelFull.getComputermodelavailableborrowcountnumber());
+//					dayInfo.add( tempmodelFull.getComputermodelavailableborrowcountnumber());
+					if(tempday <=trueadvanceday){
+						dayInfo.add( tempmodel.getAvailableborrowcountnumber());
+					}else{
+						dayInfo.add( 0);
+					}
+					
 				}				
 				periodDayAvailInfo.put(tempBorrowperiod.getId(), dayInfo);
 			}
-			availableBorrowModelMap.put(tempmodelFull.getComputermodelcomputermodeltype(), periodDayAvailInfo);
+//			availableBorrowModelMap.put(tempmodelFull.getComputermodelcomputermodeltype(), periodDayAvailInfo);
+			availableBorrowModelMap.put(tempmodel.getComputermodeltype(), periodDayAvailInfo);
 		}
 		
 		System.out.println(availableBorrowModelMap.size());

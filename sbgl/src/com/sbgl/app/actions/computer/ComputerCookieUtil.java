@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 
-public class ComputerUtil {
+public class ComputerCookieUtil {
 
 /**
  * 获取ComputerOrder的序列号
@@ -16,6 +16,9 @@ public class ComputerUtil {
 	}
 
 	public static String getCookieValue(Cookie[] cookies, String str) {
+		if(cookies == null){
+			return null;
+		}
 		  String result = null;
 		  for (Cookie cookie : cookies) {
 		   if (cookie.getName().equals(str)) {

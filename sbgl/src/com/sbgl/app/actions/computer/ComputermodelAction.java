@@ -138,7 +138,7 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 //			return SUCCESS;
 //		}
 		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-		String uidStr = ComputerUtil.getCookieValue(cookies, ComputerConfig.cookieuserid);
+		String uidStr = ComputerCookieUtil.getCookieValue(cookies, ComputerConfig.cookieuserid);
 		try {
 			computermodel.setCreatetime(DateUtil.currentDate());
 			

@@ -25,7 +25,7 @@ import com.sbgl.util.*;
 public class ComputerhomeworkreceiverDaoImpl extends HibernateDaoSupport implements ComputerhomeworkreceiverDao{
 
 	private static final Log log = LogFactory.getLog(ComputerhomeworkreceiverDaoImpl.class);
-	private final String basicComputerhomeworkreceiverFullSql = "select a.id as computerhomeworkreceiverid, a.computerhomeworkid as computerhomeworkreceivercomputerhomeworkid, a.userid as computerhomeworkreceiveruserid, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computerhomeworkreceiver a  left join Loginuser b on a.userid=b.id ";
+	private final String basicComputerhomeworkreceiverFullSql = "select a.id as computerhomeworkreceiverid, a.computerhomeworkid as computerhomeworkreceivercomputerhomeworkid, a.userid as computerhomeworkreceiveruserid, a.hasview as computerhomeworkreceiverhasview, a.hasorder as computerhomeworkreceiverhasorder, a.status as computerhomeworkreceiverstatus, b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime, b.status as loginuserstatus from Computerhomeworkreceiver a  left join Loginuser b on a.userid=b.id ";
 	
 	private final String basicComputerhomeworkreceiverSql = "From Computerhomeworkreceiver as a ";
 	
@@ -193,13 +193,13 @@ public class ComputerhomeworkreceiverDaoImpl extends HibernateDaoSupport impleme
 //  根据关联查询实体full
 
 	//根据关联查询实体 
-	public List<Computerhomeworkreceiver> selectComputerhomeworkreceiverByLoginuserId(Integer userid ){
+	public List<Computerhomeworkreceiver> selectComputerhomeworkreceiverByLoginuserId(Integer userid){
 	
 		return null;
 	}
   
 
-	public List<ComputerhomeworkreceiverFull> selectComputerhomeworkreceiverFullByLoginuserId(Integer userid ){
+	public List<ComputerhomeworkreceiverFull> selectComputerhomeworkreceiverFullByLoginuserId(Integer userid){
 	
 		return null;
 	}
