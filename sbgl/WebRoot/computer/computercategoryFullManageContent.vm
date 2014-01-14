@@ -1,0 +1,53 @@
+			<div id="formComputerorderdetailManage">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="name">名称</th>
+                   
+                    <th class="model-num">型号数量</th>
+                    <th class="equip-num">设备数量</th>
+                  </tr>
+                </thead>
+                <tbody>
+				
+	
+#set($listSize = $computercategoryFullListCh.size() - 1)
+#if($listSize>=0)
+#set($listRegion = [0..$listSize])
+##取出所有的属性名称
+#foreach($tempKey in $listRegion)
+			#set($computercategoryFull = $computercategoryFullListCh.get($tempKey))
+			#set($en = $computercategoryFullListEn.get($tempKey))
+			##set($tempKey = $tempKey*2)
+			  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!computercategoryFull.computercategorycomputercategorytype"></td>
+                    <td>$!computercategoryFull.computercategoryname<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button" action-type="editComputercategoryFillIn" 
+						data-id="$!computercategoryFull.computercategoryid" data-name="$!computercategoryFull.computercategoryname"
+						data-iden="$!en.computercategoryid" data-nameen="$!en.computercategoryname">修改</a></td>
+                  
+                    <td></td>
+                    <td></td>
+                  </tr>
+        
+#end
+#end
+                </tbody>
+              </table>
+			  <!--page -->
+			  <div class="pagination">
+				<a href="#" class="first" data-action="first">&laquo;</a>
+				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
+				<input type="text" readonly="readonly" data-max-page="$!page.totalpage" />
+				<a href="#" class="next" data-action="next">&rsaquo;</a>
+				<a href="#" class="last" data-action="last">&raquo;</a>
+			  </div>
+			  <!-- end page -->
+			  
+
+            </div>
+				
+	  <script>
+totalpage = $page.totalpage;
+currentpagenum = $page.pageNo;
+</script>

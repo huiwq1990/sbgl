@@ -33,12 +33,17 @@ import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
 import com.sbgl.app.entity.Computerorderclassrule;
+import com.sbgl.app.entity.ComputerorderclassruleFull;
+import com.sbgl.app.entity.Computerorderclassruledetail;
+import com.sbgl.app.entity.ComputerorderclassruledetailFull;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.services.computer.ComputerService;
 import com.sbgl.app.services.computer.ComputercategoryService;
 import com.sbgl.app.services.computer.ComputermodelService;
 import com.sbgl.app.services.computer.ComputerorderService;
+import com.sbgl.app.services.computer.ComputerorderclassruleService;
+import com.sbgl.app.services.computer.ComputerorderclassruledetailService;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
 import com.sbgl.util.ComputerDirective;
 import com.sbgl.util.DateUtil;
@@ -48,10 +53,10 @@ import com.sbgl.util.SpringUtil;
 
 
 @Scope("prototype") 
-@Controller("OrderComputerAction")
-public class OrderComputerAction  extends ActionSupport implements SessionAware{
+@Controller("ComputerClassorderAction")
+public class ComputerClassorderAction  extends ActionSupport implements SessionAware{
 
-	private static final Log log = LogFactory.getLog(OrderComputerAction.class);
+	private static final Log log = LogFactory.getLog(ComputerClassorderAction.class);
 
 	private Map<String, Object> session;
 	private int pageNo;
@@ -96,6 +101,27 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 	private Integer computerorderdetailid; //entity full 的id属性名称		
 	
 	
+	
+	@Resource
+	private ComputerorderclassruleService computerorderclassruleService;	
+	private Computerorderclassrule computerorderclassrule = new Computerorderclassrule();//实例化一个模型
+	private ComputerorderclassruleFull computerorderclassruleFull = new ComputerorderclassruleFull();//实例化一个模型
+	List<Computerorderclassrule> computerorderclassruleList = new ArrayList<Computerorderclassrule>();
+	List<ComputerorderclassruleFull> computerorderclassruleFullList = new ArrayList<ComputerorderclassruleFull>();
+	private Integer computerorderclassruleid; //entity full 的id属性名称		
+	
+	
+	
+	//Service	
+	@Resource
+	private ComputerorderclassruledetailService computerorderclassruledetailService;	
+	private Computerorderclassruledetail computerorderclassruledetail = new Computerorderclassruledetail();//实例化一个模型
+	private ComputerorderclassruledetailFull computerorderclassruledetailFull = new ComputerorderclassruledetailFull();//实例化一个模型
+	List<Computerorderclassruledetail> computerorderclassruledetailList = new ArrayList<Computerorderclassruledetail>();
+	List<ComputerorderclassruledetailFull> computerorderclassruledetailFullList = new ArrayList<ComputerorderclassruledetailFull>();
+	private Integer computerorderclassruledetailid; //entity full 的id属性名称		
+	
+		
 	List<String> ordernum = new ArrayList<String>();
 
 	private String logprefix = "exec method";
@@ -121,8 +147,12 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 //	提交预约表单的参数
 	private String orderInfoStr;
 	
-	
-	public String toOrderComputerPage(){
+
+	/**
+	 * 跳转到机房课程预约界面
+	 * @return
+	 */
+	public String toComputerClassorderPage(){
 		
 //		设置当前时间
 		Date currentDate = DateUtil.currentDate();
@@ -130,15 +160,47 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 //		Date currentDate = DateUtil.parseDate("2013-10-01 18:00:00");
 		String currentDateStr = DateUtil.dateFormat(currentDate, DateUtil.dateformatstr1);
 		
+//		查询课程规则
+		computerorderclassruleList = computerorderclassruleService.selectComputerorderclassruleByCondition( " where a.id = "+computerorderclassruleid+" " );
+		if(computerorderclassruleList == null || computerorderclassruleList.size() != 0){
+			return "error";
+		}
+		computerorderclassrule = computerorderclassruleList.get(0);
+		
+		
+		if(currentDate.after(computerorderclassrule.getOrderstarttime()) && currentDate.before(computerorderclassrule.getOrderendtime())){
+			actionMsg = "超出预约范围";
+			return SUCCESS;
+		}
+		
+//		查询可以预约的器材
+		String classruledetailcondition = " where a.computerorderclassruleid = "+computerorderclassruleid+" ";
+		computerorderclassruledetailList = computerorderclassruledetailService.selectComputerorderclassruledetailByCondition(classruledetailcondition);
+		
+		
+//		如果为空，直接返回
+		if(computerorderclassruledetailList == null || computerorderclassruledetailList.size() == 0){
+			computermodelList = new ArrayList<Computermodel>();
+			actionMsg = "没有可以预约的PC";
+			return SUCCESS;
+		}
+		
+//		可借出的pc model id
+		String borrowPcModelStr = "";
+		for (int i = 0; i < computerorderclassruledetailList.size(); i++) {
+			borrowPcModelStr += computerorderclassruledetailList.get(i) + ",";
+		}
+		borrowPcModelStr = borrowPcModelStr.substring(0,borrowPcModelStr.length()-1);
+		
 //		获取语言
 		String currentlanguagetype = (String) session.get(ComputerConfig.sessionLanguagetype);
 		
-		String getAllComputermodelFullTypeSql = " where a.languagetype="+currentlanguagetype+" ";
+//		获取可以借出的PC模型信息
+		String getAvailableComputermodelFullTypeSql = " where a.languagetype="+currentlanguagetype+" & a.computermodeltype in (" + borrowPcModelStr +") ";
 //		String conditionSql = " where ";
-		computermodelFullList = computermodelService.selectComputermodelFullByCondition(getAllComputermodelFullTypeSql );
+		computermodelFullList = computermodelService.selectComputermodelFullByCondition(getAvailableComputermodelFullTypeSql);
 		
-		calculate(currentDate,currentDateStr );
-		
+		calculate(computerorderclassrule,currentDate,currentDateStr );
 		System.out.println(borrowperiodList.size());
 		return SUCCESS;
 	}
@@ -162,14 +224,14 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 		}
 	}
 	
-	public  void calculate( Date currentDate,String currentDateStr ) {
+	public  void calculate(Computerorderclassrule computerorderclassrule,Date currentDate,String currentDateStr ) {
 		// TODO Auto-generated method stub
 //
 //		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
 //		ComputermodelService computermodelService = (ComputermodelService)cxt.getBean("computermodelService");
 //		
 		//设置提前预约的天数
-		computeroderadvanceorderday = ComputerConfig.computeroderadvanceorderday;
+		computeroderadvanceorderday = DateUtil.daysBetween(DateUtil.currentDate(), computerorderclassrule.getOrderendtime());
 //		设备预约表格显示的列数，默认是7
 		computerodertablercolumn = ComputerConfig.computerodertablercolumn;
 //		调整预约时间，使时间是7的倍数
@@ -180,22 +242,21 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 		System.out.println("computeroderadvanceorderday "+computeroderadvanceorderday);
 //		int computerorderTotalOrderPeriod = ComputerConfig.computerorderTotalOrderPeriod;
 		
-//			设置当前时间
-			String currentDay = "2013-10-01 18:00:00";
-			 currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(DateUtil.parseDate(currentDay));
-			 System.out.println("currentPeriod: "+currentPeriod);
-		 
-			 
-			 buildShowDate(DateUtil.parseDate(currentDay));	 
+
+		currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(currentDate);			 
+		System.out.println("currentPeriod: "+currentPeriod);
+			
+		buildShowDate(DateUtil.parseDate(currentDateStr));	 
 			 
 		//取得所有PC类型的当前库存数量
-		String currentlanguagetype = "0";
-		String getAllComputermodelTypeSql = " where a.languagetype="+currentlanguagetype+" ";
-		computermodelList = computermodelService.selectComputermodelByCondition(getAllComputermodelTypeSql);
-		for (int i = 0; i < computermodelList.size(); i++) {
-			System.out.println("当前可借数量id=" + computermodelList.get(i).getId() + "  " + " 名称："+ computermodelList.get(i).getName()
-					+ computermodelList.get(i).getAvailableborrowcountnumber());
-		}
+//		String currentlanguagetype = "0";
+//		String getAllComputermodelTypeSql = " where a.languagetype="+currentlanguagetype+" ";
+//		computermodelList = computermodelService.selectComputermodelByCondition(getAllComputermodelTypeSql);
+		
+//		for (int i = 0; i < computermodelFullList.size(); i++) {
+//			System.out.println("当前可借数量id=" + computermodelList.get(i).getId() + "  " + " 名称："+ computermodelList.get(i).getName()
+//					+ computermodelList.get(i).getAvailableborrowcountnumber());
+//		}
 		
 		//所有可借时间段信息
 //		Map<Integer,Borrowperiod> periodMap = BorrowperiodUtil.getBorrowperiodMap();
@@ -236,8 +297,8 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 		}
 		
 		System.out.println(availableBorrowModelMap.size());
-		
-		/*for(int tempmodelindex=0;tempmodelindex<computermodelList.size();tempmodelindex++){
+		/*
+		for(int tempmodelindex=0;tempmodelindex<computermodelList.size();tempmodelindex++){
 			Computermodel tempmodel =  computermodelList.get(tempmodelindex);
 			System.out.println(tempmodel.getName()+"   ");
 			for(int tempperiod=0; tempperiod < borrowperiodList.size(); tempperiod++){
@@ -248,10 +309,8 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 					System.out.print(availableBorrowModelMap.get(tempmodel.getComputermodeltype()).get(tempBorrowperiod.getId()).get(tempday)+"  ");
 				}	
 				System.out.println();
-//				periodDayAvailInfo.put(periodList.get(tempperiod).getId(), dayInfo);
 			}
 			System.out.println();
-//			availableBorrowModelMap.put(modelList.get(tempmodel).getComputermodeltype(), periodDayAvailInfo);
 		}*/
 		
 		//pc模型1的可借数量
@@ -269,7 +328,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 		System.out.println("预约订单：");
 //		ComputerorderdetailService computerorderdetailService = (ComputerorderdetailService)cxt.getBean("computerorderdetailService");
 		 
-		List<Computerorderdetail> computerorderdetailList  = computerorderdetailService.selectComputerorderdetailAfterNow(currentDay, currentPeriod);
+		List<Computerorderdetail> computerorderdetailList  = computerorderdetailService.selectComputerorderdetailAfterNow(currentDateStr, currentPeriod);
 		System.out.println(computerorderdetailList.size());
 		for(int i = 0; i <computerorderdetailList.size(); i++){
 			System.out.println("id="+computerorderdetailList.get(i).getId() + "  " +computerorderdetailList.get(i).getComputermodelid());
@@ -277,7 +336,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 
 		//根据预约清单计算当前可借数量			
 		for(Computerorderdetail od : computerorderdetailList){
-				int between = DateUtil.daysBetween(DateUtil.parseDate(currentDay),od.getBorrowday());
+				int between = DateUtil.daysBetween(DateUtil.parseDate(currentDateStr),od.getBorrowday());
 				System.out.println("model: "+od.getComputermodelid()+"; day: "+od.getBorrowday()+"; period: "+od.getBorrowperiod());
 				int newcount = availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).get(between) - od.getBorrownumber();
 				 availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).set(between, newcount);
@@ -303,17 +362,6 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 		
 		
 	
-	}
-
-
-
-	public String orderComputer(){
-		System.out.println("orderComputer");
-		for(int i=0; i < ordernum.size(); i++){
-			System.out.println(ordernum.get(i));
-		}
-		
-		return SUCCESS;
 	}
 	
 	

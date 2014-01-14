@@ -3,11 +3,25 @@
 <struts>
 	 <package name="computerorder" extends="admin">
 
+<!--跳转到个人预约页面 -->
+		<action name="toOrderComputerPage" class="OrderComputerAction" method="toOrderComputerPage">
+        	<result name="success">/computer/ordercomputer.vm</result>
+        	<result name="error">/error.vm</result> 
+		</action>
+
+<!-- 跳转到课程预约页面 -->
+		<action name="toComputerClassorderPage" class="ComputerClassorderAction" method="toComputerClassorderPage">
+        	<result name="success">/computer/computerclassorderindex.vm</result>
+        	<result name="error">/error.vm</result> 
+		</action>
+		
 <!-- 用户点击预约按钮后，跳转到预约确认界面 -->
 		<action name="toComputerorderConfirmPage" class="ManageComputerorder" method="toComputerorderConfirmPage">
         	<result name="success">/computer/computerorderConfirm.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
+        
+        
 <!--预约成功界面 -->
 		<action name="toComputerorderSuccessPage" class="ManageComputerorder" method="toComputerorderSuccessPage">
         	<result name="success">/computer/computerorderSuccess.vm</result>
@@ -20,11 +34,7 @@
         	<result name="error">/error.vm</result> 
         </action>
         
-<!-- 转向下单页面 -->
-<action name="toOrderComputerPage" class="OrderComputerAction" method="toOrderComputerPage">
-        	<result name="success">/computer/ordercomputer.vm</result>
-        	<result name="error">/error.vm</result> 
-</action>
+
 
 		<!-- 用户查看自己的预约列表-->
 		<action name="computerorderList" class="ManageComputerorder" method="computerorderList">
