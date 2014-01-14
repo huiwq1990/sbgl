@@ -97,7 +97,7 @@
         <div id="admin-content" class="clearfix">    
             <!--control-bar start-->
             <div class="control-bar clearfix">
-              <div class="title pull-left">用户管理</div>
+              <div class="title pull-left">管理员管理</div>
               <div class="tips">在此页面下管理管理员信息，如用管理员添加、修改、删除。</div>
               <!-- <div class="filter user-group-filter">
                 <ul class="nav nav-tabs nav-tabs-google">
@@ -381,7 +381,7 @@
         alterGroupId = myData.gid;
         alterGroupName = myData.gname;
         alterPrivilege = myData.privi;
-        alterUserPass = myData.tel;
+        alterTel = myData.tel;
         alterMail = myData.mail;
         alterPhoto = myData.pic;
 		
@@ -393,7 +393,7 @@
 		$("#inputTrueName").val(alterUserName);
 		$("#inputStuSex").val(alterUserGender);
 		$("#inputPassword1").val(alterUserPass);
-		$("#inputTel").val(alterUserPass);
+		$("#inputTel").val(alterTel);
 		$("#inputMail").val(alterMail);
 		
 		//console.log(alterClazzId);
@@ -403,8 +403,6 @@
 	$('.modal').on('click', ('button.btn-primary'), function () {
 		var _this = $(this);
 		var postData = {};
-		var actionUrl = "";
-		var tip = "";
 		
 	    
 		if(_this.attr('action-type') == 'modifyUser') {
@@ -413,7 +411,7 @@
     		var userSex = $("#inputStuSex").val();
     		var userPass = $("#inputPassword1").val();
     		var userGroup = $("#inputUserGroup").val();
-    		var userPrivilege = $("#inputStuClass").val();
+    		var userPrivilege = $("#inputPrivilege").val();
     		var userTel = $("#inputTel").val();
     		var userMail = $("#inputMail").val();
 			
@@ -444,24 +442,22 @@
     			return;
     		}
 		
-		
     		if(userCode == alterUserCode && alterUserName == userName && alterUserPass == userPass && alterPrivilege == userPrivilege && alterTel == userTel && alterMail == userMail && alterGroupId == userGroup && savedFileName == alterPhoto) {
     			alert("并未做修改！");
 				return;
     		} else {
 				postData = {
-					"student.id": alterUserId,
-					"student.studentId": userCode,
-        			"student.name": userName,
-        			"student.gender": userSex,
-        			"student.telephone": userTel,
-        			"student.email": userMail,
-        			"student.photo": savedFileName,
-        			"student.password": userPass,
-        			"student.classid": userClazz,
-        			"student.couldBorrow": userCould,
+					"manager.id": alterUserId,
+					"manager.administratorId": userCode,
+        			"manager.name": userName,
+        			"manager.gender": userSex,
+        			"manager.telephone": userTel,
+        			"manager.email": userMail,
+        			"manager.photo": savedFileName,
+        			"manager.password": userPass,
+        			"manager.privilege": userPrivilege,
 					"group.id": userGroup,
-					"group.type": 2
+					"group.type": 8
         		};
     		}
 	    }
@@ -471,9 +467,9 @@
 		    type: "post",
 		    data: postData,
 		    success:function(data,textStatus,jq) {  
-			    var n = noty({text: tip, timeout: 2500, type: 'success'});
+			    var n = noty({text: "修改管理员信息成功！", timeout: 2500, type: 'success'});
 			    _this.parents('.modal').modal('toggle');
-				//$("#admin-wrap").html(data);
+				$("#admin-wrap").html(data);
 	        },  
 		    error:function(data,textStatus,jq){
 		        var n = noty({text: "系统错误，操作失败，请联系管理员！", timeout: 2500, type: 'error'});
@@ -509,7 +505,7 @@
 		//alert(idsForDel);
 		if(idsForDel != "") {
 			postData = {
-				stuIds: idsForDel
+				managerIds: idsForDel
     		};
     		jQuery.ajax({  
     		    url: "${webbaseurl}/deleteManager.do",  
@@ -518,7 +514,7 @@
     		    success:function(data,textStatus,jq){ 
     				var n = noty({text: "删除管理员信息成功", timeout: 2500, type: 'success'});
     				//$(this).parents('.modal').modal('toggle');
-    				//$("#admin-wrap").html(data);
+    				$("#admin-wrap").html(data);
     				
     	        },  
     		    error:function(data,textStatus,jq){

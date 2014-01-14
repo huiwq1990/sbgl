@@ -42,13 +42,13 @@
         
         <action name="alterManager" class="ManagerAction" method="alterManager">
         	<result name="success">
-        		/user/userManageIndexForFlush.vm
+        		/user/userManageAdminForFlush.vm
         	</result>
         </action>
         
         <action name="deleteManager" class="ManagerAction" method="deleteManager">
         	<result name="success">
-        		/user/userManageIndexForFlush.vm
+        		/user/userManageAdminForFlush.vm
         	</result>
         </action>
 	 </package>
