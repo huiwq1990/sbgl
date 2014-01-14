@@ -58,7 +58,7 @@ public class ComputerhomeworkSpringTest {
 		try {
 			
 			List<String> dataList = new ArrayList<String>();
-			File f = new File( "D:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computerhomework");
+			File f = new File( "E:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computerhomework");
 			dataList = FileUtils.readLines(f);
 			String[] attrs = dataList.get(0).split(",");
 			for(int i=1; i < dataList.size();i++){
@@ -92,7 +92,7 @@ public class ComputerhomeworkSpringTest {
 		try {
 			
 			List<String> dataList = new ArrayList<String>();
-			File f = new File( "D:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computerhomework");
+			File f = new File( "E:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computerhomework");
 			dataList = FileUtils.readLines(f);
 			String[] attrs = dataList.get(0).split(",");
 			for(int i=1; i < dataList.size();i=i+2){

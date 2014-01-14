@@ -58,7 +58,7 @@ public class ComputerstatusSpringTest {
 		try {
 			
 			List<String> dataList = new ArrayList<String>();
-			File f = new File( "D:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computerstatus");
+			File f = new File( "E:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computerstatus");
 			dataList = FileUtils.readLines(f);
 			String[] attrs = dataList.get(0).split(",");
 			for(int i=1; i < dataList.size();i++){
@@ -92,7 +92,7 @@ public class ComputerstatusSpringTest {
 		try {
 			
 			List<String> dataList = new ArrayList<String>();
-			File f = new File( "D:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computerstatus");
+			File f = new File( "E:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computerstatus");
 			dataList = FileUtils.readLines(f);
 			String[] attrs = dataList.get(0).split(",");
 			for(int i=1; i < dataList.size();i=i+2){
@@ -100,7 +100,7 @@ public class ComputerstatusSpringTest {
 				Computerstatus ch =	getObj(attrs,dataList.get(i));
 				Computerstatus en =	getObj(attrs,dataList.get(i+1));
 								
-				computerstatusService.addComputerstatus(ch,en);
+//				computerstatusService.addComputerstatus(ch,en);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

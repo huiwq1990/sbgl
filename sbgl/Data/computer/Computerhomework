@@ -1,6 +1,5 @@
 id,name,computerorderclassruleid,content,createuserid,attachment,status,createtime
- , , , , , , , 
- , , , , , , , 
- , , , , , , , 
- , , , , , , , 
- , , , , , , , 
+ ,photography homework1 ,1 ,photography 第一次作业 , 1 , , , 
+  ,photography homework2 ,2 ,摄影第二次作业 , 1 , , , 
+ ,story homework1 ,3 , 故事第一次作业 , 1 , , , 
+ ,story homework2 ,4 ,故事第二次作业 , 1 , , , 

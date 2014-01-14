@@ -150,9 +150,15 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 
 	/**
 	 * 跳转到机房课程预约界面
+	 * 需要传入课程规则id:computerorderclassruleid
 	 * @return
 	 */
 	public String toComputerClassorderPage(){
+		computerorderclassruleid = 1;
+		if(computerorderclassruleid == null || computerorderclassruleid<=0){
+			System.out.println(computerorderclassruleid);
+			return "error";
+		}
 		
 //		设置当前时间
 		Date currentDate = DateUtil.currentDate();
@@ -797,6 +803,137 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 
 	public void setOrderInfoStr(String orderInfoStr) {
 		this.orderInfoStr = orderInfoStr;
+	}
+
+
+	public ComputerorderclassruleService getComputerorderclassruleService() {
+		return computerorderclassruleService;
+	}
+
+
+	public void setComputerorderclassruleService(
+			ComputerorderclassruleService computerorderclassruleService) {
+		this.computerorderclassruleService = computerorderclassruleService;
+	}
+
+
+	public Computerorderclassrule getComputerorderclassrule() {
+		return computerorderclassrule;
+	}
+
+
+	public void setComputerorderclassrule(
+			Computerorderclassrule computerorderclassrule) {
+		this.computerorderclassrule = computerorderclassrule;
+	}
+
+
+	public ComputerorderclassruleFull getComputerorderclassruleFull() {
+		return computerorderclassruleFull;
+	}
+
+
+	public void setComputerorderclassruleFull(
+			ComputerorderclassruleFull computerorderclassruleFull) {
+		this.computerorderclassruleFull = computerorderclassruleFull;
+	}
+
+
+	public List<Computerorderclassrule> getComputerorderclassruleList() {
+		return computerorderclassruleList;
+	}
+
+
+	public void setComputerorderclassruleList(
+			List<Computerorderclassrule> computerorderclassruleList) {
+		this.computerorderclassruleList = computerorderclassruleList;
+	}
+
+
+	public List<ComputerorderclassruleFull> getComputerorderclassruleFullList() {
+		return computerorderclassruleFullList;
+	}
+
+
+	public void setComputerorderclassruleFullList(
+			List<ComputerorderclassruleFull> computerorderclassruleFullList) {
+		this.computerorderclassruleFullList = computerorderclassruleFullList;
+	}
+
+
+	public Integer getComputerorderclassruleid() {
+		return computerorderclassruleid;
+	}
+
+
+	public void setComputerorderclassruleid(Integer computerorderclassruleid) {
+		this.computerorderclassruleid = computerorderclassruleid;
+	}
+
+
+	public ComputerorderclassruledetailService getComputerorderclassruledetailService() {
+		return computerorderclassruledetailService;
+	}
+
+
+	public void setComputerorderclassruledetailService(
+			ComputerorderclassruledetailService computerorderclassruledetailService) {
+		this.computerorderclassruledetailService = computerorderclassruledetailService;
+	}
+
+
+	public Computerorderclassruledetail getComputerorderclassruledetail() {
+		return computerorderclassruledetail;
+	}
+
+
+	public void setComputerorderclassruledetail(
+			Computerorderclassruledetail computerorderclassruledetail) {
+		this.computerorderclassruledetail = computerorderclassruledetail;
+	}
+
+
+	public ComputerorderclassruledetailFull getComputerorderclassruledetailFull() {
+		return computerorderclassruledetailFull;
+	}
+
+
+	public void setComputerorderclassruledetailFull(
+			ComputerorderclassruledetailFull computerorderclassruledetailFull) {
+		this.computerorderclassruledetailFull = computerorderclassruledetailFull;
+	}
+
+
+	public List<Computerorderclassruledetail> getComputerorderclassruledetailList() {
+		return computerorderclassruledetailList;
+	}
+
+
+	public void setComputerorderclassruledetailList(
+			List<Computerorderclassruledetail> computerorderclassruledetailList) {
+		this.computerorderclassruledetailList = computerorderclassruledetailList;
+	}
+
+
+	public List<ComputerorderclassruledetailFull> getComputerorderclassruledetailFullList() {
+		return computerorderclassruledetailFullList;
+	}
+
+
+	public void setComputerorderclassruledetailFullList(
+			List<ComputerorderclassruledetailFull> computerorderclassruledetailFullList) {
+		this.computerorderclassruledetailFullList = computerorderclassruledetailFullList;
+	}
+
+
+	public Integer getComputerorderclassruledetailid() {
+		return computerorderclassruledetailid;
+	}
+
+
+	public void setComputerorderclassruledetailid(
+			Integer computerorderclassruledetailid) {
+		this.computerorderclassruledetailid = computerorderclassruledetailid;
 	}
 	
 	

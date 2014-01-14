@@ -60,7 +60,7 @@ public class ComputermodelSpringTest {
 			HashMap<String, Method> map = ReflectUtil.ConverBean(Computermodel.class);
 			Object obj;
 			List<String> dataList = new ArrayList<String>();
-			File f = new File( "D:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computermodel");
+			File f = new File( "E:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computermodel");
 			dataList = FileUtils.readLines(f);
 			String[] attrs = dataList.get(0).split(",");
 			for(int i=1; i < dataList.size();i++){
@@ -98,7 +98,7 @@ public class ComputermodelSpringTest {
 		try {
 			
 			List<String> dataList = new ArrayList<String>();
-			File f = new File( "D:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computermodel");
+			File f = new File( "E:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computermodel");
 			dataList = FileUtils.readLines(f);
 			String[] attrs = dataList.get(0).split(",");
 			for(int i=1; i < dataList.size();i=i+2){
