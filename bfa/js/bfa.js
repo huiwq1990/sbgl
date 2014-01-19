@@ -2,43 +2,43 @@
 
 	(function($){
 		
-					/* 全选 */
-					$("input[type='checkbox']").click(function() {
-						var num = 0;
-						if($(this).attr("id") === "chk-all") {
-							$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
-						}
-						$("input[name='chk-list']").each(function() {
-							if($(this).prop("checked") === true){
-								num++;  
-							}
-        				});
-						if(num > 0){
-							$(".s-h").css({
-								"visibility": "visible",
-								"opacity": "1",
-								"filter": "alpha(opacity=100)"
-							});
-						} else {
-							$(".s-h").css({
-								"visibility": "hidden",
-								"opacity": "0",
-								"filter": "alpha(opacity=0)"
-							});
-						}
-					});
-
-			function format(state) {
-				var originalOption = state.element;
-				
-				if ($(originalOption).data('foo') === 'sub') {
-					return "<span class='sub'>" + state.text + "</span>";
-				} else {
-					return state.text;
-				}
-			
+		/* 全选 */
+		$("input[type='checkbox']").click(function() {
+			var num = 0;
+			if($(this).attr("id") === "chk-all") {
+				$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
 			}
-		$("body").on('load',function() {
+			$("input[name='chk-list']").each(function() {
+				if($(this).prop("checked") === true){
+					num++;  
+				}
+			});
+			if(num > 0){
+				$(".s-h").css({
+					"visibility": "visible",
+					"opacity": "1",
+					"filter": "alpha(opacity=100)"
+				});
+			} else {
+				$(".s-h").css({
+					"visibility": "hidden",
+					"opacity": "0",
+					"filter": "alpha(opacity=0)"
+				});
+			}
+		});
+
+		function format(state) {
+			var originalOption = state.element;
+			
+			if ($(originalOption).data('foo') === 'sub') {
+				return "<span class='sub'>" + state.text + "</span>";
+			} else {
+				return state.text;
+			}
+		
+		}
+		$("body").on('change', function() {
 			$(".select2").select2({
 				minimumResultsForSearch: 8,
 				formatResult: format,
