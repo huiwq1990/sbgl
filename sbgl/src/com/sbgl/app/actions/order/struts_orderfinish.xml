@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>	
+	 <package name="orderFinish" extends="admin">
+	 	<!-- 进入设备预约页面 -->
+	 	<action name="equipmentFinish" class="OrderFinishAction" method="equipmentFinish">
+        	<result name="success">/equipmentFinish.vm</result>
+        </action>
+        <!-- 进入设备预约页面 -->
+	 	<action name="equipmentConfirm" class="OrderFinishAction" method="equipmentConfirm">
+        	<result name="success">/equipmentConfirm.vm</result>
+        </action>
+    </package>
+    <package name="orderFinishAjax" extends="json-default">	
+        <!-- 提交订单备注 -->
+	 	<action name="finishorder" class="OrderFinishAction" method="finishorder">
+        	<result type="json"></result>
+        </action>
+    </package>
+</struts>
