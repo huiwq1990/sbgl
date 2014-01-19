@@ -1,6 +1,6 @@
 package com.sbgl.app.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Date;
 
 /**
@@ -29,7 +29,7 @@ public class Loginuser extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Loginuser(Integer id, String name, Timestamp createtime,
+	public Loginuser(Integer id, String name, Date createtime,
 			Integer status) {
 		this.id = id;
 		this.name = name;

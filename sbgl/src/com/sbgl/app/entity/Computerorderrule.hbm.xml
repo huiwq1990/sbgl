@@ -20,10 +20,10 @@
             <column name="classid" />
         </property>
         <property name="orderstarttime" type="java.util.Date">
-            <column name="orderstarttime" length="19" />
+            <column name="orderstarttime"  />
         </property>
         <property name="orderendtime" type="java.util.Date">
-            <column name="orderendtime" length="19" />
+            <column name="orderendtime"  />
         </property>
         <property name="totaltime" type="java.lang.Integer">
             <column name="totaltime" />

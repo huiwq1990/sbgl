@@ -5,167 +5,179 @@ import java.util.Date;
 import com.sbgl.app.dao.DaoAbs;
 
 public class EquipmentFull extends DaoAbs {
-	private Long equipmentid;
+	private Integer equipmentid;
 	private String equipmentname;
-	private Long brandid;
-	private Long classificationid;
-	private Long administrationid;
+	private Integer brandid;
+	private Integer classificationid;
+	private Integer administrationid;
 	private Date makedate;
 	private Date modifydate;
-	private Long equipmentnum;
-	private Long activenum;
-	private Long maintainnum;
-	private Long repairnum;
-	private Long losednum;
-	private Long recyclingnum;
+	private Integer equipmentnum;
+	private Integer activenum;
+	private Integer maintainnum;
+	private Integer repairnum;
+	private Integer losednum;
+	private Integer recyclingnum;
 	private String equipmentdetail;
-	private Long category;
+	private Integer category;
 	private String remark;
+	private String lanType;
+	private Integer comId;
+	private String imgNameSaved;
+	private String imgName;
 	
-	private String borrownum;  //可借数量
-	private String  categoryName; //分类名称
-
-	public Long getEquipmentid() {
-		return equipmentid;
-	}
-
-	public void setEquipmentid(Long equipmentid) {
-		this.equipmentid = equipmentid;
-	}
-
-	public String getEquipmentname() {
-		return equipmentname;
-	}
-
-	public void setEquipmentname(String equipmentname) {
-		this.equipmentname = equipmentname;
-	}
-
-	public Long getBrandid() {
-		return brandid;
-	}
-
-	public void setBrandid(Long brandid) {
-		this.brandid = brandid;
-	}
-
-	public Long getClassificationid() {
-		return classificationid;
-	}
-
-	public void setClassificationid(Long classificationid) {
-		this.classificationid = classificationid;
-	}
-
-	public Long getAdministrationid() {
-		return administrationid;
-	}
-
-	public void setAdministrationid(Long administrationid) {
-		this.administrationid = administrationid;
-	}
-
-	public Date getMakedate() {
-		return makedate;
-	}
-
-	public void setMakedate(Date makedate) {
-		this.makedate = makedate;
-	}
-
-	public Date getModifydate() {
-		return modifydate;
-	}
-
-	public void setModifydate(Date modifydate) {
-		this.modifydate = modifydate;
-	}
-
-	public Long getEquipmentnum() {
-		return equipmentnum;
-	}
-
-	public void setEquipmentnum(Long equipmentnum) {
-		this.equipmentnum = equipmentnum;
-	}
-
-	public Long getActivenum() {
+	private Long borrownum;  //可借数量
+	private String categoryName; //分类名称
+	private String daynum;   
+	private Integer applynumber;
+	
+	
+	public Integer getActivenum() {
 		return activenum;
 	}
-
-	public void setActivenum(Long activenum) {
+	public void setActivenum(Integer activenum) {
 		this.activenum = activenum;
 	}
-
-	public Long getMaintainnum() {
-		return maintainnum;
+	public Integer getAdministrationid() {
+		return administrationid;
 	}
-
-	public void setMaintainnum(Long maintainnum) {
-		this.maintainnum = maintainnum;
+	public void setAdministrationid(Integer administrationid) {
+		this.administrationid = administrationid;
 	}
-
-	public Long getRepairnum() {
-		return repairnum;
+	
+	public Integer getBrandid() {
+		return brandid;
 	}
-
-	public void setRepairnum(Long repairnum) {
-		this.repairnum = repairnum;
+	public void setBrandid(Integer brandid) {
+		this.brandid = brandid;
 	}
-
-	public Long getLosednum() {
-		return losednum;
-	}
-
-	public void setLosednum(Long losednum) {
-		this.losednum = losednum;
-	}
-
-	public Long getRecyclingnum() {
-		return recyclingnum;
-	}
-
-	public void setRecyclingnum(Long recyclingnum) {
-		this.recyclingnum = recyclingnum;
-	}
-
-	public String getEquipmentdetail() {
-		return equipmentdetail;
-	}
-
-	public void setEquipmentdetail(String equipmentdetail) {
-		this.equipmentdetail = equipmentdetail;
-	}
-
-	public Long getCategory() {
+	public Integer getCategory() {
 		return category;
 	}
-
-	public void setCategory(Long category) {
+	public void setCategory(Integer category) {
 		this.category = category;
 	}
-
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
-	public String getBorrownum() {
-		return borrownum;
-	}
-
-	public void setBorrownum(String borrownum) {
-		this.borrownum = borrownum;
-	}
-
 	public String getCategoryName() {
 		return categoryName;
 	}
-
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
+	public Integer getClassificationid() {
+		return classificationid;
+	}
+	public void setClassificationid(Integer classificationid) {
+		this.classificationid = classificationid;
+	}
+	public Integer getComId() {
+		return comId;
+	}
+	public void setComId(Integer comId) {
+		this.comId = comId;
+	}
+	public String getEquipmentdetail() {
+		return equipmentdetail;
+	}
+	public void setEquipmentdetail(String equipmentdetail) {
+		this.equipmentdetail = equipmentdetail;
+	}
+	public Integer getEquipmentid() {
+		return equipmentid;
+	}
+	public void setEquipmentid(Integer equipmentid) {
+		this.equipmentid = equipmentid;
+	}
+	public String getEquipmentname() {
+		return equipmentname;
+	}
+	public void setEquipmentname(String equipmentname) {
+		this.equipmentname = equipmentname;
+	}
+	public Integer getEquipmentnum() {
+		return equipmentnum;
+	}
+	public void setEquipmentnum(Integer equipmentnum) {
+		this.equipmentnum = equipmentnum;
+	}
+	public String getImgName() {
+		return imgName;
+	}
+	public void setImgName(String imgName) {
+		this.imgName = imgName;
+	}
+	public String getImgNameSaved() {
+		return imgNameSaved;
+	}
+	public void setImgNameSaved(String imgNameSaved) {
+		this.imgNameSaved = imgNameSaved;
+	}
+	public String getLanType() {
+		return lanType;
+	}
+	public void setLanType(String lanType) {
+		this.lanType = lanType;
+	}
+	public Integer getLosednum() {
+		return losednum;
+	}
+	public void setLosednum(Integer losednum) {
+		this.losednum = losednum;
+	}
+	public Integer getMaintainnum() {
+		return maintainnum;
+	}
+	public void setMaintainnum(Integer maintainnum) {
+		this.maintainnum = maintainnum;
+	}
+	public Date getMakedate() {
+		return makedate;
+	}
+	public void setMakedate(Date makedate) {
+		this.makedate = makedate;
+	}
+	public Date getModifydate() {
+		return modifydate;
+	}
+	public void setModifydate(Date modifydate) {
+		this.modifydate = modifydate;
+	}
+	public Integer getRecyclingnum() {
+		return recyclingnum;
+	}
+	public void setRecyclingnum(Integer recyclingnum) {
+		this.recyclingnum = recyclingnum;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	public Integer getRepairnum() {
+		return repairnum;
+	}
+	public void setRepairnum(Integer repairnum) {
+		this.repairnum = repairnum;
+	}
+	public Long getBorrownum() {
+		return borrownum;
+	}
+	public void setBorrownum(Long borrownum) {
+		this.borrownum = borrownum;
+	}
+	public String getDaynum() {
+		return daynum;
+	}
+	public void setDaynum(String daynum) {
+		this.daynum = daynum;
+	}
+	public Integer getApplynumber() {
+		return applynumber;
+	}
+	public void setApplynumber(Integer applynumber) {
+		this.applynumber = applynumber;
+	}
+	
+
+	
 }

@@ -6,14 +6,13 @@
 -->
 <hibernate-mapping>
     <class name="com.sbgl.app.entity.Equipmenborrow" table="equipmenborrow" catalog="sbgl">
-        <composite-id name="id" class="com.sbgl.app.entity.EquipmenborrowId">
-            <key-property name="borrowid" type="java.lang.Integer">
-                <column name="borrowid" />
-            </key-property>
-            <key-property name="category" type="java.lang.Integer">
-                <column name="category" />
-            </key-property>
-        </composite-id>
+        <id name="borrowid" type="java.lang.Integer">
+            <column name="borrowid" />
+            <generator class="assigned" />
+        </id>
+        <property name="category" type="java.lang.Integer">
+            <column name="category" />
+        </property>
         <property name="userid" type="java.lang.Integer">
             <column name="userid" />
         </property>
@@ -21,16 +20,16 @@
             <column name="teacherid" />
         </property>
         <property name="applytime" type="java.util.Date">
-            <column name="applytime"  />
+            <column name="applytime" length="19" />
         </property>
         <property name="status" type="java.lang.Integer">
             <column name="status" />
         </property>
         <property name="borrowtime" type="java.util.Date">
-            <column name="borrowtime"  />
+            <column name="borrowtime" length="19" />
         </property>
         <property name="returntime" type="java.util.Date">
-            <column name="returntime"  />
+            <column name="returntime" length="19" />
         </property>
         <property name="reason" type="java.lang.String">
             <column name="reason" length="2000" />
@@ -46,6 +45,12 @@
         </property>
         <property name="examstate" type="java.lang.String">
             <column name="examstate" length="1" />
+        </property>
+        <property name="title" type="java.lang.String">
+            <column name="title" length="200" />
+        </property>
+        <property name="remark" type="java.lang.String">
+            <column name="remark" length="4000" />
         </property>
     </class>
 </hibernate-mapping>

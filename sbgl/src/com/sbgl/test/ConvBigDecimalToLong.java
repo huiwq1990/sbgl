@@ -14,7 +14,7 @@ public class ConvBigDecimalToLong {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		String filePath = "D:/Workspaces/sbgl/src/com/sbgl/app/entity";
+		String filePath = "D:/github/sbgl/sbgl/src/com/sbgl/app/entity";
 		File f = new File(filePath);
 		File[] files = f.listFiles();
 		// List<File> fileList =
@@ -61,8 +61,8 @@ public class ConvBigDecimalToLong {
 		String temp = "";
 		for (int i = 0; i < strList.size(); i++) {
 			System.out.println(strList.get(i));
-			if (strList.get(i).contains("length=\"19\"")) {
-				temp = strList.get(i).replace("length=\"19\"", "");
+			if (strList.get(i).contains("java.sql.Timestamp")) {
+				temp = strList.get(i).replace("java.sql.Timestamp", "java.util.Date");
 			}else {
 				temp = strList.get(i);
 			}

@@ -1,6 +1,6 @@
 package com.sbgl.app.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Date;
 
 /**
@@ -49,8 +49,8 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 
 	/** full constructor */
 	public Equipmentdetail(Integer equipDetailid, Integer equipmentid,
-			String status, Integer administrationid, Timestamp makedate,
-			Timestamp modifydate, String sysremark, String usermark,
+			String status, Integer administrationid, Date makedate,
+			Date modifydate, String sysremark, String usermark,
 			Date manufactureDate, Date acquireDate, String manufacturer,
 			String supplyer, Float worth, String useManageDept, String manager,
 			String storagePlace, String storagePosition, String lanType,

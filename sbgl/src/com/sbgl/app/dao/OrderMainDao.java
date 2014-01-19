@@ -17,10 +17,14 @@ public interface OrderMainDao {
 	public void addEquipmentnum()  throws Exception ;
 	//获得二级器材分类(根据最小的分类id)
 	public List<Equipmentclassification> findSecondEquipmentclass();
+	//根据器材分类获得设备(根据设备名称)
+	public List<EquipmentFull> findEquipmentByClss(Integer classificationid,String fromDate,String endDate,String serach);
 	//根据器材分类获得设备(根据最小的分类id)
 	public List<EquipmentFull> findEquipmentByClss(String fromDate,String endDate);
 	//根据器材分类获得设备
 	public List<EquipmentFull> findEquipmentByClss(Integer classificationid,String fromDate,String endDate);
 	//获得设备详情
 	public EquipmentFull findEquipmentById(Integer equipmentId,String fromDate,String endDate);
+	//获得每天剩余数量（根据设备号）
+	public String findDayNum(Integer equipmentId,String fromDate,String endDate);
 }

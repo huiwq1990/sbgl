@@ -375,8 +375,6 @@
                     $("#inputTel").val("");
                     $("#inputMail").val("");
 					
-					savedFileName = "";
-					
 				} else {
 					n = noty({text: data.msg, timeout: 2500, type: 'error'});
 				}

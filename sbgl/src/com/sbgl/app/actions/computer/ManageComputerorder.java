@@ -31,11 +31,8 @@ import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
-import com.sbgl.app.entity.Computerstatus;
-import com.sbgl.app.entity.ComputerstatusFull;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
-import com.sbgl.app.services.computer.ComputerstatusService;
 import com.sbgl.util.DateUtil;
 import com.sbgl.util.ReturnJson;
 
@@ -67,13 +64,6 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	HashMap<Integer, ArrayList<Computerorderdetail>> computerorderdetailMapByComputermodelId = new HashMap<Integer,ArrayList<Computerorderdetail>>();
 	HashMap<Integer, ArrayList<ComputerorderdetailFull>> computerorderdetailFullMapByComputermodelId = new HashMap<Integer,ArrayList<ComputerorderdetailFull>>();
 	
-	
-	
-	@Resource
-	private ComputerstatusService computerstatusService;
-	int computerstatusid = 0;
-	List<Computerstatus> computerstatusList = new ArrayList<Computerstatus>();
-	List<ComputerstatusFull> computerstatusFullList = new ArrayList<ComputerstatusFull>();
 	
 	
 	private int ComputerorderStatusAduitAll = ComputerorderInfo.ComputerorderStatusAduitAll;
@@ -113,8 +103,6 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 		computerorderdetailFullList = computerorderdetailService.selectComputerorderdetailFullByCondition(sql);
 //		System.out.println("computerorderdetailFullList size:"+computerorderdetailFullList.size());
 		
-//		computerstatusList  = computerstatusService.selectComputerstatusByCondition("");
-		computerstatusFullList = computerstatusService.selectComputerstatusFullByCondition(" ");
 		if(computerorderdetailFullList==null){
 			computerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
 		}
@@ -145,13 +133,13 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	public String computerorderList(){
 		
 		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-		String uidStr = ComputerCookieUtil.getCookieValue(cookies, ComputerConfig.cookieuserid);
+		String uidStr = ComputerUtil.getCookieValue(cookies, ComputerConfig.cookieuserid);
 		//根据用户查询预约单
 //		if(cookiesMap==null){
 //			System.out.println("null");
 //		}
 //		String uidStr = cookiesMap.get(ComputerConfig.cookieuserid);
-		if(uidStr == null ){
+		if(uidStr == null || !ComputerUtil.isNumber(uidStr)){
 			return "error";
 		}
 		int userid = Integer.valueOf(uidStr);
@@ -355,7 +343,7 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 			// 将model里的属性值赋给temp
 			BeanUtils.copyProperties(temp, computerorder);
 			System.out.println("computerordertitle"+computerorder.getTitle());
-			String uuid = ComputerCookieUtil.genSerialnumber("");
+			String uuid = ComputerUtil.genSerialnumber("");
 			temp.setSerialnumber(uuid);
 			session.put("computerorderSerialnumber", uuid);
 //			temp.setUserid(Integer.valueOf(userid));
@@ -714,47 +702,6 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 
 	public void setClassOrder(int classOrder) {
 		ClassOrder = classOrder;
-	}
-
-
-	public ComputerstatusService getComputerstatusService() {
-		return computerstatusService;
-	}
-
-
-	public void setComputerstatusService(ComputerstatusService computerstatusService) {
-		this.computerstatusService = computerstatusService;
-	}
-
-
-	public int getComputerstatusid() {
-		return computerstatusid;
-	}
-
-
-	public void setComputerstatusid(int computerstatusid) {
-		this.computerstatusid = computerstatusid;
-	}
-
-
-	public List<Computerstatus> getComputerstatusList() {
-		return computerstatusList;
-	}
-
-
-	public void setComputerstatusList(List<Computerstatus> computerstatusList) {
-		this.computerstatusList = computerstatusList;
-	}
-
-
-	public List<ComputerstatusFull> getComputerstatusFullList() {
-		return computerstatusFullList;
-	}
-
-
-	public void setComputerstatusFullList(
-			List<ComputerstatusFull> computerstatusFullList) {
-		this.computerstatusFullList = computerstatusFullList;
 	}
 
 

@@ -19,11 +19,11 @@
         <property name="administrationid" type="java.lang.Integer">
             <column name="administrationid" />
         </property>
-        <property name="makedate" type="java.sql.Timestamp">
-            <column name="makedate" length="19" />
+        <property name="makedate" type="java.util.Date">
+            <column name="makedate"  />
         </property>
-        <property name="modifydate" type="java.sql.Timestamp">
-            <column name="modifydate" length="19" />
+        <property name="modifydate" type="java.util.Date">
+            <column name="modifydate"  />
         </property>
         <property name="sysremark" type="java.lang.String">
             <column name="sysremark" length="2000" />

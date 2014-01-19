@@ -9,11 +9,8 @@ import net.sf.json.JSONObject;
 
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -22,7 +19,6 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputercategoryService;
 import com.sbgl.app.services.computer.ComputermodelService;
@@ -110,24 +106,17 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 //		if(!pass){
 //			return SUCCESS;
 //		}
-		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-		String uidStr = ComputerCookieUtil.getCookieValue(cookies, ComputerConfig.cookieuserid);
 		
 		try {
 			Computercategory tempCh = new Computercategory();		
 			BeanUtils.copyProperties(tempCh, computercategory);		
 			tempCh.setName(inputAddCategoryNameCh.trim());
 			tempCh.setLanguagetype("0");
-			tempCh.setCreateuserid(Integer.valueOf(uidStr));
-			tempCh.setStatus(0);
 			
 			Computercategory tempEn = new Computercategory();			
 			BeanUtils.copyProperties(tempEn, computercategory);		
 			tempEn.setName(inputAddCategoryNameEn.trim());
-			tempEn.setLanguagetype("1");			
-			tempEn.setCreateuserid(Integer.valueOf(uidStr));
-			tempEn.setStatus(0);
-			
+			tempEn.setLanguagetype("1");
 			computercategoryService.addComputercategory(tempCh,tempEn);
 			
 			returnJson.setFlag(1);

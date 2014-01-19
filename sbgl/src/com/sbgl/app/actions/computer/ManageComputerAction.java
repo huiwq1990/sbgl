@@ -169,18 +169,11 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		
 		//设置总数量，由于是双语 除2
 		page.setTotalCount(computercategoryService.countComputercategoryRow()/2);
-		
 		//如果页码大于总页数，重新设置
 		if(pageNo>page.getTotalpage()){
 			pageNo = page.getTotalpage();
 		}
 		page.setPageNo(pageNo);
-		if(page.getTotalCount()==0){
-			page.setPageNo(0);
-			page.setTotalpage(0);
-			pageNo = 0;
-		}
-		
 		
 		String sqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";	
 //		computercategoryFullList  = computercategoryService.selectShowedComputercategoryFullByPage(page);
@@ -194,12 +187,6 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 
 		if(computercategoryFullList == null){
 			computercategoryFullList = new ArrayList<ComputercategoryFull>();
-		}
-		if(computercategoryFullListCh == null){
-			computercategoryFullListCh = new ArrayList<ComputercategoryFull>();
-		}
-		if(computercategoryFullListEn == null){
-			computercategoryFullListEn = new ArrayList<ComputercategoryFull>();
 		}
 		
 		parentcomputercategoryList = computercategoryService.selectParentComputercategory();
@@ -344,11 +331,8 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		//分类与PC模型map
 		categoryModelMap();
 		
-		
 		//pc所有状态
-//		computerstatusFullList  = computerstatusService.selectComputerstatusFullByCondition("");//查询所有的状态
-		computerstatusList  = computerstatusService.selectComputerstatusByCondition("");//查询所有的状态
-//		log.info("computerstatusList" + computerstatusList.size());
+		computerstatusFullList  = computerstatusService.selectComputerstatusFullByCondition("");//查询所有的状态
 		
 		if(computerFullListCh == null){
 			computerFullListCh = new ArrayList<ComputerFull>();
@@ -359,10 +343,9 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		if(computermodelByComputercategoryId == null){
 			computermodelByComputercategoryId = new HashMap<Integer,ArrayList<Computermodel>>();
 		}
-		if(computerstatusList == null){
-			computerstatusList = new ArrayList<Computerstatus>();
+		if(computerstatusFullList == null){
+			computerstatusFullList = new ArrayList<ComputerstatusFull>();
 		}
-		
 
 		//进入管理界面直接请求，Ajax请求使用AjaxType
 		if(callType!=null&&callType.equals("ajaxType")){
@@ -456,12 +439,12 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		if(computercategorytype == 0){
 //			countsql = countsql + " where a.languagetype="+ComputerConfig.languagech;
 			countsql = "";
-			sqlch = sqlch + " where a.languagetype="+ComputerConfig.languagech+" and b.languagetype="+ComputerConfig.languagech+" order by a.computermodeltype ";
+			sqlch = sqlch + " where a.languagetype="+ComputerConfig.languagech+" and b.languagetype="+ComputerConfig.languagech+" order by a.computermodeltype,a.languagetype";
 			sqlen = sqlen + " where a.languagetype="+ComputerConfig.languageen+" and b.languagetype="+ComputerConfig.languageen+" order by a.computermodeltype,a.languagetype";
 		}else{
 			countsql =" where a.computercategoryid="+computercategorytype;
 //			countsql = countsql + " where a.languagetype="+ComputerConfig.languagech+" and a.computercategoryid="+computercategoryid+"  order by a.computermodeltype,a.languagetype";
-			sqlch = sqlch + " where a.languagetype="+ComputerConfig.languagech+" and b.languagetype="+ComputerConfig.languagech+" and a.computercategoryid="+computercategorytype+"  order by a.computermodeltype ";
+			sqlch = sqlch + " where a.languagetype="+ComputerConfig.languagech+" and b.languagetype="+ComputerConfig.languagech+" and a.computercategoryid="+computercategorytype+"  order by a.computermodeltype,a.languagetype";
 			sqlen = sqlen + " where a.languagetype="+ComputerConfig.languageen+" and b.languagetype="+ComputerConfig.languageen+" and a.computercategoryid="+computercategorytype+"  order by a.computermodeltype,a.languagetype";
 		}
 		
@@ -481,9 +464,8 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 //		System.out.println(page.getTotalCount());
 		
 		//查询中文的Model		
-		log.info("computermodelFullListCh: " + sqlch);
 		computermodelFullListCh  = computermodelService.selectComputermodelFullByConditionAndPage(sqlch , page);
-//		log.info("computermodelFullListCh.size"+ computermodelFullListCh.size());
+//		System.out.println(computermodelFullListCh.size());
 		//查询英文的Model
 		computermodelFullListEn  = computermodelService.selectComputermodelFullByConditionAndPage(sqlen , page);
 //		System.out.println("ssss"+computermodelFullListEn.size());
@@ -524,34 +506,10 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	 * @return
 	 */
 	public String toAddComputerPage(){
-		String sqlch = " where a.languagetype=0 order by a.computercategorytype";
+		String sqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";
 		computercategoryFullList  = computercategoryService.selectComputercategoryFullByConditionAndPage(sqlch , page);
-		sqlch = " where a.languagetype=0 order by a.computermodeltype ";		
+		sqlch = " where a.languagetype=0 order by a.computermodeltype,a.languagetype";		
 		computermodelFullList  = computermodelService.selectComputermodelFullByConditionAndPage(sqlch , page);
-		
-		
-		String categorysqlch = " where a.languagetype="+ComputerConfig.languagech+" order by a.computercategorytype";
-//		System.out.println(categorysqlch);
-		computercategoryFullList  = computercategoryService.selectComputercategoryFullByCondition(categorysqlch);
-//		System.out.println("computercategoryFullList size:"+computercategoryFullList.size());
-		//分类与PC模型map
-		categoryModelMap();
-		
-		//		PC状态
-		computerstatusList  = computerstatusService.selectComputerstatusByCondition("");//查询所有的状态
-		
-		if(computermodelFullList == null){
-			computermodelFullList = new ArrayList<ComputermodelFull>();
-		}
-		if(computerFullListEn == null){
-			computerFullListEn = new ArrayList<ComputerFull>();
-		}
-		if(computermodelByComputercategoryId == null){
-			computermodelByComputercategoryId = new HashMap<Integer,ArrayList<Computermodel>>();
-		}
-		if(computerstatusList == null){
-			computerstatusList = new ArrayList<Computerstatus>();
-		}
 		
 		return SUCCESS;
 	}

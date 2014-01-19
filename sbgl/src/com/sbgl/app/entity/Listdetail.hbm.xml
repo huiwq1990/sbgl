@@ -28,5 +28,8 @@
         <property name="returntime" type="java.util.Date">
             <column name="returntime"  />
         </property>
+        <property name="ifdelay" type="java.lang.String">
+            <column name="ifdelay"  length="1" />
+        </property>
     </class>
 </hibernate-mapping>

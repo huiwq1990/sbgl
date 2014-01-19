@@ -13,13 +13,20 @@
         </action>
         <!-- 根据分类id刷新页面 -->
 	 	<action name="equipmentByClass" class="OrderMainAction" method="equipmentByClass">
-        	<result name="success">/equipmentBooking.vm</result>
+        	<result name="success">/order/equipmentContent.vm</result>
+        </action>
+        <!-- 根据商品id刷新页面详情 -->
+	 	<action name="equipOrdDetail" class="OrderMainAction" method="equipOrdDetail">
+        	<result name="success">/order/equipOrderDetail.vm</result>
         </action>
     </package>
-    <package name="orderAjax" extends="json-default">
-    	
+    <package name="orderAjax" extends="json-default">	
         <!-- 根据商品id刷新页面详情 -->
 	 	<action name="equipDetail" class="OrderMainAction" method="equipDetail">
+        	<result type="json"></result>
+        </action>
+        <!-- 提交订单 -->
+	 	<action name="subOrder" class="OrderMainAction" method="subOrder">
         	<result type="json"></result>
         </action>
     </package>

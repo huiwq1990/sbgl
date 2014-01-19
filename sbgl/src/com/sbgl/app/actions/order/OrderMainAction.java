@@ -14,6 +14,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.entity.Equipment;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.services.order.OrderMainService;
+import com.sbgl.common.DataError;
 import com.sbgl.util.DateUtil;
 
 @Scope("prototype") 
@@ -34,8 +35,17 @@ public class OrderMainAction  extends ActionSupport  {
 	private String fromDate;
 	private String endDate;
 	private Integer parentClassId;
+	private Integer class1Id;
+	private String class1Name;
 	private Integer classificationId;
-
+	private String serach;
+	private String daynum;
+	private String equIds;
+	private String equNums;
+	private String message;
+	private String tag;
+	private Integer borrowId;
+	
 	//进入设备管理页面
 	public String equipmentBooking(){
 		if(fromDate==null||fromDate.equals("")){
@@ -49,6 +59,10 @@ public class OrderMainAction  extends ActionSupport  {
 			}
 		}
 		classification1List = orderMainService.findTopEquipmentclass();
+		if(classification1List!=null){
+			class1Id = classification1List.get(0).getClassificationid();
+			class1Name = classification1List.get(0).getName();
+		}
 		classification2List = orderMainService.findSecondEquipmentclass();
 		equipmentList = orderMainService.findEquipmentByClss(fromDate,endDate);
 		return SUCCESS;
@@ -66,18 +80,82 @@ public class OrderMainAction  extends ActionSupport  {
 				endDate = fromDate;
 			}
 		}
-		classification1List = orderMainService.findTopEquipmentclass();
+		
+		Equipmentclassification equipmentclassification = new Equipmentclassification();
+		equipmentclassification = orderMainService.findEquipmentclassification(parentClassId);
+		class1Name = equipmentclassification.getName();
 		classification2List = orderMainService.findSecondEquipmentclass(parentClassId);
-		if(classificationId.equals("0")){
-			equipmentList = orderMainService.findEquipmentByClss(parentClassId,fromDate,endDate);
+		if(serach!=null&&!serach.equals("")){
+			if(classificationId==0){
+				equipmentList = orderMainService.findEquipmentByClss(parentClassId,fromDate,endDate,serach);
+			}else{
+				equipmentList = orderMainService.findEquipmentByClss(classificationId,fromDate,endDate,serach);
+			}
 		}else{
-			equipmentList = orderMainService.findEquipmentByClss(classificationId,fromDate,endDate);
+			if(classificationId==0){
+				equipmentList = orderMainService.findEquipmentByClss(parentClassId,fromDate,endDate);
+			}else{
+				equipmentList = orderMainService.findEquipmentByClss(classificationId,fromDate,endDate);
+			}
 		}
 		return SUCCESS;
 	}
 
-	public String equipDetail(){		
+	public String equipDetail(){	
+		if(fromDate==null||fromDate.equals("")){
+			fromDate = DateUtil.date.format(new Date());		
+			if(endDate==null||endDate.equals("")){
+				endDate = fromDate;
+			}
+		}else{
+			if(endDate==null||endDate.equals("")){
+				endDate = fromDate;
+			}
+		}
+		daynum = orderMainService.findDayNum(equipmentId,fromDate,endDate);
+		return SUCCESS;
+	}
+	
+	//根据商品id刷新页面详情
+	public String equipOrdDetail(){		
+		if(fromDate==null||fromDate.equals("")){
+			fromDate = DateUtil.date.format(new Date());		
+			if(endDate==null||endDate.equals("")){
+				endDate = fromDate;
+			}
+		}else{
+			if(endDate==null||endDate.equals("")){
+				endDate = fromDate;
+			}
+		}
 		equipmentFull = orderMainService.findEquipmentById(equipmentId,fromDate,endDate);
+		return SUCCESS;
+	}
+	
+	
+	//提交订单
+	public String subOrder(){
+		if(fromDate==null||fromDate.equals("")){
+			fromDate = DateUtil.date.format(new Date());		
+			if(endDate==null||endDate.equals("")){
+				endDate = fromDate;
+			}
+		}else{
+			if(endDate==null||endDate.equals("")){
+				endDate = fromDate;
+			}
+		}
+		try{	
+			borrowId = orderMainService.subOrder(equIds, equNums, fromDate, endDate);
+			tag = "1";
+		}catch(DataError e){		
+			tag = "2";
+			message = e.getMessage();
+		}catch(Exception e){
+			tag = "2";
+			message = "提交订单失败";
+			log.error(e);
+		}
 		return SUCCESS;
 	}
 	
@@ -174,6 +252,78 @@ public class OrderMainAction  extends ActionSupport  {
 
 	public void setClassificationId(Integer classificationId) {
 		this.classificationId = classificationId;
+	}
+
+	public Integer getClass1Id() {
+		return class1Id;
+	}
+
+	public void setClass1Id(Integer class1Id) {
+		this.class1Id = class1Id;
+	}
+
+	public String getClass1Name() {
+		return class1Name;
+	}
+
+	public void setClass1Name(String class1Name) {
+		this.class1Name = class1Name;
+	}
+
+	public String getSerach() {
+		return serach;
+	}
+
+	public void setSerach(String serach) {
+		this.serach = serach;
+	}
+
+	public String getDaynum() {
+		return daynum;
+	}
+
+	public void setDaynum(String daynum) {
+		this.daynum = daynum;
+	}
+
+	public String getEquIds() {
+		return equIds;
+	}
+
+	public void setEquIds(String equIds) {
+		this.equIds = equIds;
+	}
+
+	public String getEquNums() {
+		return equNums;
+	}
+
+	public void setEquNums(String equNums) {
+		this.equNums = equNums;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+	public Integer getBorrowId() {
+		return borrowId;
+	}
+
+	public void setBorrowId(Integer borrowId) {
+		this.borrowId = borrowId;
 	}
 
 

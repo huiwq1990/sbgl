@@ -18,6 +18,7 @@ public class Listdetail extends com.sbgl.app.dao.DaoAbs implements
 	private Integer borrownumber;
 	private Date borrowtime;
 	private Date returntime;
+	private String ifdelay;
 
 	// Constructors
 
@@ -33,7 +34,7 @@ public class Listdetail extends com.sbgl.app.dao.DaoAbs implements
 	/** full constructor */
 	public Listdetail(Integer listdetailid, Integer borrowlistid,
 			Integer equipmentid, Integer applynumber, Integer borrownumber,
-			Date borrowtime, Date returntime) {
+			Date borrowtime, Date returntime,String ifdelay) {
 		this.listdetailid = listdetailid;
 		this.borrowlistid = borrowlistid;
 		this.equipmentid = equipmentid;
@@ -41,6 +42,7 @@ public class Listdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.borrownumber = borrownumber;
 		this.borrowtime = borrowtime;
 		this.returntime = returntime;
+		this.ifdelay = ifdelay;
 	}
 
 	// Property accessors
@@ -99,6 +101,14 @@ public class Listdetail extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setReturntime(Date returntime) {
 		this.returntime = returntime;
+	}
+
+	public String getIfdelay() {
+		return ifdelay;
+	}
+
+	public void setIfdelay(String ifdelay) {
+		this.ifdelay = ifdelay;
 	}
 
 }

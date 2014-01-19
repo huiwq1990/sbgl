@@ -1,5 +1,8 @@
-	<div id ="refreshComputermodelTable">
-					
+		<div id ="refreshComputermodelTable">
+		
+			
+            <div class="panel panel-default">
+            
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -34,7 +37,7 @@
 						data-computermodeliden="$!en.computermodelcomputercategoryid" 
 						data-descriptionen="$!en.computermodeldescription">修改</a></td>
                      <td>$!ch.computercategoryname</td>
-                     <td>$!ch.computermodelavailableborrowcountnumber</td>
+                     <td>3</td>
                     <td>$!ch.computermodeldescription</td>
                   </tr>
 #end
@@ -42,8 +45,10 @@
                 
                 </tbody>
               </table>
-			  
-			  			<!--page -->
+
+            </div>
+			
+						<!--page -->
 			  <div class="pagination">
 				<a href="#" class="first" data-action="first">&laquo;</a>
 				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
@@ -52,8 +57,8 @@
 				<a href="#" class="last" data-action="last">&raquo;</a>
 			  </div>
 			  <!-- end page -->
-				</div>
-
+				</div><!-- end refreshComputermodelTable -->
+				
 	  
 	  
 	  <script>

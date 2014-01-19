@@ -87,7 +87,6 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
         @Override
         public List<ComputermodelFull>  selectComputermodelFullByConditionAndPage(String conditionSql,final Page page) {
                 final String  sql = basicComputermodelFullSql  +conditionSql;
-                log.info("ssss"+sql);
                 List<ComputermodelFull> computermodelList = getHibernateTemplate()
                                 .executeFind(new HibernateCallback() {
                                         public Object doInHibernate(Session session)

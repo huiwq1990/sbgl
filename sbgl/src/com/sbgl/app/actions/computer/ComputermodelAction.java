@@ -9,11 +9,8 @@ import net.sf.json.JSONObject;
 
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -22,7 +19,6 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputerService;
 import com.sbgl.app.services.computer.ComputercategoryService;
@@ -137,8 +133,7 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 //		if(!pass){
 //			return SUCCESS;
 //		}
-		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-		String uidStr = ComputerCookieUtil.getCookieValue(cookies, ComputerConfig.cookieuserid);
+		
 		try {
 			computermodel.setCreatetime(DateUtil.currentDate());
 			
@@ -147,8 +142,6 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 
 			BeanUtils.copyProperties(modelCh, computermodel);	
 			modelCh.setLanguagetype("0");
-			modelCh.setCreateuserid(Integer.valueOf(uidStr));
-			modelCh.setStatus(0);
 			
 			BeanUtils.copyProperties(modelEn, computermodel);
 			//英文的属性需要单独赋值
@@ -156,8 +149,6 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 			modelEn.setName(computermodelNameEn);
 //			System.out.println(computermodelDescriptionEn);
 			modelEn.setDescription(computermodelDescriptionEn);
-			modelEn.setCreateuserid(Integer.valueOf(uidStr));
-			modelEn.setStatus(0);
 //			computermodelDescriptionEn.l;
 			computermodelService.addComputermodel(modelCh,modelEn);
 			
@@ -183,7 +174,67 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 		return SUCCESS;
 	}
 
+//删除
+	public String deleteComputermodel( ){
+		try{
+			if(computermodel.getId() != null && computermodel.getId() > 0){
+				computermodelService.deleteComputermodel(computermodel.getId());
+				actionMsg = getText("deleteComputermodelSuccess");
+			}else{
+				System.out.println("删除的id不存在");
+				actionMsg = getText("deleteComputermodelFail");
+			}
+			
+			return SUCCESS;
+		}catch(Exception e){
+			e.printStackTrace();
+			log.error("类ComputermodelAction的方法：deleteComputermodel错误"+e);
+		}
+		return "Error";
+	}
+	
+//删除Ajax
+	public String deleteComputermodelAjax( ){
+		try{
+			if(computermodel.getId() != null && computermodel.getId() >= 0){
+				computermodelService.deleteComputermodel(computermodel.getId());				
+			}
+			
+			return "IdNotExist";
+		}catch(Exception e){
+			e.printStackTrace();
+			log.error("类ComputermodelAction的方法：deleteComputermodel错误"+e);
+		}
+		return "Error";
+	}
 
+	
+//	del entityfull
+	public String deleteComputermodelFull(){
+		try {
+		
+			Integer getId = computermodel.getId();
+			if(getId != null && getId < 0){
+				log.info("删除的id不规范");
+				return "Error";
+			}
+		
+		
+			Computermodel temp = computermodelService.selectComputermodelById(getId);
+			if (temp != null) {
+				computermodelService.deleteComputermodel(getId);
+				return SUCCESS;
+			} else {
+				log.info("删除的id不存在");
+				return "Error";
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "Error";
+	}
+	
 	//del entityfull Ajax
 	public String deleteComputermodelFullAjax( ){
 		log.info(logprefix + "deleteComputercategoryFullAjax" + computermodelIdsForDel);
@@ -228,7 +279,7 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 //					return SUCCESS;
 //				}
 				
-				computerService.updateComputermodelTo(tempDelId, ComputerConfig.computercategorynotclassifyid);//删除
+				computerService.updateComputermodelTo(tempDelId, -1);//删除
 				computermodelService.deleteComputermodelByTyp(tempDelId);
 			}
 			returnJson.setFlag(1);

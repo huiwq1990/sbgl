@@ -193,7 +193,7 @@
 												data-status="$!tempcomputerorderclassrule.computerorderclassrulestatus"                           
 												>修改</a></td>    
 						
-<td><a href="${webbaseurl}/viewComputerorderclassruleFull.action?computerorderclassruleid=$!tempcomputerorderclassrule.computerorderclassruleid">$!tempcomputerorderclassrule.computerorderclassrulename</a></td>
+<td>$!tempcomputerorderclassrule.computerorderclassrulename</td>
 <!--
 <td>$!tempcomputerorderclassrule.computerorderclassruleclassname</td>
 <td>$!tempcomputerorderclassrule.computerorderclassruleclassid</td>

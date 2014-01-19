@@ -16,14 +16,5 @@
         <property name="userid" type="java.lang.Integer">
             <column name="userid" />
         </property>
-        <property name="hasview" type="java.lang.Integer">
-            <column name="hasview" />
-        </property>
-        <property name="hasorder" type="java.lang.Integer">
-            <column name="hasorder" />
-        </property>
-        <property name="status" type="java.lang.Integer">
-            <column name="status" />
-        </property>
     </class>
 </hibernate-mapping>

@@ -23,10 +23,10 @@
             <column name="administrationid" />
         </property>
         <property name="makedate" type="java.util.Date">
-            <column name="makedate" length="19" />
+            <column name="makedate"  />
         </property>
         <property name="modifydate" type="java.util.Date">
-            <column name="modifydate" length="19" />
+            <column name="modifydate"  />
         </property>
         <property name="equipmentnum" type="java.lang.Integer">
             <column name="equipmentnum" />

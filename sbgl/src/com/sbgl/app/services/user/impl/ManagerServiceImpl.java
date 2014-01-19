@@ -78,7 +78,7 @@ public class ManagerServiceImpl implements ManagerService {
 
 	@Override
 	public boolean isExistManagerCode(String managerCode) {
-		return baseDao.isExist(Administrator.class, "administratorId", managerCode);
+		return baseDao.isExist(Administrator.class, "administratorid", managerCode);
 	}
 
 }

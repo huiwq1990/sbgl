@@ -24,7 +24,11 @@
 					  <tr>
                         <td><input class="chk" type="checkbox" name="chk-list" value="$!group.id"></td>
                         <td>$!group.name<a class="btn btn-white btn-mini" action-type="beforeModify" data-id="$!group.id" data-name="$!group.name" data-type="$!group.type" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
-						<td>管理员</td>
+						#if($!group.type == 7)
+						<td>设备管理员</td>
+						#elseif($!group.type == 8)
+						<td>超级管理员</td>
+						#end
                   	 </tr>
 				    #end
                   #end

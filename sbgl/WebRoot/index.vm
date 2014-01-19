@@ -3,18 +3,22 @@
 <head>
 <meta charset="utf-8">
 <title>北京电影学院摄影系</title>
-
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="css/todc-bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="css/global.css" rel="stylesheet" type="text/css" />
-<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 10]>
+  <script src="js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
 <!--[if lt IE 9]>
   <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
 <![endif]-->
 <!--[if IE 7]>
 <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
@@ -63,31 +67,23 @@
   <div class="nav-wrap">
     <div class="site-nav">
       <div class="dropdown">
-        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 首页</a>
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 首页</a><!-- #BeginLibraryItem "/Library/siteNav.lbi" -->
         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
           <li><a href="http://google.com"><i class="icon-home"></i> 首页</a></li>
           <li class="divider"></li>
           <li><a href="#anotherAction">个人主页</a></li>
-          <li><a href="#">人脉</a></li>
+          <li><a href="#">通讯录</a></li>
           <li class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-        </ul>
-      </div>
+          <li><a href="预约首页.html">我的预约</a></li>
+          <li><a href="消息中心-站内信.html">站内信</a></li>
+          <li class="divider"></li>
+          <li><a href="admin/管理中心首页.html">管理中心</a></li>
+        </ul><!-- #EndLibraryItem --></div>
     </div>
     <div class="sub-nav">
       <ul class="nav nav-tabs nav-tabs-google">
         <li class="active">
           <a href="#">全部</a>
-        </li>
-        <li><a href="#">与我有关</a></li>
-        <li><a href="#">收藏</a></li>
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-plus"></i> 新建 <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">新的信息</a></li>
-            <li><a href="#">新的预约</a></li>
-            <li><a href="#">新的讨论</a></li>
-          </ul>
         </li>
       </ul>
     </div>
@@ -101,7 +97,25 @@
       <div id="stream" class="container">
         <div class="row">
           <div class="col-md-6">
-
+            <div class="thumbnail">
+              <div class="hd clearfix">
+                <h3 class="pull-left">新的</h3>
+              </div>
+              <div class="row p-20">
+                <div class="col-md-3">
+                  <a class="btn btn-white btn-block" href="./equipmentBooking.action"><h4><i class="icon-camera-retro icon-2x"></i></h4><h4>设备预约</h4></a>
+                </div>
+                <div class="col-md-3">
+                  <a class="btn btn-white btn-block" href="机房预约页.html"><h4><i class="icon-desktop icon-2x"></i></h4><h4>机房预约</h4></a>
+                </div>
+                <div class="col-md-3">
+                  <a class="btn btn-white btn-block" href="消息中心-站内信-写站内信.html"><h4><i class="icon-envelope icon-2x"></i></h4><h4>私信</h4></a>
+                </div>
+                <div class="col-md-3">
+                  <a class="btn btn-white btn-block" href="教学安排.html"><h4><i class="icon-book icon-2x"></i></h4><h4>教学安排</h4></a>
+                </div>
+              </div>
+            </div>
             <div class="thumbnail">
               <div class="hd clearfix">
                 <h3 class="pull-left">站内信</h3>
@@ -156,7 +170,7 @@
             <div class="thumbnail">
               <div class="hd clearfix">
                 <h3 class="pull-left">进行中的设备预约</h3>
-                <a href="./equipmentBookingMain.do" class="more lk pull-right">查看全部</a>
+                <a href="设备预约首页.html" class="more lk pull-right">查看全部</a>
               </div>
               <ul class="media-list">
                 <li class="media">
@@ -263,14 +277,12 @@
 </section>
 
 
-    <!-- Le javascript
+    <!-- javascript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
 <script src="js/jquery.js"></script>
 <script src="js/loader.min.js"></script>
 <script src="js/bootstrap-hover-dropdown.min.js"></script>
 <script src="js/select2.js"></script>
-<script src="js/bootstrap-datetimepicker.min.js"></script>
 <script src="js/bfa.js"></script>
 
 

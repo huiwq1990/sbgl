@@ -20,6 +20,13 @@
 <!--[if IE 7]>
 <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
 <![endif]-->
+<script>
+	var class1Id = "${class1Id}";
+	var cId =0;
+	var ctype=1;
+	var parentid=class1Id;
+	var ordertype=0;
+</script>
 </head>
 
 <body>
@@ -77,9 +84,8 @@
     </div>
     <div class="sub-nav">
       <ul class="nav nav-tabs nav-tabs-google">
-		#set($class1Id=0)
         #foreach($row in $classification1List)		
-			<li id="cl1$!row.classificationid" #if($velocityCount=='1') #set($class1Id=$!row.classificationid) class="active classification1" #else class="classification1" #end><a href="javascript:;"   action-type="classAjax" data-id="$!row.classificationid" data-classtype="1" >$!row.name</a></li>
+			<li id="cl1$!row.classificationid" #if($velocityCount=='1') class="active classification1" #else class="classification1" #end><a href="javascript:;"   data-type="classAjax" data-id="$!row.classificationid" data-classtype="1" >$!row.name</a></li>
 		#end
       </ul>
     </div>
@@ -94,18 +100,17 @@
         <div id="equip-list">        
           <div class="w200 container">
             <div class="control-bar clearfix">
-              <div class="title pull-left">摄影机
-			  
-			  
+              <div class="title pull-left">$!{class1Name}
+		  
 			  </div>
               <form class="navbar-search pull-right">
-                <input type="text" class="form-control" placeholder="搜索设备">
-                <i class="icon-search"></i>
+                <input id="serachtext" type="text" class="form-control" placeholder="搜索设备" >
+                <i data-type="classAjax" class="icon-search"></i>
               </form>
               <ul class="nav nav-pills pull-right">
                 #foreach($row2 in $!classification2List)		
-					#if($velocityCount=='1')<li id="cl20" class="active classification2" ><a href="javascript:;" action-type="classAjax" data-id="0" data-classtype="2" data-parentid="$!class1Id">全部</a></li>#end
-        			<li id="cl2$!row2.classificationid" class="classification2"><a href="javascript:;" action-type="classAjax" data-id="$!row2.classificationid" data-classtype="2" data-parentid="$!class1Id">$!row2.name</a></li>
+					#if($velocityCount=='1')<li id="cl20" class="active classification2" ><a href="javascript:;" data-type="classAjax" data-id="0" data-classtype="2" data-parentid="$!class1Id">全部</a></li>#end
+        			<li id="cl2$!row2.classificationid" class="classification2"><a href="javascript:;" data-type="classAjax" data-id="$!row2.classificationid" data-classtype="2" data-parentid="$!class1Id">$!row2.name</a></li>
         		#end
               </ul>
             </div>
@@ -115,8 +120,8 @@
                       <div class="thumbnail">
                         <img width="168px" height="128px" class="e-pic" src="img/170x140.jpg">
                         <div class="caption">
-                          <div class="title"><a class="lk" data-toggle="modal" href="#equip-detail" action-type="equipDetail" data-id="$!row3.equipmentid" role="button">$!row3.equipmentname</a></div>
-                          <p class="detail">文字说明……（如不可预约/最多可借：4）</p>
+                          <div class="title"><a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.equipmentid" role="button">$!row3.equipmentname</a></div>
+                          <p class="detail">最多可借：$!row3.borrownum</p>
                         </div>
                         <div class="select-num">
                           <select class="select2 form-control select-white" id="inputEquipStatus">
@@ -125,35 +130,18 @@
 							 #end
                           </select>
                         </div>                            
-                        <a class="btn btn-white add-btn" action-type="addEquip" data-id="$!row3.equipmentid" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" href="javascript:;">添 加</a>
+                        <a class="btn btn-white add-btn" data-type="addEquip" data-id="$!row3.equipmentid" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" href="javascript:;">添 加</a>
                       </div>                  
                   </div>
                    #end
-                  <div class="w-200">                  
-                      <div class="thumbnail">
-                        <img width="168px" height="128px" class="e-pic" src="img/170x140.jpg">
-                        <div class="caption">
-                          <div class="title"><a class="lk" data-toggle="modal" href="#equip-detail"  role="button">Arri Alexa Plus</a></div>
-                          <p class="detail">文字说明……（如不可预约/最多可借：4）</p> 
-                        </div>
-                        <div class="select-num">
-                          <select class="select2 form-control select-white" id="inputEquipStatus">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                          </select>
-                        </div>                            
-                        <a class="btn btn-white add-btn" action-type="addEquip" data-id="36532" data-name="设备名-1" data-num="4" href="javascript:;">添 加</a>
-                      </div>                  
-                  </div>
-                 
+               
             </div>
           </div>
         </div>
       </div>
       <!--equip-wrap end-->
 
+     
       <!--rent start-->
       <div id="rent-bar">  
               <div class="wizard thumbnail">
@@ -162,8 +150,7 @@
 
 <ul class="steps unstyled">
 		<li data-target="#step1" class="active"><h3>欢迎</h3></li>
-		<li data-target="#step2"><h3>预约时间 <small>打算哪天预约？</small></h3></li>
-		<li data-target="#step3"><h3>选择设备</h3></li>
+		<li data-target="#step2"><h3>选择设备</h3></li>
 	</ul>
 <div class="step-content">
 	<div class="step-pane active" id="step1">
@@ -204,26 +191,23 @@
                 <span class="add-on">至</span>
 	          </div>
 	          <div class="col-xs-5">
-                <input type="text" class="form-control" id="endDate"  name="end" placeholder="归还日期">
+                <input type="text" class="form-control" id="endDate" name="end" placeholder="归还日期">
 	          </div>
             </div>
 
           </div>
         </div>
-
+	<button type="button" data-type="classAjax" class="btn btn-primary">根据时间查询</button>
+	<div id="rent-list">
+          <p class="no-add">尚未添加任何设备。</p>
+        </div>
     </div>
     
-	<div class="step-pane" id="step3">
-        <div id="rent-list">
-          <p class="no-add">尚未添加任何设备。</p>
-        </div> 
-    </div>
-
 </div>
 
 <div class="form-actions actions">  
-		<button type="button" class="btn btn-white btn-prev" disabled="disabled">上一步</button>
-		<button type="button" class="btn btn-primary btn-next" data-last="提交预约">下一步</button>
+		<button type="button" class="btn btn-white btn-prev" data-type="suborder2" disabled="disabled">上一步</button>
+		<button type="button" class="btn btn-primary btn-next" data-type="suborder" data-last="提交预约">下一步</button>
 </div>
 
 
@@ -233,8 +217,6 @@
   </div>
   <!---main-content end-->
 </section>
-
-
 <!-- Modal -->
 <div id="equip-detail" class="modal hide fade" tabindex="-1" role="dialog">
   <div class="modal-header">
@@ -278,7 +260,7 @@
   </div>
   <div class="modal-footer">
     <a class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</a>
-    <a class="btn btn-primary" action-type="addEquip" data-id="$!equipmentFull.equipmentid" data-name="$!equipmentFull.equipmentname" data-num="$!equipmentFull.borrownum" href="javascript:;">添 加</a>
+    <a class="btn btn-primary" data-type="addEquip" data-id="$!equipmentFull.equipmentid" data-name="$!equipmentFull.equipmentname" data-num="$!equipmentFull.borrownum" href="javascript:;">添 加</a>
   </div>
 </div>
 
@@ -287,13 +269,14 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+
 <script src="js/jquery.js"></script>
 <script src="js/loader.min.js"></script>
 <script src="js/select2.js"></script>
 <script src="js/bootstrap-hover-dropdown.min.js"></script>
 <script src="js/bootstrap-datepicker.js"></script>
 <script src="js/locales/bootstrap-datepicker.zh-CN.js"></script>
-<script src="js/bfa.js"></script>
+<script src="js/bfa2.js"></script>
 <script src="js/highcharts.js"></script>
 <script>
 
@@ -392,15 +375,16 @@ $(window).load(function(){
 	cookie.show();
 	
 	
-	$("body").on("click", "a[action-type|=classAjax]", function() {
+	$("body").on("click", "a[data-type|=classAjax]", function() {
 		var fromDate = $("#fromDate").val();
 		var endDate = $("#endDate").val();
 		var myData = $(this).data();
-		var cId = myData.id;
-		var ctype=myData.classtype;
-		var parentid=myData.parentid;
+		cId = myData.id;
+		ctype=myData.classtype;
+		parentid=class1Id;
 		if(ctype=='1'){
 			parentid = cId;
+			class1Id = cId;
 			cId = 0;
 		}
 		$.ajax({
@@ -410,19 +394,202 @@ $(window).load(function(){
 			dataType: 'html',
 			success: function(data){
 				//刷新数据
-			   $("#equip-list").html(data);
+			   $("#equip-wrap").html(data);
 			   $(".classification1").removeClass('active');
 			   $(".classification2").removeClass('active');
-			   $("#cl1"+data.parentClassId).addClass('active');
-			   $("#cl2"+data.classificationId).addClass('active');
+			   if(ctype=='1'){
+			   		$("#cl1"+parentid).addClass('active');	
+			   		$("#cl20").addClass('active');			
+			   }else{	  
+			   		$("#cl1"+parentid).addClass('active');
+			   		$("#cl2"+cId).addClass('active');
+			   }
 			}	  
 		});
 	});
 	
+	$("body").on("click", "button[data-type|=classAjax]", function() {
+		var fromDate = $("#fromDate").val();
+		var endDate = $("#endDate").val();
+		$.ajax({
+			url: "equipmentByClass.do",
+			type: 'POST',
+			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate},
+			dataType: 'html',
+			success: function(data){
+				//刷新数据
+			   $("#equip-wrap").html(data);
+			   $(".classification1").removeClass('active');
+			   $(".classification2").removeClass('active');
+			   if(ctype=='1'){
+			   		$("#cl1"+parentid).addClass('active');	
+			   		$("#cl20").addClass('active');			
+			   }else{	  
+			   		$("#cl1"+parentid).addClass('active');
+			   		$("#cl2"+cId).addClass('active');
+			   }
+			}	  
+		});
+	});
 	
-	$("body").on("click", "a[action-type|=equipDetail]", function() {
-		var equipid = $(this).data("id");
-		
+	$("body").on("click", "i[data-type|=classAjax]", function() {
+		var fromDate = $("#fromDate").val();
+		var endDate = $("#endDate").val();
+		var serach = $("#serachtext").val();
+		$.ajax({
+			url: "equipmentByClass.do",
+			type: 'POST',
+			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate,serach:serach},
+			dataType: 'html',
+			success: function(data){
+				//刷新数据
+			   $("#equip-wrap").html(data);
+			   $(".classification1").removeClass('active');
+			   $(".classification2").removeClass('active');
+			   if(ctype=='1'){
+			   		$("#cl1"+parentid).addClass('active');	
+			   		$("#cl20").addClass('active');			
+			   }else{	  
+			   		$("#cl1"+parentid).addClass('active');
+			   		$("#cl2"+cId).addClass('active');
+			   }
+			   $("#serachtext").val(serach);
+			}	  
+		});
+	});
+	
+	$("body").on("click", "button[data-type|=suborder2]", function() {
+		if(ordertype==1){
+			ordertype--;
+		}
+	});
+	
+	$("body").on("click", "button[data-type|=suborder]", function() {
+		var fromDate = $("#fromDate").val();
+		var endDate = $("#endDate").val();
+		if(ordertype==0){
+			ordertype++;
+			return;
+		}else{
+			var equNum = "";
+    		var equId = "";
+    		$("input[name='equNum']").each(function(i){ 
+				var temp1 = $(this).val();
+    			if(i==0){ 
+    				equNum += temp1;
+    			}else{
+    				equNum += ","+temp1;
+    			}
+    		});
+    		$("input[name='equId']").each(function(j){ 
+				var temp2 = $(this).val();
+    			if(j==0){ 
+    				equId += temp2;
+    			}else{
+    				equId += ","+temp2;
+    			}
+    		});
+			$.ajax({
+				url: "subOrder.do",
+				type: 'POST',
+				data: {equIds:equId,equNums:equNum,fromDate:fromDate,endDate:endDate},
+				dataType: 'json',
+				success: function(data){
+					if(data.tag==1){
+						location.href="equipmentConfirm.do?borrowId="+data.borrowId;
+					}else{
+						alert(data.message);
+						return;
+					}
+				}	  
+			});
+		}
+	});
+	
+	$("body").on("click", "a[data-type|=equipDetail]", function() {
+		var fromDate = $("#fromDate").val();
+		var endDate = $("#endDate").val();
+		var equipid = $(this).data("id");	
+		$.ajax({
+			url: "equipOrdDetail.do",
+			type: 'POST',
+			data: {equipmentId:equipid,fromDate:fromDate,endDate:endDate},
+			dataType: 'html',
+			success: function(data){
+				//刷新数据
+			   $("#equip-detail").html(data);   
+			   alert(1);
+			   $.ajax({
+					url: "equipDetail.do",
+					type: 'POST',
+					data: {equipmentId:equipid,fromDate:fromDate,endDate:endDate},
+					dataType: 'json',
+					success: function(aadddww){
+						alert(aadddww.daynum);
+						alert(aadddww.fromDate);
+						//刷新数据
+						var tempa = aadddww.daynum.split(",");
+						var fromDate2 = new Date(aadddww.fromDate).getTime();
+						alert(fromDate2);
+						var endDate2 = new Date(aadddww.endDate).getTime();
+						alert(endDate2);
+					   $('#equip-chart').highcharts({
+					        chart: {
+					            type: 'line'
+					        },
+					        title: {
+					            text: ''
+					        },
+					        xAxis: {
+					            type: 'datetime',
+								dateTimeLabelFormats: {
+					                day: '%b%e日'
+					            },
+								plotBands: [{ // Light air
+									from: fromDate2,
+					                to: endDate2,
+									color: 'rgba(68, 170, 213, 0.1)',
+									label: {
+										text: '您的预约时间',
+										style: {
+											color: '#606060'
+										}
+									}
+								}], 
+					        },
+					        yAxis: {
+					            title: {
+					                text: '数量'
+					            },
+								min: 0,
+								allowDecimals: false
+					        },
+					        series: [{
+					            name: '参考数量',
+								pointInterval: 24 * 3600 * 1000, // 一天
+								pointStart: fromDate2,
+					            data: tempa, 
+								marker: {
+							    	fillColor: 'white',
+							    	lineWidth: 2,
+							    	lineColor: Highcharts.getOptions().colors[0]
+								}
+					        }],
+							legend: {
+					            enabled: false
+					        },
+							plotOptions: {
+								line: {
+									dataLabels: {
+										enabled: true
+									}
+								}
+							}
+					    });
+					}	  
+				});
+			}	  
+		});
 	});
 </script>
 </body>

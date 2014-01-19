@@ -1,6 +1,6 @@
 package com.sbgl.app.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Computerorderrule entity. @author MyEclipse Persistence Tools
@@ -15,8 +15,8 @@ public class Computerorderrule extends com.sbgl.app.dao.DaoAbs implements
 	private String name;
 	private String classname;
 	private Integer classid;
-	private Timestamp orderstarttime;
-	private Timestamp orderendtime;
+	private Date orderstarttime;
+	private Date orderendtime;
 	private Integer totaltime;
 
 	// Constructors
@@ -32,7 +32,7 @@ public class Computerorderrule extends com.sbgl.app.dao.DaoAbs implements
 
 	/** full constructor */
 	public Computerorderrule(Integer id, String name, String classname,
-			Integer classid, Timestamp orderstarttime, Timestamp orderendtime,
+			Integer classid, Date orderstarttime, Date orderendtime,
 			Integer totaltime) {
 		this.id = id;
 		this.name = name;
@@ -77,19 +77,19 @@ public class Computerorderrule extends com.sbgl.app.dao.DaoAbs implements
 		this.classid = classid;
 	}
 
-	public Timestamp getOrderstarttime() {
+	public Date getOrderstarttime() {
 		return this.orderstarttime;
 	}
 
-	public void setOrderstarttime(Timestamp orderstarttime) {
+	public void setOrderstarttime(Date orderstarttime) {
 		this.orderstarttime = orderstarttime;
 	}
 
-	public Timestamp getOrderendtime() {
+	public Date getOrderendtime() {
 		return this.orderendtime;
 	}
 
-	public void setOrderendtime(Timestamp orderendtime) {
+	public void setOrderendtime(Date orderendtime) {
 		this.orderendtime = orderendtime;
 	}
 

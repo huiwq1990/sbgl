@@ -17,7 +17,7 @@
             <column name="ownerId" length="15" />
         </property>
         <property name="createTime" type="java.util.Date">
-            <column name="createTime" length="19" />
+            <column name="createTime"  />
         </property>
         <property name="status" type="java.lang.Integer">
             <column name="status" />

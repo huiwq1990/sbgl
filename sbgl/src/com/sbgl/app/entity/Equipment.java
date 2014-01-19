@@ -1,6 +1,6 @@
 package com.sbgl.app.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Date;
 
 /**
@@ -47,7 +47,7 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 	/** full constructor */
 	public Equipment(Integer equipmentid, String equipmentname,
 			Integer brandid, Integer classificationid,
-			Integer administrationid, Timestamp makedate, Timestamp modifydate,
+			Integer administrationid, Date makedate, Date modifydate,
 			Integer equipmentnum, Integer activenum, Integer maintainnum,
 			Integer repairnum, Integer losednum, Integer recyclingnum,
 			String equipmentdetail, Integer category, String remark,

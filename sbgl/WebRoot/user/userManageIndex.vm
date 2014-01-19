@@ -109,7 +109,7 @@
                 </ul>
               </div> -->
               <div class="operate-item pull-left">
-                <a href="${webbaseurl}/userManageUserAdd.do" class="btn btn-primary">添加用户</a>
+                <a href="${webbaseurl}/equipManageAdmin.do" class="btn btn-primary">添加用户</a>
                 <a href="#" class="btn btn-white s-h" action-type="delUser"><i class="icon-trash"></i> 删除</a>
               </div>
 

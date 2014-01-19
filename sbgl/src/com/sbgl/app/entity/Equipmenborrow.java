@@ -11,7 +11,8 @@ public class Equipmenborrow extends com.sbgl.app.dao.DaoAbs implements
 
 	// Fields
 
-	private EquipmenborrowId id;
+	private Integer borrowid;
+	private Integer category;
 	private Integer userid;
 	private Integer teacherid;
 	private Date applytime;
@@ -23,6 +24,8 @@ public class Equipmenborrow extends com.sbgl.app.dao.DaoAbs implements
 	private Integer returnaudituser;
 	private String teachersuggest;
 	private String examstate;
+	private String title;
+	private String remark;
 
 	// Constructors
 
@@ -31,17 +34,18 @@ public class Equipmenborrow extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** minimal constructor */
-	public Equipmenborrow(EquipmenborrowId id) {
-		this.id = id;
+	public Equipmenborrow(Integer borrowid) {
+		this.borrowid = borrowid;
 	}
 
 	/** full constructor */
-	public Equipmenborrow(EquipmenborrowId id, Integer userid,
+	public Equipmenborrow(Integer borrowid, Integer category, Integer userid,
 			Integer teacherid, Date applytime, Integer status,
 			Date borrowtime, Date returntime, String reason,
 			Integer borrowaudituser, Integer returnaudituser,
-			String teachersuggest, String examstate) {
-		this.id = id;
+			String teachersuggest, String examstate, String title, String remark) {
+		this.borrowid = borrowid;
+		this.category = category;
 		this.userid = userid;
 		this.teacherid = teacherid;
 		this.applytime = applytime;
@@ -53,16 +57,26 @@ public class Equipmenborrow extends com.sbgl.app.dao.DaoAbs implements
 		this.returnaudituser = returnaudituser;
 		this.teachersuggest = teachersuggest;
 		this.examstate = examstate;
+		this.title = title;
+		this.remark = remark;
 	}
 
 	// Property accessors
 
-	public EquipmenborrowId getId() {
-		return this.id;
+	public Integer getBorrowid() {
+		return this.borrowid;
 	}
 
-	public void setId(EquipmenborrowId id) {
-		this.id = id;
+	public void setBorrowid(Integer borrowid) {
+		this.borrowid = borrowid;
+	}
+
+	public Integer getCategory() {
+		return this.category;
+	}
+
+	public void setCategory(Integer category) {
+		this.category = category;
 	}
 
 	public Integer getUserid() {
@@ -151,6 +165,22 @@ public class Equipmenborrow extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setExamstate(String examstate) {
 		this.examstate = examstate;
+	}
+
+	public String getTitle() {
+		return this.title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getRemark() {
+		return this.remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 }

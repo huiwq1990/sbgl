@@ -1,6 +1,6 @@
 package com.sbgl.app.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Date;
 
 /**
@@ -34,7 +34,7 @@ public class Equipmentclassification extends com.sbgl.app.dao.DaoAbs implements
 
 	/** full constructor */
 	public Equipmentclassification(Integer classificationid, Integer parentid,
-			String name, Timestamp maketime, Timestamp modifytime,
+			String name, Date maketime, Date modifytime,
 			Integer userid, String lanType, Integer comId) {
 		this.classificationid = classificationid;
 		this.parentid = parentid;
