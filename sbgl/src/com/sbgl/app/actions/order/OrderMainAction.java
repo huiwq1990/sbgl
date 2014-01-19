@@ -39,12 +39,12 @@ public class OrderMainAction  extends ActionSupport  {
 	private String class1Name;
 	private Integer classificationId;
 	private String serach;
-	private String daynum;
 	private String equIds;
 	private String equNums;
 	private String message;
 	private String tag;
 	private Integer borrowId;
+	private Integer[] daynums;
 	
 	//进入设备管理页面
 	public String equipmentBooking(){
@@ -112,7 +112,15 @@ public class OrderMainAction  extends ActionSupport  {
 				endDate = fromDate;
 			}
 		}
-		daynum = orderMainService.findDayNum(equipmentId,fromDate,endDate);
+		String daynum = orderMainService.findDayNum(equipmentId,fromDate,endDate);
+		String[] a =  daynum.split(",");
+		if(a!=null&&a.length>0){
+			daynums = new Integer[a.length];
+			for(int i=0;i<a.length;i++){
+				daynums[i] =Integer.parseInt(a[i]);
+			}
+		}
+		
 		return SUCCESS;
 	}
 	
@@ -278,14 +286,6 @@ public class OrderMainAction  extends ActionSupport  {
 		this.serach = serach;
 	}
 
-	public String getDaynum() {
-		return daynum;
-	}
-
-	public void setDaynum(String daynum) {
-		this.daynum = daynum;
-	}
-
 	public String getEquIds() {
 		return equIds;
 	}
@@ -324,6 +324,14 @@ public class OrderMainAction  extends ActionSupport  {
 
 	public void setBorrowId(Integer borrowId) {
 		this.borrowId = borrowId;
+	}
+
+	public Integer[] getDaynums() {
+		return daynums;
+	}
+
+	public void setDaynums(Integer[] daynums) {
+		this.daynums = daynums;
 	}
 
 

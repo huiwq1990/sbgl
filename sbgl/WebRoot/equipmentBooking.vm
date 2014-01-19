@@ -518,21 +518,16 @@ $(window).load(function(){
 			success: function(data){
 				//刷新数据
 			   $("#equip-detail").html(data);   
-			   alert(1);
 			   $.ajax({
 					url: "equipDetail.do",
 					type: 'POST',
 					data: {equipmentId:equipid,fromDate:fromDate,endDate:endDate},
 					dataType: 'json',
 					success: function(aadddww){
-						alert(aadddww.daynum);
-						alert(aadddww.fromDate);
 						//刷新数据
-						var tempa = aadddww.daynum.split(",");
-						var fromDate2 = new Date(aadddww.fromDate).getTime();
-						alert(fromDate2);
+						var tempb = aadddww.daynums;
+						var fromDate2 = new Date(aadddww.fromDate).getTime();	
 						var endDate2 = new Date(aadddww.endDate).getTime();
-						alert(endDate2);
 					   $('#equip-chart').highcharts({
 					        chart: {
 					            type: 'line'
@@ -568,7 +563,7 @@ $(window).load(function(){
 					            name: '参考数量',
 								pointInterval: 24 * 3600 * 1000, // 一天
 								pointStart: fromDate2,
-					            data: tempa, 
+					            data: tempb, 
 								marker: {
 							    	fillColor: 'white',
 							    	lineWidth: 2,

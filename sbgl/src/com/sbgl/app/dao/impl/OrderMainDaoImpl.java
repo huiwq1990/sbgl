@@ -208,7 +208,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	    String sql = " select  CONCAT(" ;
 	    	for(int i=0;i<size;i++){
 	    		String dateTemp = dateList.get(i);
-	    		sql +="(select   ifnull(sum(ifnull(b.borrownumber,b.applynumber)),0) as aaa from ListDetail b left outer join Equipment a on b.equipmentid=a.equipmentid " 
+	    		sql +="(select  a.activenum-ifnull(sum(ifnull(b.borrownumber,b.applynumber)),0) as aaa from ListDetail b left outer join Equipment a on b.equipmentid=a.equipmentid " 
 	    			+ " where b.equipmentid='"+equipmentId+"'  and (('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y')))  "  ;  
 	    		if(i!=size-1){
 	    			sql += " ,',', ";
@@ -228,7 +228,4 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		}	
 		return null;
 	}
-	
-	
-	
 }
