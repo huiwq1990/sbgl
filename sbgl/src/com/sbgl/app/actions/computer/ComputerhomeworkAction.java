@@ -98,7 +98,7 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 			return "error";
 		}
 		
-		String receivesql = " where a.userid ="+uidStr;
+		String receivesql = " where a.userid ="+uidStr ;
 		computerhomeworkreceiverList = computerhomeworkreceiverService.selectComputerhomeworkreceiverByCondition(receivesql);
 		
 		String newhomeworksql =  "";
@@ -125,13 +125,13 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 		
 			if(finishehomeworksql.length() > 1){
 				finishehomeworksql = finishehomeworksql.substring(0,finishehomeworksql.length()-1);
-				finishehomeworksql = " where a.id in (" +finishehomeworksql+") ";
+				finishehomeworksql = " where a.id in (" +finishehomeworksql+") "  + " order by computerhomeworkcreatetime desc ";
 				finishComputerhomeworkFullList = computerhomeworkService.selectComputerhomeworkFullByCondition(finishehomeworksql);
 			}
 			
 			if(newhomeworksql.length() > 1){
 				newhomeworksql = newhomeworksql.substring(0,newhomeworksql.length()-1);
-				newhomeworksql = " where a.id in (" +newhomeworksql+") ";
+				newhomeworksql = " where a.id in (" +newhomeworksql+") "  + " order by computerhomeworkcreatetime desc ";
 				newComputerhomeworkFullList = computerhomeworkService.selectComputerhomeworkFullByCondition(newhomeworksql);
 			}
 			
@@ -248,6 +248,9 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 				Computerhomeworkreceiver chr = new Computerhomeworkreceiver();
 				chr.setComputerhomeworkid(temp.getId());
 				chr.setUserid(Integer.valueOf(userIds[i]));
+				chr.setHasorder(0);
+				chr.setStatus(0);
+				chr.setHasview(0);
 				computerhomeworkreceiverService.addComputerhomeworkreceiver(chr);
 			}
 			

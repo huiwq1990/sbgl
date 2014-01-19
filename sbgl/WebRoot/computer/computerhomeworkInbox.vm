@@ -115,7 +115,7 @@
                         <div class="hd clearfix">
                           <h4 class="pull-left"><a class="lk" href="${webbaseurl}/checkComputerhomework.action?computerhomeworkid=$temp.computerhomeworkid">$!temp.computerhomeworkname</a></h4>
                         </div>
-                        <div class="t-r label label-important"><i class="icon-camera-retro icon-large"></i> 机房预约</div>
+                        <div class="t-r label label-important"><i class="icon-camera-retro icon-large"></i> <a href="${webbaseurl}/toComputerClassorderPage.${strutsaction}?computerhomeworkid=$temp.computerhomeworkid"">课程预约</a></div>
                         <div class="caption">
                           <div class="rent-info">
                            

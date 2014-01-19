@@ -30,8 +30,7 @@
 	  	<filter-class>
 	  		com.sbgl.util.SbglFilterDispatcher
 	  	</filter-class>
-  </filter>
-  
+  </filter> 
   <!-- 登录拦截器 -->
   <!--  
    <filter> 

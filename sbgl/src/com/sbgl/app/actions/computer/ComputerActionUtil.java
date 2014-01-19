@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 
@@ -47,7 +48,7 @@ public class ComputerActionUtil {
 	}
 	
 	/**
-	 * 获取当前语言
+	 * 获取当前用户
 	 *
 	 * @return
 	 */
@@ -58,5 +59,17 @@ public class ComputerActionUtil {
 		}
 		return uidStr;
 	}
+	
+	/**
+	 * 获取当前用户
+	 *
+	 * @return
+	 */
+	public static String getUserId(HttpServletRequest re ){
+		String uidStr = getUserIdFromCookie(re.getCookies());
+		
+		return uidStr;
+	}
 
+	
 }
