@@ -38,16 +38,27 @@
 			}
 		
 		}
-		$("body").on('change', function() {
-			$(".select2").select2({
-				minimumResultsForSearch: 8,
-				formatResult: format,
-				escapeMarkup: function(markup) { return markup; }
-			});
-		});
-							
+
+
+/*		$(".select2").select2({
+			minimumResultsForSearch: 8,
+			formatResult: format,
+			escapeMarkup: function(markup) { return markup; }
+		});*/
+		
+			$("body").on("load", function() {
+				alert(0)
+				$(".select2").select2({
+					minimumResultsForSearch: 8,
+					formatResult: format,
+					escapeMarkup: function(markup) { return markup; }
+				});
+				
+			});		
 		$(window).load(function(){
 
+
+			
 			var lastScrollTop = 0;
 			
 			$(window).scroll(function () {
