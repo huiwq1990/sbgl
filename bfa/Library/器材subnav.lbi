@@ -1,0 +1,11 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="../admin/管理中心首页.html">首页</a></li>
+        <li><a href="../admin/教学管理首页.html">教学</a></li>
+        <li><a href="../admin/用户管理首页.html">用户</a></li>
+        <li class="active"><a href="../admin/设备预约首页.html">器材</a></li>
+        <li><a href="../admin/机房预约管理首页.html">机房</a></li>
+        <li><a href="#">内容</a></li>
+      </ul>
+    </div>    
+    
