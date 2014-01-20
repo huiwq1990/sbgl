@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 用户管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="../css/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script src="../js/html5shiv.js"></script>
+  <script src="../js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a>
+        <!-- #BeginLibraryItem "/Library/siteNav.lbi" -->
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="../index.html"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="#anotherAction">个人主页</a></li>
+          <li><a href="#">通讯录</a></li>
+          <li class="divider"></li>
+          <li><a href="../预约首页.html">我的预约</a></li>
+          <li><a href="../消息中心-站内信.html">站内信</a></li>
+          <li class="divider"></li>
+          <li><a href="管理中心首页.html">管理中心</a></li>
+        </ul>
+      <!-- #EndLibraryItem --> </div>
+    </div>
+	<div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="管理中心首页.html">首页</a></li>
+        <li><a href="教学管理首页.html">教学</a></li>
+        <li class="active"><a href="用户管理首页.html">用户</a></li>
+        <li><a href="设备预约首页.html">器材</a></li>
+        <li><a href="机房预约管理首页.html">机房</a></li>
+        <li><a href="#">内容</a></li>
+      </ul>
+    </div>
+    <ul class="account-wrap nav nav-pills pull-right">
+      <li class="notice dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">消息1</a></li>
+          <li><a href="#">消息2</a></li>
+        </ul>
+      </li>     
+      <li class="social dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="../img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+        <div class="dropdown-menu">
+          <div class="media">
+            <a class="pull-left" href="#">
+              <img src="../img/photo.jpg" width="96" height="96" class="img-rounded">
+            </a>
+            <div class="media-body">
+              <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+              <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+              <div class="setting"><a href="#">账户设置</a></div>
+              <button class="btn btn-primary" type="button">查看个人主页</button>
+            </div>
+          </div>
+        </div>      
+      </li>
+    </ul>
+  </div>
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">管理员管理</div>
+              <div class="tips">在此页面下管理系统管理员，如管理员的添加、修改、删除及管理权限的分配。</div>
+              <div class="operate-item pull-left">
+                <a href="用户管理-添加用户.html" class="btn btn-primary">添加管理员</a>
+                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+              </div>
+
+              <div class="page pull-right clearfix">
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">最新</a></li>
+                      <li><a href="#">最旧</a></li>
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+                  <ul>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+              <ul class="status-filter nav nav-pills pull-right">
+                <li class="active"><a href="#">全部(6)</a></li>
+                <li><a href="#">系统管理员(1)</a></li>
+                <li><a href="#">系秘(1)</a></li>
+                <li><a href="#">器材管理员(2)</a></li>
+                <li><a href="#">机房管理员(2)</a></li>
+              </ul>
+            </div><!--control-bar end-->
+            <div class="panel panel-default">              
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="name">姓名</th>
+                    <th class="user-group">用户组</th>
+                    <th class="admin-group">管理组</th>
+                    <th class="operate">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>姓名</td>
+                    <td>教师 - 在职</td>
+                    <td>系统管理员</td>
+                    <td><a href="">修改</a> <a href="">删除</a></td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>姓名</td>
+                    <td>教师 - 在职</td>
+                    <td>系秘</td>
+                    <td><a href="">修改</a> <a href="">删除</a></td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>姓名</td>
+                    <td>教师 - 在职</td>
+                    <td>器材管理员</td>
+                    <td><a href="">修改</a> <a href="">删除</a></td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>姓名</td>
+                    <td>教师 - 在职</td>
+                    <td>机房管理员</td>
+                    <td><a href="">修改</a> <a href="">删除</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+      </div>
+      <!--equip-wrap end-->
+
+      <!--sidebar start-->
+      <div id="lside">
+        <form class="form-group">
+          <input type="text" class="form-control" placeholder="搜索用户">
+          <i class="icon-search"></i>
+        </form>
+        <div class="list-group">
+          <a href="用户管理首页.html" class="list-group-item">用户管理</a>
+          <a href="用户管理-添加用户.html" class="list-group-item">添加用户</a>
+          <a href="用户管理-用户组.html" class="list-group-item">用户组</a>
+          <a href="用户管理-班级管理.html" class="list-group-item">班级管理</a>
+          <a href="用户管理-发送通知.html" class="list-group-item">发送通知</a>
+          <a href="用户管理-管理员管理.html" class="list-group-item active">管理员管理</a>
+          <a href="用户管理-添加管理员.html" class="list-group-item">添加管理员</a>
+          <!--<a href="用户管理-管理组.html" class="list-group-item">管理组</a>-->
+          <!--<a href="用户管理-用户认证.html" class="list-group-item">用户认证</a>-->
+        </div>
+      </div>
+      <!--sidebar end-->
+
+</section>
+
+<!-- Modal -->
+<div id="modify-status" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">修改</h3>
+  </div>
+  <div class="modal-body">
+    <p>这里是修改设备相关说明。</p>
+
+    <dl class="dl-horizontal">
+      <dt>设备号</dt>
+      <dd><input type="text" class="input-block-level" value="424324325"></dd>
+      <dt>设备名称</dt>
+      <dd>
+        <select class="select2" style="width: 300px;">
+            <optgroup label="数字摄影机">
+                <option value="AK">Alaska</option>
+                <option value="HI">Hawaii</option>
+            </optgroup>
+            <optgroup label="数字摄像机">
+                <option value="CA">California</option>
+                <option value="NV">Nevada</option>
+                <option value="OR">Oregon</option>
+                <option value="WA">Washington</option>
+            </optgroup>
+            <optgroup label="单反">
+                <option value="AZ">Arizona</option>
+                <option value="CO">Colorado</option>
+                <option value="ID">Idaho</option>
+                <option value="MT">Montana</option><option value="NE">Nebraska</option>
+                <option value="NM">New Mexico</option>
+                <option value="ND">North Dakota</option>
+                <option value="UT">Utah</option>
+                <option value="WY">Wyoming</option>
+            </optgroup>
+            <optgroup label="镝灯">
+                <option value="AL">Alabama</option>
+                <option value="AR">Arkansas</option>
+                <option value="IL">Illinois</option>
+                <option value="IA">Iowa</option>
+                <option value="KS">Kansas</option>
+                <option value="KY">Kentucky</option>
+                <option value="LA">Louisiana</option>
+                <option value="MN">Minnesota</option>
+                <option value="MS">Mississippi</option>
+                <option value="MO">Missouri</option>
+                <option value="OK">Oklahoma</option>
+                <option value="SD">South Dakota</option>
+                <option value="TX">Texas</option>
+                <option value="TN">Tennessee</option>
+                <option value="WI">Wisconsin</option>
+            </optgroup>
+            <optgroup label="钨丝灯">
+                <option value="CT">Connecticut</option>
+                <option value="DE">Delaware</option>
+                <option value="FL">Florida</option>
+                <option value="GA">Georgia</option>
+                <option value="IN">Indiana</option>
+                <option value="ME">Maine</option>
+                <option value="MD">Maryland</option>
+                <option value="MA">Massachusetts</option>
+                <option value="MI">Michigan</option>
+                <option value="NH">New Hampshire</option><option value="NJ">New Jersey</option>
+                <option value="NY">New York</option>
+                <option value="NC">North Carolina</option>
+                <option value="OH">Ohio</option>
+                <option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option>
+                <option value="VT">Vermont</option><option value="VA">Virginia</option>
+                <option value="WV">West Virginia</option>
+            </optgroup>
+        </select>
+      </dd>
+      <dt>分类</dt>
+      <dd>
+        <select class="select2" data-type="category-select" style="width: 130px;">
+          <optgroup label="摄影摄像机">
+            <option value="2">数字摄影机</option>
+            <option value="3">数字摄像机</option>
+            <option value="4">单反</option>
+          </optgroup>
+          <optgroup label="灯具">
+            <option value="6">钨丝灯</option>
+            <option value="7">镝灯</option>
+          </optgroup>
+        </select>
+      </dd>
+      <dt>状态</dt>
+      <dd>
+        <select class="select2" data-type="status-select">
+          <option value="0">正常</option>
+          <option value="1">借出</option>
+          <option value="2">维护</option>
+          <option value="3">维修</option>
+          <option value="4">遗失</option>
+        </select>
+      </dd>
+      <dt>备注</dt>
+      <dd><textarea class="input-block-level" data-type="remark" rows="3"></textarea></dd>
+    </dl>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary">确 定</button>
+  </div>
+</div>
+
+<div id="add-equip" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">添加设备</h3>
+  </div>
+  <div class="modal-body">
+    <p>这里是添加设备相关说明。</p>
+    <dl class="dl-horizontal">
+      <dt>设备号</dt>
+      <dd><input type="text" class="input-xlarge" placeholder="设备编号"></dd>
+      <dt>设备名称</dt>
+      <dd>
+        <select class="select2" style="width: 288px;">
+            <optgroup label="数字摄影机">
+                <option value="AK">Alaska</option>
+                <option value="HI">Hawaii</option>
+            </optgroup>
+            <optgroup label="数字摄像机">
+                <option value="CA">California</option>
+                <option value="NV">Nevada</option>
+                <option value="OR">Oregon</option>
+                <option value="WA">Washington</option>
+            </optgroup>
+            <optgroup label="单反">
+                <option value="AZ">Arizona</option>
+                <option value="CO">Colorado</option>
+                <option value="ID">Idaho</option>
+                <option value="MT">Montana</option><option value="NE">Nebraska</option>
+                <option value="NM">New Mexico</option>
+                <option value="ND">North Dakota</option>
+                <option value="UT">Utah</option>
+                <option value="WY">Wyoming</option>
+            </optgroup>
+            <optgroup label="镝灯">
+                <option value="AL">Alabama</option>
+                <option value="AR">Arkansas</option>
+                <option value="IL">Illinois</option>
+                <option value="IA">Iowa</option>
+                <option value="KS">Kansas</option>
+                <option value="KY">Kentucky</option>
+                <option value="LA">Louisiana</option>
+                <option value="MN">Minnesota</option>
+                <option value="MS">Mississippi</option>
+                <option value="MO">Missouri</option>
+                <option value="OK">Oklahoma</option>
+                <option value="SD">South Dakota</option>
+                <option value="TX">Texas</option>
+                <option value="TN">Tennessee</option>
+                <option value="WI">Wisconsin</option>
+            </optgroup>
+            <optgroup label="钨丝灯">
+                <option value="CT">Connecticut</option>
+                <option value="DE">Delaware</option>
+                <option value="FL">Florida</option>
+                <option value="GA">Georgia</option>
+                <option value="IN">Indiana</option>
+                <option value="ME">Maine</option>
+                <option value="MD">Maryland</option>
+                <option value="MA">Massachusetts</option>
+                <option value="MI">Michigan</option>
+                <option value="NH">New Hampshire</option><option value="NJ">New Jersey</option>
+                <option value="NY">New York</option>
+                <option value="NC">North Carolina</option>
+                <option value="OH">Ohio</option>
+                <option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option>
+                <option value="VT">Vermont</option><option value="VA">Virginia</option>
+                <option value="WV">West Virginia</option>
+            </optgroup>
+        </select>
+      </dd>
+      <dt>分类</dt>
+      <dd>
+        <select class="select2" style="width: 130px;">
+          <option value="0" data-foo="fa">全部分类</option>
+          <option value="1" data-foo="fa">摄影摄像机</option>
+          <option value="2" data-foo="sub">数字摄影机</option>
+          <option value="3" data-foo="sub">数字摄像机</option>
+          <option value="4" data-foo="sub">单反</option>
+          <option value="5" data-foo="fa">灯具</option>
+          <option value="6" data-foo="sub">钨丝灯</option>
+          <option value="7" data-foo="sub">镝灯</option>
+        </select>
+      </dd>
+      <dt>状态</dt>
+      <dd>
+        <select id="select-status" class="select2">
+          <option value="0">正常</option>
+          <option value="1">借出</option>
+          <option value="2">维护</option>
+          <option value="3">维修</option>
+          <option value="4">遗失</option>
+        </select>
+      </dd>
+      <dt>备注</dt>
+      <dd><textarea class="input-xlarge" data-type="remark" rows="3"></textarea></dd>
+    </dl>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary">确 定</button>
+  </div>
+</div>
+
+<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
+  <img src="../img/cover-img.jpg" class="cover" alt="封面照片">
+  <div class="cover-layout"></div>
+  <div class="avatar"><img src="../img/photo.jpg" width="80" height="80" class="img-circle"></div>
+  <div class="user-wrap">
+    <div class="user-name"><a href="#">用户名</a></div>
+    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
+    <div class="user-info">职务等信息</div>
+    <div class="user-info">地点</div>
+  </div>
+  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
+</div>
+
+    <!-- javascript
+    ================================================== -->
+<script src="../js/jquery.js"></script>
+<script src="../js/loader.min.js"></script>
+<script src="../js/select2.js"></script>
+<script src="../js/bootstrap-hover-dropdown.min.js"></script>
+<script src="../js/bfa.js"></script>
+
+</body>
+</html>

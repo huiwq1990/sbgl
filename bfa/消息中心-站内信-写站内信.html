@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 消息中心</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/global.css" rel="stylesheet" type="text/css" />
+<link href="js/editor/themes/default/default.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 10]>
+  <script src="js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body>
+<header id="header-wrap"><!--header-wrap-->
+  <div id="global-header">
+    <div id="logo"><a class="brand" href="#"><img src="img/logo.png" alt="北京电影学院摄影系"></a></div>
+    <div id="hdc-wrap">
+      <div class="search-wrap">
+        <form class="form-search">
+          <div class="ipt-wrap form-group"><input type="text" class="form-control"></div>
+          <button type="submit" class="btn btn-primary"><i class="icon-search"></i></button>
+        </form>
+      </div>
+    </div>
+    <ul class="account-wrap nav nav-pills pull-right">
+      <li class="notice dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">消息1</a></li>
+          <li><a href="#">消息2</a></li>
+        </ul>
+      </li>     
+      <li class="social dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="img/photo.jpg" width="48" height="48" class="img-circle"> <b class="caret"></b></a>
+        <div class="dropdown-menu">
+          <div class="media">
+            <a class="pull-left" href="#">
+              <img src="img/photo.jpg" width="96" height="96" class="img-rounded">
+            </a>
+            <div class="media-body">
+              <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+              <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+              <div class="setting"><a href="#">账户设置</a></div>
+              <button class="btn btn-primary" type="button">查看个人主页</button>
+            </div>
+          </div>
+        </div>      
+      </li>
+    </ul>
+  </div>
+  
+  <div class="nav-wrap">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-bell-alt icon-large"></i> 消息中心</a><!-- #BeginLibraryItem "/Library/siteNav.lbi" --><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="index.html"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="#anotherAction">个人主页</a></li>
+          <li><a href="#">通讯录</a></li>
+          <li class="divider"></li>
+          <li><a href="预约首页.html">我的预约</a></li>
+          <li><a href="消息中心-站内信.html">站内信</a></li>
+          <li class="divider"></li>
+          <li><a href="admin/管理中心首页.html">管理中心</a></li>
+        </ul>
+          <!-- #EndLibraryItem --></div>
+    </div>
+    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="#">消息</a></li>
+        <li><a href="#">请求</a></li>
+        <li class="active"><a href="#">站内信</a></li>
+      </ul>
+    </div>
+  </div>
+  
+</header><!--/#header-wrap-->
+<section id="main-wrap"><!--main-wrap-->
+
+  <div id="main-content" class="clearfix"><!--main-content start-->
+
+      <div class="container" id="msg">
+        <div class="row">
+          <div class="col-md-12">
+            <form role="form">
+              <div class="control-bar"><!--control-bar start-->
+                <div class="title">新站内信</div>
+              </div>
+              <!--control-bar end-->
+              <div class="row">
+                <div class="send-to-warp">
+                  <div class="form-group send-to">
+                    <label class="sr-only" for="inputSendTo">收件人</label>
+                    <input type="text" id="inputSendTo" class="send-to form-control input-lg" placeholder="添加收件人">
+                  </div>
+                </div>
+                <div class="form-group user-group">
+                <a href="#userGroup" role="button" class="btn btn-white btn-large btn-block" data-toggle="modal"><i class="icon-group"> +</i></a>
+                </div>
+              </div>
+              <div class="form-group send-title">
+                <label class="sr-only" for="inputMsgTitle">主题</label>
+                <input type="text" class="form-control input-lg" id="inputMsgTitle" placeholder="添加主题">
+              </div>
+              <div class="msg-content-warp">
+                <div class="msg-content panel panel-default">
+                  <textarea name="content" id="inputContent" style="width:100%;height:300px;visibility:hidden;"></textarea>                
+                </div>
+              </div>
+              <div class="form-group attach-file-warp">
+                <div class="btn btn-white btn-block file-input-button">
+                    <i class="icon-paper-clip"></i>
+                    <span>添加附件</span>
+                    <input id="inputFilePath" type="file" name="files[]" multiple>
+                </div>
+                <p>附件上传说明</p>
+              </div>
+              <div class="clearfix"></div>
+              <div class="msg-send-option checkbox">
+                <label>
+                  <input type="checkbox"> 发送方式
+                </label>
+              </div>    
+              <a class="btn btn-white" href="">取 消</a>
+              <button type="submit" class="btn btn-primary">发 送</button>
+            </form>
+          </div>
+        </div>
+      </div>
+  </div>
+  <!---main-content end-->
+</section>
+
+
+<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
+  <img src="img/cover-img.jpg" class="cover" alt="封面照片" />
+  <div class="cover-layout"></div>
+  <div class="avatar"><img src="img/photo.jpg" width="80" height="80" class="img-circle"></div>
+  <div class="user-wrap">
+    <div class="user-name"><a href="#">用户名</a></div>
+    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
+    <div class="user-info">职务等信息</div>
+    <div class="user-info">地点</div>
+  </div>
+  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
+</div>
+
+<!-- Modal -->
+<div id="userGroup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">浏览好友</h3>
+  </div>
+  <div class="modal-body">
+    <p>One fine body…</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary">完 成</button>
+  </div>
+</div>
+
+    <!-- Le javascript
+    ================================================== -->
+<script src="js/jquery.js"></script>
+<script src="js/loader.min.js"></script>
+<script src="js/bootstrap-hover-dropdown.min.js"></script>
+<script src="js/select2.js"></script>
+<script src="js/bfa.js"></script>
+<script src="js/editor/kindeditor-min.js"></script>
+<script src="js/editor/lang/zh_CN.js"></script>
+
+<script>
+	$("#inputSendTo").select2({
+		createSearchChoice:function(term, data) { 
+			if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
+				return {id:term, text:term};} 
+			},
+		multiple: true,
+		data: [{id: 0, text: '用户名1'},{id: 1, text: '用户名2'},{id: 2, text: '用户名3'}]
+	});
+			
+	var editor;
+	KindEditor.ready(function(K) {
+		editor = K.create('textarea[name="content"]', {
+			resizeType : 1,
+			allowPreviewEmoticons : false,
+			allowImageUpload : false,
+			items : [
+				'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+				'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+				'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+		});
+	});
+</script>
+
+	
+
+</body>
+</html>

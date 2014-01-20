@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 机房管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="../css/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 9]>
+  <script src="../js/html5shiv.js"></script>
+  <script src="../js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="http://google.com"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="#anotherAction">个人主页</a></li>
+          <li><a href="#">人脉</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div>
+    </div><!-- #BeginLibraryItem "/Library/机房subnav.lbi" -->    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="管理中心首页.html">首页</a></li>
+        <li><a href="教学管理首页.html">教学</a></li>
+        <li><a href="用户管理首页.html">用户</a></li>
+        <li><a href="设备预约首页.html">器材</a></li>
+        <li class="active"><a href="机房预约管理首页.html">机房</a></li>
+        <li><a href="#">内容</a></li>
+      </ul>
+    </div><!-- #EndLibraryItem --><ul class="account-wrap nav nav-pills pull-right">
+          <li class="notice dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">消息1</a></li>
+              <li><a href="#">消息2</a></li>
+            </ul>
+          </li>     
+          <li class="social dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="../img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+            <div class="dropdown-menu">
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img src="../img/photo.jpg" width="96" height="96" class="img-rounded">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+                  <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+                  <div class="setting"><a href="#">账户设置</a></div>
+                  <button class="btn btn-primary" type="button">查看个人主页</button>
+                </div>
+              </div>
+            </div>      
+          </li>
+        </ul>
+  </div>
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap--><!-- #BeginLibraryItem "/Library/机房tabnav.lbi" -->      <ul class="nav nav-tabs">
+        <li><a href="机房预约管理首页.html">机房预约</a></li>
+        <li class="active"><a href="机房信息管理首页.html">机房管理</a></li>
+      </ul><!-- #EndLibraryItem --><!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">型号管理</div>
+			  <div class="tips">在此页面下管理设备型号。设备型号包含每种设备的基本信息，如设备名、设备图片、设备资料介绍等等。</div>
+              <div class="filter category-filter">
+                <select id="select-categories" style="width:130px" class="select2">
+                  <option value="0" data-foo="fa">全部分类</option>
+                  <option value="1" data-foo="fa">工作站</option>          
+                  <option value="5" data-foo="fa">数字调色台</option>          
+                </select>
+              </div>
+              <div class="operate-item pull-left">
+                <a href="#add-equip-model" class="btn btn-primary" data-toggle="modal" role="button">添加型号</a>
+                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+              </div>
+
+              <div class="page pull-right clearfix">
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="record">当前分类下有<strong>XX</strong>条记录</li>
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">最新</a></li>
+                      <li><a href="#">最旧</a></li>
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+                  <ul>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+            </div><!--control-bar end-->
+            <div class="panel panel-default">
+            
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="name">设备名称(型号)</th>
+                    <th class="categories">分类</th>
+                    <th class="num">数量</th>
+                    <th class="available-num">可借数量</th>
+                    <th class="describe">描述</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
+                    <td>DELL工作站<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button">修改</a></td>
+                    <td>工作站</td>
+                     <td>10</td>
+                     <td>8</td>
+                    <td>设备型号描述信息。</td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="2"></td>
+                    <td>MAC工作站<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button">修改</a></td>
+                    <td>工作站</td>
+                      <td>4</td>
+                      <td>2</td>
+                    <td>设备型号描述信息。</td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="2"></td>
+                    <td>剪辑机房-1<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button">修改</a></td>
+                    <td>机房</td>
+                      <td>1</td>
+                      <td>1</td>
+                    <td>设备型号描述信息。</td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="2"></td>
+                    <td>剪辑机房-2<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button">修改</a></td>
+                    <td>机房</td>
+                      <td>1</td>
+                      <td>0</td>
+                    <td>设备型号描述信息。</td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="2"></td>
+                    <td>剪辑机房-3<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button">修改</a></td>
+                    <td>机房</td>
+                      <td>1</td>
+                      <td>1</td>
+                    <td>设备型号描述信息。</td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="2"></td>
+                    <td>调色机房<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button">修改</a></td>
+                    <td>机房</td>
+                      <td>1</td>
+                      <td>1</td>
+                    <td>设备型号描述信息。</td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+
+      </div>
+      <!--equip-wrap end--> 
+	  
+	  
+      <div id="lside"><!--sidebar start-->
+        <form class="form-group">
+          <input type="text" class="form-control" placeholder="搜索设备">
+          <i class="icon-search"></i>
+        </form>
+        <div class="list-group">
+          <a href="机房信息管理首页.html" class="list-group-item">机房设备管理</a>
+          <a href="机房添加.html" class="list-group-item">添加设备</a>
+          <a href="机房型号管理.html" class="list-group-item active">型号管理</a>
+          <a href="机房分类管理.html" class="list-group-item">分类管理</a>
+        </div>
+      </div>
+      <!--sidebar end-->
+	  
+	  
+	  
+
+</section>
+
+
+<!-- Modal -->
+<div id="modify-model" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">修改</h3>
+  </div>
+  <div class="modal-body">
+    <p>这里是修改设备型号相关说明。</p>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="modifyEModelName" class="col-xs-3 control-label">名称</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="modifyEModelName" placeholder="Arri Alexa Plus">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modifyEquipCategory" class="col-xs-3 control-label">分类</label>
+        <div class="col-xs-7">
+         <select class="select2 select-white form-control" id="inputECategory">           
+            <option value="1" >工作站</option>           
+            <option value="5" >机房</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modifyEDescribe" class="col-xs-3 control-label">描述</label>
+        <div class="col-xs-7">
+          <textarea class="form-control" id="modifyEDescribe" rows="3"></textarea>
+        </div>
+      </div>    
+      <div class="form-group">
+        <label for="modifyEPic" class="col-xs-3 control-label">图片</label>
+        <div class="col-xs-7">
+          <span class="btn btn-white file-input-button">
+              <i class="icon-plus"></i>
+              <span>添加图片</span>
+              <input id="modifyEPic" type="file" name="files[]" multiple>
+          </span>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary">确 定</button>
+  </div>
+</div>
+
+
+<!-- tianjia-->
+<div id="add-equip-model" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">添加设备型号</h3>
+  </div>
+  <div class="modal-body">
+    <p>这里是添加设备型号相关说明。</p>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="inputEModelName" class="col-xs-3 control-label">名称</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="inputEModelName" placeholder="设备或机房名（如DELL工作站、剪辑机房-1）">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputECategory" class="col-xs-3 control-label">分类</label>
+        <div class="col-xs-7">
+          <select class="select2 select-white form-control" id="inputECategory">        
+            <option value="1" >工作站</option>           
+            <option value="5" >数字调色台</option>           
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputEDescribe" class="col-xs-3 control-label">描述</label>
+        <div class="col-xs-7">
+          <textarea class="form-control" id="inputEDescribe" rows="3"></textarea>
+        </div>
+      </div>
+ 
+      <div class="form-group">
+        <label for="inputEPic" class="col-xs-3 control-label">图片</label>
+        <div class="col-xs-7">
+          <span class="btn btn-white file-input-button">
+              <i class="icon-plus"></i>
+              <span>添加图片</span>
+              <input id="inputEPic" type="file" name="files[]" multiple>
+          </span>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary">确 定</button>
+  </div>
+</div>
+
+    <!-- javascript
+    ================================================== -->
+<script src="../js/jquery.js"></script>
+<script src="../js/loader.min.js"></script>
+<script src="../js/select2.js"></script>
+<script src="../js/bootstrap-hover-dropdown.min.js"></script>
+<script src="../js/bfa.js"></script>
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+</body>
+</html>
