@@ -1,0 +1,5 @@
+id,computercategorytype,languagetype,parentcomputercategoryid,name,createtime,createuserid,status
+ , ,0 ,0 ,服务器 , , , 
+ , , 1,0 ,Server , , , 
+ , , 0,0, 数字调色 , , , 
+ , , 1, 0, Digital color mixing device, , , 

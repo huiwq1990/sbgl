@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="computerorder" extends="admin">
+
+<!-- 用户点击预约按钮后，跳转到预约确认界面 -->
+		<action name="toComputerorderConfirmPage" class="ManageComputerorder" method="toComputerorderConfirmPage">
+        	<result name="success">/computer/computerorderConfirm.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+<!--预约成功界面 -->
+		<action name="toComputerorderSuccessPage" class="ManageComputerorder" method="toComputerorderSuccessPage">
+        	<result name="success">/computer/computerorderSuccess.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>        
+
+<!-- 审核订单 -->
+		<action name="toAuditComputerorderPage" class="ManageComputerorder" method="toAuditComputerorderPage">
+        	<result name="success">/computer/computerorderaudit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+        
+<!-- 转向下单页面 -->
+<action name="toOrderComputerPage" class="OrderComputerAction" method="toOrderComputerPage">
+        	<result name="success">/computer/ordercomputer.vm</result>
+        	<result name="error">/error.vm</result> 
+</action>
+
+		<!-- 用户查看自己的预约列表-->
+		<action name="computerorderList" class="ManageComputerorder" method="computerorderList">
+        	<result name="success">/computer/computerorderindex.vm</result>
+        
+        	<result name="error">/error.vm</result> 
+        </action>
+       
+<!-- 进行预约 -->
+<action name="orderComputer" class="OrderComputerAction" method="orderComputer">
+        	<result name="success">/computer/computerorderindex.vm</result>
+        
+        	<result name="error">/error.vm</result> 
+        </action>
+
+<!-- default entity manage action -->
+    	<action name="manageComputerorder" class="ManageComputerAction" method="manageComputerorder">
+        	<result name="success">/computer/computerorderManage.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+
+<!-- entity full manage  -->		
+		<!-- default entity full manage action -->
+    	<action name="manageComputerorderFull" class="ManageComputerAction" method="manageComputerorderFull">
+        	<result name="success1">/computer/computerorderFullManage.vm</result>
+        	<result name="success2">/computer/computerorderFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+<!--添加实体-->
+    	<action name="addComputerorder" class="ComputerorderAction" method="addComputerorder">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerorder</param>
+			</result>
+        </action>
+		
+		
+		
+<!--del-->
+        <!--del entity-->
+        <action name="deleteComputerorder" class="ComputerorderAction" method="deleteComputerorder">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerorder</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteComputerorderFull" class="ComputerorderAction" method="deleteComputerorderFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerorderFull</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--更新实体-->
+        <action name="updateComputerorder" class="ComputerorderAction" method="updateComputerorder">
+        	<result name="success">/computer/computerorderUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerorderJsp" class="ComputerorderAction" method="updateComputerorder">
+        	<result name="success">/computer/computerorderUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerorderVm" class="ComputerorderAction" method="updateComputerorder">
+        	<result name="success">/computer/computerorderUpdate.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+<!--update entity full-->
+        <action name="updateComputerorderFull" class="ComputerorderAction" method="updateComputerorder">
+        	<result name="success">/computer/computerorderFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerorderFullJsp" class="ComputerorderAction" method="updateComputerorder">
+        	<result name="success">/computer/computerorderFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerorderFullVm" class="ComputerorderAction" method="updateComputerorder">
+        	<result name="success">/computer/computerorderFullUpdate.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+<!--根据id查询实体-->
+        <action name="selectComputerorderById" class="ComputerorderAction" method="selectComputerorderById">
+        	<result name="success">/computer/computerorderView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+
+ <!-- 用户查看自己的预约 详情-->
+		<action name="viewComputerorder" class="ManageComputerorder" method="viewComputerorder">
+        	<result name="success">/computer/computerorderView.vm</result>
+        
+        	<result name="error">/error.vm</result> 
+        </action>
+
+
+
+		
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="computerorderAjax" extends="json-default">
+    
+    <!-- 预约单审核审核 -->
+    	<action name="computerorderFormConfirm" class="ManageComputerorder" method="computerorderFormConfirm">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+    
+    	<action name="addComputerorderAjax" class="ManageComputerorder" method="addComputerorderAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        <action name="deleteComputerorderAjax" class="ComputerorderAction" method="deleteComputerorderAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteComputerorderFullAjax" class="ComputerorderAction" method="deleteComputerorderFullAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+    	<action name="updateComputerorderAjax" class="ComputerorderAction" method="updateComputerorderAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        
+        
+       <action name="auditComputerorderAjax" class="ComputerorderAction" method="auditComputerorderAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        
+      
+	</package>
+
+</struts>

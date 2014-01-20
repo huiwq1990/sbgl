@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="computerstatus" extends="admin">
+
+
+<!-- default entity manage action -->
+    	<action name="manageComputerstatus" class="ManageComputerAction" method="manageComputerstatus">
+        	<result name="success">/computer/computerstatusManage.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!-- default entity manage action -->
+    	<action name="manageComputerstatusInfo" class="ManageComputerAction" method="manageComputerstatusInfo">
+        	<result name="success">/computer/computerstatusManage.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- entity full manage  -->		
+		<!-- default entity full manage action -->
+    	<action name="manageComputerstatusFull" class="ManageComputerAction" method="manageComputerstatusFull">
+        	<result name="success1">/computer/computerstatusFullManage.vm</result>
+        	<result name="success2">/computer/computerstatusFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+		
+<!--添加实体-->
+    	<action name="addComputerstatus" class="ComputerstatusAction" method="addComputerstatus">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerstatus</param>
+			</result>
+        </action>
+		<!--
+    	<action name="addComputerstatusJsp" class="ComputerstatusAction" method="addComputerstatus">
+        	<result type="redirectAction">
+				<param name="actionName">selectComputerstatusAll</param>
+			</result>
+        </action>		
+    	<action name="addComputerstatusVm" class="ComputerstatusAction" method="addComputerstatus">
+        	<result type="redirectAction">
+				<param name="actionName">selectComputerstatusAll</param>
+			</result>
+        </action>		
+		
+		-->
+<!--edit entity-->
+        <action name="editComputerstatus" class="ComputerstatusAction" method="editComputerstatus">
+        	<result name="success">/computer/computerstatusEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="editComputerstatusJsp" class="ComputerstatusAction" method="editComputerstatus">
+        	<result name="success">/computer/computerstatusEdit.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="editComputerstatusVm" class="ComputerstatusAction" method="editComputerstatus">
+        	<result name="success">/computer/computerstatusEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>		
+<!--edit entity full-->
+        <action name="editComputerstatusFull" class="ComputerstatusAction" method="editComputerstatusFull">
+        	<result name="success">/computer/computerstatusFullEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="editComputerstatusFullJsp" class="ComputerstatusAction" method="editComputerstatusFull">
+        	<result name="success">/computer/computerstatusFullEdit.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="editComputerstatusFullVm" class="ComputerstatusAction" method="editComputerstatusFull">
+        	<result name="success">/computer/computerstatusFullEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+<!--del-->
+        <!--del entity-->
+        <action name="deleteComputerstatus" class="ComputerstatusAction" method="deleteComputerstatus">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerstatus</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteComputerstatusFull" class="ComputerstatusAction" method="deleteComputerstatusFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerstatusFull</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--更新实体-->
+        <action name="updateComputerstatus" class="ComputerstatusAction" method="updateComputerstatus">
+        	<result name="success">/computer/computerstatusUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerstatusJsp" class="ComputerstatusAction" method="updateComputerstatus">
+        	<result name="success">/computer/computerstatusUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerstatusVm" class="ComputerstatusAction" method="updateComputerstatus">
+        	<result name="success">/computer/computerstatusUpdate.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+<!--update entity full-->
+        <action name="updateComputerstatusFull" class="ComputerstatusAction" method="updateComputerstatus">
+        	<result name="success">/computer/computerstatusFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerstatusFullJsp" class="ComputerstatusAction" method="updateComputerstatus">
+        	<result name="success">/computer/computerstatusFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerstatusFullVm" class="ComputerstatusAction" method="updateComputerstatus">
+        	<result name="success">/computer/computerstatusFullUpdate.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+<!--根据id查询实体-->
+        <action name="selectComputerstatusById" class="ComputerstatusAction" method="selectComputerstatusById">
+        	<result name="success">/computer/computerstatusView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity-->		
+        <action name="viewComputerstatus" class="ComputerstatusAction" method="viewComputerstatus">
+        	<result name="success">/computer/computerstatusView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--go to view jsp-->
+		<action name="viewComputerstatusJsp" class="ComputerstatusAction" method="viewComputerstatus">
+        	<result name="success">/computer/computerstatusView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!-- go to view vm-->
+		<action name="viewComputerstatusVm" class="ComputerstatusAction" method="viewComputerstatus">
+        	<result name="success">/computer/computerstatusView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>		
+<!-- View entity full-->		
+        <action name="viewComputerstatusFull" class="ComputerstatusAction" method="viewComputerstatusFull">
+        	<result name="success">/computer/computerstatusFullView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--go to view jsp-->
+		<action name="viewComputerstatusFullJsp" class="ComputerstatusAction" method="viewComputerstatusFull">
+        	<result name="success">/computer/computerstatusFullView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!-- go to view vm-->
+		<action name="viewComputerstatusFullVm" class="ComputerstatusAction" method="viewComputerstatusFull">
+        	<result name="success">/computer/computerstatusFullView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>		
+		
+        <!--查询全部实体-->
+        <action name="selectComputerstatusAll" class="ComputerstatusAction" method="selectComputerstatusAll">
+			<result name="success">/computer/computerstatus.jsp</result>
+			<result name="error">/error.vm</result>
+		</action>
+	
+
+		
+		
+<!--根据id查询实体full-->
+
+		<action name="selectComputerstatusFullById" class="ComputerstatusAction" method="selectComputerstatusFullById">
+		  	<result name="success">/computer/computerstatusViewFull.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+
+		
+		
+        <!--查询全部实体full-->
+        <action name="selectComputerstatusFullAll" class="ComputerstatusAction" method="selectComputerstatusFullAll">
+			<result name="success">/computer/computerstatusManage.vm</result>
+			<result name="error">/error.vm</result>
+		</action>
+		
+	
+		
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="computerstatusAjax" extends="json-default">
+    	<action name="addComputerstatusAjax" class="ComputerstatusAction" method="addComputerstatusAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        <action name="deleteComputerstatusAjax" class="ComputerstatusAction" method="deleteComputerstatusAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteComputerstatusFullAjax" class="ComputerstatusAction" method="deleteComputerstatusFullAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+    	<action name="updateComputerstatusAjax" class="ComputerstatusAction" method="updateComputerstatusAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
+	</package>
+
+</struts>

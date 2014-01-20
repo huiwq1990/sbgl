@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 设备预约</title>
+
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/todc-bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/global.css" rel="stylesheet" type="text/css" />
+<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="css/datepicker.css" rel="stylesheet" type="text/css" />
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+<script>
+	var class1Id = "${class1Id}";
+	var cId =0;
+	var ctype=1;
+	var parentid=class1Id;
+	var ordertype=0;
+</script>
+</head>
+
+<body>
+<header id="header-wrap"><!--header-wrap-->
+  <div id="global-header">
+    <div id="logo"><a class="brand" href="#"><img src="img/logo.png" alt="北京电影学院摄影系"></a></div>
+    <div id="hdc-wrap">
+      <div class="search-wrap">
+        <form class="form-search">
+          <div class="ipt-wrap form-group"><input type="text" class="form-control"></div>
+          <button type="submit" class="btn btn-primary"><i class="icon-search"></i></button>
+        </form>
+      </div>
+    </div>
+    <ul class="account-wrap nav nav-pills pull-right">
+      <li class="notice dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">消息1</a></li>
+          <li><a href="#">消息2</a></li>
+        </ul>
+      </li>     
+      <li class="social dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="loginhtml" class="username">陈诚</span><img src="img/photo.jpg" width="48" height="48" class="img-circle"> <b class="caret"></b></a>
+        <div class="dropdown-menu">
+          <div class="media">
+            <a class="pull-left" href="#">
+              <img src="img/photo.jpg" width="96" height="96" class="img-rounded">
+            </a>
+            <div class="media-body">
+              <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+              <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+              <div class="setting"><a href="#">账户设置</a></div>
+              <button class="btn btn-primary" type="button">查看个人主页</button>
+            </div>
+          </div>
+        </div>      
+      </li>
+    </ul>
+  </div>
+  
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 器材预约 <i class="icon-chevron-right"></i></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="http://google.com"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="#anotherAction">个人主页</a></li>
+          <li><a href="#">人脉</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        #foreach($row in $classification1List)		
+			<li id="cl1$!row.classificationid" #if($velocityCount=='1') class="active classification1" #else class="classification1" #end><a href="javascript:;"   data-type="classAjax" data-id="$!row.classificationid" data-classtype="1" >$!row.name</a></li>
+		#end
+      </ul>
+    </div>
+  </div>
+
+</header><!--/#header-wrap-->
+<section id="main-wrap"><!--main-wrap-->
+  <!--main-content start-->
+  <div id="main-content" class="clearfix">
+      <!--equip-wrap start-->
+      <div id="equip-wrap">  
+        <div id="equip-list">        
+          <div class="w200 container">
+            <div class="control-bar clearfix">
+              <div class="title pull-left">$!{class1Name}
+		  
+			  </div>
+              <form class="navbar-search pull-right">
+                <input id="serachtext" type="text" class="form-control" placeholder="搜索设备" >
+                <i data-type="classAjax" class="icon-search"></i>
+              </form>
+              <ul class="nav nav-pills pull-right">
+                #foreach($row2 in $!classification2List)		
+					#if($velocityCount=='1')<li id="cl20" class="active classification2" ><a href="javascript:;" data-type="classAjax" data-id="0" data-classtype="2" data-parentid="$!class1Id">全部</a></li>#end
+        			<li id="cl2$!row2.classificationid" class="classification2"><a href="javascript:;" data-type="classAjax" data-id="$!row2.classificationid" data-classtype="2" data-parentid="$!class1Id">$!row2.name</a></li>
+        		#end
+              </ul>
+            </div>
+            <div class="row">
+      			#foreach($row3 in $!equipmentList)	
+                  <div class="w-200">                  
+                      <div class="thumbnail">
+                        <img width="168px" height="128px" class="e-pic" src="img/170x140.jpg">
+                        <div class="caption">
+                          <div class="title"><a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.equipmentid" role="button">$!row3.equipmentname</a></div>
+                          <p class="detail">最多可借：$!row3.borrownum</p>
+                        </div>
+                        <div class="select-num">
+                          <select class="select2 form-control select-white" id="inputEquipStatus">
+							 #foreach($i in [1 .. $!row3.borrownum])	
+								<option value="$i">$i</option>
+							 #end
+                          </select>
+                        </div>                            
+                        <a class="btn btn-white add-btn" data-type="addEquip" data-id="$!row3.equipmentid" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" href="javascript:;">添 加</a>
+                      </div>                  
+                  </div>
+                   #end
+               
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--equip-wrap end-->
+
+     
+      <!--rent start-->
+      <div id="rent-bar">  
+              <div class="wizard thumbnail">
+
+
+
+<ul class="steps unstyled">
+		<li data-target="#step1" class="active"><h3>欢迎</h3></li>
+		<li data-target="#step2"><h3>选择设备</h3></li>
+	</ul>
+<div class="step-content">
+	<div class="step-pane active" id="step1">
+      <p>欢迎使用北京电影学院摄影系在线设备预约系统！</p>
+      <p>您正在进行的是<strong>个人预约</strong>。</p>
+      <p>您正在进行的是<strong>课程预约</strong>，以下是<strong>XXX 老师</strong>的相关要求：</p>
+      <div class="media">
+        <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
+          <img src="img/photo.jpg" width="46" height="46" class="img-rounded">
+        </a>
+        <div class="media-body">
+          <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">XXX</a></h5><span>XX月XX日</span></div>
+          <div class="media-content">
+            <h5>数字摄影技术第11周设备申请</h5>
+            <p>数字摄影技术第11周设备申请具体要求如下：</p>
+            <ol>
+              <li>...</li>
+              <li>...</li>
+              <li>...</li>
+              <li>...</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      
+    </div>
+	<div class="step-pane" id="step2">
+    
+        <div class="rent-time">
+          <div class="row">
+		  
+		    <div class="input-daterange">
+		      <div class="col-xs-5">
+                <input type="text" class="form-control" id="fromDate" name="start" placeholder="起始日期">
+	          </div>
+	          <div class="col-xs-2">
+                <span class="add-on">至</span>
+	          </div>
+	          <div class="col-xs-5">
+                <input type="text" class="form-control" id="endDate" name="end" placeholder="归还日期">
+	          </div>
+            </div>
+
+          </div>
+        </div>
+	<button type="button" data-type="classAjax" class="btn btn-primary">根据时间查询</button>
+	<div id="rent-list">
+          <p class="no-add">尚未添加任何设备。</p>
+        </div>
+    </div>
+    
+</div>
+
+<div class="form-actions actions">  
+		<button type="button" class="btn btn-white btn-prev" data-type="suborder2" disabled="disabled">上一步</button>
+		<button type="button" class="btn btn-primary btn-next" data-type="suborder" data-last="提交预约">下一步</button>
+</div>
+
+
+              </div>
+      </div>      
+      <!--rent start-->
+  </div>
+  <!---main-content end-->
+</section>
+<!-- Modal -->
+<div id="equip-detail" class="modal hide fade" tabindex="-1" role="dialog">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">设备详情</h3>
+  </div>
+  <div class="modal-body">
+    <div class="media">
+      <div class="pull-left">
+        <img data-src="holder.js/140x140" class="img-equip" alt="140x140" style="width: 140px; height: 140px; " src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAACMCAYAAACuwEE+AAADHklEQVR4Xu3XQU7qYABGUZ2yLpbNmhgy1WDSiKTQXi2VkvOG8kl99z9p4f14PH68+afAzALvwMwsZfZVABgQUgFgUi5jYBhIBYBJuYyBYSAVACblMgaGgVQAmJTLGBgGUgFgUi5jYBhIBYBJuYyBYSAVACblMgaGgVQAmJTLGBgGUgFgUi5jYBhIBYBJuYyBYSAVACblMgaGgVQAmJTLGBgGUgFgUi5jYBhIBYBJuYyBYSAVACblMgaGgVQAmJTLGBgGUgFgUi5jYBhIBYBJuYyBYSAVACblMgaGgVQAmJTLGBgGUgFgUi5jYBhIBYBJuYyBYSAVACblMgaGgVQAmJTLGBgGUgFgUi5jYBhIBYBJuYyBYSAVACblMgaGgVQAmJTLGBgGUgFgUi5jYBhIBYBJuYyBYSAVACblMgaGgVQAmJTLePNgDofD1ynu9/vR0xx7ffjZ8Au3fnfsDde+3rMR3TSYy4MfO/Sx168PfArA5YGtfb1nw3L+ezYN5vwfuHXg55/vdru30+n04w70FzD/cb1nQwPMxSNtwHQJ7fpxtzZQYBYucO8zyvkxNXVHGXt97M40/NlLX2/hHA9/u5e+w1zXmwPo3mNn6pH02+s9/JQXvMDLgrl1R5hzx6l3mLEPxsOH8KnrLXiWq7zVpsHM+Xp875vS9dfqqc8wS19vlRNe+CKbBrNwC283owAwMyKZfBcAhoZUAJiUyxgYBlIBYFIuY2AYSAWASbmMgWEgFQAm5TIGhoFUAJiUyxgYBlIBYFIuY2AYSAWASbmMgWEgFQAm5TIGhoFUAJiUyxgYBlIBYFIuY2AYSAWASbmMgWEgFQAm5TIGhoFUAJiUyxgYBlIBYFIuY2AYSAWASbmMgWEgFQAm5TIGhoFUAJiUyxgYBlIBYFIuY2AYSAWASbmMgWEgFQAm5TIGhoFUAJiUyxgYBlIBYFIuY2AYSAWASbmMgWEgFQAm5TIGhoFUAJiUyxgYBlIBYFIuY2AYSAWASbmMgWEgFQAm5TIGhoFUAJiUyxgYBlIBYFIuY2AYSAWASbmMgWEgFQAm5TL+BPsW85cqjddyAAAAAElFTkSuQmCC">
+      </div>
+      <div class="media-body">
+        <dl class="dl-horizontal">
+          <dt>型号</dt>
+          <dd>$!equipmentFull.equipmentname</dd>
+          <dt>所属分类</dt>
+          <dd>$!equipmentFull.categoryName</dd>
+          <dt>预约数量</dt>
+          <dd>
+            <div class="select-num">
+              <select class="select2 form-control select-white" id="inputEquipStatus" style="width: 80px;">
+				#if($!equipmentFull.borrownum)  				
+					#foreach($i in [1 .. $!equipmentFull.borrownum])	
+    					<option value="$i">$i</option>
+    				#end			
+				#else
+					<option value="0">0</option>
+				#end
+              </select>
+            </div>
+          </dd>
+          <dt>介绍</dt>
+          <dd>$!equipmentFull.equipmentdetail</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="equip-chart-title">近期可预约数量</div>
+    <div class="equip-chart-warp scrollable" style="width: 628px; overflow-x: auto">  
+      <div id="equip-chart" style="width:100%; height:150px;"></div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</a>
+    <a class="btn btn-primary" data-type="addEquip" data-id="$!equipmentFull.equipmentid" data-name="$!equipmentFull.equipmentname" data-num="$!equipmentFull.borrownum" href="javascript:;">添 加</a>
+  </div>
+</div>
+
+<div class="modal-backdrop fade in"></div>
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+<script src="js/jquery.js"></script>
+<script src="js/loader.min.js"></script>
+<script src="js/select2.js"></script>
+<script src="js/bootstrap-hover-dropdown.min.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
+<script src="js/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="js/bfa2.js"></script>
+<script src="js/highcharts.js"></script>
+<script>
+
+$('.input-daterange').datepicker({
+	language: 'zh-CN',
+	format: 'yyyy-mm-dd',
+	todayHighlight: true,
+});
+
+$(function () {
+	
+	Highcharts.setOptions({
+		lang: {
+			months: ['一月', '二月', '三月', '四月', '五月', '六月', 
+				'七月', '八月', '九月', '十月', '十一月', '十二月'],
+			shortMonths: ['1月', '2月', '3月', '4月', '5月', '6月', 
+				'7月', '8月', '9月', '10月', '11月', '12月'],
+			weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+		}
+	});
+
+$(window).load(function(){
+    $('#equip-chart').highcharts({
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            type: 'datetime',
+			dateTimeLabelFormats: {
+                day: '%b%e日'
+            },
+			plotBands: [{ // Light air
+				from: Date.UTC(2013, 8, 27),
+                to: Date.UTC(2013, 9, 3),
+				color: 'rgba(68, 170, 213, 0.1)',
+				label: {
+					text: '您的预约时间',
+					style: {
+						color: '#606060'
+					}
+				}
+			}], 
+        },
+        yAxis: {
+            title: {
+                text: '数量'
+            },
+			min: 0,
+			allowDecimals: false
+        },
+        series: [{
+            name: '参考数量',
+			pointInterval: 24 * 3600 * 1000, // 一天
+			pointStart: Date.UTC(2013, 8, 17),
+            data: [1, 0, 4, 3, 3, 2, 5, 6, 4, 3, 2, 2, 2, 3, 3, 3, 4, 2, 2, 2, 3, 3, 3, 4, 2, 2, 2],
+			marker: {
+		    	fillColor: 'white',
+		    	lineWidth: 2,
+		    	lineColor: Highcharts.getOptions().colors[0]
+			}
+        }],
+		legend: {
+            enabled: false
+        },
+		plotOptions: {
+			line: {
+				dataLabels: {
+					enabled: true
+				}
+			}
+		}
+    });
+    
+
+});
+});
+
+    var cookie={ 
+  		//读取COOKIES,n为COOKIE名 
+   		Get:function(n){ 
+       		var re=new RegExp(n+'=([^;]*);?','gi');
+       	    var r=re.exec(document.cookie)||[];
+       	    return (r.length>1?r[1]:null)
+   		},show:function(){
+	  		var userName=cookie.Get("username");
+	  		if(userName!=null && userName!="" ){
+			//登录成功
+		 		document.getElementById("loginhtml").innerHTML =unescape(userName);
+		 	}
+	  	}
+	}
+	  
+	cookie.show();
+	
+	
+	$("body").on("click", "a[data-type|=classAjax]", function() {
+		var fromDate = $("#fromDate").val();
+		var endDate = $("#endDate").val();
+		var myData = $(this).data();
+		cId = myData.id;
+		ctype=myData.classtype;
+		parentid=class1Id;
+		if(ctype=='1'){
+			parentid = cId;
+			class1Id = cId;
+			cId = 0;
+		}
+		$.ajax({
+			url: "equipmentByClass.do",
+			type: 'POST',
+			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate},
+			dataType: 'html',
+			success: function(data){
+				//刷新数据
+			   $("#equip-wrap").html(data);
+			   $(".classification1").removeClass('active');
+			   $(".classification2").removeClass('active');
+			   if(ctype=='1'){
+			   		$("#cl1"+parentid).addClass('active');	
+			   		$("#cl20").addClass('active');			
+			   }else{	  
+			   		$("#cl1"+parentid).addClass('active');
+			   		$("#cl2"+cId).addClass('active');
+			   }
+			}	  
+		});
+	});
+	
+	$("body").on("click", "button[data-type|=classAjax]", function() {
+		var fromDate = $("#fromDate").val();
+		var endDate = $("#endDate").val();
+		$.ajax({
+			url: "equipmentByClass.do",
+			type: 'POST',
+			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate},
+			dataType: 'html',
+			success: function(data){
+				//刷新数据
+			   $("#equip-wrap").html(data);
+			   $(".classification1").removeClass('active');
+			   $(".classification2").removeClass('active');
+			   if(ctype=='1'){
+			   		$("#cl1"+parentid).addClass('active');	
+			   		$("#cl20").addClass('active');			
+			   }else{	  
+			   		$("#cl1"+parentid).addClass('active');
+			   		$("#cl2"+cId).addClass('active');
+			   }
+			}	  
+		});
+	});
+	
+	$("body").on("click", "i[data-type|=classAjax]", function() {
+		var fromDate = $("#fromDate").val();
+		var endDate = $("#endDate").val();
+		var serach = $("#serachtext").val();
+		$.ajax({
+			url: "equipmentByClass.do",
+			type: 'POST',
+			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate,serach:serach},
+			dataType: 'html',
+			success: function(data){
+				//刷新数据
+			   $("#equip-wrap").html(data);
+			   $(".classification1").removeClass('active');
+			   $(".classification2").removeClass('active');
+			   if(ctype=='1'){
+			   		$("#cl1"+parentid).addClass('active');	
+			   		$("#cl20").addClass('active');			
+			   }else{	  
+			   		$("#cl1"+parentid).addClass('active');
+			   		$("#cl2"+cId).addClass('active');
+			   }
+			   $("#serachtext").val(serach);
+			}	  
+		});
+	});
+	
+	$("body").on("click", "button[data-type|=suborder2]", function() {
+		if(ordertype==1){
+			ordertype--;
+		}
+	});
+	
+	$("body").on("click", "button[data-type|=suborder]", function() {
+		var fromDate = $("#fromDate").val();
+		var endDate = $("#endDate").val();
+		if(ordertype==0){
+			ordertype++;
+			return;
+		}else{
+			var equNum = "";
+    		var equId = "";
+    		$("input[name='equNum']").each(function(i){ 
+				var temp1 = $(this).val();
+    			if(i==0){ 
+    				equNum += temp1;
+    			}else{
+    				equNum += ","+temp1;
+    			}
+    		});
+    		$("input[name='equId']").each(function(j){ 
+				var temp2 = $(this).val();
+    			if(j==0){ 
+    				equId += temp2;
+    			}else{
+    				equId += ","+temp2;
+    			}
+    		});
+			$.ajax({
+				url: "subOrder.do",
+				type: 'POST',
+				data: {equIds:equId,equNums:equNum,fromDate:fromDate,endDate:endDate},
+				dataType: 'json',
+				success: function(data){
+					if(data.tag==1){
+						location.href="equipmentConfirm.do?borrowId="+data.borrowId;
+					}else{
+						alert(data.message);
+						return;
+					}
+				}	  
+			});
+		}
+	});
+	
+	$("body").on("click", "a[data-type|=equipDetail]", function() {
+		var fromDate = $("#fromDate").val();
+		var endDate = $("#endDate").val();
+		var equipid = $(this).data("id");	
+		$.ajax({
+			url: "equipOrdDetail.do",
+			type: 'POST',
+			data: {equipmentId:equipid,fromDate:fromDate,endDate:endDate},
+			dataType: 'html',
+			success: function(data){
+				//刷新数据
+			   $("#equip-detail").html(data);   
+			   $.ajax({
+					url: "equipDetail.do",
+					type: 'POST',
+					data: {equipmentId:equipid,fromDate:fromDate,endDate:endDate},
+					dataType: 'json',
+					success: function(aadddww){
+						//刷新数据
+						var tempb = aadddww.daynums;
+						var fromDate2 = new Date(aadddww.fromDate).getTime();	
+						var endDate2 = new Date(aadddww.endDate).getTime();
+					   $('#equip-chart').highcharts({
+					        chart: {
+					            type: 'line'
+					        },
+					        title: {
+					            text: ''
+					        },
+					        xAxis: {
+					            type: 'datetime',
+								dateTimeLabelFormats: {
+					                day: '%b%e日'
+					            },
+								plotBands: [{ // Light air
+									from: fromDate2,
+					                to: endDate2,
+									color: 'rgba(68, 170, 213, 0.1)',
+									label: {
+										text: '您的预约时间',
+										style: {
+											color: '#606060'
+										}
+									}
+								}], 
+					        },
+					        yAxis: {
+					            title: {
+					                text: '数量'
+					            },
+								min: 0,
+								allowDecimals: false
+					        },
+					        series: [{
+					            name: '参考数量',
+								pointInterval: 24 * 3600 * 1000, // 一天
+								pointStart: fromDate2,
+					            data: tempb, 
+								marker: {
+							    	fillColor: 'white',
+							    	lineWidth: 2,
+							    	lineColor: Highcharts.getOptions().colors[0]
+								}
+					        }],
+							legend: {
+					            enabled: false
+					        },
+							plotOptions: {
+								line: {
+									dataLabels: {
+										enabled: true
+									}
+								}
+							}
+					    });
+					}	  
+				});
+			}	  
+		});
+	});
+</script>
+</body>
+</html>

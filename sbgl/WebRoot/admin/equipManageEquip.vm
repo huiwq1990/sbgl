@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 设备管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 9]>
+  <script src="./js/html5shiv.js"></script>
+  <script src="./js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="http://google.com"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="#anotherAction">个人主页</a></li>
+          <li><a href="#">人脉</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">设置</a></li>
+        <li><a href="用户管理首页.html">用户</a></li>
+        <li class="active"><a href="设备管理首页.html">器材</a></li>
+        <li><a href="#">内容</a></li>
+      </ul>
+    </div>    
+    <ul class="account-wrap nav nav-pills pull-right">
+          <li class="notice dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">消息1</a></li>
+              <li><a href="#">消息2</a></li>
+            </ul>
+          </li>     
+          <li class="social dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="${imageDomain}/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+            <div class="dropdown-menu">
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img src="${imageDomain}/photo.jpg" width="96" height="96" class="img-rounded">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+                  <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+                  <div class="setting"><a href="#">账户设置</a></div>
+                  <button class="btn btn-primary" type="button">查看个人主页</button>
+                </div>
+              </div>
+            </div>      
+          </li>
+        </ul>
+  </div>
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+      <ul class="nav nav-tabs">
+        <li><a href="设备预约首页.html">器材预约</a></li>
+        <li class="active"><a href="设备管理首页.html">器材管理</a></li>
+      </ul>
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">添加设备</div>
+              <div class="tips">在此页面下添加新的设备。</div>
+			  <div class="operate-item pull-left">
+			  <div class="col-xs-7">
+                <span class="btn btn-white file-input-button">
+                  <i class="icon-plus"></i>
+                  <span>上传Excel文件</span>
+                  <input id="uploadExcel" type="file" name="file" multiple>
+                </span>
+    		    <span id="imgFileForAlter"></span>
+              </div>	
+              </div>
+            </div><!--control-bar end-->
+            <div class="panel panel-default">
+              <div class="panel-body">
+              
+                <form class="form-horizontal" action="javascript:void(0)" role="form">
+                  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">资产编号</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="assetNumber" placeholder="资产编号">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">库存条码</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="storenumber" placeholder="库存条码">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">设备机身编号</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="equipserial" placeholder="设备机身编号">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">设备生产日期</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="manufactureDate" placeholder="日期格式：1970-01-01">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">取得日期</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="acquireDate" placeholder="日期格式：1970-01-01">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">生产厂商</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="manufacturer" placeholder="生产厂商">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">供货厂商</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="supplyer" placeholder="供货厂商">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">价值</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="worth" placeholder="格式：0.00">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">使用/管理部门</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="useManageDept" placeholder="使用与管理部门">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">管理人</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="manager" placeholder="管理人姓名">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">存放地点</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="storagePlace" placeholder="存放地点">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">存放位置</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="storagePosition" placeholder="存放位置">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="inputEquipCategory" class="col-lg-2 control-label">分类</label>
+                    <div class="col-lg-4">
+                      <select class="select2 select-white form-control" id="inputEquipCategory">
+                        <option value="0" data-foo="fa">全部分类</option>
+                          #foreach($clazz in $classForEquipAdd)
+            				#if($!clazz.isParent == '1')
+            					<optgroup label="$!clazz.name">
+            				#else
+            					<option value="$!clazz.id">$!clazz.name</option>
+            				#end
+            			 #end
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group" id="modelForSelete">
+                    <label for="inputEquipModelId" class="col-lg-2 control-label">所属设备型号</label>
+                    <div class="col-lg-4">
+                      <select class="select2 select-white form-control" id="inputEquipModelId">
+						<optgroup label="未知型号">
+						<option value="-1">未知型号</option>
+						#foreach($equip in $equipCourse)
+            				#if($!equip.showClass == '1')
+            					<optgroup label="$!equip.cName">
+            				#else
+            					<option value="$!equip.id">$!equip.name</option>
+            				#end
+            			#end
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEquipStatus" class="col-lg-2 control-label">状态</label>
+                    <div class="col-lg-4">
+                      <select class="select2 select-white form-control" id="inputEquipStatus">
+                        <option value="0">正常</option>
+                        <option value="1">借出</option>
+                        <option value="2">维护</option>
+                        <option value="3">维修</option>
+                        <option value="4">遗失</option>
+                        <option value="5">回收站</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEquipRemark" class="col-lg-2 control-label">备注</label>
+                    <div class="col-lg-4">
+                      <textarea class="form-control" id="inputEquipRemark" rows="3"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-4">
+                      <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+                      <button class="btn btn-primary" action-type="addEquipDetail">添 加</button>
+                    </div>
+                  </div>
+                </form>
+              
+              </div>
+            </div>
+          </div>
+
+      </div>
+      <!--equip-wrap end-->
+      <!--sidebar start-->
+      <div id="lside">
+        <form class="form-group">
+          <input type="text" class="form-control" placeholder="搜索设备">
+          <i class="icon-search"></i>
+        </form>
+        <div class="list-group">
+          <a href="${webbaseurl}/equipManageAdmin.do" class="list-group-item">设备管理</a>
+          <a href="${webbaseurl}/equipManageEquip.do" class="list-group-item active">添加设备</a>
+          <a href="${webbaseurl}/equipManageModel.do" class="list-group-item">型号管理</a>
+          <a href="${webbaseurl}/equipManageClassfication.do" class="list-group-item">分类管理</a>
+        </div>
+      </div>
+      <!--sidebar end-->
+
+</section>
+
+
+    <!-- javascript
+    ================================================== -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/fileUpload/vendor/jquery.ui.widget.js"></script>
+<script src="${jsDomain}/fileUpload/jquery.iframe-transport.js"></script>
+<script src="${jsDomain}/jquery.fileupload.js"></script>
+
+<!--[if lt IE 10]>
+  <script src="./js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<script>
+	var n = {};					//提示
+	var cookie = { 
+  		//读取COOKIES,n为COOKIE名 
+   		Get:function(n){ 
+       		var re=new RegExp(n+'=([^;]*);?','gi');
+       	    var r=re.exec(document.cookie)||[];
+       	    return (r.length>1?r[1]:null)
+   		}
+	};
+	
+	$("body").on("click", "button[action-type|=addEquipDetail]", function() {
+		var _this = $(this);
+		var equipserial = $("#equipserial").val();
+		var modelId = $("#inputEquipModelId").val();
+		var state = $("#inputEquipStatus").val();
+		var memo = $("#inputEquipRemark").val();
+		var manufactureDate = $("#manufactureDate").val();
+		var acquireDate = $("#acquireDate").val();
+		var manufacturer = $("#manufacturer").val();
+		var supplyer = $("#supplyer").val();
+		var worth = $("#worth").val();
+		var useManageDept = $("#useManageDept").val();
+		var manager = $("#manager").val();
+		var storagePlace = $("#storagePlace").val();
+		var storagePosition = $("#storagePosition").val();
+		var storenumber = $("#storenumber").val();
+		var assetNumber = $("#assetNumber").val();
+		var ci = $("#inputEquipCategory").val();
+		
+		var regex = /^[0-9]*$/;
+		var ret = regex.test(storenumber);
+		if(ret == false) {
+			alert("库存条码必须输入数字！");
+			return;
+		}
+		var ret1 = regex.test(assetNumber);
+		if(ret1 == false) {
+			alert("资产编号必须输入数字！");
+			return;
+		}
+		var regex2 = /^[0-9]+(.[0-9]+)?$/;
+		var ret3 = regex2.test(worth);
+		if(ret3 == false) {
+			alert("金额输入格式错误！");
+			return;
+		}
+		/*
+		console.log("detailNum " + detailNum);
+		console.log("state" + state);
+		console.log("modelId" + modelId);
+		console.log("memo" + memo);
+		console.log("administrationid" + cookie.Get("id"));
+		*/
+		
+		if(assetNumber == "") {
+			alert("资产编号不能为空!");
+			return;
+		}
+		var postData = {
+			"equipmentdetail.administrationid": cookie.Get("id"),
+			"equipmentdetail.equipserial": equipserial,
+			"equipmentdetail.equipmentid": modelId,
+			"equipmentdetail.status": state,
+			"equipmentdetail.usermark": memo,
+			"manufactureDateStr": manufactureDate,
+			"acquireDateStr": acquireDate,
+			"equipmentdetail.manufacturer": manufacturer,
+			"equipmentdetail.supplyer": supplyer,
+			"equipmentdetail.worth": worth,
+			"equipmentdetail.useManageDept": useManageDept,
+			"equipmentdetail.manager": manager,
+			"equipmentdetail.storagePlace": storagePlace,
+			"equipmentdetail.storagePosition": storagePosition,
+			"equipmentdetail.storenumber": storenumber,
+			"equipmentdetail.classificationid": ci,
+			"equipmentdetail.assetNumber": assetNumber
+		}
+	
+		jQuery.ajax({  
+		    url: "${webbaseurl}/addEquipDetail.do",  
+		    type: "post",
+		    data: postData,
+		    success:function(data,textStatus,jq){  
+		    	console.log(data);
+				if(data.tag == "0") {
+					n = noty({text: data.msg, timeout: 2500, type: 'success'});
+		    		_this.parents('.modal').modal('toggle');
+					
+					$("#inputEquipId").val("");
+            		$("#inputEquipModelId").select2("val", -1);
+            		$("#inputEquipStatus").select2("val", 0);
+            		$("#inputEquipRemark").val("");
+				} else {
+					n = noty({text: data.msg, timeout: 2500, type: 'error'});
+				}
+	        },  
+		    error:function(data,textStatus,jq) {
+				var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+			}  
+		});
+	});
+	
+	//监听分类下拉菜单
+	$("body").on("change", "#inputEquipCategory", function() {
+		var cid = $("#inputEquipCategory").val();
+		console.log(cid);
+		var postData = {
+    		"seletedClassId": cid
+    	};
+		
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/flushEquipDetailForAdd.do",  
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#modelForSelete").html(data);
+				//$("#inputEquipCategory").select2("val", cid);
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
+	
+	$('#uploadExcel').fileupload({
+    	url: "${webbaseurl}/uploadExcelFile.do",
+        dataType: 'json',
+		change: function (e, data) {
+        	n = noty({text: "请等待数据添加完成！", type: 'success'});
+    	},
+        done: function (e, data) {
+			 n.close();
+            //console.log(data);
+			if(data.result.tag == 0) {
+				alert("数据已经添加到数据库中！");
+			} else if(data.result.tag == 1) {
+				alert(data.result.msg);
+			} else {
+				alert("上传Excel失败！");
+			}
+            //alert(data.result.message);
+        }
+    });
+	
+</script>
+</body>
+</html>

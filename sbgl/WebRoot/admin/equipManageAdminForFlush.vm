@@ -1,0 +1,118 @@
+<div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">设备管理</div>
+			  <div class="tips">在此页面下管理设备信息，如设备的添加、修改、删除及维护等。</div>
+              <div class="filter category-filter">
+                <select id="select-categories" style="width:130px" class="select2">
+                  <option value="0" data-foo="fa">全部分类</option>
+                  <option value="-2" data-foo="fa">未知分类</option>
+                  <option value="-1" data-foo="fa">未分类</option>
+                  #foreach($clazz in $classForEquipAdd)
+    				#if($!clazz.isParent == '1')
+    					<optgroup label="$!clazz.name">
+    				#else
+    					<option value="$!clazz.id">$!clazz.name</option>
+    				#end
+    			 #end
+                </select>
+              </div>
+              
+              <div class="operate-item pull-left">
+                <a href="${webbaseurl}/equipManageEquip.do" class="btn btn-primary">添加设备</a>
+                <a href="#" class="btn btn-white s-h" action-type="deleteDetail"><i class="icon-trash"></i> 删除</a>
+              </div>
+
+              <div class="page pull-right clearfix">
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!crtDetailPage/$!totalDetailPages页<b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#" action-type="goFirst">最新</a></li>
+                      <li><a href="#" action-type="goLast">最旧</a></li>
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+                  <ul>
+                    <li><a href="#" rel="tooltip" action-type="backPage" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" action-type="nextPage" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+              <ul class="status-filter nav nav-pills pull-right">
+                <li class="active" action-type="active" id="-1" data-state="-1"><a href="#">全部(<span id="sum">$!totalDetailSum</span>)（无不显示）</a></li>
+                <li action-type="active" id="0" data-state="0"><a href="#">正常(<span id="sum0">$!normalSum</span>)</a></li>
+                <li action-type="active" id="1" data-state="1"><a href="#">借出(<span id="sum1">$!loanSum</span>)</a></li>
+                <li action-type="active" id="2" data-state="2"><a href="#">维护(<span id="sum2">$!maintSum</span>)</a></li>
+                <li action-type="active" id="3" data-state="3"><a href="#">维修(<span id="sum3">$!repairSum</span>)</a></li>
+                <li action-type="active" id="4" data-state="4"><a href="#">遗失(<span id="sum4">$!lostSum</span>)</a></li>
+                <li action-type="active" id="5" data-state="5"><a href="#">回收站(<span id="sum5">$!recycleSum</span>)</a></li>
+              </ul>
+            </div><!--control-bar end-->
+            <div class="panel panel-default table-responsive" id="detailDataDomain">
+                          
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="id">资产编号</th>
+                    <th class="status">机身编号</th>
+                    <th class="id">型号</th>
+                    <th class="id">分类名称</th>
+					<th class="status">状态</th>
+                    <th class="id">使用/管理部门</th>
+                    <th class="status">管理人</th>
+                    <th class="id">存放地点</th>
+                    <th class="remark">备注</th>
+                  </tr>
+                </thead>
+                <tbody>
+				  #foreach($equipDetail in $equipDetailCourse)
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!equipDetail.id"></td>
+                    <td>$!equipDetail.assetNumber<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="alterDetailFillIn" data-id="$!equipDetail.id" data-code="$!equipDetail.code" data-mid="$!equipDetail.modelId" data-state="$!equipDetail.state" data-memo="$!equipDetail.memo" data-mDate="$!equipDetail.mDate" data-aDate="$!equipDetail.aDate" data-manufacturer="$!equipDetail.manufacturer" data-supplyer="$!equipDetail.supplyer" data-worth="$!equipDetail.worth" data-useManageDept="$!equipDetail.useManageDept" data-manager="$!equipDetail.manager" data-storagePlace="$!equipDetail.storagePlace" data-storagePosition="$!equipDetail.storagePosition" data-storenumber="$!equipDetail.storenumber" data-equipserial="$!equipDetail.equipserial" data-assetNumber="$!equipDetail.assetNumber" data-classId="$!equipDetail.classId">修改</a></td>
+                    <td>$!equipDetail.equipserial</td>
+					<td>$!equipDetail.modelName</td>
+					<td>$!equipDetail.className</td>
+					#if($!equipDetail.state == 0)
+						<td>正常</td>
+					#elseif($!equipDetail.state == 1)
+						<td>借出</td>
+					#elseif($!equipDetail.state == 2)
+						<td>维护</td>
+					#elseif($!equipDetail.state == 3)
+						<td>维修</td>
+					#elseif($!equipDetail.state == 4)
+						<td>遗失</td>
+					#elseif($!equipDetail.state == 5)
+						<td>回收站</td>
+					#end
+                    <td>$!equipDetail.useManageDept</td>
+                    <td>$!equipDetail.manager</td>
+                    <td>$!equipDetail.storagePlace</td>
+                    <td>$!equipDetail.memo</td>
+                  </tr>
+                  #end
+                </tbody>
+              </table>
+              
+            </div>
+          </div>
+<script >
+	$(".select2").select2({
+		minimumResultsForSearch: 8,
+		formatResult: format,
+		escapeMarkup: function(markup) { return markup; }
+	});
+	function format(state) {
+		var originalOption = state.element;
+		
+		if ($(originalOption).data('foo') === 'sub') {
+			return "<span class='sub'>" + state.text + "</span>";
+		} else {
+			return state.text;
+		}
+	
+	}
+</script>

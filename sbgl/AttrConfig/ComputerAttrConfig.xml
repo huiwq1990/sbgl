@@ -1,0 +1,7 @@
+
+    ManyToOne;attrName=computermodelid ;colName=computermodelid;class=Computermodel;
+    ManyToOne;attrName=computerstatusid ;colName=computerstatusid;class=Computerstatus;
+//如果有多对一，则配置
+//OneToMany;attrName= ;colName=;class=;
+
+	

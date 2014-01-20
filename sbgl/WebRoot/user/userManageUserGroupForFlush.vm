@@ -1,0 +1,41 @@
+<div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">用户组管理</div>
+              <div class="tips">在此页面下添加新的用户组或者管理现有用户组。</div>
+              <div class="operate-item pull-left">
+                <a href="#add-equip-category" class="btn btn-primary" action-type="clearInput" data-toggle="modal" role="button">添加用户组</a>
+                <a href="#" class="btn btn-white s-h" action-type="delUserGroup"><i class="icon-trash"></i> 删除</a>
+              </div>
+            </div><!--control-bar end-->
+            <div class="panel panel-default">
+            
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="name">名称</th>
+                    <th class="f-category">组分类</th>
+                  </tr>
+                </thead>
+                <tbody>
+				  #foreach($group in $allGroupList)
+				    #if($group.type != 0)
+					  <tr>
+                        <td><input class="chk" type="checkbox" name="chk-list" value="$!group.id"></td>
+                        <td>$!group.name<a class="btn btn-white btn-mini" action-type="beforeModify" data-id="$!group.id" data-name="$!group.name" data-type="$!group.type" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
+						#if($!group.type == 2)
+						<td>学生</td>
+						#elseif($!group.type == 6)
+						<td>教师</td>
+						#elseif($!group.type == -1)
+						<td>其他</td>
+						#end
+                  	 </tr>
+				    #end
+                  #end
+                </tbody>
+              </table>
+              
+            </div>
+          </div>

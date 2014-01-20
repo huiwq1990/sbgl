@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="computerhomeworkreceiver" extends="admin">
+
+
+<!-- default entity manage action -->
+    	<action name="manageComputerhomeworkreceiver" class="ManageComputerAction" method="manageComputerhomeworkreceiver">
+        	<result name="success">/computer/computerhomeworkreceiverManage.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!-- default entity manage action -->
+    	<action name="manageComputerhomeworkreceiverInfo" class="ManageComputerAction" method="manageComputerhomeworkreceiverInfo">
+        	<result name="success">/computer/computerhomeworkreceiverManage.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!-- manage action , go to jsp page -->
+    	<action name="manageComputerhomeworkreceiverJsp" class="ManageComputerAction" method="manageComputerhomeworkreceiver">
+        	<result name="success">/computer/computerhomeworkreceiverManage.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>		
+		<!-- manage action , go to vm page -->
+    	<action name="manageComputerhomeworkreceiverVm" class="ManageComputerAction" method="manageComputerhomeworkreceiver">
+        	<result name="success">/computer/computerhomeworkreceiverManage.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>		
+<!-- entity full manage  -->		
+		<!-- default entity full manage action -->
+    	<action name="manageComputerhomeworkreceiverFull" class="ManageComputerAction" method="manageComputerhomeworkreceiverFull">
+        	<result name="success1">/computer/computerhomeworkreceiverFullManage.vm</result>
+        	<result name="success2">/computer/computerhomeworkreceiverFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!-- manage action , go to jsp page -->
+    	<action name="manageComputerhomeworkreceiverFullJsp" class="ManageComputerAction" method="manageComputerhomeworkreceiverFull">
+        	<result name="success">/computer/computerhomeworkreceiverFullManage.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>		
+		<!-- manage action , go to vm page -->
+    	<action name="manageComputerhomeworkreceiverFullVm" class="ManageComputerAction" method="manageComputerhomeworkreceiverFull">
+        	<result name="success">/computer/computerhomeworkreceiverFullManage.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>	
+		
+		
+<!--添加实体-->
+    	<action name="addComputerhomeworkreceiver" class="ComputerhomeworkreceiverAction" method="addComputerhomeworkreceiver">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerhomeworkreceiver</param>
+			</result>
+        </action>
+		<!--
+    	<action name="addComputerhomeworkreceiverJsp" class="ComputerhomeworkreceiverAction" method="addComputerhomeworkreceiver">
+        	<result type="redirectAction">
+				<param name="actionName">selectComputerhomeworkreceiverAll</param>
+			</result>
+        </action>		
+    	<action name="addComputerhomeworkreceiverVm" class="ComputerhomeworkreceiverAction" method="addComputerhomeworkreceiver">
+        	<result type="redirectAction">
+				<param name="actionName">selectComputerhomeworkreceiverAll</param>
+			</result>
+        </action>		
+		
+		-->
+<!--edit entity-->
+        <action name="editComputerhomeworkreceiver" class="ComputerhomeworkreceiverAction" method="editComputerhomeworkreceiver">
+        	<result name="success">/computer/computerhomeworkreceiverEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="editComputerhomeworkreceiverJsp" class="ComputerhomeworkreceiverAction" method="editComputerhomeworkreceiver">
+        	<result name="success">/computer/computerhomeworkreceiverEdit.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="editComputerhomeworkreceiverVm" class="ComputerhomeworkreceiverAction" method="editComputerhomeworkreceiver">
+        	<result name="success">/computer/computerhomeworkreceiverEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>		
+<!--edit entity full-->
+        <action name="editComputerhomeworkreceiverFull" class="ComputerhomeworkreceiverAction" method="editComputerhomeworkreceiverFull">
+        	<result name="success">/computer/computerhomeworkreceiverFullEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="editComputerhomeworkreceiverFullJsp" class="ComputerhomeworkreceiverAction" method="editComputerhomeworkreceiverFull">
+        	<result name="success">/computer/computerhomeworkreceiverFullEdit.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="editComputerhomeworkreceiverFullVm" class="ComputerhomeworkreceiverAction" method="editComputerhomeworkreceiverFull">
+        	<result name="success">/computer/computerhomeworkreceiverFullEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+<!--del-->
+        <!--del entity-->
+        <action name="deleteComputerhomeworkreceiver" class="ComputerhomeworkreceiverAction" method="deleteComputerhomeworkreceiver">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerhomeworkreceiver</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteComputerhomeworkreceiverFull" class="ComputerhomeworkreceiverAction" method="deleteComputerhomeworkreceiverFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerhomeworkreceiverFull</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--更新实体-->
+        <action name="updateComputerhomeworkreceiver" class="ComputerhomeworkreceiverAction" method="updateComputerhomeworkreceiver">
+        	<result name="success">/computer/computerhomeworkreceiverUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerhomeworkreceiverJsp" class="ComputerhomeworkreceiverAction" method="updateComputerhomeworkreceiver">
+        	<result name="success">/computer/computerhomeworkreceiverUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerhomeworkreceiverVm" class="ComputerhomeworkreceiverAction" method="updateComputerhomeworkreceiver">
+        	<result name="success">/computer/computerhomeworkreceiverUpdate.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+<!--update entity full-->
+        <action name="updateComputerhomeworkreceiverFull" class="ComputerhomeworkreceiverAction" method="updateComputerhomeworkreceiver">
+        	<result name="success">/computer/computerhomeworkreceiverFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerhomeworkreceiverFullJsp" class="ComputerhomeworkreceiverAction" method="updateComputerhomeworkreceiver">
+        	<result name="success">/computer/computerhomeworkreceiverFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<action name="updateComputerhomeworkreceiverFullVm" class="ComputerhomeworkreceiverAction" method="updateComputerhomeworkreceiver">
+        	<result name="success">/computer/computerhomeworkreceiverFullUpdate.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+<!--根据id查询实体-->
+        <action name="selectComputerhomeworkreceiverById" class="ComputerhomeworkreceiverAction" method="selectComputerhomeworkreceiverById">
+        	<result name="success">/computer/computerhomeworkreceiverView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity-->		
+        <action name="viewComputerhomeworkreceiver" class="ComputerhomeworkreceiverAction" method="viewComputerhomeworkreceiver">
+        	<result name="success">/computer/computerhomeworkreceiverView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--go to view jsp-->
+		<action name="viewComputerhomeworkreceiverJsp" class="ComputerhomeworkreceiverAction" method="viewComputerhomeworkreceiver">
+        	<result name="success">/computer/computerhomeworkreceiverView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!-- go to view vm-->
+		<action name="viewComputerhomeworkreceiverVm" class="ComputerhomeworkreceiverAction" method="viewComputerhomeworkreceiver">
+        	<result name="success">/computer/computerhomeworkreceiverView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>		
+<!-- View entity full-->		
+        <action name="viewComputerhomeworkreceiverFull" class="ComputerhomeworkreceiverAction" method="viewComputerhomeworkreceiverFull">
+        	<result name="success">/computer/computerhomeworkreceiverFullView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--go to view jsp-->
+		<action name="viewComputerhomeworkreceiverFullJsp" class="ComputerhomeworkreceiverAction" method="viewComputerhomeworkreceiverFull">
+        	<result name="success">/computer/computerhomeworkreceiverFullView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!-- go to view vm-->
+		<action name="viewComputerhomeworkreceiverFullVm" class="ComputerhomeworkreceiverAction" method="viewComputerhomeworkreceiverFull">
+        	<result name="success">/computer/computerhomeworkreceiverFullView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>		
+		
+        <!--查询全部实体-->
+        <action name="selectComputerhomeworkreceiverAll" class="ComputerhomeworkreceiverAction" method="selectComputerhomeworkreceiverAll">
+			<result name="success">/computer/computerhomeworkreceiver.jsp</result>
+			<result name="error">/error.vm</result>
+		</action>
+	
+
+		
+		
+<!--根据id查询实体full-->
+
+		<action name="selectComputerhomeworkreceiverFullById" class="ComputerhomeworkreceiverAction" method="selectComputerhomeworkreceiverFullById">
+		  	<result name="success">/computer/computerhomeworkreceiverViewFull.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+
+		
+		
+        <!--查询全部实体full-->
+        <action name="selectComputerhomeworkreceiverFullAll" class="ComputerhomeworkreceiverAction" method="selectComputerhomeworkreceiverFullAll">
+			<result name="success">/computer/computerhomeworkreceiverManage.vm</result>
+			<result name="error">/error.vm</result>
+		</action>
+		
+	
+		
+
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="computerhomeworkreceiverAjax" extends="json-default">
+    	<action name="addComputerhomeworkreceiverAjax" class="ComputerhomeworkreceiverAction" method="addComputerhomeworkreceiverAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        <action name="deleteComputerhomeworkreceiverAjax" class="ComputerhomeworkreceiverAction" method="deleteComputerhomeworkreceiverAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteComputerhomeworkreceiverFullAjax" class="ComputerhomeworkreceiverAction" method="deleteComputerhomeworkreceiverFullAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+    	<action name="updateComputerhomeworkreceiverAjax" class="ComputerhomeworkreceiverAction" method="updateComputerhomeworkreceiverAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
+	</package>
+
+</struts>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 用户管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script src="../js/html5shiv.js"></script>
+  <script src="../js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+  <div id="global-header">
+    <div id="logo"><a class="brand" href="#"><img src="${imageDomain}/logo.png" alt="北京电影学院摄影系"></a></div>
+    <div id="hdc-wrap">
+      <div class="search-wrap">
+        <form class="form-search">
+          <div class="ipt-wrap form-group"><input type="text" class="form-control"></div>
+          <button type="submit" class="btn btn-primary"><i class="icon-search"></i></button>
+        </form>
+      </div>
+    </div>
+    <ul class="account-wrap nav nav-pills pull-right">
+      <li class="notice dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">消息1</a></li>
+          <li><a href="#">消息2</a></li>
+        </ul>
+      </li>     
+      <li class="social dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="${imageDomain}/photo.jpg" width="48" height="48" class="img-circle"> <b class="caret"></b></a>
+        <div class="dropdown-menu">
+          <div class="media">
+            <a class="pull-left" href="#">
+              <img src="${imageDomain}/photo.jpg" width="96" height="96" class="img-rounded">
+            </a>
+            <div class="media-body">
+              <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+              <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+              <div class="setting"><a href="#">账户设置</a></div>
+              <button class="btn btn-primary" type="button">查看个人主页</button>
+            </div>
+          </div>
+        </div>      
+      </li>
+    </ul>
+  </div>
+  
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="http://google.com"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="#anotherAction">个人主页</a></li>
+          <li><a href="#">人脉</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">设置</a></li>
+        <li class="active"><a href="#">用户</a></li>
+        <li><a href="#">设备</a></li>
+        <li><a href="#">内容</a></li>
+      </ul>
+    </div>
+  </div>
+
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">添加用户</div>
+              <div class="tips">在此页面下添加新的用户。</div>
+            </div><!--control-bar end-->
+            <div class="panel panel-default">
+              <div class="panel-body">
+                
+                <form class="form-horizontal" role="form">
+                  <div class="form-group">
+                    <label for="inputTrueName" class="col-lg-2 control-label">真实姓名</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="inputTrueName" placeholder="真实姓名">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputPassword1" class="col-lg-2 control-label">密码</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="inputPassword1" placeholder="登录密码">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputUserGroup" class="col-lg-2 control-label">用户组</label>
+                    <div class="col-lg-4">
+                      <select class="select2 form-control" id="inputUserGroup">
+                      <optgroup label="学生">
+                        <option value="1">本科</option>
+                        <option value="2">硕士</option>
+                        <option value="3">博士</option>
+                      </optgroup>
+                      <optgroup label="教师">
+                        <option value="4">在职</option>
+                        <option value="5">退休</option>
+                      </optgroup>
+                      <optgroup label="其他">
+                        <option value="6">Arizona</option>
+                        <option value="7">Colorado</option>
+                      </optgroup>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputStuNum" class="col-lg-2 control-label">学号</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="inputStuNum" placeholder="系统默认登录用户名">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputStuClass" class="col-lg-2 control-label">班级</label>
+                    <div class="col-lg-4">
+                      <select class="select2 form-control" id="inputStuClass">
+                      <optgroup label="学生">
+                        <option value="1">本科</option>
+                        <option value="2">硕士</option>
+                        <option value="3">博士</option>
+                      </optgroup>
+                      <optgroup label="教师">
+                        <option value="4">在职</option>
+                        <option value="5">退休</option>
+                      </optgroup>
+                      <optgroup label="其他">
+                        <option value="6">Arizona</option>
+                        <option value="7">Colorado</option>
+                      </optgroup>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputStuNum" class="col-lg-2 control-label">头像</label>
+                    <div class="col-lg-4">
+                      <span class="btn btn-white file-input-button">
+                          <i class="icon-plus"></i>
+                          <span>添加图片</span>
+                          <input id="inputEPic" type="file" name="files[]" multiple>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-4">
+                      <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+                      <button type="submit" class="btn btn-primary">添 加</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+      </div>
+      <!--admin-wrap end-->
+      <!--sidebar start-->
+      <div id="lside">
+        <!-- <form class="form-group">
+          <input type="text" class="form-control" placeholder="搜索设备">
+          <i class="icon-search"></i>
+        </form>  -->      
+        <div class="list-group">
+          <a href="${webbaseurl}/userManageUser.do" class="list-group-item">用户管理</a>
+          <a href="${webbaseurl}/userManageUserAdd.do" class="list-group-item">添加用户</a>
+          <a href="${webbaseurl}/userManageUserGroup.do" class="list-group-item">用户组</a>
+          <a href="${webbaseurl}/userManageClass.do" class="list-group-item">班级管理</a>
+          <!-- <a href="用户管理-发送通知.html" class="list-group-item">发送通知</a> -->
+          <a href="${webbaseurl}/userManageAdmin.do" class="list-group-item">管理员管理</a>
+          <a href="${webbaseurl}/userManageAdminAdd.do" class="list-group-item active">添加管理员</a>
+          <a href="${webbaseurl}/userManageAdminGroup.do" class="list-group-item">管理组</a>
+          <!-- <a href="用户管理-用户认证.html" class="list-group-item">用户认证</a> -->
+        </div>
+
+      </div>
+      <!--sidebar end-->
+
+</section>
+
+
+    <!-- javascript
+    ================================================== -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+
+</body>
+</html>

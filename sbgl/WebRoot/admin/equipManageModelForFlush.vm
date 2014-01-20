@@ -1,0 +1,88 @@
+<div id="admin-content" class="clearfix">    
+    <!--control-bar start-->
+    <div class="control-bar clearfix">
+      <div class="title pull-left">型号管理</div>
+	  <div class="tips">在此页面下管理设备型号。设备型号包含每种设备的基本信息，如设备名、设备图片、设备资料介绍等等。</div>
+      <div class="filter category-filter">
+        <select id="select-categories" style="width:130px" class="select2">
+          <option value="0" data-foo="fa">全部分类</option>
+		  <option value="-1" data-foo="fa">未分类</option>
+          #foreach($clazz in $classForEquipAdd)
+			#if($!clazz.isParent == '1')
+				<optgroup label="$!clazz.name">
+			#else
+				<option value="$!clazz.id">$!clazz.name</option>
+			#end
+		 #end
+        </select>
+      </div>
+      <div class="operate-item pull-left">
+        <a href="#add-equip-model" class="btn btn-primary" action-type="clearInput" data-toggle="modal" role="button">添加型号</a>
+        <a href="#" class="btn btn-white s-h" action-type="deleteModel"><i class="icon-trash"></i> 删除</a>
+      </div>
+
+      <div class="page pull-right clearfix">
+        <ul class="page-index nav nav-pills pull-left">
+          <li class="record">当前分类下有<strong id="sum">$!modelCount</strong>条记录</li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!crtModelPage/$!totalModelPages页 <b class="caret"></b></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#" action-type="goFirst">最旧</a></li>
+              <li><a href="#" action-type="goLast">最新</a></li>
+            </ul>
+          </li>              
+        </ul>
+        <div class="pagination pull-right">
+          <ul>
+            <li><a href="#" rel="tooltip" action-type="backPage" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-left"></i></a></li>
+            <li><a href="#" rel="tooltip" action-type="nextPage" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-right"></i></a></li>
+          </ul>
+        </div>              
+      </div>
+    </div><!--control-bar end-->
+    <div class="panel panel-default" id="modelDataDomain">
+    
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+            <th class="name">设备名称(型号)</th>
+            <th class="categories">分类</th>
+            <th class="stock">合作器材公司</th>
+            <th class="describe">描述</th>
+          </tr>
+        </thead>
+        <tbody>
+		#foreach($model in $allModelCourse)
+          <tr>
+		  #if($!model.showClass != 1)
+            <td><input class="chk" type="checkbox" name="chk-list" value="$!model.id"></td>
+            <td>$!model.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-idEN="$!model.idEN" data-name="$!model.name" data-nameEN="$!model.nameEN" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo" data-memoEN="$!model.memoEN" data-imgname="$!model.imgName" data-brandid="$!model.branId">修改</a></td>
+			<td>$!model.cName</td>
+			<td>#if($!model.branId == "1")双塔影视#end</td>
+            <td>$!model.memo</td>
+		  #end
+          </tr>
+        #end  
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+<script >
+	$(".select2").select2({
+		minimumResultsForSearch: 8,
+		formatResult: format,
+		escapeMarkup: function(markup) { return markup; }
+	});
+	function format(state) {
+		var originalOption = state.element;
+		
+		if ($(originalOption).data('foo') === 'sub') {
+			return "<span class='sub'>" + state.text + "</span>";
+		} else {
+			return state.text;
+		}
+	
+	}
+</script>

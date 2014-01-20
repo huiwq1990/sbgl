@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 消息中心</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+<link href="${jsDomain}/editor/themes/default/default.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 10]>
+  <script src="${jsDomain}/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script src="${jsDomain}/html5shiv.js"></script>
+  <script src="${jsDomain}/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="${cssDomain}/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a><!-- #BeginLibraryItem "/Library/siteNav.lbi" -->
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="http://google.com"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="#anotherAction">个人主页</a></li>
+          <li><a href="#">通讯录</a></li>
+          <li class="divider"></li>
+          <li><a href="../预约首页.html">我的预约</a></li>
+          <li><a href="../消息中心-站内信.html">站内信</a></li>
+          <li class="divider"></li>
+          <li><a href="管理中心首页.html">管理中心</a></li>
+        </ul><!-- #EndLibraryItem --></div>
+    </div>
+    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">设置</a></li>
+        <li><a href="用户管理首页.html">用户</a></li>
+        <li class="active"><a href="设备管理首页.html">器材</a></li>
+        <li><a href="#">内容</a></li>
+      </ul>
+    </div>    
+    <ul class="account-wrap nav nav-pills pull-right">
+          <li class="notice dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">消息1</a></li>
+              <li><a href="#">消息2</a></li>
+            </ul>
+          </li>     
+          <li class="social dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="../img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+            <div class="dropdown-menu">
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img src="../img/photo.jpg" width="96" height="96" class="img-rounded">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+                  <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+                  <div class="setting"><a href="#">账户设置</a></div>
+                  <button class="btn btn-primary" type="button">查看个人主页</button>
+                </div>
+              </div>
+            </div>      
+          </li>
+        </ul>
+  </div>
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <ul class="nav nav-tabs">
+        <li><a href="设备预约首页.html">器材预约</a></li>
+        <li class="active"><a href="设备管理首页.html">器材管理</a></li>
+      </ul>
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">            
+            
+            <div class="panel panel-default">
+              <div class="panel-body">
+ <!--Add 表单-->             
+              <form id="AddComputerorderclassruleForm" action="javascript:void(0)" class="form-horizontal" role="form">
+					<div class="form-group">
+                    <label for="label_computerorderclassrule_name" class="col-lg-2 control-label">规则名称</label>
+                    <div class="col-lg-4">
+                     <input type="text" class="form-control" id="input_computerorderclassrule_name" name="name"  placeholder="name">
+                    </div>
+                  </div>
+				  <!--
+				  <div class="form-group">
+                    <label for="label_computerorderclassrule_classname" class="col-lg-2 control-label">classname</label>
+                    <div class="col-lg-4">
+                     <input type="text" class="form-control" id="input_computerorderclassrule_classname" name="classname"  placeholder="classname">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="label_computerorderclassrule_classid" class="col-lg-2 control-label">classid</label>
+                    <div class="col-lg-4">
+                     <input type="text" class="form-control" id="input_computerorderclassrule_classid" name="classid"  placeholder="classid">
+                    </div>
+                  </div>
+				  -->
+				  <div class="form-group input-daterange">
+                    <label for="label_computerorderclassrule_orderstarttime" class="col-lg-2 control-label">预约开始时间</label>
+                    <div class="col-lg-4">
+                     <input type="text" class="form-control" id="input_computerorderclassrule_orderstarttime" name="orderstarttime"  placeholder="orderstarttime">
+                    </div>
+                  </div>
+				  <div class="form-group input-daterange">
+                    <label for="label_computerorderclassrule_orderendtime" class="col-lg-2 control-label">预约结束时间</label>
+                    <div class="col-lg-4">
+                     <input type="text" class="form-control" id="input_computerorderclassrule_orderendtime" name="orderendtime"  placeholder="orderendtime">
+                    </div>
+                  </div>
+				  <div class="form-group">
+                    <label for="label_computerorderclassrule_availableordertime" class="col-lg-2 control-label">总共允许时间</label>
+                    <div class="col-lg-4">
+                     <input type="text" class="form-control" id="input_computerorderclassrule_availableordertime" name="availableordertime"  placeholder="availableordertime">
+                    </div>
+                  </div>
+				  
+				<div class="form-group">
+					<label for="label_computerorderclassrule_allowborrowpcids" class="col-lg-2 control-label">允许借的机器类型</label>
+                    <div class="col-lg-4">
+                     <input type="text" class="form-control" id="input_computerorderclassrule_allowborrowpcids" name="allowborrowpcids"  placeholder="">					
+					</div>               
+					</div>
+					
+				 <div class="form-group user-group">
+                  <a href="#createEquipRule" role="button" class="btn btn-white btn-large btn-block" data-toggle="modal">添加 +</a>
+                </div>
+				  
+				
+				 <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-4">
+                      <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+                      <button class="btn btn-primary"  action-type="addComputerorderclassruleButton" >添 加</button>					
+                    </div>
+                  </div>
+           </form><!--end Add 表单-->                    
+
+              </div>			  
+            </div>
+          </div>
+
+      </div>
+      <!--equip-wrap end-->
+       <!--sidebar start-->
+      <div id="lside">
+        <form class="form-group">
+          <input type="text" class="form-control" placeholder="搜索">
+          <i class="icon-search"></i>
+        </form>
+        <div class="list-group">
+          <a href="${webbaseurl}/manageComputerorderclassruleFull.action" class="list-group-item">管理</a>
+          <a href="${webbaseurl}/computer/computerorderclassruleAdd.vm" class="list-group-item">添加</a>
+          
+        </div>
+      </div>
+      <!--sidebar end-->
+
+</section>
+
+<div id="createEquipRule" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="createEquipRuleLabel" aria-hidden="true">
+ 
+  <div class="modal-body">
+    
+    <div class="tabbable tabs-left">
+      <ul class="nav nav-tabs">
+		#foreach($categoryfull in ${computercategoryList})
+			<li><a href="#$!categoryfull.computercategorytype" data-toggle="tab">$!categoryfull.name</a></li>
+		#end        
+      </ul>
+      <div class="tab-content">
+		
+		#foreach($category in ${computercategoryList})
+			#set($categoryid = $category.computercategorytype)
+		<div class="tab-pane" id="$!categoryid">
+          <div class="row model-list">
+			#set($modelList = $computermodelByComputercategoryId.get($categoryid))
+			
+			#foreach($model in $modelList)
+			<div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="$model.computermodeltype" data-is-select="false"><i class="icon-check-empty icon-large"></i>$model.name</div>
+			#end           
+          </div>
+        </div>
+		#end
+		
+      
+      </div><!--content-->
+    </div><!--left-->
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary" id="submit">完 成</button>
+  </div>
+</div>
+  
+    <!-- Le javascript
+    ================================================== -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/editor/kindeditor-min.js"></script>
+<script src="${jsDomain}/editor/lang/zh_CN.js"></script>
+<script src="${jsDomain}/bootstrap-datepicker.js"></script>
+<script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
+
+<script>
+
+	$('.input-daterange').datepicker({
+	language: 'zh-CN',
+	format: 'yyyy-mm-dd',
+	todayHighlight: true,
+	});
+
+	$("#inputSendTo").select2({
+		createSearchChoice:function(term, data) { 
+			if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
+				return {id:term, text:term};} 
+			},
+		multiple: true,
+		data: [{id: 0, text: '用户名1'},{id: 1, text: '用户名2'},{id: 2, text: '用户名3'}]
+	});
+			
+	var editor;
+	KindEditor.ready(function(K) {
+		editor = K.create('textarea[name="content"]', {
+			resizeType : 1,
+			allowPreviewEmoticons : false,
+			allowImageUpload : false,
+			items : [
+				'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+				'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+				'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+		});
+	});
+	
+	$('body').on('click', ('#createEquipRule .model-list > .list-item'), function () {
+		if ($(this).children('i').hasClass('icon-check-empty')) {
+			$(this).children('i').removeClass('icon-check-empty').addClass('icon-check');
+			$(this).data('isSelect', 'true');
+		} else if ($(this).children('i').hasClass('icon-check')) {
+			$(this).children('i').removeClass('icon-check').addClass('icon-check-empty');
+			$(this).data('isSelect', 'false');
+		}
+	});
+	
+	//获取课程规则 的PC
+	$('body').on('click', ('#createEquipRule #submit'), function () {
+		var _this = $(this);
+		var pcIds = "";
+		$('.model-list > .list-item').each(function(index, elem) {
+			if($(elem).data('isSelect')) {
+            	var myData = $(elem).data();
+				pcIds += myData.modelId+";";				
+			}
+        });
+		pcIds = pcIds.substring(0,pcIds.length-1);
+		//alert(pcIds);
+		
+		_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+		$('#input_computerorderclassrule_allowborrowpcids').val(pcIds);
+		
+	});//end add classrule
+	
+	
+	
+	//添加预约规则
+	$("body").on("click", "button[action-type|=addComputerorderclassruleButton]", function() {
+			
+			var input_computerorderclassrule_name = $("#input_computerorderclassrule_name").val();		
+			var input_computerorderclassrule_orderstarttime = $("#input_computerorderclassrule_orderstarttime").val();
+			var input_computerorderclassrule_orderendtime = $("#input_computerorderclassrule_orderendtime").val();
+			var input_computerorderclassrule_availableordertime = $("#input_computerorderclassrule_availableordertime").val();
+			var input_computerorderclassrule_allowborrowpcids = $("#input_computerorderclassrule_allowborrowpcids").val();
+			
+			var postData = {
+				"name": input_computerorderclassrule_name,
+				"orderstarttime": input_computerorderclassrule_orderstarttime,
+				"orderendtime": input_computerorderclassrule_orderendtime,
+				"availableordertime": input_computerorderclassrule_availableordertime,
+				"allowborrowpcids": input_computerorderclassrule_allowborrowpcids
+			};
+			
+			jQuery.ajax({  
+			    url:"${webbaseurl}/addComputerorderclassruleAjax.${strutsaction}",  
+			    type:"post",
+			    data:postData,
+			  	dataType: 'json',
+				success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+				if(returnJson.flag == 1){
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});							
+				}else{
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
+				}
+		}	});		  	  
+
+	})
+	//end 添加预约规则
+	
+	
+	
+	
+	
+</script>
+	
+	
+</body>
+</html>

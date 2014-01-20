@@ -1,0 +1,44 @@
+<!--equip-wrap start-->
+        <div id="equip-list">        
+          <div class="w200 container">
+            <div class="control-bar clearfix">
+              <div class="title pull-left">$!{class1Name}
+			  
+			  
+			  </div>
+              <form class="navbar-search pull-right">
+                <input id="serachtext" type="text" class="form-control" placeholder="搜索设备">
+                <i data-type="classAjax" class="icon-search"></i>
+              </form>
+              <ul class="nav nav-pills pull-right">
+                #foreach($row2 in $!classification2List)		
+					#if($velocityCount=='1')<li id="cl20" class="active classification2" ><a href="javascript:;" data-type="classAjax" data-id="0" data-classtype="2" data-parentid="$!class1Id">全部</a></li>#end
+        			<li id="cl2$!row2.classificationid" class="classification2"><a href="javascript:;" data-type="classAjax" data-id="$!row2.classificationid" data-classtype="2" data-parentid="$!class1Id">$!row2.name</a></li>
+        		#end
+              </ul>
+            </div>
+            <div class="row">
+      			#foreach($row3 in $!equipmentList)	
+                  <div class="w-200">                  
+                      <div class="thumbnail">
+                        <img width="168px" height="128px" class="e-pic" src="img/170x140.jpg">
+                        <div class="caption">
+                          <div class="title"><a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.equipmentid" role="button">$!row3.equipmentname</a></div>
+                          <p class="detail">最多可借：$!row3.borrownum</p>
+                        </div>
+                        <div class="select-num">
+                          <select class="select2 form-control select-white" id="inputEquipStatus">
+							 #foreach($i in [1 .. $!row3.borrownum])	
+								<option value="$i">$i</option>
+							 #end
+                          </select>
+                        </div>                            
+                        <a class="btn btn-white add-btn" data-type="addEquip" data-id="$!row3.equipmentid" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" href="javascript:;">添 加</a>
+                      </div>                  
+                  </div>
+                   #end          
+            </div>
+          </div>
+        </div>
+      <!--equip-wrap end-->
+<script src="js/bfa2.js"></script>
