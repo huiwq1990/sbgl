@@ -119,11 +119,9 @@
                 <a href="#" class="btn btn-white s-h" action-type="deleteComputermodelButton"><i class="icon-trash"></i> 删除</a>
               </div>
 
+			  <!--page
               <div class="page pull-right clearfix">
-				
-		
-				
-				
+								
                 <ul class="page-index nav nav-pills pull-left">
                   <li class="record">当前分类下有<strong>XX</strong>条记录</li>
                   <li class="dropdown">
@@ -140,15 +138,20 @@
                     <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
                   </ul>
                 </div>              
-              </div>
+              </div>-->
+			  <!-- end page-->
+			  
             </div><!--control-bar end-->
 			
 			
-			<div id ="refreshComputermodelTable">
+		
 		
 			
             <div class="panel panel-default">
-            
+				
+				
+            	<div id ="refreshComputermodelTable">
+					
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -175,12 +178,12 @@
 						action-type="editComputermodelFillIn" 
 						data-id="$!ch.computermodelid" 
 						data-name="$!ch.computermodelname" 
-						data-computermodelid="$!ch.computermodelcomputercategoryid" 
+						data-computercategoryid = "$!ch.computermodelcomputercategoryid" 
 						data-description="$!ch.computermodeldescription" 
 						
 						data-iden="$!en.computermodelid" 
 						data-nameen="$!en.computermodelname" 
-						data-computermodeliden="$!en.computermodelcomputercategoryid" 
+						data-computercategoryiden="$!en.computermodelcomputercategoryid" 
 						data-descriptionen="$!en.computermodeldescription">修改</a></td>
                      <td>$!ch.computercategoryname</td>
                      <td>$!ch.computermodelavailableborrowcountnumber</td>
@@ -191,10 +194,8 @@
                 
                 </tbody>
               </table>
-
-            </div>
-			
-						<!--page -->
+			  
+			  			<!--page -->
 			  <div class="pagination">
 				<a href="#" class="first" data-action="first">&laquo;</a>
 				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
@@ -203,9 +204,15 @@
 				<a href="#" class="last" data-action="last">&raquo;</a>
 			  </div>
 			  <!-- end page -->
-				</div><!-- end refreshComputermodelTable -->
-				
 				</div>
+
+            </div><!-- end refreshComputermodelTable -->
+			
+			
+				
+				
+			
+			</div>
 
       </div>
       <!--equip-wrap end-->
@@ -333,7 +340,7 @@
         <label for="inputECategory" class="col-xs-3 control-label">分类</label>
         <div class="col-xs-7">
           <select class="select2 select-white form-control" id="addComputermodelComputercategoryid">
-			 <option value="1000" >数据库中不存在的分类</option>
+			 
 #set($computercategoryListSize = $computercategoryList.size() - 1)
 ##判断数据是否为空
 #if($computercategoryListSize>=0)
@@ -400,22 +407,62 @@
 <![endif]-->
 
 <script>
-	var cookie = { 
-  		//读取COOKIES,n为COOKIE名 
-   		Get:function(n){ 
-       		var re=new RegExp(n+'=([^;]*);?','gi');
-       	    var r=re.exec(document.cookie)||[];
-       	    return (r.length>1?r[1]:null)
-   		}
-	};
+
 	
 	//当前页
-var currentpagenum=1;
-var totalpage=$page.totalpage;
-var computercategorytype = 0;
+	var currentpagenum=1;
+	var totalpage=$page.totalpage;
+	var computercategorytype = 0;
+	var idsForDel;	
+	
+	
 
-	var editComputermodelId;
-	var editComputermodelName;
+
+	//add 分类
+	$("body").on("click", "button[action-type|=addComputermodelButton]", function() {
+		var _this = $(this);
+		
+		var actionUrl = "${webbaseurl}/addComputermodelAjax.${strutsaction}";
+			
+		//公共属性
+		var addComputermodelComputercategoryid = $('#addComputermodelComputercategoryid').val();
+			
+		//私有属性
+		var addComputermodelName = $('#addComputermodelName').val();			
+		var addComputermodelDescription = $('#addComputermodelDescription').val();
+			
+		var addComputermodelNameEn = $('#addComputermodelNameEn').val();
+		var addComputermodelDescriptionEn = $('#addComputermodelDescriptionEn').val();
+			
+		var postData = {
+				"computercategoryid":addComputermodelComputercategoryid,				
+				"name": addComputermodelName,				
+				"computermodelNameEn": addComputermodelNameEn,
+				"description": addComputermodelDescription,
+				"computermodelDescriptionEn":addComputermodelDescriptionEn				
+		}
+		
+		jQuery.ajax({  
+		    url : actionUrl,  
+		    type:"post",
+		    data:postData,
+			dataType: 'json',
+			success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+				if(returnJson.flag == 1){
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});		
+					refreshComputermodelTable();
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框					
+				}else{
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+				}
+			}//end success		  	  
+		});
+	})
+	//end add 分类
+	
+	
 	
 	//选择修改按钮，填充修改弹出框
 	$("body").on("click", "a[action-type|=editComputermodelFillIn]", function() {
@@ -434,87 +481,23 @@ var computercategorytype = 0;
 	//	alert(myData.descriptionen);
 		
 	});
-
-	/* 处理CheckBox选中事件用于删除处理 */
-	var idsForDel;	
-	$("input[type='checkbox']").click(function() {
-		//var num = 0;
-		idsForDel = "";
 		
-		if($(this).attr("id") === "chk-all") {
-			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
-		}
-		$("input[name='chk-list']").each(function() {
-			if($(this).prop("checked") === true) {
-				//num++;
-				idsForDel += $(this).prop("value") + ";";
-			}
-		});
-		//alert("test");
-	});
-	//end box
-
-// 触发提交按钮事件
-$('.modal').on('click', ('button.btn-primary'), function () {		
-
+	//updateComputermodelButton
+	$("body").on("click", "button[action-type|=updateComputermodelButton]", function() {
 		var _this = $(this);
-
-		//处理添加
-		if(_this.attr('action-type') == 'addComputermodelButton')
-		{
-			//alert('ssss');
-			var actionUrl = "${webbaseurl}/addComputermodelAjax.${strutsaction}";
-			
-			//公共属性
-			var createuserid = cookie.Get("id");
-			var addComputermodelComputercategoryid = $('#addComputermodelComputercategoryid').val();
-			
-			//私有属性
-			var addComputermodelName = $('#addComputermodelName').val();			
-			var addComputermodelDescription = $('#addComputermodelDescription').val();
-			
-			var addComputermodelNameEn = $('#addComputermodelNameEn').val();
-			var addComputermodelDescriptionEn = $('#addComputermodelDescriptionEn').val();
-			
-			var postData = {
-				"createuserid": createuserid,
-				"computercategoryid":addComputermodelComputercategoryid,
-				
-				"name": addComputermodelName,				
-				"computermodelNameEn": addComputermodelNameEn,
-				"description": addComputermodelDescription,
-				"computermodelDescriptionEn":addComputermodelDescriptionEn				
-			}
-				
-		}
-		//end add
 		
-		//if deleteComputermodelButton delete分类 
-		/*if(_this.attr('action-type') == 'deleteComputermodelButton'){		
-		alert('sss');
-			var actionUrl = "${webbaseurl}/deleteComputermodelFullAjax.${strutsaction}";
-			idsForDel = idsForDel.substring(0,idsForDel.length-1);
-			alert(idsForDel);
-			var postData = {
-				computermodelIdsForDel: idsForDel
-			}		
-		}*/
-		//end if deleteComputermodelButton	
-		
-		//if updateComputermodelButton 更新分类
-		if(_this.attr('action-type') == 'updateComputermodelButton'){		
-			var actionUrl = "${webbaseurl}/updateComputermodelAjax.${strutsaction}";
-			var editComputermodelName = $('#inputEditComputermodelName').val();
-			var editComputermodelComputercategoryid = $('#inputEditComputermodelComputercategoryid').val();
-			var editComputermodelDescription = $('#editComputermodelDescriptionCh').val();			
+		var actionUrl = "${webbaseurl}/updateComputermodelAjax.${strutsaction}";
+		var editComputermodelName = $('#inputEditComputermodelName').val();
+		var editComputermodelComputercategoryid = $('#inputEditComputermodelComputercategoryid').val();
+		var editComputermodelDescription = $('#editComputermodelDescriptionCh').val();			
 			
-			var editComputermodelNameEn = $('#editComputermodelNameEn').val();			
-			var editComputermodelDescriptionEnVal = $('#editComputermodelDescriptionEn').val();			
+		var editComputermodelNameEn = $('#editComputermodelNameEn').val();			
+		var editComputermodelDescriptionEnVal = $('#editComputermodelDescriptionEn').val();			
 			
-			var editComputermodelIdChVal = $('#editComputermodelIdCh').val();
-			var editComputermodelIdEnVal = $('#editComputermodelIdEn').val();
+		var editComputermodelIdChVal = $('#editComputermodelIdCh').val();
+		var editComputermodelIdEnVal = $('#editComputermodelIdEn').val();
 			
-			var postData = {
+		var postData = {
 				"id": editComputermodelIdChVal,
 				"name": editComputermodelName,				
 				"computercategoryid":editComputermodelComputercategoryid,
@@ -523,38 +506,29 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 				"computermodelIdEn": editComputermodelIdEnVal,
 				"computermodelNameEn":editComputermodelNameEn,
 				"computermodelDescriptionEn":editComputermodelDescriptionEnVal
-			}
-			
 		}
-		//end if updateComputermodelButton
-		
-		
-		// 如果是其它的提交操作，对照上一行的if代码处理		
-		
-		// 提交处理
 		jQuery.ajax({  
-		    url: actionUrl,  
-		    type: "post",
-		    data: postData,
-		    dataType: 'json',
+		    url : actionUrl,  
+		    type:"post",
+		    data:postData,
+			dataType: 'json',
 			success: function(data){
 				var returnJson = jQuery.parseJSON(data); 
 				if(returnJson.flag == 1){
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});		
+					refreshComputermodelTable();
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框					
+				}else{
 					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
 					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
-					refreshComputermodelTable();
-					console.log('this is :'+$(this));
-				}else{
-					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
 				}
 			}		  	  
-		});		
+		});
 	});
-// end 触发事件
+	//end updateComputermodelButton
 
 
-
-//处理删除监听
+// checkbox
 	$("body").on("click", "input[type='checkbox']", function() {
 		var num = 0;
 		if($(this).attr("id") === "chk-all") {
@@ -634,7 +608,8 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 			jQuery.ajax({  
 		    url: '${webbaseurl}/manageComputermodelFull.action',  
 		    type: "post",
-		    data:{	pageNo:currentpagenum,
+		    data:{	
+					pageNo:currentpagenum,
 					callType:'ajaxType',
 					computercategorytype : computercategorytype
 					},
@@ -654,12 +629,12 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 				});
 				}		  	  
 			});		
-	}
+	}//end refresh
 
 	
 //更改model的分类	
 function getComputermodelById(tcomputercategoryid){
-	alert(tcomputercategoryid);
+	//alert(tcomputercategoryid);
 	computercategorytype = tcomputercategoryid;
 	currentpagenum = 1;
 	refreshComputermodelTable();

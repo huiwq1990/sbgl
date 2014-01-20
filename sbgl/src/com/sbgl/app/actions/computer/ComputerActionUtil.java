@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
+
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.ComputercategoryFull;
@@ -28,4 +33,43 @@ public class ComputerActionUtil {
 		return computermodelByComputercategoryId;
 	}
 
+	
+	/**
+	 * 获取当前语言
+	 * @param str
+	 * @return
+	 */
+	public static int getLanguagetype(String str){
+		if(str==null || !str.trim().equals("1")){
+			return ComputerConfig.languagech;
+		}
+		
+		return ComputerConfig.languageen;
+	}
+	
+	/**
+	 * 获取当前用户
+	 *
+	 * @return
+	 */
+	public static String getUserIdFromCookie(Cookie[] cookies ){	
+		String uidStr = ComputerCookieUtil.getCookieValue(cookies, ComputerConfig.cookieuserid);	
+		if(uidStr == null ){
+			return "";
+		}
+		return uidStr;
+	}
+	
+	/**
+	 * 获取当前用户
+	 *
+	 * @return
+	 */
+	public static String getUserId(HttpServletRequest re ){
+		String uidStr = getUserIdFromCookie(re.getCookies());
+		
+		return uidStr;
+	}
+
+	
 }

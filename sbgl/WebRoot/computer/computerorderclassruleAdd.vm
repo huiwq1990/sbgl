@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 消息中心</title>
+<title>北京电影学院摄影系 - 课程预约规则添加</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -98,6 +98,13 @@
                     <label for="label_computerorderclassrule_name" class="col-lg-2 control-label">规则名称</label>
                     <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computerorderclassrule_name" name="name"  placeholder="name">
+                    </div>
+                  </div>
+				  
+				  <div class="form-group">
+                    <label for="label_computerorderclassrule_name" class="col-lg-2 control-label">课程名称</label>
+                    <div class="col-lg-4">
+                     <input type="text" class="form-control" id="input_computerorderclassrule_classname" name="classname"  placeholder="name">
                     </div>
                   </div>
 				  <!--
@@ -205,8 +212,8 @@
     </div><!--left-->
   </div>
   <div class="modal-footer">
-    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary" id="submit">完 成</button>
+        <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary" action-type="setComputerorderclassruleButton">确 定</button>
   </div>
 </div>
   
@@ -221,6 +228,8 @@
 <script src="${jsDomain}/editor/lang/zh_CN.js"></script>
 <script src="${jsDomain}/bootstrap-datepicker.js"></script>
 <script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/jquery.jqpagination.js"></script>
 
 <script>
 
@@ -255,19 +264,20 @@
 	$('body').on('click', ('#createEquipRule .model-list > .list-item'), function () {
 		if ($(this).children('i').hasClass('icon-check-empty')) {
 			$(this).children('i').removeClass('icon-check-empty').addClass('icon-check');
-			$(this).data('isSelect', 'true');
+			$(this).data('is-select', 'true');
 		} else if ($(this).children('i').hasClass('icon-check')) {
 			$(this).children('i').removeClass('icon-check').addClass('icon-check-empty');
-			$(this).data('isSelect', 'false');
+			$(this).data('is-select', 'false');
 		}
 	});
 	
 	//获取课程规则 的PC
-	$('body').on('click', ('#createEquipRule #submit'), function () {
+	$('body').on('click',  "button[action-type|=setComputerorderclassruleButton]", function () {
 		var _this = $(this);
 		var pcIds = "";
 		$('.model-list > .list-item').each(function(index, elem) {
-			if($(elem).data('isSelect')) {
+			if($(elem).data('is-select') == 'true') {
+			//if($(elem).children('i').hasClass('icon-check')) {
             	var myData = $(elem).data();
 				pcIds += myData.modelId+";";				
 			}
@@ -284,17 +294,24 @@
 	
 	//添加预约规则
 	$("body").on("click", "button[action-type|=addComputerorderclassruleButton]", function() {
+			var _this = $(this);
 			
 			var input_computerorderclassrule_name = $("#input_computerorderclassrule_name").val();		
-			var input_computerorderclassrule_orderstarttime = $("#input_computerorderclassrule_orderstarttime").val();
-			var input_computerorderclassrule_orderendtime = $("#input_computerorderclassrule_orderendtime").val();
+			var input_computerorderclassrule_classname = $("#input_computerorderclassrule_classname").val();		
+			var orderstarttime = $("#input_computerorderclassrule_orderstarttime").val();
+			var orderendtime = $("#input_computerorderclassrule_orderendtime").val();
 			var input_computerorderclassrule_availableordertime = $("#input_computerorderclassrule_availableordertime").val();
 			var input_computerorderclassrule_allowborrowpcids = $("#input_computerorderclassrule_allowborrowpcids").val();
 			
+			//orderstarttime += " 00:00:00";
+		//	orderendtime += " 00:00:00";
+		//	alert(orderstarttime);
+			//return;
 			var postData = {
 				"name": input_computerorderclassrule_name,
-				"orderstarttime": input_computerorderclassrule_orderstarttime,
-				"orderendtime": input_computerorderclassrule_orderendtime,
+				"classname" : input_computerorderclassrule_classname,
+				"orderstarttime" : orderstarttime,
+				"orderendtime" : orderendtime,
 				"availableordertime": input_computerorderclassrule_availableordertime,
 				"allowborrowpcids": input_computerorderclassrule_allowborrowpcids
 			};
@@ -307,16 +324,26 @@
 				success: function(data){
 				var returnJson = jQuery.parseJSON(data); 
 				if(returnJson.flag == 1){
-					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});							
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+					addFormClear();
 				}else{
 					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
 				}
 		}	});		  	  
 
 	})
 	//end 添加预约规则
 	
-	
+	function addFormClear(){
+		$("#input_computerorderclassrule_name").val("");		
+		$("#input_computerorderclassrule_classname").val("");		
+		$("#input_computerorderclassrule_orderstarttime").val("");
+		$("#input_computerorderclassrule_orderendtime").val("");
+		$("#input_computerorderclassrule_availableordertime").val("");
+		$("#input_computerorderclassrule_allowborrowpcids").val("");
+	}
 	
 	
 	

@@ -9,8 +9,11 @@ import net.sf.json.JSONObject;
 
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -46,12 +49,13 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 	List<Computerorderclassrule> computerorderclassruleList = new ArrayList<Computerorderclassrule>();
 	List<ComputerorderclassruleFull> computerorderclassruleFullList = new ArrayList<ComputerorderclassruleFull>();
 	private Integer computerorderclassruleid; //entity full 的id属性名称		
+
+	
 	private String logprefix = "exec action method:";		
 	Page page = new Page();
 	Integer pageNo=1;
 	
-	
-	
+		
 	@Resource
 	private ComputerorderclassruledetailService computerorderclassruledetailService;
 	
@@ -61,8 +65,7 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 	
 //	规则允许借的pc
 	private String allowborrowpcids;
-	private String orderstarttime;
-	private String orderendtime;
+
 	
 //  manage Computerorderclassrule
 	public String manageComputerorderclassrule(){
@@ -109,18 +112,7 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 	}			
 			
 		
-	//管理
-	public String manageComputerorderclassruleInfo(){
-		log.info(logprefix +" manageComputerorderclassrule");
-		//Page page = new Page();
-		//if()
-		computerorderclassruleList  = computerorderclassruleService.selectComputerorderclassruleByPage(page);
-		for(int i = 0; i < computerorderclassruleList.size(); i++){
-		//	System.out.println("id="+computerorderclassruleList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}	
-			
+		
 	public String addComputerorderclassrule(){	
 		log.info("Add Entity");
 
@@ -149,18 +141,23 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 //  ajax add	
 	public String addComputerorderclassruleAjax(){	
 		log.info("Add Entity Ajax Manner");
-		
-		ReturnJson returnJson = new ReturnJson();
-		
+		if(addCheck() == false){
+			returnJson.setFlag(0);		
+			returnJson.setReason("参数不规范");
+			JSONObject jo = JSONObject.fromObject(returnJson);
+			this.returnStr = jo.toString();
+			
+			return SUCCESS;
+		}
+	
 		try {
 			Computerorderclassrule temp = new Computerorderclassrule();
 			// 将model里的属性值赋给temp
-//			BeanUtils.copyProperties(temp, computerorderclassrule);			
+			BeanUtils.copyProperties(temp, computerorderclassrule);			
 		
-			temp.setOrderstarttime(DateUtil.parseDate(orderstarttime));
-			System.out.println("orderstarttimeorderstarttime"+orderstarttime);
-			temp.setOrderendtime(DateUtil.parseDate(orderendtime));
 			temp.setCreatetime(DateUtil.currentDate());
+			int uid = Integer.valueOf(ComputerActionUtil.getUserId(ServletActionContext.getRequest()));
+			temp.setCreateuserid(uid);
 			
 			computerorderclassruleService.addComputerorderclassrule(temp);
 			
@@ -188,6 +185,29 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 		JSONObject jo = JSONObject.fromObject(returnJson);
 		this.returnStr = jo.toString();
 		return SUCCESS;
+	}
+	
+	public boolean addCheck(){
+		Computerorderclassrule t = computerorderclassrule;
+		if(t.getName()== null || t.getName().trim().length() == 0){
+			return false;
+		}
+		if(t.getOrderstarttime()== null){
+			return false;
+		}
+		
+		if(t.getOrderendtime()== null){
+			return false;
+		}
+
+		if(allowborrowpcids== null || allowborrowpcids.trim().length() == 0){
+			return false;
+		}	
+//		if(t.get== null || t.getName().trim().length() == 0){
+//			return false;
+//		}
+		
+		return true;
 	}
 
 //删除
@@ -665,23 +685,6 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 			this.computerorderclassruleid = computerorderclassruleid;
 		}
 
-		public String getOrderstarttime() {
-			return orderstarttime;
-		}
-
-		public void setOrderstarttime(String orderstarttime) {
-			this.orderstarttime = orderstarttime;
-		}
-
-		public String getOrderendtime() {
-			return orderendtime;
-		}
-
-		public void setOrderendtime(String orderendtime) {
-			this.orderendtime = orderendtime;
-		}
-        
-        
-   
+		
         
 }

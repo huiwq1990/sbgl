@@ -32,6 +32,7 @@ import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
+import com.sbgl.app.entity.Computerorderclassrule;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.services.computer.ComputerService;
@@ -50,7 +51,7 @@ import com.sbgl.util.SpringUtil;
 @Controller("OrderComputerAction")
 public class OrderComputerAction  extends ActionSupport implements SessionAware{
 
-	private static final Log log = LogFactory.getLog(ManageComputerAction.class);
+	private static final Log log = LogFactory.getLog(OrderComputerAction.class);
 
 	private Map<String, Object> session;
 	private int pageNo;
@@ -122,18 +123,25 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 	
 	
 	public String toOrderComputerPage(){
-		String currentlanguagetype = "0";
-		String getAllComputermodelFullTypeSql = " where a.languagetype="+currentlanguagetype+" ";
-//		String conditionSql = " where ";
-		computermodelFullList = computermodelService.selectComputermodelFullByCondition(getAllComputermodelFullTypeSql );
 		
-		calculate();
+//		设置当前时间
+		Date currentDate = DateUtil.currentDate();
+		//设置假的时间
+//		Date currentDate = DateUtil.parseDate("2013-10-01 18:00:00");
+		String currentDateStr = DateUtil.dateFormat(currentDate, DateUtil.dateformatstr1);
 		
+//		获取语言
+		int currentlanguagetype = ComputerActionUtil.getLanguagetype((String) session.get(ComputerConfig.sessionLanguagetype));
 		
+		String getAllComputermodelTypeSql = " where a.languagetype="+currentlanguagetype+" ";
+		computermodelList = computermodelService.selectComputermodelByCondition(getAllComputermodelTypeSql);
+		log.info("computermodelList" + computermodelList.size());
+		calculate(currentDate,currentDateStr );
 		
 		System.out.println(borrowperiodList.size());
 		return SUCCESS;
 	}
+
 	
 	public void buildShowDate(Date curDate){
 		int weeknum = computeroderadvanceorderday/computerodertablercolumn;
@@ -153,7 +161,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 		}
 	}
 	
-	public  void calculate() {
+	public  void calculate( Date currentDate,String currentDateStr ) {
 		// TODO Auto-generated method stub
 //
 //		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
@@ -180,20 +188,25 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 			 buildShowDate(DateUtil.parseDate(currentDay));	 
 			 
 		//取得所有PC类型的当前库存数量
-		String currentlanguagetype = "0";
-		String getAllComputermodelTypeSql = " where a.languagetype="+currentlanguagetype+" ";
-		computermodelList = computermodelService.selectComputermodelByCondition(getAllComputermodelTypeSql);
-		for (int i = 0; i < computermodelList.size(); i++) {
-			System.out.println("当前可借数量id=" + computermodelList.get(i).getId() + "  " + " 名称："+ computermodelList.get(i).getName()
-					+ computermodelList.get(i).getAvailableborrowcountnumber());
-		}
+//		String currentlanguagetype = "0";
+//		log.info("computermodelList" + computermodelList.size());
+//		String getAllComputermodelTypeSql = " where a.languagetype="+currentlanguagetype+" ";
+//		computermodelList = computermodelService.selectComputermodelByCondition(getAllComputermodelTypeSql);
+//		log.info("computermodelList" + computermodelList.size());
+//		for (int i = 0; i < computermodelList.size(); i++) {
+//			System.out.println("当前可借数量id=" + computermodelList.get(i).getId() + "  " + " 名称："+ computermodelList.get(i).getName()
+//					+ computermodelList.get(i).getAvailableborrowcountnumber());
+//		}
 		
 		//所有可借时间段信息
 //		Map<Integer,Borrowperiod> periodMap = BorrowperiodUtil.getBorrowperiodMap();
 		borrowperiodList =  BorrowperiodUtil.getBorrowperiodList();
-		//初始化每个型号每个时段可借数量数组，		
+		
+		
+//		初始化每个型号每个时段可借数量数组，		
 		for(int tempmodelindex=0;tempmodelindex<computermodelList.size();tempmodelindex++){
-			Computermodel tempmodel =  computermodelList.get(tempmodelindex);
+//			ComputermodelFull tempmodelFull =  computermodelFullList.get(tempmodelindex);//full list已经赋值
+			Computermodel tempmodel =  computermodelList.get(tempmodelindex);//full list已经赋值
 			HashMap<Integer,ArrayList<Integer>> periodDayAvailInfo = new HashMap<Integer,ArrayList<Integer>>();
 			for(int tempperiod=0; tempperiod < borrowperiodList.size(); tempperiod++){
 				Borrowperiod tempBorrowperiod = borrowperiodList.get(tempperiod);
@@ -205,6 +218,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 				if(tempBorrowperiod.getPeriodnum() < currentPeriod ){
 					todaynum = 0;
 				}else{
+//					todaynum = tempmodelFull.getComputermodelavailableborrowcountnumber();
 					todaynum = tempmodel.getAvailableborrowcountnumber();
 				}
 				dayInfo.add(todaynum);
@@ -219,16 +233,18 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 //					}else if(currentPeriod<=4){
 //						availableBorrowModelMap.get(2).get(key)
 //					}
+//					dayInfo.add( tempmodelFull.getComputermodelavailableborrowcountnumber());
 					dayInfo.add( tempmodel.getAvailableborrowcountnumber());
 				}				
 				periodDayAvailInfo.put(tempBorrowperiod.getId(), dayInfo);
 			}
+//			availableBorrowModelMap.put(tempmodelFull.getComputermodelcomputermodeltype(), periodDayAvailInfo);
 			availableBorrowModelMap.put(tempmodel.getComputermodeltype(), periodDayAvailInfo);
 		}
 		
 		System.out.println(availableBorrowModelMap.size());
 		
-		for(int tempmodelindex=0;tempmodelindex<computermodelList.size();tempmodelindex++){
+		/*for(int tempmodelindex=0;tempmodelindex<computermodelList.size();tempmodelindex++){
 			Computermodel tempmodel =  computermodelList.get(tempmodelindex);
 			System.out.println(tempmodel.getName()+"   ");
 			for(int tempperiod=0; tempperiod < borrowperiodList.size(); tempperiod++){
@@ -243,7 +259,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 			}
 			System.out.println();
 //			availableBorrowModelMap.put(modelList.get(tempmodel).getComputermodeltype(), periodDayAvailInfo);
-		}
+		}*/
 		
 		//pc模型1的可借数量
 //		Integer[][] pcnumberArray = availableBorrowModelMap.get(1);

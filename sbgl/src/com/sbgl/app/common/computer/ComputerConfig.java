@@ -2,7 +2,11 @@ package com.sbgl.app.common.computer;
 
 public class ComputerConfig {
 	
-	public static String cookieuserid = "userid";
+//	用户登录信息放置的cookie的名称
+	public final static String cookieuserid = "userid";
+	
+//	用户语言信息的session信息
+	public final static String sessionLanguagetype = "languagetype";
 	
 	//预约提前时间
 //	public static int computerorderTotalOrderDay = 16;
@@ -16,4 +20,8 @@ public class ComputerConfig {
 	
 	public static int languagech = 0;
 	public static int languageen = 1;
+	
+//	未分类的类型
+	public final static int computercategorynotclassifyid = -1;
+	
 }
