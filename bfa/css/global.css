@@ -37,6 +37,7 @@ p {
 .p-lr-20 {
 	padding: 0 20px;
 }
+.col-no-padding { padding: 0; }
 .mt-20 { margin-top: 20px; }
 .btn-type { padding: 20px 80px; }
 .text-shadow {
@@ -611,29 +612,6 @@ border-bottom: 2px solid #427FED !important;
 .wizard form { margin: 0; height: 100%; }
 .wizard .title { margin-top: 20px; line-height: 25px; }
 .wizard .form-actions { position: absolute; bottom: 0; left: 0; right: 0; height: 70px;  margin: 0; z-index: 100; }
-.wizard .row { margin-bottom: 10px; }
-.wizard .item-name { float:left; padding-left:15px; width: 215px; height: 30px; line-height: 30px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.wizard .item-ctrl { float:right; padding-right:15px; width: 115px; }
-.wizard .item-need-more { padding: 4px 55px 0 15px; text-align: right; clear: both; }
-.wizard .input-group .btn, #rent-bar .input-group .form-control { padding: 4px 6px; }
-.wizard .spinner .form-control { width: 36px; }
-.wizard .spinner-input { text-align: center; }
-.wizard .close { float: none; margin-left: 6px;  }
-.wizard .is-add { height: 40px; margin: 0; }
-.wizard .btn-link { 
-	color: #000;
-	opacity: 0.2;
-	filter: alpha(opacity=20);
-	-webkit-transition: opacity .2s;
-	-moz-transition: opacity .2s;
-	-o-transition: opacity .2s;
-	transition: opacity .2s;
-}
-.wizard .btn-link:hover, .wizard .btn-link:focus {
-	text-decoration: none;
- 	opacity: 1;
-	filter: alpha(opacity=100);
-}
 .wizard .steps { position: relative; display: table; width: 100%; height: 60px;  }
 .wizard .steps li { position: absolute; left: 600px; display: block; width: 340px; height: auto; -webkit-transition: all .5s ease-in-out; transition: all .5s ease-in-out; }
 .wizard .steps h3 small { font-size: 13px; }
@@ -649,11 +627,6 @@ border-bottom: 2px solid #427FED !important;
 }
 
 /* 预约 ================================================= */
-.rent-info { min-height: 80px; }
-.rent-info .rent-remark { height: 20px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
-.rent-status { height: 32px; }
-.rent-status .status{ padding: 4px 0;}
-
 #rent-bar { 
 	position: fixed;
 	right: 50%;
@@ -664,6 +637,42 @@ border-bottom: 2px solid #427FED !important;
 	padding: 0 0 4px 0;
 	overflow: hidden;
 }
+#rent-bar .row { margin-bottom: 10px; }
+#rent-bar .panel-default { border: 1px solid #D8D8D8; }
+#rent-bar .panel-default > .panel-heading { background-color: transparent; border-color: transparent; }
+#rent-bar .panel-heading { padding: 0 15px; }
+#rent-bar .panel-body { padding: 15px; }
+#rent-bar > .rent-time, #rent-bar #rent-list { display: none; }
+#rent-bar > .rent-time.panel { margin-bottom: 10px; }
+#rent-bar #rent-list .item-name { float:left; padding-left:15px; width: 215px; height: 30px; line-height: 30px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#rent-bar #rent-list .item-ctrl { float:right; padding-right:15px; width: 115px; }
+#rent-bar #rent-list .item-need-more { padding: 4px 55px 0 15px; text-align: right; clear: both; }
+#rent-bar #rent-list .input-group .btn, #rent-bar .input-group .form-control { padding: 4px 6px; }
+#rent-bar #rent-list .spinner .form-control { width: 36px; }
+#rent-bar #rent-list .spinner-input { text-align: center; }
+#rent-bar #rent-list .close { float: none; margin-left: 6px;  }
+#rent-bar #rent-list .is-add { height: 40px; margin: 0; }
+#rent-bar .btn-link { 
+	color: #000;
+	opacity: 0.2;
+	filter: alpha(opacity=20);
+	-webkit-transition: opacity .2s;
+	-moz-transition: opacity .2s;
+	-o-transition: opacity .2s;
+	transition: opacity .2s;
+}
+#rent-bar .btn-link:hover, .wizard .btn-link:focus {
+	text-decoration: none;
+ 	opacity: 1;
+	filter: alpha(opacity=100);
+}
+
+.rent-info { min-height: 80px; }
+.rent-info .rent-remark { height: 20px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.rent-status { height: 32px; }
+.rent-status .status{ padding: 4px 0;}
+
+
 #equip-detail {
 	left: 50%;
 	width: 660px;

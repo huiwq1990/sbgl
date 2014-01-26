@@ -122,17 +122,7 @@
 				$("#rent-bar .wizard").animate({
 					height: $("#rent-bar .wizard .step-content").height() + 130
 				});
-				/*
-				$(".step-pane").each(function(index) {
-					console.log( $(this).css() );
-					if ($(this).hasClass("active")) {
-						$(this).show(300);
-					} else {
-						$(this).hide(300);
-					}
-				});
-				*/
-				var item = $('.wizard').wizard('selectedItem');
+/*				var item = $('.wizard').wizard('selectedItem');
 				if((item.step > 2)) {
 					$("#rent-bar").animate({
 							"right": "0%",
@@ -141,7 +131,19 @@
 							"margin-right": "20px"
 					});
 					$(".modal-backdrop").remove();					
-				}
+				}*/
+			});
+			$('#rent-bar .wizard').on('finished', function(e, data) {
+				$("#rent-bar").animate({
+						"right": "0%",
+						"top": "145px",
+						"width": "380px",
+						"margin-right": "20px"
+				});
+				$(".modal-backdrop").remove();
+				$("#rent-bar .wizard").remove();
+				$("#rent-bar > .rent-time").show();
+				$("#rent-bar > #rent-list").show();
 			});
 			/* 添加设备按钮 */
 			$("body").on("click", "a[data-type|=addEquip]", function() {
@@ -176,7 +178,7 @@
 				if ($("#rent-list #" + eId).length > 0) {
 					alert("设备" + eName + "已添加！");
 				} else {									
-					$("#rent-list").append(html);					
+					$("#rent-list .panel-body").append(html);					
 					var spinner = $("#rent-list #" + eId).children(".spinner").spinner({max: maxNum});		// 设置设备最大可预约数量
 					$("#rent-list #" + eId).children(".spinner").spinner('value', eSelectNum);
 					var overMaxNum = 0;
@@ -187,7 +189,7 @@
 						var needMore;
 						if(curVal === maxNum) {
 							var str = "已达最大可借数量，继续添加，系统会记录下你所需实际数量，并提供相应建议!";
-							var n = noty({text: str, timeout: 8000,});
+							var n = noty({text: str, timeout: 6000,});
 
 							$(_this).on("click", ".spinner-up",function(){
 								if ($(_this).parent().find(".item-need-more").length === 0 ) {								
@@ -197,8 +199,7 @@
 								overMaxNum++;
 								$("#rent-list #" + eId).children(".spinner").spinner("setMin", maxNum);		// 设置设备最小可预约数量为最大数，使其减少还需数量
 								console.log(".spinner-up, 已达最大可预约数量！,超出： " + overMaxNum);
-								$(_this).next(".item-need-more").find(".need-num").html(overMaxNum);
-								
+								$(_this).next(".item-need-more").find(".need-num").html(overMaxNum);								
 								console.log(".spinner-up, 已达最大可预约数量！,超出： " + overMaxNum);
 							});	
 							$(_this).on("click", ".spinner-down",function(){
@@ -383,12 +384,17 @@
 				}
 			});			
 
-			function reWizardHeight() {
+/*			function reWizardHeight_old() {
 				$("#rent-bar .wizard").animate({
 					height: $("#rent-bar .wizard .step-content").height() + 130
 				});
-			}
+			}*/
 
+            function reWizardHeight() {
+				$("#rent-list").animate({
+					height: $("#rent-list .panel-body").height() + 130
+				});
+			}
 
 
 			$('.spinner').spinner();
