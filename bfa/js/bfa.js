@@ -140,6 +140,12 @@
 						"width": "380px",
 						"margin-right": "20px"
 				});
+				
+				$('#rent-bar .wizard .input-daterange').datepicker('update', '2011-03-05');
+				var dateCheckin = $("#rent-bar .wizard .input-daterange .checkin").datepicker("getDate");
+				var dateCheckout = $("#rent-bar .wizard .input-daterange .checkout").datepicker("getDate");
+				$("#rent-bar .input-daterange .checkin1").datepicker("setDate", dateCheckin);
+				$("#rent-bar .input-daterange .checkout1").datepicker("setDate", dateCheckout);
 				$(".modal-backdrop").remove();
 				$("#rent-bar .wizard").remove();
 				$("#rent-bar > .rent-time").show();

@@ -310,9 +310,6 @@
                     <p>数字摄影技术第11周设备申请具体要求如下：</p>
                     <ol>
                       <li>...</li>
-                      <li>...</li>
-                      <li>...</li>
-                      <li>...</li>
                     </ol>
                   </div>
                 </div>
@@ -323,13 +320,13 @@
                 <div class="row">                  
                   <div class="input-daterange">
                     <div class="col-xs-5">
-                      <input type="text" class="form-control" name="start" placeholder="起始日期">
+                      <input type="text" class="form-control checkin" name="start" placeholder="起始日期">
                     </div>
                     <div class="col-xs-2">
                       <span class="add-on">至</span>
                     </div>
                     <div class="col-xs-5">
-                      <input type="text" class="form-control" name="end" placeholder="归还日期">
+                      <input type="text" class="form-control checkout" name="end" placeholder="归还日期">
                     </div>
                   </div>        
                 </div>
@@ -344,13 +341,13 @@
         <div class="rent-time panel panel-default">
           <div class="row panel-body input-daterange">  
             <div class="col-xs-4">
-              <input type="text" class="form-control" name="start" placeholder="起始日期">
+              <input type="text" class="form-control checkin1" name="start" value placeholder="起始日期">
             </div>
             <div class="col-xs-1 col-no-padding">
               <span class="add-on">至</span>
             </div>
             <div class="col-xs-4">
-              <input type="text" class="form-control" name="end" placeholder="归还日期">
+              <input type="text" class="form-control checkout1" name="end" value placeholder="归还日期">
             </div>
             <div class="col-xs-3 col-no-padding">
               <button type="button" class="btn btn-white">重新搜索</button>
@@ -429,13 +426,23 @@
 <script src="js/jquery.noty.js"></script>
 <script>
 
-$('.input-daterange').datepicker({
-	language: 'zh-CN',
-	format: 'yyyy-mm-dd',
-	todayHighlight: true,
-});
+
 
 $(function () {
+	var nowTemp = new Date();	
+	var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+	$('.input-daterange').datepicker({
+		language: 'zh-CN',
+		format: 'yyyy-mm-dd',
+		todayHighlight: true,
+		autoclose: true,
+		startDate: now
+	});	 
+	var checkin = $('.checkin .checkin1').datepicker()
+		.on('changeDate', function(ev) {
+	  		$('.checkout')[0].focus();
+	});
+	
 	
 	Highcharts.setOptions({
 		lang: {
