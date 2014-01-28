@@ -134,22 +134,25 @@
 				}*/
 			});
 			$('#rent-bar .wizard').on('finished', function(e, data) {
-				$("#rent-bar").animate({
+
+				var dateCheckin = $("#rent-bar .wizard .input-daterange .checkin").datepicker("getDate");
+				var dateCheckout = $("#rent-bar .wizard .input-daterange .checkout").datepicker("getDate");
+				if (dateCheckin == "Invalid Date" || dateCheckout == "Invalid Date" ) {
+					alert("请填写预约时间。");
+				} else {
+					$("#rent-bar").animate({
 						"right": "0%",
 						"top": "145px",
 						"width": "380px",
 						"margin-right": "20px"
-				});
-				
-				$('#rent-bar .wizard .input-daterange').datepicker('update', '2011-03-05');
-				var dateCheckin = $("#rent-bar .wizard .input-daterange .checkin").datepicker("getDate");
-				var dateCheckout = $("#rent-bar .wizard .input-daterange .checkout").datepicker("getDate");
-				$("#rent-bar .input-daterange .checkin1").datepicker("setDate", dateCheckin);
-				$("#rent-bar .input-daterange .checkout1").datepicker("setDate", dateCheckout);
-				$(".modal-backdrop").remove();
-				$("#rent-bar .wizard").remove();
-				$("#rent-bar > .rent-time").show();
-				$("#rent-bar > #rent-list").show();
+					});
+					$("#rent-bar .input-daterange .checkin1").datepicker("setDate", dateCheckin);
+					$("#rent-bar .input-daterange .checkout1").datepicker("setDate", dateCheckout);
+					$(".modal-backdrop").remove();
+					$("#rent-bar .wizard").remove();
+					$("#rent-bar > .rent-time").show();
+					$("#rent-bar > #rent-list").show();
+				}
 			});
 			/* 添加设备按钮 */
 			$("body").on("click", "a[data-type|=addEquip]", function() {
@@ -398,7 +401,7 @@
 
             function reWizardHeight() {
 				$("#rent-list").animate({
-					height: $("#rent-list .panel-body").height() + 130
+					height: $("#rent-list .panel-body").height() + 100
 				});
 			}
 

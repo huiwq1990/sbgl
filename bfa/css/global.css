@@ -626,6 +626,7 @@ border-bottom: 2px solid #427FED !important;
 	display: block;
 }
 
+
 /* 预约 ================================================= */
 #rent-bar { 
 	position: fixed;
@@ -643,6 +644,7 @@ border-bottom: 2px solid #427FED !important;
 #rent-bar .panel-heading { padding: 0 15px; }
 #rent-bar .panel-body { padding: 15px; }
 #rent-bar > .rent-time, #rent-bar #rent-list { display: none; }
+#rent-bar > .rent-time .row { margin-bottom: 0; }
 #rent-bar > .rent-time.panel { margin-bottom: 10px; }
 #rent-bar #rent-list .item-name { float:left; padding-left:15px; width: 215px; height: 30px; line-height: 30px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 #rent-bar #rent-list .item-ctrl { float:right; padding-right:15px; width: 115px; }
