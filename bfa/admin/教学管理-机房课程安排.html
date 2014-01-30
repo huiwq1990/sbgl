@@ -116,49 +116,72 @@
                 </div>
               </div>
               <div class="panel panel-default">
-                <table class="table">
+                <table class="table course-week-table">
                   <thead>
                     <tr>
-                      <th class="time-slop">时间</th>
-                      <th>周六</th>
-                      <th>周日</th>
+                      <th class="time-slot" colspan="2">时间</th>
                       <th>周一</th>
                       <th>周二</th>
                       <th>周三</th>
                       <th>周四</th>
-                      <th>周五</th>                      
+                      <th>周五</th>
+                      <th>周六</th>
+                      <th>周日</th>                      
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td class="time-slot">上午</td>
-                      <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
-                      <td></td>
+                      <td class="time-slot" rowspan="2">上午</td>
+                      <td class="time-num">1</td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
                     </tr>
                     <tr>
-                      <td class="time-slot">下午</td>
-                      <td></td>
-                      <td></td>
-                      <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
-                      <td></td>
-                      <td></td>
-                      <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
-                      <td></td>
+                      <td class="time-num">2</td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                    </tr>
+                    <tr>
+                      <td rowspan="2" class="time-slot">下午</td>
+                      <td class="time-num">3</td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                    </tr>
+                    <tr>
+                      <td class="time-num">4</td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
                     </tr>
                     <tr>
                       <td class="time-slot">晚上</td>
-                      <td></td>
-                      <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
+                      <td class="time-num">5</td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
+                      <td class="selectable"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -228,6 +251,31 @@
                       </label>
                     </div>
                   </div>
+                  <div class="form-group row">
+                    <label for="inputCourseName" class="col-md-1 control-label">课程名称</label>
+                    <div class="col-lg-6">
+                      <select class="select2 select-white form-control" id="inputCourseName">
+                        <optgroup label="本科">
+                          <option value="AK">ARRI ALEXA</option>
+                          <option value="HI">RED EPIC</option>
+                          <option value="HI">RED SCARLET</option>
+                        </optgroup>
+                        <optgroup label="硕士">
+                          <option value="CA">SONY EX1</option>
+                          <option value="CA">SONY EX3</option>
+                          <option value="CA">SONY FS700</option>
+                        </optgroup>
+                        <optgroup label="博士">
+                          <option value="AZ">CANON EOS 5D MARK II</option>
+                          <option value="AZ">CANON EOS 5D MARK III</option>
+                        </optgroup>
+                        <optgroup label="MFA">
+                          <option value="AL">ARRI 2000W</option>
+                        </optgroup>
+                      </select>
+
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -258,5 +306,19 @@
 <script src="../js/select2.js"></script>
 <script src="../js/bootstrap-hover-dropdown.min.js"></script>
 <script src="../js/bfa.js"></script>
+
+<script>
+/* ============ 课程安排 ============= */
+$("body").on("click", ".selectable", function() {
+	$(this).toggleClass("selected");
+	if($(this).hasClass("selected")) {		// 如果选中
+		$(this).append('<i class="icon-ok"></i>');
+	} else {					
+		$(this).find(".icon-ok").remove();		// 移除选中标识		
+	}
+
+});	
+				
+</script>
 </body>
 </html>

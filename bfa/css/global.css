@@ -780,21 +780,12 @@ transition: none;
 #admin .group-body .stock-in-status .stock-other { color: #999999; }
 #admin .group-body.media-list { margin-bottom: 0; }
 /* 机房预约 ================================================= */
-.bookable {
-	cursor: pointer;
-	position: relative;	
-}
-.bookable:hover {
-	background-color: #F5F9FC;
-}
+#post-equip .bookable {	cursor: pointer; position: relative; }
+#post-equip .bookable:hover { background-color: #F5F9FC; }
 #post-equip .selected { background-color: #F5F9FC !important; }
 #post-equip .table th,
 #post-equip .table td { width: 12.5%; text-align: center; }
-#post-equip .table td i { 
-	position: absolute;
-	top: 10px;
-	right: 10px;
-}
+#post-equip .table td i { position: absolute; top: 10px; right: 10px; }
 #post-equip .time-slot { width: 8%; text-align: left !important; vertical-align: middle; }
 #post-equip .carousel-bar { margin-bottom: 6px; text-align: right; }
 #post-equip .equip-title { margin-top: 10px; }
@@ -1338,9 +1329,14 @@ a.list-group-item.active:focus .list-group-item-text {
 
 }
 #admin .table { margin: 0; }
-
-
-
+#admin .table.course-week-table,
+#admin .table.course-week-table th { text-align: center; }
+#admin .table.course-week-table tbody > tr { height: 50px; }
+#admin .table.course-week-table th.time-slot { width: 80px; }
+#admin .table.course-week-table td.time-slot,
+#admin .table.course-week-table td.time-num { width: 40px; vertical-align: middle; }
+#admin .table.course-week-table .selectable {	cursor: pointer; position: relative; }
+#admin .table.course-week-table .selectable:hover { background-color: #F5F9FC; }
 
 .select2-results .sub { padding-left: 12px; }
 
