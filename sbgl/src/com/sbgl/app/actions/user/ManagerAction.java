@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sbgl.app.actions.user.template.UserCourse;
 import com.sbgl.app.entity.Administrator;
 import com.sbgl.app.entity.Usergroup;
 import com.sbgl.app.entity.Usergrouprelation;
@@ -116,12 +117,14 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 			this.tag = "1";
 			this.message = "修改管理员信息失败！";
 		} else {
-			Usergrouprelation ugr = userGroupRelationService.getRelationByType(manager.getId(), 0);
+			Usergrouprelation ugr = userGroupRelationService.getRelationByType(manager.getId(), 8);
 			ugr.setGroupId( group.getId() );
 			userGroupRelationService.alterUserGroupRelation( ugr );
 			this.tag = "0";
 			this.message = "修改管理员信息成功！";
 		}
+		
+		gotoUserManageAdmin();
 		
 		returnJSON.put("tag", tag);
 		returnJSON.put("msg", message);
@@ -147,7 +150,7 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 		for (String id : ids) {
 			Integer oneId = Integer.valueOf( id );
 			Administrator mg = managerService.getManagerById( oneId );
-			Usergrouprelation temp = userGroupRelationService.getRelationByType(mg.getId(), 0);
+			Usergrouprelation temp = userGroupRelationService.getRelationByType(mg.getId(), 8);
 			if(managerService.deleteManager( oneId ) == 0 && userGroupRelationService.deleteUserGroupRelation( temp.getId() ) == 0) {
 				this.message = "删除管理员信息成功！";
 				this.tag = "0";
@@ -156,6 +159,8 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 				this.tag = "1";
 			}
 		}
+		
+		gotoUserManageAdmin();
 		
 		returnJSON.put("tag", tag);
 		returnJSON.put("msg", message);
@@ -166,10 +171,10 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 	 * 获取全部管理员
 	 * @return
 	 */
-	public String getAllTeacher() {
+	/*public String getAllTeacher() {
 		allManagerList = managerService.getAllManager();
 		return SUCCESS;
-	}
+	}*/
 	
 	/**
 	 * 页面访问
@@ -178,24 +183,50 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 	public List<Usergroup> getAllGroupList() {
 		return allGroupList;
 	}
+	private List<UserCourse> allManagerList;
+	public List<UserCourse> getAllManagerList() {
+		return allManagerList;
+	}
 	public String gotoUserManageAdmin() {
+		allManagerList = new ArrayList<UserCourse>();
+		gotoUserManageAdminGroup();
 		
+		List<Administrator> allAdminList = managerService.getAllManager();
+		for (Administrator admin : allAdminList) {
+			Usergrouprelation ugr = userGroupRelationService.getRelationByType( admin.getId(), 8 );
+			Usergroup ug = null;
+			
+			UserCourse uc = new UserCourse();
+			uc.setUserName( admin.getName() );
+			uc.setUserPass( admin.getPassword() );
+			uc.setUserCode( admin.getAdministratorId() );
+			uc.setGender( admin.getGender() );
+			uc.setId( String.valueOf( admin.getId() ) );
+			uc.setPhoto( admin.getPhoto() );
+			uc.setTel( admin.getTelephone() );
+			uc.setMail( admin.getEmail() );
+			uc.setPrivilege( String.valueOf( admin.getPrivilege() ) );
+			if(ugr != null) {
+				ug = groupService.getUserGroupByid( ugr.getGroupId() );
+				if(ug != null) {
+					uc.setUserGroupId( String.valueOf(ugr.getId()) );
+					uc.setUserGroupName( ug.getName() );
+				}
+			}
+			allManagerList.add( uc );
+		}
 		return SUCCESS;
 	}
 	public String gotoUserManageAdminAdd() {
-		
+		gotoUserManageAdminGroup();
 		return SUCCESS;
 	}
 	
-	private List<Administrator> allManagerList;
-	public List<Administrator> getAllManagerList() {
-		return allManagerList;
-	}
 	public String gotoUserManageAdminGroup() {
 		allGroupList = new ArrayList<Usergroup>();
 		List<Usergroup> tempList = groupService.getAllUserGroup();
 		for (Usergroup ug : tempList) {
-			if(ug.getType() == 7 || ug.getType() == 8) {
+			if(ug.getType() == 8) {
 				allGroupList.add( ug );
 			}
 		}

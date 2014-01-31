@@ -286,7 +286,8 @@ public class StudentAction extends ActionSupport implements SessionAware {
 											   s.getTelephone(),
 											   s.getEmail(),
 											   s.getCouldBorrow(),
-											   s.getPhoto()
+											   s.getPhoto(),
+											   ""
 											   );
 				allUserList.add( uc );
 				
@@ -313,7 +314,8 @@ public class StudentAction extends ActionSupport implements SessionAware {
 											   t.getTelephone(),
 											   t.getEmail(),
 											   "not",
-											   t.getPhoto()
+											   t.getPhoto(),
+											   ""
 											   );
 				allUserList.add( uc );
 			}		
@@ -339,7 +341,8 @@ public class StudentAction extends ActionSupport implements SessionAware {
 											   w.getTelephone(),
 											   w.getEmail(),
 											   "not",
-											   w.getPhoto()
+											   w.getPhoto(),
+											   ""
 											   );
 				allUserList.add( uc );
 			}

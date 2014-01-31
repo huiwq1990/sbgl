@@ -107,9 +107,6 @@
 		<mapping resource="com/sbgl/app/entity/Administrator.hbm.xml" />
 
 
-		<!-- wm -->
-		<mapping resource="com/sbgl/app/entity/Equipmenborrow.hbm.xml" />
-		<mapping resource="com/sbgl/app/entity/Listdetail.hbm.xml" />
 
 
 	</session-factory>

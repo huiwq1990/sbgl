@@ -15,12 +15,13 @@ public class UserCourse {
 	private String mail;
 	private String canBorrow;
 	private String photo;
+	private String privilege;
 	
 	public UserCourse(String id, String gender, String userCode,
 			String userName, String userPass, String userGroupId,
 			String userGroupName, String userGroupType, String clazzId,
 			String clazzName, String tel, String mail, String canBorrow,
-			String photo) {
+			String photo, String privilege) {
 		super();
 		this.id = id;
 		this.gender = gender;
@@ -36,6 +37,7 @@ public class UserCourse {
 		this.mail = mail;
 		this.canBorrow = canBorrow;
 		this.photo = photo;
+		this.privilege = privilege;
 	}
 
 	public UserCourse() {
@@ -131,5 +133,13 @@ public class UserCourse {
 
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+	
+	public String getPrivilege() {
+		return privilege;
+	}
+
+	public void setPrivilege(String privilege) {
+		this.privilege = privilege;
 	}
 }

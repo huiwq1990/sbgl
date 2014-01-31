@@ -1,5 +1,6 @@
 package com.sbgl.app.actions.user;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,13 @@ public class GroupAction extends ActionSupport implements SessionAware {
 	private String tag;     		//返回执行结果 0-成功 1-失败
 	private String message; 		//返回信息
 	private int whichGroup = 0;		//0为用户组；1为管理员组
-
+	public int getWhichGroup() {
+		return whichGroup;
+	}
+	public void setWhichGroup(int whichGroup) {
+		this.whichGroup = whichGroup;
+	}
+	
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
@@ -69,10 +76,10 @@ public class GroupAction extends ActionSupport implements SessionAware {
 			long returnCode = groupService.addUserGroup( group );
 			if(returnCode == -1) {
 				this.tag = "1";
-				this.message = "添加用户组信息失败！";
+				this.message = "添加组信息失败！";
 			} else {
 				this.tag = "0";
-				this.message = "添加用户组信息成功！";
+				this.message = "添加组信息成功！";
 				
 				if(group.getType() == 2 || group.getType() == 6 || group.getType() == -1) {
 					whichGroup = 0;
@@ -82,7 +89,7 @@ public class GroupAction extends ActionSupport implements SessionAware {
 			}
 		} else {
 			this.tag = "2";
-			this.message = "所添加的用户组信息已经存在！";
+			this.message = "所添加的组信息已经存在！";
 		}
 		getAllGroup();
 		returnJSON.put("tag", tag);
@@ -102,10 +109,16 @@ public class GroupAction extends ActionSupport implements SessionAware {
 		
 		if(returnCode == -1) {
 			this.tag = "1";
-			this.message = "修改用户组信息失败！";
+			this.message = "修改组信息失败！";
 		} else {
 			this.tag = "0";
-			this.message = "修改用户组信息成功！";
+			this.message = "修改组信息成功！";
+
+			if(group.getType() == 2 || group.getType() == 6 || group.getType() == -1) {
+				whichGroup = 0;
+			} else {
+				whichGroup = 1;
+			}
 		}
 		getAllGroup();
 		returnJSON.put("tag", tag);
@@ -132,10 +145,11 @@ public class GroupAction extends ActionSupport implements SessionAware {
 		for (String id : ids) {
 			Integer oneId = Integer.valueOf( id );
 			if(groupService.deleteUsergroup( oneId ) == 0) {
-				this.message = "删除用户组成功！";
+				this.message = "删除组成功！";
 				this.tag = "0";
+
 			} else {
-				this.message = "删除用户组失败！";
+				this.message = "删除组失败！";
 				this.tag = "1";
 			}
 		}
@@ -159,6 +173,7 @@ public class GroupAction extends ActionSupport implements SessionAware {
 	
 	public String getAllGroup() {
 		List<Usergroup> tempList = groupService.getAllUserGroup();
+		allGroupList = new ArrayList<Usergroup>();
 		
 		if(whichGroup == 0) {
 			for (Usergroup ug : tempList) {
@@ -173,6 +188,7 @@ public class GroupAction extends ActionSupport implements SessionAware {
 				}
 			}
 		}
+		
 		return SUCCESS;
 	}
 }
