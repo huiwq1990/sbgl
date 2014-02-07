@@ -76,56 +76,48 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	//删除
 	String computercategoryIdsForDel;
 	
-	public String addComputercategory(){	
-		log.info("Add Entity");
-
-		try {
-			Computercategory temp = new Computercategory();
-			// 将model里的属性值赋给temp
-			BeanUtils.copyProperties(temp, computercategory);			
-			//add your code here.
-			
-			//temp.setCreatetime(DateUtil.currentDate());
-			
-			computercategoryService.addComputercategory(temp);
-			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputercategoryAction的方法：addBbstagfavourite错误"+e);
+	public static int checkUserLogin(){
+		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
+		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
+		if(uidStr==null || uidStr.trim().equals("0") || uidStr.trim().equals("")){
+			return -1;
 		}
-		return "Error";
+		return Integer.valueOf(uidStr);
 	}
 	
 //  ajax add	
 	public String addComputercategoryAjax(){	
 		log.info("Add Entity Ajax Manner");
 		
+
+		Integer uid = checkUserLogin();
+		if(uid < 0){
+			returnJson.setFlag(0);
+			returnJson.setReason("用户未登录");
+			JSONObject jo = JSONObject.fromObject(returnJson);
+			this.returnStr = jo.toString();			
+			return SUCCESS;
+		}
+		
 		//名称不规范
-//		boolean pass = checkComputercategoryName();
-//		if(!pass){
-//			return SUCCESS;
-//		}
-		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-		String uidStr = ComputerCookieUtil.getCookieValue(cookies, ComputerConfig.cookieuserid);
+		boolean pass = checkComputercategoryName();
+		if(!pass){
+			return SUCCESS;
+		}
 		
 		try {
 			Computercategory tempCh = new Computercategory();		
 			BeanUtils.copyProperties(tempCh, computercategory);		
 			tempCh.setName(inputAddCategoryNameCh.trim());
-			tempCh.setLanguagetype("0");
-			tempCh.setCreateuserid(Integer.valueOf(uidStr));
+			tempCh.setLanguagetype(ComputerConfig.languagechStr);
+			tempCh.setCreateuserid(uid);
 			tempCh.setStatus(0);
 			
 			Computercategory tempEn = new Computercategory();			
 			BeanUtils.copyProperties(tempEn, computercategory);		
 			tempEn.setName(inputAddCategoryNameEn.trim());
-			tempEn.setLanguagetype("1");			
-			tempEn.setCreateuserid(Integer.valueOf(uidStr));
+			tempEn.setLanguagetype(ComputerConfig.languageenStr);			
+			tempEn.setCreateuserid(uid);
 			tempEn.setStatus(0);
 			
 			computercategoryService.addComputercategory(tempCh,tempEn);
@@ -152,7 +144,7 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	}
 	
 	private boolean checkComputercategoryName(){
-		if(computercategory.getName()==null || computercategory.getName().trim().equals("")){
+		if(inputAddCategoryNameEn==null || inputAddCategoryNameEn.trim().equals("") || inputAddCategoryNameCh==null || inputAddCategoryNameCh.trim().equals("")){
 			returnJson.setFlag(0);	
 			returnJson.setReason("分类名称不能为空");
 			JSONObject jo = JSONObject.fromObject(returnJson);
@@ -162,7 +154,7 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 		
 		
 		
-		if(computercategoryService.isComputercategoryNameExist(computercategory.getName().trim())){
+		if(computercategoryService.isComputercategoryNameExist(inputAddCategoryNameCh.trim())){
 			returnJson.setFlag(0);	
 			returnJson.setReason("分类名称重复");
 			JSONObject jo = JSONObject.fromObject(returnJson);

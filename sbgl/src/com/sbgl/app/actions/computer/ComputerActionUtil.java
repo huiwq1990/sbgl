@@ -55,7 +55,7 @@ public class ComputerActionUtil {
 	public static String getUserIdFromCookie(Cookie[] cookies ){	
 		String uidStr = ComputerCookieUtil.getCookieValue(cookies, ComputerConfig.cookieuserid);	
 		if(uidStr == null ){
-			return "";
+			return "0";
 		}
 		return uidStr;
 	}
