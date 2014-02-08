@@ -1,62 +1,60 @@
 package com.sbgl.app.entity;
 
-
-
 /**
  * Computerstatus entity. @author MyEclipse Persistence Tools
  */
 
-public class Computerstatus extends com.sbgl.app.dao.DaoAbs implements java.io.Serializable {
+public class Computerstatus extends com.sbgl.app.dao.DaoAbs implements
+		java.io.Serializable {
 
+	// Fields
 
-    // Fields    
+	private Integer id;
+	private String name;
+	private Integer availableborrow;
 
-     private Integer id;
-     private String name;
+	// Constructors
 
-
-    // Constructors
-
-    /** default constructor */
-    public Computerstatus() {
-    }
+	/** default constructor */
+	public Computerstatus() {
+	}
 
 	/** minimal constructor */
-    public Computerstatus(Integer id) {
-        this.id = id;
-    }
-    
-    /** full constructor */
-    public Computerstatus(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+	public Computerstatus(Integer id) {
+		this.id = id;
+	}
 
-   
-    // Property accessors
+	/** full constructor */
+	public Computerstatus(Integer id, String name, Integer availableborrow) {
+		this.id = id;
+		this.name = name;
+		this.availableborrow = availableborrow;
+	}
 
-    public Integer getId() {
-        return this.id;
-    }
-    
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	// Property accessors
 
-    public String getName() {
-        return this.name;
-    }
-    
-    public void setName(String name) {
-        this.name = name;
-    }
-   
+	public Integer getId() {
+		return this.id;
+	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
+	public String getName() {
+		return this.name;
+	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
 
+	public Integer getAvailableborrow() {
+		return this.availableborrow;
+	}
 
-
-
+	public void setAvailableborrow(Integer availableborrow) {
+		this.availableborrow = availableborrow;
+	}
 
 }

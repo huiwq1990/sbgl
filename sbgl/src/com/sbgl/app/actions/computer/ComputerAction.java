@@ -19,9 +19,11 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputerService;
 import com.sbgl.app.services.computer.ComputermodelService;
+import com.sbgl.app.services.computer.ComputerstatusService;
 import com.sbgl.util.*;
 
 
@@ -59,6 +61,11 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	
 	
 	
+	@Resource
+	private ComputerstatusService computerstatusService;
+	int computerstatusid = 0;
+	List<Computerstatus> computerstatusList = new ArrayList<Computerstatus>();
+	List<ComputerstatusFull> computerstatusFullList = new ArrayList<ComputerstatusFull>();
 	
 	
 	
@@ -75,51 +82,7 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	//删除
 	String computerIdsForDel;
 	
-//  manage Computer
-	public String manageComputer(){
-		log.info(logprefix+"manageComputerFull");
-		
-//      分页查询	
-		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
-		//page.setTotalpage(computerService.countComputerRow());
-		computerList  = computerService.selectComputerByPage(page);
-		
-//		查询全部
-//		computerList  = computerService.selectComputerById();
-		
-	    if(computerList == null){
-			computerList = new ArrayList<Computer>();
-		}
-//		for(int i = 0; i < computerList.size(); i++){
-//			System.out.println("id="+computerList.get(i).getLoginusername());
-//		}
-		return SUCCESS;
-	}		
-			
-	//管理 查询
-	public String manageComputerFull(){
-		log.info("exec action method:manageComputerFull");
-		
-//      分页查询		
-		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
-		//page.setTotalpage(computerService.countComputerRow());
-		computerFullList  = computerService.selectComputerFullByPage(page);
-		
-//		查询全部
-//		computerFullList  = computerService.selectComputerFullAll();
 
-		if(computerFullList == null){
-			computerFullList = new ArrayList<ComputerFull>();
-		}
-//		for(int i = 0; i < computerFullList.size(); i++){
-//			System.out.println("id="+computerFullList.get(i).getLoginusername());
-//		}
-		return SUCCESS;
-	}			
-			
-		
 
 			
 
@@ -139,20 +102,40 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 			BeanUtils.copyProperties(ch, computer);			
 			BeanUtils.copyProperties(en, computer);		
 			
-			ch.setLanguagetype("0");
+			ch.setLanguagetype(ComputerConfig.languagechStr);
 	
-			en.setLanguagetype("1");
+			en.setLanguagetype(ComputerConfig.languageenStr);
 			en.setSerialnumber(computerSerialnumberEn);
 			en.setRemark(computerRemarkEn);
 			
 			
-			computerService.addComputer(ch,en);
+		
 			
-			int s = ch.getStatus();
-			if(s==1 || s==2){
-				Computermodel cm = computermodelService.selectComputermodelById(ch.getComputermodelid());
+//			修改数量
+			List<Computerstatus> computerstatusList = computerstatusService.selectComputerstatusByCondition( " where id = " + ch.getComputerstatusid() );
+			if(computerstatusList==null || computerstatusList.size() !=0){
+				returnJson.setFlag(0);		
+				returnJson.setReason("获取可借状态失败!");
+				JSONObject jo = JSONObject.fromObject(returnJson);
+				this.returnStr = jo.toString();
+			}
+			
+			Computermodel cm = computermodelService.selectComputermodelByCondition(" where computermodeltype = " + ch.getComputermodelid() ).get(0);			
+			if(cm.getComputercount()== null){
+				cm.setComputercount(0);
+			}
+			computermodelService.execSql(" update Computermodel set computercount="+(cm.getComputercount()+1)+"  where computermodeltype = "+ch.getComputermodelid());
+
+			if(computerstatusList.get(0).getAvailableborrow()== ComputerConfig.computeravailableborrowstatusid){
+				if(cm.getAvailableborrowcountnumber() == 0){
+					cm.setAvailableborrowcountnumber(0);
+				}				
 				computermodelService.execSql(" update Computermodel set availableborrowcountnumber="+(cm.getAvailableborrowcountnumber()+1)+"  where computermodeltype = "+ch.getComputermodelid());
 			}
+			
+			
+			computerService.addComputer(ch,en);
+			
 			returnJson.setFlag(1);		
 			returnJson.setReason("添加机器成功!");
 			JSONObject jo = JSONObject.fromObject(returnJson);
@@ -236,32 +219,7 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 		return SUCCESS;
 	}
 
-//修改
-	public String updateComputer(){
-		try {
-			if(computer.getId() != null && computer.getId() > 0){				
-				Computer tempComputer = computerService.selectComputerById(computer.getId());
-																				  								
-												  								
-												  								
-												  								
-												  								
-												  								
-								actionMsg = getText("viewComputerSuccess");
-			}else{
-				actionMsg = getText("viewComputerFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerAction的方法：viewComputer错误"+e);
-		}
 
-		return "error";
-	}
-	
-	
 	//ajax 修改
 	public String updateComputerAjax(){
 		log.info(logprefix + "updateComputerAjax,id="+computer.getId()+"  " + computerIdEn+"  end");
@@ -271,11 +229,14 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 			System.out.println("computer.getSerialnumber()"+computer.getSerialnumber());
 //			ch
 			Computer tempComputer = computerService.selectComputerById(computer.getId());
+			int originalComputerStatus = tempComputer.getComputerstatusid();
 			tempComputer.setSerialnumber(computer.getSerialnumber());
 			tempComputer.setComputermodelid(computer.getComputermodelid());			
 			tempComputer.setComputerstatusid(computer.getComputerstatusid());
 			tempComputer.setRemark(computer.getRemark());
 		
+			Computer ch = tempComputer;
+			
 			computerService.updateComputer(tempComputer);
 //			en
 			tempComputer = computerService.selectComputerById(computerIdEn);
@@ -285,6 +246,38 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 			tempComputer.setRemark(computerRemarkEn);
 			computerService.updateComputer(tempComputer);
 			
+//			修改可借数量
+			List<Computerstatus> computerstatusList = computerstatusService.selectComputerstatusByCondition( " where id = " + ch.getComputerstatusid() );
+			List<Computerstatus> orgComputerstatusList = computerstatusService.selectComputerstatusByCondition( " where id = " + originalComputerStatus );
+			
+			
+			if(computerstatusList==null || computerstatusList.size() !=0 || orgComputerstatusList==null || orgComputerstatusList.size() !=0){
+				returnJson.setFlag(0);		
+				returnJson.setReason("获取可借状态失败!");
+				JSONObject jo = JSONObject.fromObject(returnJson);
+				this.returnStr = jo.toString();
+			}
+			int nowAviBow = computerstatusList.get(0).getAvailableborrow();
+			int orgAviBow = orgComputerstatusList.get(0).getAvailableborrow();
+			
+//			原先可借现在不可借
+			if( (nowAviBow != orgAviBow) && (orgAviBow == ComputerConfig.computeravailableborrowstatusid) ){
+				Computermodel cm = computermodelService.selectComputermodelByCondition(" where computermodeltype = " + ch.getComputermodelid() ).get(0);
+				if(cm.getAvailableborrowcountnumber() == 0){
+					cm.setAvailableborrowcountnumber(0);
+				}				
+				computermodelService.execSql(" update Computermodel set availableborrowcountnumber="+(cm.getAvailableborrowcountnumber()-1)+"  where computermodeltype = "+ch.getComputermodelid());
+			}
+			
+//			原先不可借现在可借
+			if( (nowAviBow != orgAviBow) && (orgAviBow != ComputerConfig.computeravailableborrowstatusid) ){
+				Computermodel cm = computermodelService.selectComputermodelByCondition(" where computermodeltype = " + ch.getComputermodelid() ).get(0);
+				if(cm.getAvailableborrowcountnumber() == 0){
+					cm.setAvailableborrowcountnumber(0);
+				}				
+				computermodelService.execSql(" update Computermodel set availableborrowcountnumber="+(cm.getAvailableborrowcountnumber()+1)+"  where computermodeltype = "+ch.getComputermodelid());
+			}
+						
 			returnJson.setFlag(1);		
 			returnJson.setReason("修改成功!");
 			JSONObject jo = JSONObject.fromObject(returnJson);				

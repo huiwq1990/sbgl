@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
@@ -75,6 +76,8 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	List<ComputercategoryFull> computercategoryFullList = new ArrayList<ComputercategoryFull>();
 	List<ComputercategoryFull> computercategoryFullListCh = new ArrayList<ComputercategoryFull>();
 	List<ComputercategoryFull> computercategoryFullListEn = new ArrayList<ComputercategoryFull>();
+	List<Integer> computercategoryModelSize = new ArrayList<Integer>();
+	List<Integer> computercategoryComputerSize = new ArrayList<Integer>();
 	
 	@Resource
 	private ComputermodelService computermodelService;
@@ -94,7 +97,7 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	List<ComputerFull> computerFullListEn = new ArrayList<ComputerFull>();
 	//key是分类信息，value是分类中的模型
 //	HashMap<Integer, ArrayList<ComputermodelFull>> computermodelByComputercategoryId = new HashMap<Integer,ArrayList<ComputermodelFull>>();
-	HashMap<Integer, ArrayList<Computermodel>> computermodelByComputercategoryId = new HashMap<Integer,ArrayList<Computermodel>>();
+
 	private Integer computerid; //entity full 的id属性名称	
 	
 
@@ -148,6 +151,10 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	
 	
 	
+	HashMap<Integer, ArrayList<Computermodel>> computermodelByComputercategoryId = new HashMap<Integer,ArrayList<Computermodel>>();
+//	HashMap<Integer, ArrayList<Computer>> computerByComputermodelId = new HashMap<Integer,ArrayList<Computer>>();
+	
+	
 	private String logprefix = "exec method";
 	Page page = new Page();
 
@@ -181,13 +188,35 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 			pageNo = 0;
 		}
 		
-		
+//		查询中文的分类
 		String sqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";	
-//		computercategoryFullList  = computercategoryService.selectShowedComputercategoryFullByPage(page);
 		computercategoryFullListCh  = computercategoryService.selectComputercategoryFullByConditionAndPage(sqlch , page);
 		
+//		查询英文的分类
 		String sqlen = " where a.languagetype=1 order by a.computercategorytype,a.languagetype";
 		computercategoryFullListEn  = computercategoryService.selectComputercategoryFullByConditionAndPage(sqlen , page);
+		
+//		计算数量
+		computerCategoryModelMap(computercategoryFullListCh);
+		
+		for(ComputercategoryFull categoryFull : computercategoryFullListCh){
+			int categoryType = categoryFull.getComputercategorycomputercategorytype();
+			ArrayList<Computermodel> entry = computermodelByComputercategoryId.get(categoryType);
+//		for (Entry<Integer, ArrayList<Computermodel>> entry : computermodelByComputercategoryId.entrySet()) {
+			computercategoryModelSize.add(entry.size());
+			
+			int computersize = 0;
+			if(entry != null && entry.size() > 0){
+				for(Computermodel m : entry){
+//					System.out.println(m.getComputercount());
+					if(m.getComputercount() != null){
+						computersize += m.getComputercount();
+					}					
+				}
+			}
+			
+			computercategoryComputerSize.add(computersize);
+		}
 		
 //		查询全部
 //		computercategoryFullList  = computercategoryService.selectComputercategoryFullAll();
@@ -200,6 +229,12 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		}
 		if(computercategoryFullListEn == null){
 			computercategoryFullListEn = new ArrayList<ComputercategoryFull>();
+		}	
+		if(computercategoryModelSize == null){
+			computercategoryModelSize = new ArrayList<Integer>();
+		}
+		if(computercategoryComputerSize == null){
+			computercategoryComputerSize = new ArrayList<Integer>();
 		}
 		
 		parentcomputercategoryList = computercategoryService.selectParentComputercategory();
@@ -212,6 +247,58 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 			return "success";
 		}
 	}			
+	
+	
+//	获取种类到模型的map
+	public void computerCategoryModelMap(List<ComputercategoryFull> tempComputercategoryFullList){
+		//model的分类信息，只显示中文的
+//		String categorysqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";
+//		List<ComputercategoryFull> tempComputercategoryFullList  = computercategoryService.selectComputercategoryFullByCondition(categorysqlch);
+		
+		if(tempComputercategoryFullList == null){
+			computermodelByComputercategoryId  = new HashMap<Integer,ArrayList<Computermodel>>();
+			return ;
+		}
+		for(ComputercategoryFull computercategoryFull : tempComputercategoryFullList){
+			int computercategoryType = computercategoryFull.getComputercategorycomputercategorytype();
+
+			String sqlch = " where a.languagetype="+ComputerConfig.languagech+" and a.computercategoryid = "+computercategoryType+" order by a.computermodeltype,a.languagetype";		
+			ArrayList<Computermodel> tempComputermodelFullListCh  = (ArrayList<Computermodel>) computermodelService.selectComputermodelByCondition(sqlch );
+			if(tempComputermodelFullListCh == null){
+				tempComputermodelFullListCh = new ArrayList<Computermodel>();
+			}
+//			System.out.println(tempComputermodelFullListCh.size());
+			computermodelByComputercategoryId.put(computercategoryType, tempComputermodelFullListCh);
+		}
+		
+	}
+	
+	
+	/*
+//	获取模型到机器的map
+	public void computerModelComputerMap(List<ComputercategoryFull> tempComputermodelList){
+		//model的分类信息，只显示中文的
+//		String categorysqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";
+//		List<ComputercategoryFull> tempComputercategoryFullList  = computercategoryService.selectComputercategoryFullByCondition(categorysqlch);
+		
+		if(tempComputercategoryFullList == null){
+			computerByComputermodelId  = new HashMap<Integer,ArrayList<Computer>>();
+			return ;
+		}
+		for(ComputercategoryFull computercategoryFull : tempComputercategoryFullList){
+			int computercategoryType = computercategoryFull.getComputercategorycomputercategorytype();
+
+			String sqlch = " where a.languagetype="+ComputerConfig.languagech+" and a.computercategoryid = "+computercategoryType+" order by a.computermodeltype,a.languagetype";		
+			ArrayList<Computer> tempComputermodelFullListCh  = (ArrayList<Computer>) computermodelService.selectComputermodelByCondition(sqlch );
+			if(tempComputermodelFullListCh == null){
+				tempComputermodelFullListCh = new ArrayList<Computer>();
+			}
+			System.out.println(tempComputermodelFullListCh.size());
+			computerByComputermodelId.put(computercategoryType, tempComputermodelFullListCh);
+		}
+		
+	}
+	*/
 	
 	//管理 查询
 /*	public void manageComputercategoryFull(InternalContextAdapter cxt,Map param,VelocityContext context){
@@ -260,7 +347,6 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		if(pageNo ==0){
 			pageNo =1;
 		}		
-		
 		
 		String countsql = " where a.languagetype="+ComputerConfig.languagech;
 		String sqlch =" where a.languagetype="+ComputerConfig.languagech+" and b.languagetype="+ComputerConfig.languagech;
@@ -346,7 +432,7 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		
 		
 		//pc所有状态
-//		computerstatusFullList  = computerstatusService.selectComputerstatusFullByCondition("");//查询所有的状态
+		computerstatusFullList  = computerstatusService.selectComputerstatusFullByCondition("");//查询所有的状态
 		computerstatusList  = computerstatusService.selectComputerstatusByCondition("");//查询所有的状态
 //		log.info("computerstatusList" + computerstatusList.size());
 		
@@ -524,11 +610,11 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	 * @return
 	 */
 	public String toAddComputerPage(){
-		String sqlch = " where a.languagetype=0 order by a.computercategorytype";
-		computercategoryFullList  = computercategoryService.selectComputercategoryFullByConditionAndPage(sqlch , page);
-		sqlch = " where a.languagetype=0 order by a.computermodeltype ";		
-		computermodelFullList  = computermodelService.selectComputermodelFullByConditionAndPage(sqlch , page);
-		
+//		String sqlch = " where a.languagetype="+ ComputerConfig.languagech +" order by a.computercategorytype";
+//		computercategoryFullList  = computercategoryService.selectComputercategoryFullByConditionAndPage(sqlch , page);
+//		sqlch = " where a.languagetype=0 order by a.computermodeltype ";		
+//		computermodelFullList  = computermodelService.selectComputermodelFullByConditionAndPage(sqlch , page);
+//		
 		
 		String categorysqlch = " where a.languagetype="+ComputerConfig.languagech+" order by a.computercategorytype";
 //		System.out.println(categorysqlch);
@@ -537,7 +623,7 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		//分类与PC模型map
 		categoryModelMap();
 		
-		//		PC状态
+		//PC状态
 		computerstatusList  = computerstatusService.selectComputerstatusByCondition("");//查询所有的状态
 		
 		if(computermodelFullList == null){
@@ -1234,6 +1320,27 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 
 	public void setClassOrder(int classOrder) {
 		ClassOrder = classOrder;
+	}
+
+
+	public List<Integer> getComputercategoryModelSize() {
+		return computercategoryModelSize;
+	}
+
+
+	public void setComputercategoryModelSize(List<Integer> computercategoryModelSize) {
+		this.computercategoryModelSize = computercategoryModelSize;
+	}
+
+
+	public List<Integer> getComputercategoryComputerSize() {
+		return computercategoryComputerSize;
+	}
+
+
+	public void setComputercategoryComputerSize(
+			List<Integer> computercategoryComputerSize) {
+		this.computercategoryComputerSize = computercategoryComputerSize;
 	}
 
 

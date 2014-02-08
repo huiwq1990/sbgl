@@ -144,17 +144,21 @@
 #set($listRegion = [0..$listSize])
 ##取出所有的属性名称
 #foreach($tempKey in $listRegion)
-			#set($computercategoryFull = $computercategoryFullListCh.get($tempKey))
+			#set($ch = $computercategoryFullListCh.get($tempKey))
 			#set($en = $computercategoryFullListEn.get($tempKey))
+			
+			#set($modelSize = $computercategoryModelSize.get($tempKey) )
+			#set($computerSize = $computercategoryComputerSize.get($tempKey) )
+			
 			##set($tempKey = $tempKey*2)
 			  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="$!computercategoryFull.computercategorycomputercategorytype"></td>
-                    <td>$!computercategoryFull.computercategoryname<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button" action-type="editComputercategoryFillIn" 
-						data-id="$!computercategoryFull.computercategoryid" data-name="$!computercategoryFull.computercategoryname"
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!ch.computercategorycomputercategorytype"></td>
+                    <td>$!ch.computercategoryname<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button" action-type="editComputercategoryFillIn" 
+						data-id="$!ch.computercategoryid" data-name="$!ch.computercategoryname"
 						data-iden="$!en.computercategoryid" data-nameen="$!en.computercategoryname">修改</a></td>
 					<td>$!en.computercategoryname</td>
-                    <td></td>
-                    <td></td>
+                    <td>$modelSize</td>
+                    <td>$computerSize</td>
                   </tr>
         
 #end

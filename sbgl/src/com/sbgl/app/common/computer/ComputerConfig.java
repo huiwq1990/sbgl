@@ -26,4 +26,7 @@ public class ComputerConfig {
 //	未分类的类型
 	public final static int computercategorynotclassifyid = -1;
 	
+//	可借状态id
+	public final static int computeravailableborrowstatusid = 1;
+	
 }

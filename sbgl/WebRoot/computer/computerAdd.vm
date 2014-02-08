@@ -109,14 +109,14 @@
                     <label for="inputEquipCategory" class="col-lg-2 control-label">分类</label>
                     <div class="col-lg-4">
                       <select class="select2 select-white form-control" id="inputAddComputerComputercategoryid">    
-#set($listSize = $computercategoryFullList.size() - 1)
+#set($categorylistSize = $computercategoryFullList.size() - 1)
 ##判断数据是否为空
-#if($listSize>=0)
-#set($listRegion = [0..$listSize])
+#if($categorylistSize>=0)
+#set($listRegion = [0..$categorylistSize])
 ##取出所有的属性名称
 #foreach($tempKey in $listRegion)
 			#set($ch = $computercategoryFullList.get($tempKey))						
-                        <option value="$!ch.computercategoryid" >$!ch.computercategoryname</option>                      
+                        <option value="$!ch.computercategorycomputercategorytype" >$!ch.computercategoryname</option>                      
                         
 #end
 #end						
@@ -127,17 +127,20 @@
                     <label for="inputEquipModelId" class="col-lg-2 control-label">所属设备型号</label>
                     <div class="col-lg-4">
                       <select class="select2 select-white form-control" id="inputAddComputerComputermodelid">
-#set($listSize = $computermodelFullList.size() - 1)
+#if($categorylistSize > 0)						
+#set($categorymodelList = $computermodelByComputercategoryId.get($computercategoryFullList.get(0).computercategorycomputercategorytype))								
+#set($categorymodelListSize = $categorymodelList.size() - 1)
 ##判断数据是否为空
-#if($listSize>=0)
-#set($listRegion = [0..$listSize])
+#if($categorymodelListSize>= 0)
+#set($listRegion = [0..$categorymodelListSize])
 ##取出所有的属性名称
 #foreach($tempKey in $listRegion)
-			#set($ch = $computermodelFullList.get($tempKey))						
-                        <option value="$!ch.computermodelid" >$!ch.computermodelname</option>                      
+			#set($ch = $categorymodelList.get($tempKey))						
+                        <option value="$!ch.computermodeltype" >$!ch.name</option>                      
                         
 #end
 #end
+#end ## 分类数量
                       </select>
                     </div>
                   </div>
@@ -227,6 +230,36 @@
 
 	
 <script>	
+
+$("#inputAddComputerComputercategoryid").on("change", function(e) {
+	var html;
+	$("#s2id_inputAddComputerComputermodelid > a > span").empty();
+	
+	
+	
+	#foreach($categoryfull in ${computercategoryFullList})	
+   		#set($modelList = $computermodelByComputercategoryId.get($categoryfull.computercategorycomputercategorytype))
+		
+		if (e.val == $!categoryfull.computercategorycomputercategorytype) {
+		html = '';
+			#foreach($model in ${modelList})
+               html +=   '<option value="$!model.computermodeltype">$!model.name</option> ';
+			#end
+		
+		$("#inputAddComputerComputermodelid").empty();
+		$("#inputAddComputerComputermodelid").append(html);
+		
+		#if($modelList.size() > 0)
+			$("#s2id_inputAddComputerComputermodelid > a > span").append("$!modelList.get(0).name");
+		#end
+		
+		}
+		
+	#end
+	
+	//log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed}));
+})
+	
 var cookie = { 
   		//读取COOKIES,n为COOKIE名 
    		Get:function(n){ 
@@ -245,9 +278,10 @@ var cookie = {
 			"computerSerialnumberEn":$('#inputAddComputerSerialnumberEn').val(),
 	 		"computermodelid":$('#inputAddComputerComputermodelid').val(),
 	 		"createuserid":createuserid,
-	 		"status":$('#inputAddComputerStatus').val(),
+	 		"computerstatusid":$('#inputAddComputerStatus').val(),
 	 		"remark":$('#inputAddComputerRemark').val(),
-			"computerRemarkEn":$('#inputAddComputerRemarkEn').val()
+			"computerRemarkEn":$('#inputAddComputerRemarkEn').val(),
+			"status" : 0
 		};
 		//alert("add computer");
 		jQuery.ajax({  
@@ -280,6 +314,34 @@ var cookie = {
 	 	$('#inputAddComputerStatus').select2("val","0");
 	 	$('#inputAddComputerRemark').val("");
 		$('#inputAddComputerRemarkEn').val("");
+		
+		
+		var html;
+		$("#s2id_inputAddComputerComputermodelid > a > span").empty();
+		html = '';
+#if($categorylistSize > 0)						
+#set($categorymodelList = $computermodelByComputercategoryId.get($computercategoryFullList.get(0).computercategorycomputercategorytype))								
+#set($categorymodelListSize = $categorymodelList.size() - 1)
+##判断数据是否为空
+#if($categorymodelListSize>= 0)
+#set($listRegion = [0..$categorymodelListSize])
+##取出所有的属性名称
+#foreach($tempKey in $listRegion)
+			#set($ch = $categorymodelList.get($tempKey))
+			 html +=   '<option value="$!ch.computermodeltype">$!ch.name</option> '; 
+#end
+#end
+#end ## 分类数量
+		
+		$("#inputAddComputerComputermodelid").empty();
+		$("#inputAddComputerComputermodelid").append(html);
+		
+		#if($modelList.size() > 0)
+			$("#s2id_inputAddComputerComputermodelid > a > span").append("$!categorymodelList.get(0).name");
+		#end
+		
+		
+		
 	}
 	
 </script>	

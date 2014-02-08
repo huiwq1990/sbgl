@@ -1,6 +1,5 @@
-id,name
- ,正常           
- , 借出
- , 维护
- , 维修
- , 遗失
+id,name,availableborrow
+ ,可借,1            
+ , 维护,0 
+ , 维修,0 
+ , 遗失,0 

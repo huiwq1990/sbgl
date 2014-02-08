@@ -58,7 +58,7 @@ public class ComputerstatusSpringTest {
 		try {
 			
 			List<String> dataList = new ArrayList<String>();
-			File f = new File( "D:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computerstatus");
+			File f = new File( "E:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computerstatus");
 			dataList = FileUtils.readLines(f);
 			String[] attrs = dataList.get(0).split(",");
 			for(int i=1; i < dataList.size();i++){
@@ -72,43 +72,7 @@ public class ComputerstatusSpringTest {
 	}
 	
 	
-	public static void iniDouble(){
-		ApplicationContext cxt = new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
 
-		ComputerstatusService computerstatusService = (ComputerstatusService) cxt.getBean("computerstatusService");
-		CommonService commonService = (CommonService) cxt.getBean("commonService");
-		// 将计数器置1
-		commonService.iniCode("Computerstatus");
-		commonService.iniCode("Computerstatustype");
-		// 删除
-		List<Computerstatus> computerstatusList = computerstatusService.selectComputerstatusAll();
-		if (computerstatusList != null) {
-			for (int i = 0; i < computerstatusList.size(); i++) {
-				computerstatusService.deleteComputerstatus(computerstatusList.get(i).getId());
-			}
-		}
-		
-		
-		try {
-			
-			List<String> dataList = new ArrayList<String>();
-			File f = new File( "D:/GitHub/sbgl/sbgl/Data"+"/computer"+"/Computerstatus");
-			dataList = FileUtils.readLines(f);
-			String[] attrs = dataList.get(0).split(",");
-			for(int i=1; i < dataList.size();i=i+2){
-				
-				Computerstatus ch =	getObj(attrs,dataList.get(i));
-				Computerstatus en =	getObj(attrs,dataList.get(i+1));
-								
-				computerstatusService.addComputerstatus(ch,en);
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
-	}
-	
 	public static Computerstatus getObj(String[] attrs,String str) throws Exception{
 		HashMap<String, Method> map = ReflectUtil.ConverBean(Computerstatus.class);
 		
@@ -124,6 +88,12 @@ public class ComputerstatusSpringTest {
 									if(!datas[1].trim().equals("")){
 					 method = map.get(attrs[1]);
 																method.invoke(obj,String.valueOf(datas[1].trim()));
+ 										}
+									
+
+									if(!datas[2].trim().equals("")){
+					 method = map.get(attrs[2]);
+																method.invoke(obj,Integer.valueOf(datas[2].trim()));
  										}
 					
 								
