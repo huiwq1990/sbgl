@@ -96,7 +96,7 @@
 	#foreach($model in ${modelList})
                   <option value="$!categoryfull.computercategorycomputercategorytype;$!model.computermodeltype" data-foo="sub">$!model.name</option>
 	#end	
-	#end
+#end
                   
                 </select>
               </div>              
@@ -270,16 +270,14 @@
                     <label for="inputEquipModelId" class="col-lg-3 control-label">所属设备型号</label>
                     <div class="col-xs-7">
                       <select class="select2 select-white form-control" id="inputEditComputerComputermodelid">
-               
-#foreach($categoryfull in ${computercategoryFullList})
+               #foreach($categoryfull in ${computercategoryFullList})
 	<option value="$!categoryfull.computercategorycomputercategorytype;0" data-foo="fa">$categoryfull.computercategoryname</option>
     #set($modelList = $computermodelByComputercategoryId.get($categoryfull.computercategorycomputercategorytype))
 	#foreach($model in ${modelList})
                   <option value="$!model.computermodeltype" data-foo="sub">$!model.name</option>
 	#end	
 	#end
-                  
-                </select>
+					  </select>
                     </div>
                   </div>
                   <div class="form-group">
@@ -363,6 +361,37 @@
 
 <script>
 
+/*
+$("#inputEditComputerComputercategoryid").on("change", function(e) {
+	var html;
+	$("#s2id_inputEditComputerComputermodelid > a > span").empty();
+	
+	
+	
+	#foreach($categoryfull in ${computercategoryFullList})	
+   		#set($modelList = $computermodelByComputercategoryId.get($categoryfull.computercategorycomputercategorytype))
+		
+		if (e.val == $!categoryfull.computercategorycomputercategorytype) {
+		html = '';
+			#foreach($model in ${modelList})
+               html +=   '<option value="$!model.computermodeltype">$!model.name</option> ';
+			#end
+		
+		$("#inputEditComputerComputermodelid").empty();
+		$("#inputEditComputerComputermodelid").append(html);
+		
+		#if($modelList.size() > 0)
+			$("#s2id_inputEditComputerComputermodelid > a > span").append("$!modelList.get(0).name");
+		#end
+		
+		}
+		
+	#end
+	
+	//log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed}));
+})
+*/
+
 var cookie = { 
   		//读取COOKIES,n为COOKIE名 
    		Get:function(n){ 
@@ -398,8 +427,8 @@ function refreshComputerTable(){
 		    data:{	pageNo:currentpagenum,
 					callType:'ajaxType',
 					computerstatusid : computerstatusid,
-					computermodeltype:computermodeltype,
-					computercategorytype: computercategorytype
+					computermodeltype : computermodeltype,
+					computercategorytype : computercategorytype
 					},
 		    dataType: 'html',
 			success: function(data){

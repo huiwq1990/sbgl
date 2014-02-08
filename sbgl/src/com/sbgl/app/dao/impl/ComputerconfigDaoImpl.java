@@ -16,25 +16,23 @@ import org.springframework.stereotype.Repository;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.DaoAbs;
 
-import com.sbgl.app.dao.ComputerorderDao;
-import com.sbgl.app.entity.Computerorder;
-import com.sbgl.app.entity.ComputerorderFull;
+import com.sbgl.app.dao.ComputerconfigDao;
+import com.sbgl.app.entity.Computerconfig;
+import com.sbgl.app.entity.ComputerconfigFull;
 import com.sbgl.util.*;
 
-@Repository("computerorderDao")
-public class ComputerorderDaoImpl extends HibernateDaoSupport implements ComputerorderDao{
+@Repository("computerconfigDao")
+public class ComputerconfigDaoImpl extends HibernateDaoSupport implements ComputerconfigDao{
 
-	private static final Log log = LogFactory.getLog(ComputerorderDaoImpl.class);
-	private final String basicComputerorderFullSql = "select a.id as computerorderid, a.serialnumber as computerorderserialnumber, a.userid as computerorderuserid, a.title as computerordertitle, a.ordertype as computerorderordertype, a.createtime as computerordercreatetime, a.remark as computerorderremark, a.status as computerorderstatus, " +
-			"b.id as loginuserid, b.name as loginusername" +
-			" from Computerorder a  left join Loginuser b on a.userid=b.id ";
+	private static final Log log = LogFactory.getLog(ComputerconfigDaoImpl.class);
+	private final String basicComputerconfigFullSql = "select a.id as computerconfigid, a.name as computerconfigname, a.value as computerconfigvalue from Computerconfig a  ";
 	
-	private final String basicComputerorderSql = "From Computerorder as a ";
+	private final String basicComputerconfigSql = "From Computerconfig as a ";
 	
 	// 根据条件查询查询实体
 	@Override
-	public List<Computerorder> selectComputerorderByCondition(String condition) {
-		final String  sql = basicComputerorderSql +" " + condition;
+	public List<Computerconfig> selectComputerconfigByCondition(String condition) {
+		final String  sql = basicComputerconfigSql +" " + condition;
 		
 		try {
              List l = this.getHibernateTemplate().find(sql);
@@ -48,8 +46,8 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 	
 	//  根据条件分页查询实体        
         @Override
-        public List<Computerorder>  selectComputerorderByConditionAndPage(String conditionSql,final Page page) {
-                final String  sql = basicComputerorderSql  +conditionSql;
+        public List<Computerconfig>  selectComputerconfigByConditionAndPage(String conditionSql,final Page page) {
+                final String  sql = basicComputerconfigSql  +conditionSql;
               try {
 	        
 	         Query q = this.getSession().createQuery(sql).setFirstResult(page.getPageNo()).setMaxResults(page.getPageSize());
@@ -65,10 +63,10 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 	
 	//条件查询full
 	@Override
-	public List<ComputerorderFull> selectComputerorderFullByCondition(String condition) {
-		final String  sql = basicComputerorderFullSql +" " + condition;
+	public List<ComputerconfigFull> selectComputerconfigFullByCondition(String condition) {
+		final String  sql = basicComputerconfigFullSql +" " + condition;
 		
-		List<ComputerorderFull> computerorderList = getHibernateTemplate()
+		List<ComputerconfigFull> computerconfigList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
 					public Object doInHibernate(Session session)
 							throws HibernateException {
@@ -76,19 +74,19 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 							//Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(YaomingFull.class));  
 						Query query = session.createSQLQuery(sql);
 						query.setResultTransformer(new EscColumnToBean(
-								ComputerorderFull.class));
+								ComputerconfigFull.class));
 						return query.list();
 					}
 				});		
-		return computerorderList;
+		return computerconfigList;
 	}
 	
 	
 	// 查询实体full        
         @Override
-        public List<ComputerorderFull>  selectComputerorderFullByConditionAndPage(String conditionSql,final Page page) {
-                final String  sql = basicComputerorderFullSql  +conditionSql;
-                List<ComputerorderFull> computerorderList = getHibernateTemplate()
+        public List<ComputerconfigFull>  selectComputerconfigFullByConditionAndPage(String conditionSql,final Page page) {
+                final String  sql = basicComputerconfigFullSql  +conditionSql;
+                List<ComputerconfigFull> computerconfigList = getHibernateTemplate()
                                 .executeFind(new HibernateCallback() {
                                         public Object doInHibernate(Session session)
                                                         throws HibernateException {
@@ -98,24 +96,24 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
                                                 query.setFirstResult(page.getStartNum());
                                                 query.setMaxResults(page.getPageSize());
                                                 query.setResultTransformer(new EscColumnToBean(
-                                                                ComputerorderFull.class));
+                                                                ComputerconfigFull.class));
                                                 return query.list();
                                         }
                                 });
-                if (computerorderList != null && !computerorderList.isEmpty()) {
-                        return computerorderList;
+                if (computerconfigList != null && !computerconfigList.isEmpty()) {
+                        return computerconfigList;
                 }
-                return computerorderList;
+                return computerconfigList;
         }
 	
 	
 	
 //  删除实体
-	public int deleteEntity(Integer computerorderId) {
+	public int deleteEntity(Integer computerconfigId) {
 		// TODO Auto-generated method stub		
 //		log.debug("正在删除");
         try {
-        	String hqlString="update Computerorder as tb set tb.status = 0 where tb.id = " +computerorderId; 
+        	String hqlString="update Computerconfig as tb set tb.status = 0 where tb.id = " +computerconfigId; 
         	Query query = this.getHibernateTemplate().getSessionFactory().getCurrentSession().createQuery(hqlString);    	   	
         	int ret=query.executeUpdate();
 
@@ -129,10 +127,10 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 
 //  根据实体id查询实体full	
 	@Override
-	public ComputerorderFull selectComputerorderFullById(Integer computerorderId) {
-		final String  sql =  basicComputerorderFullSql + " where a.id = "+computerorderId;
+	public ComputerconfigFull selectComputerconfigFullById(Integer computerconfigId) {
+		final String  sql =  basicComputerconfigFullSql + " where a.id = "+computerconfigId;
 		
-		List<ComputerorderFull> computerorderList = getHibernateTemplate()
+		List<ComputerconfigFull> computerconfigList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
 					public Object doInHibernate(Session session)
 							throws HibernateException {
@@ -140,41 +138,41 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 							//Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.aliasToBean(YaomingFull.class));  
 						Query query = session.createSQLQuery(sql);
 						query.setResultTransformer(new EscColumnToBean(
-								ComputerorderFull.class));
+								ComputerconfigFull.class));
 						return query.list();
 					}
 				});
-		if (computerorderList != null && !computerorderList.isEmpty()) {
-			return computerorderList.get(0);
+		if (computerconfigList != null && !computerconfigList.isEmpty()) {
+			return computerconfigList.get(0);
 		}
 		return null;
 	}
 	
 //	查询全部实体full
 	@Override
-	public List<ComputerorderFull> selectComputerorderFullAll() {
-		final String  sql = basicComputerorderFullSql;
+	public List<ComputerconfigFull> selectComputerconfigFullAll() {
+		final String  sql = basicComputerconfigFullSql;
 		
-		List<ComputerorderFull> computerorderFullList = getHibernateTemplate()
+		List<ComputerconfigFull> computerconfigFullList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
 					public Object doInHibernate(Session session)
 							throws HibernateException {
 						Query query = session.createSQLQuery(sql);
 						query.setResultTransformer(new EscColumnToBean(
-								ComputerorderFull.class));
+								ComputerconfigFull.class));
 						return query.list();
 					}
 				});
-		if (computerorderFullList != null && !computerorderFullList.isEmpty()) {			
-			return computerorderFullList;
+		if (computerconfigFullList != null && !computerconfigFullList.isEmpty()) {			
+			return computerconfigFullList;
 		}
 		return null;
 	}
 //  分页查询 实体full
-	public List<ComputerorderFull> selectComputerorderFullByPage(final Page page){
-		final String  sql = basicComputerorderFullSql;
+	public List<ComputerconfigFull> selectComputerconfigFullByPage(final Page page){
+		final String  sql = basicComputerconfigFullSql;
 		
-		List<ComputerorderFull> computerorderFullList = getHibernateTemplate()
+		List<ComputerconfigFull> computerconfigFullList = getHibernateTemplate()
 				.executeFind(new HibernateCallback() {
 					public Object doInHibernate(Session session)
 							throws HibernateException {
@@ -182,29 +180,16 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 						query.setFirstResult(page.getStartNum());
 						query.setMaxResults(page.getPageSize());
 						query.setResultTransformer(new EscColumnToBean(
-								ComputerorderFull.class));
+								ComputerconfigFull.class));
 						return query.list();
 					}
 				});
-		if (computerorderFullList != null && !computerorderFullList.isEmpty()) {			
-			return computerorderFullList;
+		if (computerconfigFullList != null && !computerconfigFullList.isEmpty()) {			
+			return computerconfigFullList;
 		}
 		return null;
 	}
 	
 //  根据关联查询实体full
-
-	//根据关联查询实体 
-	public List<Computerorder> selectComputerorderByLoginuserId(Integer userid ){
-	
-		return null;
-	}
-  
-
-	public List<ComputerorderFull> selectComputerorderFullByLoginuserId(Integer userid ){
-	
-		return null;
-	}
-
  
 }

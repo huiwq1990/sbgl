@@ -358,19 +358,31 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		if(computercategorytype==0){
 			
 		}
-		//查询某一个Model下的
+		
+		//查询某一个Model下的PC
 		if(computercategorytype!=0 && computermodeltype!=0){
 			countsql +=  " and a.computermodelid="+computermodeltype;
 			sqlch = sqlch + " and a.computermodelid="+computermodeltype;
 			sqlen = sqlen +  " and a.computermodelid="+computermodeltype;
 		}
-//		查询某一分类下的
+		
+//		查询某一分类下的PC 先获取分类下面的模型
 		if(computercategorytype!=0 && computermodeltype==0){
-			List<Computermodel> tempComputermodelList = computermodelService.selectComputermodelByCondition(" where a.computercategoryid="+computercategorytype);
+			List<Computermodel> tempComputermodelList = computermodelService.selectComputermodelByCondition(" where a.computercategoryid="+computercategorytype +" and a.languagetype="+ComputerConfig.languagech);
+			
 			String inStr = " (";
-			for(Computermodel c : tempComputermodelList){
-				inStr += c.getId()+",";
+			
+//			如果不存在分类不存在模型，设置一个空的模型id
+			if(tempComputermodelList==null || tempComputermodelList.size()<1){
+				inStr +=" -10,";
+			}else{
+				for(Computermodel c : tempComputermodelList){
+					inStr += c.getComputermodeltype()+",";
+				}
 			}
+			
+			
+			
 			inStr = inStr.substring(0,inStr.length()-1);
 			inStr += ") ";
 			countsql += " and a.computermodelid in "+inStr+" ";
@@ -458,7 +470,7 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		}
 	}		
 	
-	//管理 查询
+	//管理 PC预约
 	public String manageComputerorderFull(){
 		log.info("exec action method:manageComputerorderFull");
 		
@@ -475,6 +487,8 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		}else{
 			sql = sql+" where a.status="+computerorderStatus+" ";
 		}
+		
+		sql += " order by a.createtime desc";
 			
 		//设置总数量
 		page.setTotalCount(computerorderService.selectComputerorderFullByCondition(sql).size());

@@ -23,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.common.computer.BorrowperiodUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
+import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.entity.Borrowperiod;
 import com.sbgl.app.entity.Computer;
 import com.sbgl.app.entity.ComputerFull;
@@ -118,11 +119,17 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 	HashMap<Integer,ArrayList<String>> dateMap = new HashMap<Integer,ArrayList<String>>();
 
 	
+	
+	int computerordertype;
+	
 //	提交预约表单的参数
 	private String orderInfoStr;
 	
 	
 	public String toOrderComputerPage(){
+		
+		
+		computerordertype = ComputerorderInfo.IndividualOrder;
 		
 //		设置当前时间
 		Date currentDate = DateUtil.currentDate();
@@ -180,7 +187,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 //		int computerorderTotalOrderPeriod = ComputerConfig.computerorderTotalOrderPeriod;
 		
 //			设置当前时间
-			String currentDay = "2013-10-01 18:00:00";
+			String currentDay = DateUtil.dateFormat(currentDate, DateUtil.dateformatstr1);//"2013-10-01 18:00:00";
 			 currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(DateUtil.parseDate(currentDay));
 			 System.out.println("currentPeriod: "+currentPeriod);
 		 
@@ -756,6 +763,16 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 
 	public void setOrderInfoStr(String orderInfoStr) {
 		this.orderInfoStr = orderInfoStr;
+	}
+
+
+	public int getComputerordertype() {
+		return computerordertype;
+	}
+
+
+	public void setComputerordertype(int computerordertype) {
+		this.computerordertype = computerordertype;
 	}
 	
 	

@@ -10,6 +10,7 @@ public class ComputerConfig {
 	
 	//预约提前时间
 //	public static int computerorderTotalOrderDay = 16;
+	
 	//预约时间段
 	public  static int computerorderTotalOrderPeriod = 3;
 	
@@ -28,5 +29,10 @@ public class ComputerConfig {
 	
 //	可借状态id
 	public final static int computeravailableborrowstatusid = 1;
+	
+	
+//	用户未登录返回值
+	public final static String usernotloginreturnstr = "usernotlogin";
+	
 	
 }

@@ -9,8 +9,11 @@ import net.sf.json.JSONObject;
 
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -83,18 +86,36 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	String computerIdsForDel;
 	
 
-
+	public static int checkUserLogin(){
+		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
+		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
+		if(uidStr==null || uidStr.trim().equals("0") || uidStr.trim().equals("")){
+			return -1;
+		}
+		return Integer.valueOf(uidStr);
+	}
 			
 
 //  ajax add	
 	public String addComputerAjax(){	
 		log.info("Add Entity Ajax Manner");
 		
+		Integer uid = checkUserLogin();
+		log.info("login user id "+ uid);
+		if(uid < 0){
+			returnJson.setFlag(0);
+			returnJson.setReason("用户未登录");
+			JSONObject jo = JSONObject.fromObject(returnJson);
+			this.returnStr = jo.toString();			
+			return SUCCESS;
+		}
+		
 		ReturnJson returnJson = new ReturnJson();
 		
 		try {
 			
 			computer.setCreatetime(DateUtil.currentDate());
+			computer.setCreateuserid(uid);
 			
 			Computer ch = new Computer();
 			Computer en = new Computer();
@@ -169,37 +190,46 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 			for(int i=0; i < ids.length;i++){
 				
 				Integer typeId = Integer.valueOf(ids[i]);			
-				log.info(typeId);
+//				log.info(typeId);
 				//检查id
-				/*
-				if(tempDelId == null || tempDelId < 0){
-					returnJson.setFlag(0);
-					returnJson.setReason("删除的id不规范");
-					log.info("删除的id不规范");
-					JSONObject jo = JSONObject.fromObject(returnJson);
-					this.returnStr = jo.toString();
-					return SUCCESS;
-				}	
+				
+//				if(tempDelId == null || tempDelId < 0){
+//					returnJson.setFlag(0);
+//					returnJson.setReason("删除的id不规范");
+//					log.info("删除的id不规范");
+//					JSONObject jo = JSONObject.fromObject(returnJson);
+//					this.returnStr = jo.toString();
+//					return SUCCESS;
+//				}	
+				
 				//del
-				Computercategory temp = computercategoryService.selectComputercategoryById(typeId);			
-				if (temp != null) {			
-					//将相应的PC类型分类设置成-1
-					computermodelService.updateCategoryComputermodel(typeId);
-					computercategoryService.deleteComputercategory(typeId);
 					
-				} else {
-					log.info("删除的id不存在");		
+//				if (temp != null) {	
+				
+//					
+//				} else {
+//					log.info("删除的id不存在");		
+//					returnJson.setFlag(0);
+//					returnJson.setReason("删除的id不存在");
+//					JSONObject jo = JSONObject.fromObject(returnJson);
+//					this.returnStr = jo.toString();
+//					return SUCCESS;
+//				}
+				
+//				修改数量
+				List<Computermodel> cmList = computermodelService.selectComputermodelByCondition(" where computermodeltype = " + typeId );
+				if(cmList== null || cmList.size() !=2){
 					returnJson.setFlag(0);
-					returnJson.setReason("删除的id不存在");
+					returnJson.setReason("获取模型信息出错!");
 					JSONObject jo = JSONObject.fromObject(returnJson);
 					this.returnStr = jo.toString();
 					return SUCCESS;
-				}
-				*/
-//				computermodService.updateCategoryComputermodel(typeId);
+				}			
+				Computermodel cm = cmList.get(0);
+				computermodelService.execSql(" update Computermodel set availableborrowcountnumber="+(cm.getAvailableborrowcountnumber()-1)+" computercount="+(cm.getComputercount()-1)+" where computermodeltype = "+typeId);
+					
+//				del
 				computerService.deleteComputerByType(typeId);
-				
-				
 				
 			}
 			returnJson.setFlag(1);
@@ -220,9 +250,33 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	}
 
 
+	public boolean passCheckUpdate(){
+		
+//		String re = 
+		if(computer.getId()==0 || computer.getSerialnumber()==null || computer.getSerialnumber().trim().equals("") ||
+				computer.getComputermodelid()== null || computer.getComputermodelid()==0 ||
+				computer.getComputerstatusid()== null || computer.getComputerstatusid() ==0){
+			return false;
+		}
+		
+		return true;
+		
+	
+	}
+	
 	//ajax 修改
 	public String updateComputerAjax(){
 		log.info(logprefix + "updateComputerAjax,id="+computer.getId()+"  " + computerIdEn+"  end");
+		
+		if(!passCheckUpdate()){
+			returnJson.setFlag(0);	
+			returnJson.setReason("数据不完整");
+			JSONObject jo = JSONObject.fromObject(returnJson);
+			this.returnStr = jo.toString();
+			return SUCCESS;
+		}
+		
+		
 
 		try {
 			

@@ -277,7 +277,7 @@ var cookie = {
 			"serialnumber":$('#inputAddComputerSerialnumber').val(),	
 			"computerSerialnumberEn":$('#inputAddComputerSerialnumberEn').val(),
 	 		"computermodelid":$('#inputAddComputerComputermodelid').val(),
-	 		"createuserid":createuserid,
+	 		//"createuserid":createuserid,
 	 		"computerstatusid":$('#inputAddComputerStatus').val(),
 	 		"remark":$('#inputAddComputerRemark').val(),
 			"computerRemarkEn":$('#inputAddComputerRemarkEn').val(),

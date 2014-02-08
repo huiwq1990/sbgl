@@ -105,6 +105,7 @@
 		<mapping
 			resource="com/sbgl/app/entity/Usergrouprelation.hbm.xml" />
 		<mapping resource="com/sbgl/app/entity/Administrator.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Computerconfig.hbm.xml" />
 
 
 

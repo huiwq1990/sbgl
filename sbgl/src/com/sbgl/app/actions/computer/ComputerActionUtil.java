@@ -47,6 +47,14 @@ public class ComputerActionUtil {
 		return ComputerConfig.languageen;
 	}
 	
+	public static String getLanguagetypeStr(String str){
+		if(str==null || !str.trim().equals("1")){
+			return ComputerConfig.languageenStr;
+		}
+		
+		return ComputerConfig.languagechStr;
+	}
+	
 	/**
 	 * 获取当前用户
 	 *

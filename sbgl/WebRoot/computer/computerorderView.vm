@@ -126,7 +126,7 @@
 #end
 #end					
 					
-					
+					<!--
                     <div class="media">                        
                       <div class="group-hd">
                         <div class="group-name pull-left">DELL工作站</div>
@@ -143,7 +143,9 @@
                         <p>……</p>
                       </div>  
                     </div>
-                  </div>
+                -->
+
+					  </div>
                 </div>                  
             </div>
             <div class="col-md-5">

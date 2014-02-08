@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="computerconfig" extends="admin">
+
+
+<!-- default entity manage action -->
+    	<action name="manageComputerconfig" class="ComputerconfigAction" method="manageComputerconfig">
+        	<result name="success">/computer/computerconfig.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+	
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="computerconfigAjax" extends="json-default">
+
+    	<action name="updateComputerconfigAjax" class="ComputerconfigAction" method="updateComputerconfigAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
+	</package>
+
+</struts>

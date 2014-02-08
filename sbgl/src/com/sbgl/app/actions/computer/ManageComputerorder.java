@@ -94,6 +94,27 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	private String orderInfoStr;
 	private Object computerorderSerialnumber;
 	
+//	确认界面参数
+	int orderpccaregorynum = 0;
+	int orderpctotalnum = 0;
+	
+	int computerordertype;
+	
+	
+	
+	public static int checkUserLogin(){
+		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
+		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
+		if(uidStr==null || uidStr.trim().equals("0") || uidStr.trim().equals("")){
+			return -1;
+		}
+		return Integer.valueOf(uidStr);
+	}
+			
+
+	
+	
+	
 	
 	/**
 	 * 跳转到订单审核界面
@@ -142,21 +163,15 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	 * 查看借用清单列表
 	 * @return
 	 */
-	public String computerorderList(){
+	public String viewMineComputerorderList(){
 		
-		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-		String uidStr = ComputerCookieUtil.getCookieValue(cookies, ComputerConfig.cookieuserid);
-		//根据用户查询预约单
-//		if(cookiesMap==null){
-//			System.out.println("null");
-//		}
-//		String uidStr = cookiesMap.get(ComputerConfig.cookieuserid);
-		if(uidStr == null ){
-			return "error";
+		Integer userid = checkUserLogin();
+//		log.info("login user id "+ uid);
+		if(userid < 0){				
+			return ComputerConfig.usernotloginreturnstr;
 		}
-		int userid = Integer.valueOf(uidStr);
 		
-		String selordersql = "  where a.userid="+userid;
+		String selordersql = "  where a.userid="+userid + " order by a.createtime desc";
 		computerorderFullList = computerorderService.selectComputerorderFullByCondition(selordersql);
 		
 //		String sql = " where a.computerorderid = "+computerorderId  + " and c.languagetype="+ComputerConfig.languagech ;
@@ -219,7 +234,7 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	 * @return
 	 */
 	public String computerorderFormConfirm(){	
-		log.info("computerorderFormConfirm");
+		log.info("computerorderFormConfirm"+computerordertype);
 		ReturnJson returnJson = new ReturnJson();		
 		
 		if(confirmOrderInfo(orderInfoStr) == false){
@@ -235,6 +250,8 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 			
 			JSONObject jo = JSONObject.fromObject(returnJson);
 			this.returnStr = jo.toString();
+			
+			session.put("computerordertype", computerordertype);
 			session.put("computerorderdetailList", computerorderdetailList);
 			session.put("computerorderdetailFullList", computerorderdetailFullList);
 //			returnJson.setReason("提交数据错误");
@@ -301,6 +318,9 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 			return "error";
 		}
 		
+		
+		orderpctotalnum = 0;
+		
 		for (int i = 0; i < computerorderdetailFullList.size(); i++) {
 			int tempComputermodelId = computerorderdetailFullList.get(i).getComputerorderdetailcomputermodelid();
 			if(computerorderdetailFullMapByComputermodelId.containsKey(tempComputermodelId)){
@@ -309,8 +329,13 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 				ArrayList<ComputerorderdetailFull> tempComputerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
 				tempComputerorderdetailFullList.add(computerorderdetailFullList.get(i));
 				computerorderdetailFullMapByComputermodelId.put(tempComputermodelId,tempComputerorderdetailFullList);
+				orderpctotalnum++;
 			}
 		}
+		
+		
+		orderpccaregorynum = computerorderdetailFullMapByComputermodelId.size();
+		
 		
 		if(computerorderdetailFullMapByComputermodelId == null){
 			computerorderdetailFullMapByComputermodelId = new HashMap<Integer,ArrayList<ComputerorderdetailFull>>();
@@ -358,9 +383,19 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 			String uuid = ComputerCookieUtil.genSerialnumber("");
 			temp.setSerialnumber(uuid);
 			session.put("computerorderSerialnumber", uuid);
-//			temp.setUserid(Integer.valueOf(userid));
-			temp.setUserid(Integer.valueOf("1"));
+
+			Integer uid = checkUserLogin();
+			if(uid < 0){
+				returnJson.setFlag(0);
+				returnJson.setReason("用户未登录");
+				JSONObject jo = JSONObject.fromObject(returnJson);
+				this.returnStr = jo.toString();			
+				return SUCCESS;
+			}
+			
+			temp.setUserid(uid);
 			temp.setCreatetime(DateUtil.currentDate());
+			temp.setOrdertype((Integer) session.get("computerordertype"));
 			temp.setStatus(ComputerorderInfo.ComputerorderStatusAduitWait);
 			computerorderService.addComputerorder(temp);
 			
@@ -756,6 +791,45 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 			List<ComputerstatusFull> computerstatusFullList) {
 		this.computerstatusFullList = computerstatusFullList;
 	}
+
+
+	public int getOrderpccaregorynum() {
+		return orderpccaregorynum;
+	}
+
+
+	public void setOrderpccaregorynum(int orderpccaregorynum) {
+		this.orderpccaregorynum = orderpccaregorynum;
+	}
+
+
+	public int getOrderpctotalnum() {
+		return orderpctotalnum;
+	}
+
+
+	public void setOrderpctotalnum(int orderpctotalnum) {
+		this.orderpctotalnum = orderpctotalnum;
+	}
+
+
+
+
+
+
+	public int getComputerordertype() {
+		return computerordertype;
+	}
+
+
+
+
+
+
+	public void setComputerordertype(int computerordertype) {
+		this.computerordertype = computerordertype;
+	}
+
 
 
 	

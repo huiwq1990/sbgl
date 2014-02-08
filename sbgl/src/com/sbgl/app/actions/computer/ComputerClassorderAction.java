@@ -23,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.common.computer.BorrowperiodUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
+import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.entity.Borrowperiod;
 import com.sbgl.app.entity.Computer;
 import com.sbgl.app.entity.ComputerFull;
@@ -166,18 +167,22 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 //	提交预约表单的参数
 	private String orderInfoStr;
 	
+	private int computerordertype = 0;
 
 	/**
 	 * 跳转到机房课程预约界面
 	 * 需要传入课程规则id:computerorderclassruleid
 	 * @return
 	 */
-	public String toComputerClassorderPage(){
-		
+	public String toComputerClassorderPage(){		
 		log.info("exec toComputerClassorderPage");
 		
+		
+//		设置为课程预约
+		computerordertype = ComputerorderInfo.ClassOrder;
+		
 		if(computerhomeworkid == null || computerhomeworkid <0){
-			System.out.println("参数不对");
+			System.out.println("参数不对,没有作业id");
 			return "error";
 		}
 		
@@ -1101,8 +1106,16 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 			List<ComputerhomeworkreceiverFull> computerhomeworkreceiverFullList) {
 		this.computerhomeworkreceiverFullList = computerhomeworkreceiverFullList;
 	}
-	
-	
-	
+
+
+	public int getComputerordertype() {
+		return computerordertype;
+	}
+
+
+	public void setComputerordertype(int computerordertype) {
+		this.computerordertype = computerordertype;
+	}
+
 	
 }

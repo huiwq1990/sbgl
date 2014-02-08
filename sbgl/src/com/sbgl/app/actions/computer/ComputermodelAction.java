@@ -68,35 +68,15 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 	
 	private String computermodelIdsForDel;
 
-	/**
-	 * 		
-	 * @return
-	 */
-	public String addComputermodel(){	
-		log.info("Add Entity");
-
-		try {
-			Computermodel temp = new Computermodel();
-			// 将model里的属性值赋给temp
-			BeanUtils.copyProperties(temp, computermodel);			
-			//add your code here.
-			
-			//temp.setCreatetime(DateUtil.currentDate());
-			
-			computermodelService.addComputermodel(temp);
-			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputermodelAction的方法：addBbstagfavourite错误"+e);
+		
+	public static int checkUserLogin(){
+		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
+		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
+		if(uidStr==null || uidStr.trim().equals("0") || uidStr.trim().equals("")){
+			return -1;
 		}
-		return "Error";
+		return Integer.valueOf(uidStr);
 	}
-	
 	
 	//check model
 	private boolean checkComputermodel(){
@@ -129,7 +109,8 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 		
 		return true;
 	}
-//  ajax add	
+
+	//  ajax add	
 	public String addComputermodelAjax(){	
 		log.info("Add Entity Ajax Manner");
 		
@@ -137,26 +118,39 @@ public class ComputermodelAction extends ActionSupport implements SessionAware,M
 //		if(!pass){
 //			return SUCCESS;
 //		}
-		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-		String uidStr = ComputerCookieUtil.getCookieValue(cookies, ComputerConfig.cookieuserid);
+
+		Integer uid = checkUserLogin();
+		System.out.println("sss"+ uid);
+		if(uid < 0){
+			returnJson.setFlag(0);
+			returnJson.setReason("用户未登录");
+			JSONObject jo = JSONObject.fromObject(returnJson);
+			this.returnStr = jo.toString();			
+			return SUCCESS;
+		}
+		
 		try {
+//			设置初值指
 			computermodel.setCreatetime(DateUtil.currentDate());
+			computermodel.setAvailableborrowcountnumber(0);
+			computermodel.setComputercount(0);
 			
 			Computermodel modelCh = new Computermodel();
 			Computermodel modelEn = new Computermodel();
 
+			
 			BeanUtils.copyProperties(modelCh, computermodel);	
-			modelCh.setLanguagetype("0");
-			modelCh.setCreateuserid(Integer.valueOf(uidStr));
+			modelCh.setLanguagetype(ComputerConfig.languagechStr);
+			modelCh.setCreateuserid(uid);
 			modelCh.setStatus(0);
 			
 			BeanUtils.copyProperties(modelEn, computermodel);
 			//英文的属性需要单独赋值
-			modelEn.setLanguagetype("1");
+			modelEn.setLanguagetype(ComputerConfig.languageenStr);
 			modelEn.setName(computermodelNameEn);
 //			System.out.println(computermodelDescriptionEn);
 			modelEn.setDescription(computermodelDescriptionEn);
-			modelEn.setCreateuserid(Integer.valueOf(uidStr));
+			modelEn.setCreateuserid(uid);
 			modelEn.setStatus(0);
 //			computermodelDescriptionEn.l;
 			computermodelService.addComputermodel(modelCh,modelEn);
