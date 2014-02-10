@@ -3,6 +3,7 @@ package com.sbgl.app.actions.computer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,7 @@ import com.sbgl.app.entity.Computermodel;
 
 public class ComputerActionUtil {
 	
-	public static HashMap<Integer, ArrayList<Computermodel>> categoryModelMap(List<Computermodel>  computermodelList){
+	public static HashMap<Integer, ArrayList<Computermodel>> categoryModelMap(List<Computercategory> computercategoryList,List<Computermodel>  computermodelList){
 		//model的分类信息，只显示中文的
 //		String categorysqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";
 //		List<ComputercategoryFull> tempComputercategoryFullList  = computercategoryService.selectComputercategoryFullByCondition(categorysqlch);
@@ -30,8 +31,17 @@ public class ComputerActionUtil {
 			computermodelByComputercategoryId.get(computercategoryType).add(computermodel);			
 		}
 		
+		
+		for(Computercategory ca : computercategoryList){
+			int categorytype = ca.getComputercategorytype();
+			if(!computermodelByComputercategoryId.containsKey(categorytype)){
+				computermodelByComputercategoryId.put(categorytype, new ArrayList<Computermodel>());
+			}
+		}
+		
 		return computermodelByComputercategoryId;
 	}
+
 
 	
 	/**
@@ -54,6 +64,9 @@ public class ComputerActionUtil {
 		
 		return ComputerConfig.languagechStr;
 	}
+	
+
+	
 	
 	/**
 	 * 获取当前用户

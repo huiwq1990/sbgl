@@ -8,12 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 
 import net.sf.json.JSONObject;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
@@ -29,6 +31,8 @@ import com.sbgl.app.entity.Computer;
 import com.sbgl.app.entity.ComputerFull;
 import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.ComputercategoryFull;
+import com.sbgl.app.entity.Computerconfig;
+import com.sbgl.app.entity.ComputerconfigFull;
 import com.sbgl.app.entity.Computerhomework;
 import com.sbgl.app.entity.ComputerhomeworkFull;
 import com.sbgl.app.entity.Computerhomeworkreceiver;
@@ -45,6 +49,7 @@ import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.services.computer.ComputerService;
 import com.sbgl.app.services.computer.ComputercategoryService;
+import com.sbgl.app.services.computer.ComputerconfigService;
 import com.sbgl.app.services.computer.ComputerhomeworkService;
 import com.sbgl.app.services.computer.ComputerhomeworkreceiverService;
 import com.sbgl.app.services.computer.ComputermodelService;
@@ -142,6 +147,15 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 	private List<Computerhomeworkreceiver> computerhomeworkreceiverList = new ArrayList<Computerhomeworkreceiver>();
 	private List<ComputerhomeworkreceiverFull> computerhomeworkreceiverFullList = new ArrayList<ComputerhomeworkreceiverFull>();
 		
+	
+	@Resource
+	private ComputerconfigService computerconfigService;
+	private Computerconfig computerconfig = new Computerconfig();//实例化一个模型
+	private ComputerconfigFull computerconfigFull = new ComputerconfigFull();//实例化一个模型
+	List<Computerconfig> computerconfigList = new ArrayList<Computerconfig>();
+	List<ComputerconfigFull> computerconfigFullList = new ArrayList<ComputerconfigFull>();
+	private Integer computerconfigid; //entity full 的id属性名称		
+	
 	List<String> ordernum = new ArrayList<String>();
 
 	private String logprefix = "exec method";
@@ -169,6 +183,20 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 	
 	private int computerordertype = 0;
 
+	
+	public int checkUserLogin(){
+		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
+		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
+		if(uidStr==null || uidStr.trim().equals("0") || uidStr.trim().equals("")){
+			return -1;
+		}
+		return Integer.valueOf(uidStr);
+	}
+	
+	public int getCurrentLanguage(){
+		return ComputerActionUtil.getLanguagetype((String) session.get(ComputerConfig.sessionLanguagetype));		
+	}
+	
 	/**
 	 * 跳转到机房课程预约界面
 	 * 需要传入课程规则id:computerorderclassruleid
@@ -176,50 +204,59 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 	 */
 	public String toComputerClassorderPage(){		
 		log.info("exec toComputerClassorderPage");
+//		设置当前时间
+		Date currentDate = DateUtil.currentDate();
+//		获取语言
+		int currentlanguagetype = this.getCurrentLanguage();	
+		
+		//设置假的时间
+//		Date currentDate = DateUtil.parseDate("2013-10-01 18:00:00");
+		String currentDateStr = DateUtil.dateFormat(currentDate, DateUtil.dateformatstr1);
+		
 		
 		
 //		设置为课程预约
 		computerordertype = ComputerorderInfo.ClassOrder;
 		
 		if(computerhomeworkid == null || computerhomeworkid <0){
-			System.out.println("参数不对,没有作业id");
-			return "error";
+			actionMsg = "无法获取作业信息，访问界面不存在";
+			log.error(actionMsg);
+			return ComputerConfig.pagenotfound;
 		}
 		
 		computerhomeworkList = computerhomeworkService.selectComputerhomeworkByCondition(" where a.id= "+ computerhomeworkid+"  ");
 		
+//		作业存在多个或没有
 		if(computerhomeworkList==null || computerhomeworkList.size()!= 1){
-			System.out.println("作业存在问题 不存在或者大于一个");
-			return "error";
+			actionMsg = "无法获取作业信息，访问界面不存在";
+			log.error(actionMsg);
+			return ComputerConfig.pagenotfound;
 		}
 		
 //		根据作业获取规则的id
 		computerorderclassruleid = computerhomeworkList.get(0).getComputerorderclassruleid();
-		if(computerorderclassruleid == null || computerorderclassruleid<=0){
-			System.out.println("computerorderclassruleid"+computerorderclassruleid);
-			return "error";
-		}
-		
-//		设置当前时间
-		Date currentDate = DateUtil.currentDate();
-		//设置假的时间
-//		Date currentDate = DateUtil.parseDate("2013-10-01 18:00:00");
-		String currentDateStr = DateUtil.dateFormat(currentDate, DateUtil.dateformatstr1);
-		
-//		查询课程规则
 		computerorderclassruleList = computerorderclassruleService.selectComputerorderclassruleByCondition( " where a.id = "+computerorderclassruleid+" " );
 		if(computerorderclassruleList == null || computerorderclassruleList.size() != 1){
-			log.info("课程规则的id错误");
-			return "error";
+			actionMsg = "无法获取作业规则信息，访问界面不存在";
+			log.error(actionMsg);
+			return ComputerConfig.pagenotfound;
 		}
 		computerorderclassrule = computerorderclassruleList.get(0);
-		
-		
-		if(currentDate.after(computerorderclassrule.getOrderendtime()) || currentDate.before(computerorderclassrule.getOrderstarttime())){
-			actionMsg = "超出预约范围";
-			log.info("超出预约范围");
-			return "error";
+	
+		Date orderstartDate = computerorderclassrule.getOrderstarttime();
+		Date orderEndDate = computerorderclassrule.getOrderendtime();
+//		检查规则日期
+		if(orderstartDate == null || orderEndDate == null ){
+			actionMsg = "作业规则日期错误";
+			log.error(actionMsg);
+			return ComputerConfig.pagenotfound;
 		}
+		if(currentDate.after(computerorderclassrule.getOrderendtime())){
+			actionMsg = "作业预约日期结束";
+			log.error(actionMsg);
+			return ComputerConfig.pagenotfound;
+		}
+		
 		
 //		查询可以预约的器材
 		String classruledetailcondition = " where a.computerorderclassruleid = "+computerorderclassruleid+" ";
@@ -230,19 +267,18 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 		if(computerorderclassruledetailList == null || computerorderclassruledetailList.size() == 0){
 			computermodelList = new ArrayList<Computermodel>();
 			actionMsg = "没有可以预约的PC";
-			log.info("没有可以预约的PC");
-			return "error";
+			log.error(actionMsg);
+			return ComputerConfig.pagenotfound;
 		}
 		
-//		可借出的pc model id
+//		可借出的pc model type
 		String borrowPcModelStr = "";
 		for (int i = 0; i < computerorderclassruledetailList.size(); i++) {
 			borrowPcModelStr += computerorderclassruledetailList.get(i).getAllowedcomputermodelid() + ",";
 		}
 		borrowPcModelStr = borrowPcModelStr.substring(0,borrowPcModelStr.length()-1);
 		
-//		获取语言
-		int currentlanguagetype = ComputerActionUtil.getLanguagetype((String) session.get(ComputerConfig.sessionLanguagetype));		
+	
 		
 //		获取可以借出的PC模型信息
 		String getAvailableComputermodelFullTypeSql = " where a.languagetype="+currentlanguagetype+" and a.computermodeltype in (" + borrowPcModelStr +") ";
@@ -250,20 +286,21 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 //		computermodelFullList = computermodelService.selectComputermodelFullByCondition(getAvailableComputermodelFullTypeSql);
 		computermodelList = computermodelService.selectComputermodelByCondition(getAvailableComputermodelFullTypeSql);
 		
-		calculate(computerorderclassrule,currentDate,currentDateStr );
+		
+		calculate(computerorderclassrule,orderstartDate,orderEndDate );
 //		System.out.println(borrowperiodList.size());
 		return SUCCESS;
 	}
 
 	
-	public void buildShowDate(Date curDate){
+	public void buildShowDate(Date orderStartDate){
 		int weeknum = computeroderadvanceorderday/computerodertablercolumn;
 		for(int i=0; i< weeknum;i++){
 			
 			ArrayList<String> time = new ArrayList<String>();
 			ArrayList<String> weekStr = new ArrayList<String>();
 			for(int col =0; col <computerodertablercolumn; col++ ){
-				Date date = DateUtil.addDay(curDate, i*computerodertablercolumn + col);
+				Date date = DateUtil.addDay(orderStartDate, i*computerodertablercolumn + col);
 				String dayStr = DateUtil.dateFormat( date , "MM/dd");
 				String timeStr = DateUtil.dateFormat( date , "yyyy-MM-dd");
 				weekStr.add(dayStr);
@@ -274,14 +311,13 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 		}
 	}
 	
-	public  void calculate(Computerorderclassrule computerorderclassrule,Date currentDate,String currentDateStr ) {
-		// TODO Auto-generated method stub
-//
-//		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
-//		ComputermodelService computermodelService = (ComputermodelService)cxt.getBean("computermodelService");
-//		
+	public  void calculate(Computerorderclassrule computerorderclassrule,Date orderStartDate,Date orderEndDate) {
+		String currentDateStr = DateUtil.dateFormat(orderStartDate, DateUtil.dateformatstr1);
+		String orderStartDateStr = DateUtil.dateFormat(orderStartDate, DateUtil.dateformatstr1);
+		String orderEndDateStr = DateUtil.dateFormat(orderEndDate, DateUtil.dateformatstr1);
+		
 		//设置提前预约的天数
-		computeroderadvanceorderday = DateUtil.daysBetween(DateUtil.currentDate(), computerorderclassrule.getOrderendtime());
+		computeroderadvanceorderday = DateUtil.daysBetween(orderStartDate, orderEndDate);
 		int trueadvanceday = computeroderadvanceorderday;
 //		设备预约表格显示的列数，默认是7
 		computerodertablercolumn = ComputerConfig.computerodertablercolumn;
@@ -294,10 +330,10 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 //		int computerorderTotalOrderPeriod = ComputerConfig.computerorderTotalOrderPeriod;
 		
 
-		currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(currentDate);			 
+		currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(orderStartDate);			 
 		System.out.println("currentPeriod: "+currentPeriod);
 			
-		buildShowDate(DateUtil.parseDate(currentDateStr));	 
+		buildShowDate(orderStartDate);	 
 			 
 		//取得所有PC类型的当前库存数量
 //		String currentlanguagetype = "0";
@@ -388,7 +424,7 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 		System.out.println("预约订单：");
 //		ComputerorderdetailService computerorderdetailService = (ComputerorderdetailService)cxt.getBean("computerorderdetailService");
 		 
-		List<Computerorderdetail> computerorderdetailList  = computerorderdetailService.selectComputerorderdetailAfterNow(currentDateStr, currentPeriod);
+		List<Computerorderdetail> computerorderdetailList  = computerorderdetailService.selectBookedComputerorderdetailFromStartToEnd(orderStartDateStr, currentPeriod,orderEndDateStr,8);
 		System.out.println(computerorderdetailList.size());
 		for(int i = 0; i <computerorderdetailList.size(); i++){
 			System.out.println("id="+computerorderdetailList.get(i).getId() + "  " +computerorderdetailList.get(i).getComputermodelid());
@@ -396,10 +432,10 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 
 		//根据预约清单计算当前可借数量			
 		for(Computerorderdetail od : computerorderdetailList){
-				int between = DateUtil.daysBetween(DateUtil.parseDate(currentDateStr),od.getBorrowday());
-				System.out.println("model: "+od.getComputermodelid()+"; day: "+od.getBorrowday()+"; period: "+od.getBorrowperiod());
-				int newcount = availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).get(between) - od.getBorrownumber();
-				 availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).set(between, newcount);
+			int between = DateUtil.daysBetween(orderStartDate,od.getBorrowday());
+			System.out.println("model: "+od.getComputermodelid()+"; day: "+od.getBorrowday()+"; period: "+od.getBorrowperiod());
+			int newcount = availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).get(between) - od.getBorrownumber();
+			availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).set(between, newcount);
 		}
 
 	/*

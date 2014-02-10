@@ -75,12 +75,23 @@ public class ComputerhomeworkreceiverServiceImpl implements Computerhomeworkrece
 		
 		Computerhomeworkreceiver tempComputerhomeworkreceiver = new Computerhomeworkreceiver();
 		//tempComputerhomeworkreceiver = baseDao.getEntityById(Computerhomeworkreceiver.class, computerhomeworkreceiver.getId());
-		tempComputerhomeworkreceiver = computerhomeworkreceiver;
+//		tempComputerhomeworkreceiver = computerhomeworkreceiver;
 		//add your code here
 		
 		
-		baseDao.updateEntity(tempComputerhomeworkreceiver);
+		baseDao.updateEntity(computerhomeworkreceiver);
 
+	}
+	
+	
+	
+	
+	@Override
+	public int execSql(String sql) {
+//		String sql = "delete from Computerorderdetail " + condition;
+		baseDao.createSQL(sql);
+		return 1;
+		
 	}
 
 //	根据id查询实体类			
@@ -174,5 +185,25 @@ public class ComputerhomeworkreceiverServiceImpl implements Computerhomeworkrece
 	public List<ComputerhomeworkreceiverFull> selectComputerhomeworkreceiverFullByLoginuserId(Integer userid ) {
 		return computerhomeworkreceiverDao.selectComputerhomeworkreceiverFullByLoginuserId(userid );
 	}
+
+	public BaseDao getBaseDao() {
+		return baseDao;
+	}
+
+	public void setBaseDao(BaseDao baseDao) {
+		this.baseDao = baseDao;
+	}
+
+	public ComputerhomeworkreceiverDao getComputerhomeworkreceiverDao() {
+		return computerhomeworkreceiverDao;
+	}
+
+	public void setComputerhomeworkreceiverDao(
+			ComputerhomeworkreceiverDao computerhomeworkreceiverDao) {
+		this.computerhomeworkreceiverDao = computerhomeworkreceiverDao;
+	}
+	
+	
+	
 
 }

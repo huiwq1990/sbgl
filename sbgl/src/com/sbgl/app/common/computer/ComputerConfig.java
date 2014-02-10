@@ -2,6 +2,10 @@ package com.sbgl.app.common.computer;
 
 public class ComputerConfig {
 	
+//	error return flag
+	public final static int ajaxerrorreturn = 0;
+	public final static int ajaxsuccessreturn = 1;
+	
 //	用户登录信息放置的cookie的名称
 	public final static String cookieuserid = "userid";
 	
@@ -33,6 +37,11 @@ public class ComputerConfig {
 	
 //	用户未登录返回值
 	public final static String usernotloginreturnstr = "usernotlogin";
+	
+	
+//	访问界面不存在
+	public final static String pagenotfound = "pagenotfound";
+	public final static String innererror = "innererror";
 	
 	
 }

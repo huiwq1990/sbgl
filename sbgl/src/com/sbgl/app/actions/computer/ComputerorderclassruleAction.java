@@ -11,6 +11,7 @@ import net.sf.json.JSONObject;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
@@ -22,7 +23,9 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.*;
+import com.sbgl.app.services.computer.ComputerhomeworkService;
 import com.sbgl.app.services.computer.ComputerorderclassruleService;
 import com.sbgl.app.services.computer.ComputerorderclassruledetailService;
 import com.sbgl.util.*;
@@ -45,11 +48,27 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 	private Computerorderclassrule computerorderclassruleModel = new Computerorderclassrule();//实例化一个模型
 	private ComputerorderclassruleFull computerorderclassruleFull = new ComputerorderclassruleFull();//实例化一个模型
 	private String actionMsg; // Action间传递的消息参数
-	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
+	
 	List<Computerorderclassrule> computerorderclassruleList = new ArrayList<Computerorderclassrule>();
 	List<ComputerorderclassruleFull> computerorderclassruleFullList = new ArrayList<ComputerorderclassruleFull>();
 	private Integer computerorderclassruleid; //entity full 的id属性名称		
 
+	
+	
+	@Resource
+	private ComputerhomeworkService computerhomeworkService;	
+	private Computerhomework computerhomework = new Computerhomework();//实例化一个模型
+	private ComputerhomeworkFull computerhomeworkFull = new ComputerhomeworkFull();//实例化一个模型
+	private List<Computerhomework> computerhomeworkList = new ArrayList<Computerhomework>();
+	private List<ComputerhomeworkFull> computerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	private String logprefix = "exec action method:";		
 	Page page = new Page();
@@ -66,6 +85,8 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 //	规则允许借的pc
 	private String allowborrowpcids;
 
+	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
+	private String returnInfo;
 	
 //  manage Computerorderclassrule
 	public String manageComputerorderclassrule(){
@@ -141,6 +162,8 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 //  ajax add	
 	public String addComputerorderclassruleAjax(){	
 		log.info("Add Entity Ajax Manner");
+		
+		String returnInfo = "";
 		if(addCheck() == false){
 			returnJson.setFlag(0);		
 			returnJson.setReason("参数不规范");
@@ -159,21 +182,37 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 			int uid = Integer.valueOf(ComputerActionUtil.getUserId(ServletActionContext.getRequest()));
 			temp.setCreateuserid(uid);
 			
-			computerorderclassruleService.addComputerorderclassrule(temp);
+
 			
 			String[] pcid = allowborrowpcids.split(";");
+//			如果有异常
+			for (int i = 0; i < pcid.length; i++) {
+//				未分类是-1，判断要注意
+				if(!NumberUtils.isNumber(pcid[i])){
+					log.error("模型Id不规范："+pcid[i]);
+					returnInfo = "获取允许借用模型Id出错";
+					buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+					return SUCCESS;
+				}
+			}
+//			添加规则，获取规则id
+			computerorderclassruleService.addComputerorderclassrule(temp);
+			
+			if(temp.getId()==null || temp.getId() < 0){				
+				returnInfo = "获取规则信息ID出错";
+				buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+				return SUCCESS;
+			}
+			
 			for (int i = 0; i < pcid.length; i++) {
 				Computerorderclassruledetail c = new Computerorderclassruledetail();
 				c.setAllowedcomputermodelid(Integer.valueOf(pcid[i]));
 				c.setComputerorderclassruleid(temp.getId());
 				computerorderclassruledetailService.addComputerorderclassruledetail(c);
 			}
-			
-			returnJson.setFlag(1);		
-			returnJson.setReason("添加规则成功");
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
-			
+					
+			returnInfo = "添加规则成功";
+			buildReturnStr(ComputerConfig.ajaxsuccessreturn,returnInfo);
 			return SUCCESS;
 		} catch(Exception e){
 			e.printStackTrace();
@@ -181,10 +220,25 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 		}
 		
 		returnJson.setFlag(0);	
-		returnJson.setReason("错误");
+		if(returnInfo.length() ==0 ){			
+			returnJson.setReason(returnInfo);
+		}else{
+			returnJson.setReason("内部错误");
+		}		
 		JSONObject jo = JSONObject.fromObject(returnJson);
 		this.returnStr = jo.toString();
 		return SUCCESS;
+	}
+	
+	
+	public void buildReturnStr(int flag,String errorStr){
+		ReturnJson returnJson = new ReturnJson();
+		returnJson.setFlag(flag);			
+		returnJson.setReason(errorStr);
+		
+		JSONObject jo = JSONObject.fromObject(returnJson);
+		this.returnStr = jo.toString();
+//		return SUCCESS;
 	}
 	
 	public boolean addCheck(){
@@ -210,119 +264,106 @@ public class ComputerorderclassruleAction extends ActionSupport implements Sessi
 		return true;
 	}
 
-//删除
-	public String deleteComputerorderclassrule( ){
-		try{
-			if(computerorderclassrule.getId() != null && computerorderclassrule.getId() > 0){
-				computerorderclassruleService.deleteComputerorderclassrule(computerorderclassrule.getId());
-				actionMsg = getText("deleteComputerorderclassruleSuccess");
-			}else{
-				System.out.println("删除的id不存在");
-				actionMsg = getText("deleteComputerorderclassruleFail");
-			}
-			
-			return SUCCESS;
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerorderclassruleAction的方法：deleteComputerorderclassrule错误"+e);
-		}
-		return "Error";
-	}
-	
-//删除Ajax
-	public String deleteComputerorderclassruleAjax( ){
-		try{
-			if(computerorderclassrule.getId() != null && computerorderclassrule.getId() >= 0){
-				computerorderclassruleService.deleteComputerorderclassrule(computerorderclassrule.getId());				
-			}
-			
-			return "IdNotExist";
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerorderclassruleAction的方法：deleteComputerorderclassrule错误"+e);
-		}
-		return "Error";
-	}
-
-	
-//	del entityfull
-	public String deleteComputerorderclassruleFull(){
-		try {
-		
-			Integer getId = computerorderclassrule.getId();
-			if(getId != null && getId < 0){
-				log.info("删除的id不规范");
-				return "Error";
-			}
-		
-		
-			Computerorderclassrule temp = computerorderclassruleService.selectComputerorderclassruleById(getId);
-			if (temp != null) {
-				computerorderclassruleService.deleteComputerorderclassrule(getId);
-				return SUCCESS;
-			} else {
-				log.info("删除的id不存在");
-				return "Error";
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "Error";
-	}
-	
 	//del entityfull Ajax
 	public String deleteComputerorderclassruleFullAjax( ){
 		
-		log.info(logprefix + "deleteComputercategoryFullAjax");
-             
+		log.info(logprefix + "deleteComputerorderclassruleFullAjax");
+        if(!passCheckDelParm()){
+        	buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+        	return SUCCESS;
+        }
+		
+		
 		try{
 			String ids[] = computerorderclassruleIdsForDel.split(";");
 			for(int i=0; i < ids.length;i++){
                                 
-				Integer tempDelId = Integer.valueOf(ids[i]);                        
-				log.info(tempDelId);
-                                //检查id
-                                if(tempDelId == null || tempDelId < 0){
-                                        returnJson.setFlag(0);
-                                        returnJson.setReason("删除的id不规范");
-                                        log.info("删除的id不规范");
-                                        JSONObject jo = JSONObject.fromObject(returnJson);
-                                        this.returnStr = jo.toString();
-                                        return SUCCESS;
-                                }        
-                                //del
-                                Computerorderclassrule temp = computerorderclassruleService.selectComputerorderclassruleById(tempDelId);                        
-                                if (temp != null) {                        
-                                        //其他操作                                        
-                                        computerorderclassruleService.deleteComputerorderclassrule(tempDelId);                                        
-                                } else {
-                                        log.info("删除的id不存在");                
-                                        returnJson.setFlag(0);
-                                        returnJson.setReason("删除的id不存在");
-                                        JSONObject jo = JSONObject.fromObject(returnJson);
-                                        this.returnStr = jo.toString();
-                                        return SUCCESS;
-                                }
-                        }
-                        returnJson.setFlag(1);
-//                        returnJson.setReason("删除的id不存在");
-                        JSONObject jo = JSONObject.fromObject(returnJson);
-                        this.returnStr = jo.toString();
-                        return SUCCESS;
+				Integer tempDelId = Integer.valueOf(ids[i]);                       
+			
+				// 检查id
+				if (tempDelId == null || tempDelId < 0) {				
+					returnInfo = "删除的id不规范";
+					log.info(returnInfo);
+					buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+					return SUCCESS;
+				}
+				
+//				查询规则
+				Computerorderclassrule temp = computerorderclassruleService.selectComputerorderclassruleById(tempDelId);
+				
+				if(temp == null){
+					returnInfo = "删除的规则id"+tempDelId+"不存在";
+					log.info(returnInfo);
+					buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+					return SUCCESS;
+				}
+				//规则是否使用
+				if(isComputerorderclassruleUsed(tempDelId)){
+					returnInfo = "作业"+computerhomeworkList.get(0).getName()+"使用了规则"+temp.getName();
+					log.info(returnInfo);
+					buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+		        	return SUCCESS;
+				}
+				
+				// del
+				
+				if (temp != null) {
+					computerorderclassruleService
+							.deleteComputerorderclassrule(tempDelId);
+				} 
+			}
+			
+			returnInfo = "删除成功";
+			log.info(returnInfo);
+			buildReturnStr(ComputerConfig.ajaxsuccessreturn,returnInfo);
+			return SUCCESS;
                         
                 } catch (Exception e) {
                         e.printStackTrace();
                 }
                 
                 returnJson.setFlag(0);
-                returnJson.setReason("删除的内部错误");
+                returnJson.setReason("删除发生内部错误");
                 JSONObject jo = JSONObject.fromObject(returnJson);
                 this.returnStr = jo.toString();
                 return SUCCESS;
         }
 
-//修改
+//	检查删除参数
+//	检查del参数
+	public boolean passCheckDelParm(){
+		if(computerorderclassruleIdsForDel==null || computerorderclassruleIdsForDel.length() == 0){
+			returnInfo = "没有选择删除项";
+			return false;
+		}
+		
+		String ids[] = computerorderclassruleIdsForDel.split(";");
+		for(int i=0; i < ids.length;i++){
+			if(!NumberUtils.isNumber(ids[i])){
+				returnInfo = "删除参数不正确";
+				return false;
+			}
+		}
+		
+		
+		return true;
+	}
+
+	
+//	检查某个规则是否已经使用
+	public boolean isComputerorderclassruleUsed(int id){
+		
+		String testusesql = " where computerorderclassruleid = "+id;
+		computerhomeworkList  =  computerhomeworkService.selectComputerhomeworkByCondition(testusesql);
+		
+		if(computerhomeworkList == null || computerhomeworkList.size() == 0){
+			return false;
+		}
+		return true;
+	}
+	
+	
+	//修改
 	public String updateComputerorderclassrule(){
 		try {
 			if(computerorderclassrule.getId() != null && computerorderclassrule.getId() > 0){				

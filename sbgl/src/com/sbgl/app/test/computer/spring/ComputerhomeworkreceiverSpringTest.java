@@ -29,7 +29,7 @@ public class ComputerhomeworkreceiverSpringTest {
 //		selectComputerhomeworkreceiverAll();
 //		deleteComputerhomeworkreceiver();
 		
-//		updateComputerhomeworkreceiver();
+		updateComputerhomeworkreceiver();
 //		selectComputerhomeworkreceiverById(1L);
 //		selectComputerhomeworkreceiverFullById(1L);
 //      selectComputerhomeworkreceiverFullAll();
@@ -178,14 +178,17 @@ public class ComputerhomeworkreceiverSpringTest {
 		
 		Computerhomeworkreceiver computerhomeworkreceiver = new Computerhomeworkreceiver();
 		//获取一个实体，更改它
-		computerhomeworkreceiver = computerhomeworkreceiverService.selectComputerhomeworkreceiverById(0);
+		computerhomeworkreceiver = computerhomeworkreceiverService.selectComputerhomeworkreceiverById(43);
 		//computerhomeworkreceiver.setName("tq");
 		//computer.setCreatetime(DateUtil.currentDate());
 		//computerhomeworkreceiver.setCreatetime(DateUtil.currentDate());
-		
+		computerhomeworkreceiver.setHasorder(1);
+		System.out.println("ssss" + computerhomeworkreceiver.getId());
 		computerhomeworkreceiverService.updateComputerhomeworkreceiver(computerhomeworkreceiver);
 	
 	}
+	
+
 	
 	public static void selectComputerhomeworkreceiverAll(){
 		

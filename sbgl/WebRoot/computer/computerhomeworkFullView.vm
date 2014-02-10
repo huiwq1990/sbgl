@@ -7,16 +7,11 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+	
+#parse("computer/includecssfile.vm")	
+#parse("computer/includejsfile.vm")
 
-<!--[if lt IE 9]>
-  <script src="../js/html5shiv.js"></script>
-  <script src="../js/respond.min.js"></script>
-<![endif]-->
-<!--[if IE 7]>
-<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
-<![endif]-->
+	
 </head>
 
 <body id="admin">
@@ -78,12 +73,7 @@
            
       <div class="control-bar clearfix"><!--control-bar start-->
         <div class="title pull-left">作业查看</div>     
-        <div class="pagination pull-right">
-          <ul>
-            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="上一个"><i class="icon-chevron-left"></i></a></li>
-            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="下一个"><i class="icon-chevron-right"></i></a></li>
-          </ul>
-        </div>       
+       
       </div><!--control-bar end-->
               
       <div class="row">
@@ -113,7 +103,7 @@
                         </div>
                       </div>
                       <a class="pull-left" data-toggle="modal" href="#equip-detail" role="button">
-                        <img src="../img/mac-pro-gallery1-2012.jpg" width="100" height="100">
+                        <img src="${computerImagePath}/$temp.computermodelpicpath" width="100" height="100">
                       </a>
                   
                     </div>
@@ -128,28 +118,23 @@
             <div class="col-md-7">
                 <div class="thumbnail">
                   <div class="hd">
-                    <h3>状态</h3>
+                    <h3>规则详情</h3>
                   </div>
                   <div class="caption">
-                      <div class="status">
-                      <strong>审核人可能存在的状态:</strong><br>
-               
-                      </div>
-                      <hr>
-                      <strong>审核人可能进行的操作:</strong><br>                      
-                      <a class="btn btn-primary" onclick="auditOrder( $computerorderFull.computerorderid ,1)" href="#">审核通过</a>
-                      <a class="btn btn-white" onclick="auditOrder( $computerorderFull.computerorderid ,2)" data-toggle="modal" href="#reject" role="button">驳 回</a>
-                      <a class="btn btn-white" onclick="auditOrder( $computerorderFull.computerorderid ,3)" data-toggle="modal" href="#reject" role="button">删 除</a>
+                    
+					<div class="name">规则名称：$computerhomeworkFull.computerorderclassrulename</div>
+                  <div class="name">规则课程名称：$computerhomeworkFull.computerorderclassruleclassname</div>
+					
                   </div>
                 </div>
                 <div class="thumbnail">
                   <div class="hd">
-                    <h3>详情</h3>
+                    <h3>作业详情</h3>
                   </div>
                   <div class="caption">
                     <div class="rent-detail">
-                     <div class="name">作业名称：$computerhomeworkFull.computerhomeworkname</div>
-                      <div class="rent-remark"><i class="icon-pencil"></i></div>
+						<div class="name">作业名称：$computerhomeworkFull.computerhomeworkname</div>
+						<div class="name">作业描述：$computerhomeworkFull.computerhomeworkcontent</div>
                     </div>
                     <hr>
                   </div>                        

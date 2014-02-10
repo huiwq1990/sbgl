@@ -140,17 +140,50 @@
                     </div>
                   </div>
 				  
+				  <!--
 				<div class="form-group">
 					<label for="label_computerorderclassrule_allowborrowpcids" class="col-lg-2 control-label">允许借的机器类型</label>
                     <div class="col-lg-4">
                      <input type="text" class="form-control" id="input_computerorderclassrule_allowborrowpcids" name="allowborrowpcids"  placeholder="">					
 					</div>               
-					</div>
-					
+				</div>
+				
 				 <div class="form-group user-group">
                   <a href="#createEquipRule" role="button" class="btn btn-white btn-large btn-block" data-toggle="modal">添加 +</a>
                 </div>
 				  
+				-->
+				
+				<div class="form-group">
+					
+                    <label for="inputRentableGroup" class="col-lg-2 control-label">允许借的机器类型</label>
+                    <div class="col-lg-4">
+						
+					#foreach($categoryfull in ${computercategoryList})
+						<div class="group-hd">
+							<div class="group-name pull-left">$!categoryfull.name</div>
+							<div class="group-line"><hr></div>
+						</div>
+						
+						#set($categorytype = $categoryfull.computercategorytype)		
+						#set($modelList = $computermodelByComputercategoryId.get($categorytype))
+						#if($modelList=='null' || $modelList.size() ==0)
+							<label class="checkbox-inline">
+								分类没有模型
+                     		</label>	
+						#end	
+						#foreach($model in $modelList)
+							<label class="checkbox-inline">
+								<input type="checkbox" name="inputAviBorrowModelGroup" id="rentGroup_$model.computermodeltype" value="$model.computermodeltype" >$model.name
+                     		</label>						
+						#end                    
+						
+					#end
+                    
+                    </div>
+                  </div>
+				
+				
 				
 				 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-4">
@@ -301,19 +334,27 @@
 			var orderstarttime = $("#input_computerorderclassrule_orderstarttime").val();
 			var orderendtime = $("#input_computerorderclassrule_orderendtime").val();
 			var input_computerorderclassrule_availableordertime = $("#input_computerorderclassrule_availableordertime").val();
-			var input_computerorderclassrule_allowborrowpcids = $("#input_computerorderclassrule_allowborrowpcids").val();
+			//var input_computerorderclassrule_allowborrowpcids = $("#input_computerorderclassrule_allowborrowpcids").val();
+			
+			var allowborrowpcids="";
+			$("input[name='inputAviBorrowModelGroup']").each(function() {
+				if($(this).prop("checked") === true) {
+					allowborrowpcids += $(this).prop("value")+";";				
+				}
+			});
+			allowborrowpcids = allowborrowpcids.substring(0,allowborrowpcids.length-1);
 			
 			//orderstarttime += " 00:00:00";
 		//	orderendtime += " 00:00:00";
-		//	alert(orderstarttime);
-			//return;
+			//alert(allowborrowpcids);
+		//	return;
 			var postData = {
 				"name": input_computerorderclassrule_name,
 				"classname" : input_computerorderclassrule_classname,
 				"orderstarttime" : orderstarttime,
 				"orderendtime" : orderendtime,
 				"availableordertime": input_computerorderclassrule_availableordertime,
-				"allowborrowpcids": input_computerorderclassrule_allowborrowpcids
+				"allowborrowpcids": allowborrowpcids
 			};
 			
 			jQuery.ajax({  
@@ -342,7 +383,11 @@
 		$("#input_computerorderclassrule_orderstarttime").val("");
 		$("#input_computerorderclassrule_orderendtime").val("");
 		$("#input_computerorderclassrule_availableordertime").val("");
-		$("#input_computerorderclassrule_allowborrowpcids").val("");
+		
+		$("input[name='inputAviBorrowModelGroup']").each(function() {
+			$(this).removeAttr("checked"); 				
+		});
+		//$("#input_computerorderclassrule_allowborrowpcids").val("");
 	}
 	
 	

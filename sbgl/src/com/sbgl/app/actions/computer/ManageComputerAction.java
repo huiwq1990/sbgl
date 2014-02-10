@@ -700,6 +700,7 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		if(pageNo ==0){
 			pageNo =1;
 		}
+		
 		page.setTotalCount(computerorderclassruleService.countComputerorderclassruleRow());
 		if(page.getTotalpage() < pageNo){
 			pageNo = page.getTotalpage();
@@ -707,7 +708,7 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		page.setPageNo(pageNo);
 		
 		//page.setTotalpage(computerorderclassruleService.countComputerorderclassruleRow());
-		computerorderclassruleFullList  = computerorderclassruleService.selectComputerorderclassruleFullByConditionAndPage("", page);
+		computerorderclassruleFullList  = computerorderclassruleService.selectComputerorderclassruleFullByConditionAndPage(" order by a.createtime ", page);
 		
 //		查询全部
 //		computerorderclassruleFullList  = computerorderclassruleService.selectComputerorderclassruleFullAll();
@@ -729,14 +730,14 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	
 	public String toAddComputerorderclassrulePage(){
 //		获取全部分类信息
-		String categorysqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";	
+		String categorysqlch = " where a.languagetype="+ComputerConfig.languagech+" order by a.computercategorytype";	
 		computercategoryList  = computercategoryService.selectComputercategoryByCondition(categorysqlch);
 //		获取全部模型信息
-		String modelsqlen = " where a.languagetype=1 order by a.computermodeltype,a.languagetype";
-		computermodelList  =  computermodelService.selectComputermodelByCondition(modelsqlen);
+		String modelsqlch = " where a.languagetype="+ComputerConfig.languagech+"  order by a.computermodeltype";
+		computermodelList  =  computermodelService.selectComputermodelByCondition(modelsqlch);
 		
 //		将模型与分类关联
-		computermodelByComputercategoryId = ComputerActionUtil.categoryModelMap(computermodelList);
+		computermodelByComputercategoryId = ComputerActionUtil.categoryModelMap(computercategoryList,computermodelList);
 	
 		
 		if(computercategoryList == null){
@@ -771,7 +772,7 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		computermodelList  =  computermodelService.selectComputermodelByCondition(modelsqlen);
 		
 //		将模型与分类关联
-		computermodelByComputercategoryId = ComputerActionUtil.categoryModelMap(computermodelList);
+		computermodelByComputercategoryId = ComputerActionUtil.categoryModelMap(computercategoryList,computermodelList);
 	
 //		查询可以选择的预约规则
 		computerorderclassruleFullList  = computerorderclassruleService.selectComputerorderclassruleFullByCondition("");
@@ -796,7 +797,17 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		if(pageNo ==0){
 			pageNo =1;
 		}
-		page.setTotalCount(computerhomeworkService.countComputerhomeworkRow());
+		int totalcount = computerhomeworkService.countComputerhomeworkRow();
+		
+		
+		
+		if(totalcount == 0){
+			page.setTotalCount(1);
+		}else{
+			page.setTotalCount(totalcount);
+		}
+		
+		System.out.println(page.getTotalpage());
 		if(page.getTotalpage() < pageNo){
 			pageNo = page.getTotalpage();
 		}

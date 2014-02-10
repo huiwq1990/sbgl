@@ -1,0 +1,15 @@
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/jquery.jqpagination.js"></script>
+<script src="${jsDomain}/editor/kindeditor-min.js"></script>
+<script src="${jsDomain}/editor/lang/zh_CN.js"></script>
+<!--[if lt IE 10]>
+  <script src="${jsDomain}/js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->

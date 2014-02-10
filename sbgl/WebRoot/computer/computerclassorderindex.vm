@@ -395,7 +395,8 @@ $(window).load(function(){
 		var postData = {
 			userid : createuserid,
 			orderInfoStr : str,
-			computerordertype : $computerordertype			
+			computerordertype : $computerordertype,
+			computerhomeworkid : $computerhomeworkid
 		};
 		
 		jQuery.ajax({  

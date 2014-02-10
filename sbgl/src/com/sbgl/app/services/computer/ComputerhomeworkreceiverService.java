@@ -57,6 +57,8 @@ public interface ComputerhomeworkreceiverService{
 //根据关联查询实体full	
 	public List<ComputerhomeworkreceiverFull> selectComputerhomeworkreceiverFullByLoginuserId(Integer userid );
 
+	int execSql(String sql);
+
 		
 	
 	

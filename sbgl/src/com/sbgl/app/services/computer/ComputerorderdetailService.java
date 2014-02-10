@@ -68,6 +68,9 @@ public interface ComputerorderdetailService{
 
 	int execSql(String sql);
 
+	List<Computerorderdetail> selectBookedComputerorderdetailFromStartToEnd(
+			String startDay, int startPeriod, String endDay, int endPeriod);
+
 		
 	
 	

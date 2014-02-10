@@ -3,6 +3,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 
+session.setAttribute("languagetype","1");
 
 Cookie cookie=new Cookie("userid", "1"); 
 cookie.setMaxAge(1000000);   //存活期为10秒

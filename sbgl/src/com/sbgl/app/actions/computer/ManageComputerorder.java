@@ -26,6 +26,8 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.common.computer.ComputerorderdetailInfo;
+import com.sbgl.app.entity.Computerhomeworkreceiver;
+import com.sbgl.app.entity.ComputerhomeworkreceiverFull;
 import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
@@ -33,6 +35,7 @@ import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.entity.Computerstatus;
 import com.sbgl.app.entity.ComputerstatusFull;
+import com.sbgl.app.services.computer.ComputerhomeworkreceiverService;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
 import com.sbgl.app.services.computer.ComputerstatusService;
@@ -76,6 +79,13 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	List<ComputerstatusFull> computerstatusFullList = new ArrayList<ComputerstatusFull>();
 	
 	
+	@Resource
+	private ComputerhomeworkreceiverService computerhomeworkreceiverService;	
+	private Computerhomeworkreceiver computerhomeworkreceiver = new Computerhomeworkreceiver();//实例化一个模型
+	private List<Computerhomeworkreceiver> computerhomeworkreceiverList = new ArrayList<Computerhomeworkreceiver>();
+	private ComputerhomeworkreceiverFull computerhomeworkreceiverFull = new ComputerhomeworkreceiverFull();//实例化一个模型
+	
+	
 	private int ComputerorderStatusAduitAll = ComputerorderInfo.ComputerorderStatusAduitAll;
 	private int ComputerorderStatusAduitPass = ComputerorderInfo.ComputerorderStatusAduitPass;
 	private int ComputerorderStatusAduitReject = ComputerorderInfo.ComputerorderStatusAduitReject;
@@ -86,7 +96,7 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	
 	
 //	全局参数
-	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
+	
 	private String userid;
 	
 	
@@ -99,7 +109,10 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	int orderpctotalnum = 0;
 	
 	int computerordertype;
+	int computerhomeworkid;
 	
+	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
+	String returnInfo;
 	
 	
 	public static int checkUserLogin(){
@@ -251,6 +264,7 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 			JSONObject jo = JSONObject.fromObject(returnJson);
 			this.returnStr = jo.toString();
 			
+			session.put("computerhomeworkid", computerhomeworkid);
 			session.put("computerordertype", computerordertype);
 			session.put("computerorderdetailList", computerorderdetailList);
 			session.put("computerorderdetailFullList", computerorderdetailFullList);
@@ -305,7 +319,7 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 
 	
 	
-//	跳转到预约确认界面
+//	课程预约界面点击提交按钮后，如果computerorderFormConfirm指向成功，跳转到预约确认界面
 	public String toComputerorderConfirmPage(){	
 		log.info("toComputerorderConfirmPage"+session);
 		ReturnJson returnJson = new ReturnJson();		
@@ -373,7 +387,16 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 //  提交预约表单	
 	public String addComputerorderAjax(){	
 		log.info("Add Entity Ajax Manner");
-		ReturnJson returnJson = new ReturnJson();
+		
+		computerhomeworkid = (Integer) session.get("computerhomeworkid");
+		computerordertype = (Integer) session.get("computerordertype");
+		
+		Integer uid = checkUserLogin();
+		if(uid < 0){			
+			returnInfo = "用户未登录";
+			buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+			return SUCCESS;
+		}
 					
 		try {
 			Computerorder temp = new Computerorder();
@@ -384,18 +407,11 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 			temp.setSerialnumber(uuid);
 			session.put("computerorderSerialnumber", uuid);
 
-			Integer uid = checkUserLogin();
-			if(uid < 0){
-				returnJson.setFlag(0);
-				returnJson.setReason("用户未登录");
-				JSONObject jo = JSONObject.fromObject(returnJson);
-				this.returnStr = jo.toString();			
-				return SUCCESS;
-			}
+			
 			
 			temp.setUserid(uid);
 			temp.setCreatetime(DateUtil.currentDate());
-			temp.setOrdertype((Integer) session.get("computerordertype"));
+			temp.setOrdertype(computerordertype);
 			temp.setStatus(ComputerorderInfo.ComputerorderStatusAduitWait);
 			computerorderService.addComputerorder(temp);
 			
@@ -407,27 +423,51 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 				computerorderdetailService.addComputerorderdetail(cd);
 			}
 			
-			returnJson.setFlag(1);		
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
+			String hmresql = " where computerhomeworkid = "+ computerhomeworkid +" and userid="+checkUserLogin();
+			System.out.println(hmresql);
+			computerhomeworkreceiverList = computerhomeworkreceiverService.selectComputerhomeworkreceiverByCondition(hmresql);
+			if(computerhomeworkreceiverList == null || computerhomeworkreceiverList.size()!=1){
+				returnInfo = "修改用户课程预约的预约状态失败";
+				buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+				return SUCCESS;
+			}
 			
+			
+			Computerhomeworkreceiver tempChr = computerhomeworkreceiverList.get(0);
+			tempChr.setHasorder(1);
+			tempChr.setHasview(1);
+			
+			String updateChrSql = " update Computerhomeworkreceiver set hasorder=1 , hasview=1 where id = "+tempChr.getId();
+			computerhomeworkreceiverService.execSql(updateChrSql);
+			
+			returnInfo = "预约成功";
+			buildReturnStr(ComputerConfig.ajaxsuccessreturn,returnInfo);
 			return SUCCESS;
+			
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		}catch(Exception e){
 			e.printStackTrace();
-			log.error("类ComputerorderAction的方法：addBbstagfavourite错误"+e);
+			log.error("addComputerorderAjax错误"+e);
 		}
 		
-		returnJson.setFlag(0);		
-		JSONObject jo = JSONObject.fromObject(returnJson);
-		this.returnStr = jo.toString();
+		returnInfo = "系统发生内部错误";
+		buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
 		return SUCCESS;
 	}
 	
 	
+	public void buildReturnStr(int flag,String errorStr){
+		ReturnJson returnJson = new ReturnJson();
+		returnJson.setFlag(flag);			
+		returnJson.setReason(errorStr);
+		
+		JSONObject jo = JSONObject.fromObject(returnJson);
+		this.returnStr = jo.toString();
+//		return SUCCESS;
+	}
 	
 
 	public String toComputerorderSuccessPage(){
@@ -828,6 +868,24 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 
 	public void setComputerordertype(int computerordertype) {
 		this.computerordertype = computerordertype;
+	}
+
+
+
+
+
+
+	public int getComputerhomeworkid() {
+		return computerhomeworkid;
+	}
+
+
+
+
+
+
+	public void setComputerhomeworkid(int computerhomeworkid) {
+		this.computerhomeworkid = computerhomeworkid;
 	}
 
 

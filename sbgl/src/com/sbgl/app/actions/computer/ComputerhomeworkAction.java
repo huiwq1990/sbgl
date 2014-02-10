@@ -46,8 +46,8 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 	private Computerhomework computerhomework = new Computerhomework();//实例化一个模型
 	private Computerhomework computerhomeworkModel = new Computerhomework();//实例化一个模型
 	private ComputerhomeworkFull computerhomeworkFull = new ComputerhomeworkFull();//实例化一个模型
-	private String actionMsg; // Action间传递的消息参数
-	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
+	
+
 	List<Computerhomework> computerhomeworkList = new ArrayList<Computerhomework>();
 	List<ComputerhomeworkFull> computerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
 	private Integer computerhomeworkid; //entity full 的id属性名称		
@@ -86,19 +86,48 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 	List<Computerorderclassruledetail> computerorderclassruledetailList = new ArrayList<Computerorderclassruledetail>();
 	List<ComputerorderclassruledetailFull> computerorderclassruledetailFullList = new ArrayList<ComputerorderclassruledetailFull>();
 	
-	ReturnJson returnJson = new ReturnJson();
+	
+	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
+	private String returnInfo;
+	private String actionMsg; // Action间传递的消息参数
+	
+	
+	public int checkUserLogin(){
+		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
+		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
+		if(uidStr==null || uidStr.trim().equals("0") || uidStr.trim().equals("")){
+			return -1;
+		}
+		return Integer.valueOf(uidStr);
+	}
+	
+	public int getCurrentLanguage(){
+		return ComputerActionUtil.getLanguagetype((String) session.get(ComputerConfig.sessionLanguagetype));		
+	}
+	
+	public void buildReturnStr(int flag,String errorStr){
+		ReturnJson returnJson = new ReturnJson();
+		returnJson.setFlag(flag);			
+		returnJson.setReason(errorStr);
+		
+		JSONObject jo = JSONObject.fromObject(returnJson);
+		this.returnStr = jo.toString();
+//		return SUCCESS;
+	}
 	
 //	学生查看作业收件箱
 	public String toComputerhomeworkInboxPage(){
 		log.info(logprefix +" toComputerhomeworkInboxPage");
 		
-		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
-		if(uidStr==null || uidStr.trim().equals("")){
-			return "error";
+		Integer uid = checkUserLogin();
+		log.info("login user id "+ uid);
+		if(uid < 0){
+			returnInfo = "用户未登录";
+			buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+			return SUCCESS;
 		}
 		
-		String receivesql = " where a.userid ="+uidStr ;
+		String receivesql = " where a.userid ="+uid ;
 		computerhomeworkreceiverList = computerhomeworkreceiverService.selectComputerhomeworkreceiverByCondition(receivesql);
 		
 		String newhomeworksql =  "";
@@ -113,15 +142,14 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 			
 			return SUCCESS;
 		}
-			for(int i=0; i<computerhomeworkreceiverList.size();i++){
-				if(computerhomeworkreceiverList.get(i).getHasorder()==null || computerhomeworkreceiverList.get(i).getHasorder() != 1){
+			
+		for(int i=0; i<computerhomeworkreceiverList.size();i++){
+			if(computerhomeworkreceiverList.get(i).getHasorder()==null || computerhomeworkreceiverList.get(i).getHasorder() != 1){
 					newhomeworksql += computerhomeworkreceiverList.get(i).getComputerhomeworkid()+",";
-				}else{
-					
-					finishehomeworksql += computerhomeworkreceiverList.get(i).getComputerhomeworkid()+",";
-				}
-				
+			}else{
+				finishehomeworksql += computerhomeworkreceiverList.get(i).getComputerhomeworkid()+",";
 			}
+		}
 		
 			if(finishehomeworksql.length() > 1){
 				finishehomeworksql = finishehomeworksql.substring(0,finishehomeworksql.length()-1);
@@ -147,29 +175,7 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 	}
 	
 	
-	
-//  manage Computerhomework
-	public String manageComputerhomework(){
-		log.info(logprefix+"manageComputerhomeworkFull");
 		
-//      分页查询	
-		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
-		//page.setTotalpage(computerhomeworkService.countComputerhomeworkRow());
-		computerhomeworkList  = computerhomeworkService.selectComputerhomeworkByPage(page);
-		
-//		查询全部
-//		computerhomeworkList  = computerhomeworkService.selectComputerhomeworkById();
-		
-	    if(computerhomeworkList == null){
-			computerhomeworkList = new ArrayList<Computerhomework>();
-		}
-//		for(int i = 0; i < computerhomeworkList.size(); i++){
-//			System.out.println("id="+computerhomeworkList.get(i).getLoginusername());
-//		}
-		return SUCCESS;
-	}		
-			
 	//管理 查询
 	public String manageComputerhomeworkFull(){
 		log.info("exec action method:manageComputerhomeworkFull");
@@ -195,39 +201,7 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 		
 
 			
-	public String addComputerhomework(){	
-		log.info("Add Entity");
 
-		try {
-			Computerhomework temp = new Computerhomework();
-			// 将model里的属性值赋给temp
-			BeanUtils.copyProperties(temp, computerhomework);			
-			//add your code here.
-			temp.setCreateuserid(0);
-//			temp.setCreatetime(DateUtil.currentDate());
-//			
-//			computerhomeworkService.addComputerhomework(temp);
-//			
-//			String[] userIds = receiverUserIds.split(";");
-//			for (int i = 0; i < userIds.length; i++) {
-//				Computerhomeworkreceiver chr = new Computerhomeworkreceiver();
-//				chr.setComputerhomeworkid(temp.getId());
-//				chr.setUserid(Integer.valueOf(userIds[i]));
-//				computerhomeworkreceiverService.addComputerhomeworkreceiver(chr);
-//			}
-//			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerhomeworkAction的方法：addBbstagfavourite错误"+e);
-		}
-		return "Error";
-	}
-	
 //  ajax add	
 	public String addComputerhomeworkAjax(){	
 		log.info("Add Entity Ajax Manner");
@@ -277,72 +251,12 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 		return SUCCESS;
 	}
 
-//删除
-	public String deleteComputerhomework( ){
-		try{
-			if(computerhomework.getId() != null && computerhomework.getId() > 0){
-				computerhomeworkService.deleteComputerhomework(computerhomework.getId());
-				actionMsg = getText("deleteComputerhomeworkSuccess");
-			}else{
-				System.out.println("删除的id不存在");
-				actionMsg = getText("deleteComputerhomeworkFail");
-			}
-			
-			return SUCCESS;
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerhomeworkAction的方法：deleteComputerhomework错误"+e);
-		}
-		return "Error";
-	}
-	
-//删除Ajax
-	public String deleteComputerhomeworkAjax( ){
-		try{
-			if(computerhomework.getId() != null && computerhomework.getId() >= 0){
-				computerhomeworkService.deleteComputerhomework(computerhomework.getId());				
-			}
-			
-			return "IdNotExist";
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerhomeworkAction的方法：deleteComputerhomework错误"+e);
-		}
-		return "Error";
-	}
 
-	
-//	del entityfull
-	public String deleteComputerhomeworkFull(){
-		try {
-		
-			Integer getId = computerhomework.getId();
-			if(getId != null && getId < 0){
-				log.info("删除的id不规范");
-				return "Error";
-			}
-		
-		
-			Computerhomework temp = computerhomeworkService.selectComputerhomeworkById(getId);
-			if (temp != null) {
-				computerhomeworkService.deleteComputerhomework(getId);
-				return SUCCESS;
-			} else {
-				log.info("删除的id不存在");
-				return "Error";
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "Error";
-	}
-	
 	//del entityfull Ajax
 	public String deleteComputerhomeworkFullAjax( ){
 		
 		log.info(logprefix + "deleteComputercategoryFullAjax");
-             
+		ReturnJson returnJson = new ReturnJson();
 		try{
 			String ids[] = computerhomeworkIdsForDel.split(";");
 			for(int i=0; i < ids.length;i++){
@@ -523,33 +437,7 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 		return "error";
 	}
 
-	
-	// 查看实体 根据对象Id查询
-	public String viewComputerhomework(){
-		log.info("viewComputerhomework");
-		try {
-			if(computerhomework.getId() != null && computerhomework.getId() > 0){				
-				Computerhomework temComputerhomework = computerhomeworkService.selectComputerhomeworkById(computerhomework.getId());
-				BeanUtils.copyProperties(computerhomeworkModel,temComputerhomework);	
-				actionMsg = getText("selectComputerhomeworkByIdSuccess");
-			}else{
-				actionMsg = getText("selectComputerhomeworkByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerhomeworkAction的方法：selectComputerhomeworkById错误"+e);
-		}
 
-
-		return "error";
-
-	}	
 	/**
 	 * 学生查看作业信息
 	 * view ComputerhomeworkFull
@@ -598,28 +486,24 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 			return "Error";
 		}	
 
-/**
- * view ComputerhomeworkFull
- * need give parmeter id
- * get id from modle,
- * @return
- */
+
+	/**
+	 * view ComputerhomeworkFull
+	 * need give parmeter id
+	 * get id from modle,
+	 * @return
+	 */
 	public String viewComputerhomeworkFull() {
 				
 		try {
-			
-			if (computerhomeworkid <= 0) {
-				log.error("error,id小于0不规范");
-				return "error";
-			}	
-			
 			String condition = " where a.id = "+computerhomeworkid;
 			List<ComputerhomeworkFull> tempList = computerhomeworkService.selectComputerhomeworkFullByCondition(condition );
 			
 			if(tempList!=null && tempList.size() >0){
 				
 			}else{
-				return "error";
+				actionMsg = "访问的PC作业不存在";
+				return ComputerConfig.pagenotfound;
 			}
 			
 			computerhomeworkFull = tempList.get(0);
@@ -627,13 +511,12 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 			
 //			查询作业可以借的PC
 			int ruleId = computerhomeworkFull.getComputerorderclassruleid();
-			if(ruleId > 0){
-				String borrowPcSql  = " where a.id = "+ ruleId;
-				computerorderclassruledetailFullList = computerorderclassruledetailService.selectComputerorderclassruledetailFullByCondition(borrowPcSql);				
-			}
-			
+			String borrowPcSql  = " where a.computerorderclassruleid = "+ ruleId + " and b.languagetype = "+this.getCurrentLanguage();
+			computerorderclassruledetailFullList = computerorderclassruledetailService.selectComputerorderclassruledetailFullByCondition(borrowPcSql);				
+
 			if(computerorderclassruledetailFullList == null){
-				computerorderclassruledetailFullList = new ArrayList<ComputerorderclassruledetailFull>();
+				actionMsg = "获取作业规则错误";
+				return ComputerConfig.pagenotfound;
 			}
 			
 			return SUCCESS;
@@ -641,7 +524,9 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 		} catch (Exception e) {
 			e.printStackTrace();			
 		}
-		return "Error";
+		
+		actionMsg = "系统内部发生错误";
+		return ComputerConfig.innererror;
 	}
 /*
 	//根据computerorderclassruleid 查询实体
@@ -819,15 +704,6 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 		}
 
 
-
-		public ReturnJson getReturnJson() {
-			return returnJson;
-		}
-
-		public void setReturnJson(ReturnJson returnJson) {
-			this.returnJson = returnJson;
-		}
-
 		public static Log getLog() {
 			return log;
 		}
@@ -994,6 +870,14 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 		public void setFinishComputerhomeworkFullList(
 				List<ComputerhomeworkFull> finishComputerhomeworkFullList) {
 			this.finishComputerhomeworkFullList = finishComputerhomeworkFullList;
+		}
+
+		public String getReturnInfo() {
+			return returnInfo;
+		}
+
+		public void setReturnInfo(String returnInfo) {
+			this.returnInfo = returnInfo;
 		}
 		
 		

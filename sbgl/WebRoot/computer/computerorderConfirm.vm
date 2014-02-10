@@ -153,7 +153,13 @@
                         </div>
                         <div class="caption">
                           <span class="rent-user">申请者：<a rel="popover" class="lk" href="#">用户名（我）</a></span>
-                          <div class="rent-type">预约类型：个人预约</div>
+                          <div class="rent-type">预约类型：
+							#if($computerordertype == 1)
+							个人预约
+							#else
+							课程预约
+							#end
+						  </div>
                         </div>
                         <hr />
                         <div class="hd"><h3>标题 <small>（可选，系统根据预约时间生成默认标题）</small></h3></div>
@@ -208,7 +214,8 @@ var cookie = {
 		var postData = {
 			title : $("#inputAddComputerorderTitle").val(),
 			remark : $("#inputAddComputerorderRemark").val(),
-			ordertype : $computerordertype
+			computerordertype : $computerordertype,
+			computerhomeworkid : $computerhomeworkid
 		};
 		
 		jQuery.ajax({  

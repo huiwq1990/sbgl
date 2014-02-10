@@ -99,34 +99,9 @@
 <!-- View entity full-->		
         <action name="viewComputerhomeworkFull" class="ComputerhomeworkAction" method="viewComputerhomeworkFull">
         	<result name="success">/computer/computerhomeworkFullView.vm</result>
-        	<result name="error">/error.vm</result> 
+        		<result name="pagenotfound">/computer/errorpage.vm</result>
+			<result name="innererror">/computer/errorpage.vm</result>
         </action>
-	
-		
-        <!--查询全部实体-->
-        <action name="selectComputerhomeworkAll" class="ComputerhomeworkAction" method="selectComputerhomeworkAll">
-			<result name="success">/computer/computerhomework.jsp</result>
-			<result name="error">/error.vm</result>
-		</action>
-	
-
-		
-		
-<!--根据id查询实体full-->
-
-		<action name="selectComputerhomeworkFullById" class="ComputerhomeworkAction" method="selectComputerhomeworkFullById">
-		  	<result name="success">/computer/computerhomeworkViewFull.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-
-		
-		
-        <!--查询全部实体full-->
-        <action name="selectComputerhomeworkFullAll" class="ComputerhomeworkAction" method="selectComputerhomeworkFullAll">
-			<result name="success">/computer/computerhomeworkManage.vm</result>
-			<result name="error">/error.vm</result>
-		</action>
-		
 	
 		
 

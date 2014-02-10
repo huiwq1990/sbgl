@@ -236,6 +236,25 @@ public class ComputerorderdetailServiceImpl implements ComputerorderdetailServic
     }
     
     
+    @Override
+    public List<Computerorderdetail> selectBookedComputerorderdetailFromStartToEnd(String startDay,int startPeriod,String endDay,int endPeriod){
+
+            int computerorderTotalOrderDay = ComputerConfig.computeroderadvanceorderday;
+//            int computerorderTotalOrderPeriod = ComputerConfig.computerorderTotalOrderPeriod;
+            Date curDate = DateUtil.parseDate(startDay);
+            Date endDate = DateUtil.parseDate(endDay);
+            String endate = DateUtil.dateFormat(endDate,DateUtil.dateformatstr1);
+            String cond = "where ( (borrowday = '" + startDay+"' and borrowperiod >="+startPeriod+") or ";
+            cond +=  "             ((borrowday > '" + startDay+"') and (borrowday <= '" + endate+"') )";
+            cond +=  "            ) and ";
+            cond +=  "            ( status in ("+ComputerorderdetailInfo.ComputerorderdetailStatusAduitPass+","+ComputerorderdetailInfo.ComputerorderdetailStatusAduitWait+") ) ";
+//            cond = " ";
+    System.out.println(cond);
+            return computerorderdetailDao.selectComputerorderdetailByCondition(cond);
+
+    }
+    
+    
 	@Override
 	public int execSql(String sql) {
 //		String sql = "delete from Computerorderdetail " + condition;
