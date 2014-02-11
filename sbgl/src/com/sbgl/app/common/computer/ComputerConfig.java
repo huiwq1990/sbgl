@@ -2,6 +2,17 @@ package com.sbgl.app.common.computer;
 
 public class ComputerConfig {
 	
+//	模块名称
+	public final static String ComputerModelName = "computer";
+	
+	
+//	导航栏类型
+	public static final String ComputerManageInfoIncludeSidebarType = "computerManageInfo";	
+//	PC管理导航栏的文件路径
+	public static final String ComputerManageInfoIncludeSidebarPath = "computer/computerManageInfoIncludeSidebar.vm";
+//	导航栏的名称
+	public static final String IncludeSidebarDirectiveName = "includeSidebar"; 
+	
 //	error return flag
 	public final static int ajaxerrorreturn = 0;
 	public final static int ajaxsuccessreturn = 1;

@@ -190,18 +190,8 @@
 	  
 	  
 	  
-	   <div id="lside"><!--sidebar start-->
-        <form class="form-group">
-          <input type="text" class="form-control" placeholder="搜索设备">
-          <i class="icon-search"></i>
-        </form>
-        <div class="list-group">
-          <a href="${webbaseurl}/manageComputerFull.action" class="list-group-item active">机器信息管理</a>
-          <a href="机器添加.html" class="list-group-item">机器添加</a>
-          <a href="${webbaseurl}/manageComputermodelFull.action" class="list-group-item">型号管理</a>
-          <a href="${webbaseurl}/manageComputercategoryFull.action" class="list-group-item">分类管理</a>
-        </div>
-      </div>
+	  <!--sidebar start-->
+       #includeSidebar("parameters=currentWebpage:computercategoryFullManage.vm,currentModel:computer,currentType:computerManageInfo")
       <!--sidebar end-->
 	  
 	  
