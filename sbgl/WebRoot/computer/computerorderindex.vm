@@ -103,20 +103,26 @@
             </div>
             <div class="row">
       
-#set($computerorderFullListSize = $computerorderFullList.size() - 1)
+#set($computerorderFullListSize = $computerorderFullUnderwayList.size() - 1)
 ##判断数据是否为空
 #if($computerorderFullListSize>=0)
 #set($computerorderFullListRegion = [0..$computerorderFullListSize])
 ##取出所有的属性名称
 #foreach($tempKey in $computerorderFullListRegion)
-			#set($temp = $computerorderFullList.get($tempKey))				
+			#set($temp = $computerorderFullUnderwayList.get($tempKey))				
                   <div class="col-3">                  
                       <div class="thumbnail">
                         <div class="hd clearfix">
                           <h4 class="pull-left"><a class="lk" href="${webbaseurl}/viewComputerorder.action?computerorderId=$temp.computerorderid">$!temp.computerordertitle</a></h4>
                         </div>
-                        <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> 设备预约<br/>个人预约</div>
-                        <div class="caption">
+                         <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> 
+							#if($!temp.computerorderordertype==2) 
+								课程预约 
+							#else 
+								个人预约 
+							#end
+						</div>
+						<div class="caption">
                           <div class="rent-info">
                             <div class="rent-num">预约号：432420427（无则不显示）</div>
                             <div class="rent-time"><i class="icon-time"></i> 2013年10月18日 - 2013年10月23日（无则不显示）</div>
@@ -139,7 +145,44 @@
               <div class="title pull-left">已完成</div>
             </div>
             <div class="row thumbnails">
-      
+
+#set($computerorderFullListSize = $computerorderFullFinishList.size() - 1)
+##判断数据是否为空
+#if($computerorderFullListSize>=0)
+#set($computerorderFullListRegion = [0..$computerorderFullListSize])
+##取出所有的属性名称
+#foreach($tempKey in $computerorderFullListRegion)
+			#set($temp = $computerorderFullFinishList.get($tempKey))				
+                  <div class="col-3">                  
+                      <div class="thumbnail">
+                        <div class="hd clearfix">
+                          <h4 class="pull-left"><a class="lk" href="${webbaseurl}/viewComputerorder.action?computerorderId=$temp.computerorderid">$!temp.computerordertitle</a></h4>
+                        </div>
+                        <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> 
+							#if($!temp.computerorderordertype==2) 
+								课程预约 
+							#else 
+								个人预约 
+							#end
+						</div>
+                        <div class="caption">
+                          <div class="rent-info">
+                            <div class="rent-num">预约号：432420427（无则不显示）</div>
+                            <div class="rent-time"><i class="icon-time"></i> 2013年10月18日 - 2013年10月23日（无则不显示）</div>
+                            <div class="rent-remark"><i class="icon-pencil"></i> 这里是预约备注（无则不显示）附近开发就给你说拉刚接完福建武平如果奋力反击我的积分我觉得怕人家分邱娥国该恶风哥怕阿娇大家都疯狂了</div>
+                          </div>
+                          <hr />
+                          <div class="rent-status clearfix">
+							#set($curstatus = $temp.computerorderstatus)
+                            <div class="status pull-left"><span class="label label-info">状态</span> #parse("computer/includeComputerorderStatus.vm")</div>
+                          </div>
+                        </div>
+                      </div>                  
+                  </div>
+#end
+#end				
+				
+				<!--
                   <div class="col-3">                  
                       <div class="thumbnail">
                         <div class="hd">
@@ -155,21 +198,7 @@
                         </div>
                       </div>                  
                   </div>
-                  <div class="col-3">                  
-                      <div class="thumbnail">
-                        <div class="hd">
-                          <h4><a class="lk" href="设备预约详细内容页.html">数字摄影技术第11周设备申请</a></h4>
-                        </div>
-                        <div class="t-r label label-important"><i class="icon-camera-retro icon-large"></i> 设备预约<br/>个人预约</div>
-                        <div class="caption">
-                          <div class="rent-info">
-                            <div class="rent-num">预约号：432420427（无则不显示）</div>
-                            <div class="rent-time"><i class="icon-time"></i> 2013年10月18日 - 2013年10月23日（无则不显示）</div>
-                            <div class="rent-remark"><i class="icon-pencil"></i> 这里是预约备注（无则不显示）</div>
-                          </div>
-                        </div>
-                      </div>                  
-                  </div>
+				  -->
             </div>            
             
 

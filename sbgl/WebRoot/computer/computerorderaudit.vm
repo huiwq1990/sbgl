@@ -156,14 +156,13 @@
                   </div>
                   <div class="caption">
                       <div class="status">
-                      <strong>审核人可能存在的状态:</strong><br>
-                      申请人尚未提交预约申请。<br>
-                      等待您的审核。<br>
-                      ……
+                      订单当前状态：#set($curstatus = $computerorderFull.computerorderstatus)
+					  #parse("computer/includeComputerorderStatus.vm")
+
                       </div>
                       <hr>
                       <strong>审核人可能进行的操作:</strong><br>                      
-                      <a class="btn btn-primary" onclick="auditOrder( $computerorderFull.computerorderid ,$!ComputerorderStatusAduitWait)" href="#">审核通过</a>
+                      <a class="btn btn-primary" onclick="auditOrder( $computerorderFull.computerorderid ,$!ComputerorderStatusAduitPass)" href="#">审核通过</a>
                       <a class="btn btn-white" onclick="auditOrder( $computerorderFull.computerorderid ,$!ComputerorderStatusAduitReject)" data-toggle="modal" href="#reject" role="button">驳 回</a>
                       <a class="btn btn-white" onclick="auditOrder( $computerorderFull.computerorderid ,$!ComputerorderStatusAduitDel)" data-toggle="modal" href="#reject" role="button">删 除</a>
                   </div>

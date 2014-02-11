@@ -154,24 +154,13 @@
                     <h3>状态</h3>
                   </div>
                   <div class="caption">
-                      <div class="status">
-                      <strong>审核人可能存在的状态:</strong><br>
-                      申请人尚未提交预约申请。<br>
-                      等待您的审核。<br>
-                      ……
-                      </div>
+                     
                       <hr>
-                      <strong> #if($!temp.computerorderstatus == $ComputerorderStatusAduitPass)
-						<td>审核通过</td>
-					#elseif($!temp.computerorderstatus ==$ComputerorderStatusAduitReject)
-						<td>驳回</td>
-						#elseif($!temp.computerorderstatus ==$ComputerorderStatusAduitDel)
-						<td>删除</td>
-						#elseif($!temp.computerorderstatus ==$ComputerorderStatusAduitWait)
-						<td>待审核</td>
-						#else 
-							<td>错误</td>
-							#end</strong><br>                      
+                      <strong> 
+						#set($curstatus = $computerorderFull.computerorderstatus)
+                           <td> #parse("computer/includeComputerorderStatus.vm") </td>
+
+					  </strong><br>                      
                        </div>
                 </div>
                 <div class="thumbnail">

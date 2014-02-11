@@ -95,8 +95,11 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	private int ClassOrder = ComputerorderInfo.IndividualOrder;
 	
 	
-//	全局参数
+//	查看自己的预约
+	List<ComputerorderFull> computerorderFullUnderwayList = new ArrayList<ComputerorderFull>();//进行中的预约
+	List<ComputerorderFull> computerorderFullFinishList = new ArrayList<ComputerorderFull>();//进行中的预约
 	
+//	全局参数	
 	private String userid;
 	
 	
@@ -112,10 +115,12 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	int computerhomeworkid;
 	
 	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
-	String returnInfo;
+	private String returnInfo;
+	private String actionMsg; // Action间传递的消息参数
 	
 	
-	public static int checkUserLogin(){
+
+	public int checkUserLogin(){
 		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
 		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
 		if(uidStr==null || uidStr.trim().equals("0") || uidStr.trim().equals("")){
@@ -123,11 +128,22 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 		}
 		return Integer.valueOf(uidStr);
 	}
-			
-
 	
+	public int getCurrentLanguage(){
+		return ComputerActionUtil.getLanguagetype((String) session.get(ComputerConfig.sessionLanguagetype));		
+	}
 	
+	public void buildReturnStr(int flag,String errorStr){
+		ReturnJson returnJson = new ReturnJson();
+		returnJson.setFlag(flag);			
+		returnJson.setReason(errorStr);
+		
+		JSONObject jo = JSONObject.fromObject(returnJson);
+		this.returnStr = jo.toString();
+//		return SUCCESS;
+	}
 	
+		
 	
 	/**
 	 * 跳转到订单审核界面
@@ -135,12 +151,11 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	 */
 	public String toAuditComputerorderPage(){
 		System.out.println("toAuditComputerorderPage "+ computerorderId);
+		
 		computerorderFull = computerorderService.selectComputerorderFullById(computerorderId);
-		//如果找不到相应的预约单，返回错误
 		if(computerorderFull == null){
-//			Log.info("");
-			System.out.println("wrong");
-			return "PageNotFound";
+			actionMsg = "用户未登录";
+			return ComputerConfig.usernotloginreturnstr;
 		}
 		
 		String sql = " where a.computerorderid = "+computerorderId  + " and c.languagetype="+ComputerConfig.languagech ;
@@ -180,16 +195,26 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 		
 		Integer userid = checkUserLogin();
 //		log.info("login user id "+ uid);
-		if(userid < 0){				
+		if(userid < 0){		
+			actionMsg = "用户未登录";
 			return ComputerConfig.usernotloginreturnstr;
 		}
 		
-		String selordersql = "  where a.userid="+userid + " order by a.createtime desc";
-		computerorderFullList = computerorderService.selectComputerorderFullByCondition(selordersql);
+
+//		进行中的预约是：状态未审核的预约
+		String selunderwayordersql = "  where a.userid="+userid + " and a.status="+ComputerorderInfo.ComputerorderStatusAduitWait+" order by a.createtime desc";
+		computerorderFullUnderwayList = computerorderService.selectComputerorderFullByCondition(selunderwayordersql);
+		
+		String selfinordersql = "  where a.userid="+userid + " and a.status !="+ComputerorderInfo.ComputerorderStatusAduitWait+" order by a.createtime desc";
+		computerorderFullFinishList = computerorderService.selectComputerorderFullByCondition(selfinordersql);
+		
 		
 //		String sql = " where a.computerorderid = "+computerorderId  + " and c.languagetype="+ComputerConfig.languagech ;
-		if(computerorderFullList==null){
-			computerorderFullList = new ArrayList<ComputerorderFull>();
+		if(computerorderFullUnderwayList==null){
+			computerorderFullUnderwayList = new ArrayList<ComputerorderFull>();
+		}
+		if(computerorderFullFinishList==null){
+			computerorderFullFinishList = new ArrayList<ComputerorderFull>();
 		}
 		
 		return SUCCESS;
@@ -198,7 +223,7 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	
 	
 	/**
-	 * 查看订单详情
+	 * 用户查看订单详情
 	 * @return
 	 */
 	public String viewComputerorder(){
@@ -423,22 +448,21 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 				computerorderdetailService.addComputerorderdetail(cd);
 			}
 			
-			String hmresql = " where computerhomeworkid = "+ computerhomeworkid +" and userid="+checkUserLogin();
-			System.out.println(hmresql);
-			computerhomeworkreceiverList = computerhomeworkreceiverService.selectComputerhomeworkreceiverByCondition(hmresql);
-			if(computerhomeworkreceiverList == null || computerhomeworkreceiverList.size()!=1){
-				returnInfo = "修改用户课程预约的预约状态失败";
-				buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
-				return SUCCESS;
+//			如果是课程预约，需要修改作业的状态，一次作业只能预约一次
+			if(computerordertype == ComputerorderInfo.ClassOrder){
+				String hmresql = " where computerhomeworkid = "+ computerhomeworkid +" and userid="+checkUserLogin();
+//				System.out.println(hmresql);
+				computerhomeworkreceiverList = computerhomeworkreceiverService.selectComputerhomeworkreceiverByCondition(hmresql);
+				if(computerhomeworkreceiverList == null || computerhomeworkreceiverList.size()!=1){
+					returnInfo = "修改用户课程预约的预约状态失败";
+					buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+					return SUCCESS;
+				}
+				
+				String updateChrSql = " update Computerhomeworkreceiver set hasorder=1 , hasview=1 where id = "+computerhomeworkreceiverList.get(0).getId();
+				computerhomeworkreceiverService.execSql(updateChrSql);
 			}
-			
-			
-			Computerhomeworkreceiver tempChr = computerhomeworkreceiverList.get(0);
-			tempChr.setHasorder(1);
-			tempChr.setHasview(1);
-			
-			String updateChrSql = " update Computerhomeworkreceiver set hasorder=1 , hasview=1 where id = "+tempChr.getId();
-			computerhomeworkreceiverService.execSql(updateChrSql);
+
 			
 			returnInfo = "预约成功";
 			buildReturnStr(ComputerConfig.ajaxsuccessreturn,returnInfo);
@@ -459,15 +483,7 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	}
 	
 	
-	public void buildReturnStr(int flag,String errorStr){
-		ReturnJson returnJson = new ReturnJson();
-		returnJson.setFlag(flag);			
-		returnJson.setReason(errorStr);
-		
-		JSONObject jo = JSONObject.fromObject(returnJson);
-		this.returnStr = jo.toString();
-//		return SUCCESS;
-	}
+
 	
 
 	public String toComputerorderSuccessPage(){
@@ -886,6 +902,76 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 
 	public void setComputerhomeworkid(int computerhomeworkid) {
 		this.computerhomeworkid = computerhomeworkid;
+	}
+
+	public ComputerhomeworkreceiverService getComputerhomeworkreceiverService() {
+		return computerhomeworkreceiverService;
+	}
+
+	public void setComputerhomeworkreceiverService(
+			ComputerhomeworkreceiverService computerhomeworkreceiverService) {
+		this.computerhomeworkreceiverService = computerhomeworkreceiverService;
+	}
+
+	public Computerhomeworkreceiver getComputerhomeworkreceiver() {
+		return computerhomeworkreceiver;
+	}
+
+	public void setComputerhomeworkreceiver(
+			Computerhomeworkreceiver computerhomeworkreceiver) {
+		this.computerhomeworkreceiver = computerhomeworkreceiver;
+	}
+
+	public List<Computerhomeworkreceiver> getComputerhomeworkreceiverList() {
+		return computerhomeworkreceiverList;
+	}
+
+	public void setComputerhomeworkreceiverList(
+			List<Computerhomeworkreceiver> computerhomeworkreceiverList) {
+		this.computerhomeworkreceiverList = computerhomeworkreceiverList;
+	}
+
+	public ComputerhomeworkreceiverFull getComputerhomeworkreceiverFull() {
+		return computerhomeworkreceiverFull;
+	}
+
+	public void setComputerhomeworkreceiverFull(
+			ComputerhomeworkreceiverFull computerhomeworkreceiverFull) {
+		this.computerhomeworkreceiverFull = computerhomeworkreceiverFull;
+	}
+
+	public List<ComputerorderFull> getComputerorderFullUnderwayList() {
+		return computerorderFullUnderwayList;
+	}
+
+	public void setComputerorderFullUnderwayList(
+			List<ComputerorderFull> computerorderFullUnderwayList) {
+		this.computerorderFullUnderwayList = computerorderFullUnderwayList;
+	}
+
+	public List<ComputerorderFull> getComputerorderFullFinishList() {
+		return computerorderFullFinishList;
+	}
+
+	public void setComputerorderFullFinishList(
+			List<ComputerorderFull> computerorderFullFinishList) {
+		this.computerorderFullFinishList = computerorderFullFinishList;
+	}
+
+	public String getReturnInfo() {
+		return returnInfo;
+	}
+
+	public void setReturnInfo(String returnInfo) {
+		this.returnInfo = returnInfo;
+	}
+
+	public String getActionMsg() {
+		return actionMsg;
+	}
+
+	public void setActionMsg(String actionMsg) {
+		this.actionMsg = actionMsg;
 	}
 
 

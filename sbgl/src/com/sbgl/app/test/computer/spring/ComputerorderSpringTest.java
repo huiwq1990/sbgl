@@ -29,10 +29,10 @@ public class ComputerorderSpringTest {
 //		selectComputerorderAll();
 //		deleteComputerorder();
 		
-//		updateComputerorder();
+		updateComputerorder();
 //		selectComputerorderById(1L);
 //		selectComputerorderFullById(1L);
-      selectComputerorderFullAll();
+//      selectComputerorderFullAll();
 
 	}
 	

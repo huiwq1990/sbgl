@@ -50,6 +50,8 @@ public interface ComputerorderService{
 	
 	// 查询实体full        
         public List<ComputerorderFull>  selectComputerorderFullByConditionAndPage(String condition,final Page page);
+
+		int execSql(String sql);
 		
 	
 //根据关联查询实体	

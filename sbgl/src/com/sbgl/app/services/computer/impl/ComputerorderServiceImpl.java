@@ -152,7 +152,13 @@ public class ComputerorderServiceImpl implements ComputerorderService{
         public List<ComputerorderFull>  selectComputerorderFullByConditionAndPage(String condition,final Page page) {
 			return computerorderDao.selectComputerorderFullByConditionAndPage(condition, page);
 		}
-	
+    	@Override
+    	public int execSql(String sql) {
+//    		String sql = "delete from Computerorderdetail " + condition;
+    		baseDao.createSQL(sql);
+    		return 1;
+    		
+    	}
 	
 
 }

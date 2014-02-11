@@ -9,8 +9,11 @@ import net.sf.json.JSONObject;
 
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -19,6 +22,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.common.computer.ComputerorderdetailInfo;
 import com.sbgl.app.entity.*;
@@ -42,8 +46,7 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	private Computerorder computerorder = new Computerorder();//实例化一个模型
 	private Computerorder computerorderModel= new Computerorder();//实例化一个模型
 	private ComputerorderFull computerorderFull = new ComputerorderFull();//实例化一个模型
-	private String actionMsg; // Action间传递的消息参数
-	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
+
 	List<Computerorder> computerorderList = new ArrayList<Computerorder>();
 	List<ComputerorderFull> computerorderFullList = new ArrayList<ComputerorderFull>();
 	private Integer computerorderid; //entity full 的id属性名称		
@@ -75,74 +78,41 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	Page page = new Page();
 	Integer pageNo=1;	
 	
+
+	
 	public String computerorderIdsForDel;
 
+//	return info
+	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
+	private String returnInfo;
+	private String actionMsg; // Action间传递的消息参数
 	
 //	public int auditStatus;//审核结果
 	
-	
-	
 
-//删除
-	public String deleteComputerorder( ){
-		try{
-			if(computerorder.getId() != null && computerorder.getId() > 0){
-				computerorderService.deleteComputerorder(computerorder.getId());
-				actionMsg = getText("deleteComputerorderSuccess");
-			}else{
-				System.out.println("删除的id不存在");
-				actionMsg = getText("deleteComputerorderFail");
-			}
-			
-			return SUCCESS;
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerorderAction的方法：deleteComputerorder错误"+e);
+	public int checkUserLogin(){
+		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
+		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
+		if(uidStr==null || uidStr.trim().equals("0") || uidStr.trim().equals("")){
+			return -1;
 		}
-		return "Error";
+		return Integer.valueOf(uidStr);
 	}
 	
-//删除Ajax
-	public String deleteComputerorderAjax( ){
-		try{
-			if(computerorder.getId() != null && computerorder.getId() >= 0){
-				computerorderService.deleteComputerorder(computerorder.getId());				
-			}
-			
-			return "IdNotExist";
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerorderAction的方法：deleteComputerorder错误"+e);
-		}
-		return "Error";
+	public int getCurrentLanguage(){
+		return ComputerActionUtil.getLanguagetype((String) session.get(ComputerConfig.sessionLanguagetype));		
 	}
-
 	
-//	del entityfull
-	public String deleteComputerorderFull(){
-		try {
+	public void buildReturnStr(int flag,String errorStr){
+		ReturnJson returnJson = new ReturnJson();
+		returnJson.setFlag(flag);			
+		returnJson.setReason(errorStr);
 		
-			Integer getId = computerorder.getId();
-			if(getId != null && getId < 0){
-				log.info("删除的id不规范");
-				return "Error";
-			}
-		
-		
-			Computerorder temp = computerorderService.selectComputerorderById(getId);
-			if (temp != null) {
-				computerorderService.deleteComputerorder(getId);
-				return SUCCESS;
-			} else {
-				log.info("删除的id不存在");
-				return "Error";
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "Error";
+		JSONObject jo = JSONObject.fromObject(returnJson);
+		this.returnStr = jo.toString();
+//		return SUCCESS;
 	}
+	
 	
 	//del entityfull Ajax
 	public String deleteComputerorderFullAjax( ){
@@ -245,38 +215,36 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	//审核表单，修改表单状态
 	public String auditComputerorderAjax(){
 		log.info(logprefix + "auditComputerorderAjax,id="+computerorder.getId());
-		ReturnJson returnJson = new ReturnJson();
+		
 		try {
-			if(computerorder.getId() != null && computerorder.getId() > 0){				
+				
 				Computerorder tempComputerorder = computerorderService.selectComputerorderById(computerorder.getId());
+				if(tempComputerorder==null){
+					returnInfo = "获取审核表单失败";
+					buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+					return SUCCESS;
+				}
+				
 //              修改状态				
   				tempComputerorder.setStatus(computerorder.getStatus());
 			
-				computerorderService.updateComputerorder(tempComputerorder);
+				computerorderService.execSql("  update Computerorder set status="+computerorder.getStatus()+" where id = "+computerorder.getId());
 
 				computerorderdetailService.execSql(" update Computerorderdetail set status="+computerorder.getStatus()+" where computerorderid = "+computerorder.getId());
 
 				
-				returnJson.setFlag(1);		
-				returnJson.setReason("审核完成");
-				JSONObject jo = JSONObject.fromObject(returnJson);
-				this.returnStr = jo.toString();
+				returnInfo = "审核完成";
+				buildReturnStr(ComputerConfig.ajaxsuccessreturn,returnInfo);
 				return SUCCESS;
 				
-			}else{
-				actionMsg = getText("viewComputerorderFail");
-				log.info(logprefix + "updateComputerorderAjax fail");
-			}			
-			
+				
 		}catch(Exception e){
 			e.printStackTrace();
 			log.error("类ComputerorderAction的方法：viewComputerorder错误"+e);
 		}
 
-			returnJson.setFlag(0);
-			returnJson.setReason("审核失败");
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
+			returnInfo = "审核失败,发生内部错误";
+			buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
 			return SUCCESS;
 	}
 	
