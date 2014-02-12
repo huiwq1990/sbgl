@@ -1388,10 +1388,10 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					cc.setId( String.valueOf( classfication.getClassificationid() ) );
 					cc.setName( classfication.getName() );
 					if( classfication.getParentid() == 0 ) {
-						cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification( classfication.getClassificationid(), true ) ) );
+						cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification( classfication.getClassificationid(), true )/2 ) );
 						cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification( classfication.getClassificationid(), true ) ) );
 					} else {
-						cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification( classfication.getClassificationid(), false ) ) );
+						cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification( classfication.getClassificationid(), false )/2 ) );
 						cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification( classfication.getClassificationid(), false ) ) );
 					}
 					cc.setpId( String.valueOf( classfication.getParentid() ) );
