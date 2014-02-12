@@ -78,14 +78,10 @@
   </div>
 </header><!--/#header-wrap-->
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
-      <ul class="nav nav-tabs">
-        <li><a href="机器预约管理首页.html">机器预约管理</a></li>
-        <li class="active"><a href="机器信息管理首页.html">机器信息管理</a></li>
-      </ul>
-	  
-	  
-	  
-	  
+	
+		#set($currentPageType="computerInfoManage")
+		#parse("computer/includeComputerManageNavi.vm")
+		
       <!--admin-wrap start-->
       <div id="admin-wrap">
         <div id="admin-content" class="clearfix">    
