@@ -25,7 +25,9 @@ import com.sbgl.util.*;
 public class MessagereceiverDaoImpl extends HibernateDaoSupport implements MessagereceiverDao{
 
 	private static final Log log = LogFactory.getLog(MessagereceiverDaoImpl.class);
-	private final String basicMessagereceiverFullSql = "select a.id as messagereceiverid, a.messageid as messagereceivermessageid, a.receiverid as messagereceiverreceiverid, a.hasview as messagereceiverhasview, a.viewdate as messagereceiverviewdate, a.status as messagereceiverstatus, b.id as receiverloginuserid, b.name as receiverloginusername, b.createtime as receiverloginusercreatetime, b.status as receiverloginuserstatus from Messagereceiver a  left join Loginuser b on a.receiverid=b.id ";
+	private final String basicMessagereceiverFullSql = "select a.id as messagereceiverid, a.messageid as messagereceivermessageid, a.receiverid as messagereceiverreceiverid, a.hasview as messagereceiverhasview, a.viewdate as messagereceiverviewdate, a.status as messagereceiverstatus," +
+			" b.id as receiverloginuserid, b.name as receiverloginusername   " +
+			" from Messagereceiver a  left join Loginuser b on a.receiverid=b.id ";
 	
 	private final String basicMessagereceiverSql = "From Messagereceiver as a ";
 	

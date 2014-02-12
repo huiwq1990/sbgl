@@ -25,7 +25,9 @@ import com.sbgl.util.*;
 public class MessageDaoImpl extends HibernateDaoSupport implements MessageDao{
 
 	private static final Log log = LogFactory.getLog(MessageDaoImpl.class);
-	private final String basicMessageFullSql = "select a.id as messageid, a.title as messagetitle, a.content as messagecontent, a.senderid as messagesenderid, a.sendtime as messagesendtime, a.replyid as messagereplyid, a.readstatus as messagereadstatus, a.filepath as messagefilepath, a.isbigfile as messageisbigfile, a.type as messagetype, a.status as messagestatus, b.id as senderloginuserid, b.name as senderloginusername, b.createtime as senderloginusercreatetime, b.status as senderloginuserstatus from Message a  left join Loginuser b on a.senderid=b.id ";
+	private final String basicMessageFullSql = "select a.id as messageid, a.title as messagetitle, a.content as messagecontent, a.senderid as messagesenderid, a.sendtime as messagesendtime, a.replyid as messagereplyid, a.readstatus as messagereadstatus, a.filepath as messagefilepath, a.isbigfile as messageisbigfile, a.type as messagetype, a.status as messagestatus," +
+			" b.id as senderloginuserid, b.name as senderloginusername  " +
+			" from Message a  left join Loginuser b on a.senderid=b.id ";
 	
 	private final String basicMessageSql = "From Message as a ";
 	

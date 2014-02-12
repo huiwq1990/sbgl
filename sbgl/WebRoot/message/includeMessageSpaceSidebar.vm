@@ -11,13 +11,19 @@
 		#if($currentWebpage == "kbZhengzhuangFullManage.vm" )
 			 active        
 		#end		
-		">症状管理</a> 
+		">收件箱</a> 
+		
+		<a href="${webbaseurl}/manageKbZhengzhuangFull.action" class="list-group-item
+		#if($currentWebpage == "messageSendbox.vm" )
+			 active        
+		#end		
+		">已发送</a> 
 		
 		<a href="${webbaseurl}/toAddZhengzhuangPage.action" class="list-group-item
-		#if($currentWebpage == "kbZhengzhuangAdd.vm" )
+		#if($currentWebpage == "messageTrash.vm" )
 			 active        
 		#end
-		">症状添加</a>
+		">回收站</a>
 		
 	</div>
 </div>

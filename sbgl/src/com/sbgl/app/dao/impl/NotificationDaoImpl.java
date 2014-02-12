@@ -25,7 +25,10 @@ import com.sbgl.util.*;
 public class NotificationDaoImpl extends HibernateDaoSupport implements NotificationDao{
 
 	private static final Log log = LogFactory.getLog(NotificationDaoImpl.class);
-	private final String basicNotificationFullSql = "select a.id as notificationid, a.title as notificationtitle, a.content as notificationcontent, a.senderrid as notificationsenderrid, a.receiverid as notificationreceiverid, a.sendtime as notificationsendtime, a.readstatus as notificationreadstatus, a.modeltype as notificationmodeltype, a.status as notificationstatus, b.id as senderloginuserid, b.name as senderloginusername, b.createtime as senderloginusercreatetime, b.status as senderloginuserstatus, c.id as receiverloginuserid, c.name as receiverloginusername, c.createtime as receiverloginusercreatetime, c.status as receiverloginuserstatus from Notification a  left join Loginuser b on a.senderid=b.id left join Loginuser c on a.receiverid=c.id ";
+	private final String basicNotificationFullSql = "select a.id as notificationid, a.title as notificationtitle, a.content as notificationcontent, a.senderrid as notificationsenderrid, a.receiverid as notificationreceiverid, a.sendtime as notificationsendtime, a.readstatus as notificationreadstatus, a.modeltype as notificationmodeltype, a.status as notificationstatus," +
+			" b.id as senderloginuserid, b.name as senderloginusername  " +
+			"c.id as receiverloginuserid, c.name as receiverloginusername    " +
+			"from Notification a  left join Loginuser b on a.senderid=b.id left join Loginuser c on a.receiverid=c.id ";
 	
 	private final String basicNotificationSql = "From Notification as a ";
 	
@@ -192,25 +195,7 @@ public class NotificationDaoImpl extends HibernateDaoSupport implements Notifica
 	
 //  根据关联查询实体full
 
-	//根据关联查询实体 
-	public List<Notification> selectNotificationByLoginuserId(Integer senderid){
-	
-		return null;
-	}
-	public List<Notification> selectNotificationByLoginuserId(Integer receiverid){
-	
-		return null;
-	}
-  
 
-	public List<NotificationFull> selectNotificationFullByLoginuserId(Integer senderid){
-	
-		return null;
-	}
-	public List<NotificationFull> selectNotificationFullByLoginuserId(Integer receiverid){
-	
-		return null;
-	}
 
  
 }

@@ -30,8 +30,7 @@ public interface MessagereceiverService{
 //	根据id查询full类
 	public MessagereceiverFull selectMessagereceiverFullById(Integer messagereceiverId);
 
-//  查询全部full
-	public List<MessagereceiverFull> selectMessagereceiverFullAll();
+
 		
 //  查询数量
 	public int countMessagereceiverRow();

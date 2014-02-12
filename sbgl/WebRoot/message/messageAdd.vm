@@ -125,7 +125,7 @@
                 </label>
               </div>    
               <a class="btn btn-white" href="">取 消</a>
-              <button type="submit" class="btn btn-primary">发 送</button>
+              <button type="submit" class="btn btn-primary" action-type="addMessageButton">发 送</button>
             </form>
           </div>
         </div>
@@ -175,7 +175,7 @@
 				return {id:term, text:term};} 
 			},
 		multiple: true,
-		data: [{id: 0, text: '用户名1'},{id: 1, text: '用户名2'},{id: 2, text: '用户名3'}]
+		data: [{id: 1, text: '用户名1'},{id: 2, text: '用户名2'},{id: 3, text: '用户名3'}]
 	});
 			
 	var editor;
@@ -193,24 +193,23 @@
 	
 	
 	//添加作业
-	$("body").on("click", "button[action-type|=addComputerhomeworkButton]", function() {
+	$("body").on("click", "button[action-type|=addMessageButton]", function() {
 			
-			var input_sendtoids = $('#input_sendtoids').val();		
-			var input_computerorderclassruleid = $('#input_computerorderclassruleid').val();
-			var input_name = $('#input_name').val();
-			
+			var inputSendTo = $('#inputSendTo').val();
+			inputSendTo = inputSendTo.replace(",",";");
+			var inputMsgTitle = $('#inputMsgTitle').val();
+		
 			var input_content =  editor.html();
-			//alert("input_content "+input_content);
+			//alert("input_content "+inputSendTo);
 			//return;
 			var postData = {
-				"receiverids": input_sendtoids,
-				"computerorderclassruleid": input_computerorderclassruleid,
-				"name": input_name,
+				"messagereceiverids": inputSendTo,
+				"title": inputMsgTitle,				
 				"content": input_content
 			};
 			
 			jQuery.ajax({  
-			    url:"${webbaseurl}/addComputerhomeworkAjax.${strutsaction}",  
+			    url:"${webbaseurl}/addMessageAjax.${strutsaction}",  
 			    type:"post",
 			    data:postData,
 			  	dataType: 'json',
@@ -219,6 +218,7 @@
 				if(returnJson.flag == 1){
 					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});
 					clearInput();
+					
 				}else{
 					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
 				}
@@ -232,10 +232,8 @@
 	
 	//清空数据
 	function clearInput(){
-		$('#input_sendtoids').val("");
-		$('#input_computerorderclassruleid').select2("");
-		$('#input_name').val("");
-		//$('#input_content').val("");
+		$('#inputSendTo').val("");		
+		$('#inputMsgTitle').val("");		
 		editor.html("");
 	}
 </script>

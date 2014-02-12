@@ -9,8 +9,11 @@ import net.sf.json.JSONObject;
 
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -19,6 +22,8 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.actions.computer.ComputerActionUtil;
+import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.message.NotificationService;
 import com.sbgl.util.*;
@@ -36,45 +41,66 @@ public class NotificationAction extends ActionSupport implements SessionAware,Mo
 	//Service	
 	@Resource
 	private NotificationService notificationService;
-	
+	private Integer notificationid; //entity full 的id属性名称	
 	private Notification notification = new Notification();//实例化一个模型
 	private Notification notificationModel = new Notification();//实例化一个模型
-	private NotificationFull notificationFull = new NotificationFull();//实例化一个模型
-	private String actionMsg; // Action间传递的消息参数
-	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
-	List<Notification> notificationList = new ArrayList<Notification>();
-	List<NotificationFull> notificationFullList = new ArrayList<NotificationFull>();
-	private Integer notificationid; //entity full 的id属性名称		
+	private NotificationFull notificationFull = new NotificationFull();//实例化一个模型	
+	private List<Notification> notificationList = new ArrayList<Notification>();
+	private List<NotificationFull> notificationFullList = new ArrayList<NotificationFull>();
+		
 	private String logprefix = "exec action method:";
 	
 	private int pageNo=1;
 	private String callType;
 	private Page page = new Page();
 	private ReturnJson returnJson = new ReturnJson();
+	
 	private String notificationIdsForDel;
 	
-//  manage Notification
-	public String manageNotification(){
-		log.info(logprefix+"manageNotificationFull");
-		
-//      分页查询	
-		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
-		//page.setTotalpage(notificationService.countNotificationRow());
-		notificationList  = notificationService.selectNotificationByPage(page);
-		
-//		查询全部
-//		notificationList  = notificationService.selectNotificationById();
-		
-	    if(notificationList == null){
-			notificationList = new ArrayList<Notification>();
+	
+	
+	
+
+	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
+	private String returnInfo;
+	private String actionMsg; // Action间传递的消息参数
+
+
+
+	public int checkUserLogin(){
+		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
+		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
+		if(uidStr==null || uidStr.trim().equals("0") || uidStr.trim().equals("")){
+			return -1;
 		}
-//		for(int i = 0; i < notificationList.size(); i++){
-//			System.out.println("id="+notificationList.get(i).getLoginusername());
-//		}
-		return SUCCESS;
-	}		
-			
+		return Integer.valueOf(uidStr);
+	}
+	
+	public int getCurrentLanguage(){
+		return ComputerActionUtil.getLanguagetype((String) session.get(ComputerConfig.sessionLanguagetype));		
+	}
+	
+	public void buildReturnStr(int flag,String errorStr){
+		ReturnJson returnJson = new ReturnJson();
+		returnJson.setFlag(flag);			
+		returnJson.setReason(errorStr);
+		
+		JSONObject jo = JSONObject.fromObject(returnJson);
+		this.returnStr = jo.toString();
+//		return SUCCESS;
+	}
+	
+		
+//	/**
+//	 * 发送通知
+//	 * @return
+//	 */
+//	public String sendNotification(){
+//		
+//		
+//	}
+	
+	
 	//管理 查询
 	public String manageNotificationFull(){
 		log.info("exec action method:manageNotificationFull");
@@ -105,31 +131,6 @@ public class NotificationAction extends ActionSupport implements SessionAware,Mo
         }	
 	}			
 
-			
-	public String addNotification(){	
-		log.info("Add Entity");
-
-		try {
-			Notification temp = new Notification();
-			// 将model里的属性值赋给temp
-			BeanUtils.copyProperties(temp, notification);			
-			//add your code here.
-			
-			//temp.setCreatetime(DateUtil.currentDate());
-			
-			notificationService.addNotification(temp);
-			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类NotificationAction的方法：addBbstagfavourite错误"+e);
-		}
-		return "Error";
-	}
 	
 //  ajax add	
 	public String addNotificationAjax(){	
@@ -170,41 +171,8 @@ public class NotificationAction extends ActionSupport implements SessionAware,Mo
 		return SUCCESS;
 	}
 
-//删除
-	public String deleteNotification( ){
-		try{
-			if(notification.getId() != null && notification.getId() > 0){
-				notificationService.deleteNotification(notification.getId());
-				actionMsg = getText("deleteNotificationSuccess");
-			}else{
-				System.out.println("删除的id不存在");
-				actionMsg = getText("deleteNotificationFail");
-			}
-			
-			return SUCCESS;
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类NotificationAction的方法：deleteNotification错误"+e);
-		}
-		return "Error";
-	}
-	
-//删除Ajax
-	public String deleteNotificationAjax( ){
-		try{
-			if(notification.getId() != null && notification.getId() >= 0){
-				notificationService.deleteNotification(notification.getId());				
-			}
-			
-			return "IdNotExist";
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类NotificationAction的方法：deleteNotification错误"+e);
-		}
-		return "Error";
-	}
 
-	
+
 //	del entityfull
 	public String deleteNotificationFull(){
 		try {
@@ -355,68 +323,6 @@ public class NotificationAction extends ActionSupport implements SessionAware,Mo
 	}
 	
 	
-	/**
-	
-	编辑实体 action的方法，首先获取entity的信息，返回到编辑页面
-	
-	*/
-	public String editNotification(){
-		log.info(logprefix + "editNotification");
-			
-		try {
-			//实体的id可以为0
-			if(notification.getId() != null && notification.getId() >= 0){				
-				Notification temNotification = notificationService.selectNotificationById(notification.getId());
-				if(temNotification != null){
-					BeanUtils.copyProperties(notificationModel,temNotification);	
-					//actionMsg = getText("selectNotificationByIdSuccess");
-					return SUCCESS;
-				}				
-			}		
-			return "PageNotExist";
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类NotificationAction的方法：selectNotificationById错误"+e);
-		}
-
-
-		return "error";
-	}
-	
-
-	/**
-	编辑实体Full action的方法，首先获取entityfull的信息，返回到编辑页面
-	
-	*/
-	public String editNotificationFull(){
-		
-		log.info(logprefix + "viewNotification");
-		
-		try {
-			if(notification.getId() != null && notification.getId() > 0){				
-				NotificationFull temNotificationFull = notificationService.selectNotificationFullById(notification.getId());
-				BeanUtils.copyProperties(notificationFull,temNotificationFull);	
-				actionMsg = getText("selectNotificationByIdSuccess");
-			}else{
-				actionMsg = getText("selectNotificationByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类NotificationAction的方法：selectNotificationFullById错误"+e);
-		}
-		
-		return "error";
-	}
 
 	
 	// 查看实体 根据对象Id查询
@@ -481,68 +387,7 @@ public class NotificationAction extends ActionSupport implements SessionAware,Mo
 		}
 		return "Error";
 	}
-/*
-	//根据senderid查询实体
-	public String selectNotificationByLoginuserId() {
-			//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		notificationList  = notificationService.selectNotificationAll();
-		for(int i = 0; i < notificationList.size(); i++){
-			System.out.println("id="+notificationList.get(i).getId());
-		}
-		return SUCCESS;
-	}
-	//根据receiverid查询实体
-	public String selectNotificationByLoginuserId() {
-			//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		notificationList  = notificationService.selectNotificationAll();
-		for(int i = 0; i < notificationList.size(); i++){
-			System.out.println("id="+notificationList.get(i).getId());
-		}
-		return SUCCESS;
-	}
-	//根据senderid查询实体full
-	public String selectNotificationFullByLoginuserId() {
-				//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		notificationFullList  = notificationService.selectNotificationFullByLoginuserId(userId);
-		for(int i = 0; i < notificationFullList.size(); i++){
-			//System.out.println("id="+notificationFullList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}
-	//根据receiverid查询实体full
-	public String selectNotificationFullByLoginuserId() {
-				//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		notificationFullList  = notificationService.selectNotificationFullByLoginuserId(userId);
-		for(int i = 0; i < notificationFullList.size(); i++){
-			//System.out.println("id="+notificationFullList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}
-*/
+
 	//get set
 	public void setSession(Map<String, Object> session) {
 		// TODO Auto-generated method stub

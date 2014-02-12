@@ -3,7 +3,33 @@
 <struts>
 	 <package name="message" extends="admin">
 
+<!-- 跳转到消息添加界面 -->
+    	<action name="toAddMessagePage" class="MessageAction" method="toAddMessagePage">
+        	<result name="success">/message/messageAdd.vm</result>			
+        	<result name="error">/error/messageError.vm</result> 
+        </action>
+        
+<!-- 跳转到消息接收界面 -->
+    	<action name="toMessageInbox" class="MessageAction" method="toMessageInbox">
+        	<result name="success">/message/messageInbox.vm</result>			
+        	<result name="usernotlogin">/error/messageError.vm</result> 
+        	<result name="error">/error/messageError.vm</result> 
+        </action>
+        
+<!-- 跳转到消息发送界面 -->
+    	<action name="toMessageSendbox" class="MessageAction" method="toMessageSendbox">
+        	<result name="success">/message/messageSendbox.vm</result>			
+        	<result name="usernotlogin">/error/messageError.vm</result> 
+        	<result name="error">/error/messageError.vm</result> 
+        </action>   
 
+<!-- 跳转到消息回收站界面 -->
+    	<action name="toMessageTrash" class="MessageAction" method="toMessageTrash">
+        	<result name="success">/message/messageTrash.vm</result>			
+        	<result name="usernotlogin">/error/messageError.vm</result> 
+        	<result name="error">/error/messageError.vm</result> 
+        </action>                 
+              
 <!-- default entity manage action -->
     	<action name="manageMessage" class="ManageMessageAction" method="manageMessage">
         	<result name="success1">/message/messageManage.vm</result>

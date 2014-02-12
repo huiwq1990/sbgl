@@ -27,13 +27,6 @@ public List<Notification> selectNotificationByCondition(String condition);
 
 
 
-	//根据关联查询实体 
-	public List<Notification> selectNotificationByLoginuserId(Integer senderid);
-	//根据关联查询实体 
-	public List<Notification> selectNotificationByLoginuserId(Integer receiverid);
-
-	public List<NotificationFull> selectNotificationFullByLoginuserId(Integer senderid);
-	public List<NotificationFull> selectNotificationFullByLoginuserId(Integer receiverid);
 
  
 }

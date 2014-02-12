@@ -9,8 +9,11 @@ import net.sf.json.JSONObject;
 
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -19,8 +22,11 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.actions.computer.ComputerActionUtil;
+import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.message.MessageService;
+import com.sbgl.app.services.message.MessagereceiverService;
 import com.sbgl.util.*;
 
 
@@ -36,44 +42,65 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 	//Service	
 	@Resource
 	private MessageService messageService;
-	
+	private Integer messageid; //entity full 的id属性名称		
 	private Message message = new Message();//实例化一个模型
 	private Message messageModel = new Message();//实例化一个模型
-	private MessageFull messageFull = new MessageFull();//实例化一个模型
-	private String actionMsg; // Action间传递的消息参数
-	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
-	List<Message> messageList = new ArrayList<Message>();
-	List<MessageFull> messageFullList = new ArrayList<MessageFull>();
-	private Integer messageid; //entity full 的id属性名称		
+	private MessageFull messageFull = new MessageFull();//实例化一个模型	
+	private List<Message> messageList = new ArrayList<Message>();
+	private List<MessageFull> messageFullList = new ArrayList<MessageFull>();
+	
+	
+	
+	@Resource
+	private MessagereceiverService messagereceiverService;
+	private Integer messagereceiverid; //entity full 的id属性名称		
+	private Messagereceiver messagereceiver = new Messagereceiver();//实例化一个模型
+	private Messagereceiver messagereceiverModel = new Messagereceiver();//实例化一个模型
+	private MessagereceiverFull messagereceiverFull = new MessagereceiverFull();//实例化一个模型	
+	private List<Messagereceiver> messagereceiverList = new ArrayList<Messagereceiver>();
+	private List<MessagereceiverFull> messagereceiverFullList = new ArrayList<MessagereceiverFull>();
+	
+	
+	
 	private String logprefix = "exec action method:";
 	
+
+	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
+	private String returnInfo;
+	private String actionMsg; // Action间传递的消息参数
+
+
 	private int pageNo=1;
-	private String callType;
 	private Page page = new Page();
-	private ReturnJson returnJson = new ReturnJson();
+	private String callType;
 	private String messageIdsForDel;
 	
-//  manage Message
-	public String manageMessage(){
-		log.info(logprefix+"manageMessageFull");
-		
-//      分页查询	
-		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
-		//page.setTotalpage(messageService.countMessageRow());
-		messageList  = messageService.selectMessageByPage(page);
-		
-//		查询全部
-//		messageList  = messageService.selectMessageById();
-		
-	    if(messageList == null){
-			messageList = new ArrayList<Message>();
+	private String messagereceiverids;
+	private ReturnJson returnJson = new ReturnJson();
+
+	public int checkUserLogin(){
+		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
+		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
+		if(uidStr==null || uidStr.trim().equals("0") || uidStr.trim().equals("")){
+			return -1;
 		}
-//		for(int i = 0; i < messageList.size(); i++){
-//			System.out.println("id="+messageList.get(i).getLoginusername());
-//		}
-		return SUCCESS;
-	}		
+		return Integer.valueOf(uidStr);
+	}
+	
+	public int getCurrentLanguage(){
+		return ComputerActionUtil.getLanguagetype((String) session.get(ComputerConfig.sessionLanguagetype));		
+	}
+	
+	public void buildReturnStr(int flag,String errorStr){
+		ReturnJson returnJson = new ReturnJson();
+		returnJson.setFlag(flag);			
+		returnJson.setReason(errorStr);
+		
+		JSONObject jo = JSONObject.fromObject(returnJson);
+		this.returnStr = jo.toString();
+//		return SUCCESS;
+	}
+	
 			
 	//管理 查询
 	public String manageMessageFull(){
@@ -105,55 +132,70 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
         }	
 	}			
 
-			
-	public String addMessage(){	
-		log.info("Add Entity");
-
-		try {
-			Message temp = new Message();
-			// 将model里的属性值赋给temp
-			BeanUtils.copyProperties(temp, message);			
-			//add your code here.
-			
-			//temp.setCreatetime(DateUtil.currentDate());
-			
-			messageService.addMessage(temp);
-			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类MessageAction的方法：addBbstagfavourite错误"+e);
-		}
-		return "Error";
+	/**
+	 * 跳转到添加界面
+	 * @return
+	 */
+	public String toAddMessagePage(){
+//		装载用户信息
+		
+		return SUCCESS; 
+		
 	}
 	
+//	检查添加信息
+	public boolean passMessageAddInfoCheck(){
+		if(messagereceiverids == null || messagereceiverids.length() == 0){
+			returnInfo = "消息接收人为空";
+			buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+			return false;
+		}
+		
+		return true;
+	}
 //  ajax add	
 	public String addMessageAjax(){	
 		log.info("Add Entity Ajax Manner");
 		
-		ReturnJson returnJson = new ReturnJson();
+		Integer uid = checkUserLogin();
+		log.info("login user id "+ uid);
+		if(uid < 0){
+			returnInfo = "用户未登录";
+			buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+			return SUCCESS;
+		}
+		
+		if(!passMessageAddInfoCheck()){
+			return SUCCESS;
+		}
+	
 		
 		try {
 			Message temp = new Message();
 			// 将model里的属性值赋给temp
-			BeanUtils.copyProperties(temp, message);			
-			//add your code here.
-			
-			//temp.setCreatetime(DateUtil.currentDate());
-			
+			BeanUtils.copyProperties(temp, message);
+			temp.setSenderid(uid);
+			temp.setSendtime(DateUtil.currentDate());
+			temp.setReplyid(0);
+			temp.setStatus(MessageConstant.MessageStatusValid);
 			
 			messageService.addMessage(temp);
 			
-			returnJson.setFlag(1);
-			returnJson.setReason("添加成功");
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
 			
+			String[] userIds = messagereceiverids.split(";");
+			for (int i = 0; i < userIds.length; i++) {
+				Messagereceiver mr = new Messagereceiver();
+				mr.setMessageid(temp.getId());
+				mr.setReceiverid(Integer.valueOf(userIds[i]));
+				mr.setHasview(0);
+				mr.setStatus(0);
+				messagereceiverService.addMessagereceiver(mr);
+			}
+			
+			returnInfo = "消息发送成功";
+			buildReturnStr(ComputerConfig.ajaxsuccessreturn,returnInfo);
 			return SUCCESS;
+			
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
@@ -163,73 +205,13 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 			log.error("类MessageAction的方法：addBbstagfavourite错误"+e);
 		}
 		
-		returnJson.setFlag(0);		
-		returnJson.setReason("添加失败");
-		JSONObject jo = JSONObject.fromObject(returnJson);
-		this.returnStr = jo.toString();
+		returnInfo = "消息发送失败";
+		buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
 		return SUCCESS;
 	}
 
-//删除
-	public String deleteMessage( ){
-		try{
-			if(message.getId() != null && message.getId() > 0){
-				messageService.deleteMessage(message.getId());
-				actionMsg = getText("deleteMessageSuccess");
-			}else{
-				System.out.println("删除的id不存在");
-				actionMsg = getText("deleteMessageFail");
-			}
-			
-			return SUCCESS;
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类MessageAction的方法：deleteMessage错误"+e);
-		}
-		return "Error";
-	}
-	
-//删除Ajax
-	public String deleteMessageAjax( ){
-		try{
-			if(message.getId() != null && message.getId() >= 0){
-				messageService.deleteMessage(message.getId());				
-			}
-			
-			return "IdNotExist";
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类MessageAction的方法：deleteMessage错误"+e);
-		}
-		return "Error";
-	}
 
 	
-//	del entityfull
-	public String deleteMessageFull(){
-		try {
-		
-			Integer getId = message.getId();
-			if(getId != null && getId < 0){
-				log.info("删除的id不规范");
-				return "Error";
-			}
-		
-		
-			Message temp = messageService.selectMessageById(getId);
-			if (temp != null) {
-				messageService.deleteMessage(getId);
-				return SUCCESS;
-			} else {
-				log.info("删除的id不存在");
-				return "Error";
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "Error";
-	}
 	
 	//del entityfull Ajax
 	public String deleteMessageFullAjax( ){
@@ -282,35 +264,7 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
                 return SUCCESS;
         }
 
-//修改
-	public String updateMessage(){
-		try {
-			if(message.getId() != null && message.getId() > 0){				
-				Message tempMessage = messageService.selectMessageById(message.getId());
-																				  								
-												  								
-												  								
-												  								
-												  								
-												  								
-												  								
-												  								
-												  								
-												  								
-								actionMsg = getText("viewMessageSuccess");
-			}else{
-				actionMsg = getText("viewMessageFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类MessageAction的方法：viewMessage错误"+e);
-		}
 
-		return "error";
-	}
-	
 	
 	//ajax 修改
 	public String updateMessageAjax(){
@@ -359,96 +313,7 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 	}
 	
 	
-	/**
-	
-	编辑实体 action的方法，首先获取entity的信息，返回到编辑页面
-	
-	*/
-	public String editMessage(){
-		log.info(logprefix + "editMessage");
-			
-		try {
-			//实体的id可以为0
-			if(message.getId() != null && message.getId() >= 0){				
-				Message temMessage = messageService.selectMessageById(message.getId());
-				if(temMessage != null){
-					BeanUtils.copyProperties(messageModel,temMessage);	
-					//actionMsg = getText("selectMessageByIdSuccess");
-					return SUCCESS;
-				}				
-			}		
-			return "PageNotExist";
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类MessageAction的方法：selectMessageById错误"+e);
-		}
 
-
-		return "error";
-	}
-	
-
-	/**
-	编辑实体Full action的方法，首先获取entityfull的信息，返回到编辑页面
-	
-	*/
-	public String editMessageFull(){
-		
-		log.info(logprefix + "viewMessage");
-		
-		try {
-			if(message.getId() != null && message.getId() > 0){				
-				MessageFull temMessageFull = messageService.selectMessageFullById(message.getId());
-				BeanUtils.copyProperties(messageFull,temMessageFull);	
-				actionMsg = getText("selectMessageByIdSuccess");
-			}else{
-				actionMsg = getText("selectMessageByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类MessageAction的方法：selectMessageFullById错误"+e);
-		}
-		
-		return "error";
-	}
-
-	
-	// 查看实体 根据对象Id查询
-	public String viewMessage(){
-		log.info("viewMessage");
-		try {
-			if(message.getId() != null && message.getId() > 0){				
-				Message temMessage = messageService.selectMessageById(message.getId());
-				BeanUtils.copyProperties(messageModel,temMessage);	
-				actionMsg = getText("selectMessageByIdSuccess");
-			}else{
-				actionMsg = getText("selectMessageByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类MessageAction的方法：selectMessageById错误"+e);
-		}
-
-
-		return "error";
-
-	}	
 
 /**
  * view MessageFull
@@ -485,38 +350,107 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 		}
 		return "Error";
 	}
-/*
-	//根据senderid查询实体
-	public String selectMessageByLoginuserId() {
-			//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
+
+	
+	/**
+	 * 消息收件箱
+	 */
+	public String toMessageInbox() {
+		Integer uid = checkUserLogin();
+		log.info("login user id "+ uid);
+		if(uid < 0){
+			actionMsg = "用户未登录";
+			log.error(actionMsg);
+			return ComputerConfig.usernotloginreturnstr;
 		}
-		Integer userId = lu.getId();
 		
-		messageList  = messageService.selectMessageAll();
-		for(int i = 0; i < messageList.size(); i++){
-			System.out.println("id="+messageList.get(i).getId());
+//		查询收到的消息
+		String inboxsql = " where a.receiverid ="+uid + " a.status = "+MessageConstant.MessageStatusValid;
+		messagereceiverList =	messagereceiverService.selectMessagereceiverByCondition(inboxsql);
+			
+		if(messagereceiverList == null){
+			messageFullList = new ArrayList<MessageFull>();
+			return SUCCESS;
+		}
+		for (int i = 0; i < messagereceiverList.size(); i++) {
+			String msgfullsel = " where a.id = "+ messagereceiverList.get(i).getMessageid();
+			List<MessageFull> temp = messageService.selectMessageFullByCondition(msgfullsel);
+			if(temp != null && temp.size() == 1){
+				messageFullList.add(temp.get(0));
+			}			
+		}
+//		messageFullList = messageService.selectMessageFullByCondition(inboxsql);
+		if(messagereceiverList == null){
+			messageFullList = new ArrayList<MessageFull>();
+			return SUCCESS;
 		}
 		return SUCCESS;
 	}
-	//根据senderid查询实体full
-	public String selectMessageFullByLoginuserId() {
-				//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
+	
+	/**
+	 * 消息发件箱
+	 */
+	public String toMessageSendbox() {
+		Integer uid = checkUserLogin();
+		log.info("login user id "+ uid);
+		if(uid < 0){
+			actionMsg = "用户未登录";
+			log.error(actionMsg);
+			return ComputerConfig.usernotloginreturnstr;
 		}
-		Integer userId = lu.getId();
 		
-		messageFullList  = messageService.selectMessageFullByLoginuserId(userId);
-		for(int i = 0; i < messageFullList.size(); i++){
-			//System.out.println("id="+messageFullList.get(i).getLoginusername());
+		
+		String sendboxsql = " where a.senderid ="+uid +" and a.status = "+MessageConstant.MessageStatusValid;
+		messageFullList = messageService.selectMessageFullByCondition(sendboxsql);
+		
+		if(messageFullList == null){
+			messageFullList = new ArrayList<MessageFull>();
 		}
+		
 		return SUCCESS;
 	}
-*/
+	
+	
+	/**
+	 * 消息回收站
+	 */
+	public String toMessageTrash() {
+		Integer uid = checkUserLogin();
+		log.info("login user id "+ uid);
+		if(uid < 0){
+			actionMsg = "用户未登录";
+			log.error(actionMsg);
+			return ComputerConfig.usernotloginreturnstr;
+		}
+		
+//		查询用户删除的发送的消息
+		String delsendboxsql = " where a.senderid ="+uid +" and a.status = "+MessageConstant.MessageStatusDel;
+		messageFullList = messageService.selectMessageFullByCondition(delsendboxsql);
+		
+//		查询删除的收到的信息		
+//		查询收到的消息
+		String delinboxsql = " where a.receiverid ="+uid + " a.status = "+MessageConstant.MessageStatusDel;
+		messagereceiverList =	messagereceiverService.selectMessagereceiverByCondition(delinboxsql);
+			
+		if(messagereceiverList != null){
+			for (int i = 0; i < messagereceiverList.size(); i++) {
+				String msgfullsel = " where a.id = "+ messagereceiverList.get(i).getMessageid();
+				List<MessageFull> temp = messageService.selectMessageFullByCondition(msgfullsel);
+				if(temp != null && temp.size() == 1){
+					messageFullList.add(temp.get(0));
+				}			
+			}
+		}
+		
+		if(messageFullList == null){
+			messageFullList = new ArrayList<MessageFull>();
+		}
+		
+		return SUCCESS;
+	}
+	
+	
+	
 	//get set
 	public void setSession(Map<String, Object> session) {
 		// TODO Auto-generated method stub
@@ -613,4 +547,132 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
         public void setMessageIdsForDel(String messageIdsForDel) {
                 this.messageIdsForDel = messageIdsForDel;
         }
+
+		public MessageService getMessageService() {
+			return messageService;
+		}
+
+		public void setMessageService(MessageService messageService) {
+			this.messageService = messageService;
+		}
+
+		public MessagereceiverService getMessagereceiverService() {
+			return messagereceiverService;
+		}
+
+		public void setMessagereceiverService(
+				MessagereceiverService messagereceiverService) {
+			this.messagereceiverService = messagereceiverService;
+		}
+
+		public Integer getMessagereceiverid() {
+			return messagereceiverid;
+		}
+
+		public void setMessagereceiverid(Integer messagereceiverid) {
+			this.messagereceiverid = messagereceiverid;
+		}
+
+		public Messagereceiver getMessagereceiver() {
+			return messagereceiver;
+		}
+
+		public void setMessagereceiver(Messagereceiver messagereceiver) {
+			this.messagereceiver = messagereceiver;
+		}
+
+		public Messagereceiver getMessagereceiverModel() {
+			return messagereceiverModel;
+		}
+
+		public void setMessagereceiverModel(Messagereceiver messagereceiverModel) {
+			this.messagereceiverModel = messagereceiverModel;
+		}
+
+		public MessagereceiverFull getMessagereceiverFull() {
+			return messagereceiverFull;
+		}
+
+		public void setMessagereceiverFull(MessagereceiverFull messagereceiverFull) {
+			this.messagereceiverFull = messagereceiverFull;
+		}
+
+		public List<Messagereceiver> getMessagereceiverList() {
+			return messagereceiverList;
+		}
+
+		public void setMessagereceiverList(List<Messagereceiver> messagereceiverList) {
+			this.messagereceiverList = messagereceiverList;
+		}
+
+		public List<MessagereceiverFull> getMessagereceiverFullList() {
+			return messagereceiverFullList;
+		}
+
+		public void setMessagereceiverFullList(
+				List<MessagereceiverFull> messagereceiverFullList) {
+			this.messagereceiverFullList = messagereceiverFullList;
+		}
+
+		public String getLogprefix() {
+			return logprefix;
+		}
+
+		public void setLogprefix(String logprefix) {
+			this.logprefix = logprefix;
+		}
+
+		public String getReturnInfo() {
+			return returnInfo;
+		}
+
+		public void setReturnInfo(String returnInfo) {
+			this.returnInfo = returnInfo;
+		}
+
+		public String getActionMsg() {
+			return actionMsg;
+		}
+
+		public void setActionMsg(String actionMsg) {
+			this.actionMsg = actionMsg;
+		}
+
+		public String getCallType() {
+			return callType;
+		}
+
+		public void setCallType(String callType) {
+			this.callType = callType;
+		}
+
+		public String getMessagereceiverids() {
+			return messagereceiverids;
+		}
+
+		public void setMessagereceiverids(String messagereceiverids) {
+			this.messagereceiverids = messagereceiverids;
+		}
+
+		public ReturnJson getReturnJson() {
+			return returnJson;
+		}
+
+		public void setReturnJson(ReturnJson returnJson) {
+			this.returnJson = returnJson;
+		}
+
+		public static Log getLog() {
+			return log;
+		}
+
+		public Map<String, Object> getSession() {
+			return session;
+		}
+
+		public void setMessageid(Integer messageid) {
+			this.messageid = messageid;
+		}
+        
+        
 }

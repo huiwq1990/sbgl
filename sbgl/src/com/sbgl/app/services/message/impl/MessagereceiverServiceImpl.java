@@ -25,6 +25,11 @@ public class MessagereceiverServiceImpl implements MessagereceiverService{
 	@Resource
 	private MessagereceiverDao messagereceiverDao;
 	
+//	public void sendNotification(String ){
+//		
+//	}
+	
+	
 	//http://blog.csdn.net/softimes/article/details/7008875 实体添加时需要配置hibernate
 	@Override
 	public void addMessagereceiver(Messagereceiver messagereceiver){
@@ -149,6 +154,8 @@ public class MessagereceiverServiceImpl implements MessagereceiverService{
         public List<MessagereceiverFull>  selectMessagereceiverFullByConditionAndPage(String condition,final Page page) {
 			return messagereceiverDao.selectMessagereceiverFullByConditionAndPage(condition, page);
 		}
+
+		
 	
 
 

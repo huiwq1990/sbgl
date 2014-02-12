@@ -36,20 +36,24 @@ public class MessagereceiverAction extends ActionSupport implements SessionAware
 	//Service	
 	@Resource
 	private MessagereceiverService messagereceiverService;
-	
+	private Integer messagereceiverid; //entity full 的id属性名称		
 	private Messagereceiver messagereceiver = new Messagereceiver();//实例化一个模型
 	private Messagereceiver messagereceiverModel = new Messagereceiver();//实例化一个模型
-	private MessagereceiverFull messagereceiverFull = new MessagereceiverFull();//实例化一个模型
-	private String actionMsg; // Action间传递的消息参数
-	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
-	List<Messagereceiver> messagereceiverList = new ArrayList<Messagereceiver>();
-	List<MessagereceiverFull> messagereceiverFullList = new ArrayList<MessagereceiverFull>();
-	private Integer messagereceiverid; //entity full 的id属性名称		
+	private MessagereceiverFull messagereceiverFull = new MessagereceiverFull();//实例化一个模型	
+	private List<Messagereceiver> messagereceiverList = new ArrayList<Messagereceiver>();
+	private List<MessagereceiverFull> messagereceiverFullList = new ArrayList<MessagereceiverFull>();
+	
 	private String logprefix = "exec action method:";
 	
-	private int pageNo=1;
+
 	private String callType;
+	private int pageNo=1;
 	private Page page = new Page();
+	
+	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
+	private String returnInfo;
+	private String actionMsg; // Action间传递的消息参数
+
 	private ReturnJson returnJson = new ReturnJson();
 	private String messagereceiverIdsForDel;
 	
