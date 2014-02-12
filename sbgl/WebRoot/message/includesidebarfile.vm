@@ -1,0 +1,23 @@
+
+<div id="lside">
+	<form class="form-group">
+		<input type="text" class="form-control" placeholder="搜索">
+			<i class="icon-search"></i>
+	</form>
+	<div class="list-group">
+		
+		
+		<a href="${webbaseurl}/manageKbZhengzhuangFull.action" class="list-group-item
+		#if($currentWebpage == "kbZhengzhuangFullManage.vm" )
+			 active        
+		#end		
+		">症状管理</a> 
+		
+		<a href="${webbaseurl}/toAddZhengzhuangPage.action" class="list-group-item
+		#if($currentWebpage == "kbZhengzhuangAdd.vm" )
+			 active        
+		#end
+		">症状添加</a>
+		
+	</div>
+</div>

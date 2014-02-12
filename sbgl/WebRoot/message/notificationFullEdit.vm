@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script src="../js/html5shiv.js"></script>
+  <script src="../js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body id="admin">
+	
+	<a href="${webbaseurl}/manageNotificationFull.action">返回管理</a>
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+             
+
+             
+	  
+	  
+ <div class="panel-body">
+                 <!-- form start -->
+               <form action="" method="" name="AddNotificationForm">
+				 <input type="hidden" class="form-control" id="input_notification_id" value="$!notificationFull.notificationid">
+
+
+		<div class="form-group">
+                    <label for="title" class="col-lg-2 control-label">title</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_notification_title" value="$!notificationFull.notificationtitle">
+                    </div>
+                  </div>
+
+		<div class="form-group">
+                    <label for="content" class="col-lg-2 control-label">content</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_notification_content" value="$!notificationFull.notificationcontent">
+                    </div>
+                  </div>
+
+		<div class="form-group">
+                    <label for="senderrid" class="col-lg-2 control-label">senderrid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_notification_senderrid" value="$!notificationFull.notificationsenderrid">
+                    </div>
+                  </div>
+
+		<div class="form-group">
+                    <label for="receiverid" class="col-lg-2 control-label">receiverid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_notification_receiverid" value="$!notificationFull.notificationreceiverid">
+                    </div>
+                  </div>
+
+		<div class="form-group">
+                    <label for="sendtime" class="col-lg-2 control-label">sendtime</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_notification_sendtime" value="$!notificationFull.notificationsendtime">
+                    </div>
+                  </div>
+
+		<div class="form-group">
+                    <label for="readstatus" class="col-lg-2 control-label">readstatus</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_notification_readstatus" value="$!notificationFull.notificationreadstatus">
+                    </div>
+                  </div>
+
+		<div class="form-group">
+                    <label for="modeltype" class="col-lg-2 control-label">modeltype</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_notification_modeltype" value="$!notificationFull.notificationmodeltype">
+                    </div>
+                  </div>
+
+		<div class="form-group">
+                    <label for="status" class="col-lg-2 control-label">status</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_notification_status" value="$!notificationFull.notificationstatus">
+                    </div>
+                  </div>
+
+               </form>
+               <!-- form end -->
+			  <!-- submit start -->
+			   <div class="form-group">   
+                  <div class="col-lg-offset-2 col-lg-4">
+                     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+                     <button type="submit" onClick = "updateNotificationAjax()" class="btn btn-primary">修改</button>
+                   </div>
+               </div>
+				<!-- submit end -->
+
+
+
+
+              </div>
+            </div>
+          </div>
+
+      </div>
+      <!--equip-wrap end-->
+    
+      <!--sidebar end-->
+
+</section>
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/message/notification.js"></script>
+</body>
+</html>

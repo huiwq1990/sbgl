@@ -12,12 +12,16 @@ public class Message extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer id;
-	private Integer senderid;
+	private String title;
 	private String content;
-	private Date createtime;
-	private Integer status;
-	private Integer isbigfile;
+	private Integer senderid;
+	private Date sendtime;
+	private Integer replyid;
+	private Integer readstatus;
 	private String filepath;
+	private Integer isbigfile;
+	private Integer type;
+	private Integer status;
 
 	// Constructors
 
@@ -31,16 +35,20 @@ public class Message extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Message(Integer id, Integer senderid, String content,
-			Date createtime, Integer status, Integer isbigfile,
-			String filepath) {
+	public Message(Integer id, String title, String content, Integer senderid,
+			Date sendtime, Integer replyid, Integer readstatus,
+			String filepath, Integer isbigfile, Integer type, Integer status) {
 		this.id = id;
-		this.senderid = senderid;
+		this.title = title;
 		this.content = content;
-		this.createtime = createtime;
-		this.status = status;
-		this.isbigfile = isbigfile;
+		this.senderid = senderid;
+		this.sendtime = sendtime;
+		this.replyid = replyid;
+		this.readstatus = readstatus;
 		this.filepath = filepath;
+		this.isbigfile = isbigfile;
+		this.type = type;
+		this.status = status;
 	}
 
 	// Property accessors
@@ -53,12 +61,12 @@ public class Message extends com.sbgl.app.dao.DaoAbs implements
 		this.id = id;
 	}
 
-	public Integer getSenderid() {
-		return this.senderid;
+	public String getTitle() {
+		return this.title;
 	}
 
-	public void setSenderid(Integer senderid) {
-		this.senderid = senderid;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getContent() {
@@ -69,20 +77,44 @@ public class Message extends com.sbgl.app.dao.DaoAbs implements
 		this.content = content;
 	}
 
-	public Date getCreatetime() {
-		return this.createtime;
+	public Integer getSenderid() {
+		return this.senderid;
 	}
 
-	public void setCreatetime(Date createtime) {
-		this.createtime = createtime;
+	public void setSenderid(Integer senderid) {
+		this.senderid = senderid;
 	}
 
-	public Integer getStatus() {
-		return this.status;
+	public Date getSendtime() {
+		return this.sendtime;
 	}
 
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setSendtime(Date sendtime) {
+		this.sendtime = sendtime;
+	}
+
+	public Integer getReplyid() {
+		return this.replyid;
+	}
+
+	public void setReplyid(Integer replyid) {
+		this.replyid = replyid;
+	}
+
+	public Integer getReadstatus() {
+		return this.readstatus;
+	}
+
+	public void setReadstatus(Integer readstatus) {
+		this.readstatus = readstatus;
+	}
+
+	public String getFilepath() {
+		return this.filepath;
+	}
+
+	public void setFilepath(String filepath) {
+		this.filepath = filepath;
 	}
 
 	public Integer getIsbigfile() {
@@ -93,12 +125,20 @@ public class Message extends com.sbgl.app.dao.DaoAbs implements
 		this.isbigfile = isbigfile;
 	}
 
-	public String getFilepath() {
-		return this.filepath;
+	public Integer getType() {
+		return this.type;
 	}
 
-	public void setFilepath(String filepath) {
-		this.filepath = filepath;
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public Integer getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 }

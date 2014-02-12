@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="messagereceiver" extends="admin">
+
+
+<!-- default entity manage action -->
+    	<action name="manageMessagereceiver" class="ManageMessageAction" method="manageMessagereceiver">
+        	<result name="success1">/message/messagereceiverManage.vm</result>
+			<result name="success2">/message/messagereceiverFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!-- entity full manage  -->		
+		<!-- default entity full manage action -->
+    	<action name="manageMessagereceiverFull" class="ManageMessageAction" method="manageMessagereceiverFull">
+        	<result name="success1">/message/messagereceiverFullManage.vm</result>
+			<result name="success2">/message/messagereceiverFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+		
+<!--添加实体-->
+    	<action name="addMessagereceiver" class="MessagereceiverAction" method="addMessagereceiver">
+        	<result type="redirectAction">
+				<param name="actionName">manageMessagereceiver</param>
+			</result>
+        </action>
+		
+<!--edit entity-->
+        <action name="editMessagereceiver" class="MessagereceiverAction" method="editMessagereceiver">
+        	<result name="success">/message/messagereceiverEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--edit entity full-->
+        <action name="editMessagereceiverFull" class="MessagereceiverAction" method="editMessagereceiverFull">
+        	<result name="success">/message/messagereceiverFullEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!--del-->
+        <!--del entity-->
+        <action name="deleteMessagereceiver" class="MessagereceiverAction" method="deleteMessagereceiver">
+        	<result type="redirectAction">
+				<param name="actionName">manageMessagereceiver</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteMessagereceiverFull" class="MessagereceiverAction" method="deleteMessagereceiverFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageMessagereceiverFull</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--更新实体-->
+        <action name="updateMessagereceiver" class="MessagereceiverAction" method="updateMessagereceiver">
+        	<result name="success">/message/messagereceiverUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--update entity full-->
+        <action name="updateMessagereceiverFull" class="MessagereceiverAction" method="updateMessagereceiver">
+        	<result name="success">/message/messagereceiverFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+<!--根据id查询实体-->
+        <action name="selectMessagereceiverById" class="MessagereceiverAction" method="selectMessagereceiverById">
+        	<result name="success">/message/messagereceiverView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity-->		
+        <action name="viewMessagereceiver" class="MessagereceiverAction" method="viewMessagereceiver">
+        	<result name="success">/message/messagereceiverView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity full-->		
+        <action name="viewMessagereceiverFull" class="MessagereceiverAction" method="viewMessagereceiverFull">
+        	<result name="success">/message/messagereceiverFullView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="messagereceiverAjax" extends="json-default">
+    	<action name="addMessagereceiverAjax" class="MessagereceiverAction" method="addMessagereceiverAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        <action name="deleteMessagereceiverAjax" class="MessagereceiverAction" method="deleteMessagereceiverAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteMessagereceiverFullAjax" class="MessagereceiverAction" method="deleteMessagereceiverFullAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+    	<action name="updateMessagereceiverAjax" class="MessagereceiverAction" method="updateMessagereceiverAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
+	</package>
+
+</struts>

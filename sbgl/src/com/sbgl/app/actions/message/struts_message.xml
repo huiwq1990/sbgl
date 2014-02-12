@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="message" extends="admin">
+
+
+<!-- default entity manage action -->
+    	<action name="manageMessage" class="ManageMessageAction" method="manageMessage">
+        	<result name="success1">/message/messageManage.vm</result>
+			<result name="success2">/message/messageFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!-- entity full manage  -->		
+		<!-- default entity full manage action -->
+    	<action name="manageMessageFull" class="ManageMessageAction" method="manageMessageFull">
+        	<result name="success1">/message/messageFullManage.vm</result>
+			<result name="success2">/message/messageFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+		
+<!--添加实体-->
+    	<action name="addMessage" class="MessageAction" method="addMessage">
+        	<result type="redirectAction">
+				<param name="actionName">manageMessage</param>
+			</result>
+        </action>
+		
+<!--edit entity-->
+        <action name="editMessage" class="MessageAction" method="editMessage">
+        	<result name="success">/message/messageEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--edit entity full-->
+        <action name="editMessageFull" class="MessageAction" method="editMessageFull">
+        	<result name="success">/message/messageFullEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!--del-->
+        <!--del entity-->
+        <action name="deleteMessage" class="MessageAction" method="deleteMessage">
+        	<result type="redirectAction">
+				<param name="actionName">manageMessage</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteMessageFull" class="MessageAction" method="deleteMessageFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageMessageFull</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--更新实体-->
+        <action name="updateMessage" class="MessageAction" method="updateMessage">
+        	<result name="success">/message/messageUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--update entity full-->
+        <action name="updateMessageFull" class="MessageAction" method="updateMessage">
+        	<result name="success">/message/messageFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+<!--根据id查询实体-->
+        <action name="selectMessageById" class="MessageAction" method="selectMessageById">
+        	<result name="success">/message/messageView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity-->		
+        <action name="viewMessage" class="MessageAction" method="viewMessage">
+        	<result name="success">/message/messageView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity full-->		
+        <action name="viewMessageFull" class="MessageAction" method="viewMessageFull">
+        	<result name="success">/message/messageFullView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="messageAjax" extends="json-default">
+    	<action name="addMessageAjax" class="MessageAction" method="addMessageAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        <action name="deleteMessageAjax" class="MessageAction" method="deleteMessageAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteMessageFullAjax" class="MessageAction" method="deleteMessageFullAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+    	<action name="updateMessageAjax" class="MessageAction" method="updateMessageAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
+	</package>
+
+</struts>

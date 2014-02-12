@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script src="../js/html5shiv.js"></script>
+  <script src="../js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body id="admin">
+	
+	<a href="${webbaseurl}/manageMessageFull.action">返回管理</a>
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+             
+
+             
+	  
+	  
+ <div class="panel-body">
+                 <!-- form start -->
+               <form action="" method="" name="AddMessageForm">
+				 <input type="hidden" class="form-control" id="input_message_id" value="$!messageFull.messageid">
+
+
+		<div class="form-group">
+                    <label for="title" class="col-lg-2 control-label">title</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_message_title" value="$!messageFull.messagetitle">
+                    </div>
+                  </div>
+
+		<div class="form-group">
+                    <label for="content" class="col-lg-2 control-label">content</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_message_content" value="$!messageFull.messagecontent">
+                    </div>
+                  </div>
+
+		<div class="form-group">
+                    <label for="senderid" class="col-lg-2 control-label">senderid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_message_senderid" value="$!messageFull.messagesenderid">
+                    </div>
+                  </div>
+
+		<div class="form-group">
+                    <label for="sendtime" class="col-lg-2 control-label">sendtime</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_message_sendtime" value="$!messageFull.messagesendtime">
+                    </div>
+                  </div>
+
+		<div class="form-group">
+                    <label for="replyid" class="col-lg-2 control-label">replyid</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_message_replyid" value="$!messageFull.messagereplyid">
+                    </div>
+                  </div>
+
+		<div class="form-group">
+                    <label for="readstatus" class="col-lg-2 control-label">readstatus</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_message_readstatus" value="$!messageFull.messagereadstatus">
+                    </div>
+                  </div>
+
+		<div class="form-group">
+                    <label for="filepath" class="col-lg-2 control-label">filepath</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_message_filepath" value="$!messageFull.messagefilepath">
+                    </div>
+                  </div>
+
+		<div class="form-group">
+                    <label for="isbigfile" class="col-lg-2 control-label">isbigfile</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_message_isbigfile" value="$!messageFull.messageisbigfile">
+                    </div>
+                  </div>
+
+		<div class="form-group">
+                    <label for="type" class="col-lg-2 control-label">type</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_message_type" value="$!messageFull.messagetype">
+                    </div>
+                  </div>
+
+		<div class="form-group">
+                    <label for="status" class="col-lg-2 control-label">status</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="input_message_status" value="$!messageFull.messagestatus">
+                    </div>
+                  </div>
+
+               </form>
+               <!-- form end -->
+			  <!-- submit start -->
+			   <div class="form-group">   
+                  <div class="col-lg-offset-2 col-lg-4">
+                     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+                     <button type="submit" onClick = "updateMessageAjax()" class="btn btn-primary">修改</button>
+                   </div>
+               </div>
+				<!-- submit end -->
+
+
+
+
+              </div>
+            </div>
+          </div>
+
+      </div>
+      <!--equip-wrap end-->
+    
+      <!--sidebar end-->
+
+</section>
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/message/message.js"></script>
+</body>
+</html>

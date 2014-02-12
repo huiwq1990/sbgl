@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="notification" extends="admin">
+
+
+<!-- default entity manage action -->
+    	<action name="manageNotification" class="ManageMessageAction" method="manageNotification">
+        	<result name="success1">/message/notificationManage.vm</result>
+			<result name="success2">/message/notificationFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!-- entity full manage  -->		
+		<!-- default entity full manage action -->
+    	<action name="manageNotificationFull" class="ManageMessageAction" method="manageNotificationFull">
+        	<result name="success1">/message/notificationFullManage.vm</result>
+			<result name="success2">/message/notificationFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+		
+<!--添加实体-->
+    	<action name="addNotification" class="NotificationAction" method="addNotification">
+        	<result type="redirectAction">
+				<param name="actionName">manageNotification</param>
+			</result>
+        </action>
+		
+<!--edit entity-->
+        <action name="editNotification" class="NotificationAction" method="editNotification">
+        	<result name="success">/message/notificationEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--edit entity full-->
+        <action name="editNotificationFull" class="NotificationAction" method="editNotificationFull">
+        	<result name="success">/message/notificationFullEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!--del-->
+        <!--del entity-->
+        <action name="deleteNotification" class="NotificationAction" method="deleteNotification">
+        	<result type="redirectAction">
+				<param name="actionName">manageNotification</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteNotificationFull" class="NotificationAction" method="deleteNotificationFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageNotificationFull</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--更新实体-->
+        <action name="updateNotification" class="NotificationAction" method="updateNotification">
+        	<result name="success">/message/notificationUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--update entity full-->
+        <action name="updateNotificationFull" class="NotificationAction" method="updateNotification">
+        	<result name="success">/message/notificationFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+<!--根据id查询实体-->
+        <action name="selectNotificationById" class="NotificationAction" method="selectNotificationById">
+        	<result name="success">/message/notificationView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity-->		
+        <action name="viewNotification" class="NotificationAction" method="viewNotification">
+        	<result name="success">/message/notificationView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity full-->		
+        <action name="viewNotificationFull" class="NotificationAction" method="viewNotificationFull">
+        	<result name="success">/message/notificationFullView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="notificationAjax" extends="json-default">
+    	<action name="addNotificationAjax" class="NotificationAction" method="addNotificationAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        <action name="deleteNotificationAjax" class="NotificationAction" method="deleteNotificationAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteNotificationFullAjax" class="NotificationAction" method="deleteNotificationFullAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+    	<action name="updateNotificationAjax" class="NotificationAction" method="updateNotificationAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
+	</package>
+
+</struts>

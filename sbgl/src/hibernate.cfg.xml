@@ -106,6 +106,9 @@
 			resource="com/sbgl/app/entity/Usergrouprelation.hbm.xml" />
 		<mapping resource="com/sbgl/app/entity/Administrator.hbm.xml" />
 		<mapping resource="com/sbgl/app/entity/Computerconfig.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Message.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Notification.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Messagereceiver.hbm.xml" />
 
 
 

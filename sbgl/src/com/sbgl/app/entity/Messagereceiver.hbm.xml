@@ -6,19 +6,24 @@
 -->
 <hibernate-mapping>
     <class name="com.sbgl.app.entity.Messagereceiver" table="messagereceiver" catalog="sbgl">
-        <composite-id name="id" class="com.sbgl.app.entity.MessagereceiverId">
-            <key-property name="id" type="java.lang.Integer">
-                <column name="id" />
-            </key-property>
-            <key-property name="messageid" type="java.lang.Integer">
-                <column name="messageid" />
-            </key-property>
-            <key-property name="receiverid" type="java.lang.Integer">
-                <column name="receiverid" />
-            </key-property>
-            <key-property name="status" type="java.lang.Integer">
-                <column name="status" />
-            </key-property>
-        </composite-id>
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="messageid" type="java.lang.Integer">
+            <column name="messageid" />
+        </property>
+        <property name="receiverid" type="java.lang.Integer">
+            <column name="receiverid" />
+        </property>
+        <property name="hasview" type="java.lang.Integer">
+            <column name="hasview" />
+        </property>
+        <property name="viewdate" type="java.util.Date">
+            <column name="viewdate"  />
+        </property>
+        <property name="status" type="java.lang.Integer">
+            <column name="status" />
+        </property>
     </class>
 </hibernate-mapping>

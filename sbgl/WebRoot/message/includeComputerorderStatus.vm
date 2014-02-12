@@ -1,0 +1,11 @@
+#if($curstatus == $ComputerorderStatusAduitPass)
+审核通过
+#elseif($curstatus ==$ComputerorderStatusAduitReject)
+驳回
+#elseif($curstatus ==$ComputerorderStatusAduitDel)
+删除
+#elseif($curstatus ==$ComputerorderStatusAduitWait)
+待审核
+#else 
+错误
+#end
