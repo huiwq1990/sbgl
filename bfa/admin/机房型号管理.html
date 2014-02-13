@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <title>北京电影学院摄影系 - 机房管理</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
 <link href="../css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="../css/global.css" rel="stylesheet" type="text/css" />
 
@@ -285,12 +285,18 @@
  
       <div class="form-group">
         <label for="inputEPic" class="col-xs-3 control-label">图片</label>
-        <div class="col-xs-7">
+        <div class="col-xs-3">
           <span class="btn btn-white file-input-button">
               <i class="icon-plus"></i>
               <span>添加图片</span>
               <input id="inputEPic" type="file" name="files[]" multiple>
           </span>
+        </div>
+        <div class="col-xs-4">
+          <div id="progress" class="progress progress-striped active">
+            <div class="bar"></div>
+          </div>
+          <div id="files" class="files"></div>        
         </div>
       </div>
     </form>
@@ -308,11 +314,41 @@
 <script src="../js/select2.js"></script>
 <script src="../js/bootstrap-hover-dropdown.min.js"></script>
 <script src="../js/bfa.js"></script>
+<script src="../js/jquery.ui.widget.js"></script>
+<script src="../js/jquery.fileupload.js"></script>
 <!--[if lt IE 10]>
   <script src="../js/jquery.placeholder.js"></script>
   <script>
   $('input, textarea').placeholder();
   </script>
 <![endif]-->
+
+<script>
+
+$(function () {
+    // Change this to the location of your server-side upload handler:
+    var url = window.location.hostname === 'blueimp.github.io' ?
+                '//jquery-file-upload.appspot.com/' : 'server/php/';
+    $('#inputEPic').fileupload({
+        url: url,
+        dataType: 'json',
+        done: function (e, data) {
+			$('#progress').hide();
+            $.each(data.result.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo('#files');
+            });
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .bar').css(
+                'width',
+                progress + '%'
+            );
+        }
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+});
+</script>
+
 </body>
 </html>

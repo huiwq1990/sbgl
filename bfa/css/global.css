@@ -1342,7 +1342,7 @@ a.list-group-item.active:focus .list-group-item-text {
 
 .select2-results .sub { padding-left: 12px; }
 
-
+.form-group .progress { margin: 10px 0; }
 
 
 /* 消息中心 ================================================= */
