@@ -42,15 +42,13 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	//Service	
 	@Resource
 	private ComputerService computerService;
-	
+	private Integer computerid; //entity full 的id属性名称		
 	private Computer computer = new Computer();//实例化一个模型
 	private Computer computerModel = new Computer();//实例化一个模型
-	private ComputerFull computerFull = new ComputerFull();//实例化一个模型
-	private String actionMsg; // Action间传递的消息参数
-	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
-	List<Computer> computerList = new ArrayList<Computer>();
-	List<ComputerFull> computerFullList = new ArrayList<ComputerFull>();
-	private Integer computerid; //entity full 的id属性名称		
+	private ComputerFull computerFull = new ComputerFull();//实例化一个模型	
+	private List<Computer> computerList = new ArrayList<Computer>();
+	private List<ComputerFull> computerFullList = new ArrayList<ComputerFull>();
+	
 	
 	
 //	添加pc时需要修改model
@@ -72,15 +70,20 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	
 	
 	
-	private String logprefix = "exec action method:";		
-	Page page = new Page();
-	Integer pageNo=1;	
+	private String logprefix = "exec action method:";	
 	
-
+	
+	private Page page = new Page();
+	private Integer pageNo=1;	
+	
+	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
+	private String returnInfo;
+	private String actionMsg; // Action间传递的消息参数
+	
 	private int  computerIdEn;
 	private String  computerSerialnumberEn;
 	private String  computerRemarkEn;
-	
+
 	ReturnJson returnJson = new ReturnJson();
 	//删除
 	String computerIdsForDel;
@@ -183,70 +186,63 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	//del entityfull Ajax
 	public String deleteComputerFullAjax( ){
 		log.info(logprefix + "deleteComputercategoryFullAjax");
-		ReturnJson returnJson = new ReturnJson();
+		
+//		检查要删除的id是否为空
+		if(computerIdsForDel == null || computerIdsForDel.trim().length()==0){
+			returnInfo = "删除型号的id为空";
+			log.error(returnInfo);
+			returnStr = ComputerActionUtil.buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+			return SUCCESS;
+		}
 		
 		try{
-			String ids[] = computerIdsForDel.split(";");
-			for(int i=0; i < ids.length;i++){
+//			删除的是Computer的type,不是id
+			String computertypes[] = computerIdsForDel.split(";");
+			for(int i=0; i < computertypes.length;i++){
+				String computertypeStr = computertypes[i];
+				Integer computertype = Integer.valueOf(computertypes[i]);			
+
+				computerList = computerService.selectComputerByCondition(" where computertype="+computertypeStr+" and languagetype = "+ComputerConfig.languagech);	
+				if(computerList== null || computerList.size() == 0){
+					returnInfo = "删除id为"+computertypeStr+"的设备不存在";
+					log.error(returnInfo);
+					returnStr = ComputerActionUtil.buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+					return SUCCESS;
+				}	
 				
-				Integer typeId = Integer.valueOf(ids[i]);			
-//				log.info(typeId);
-				//检查id
-				
-//				if(tempDelId == null || tempDelId < 0){
-//					returnJson.setFlag(0);
-//					returnJson.setReason("删除的id不规范");
-//					log.info("删除的id不规范");
-//					JSONObject jo = JSONObject.fromObject(returnJson);
-//					this.returnStr = jo.toString();
-//					return SUCCESS;
-//				}	
-				
-				//del
-					
-//				if (temp != null) {	
-				
-//					
-//				} else {
-//					log.info("删除的id不存在");		
-//					returnJson.setFlag(0);
-//					returnJson.setReason("删除的id不存在");
-//					JSONObject jo = JSONObject.fromObject(returnJson);
-//					this.returnStr = jo.toString();
-//					return SUCCESS;
-//				}
+//				要删除的Computer
+				Computer delComputer = computerList.get(0);
 				
 //				修改数量
-				List<Computermodel> cmList = computermodelService.selectComputermodelByCondition(" where computermodeltype = " + typeId );
-				if(cmList== null || cmList.size() !=2){
-					returnJson.setFlag(0);
-					returnJson.setReason("获取模型信息出错!");
-					JSONObject jo = JSONObject.fromObject(returnJson);
-					this.returnStr = jo.toString();
+				computermodelList = computermodelService.selectComputermodelByCondition(" where computermodeltype = " + delComputer.getComputermodelid() );
+				if(computermodelList== null || computermodelList.size() !=2){					
+					returnInfo = "获取设备"+delComputer.getSerialnumber()+"的模型信息出错!";
+					log.error(returnInfo);
+					returnStr = ComputerActionUtil.buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
 					return SUCCESS;
 				}			
-				Computermodel cm = cmList.get(0);
-				computermodelService.execSql(" update Computermodel set availableborrowcountnumber="+(cm.getAvailableborrowcountnumber()-1)+" computercount="+(cm.getComputercount()-1)+" where computermodeltype = "+typeId);
+				Computermodel cm = computermodelList.get(0);
+				computermodelService.execSql(" update Computermodel set availableborrowcountnumber="+(cm.getAvailableborrowcountnumber()-1)+", computercount="+(cm.getComputercount()-1)+"  where computermodeltype = "+cm.getComputermodeltype());
 					
 //				del
-				computerService.deleteComputerByType(typeId);
+				computerService.deleteComputerByType(computertype);
 				
 			}
-			returnJson.setFlag(1);
-			returnJson.setReason("删除成功!");
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
+			
+			returnInfo = "删除成功!";
+			returnStr = ComputerActionUtil.buildReturnStr(ComputerConfig.ajaxsuccessreturn,returnInfo);
 			return SUCCESS;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		returnJson.setFlag(0);
-		returnJson.setReason("删除的内部错误");
-		JSONObject jo = JSONObject.fromObject(returnJson);
-		this.returnStr = jo.toString();
+		
+		returnInfo = "删除的内部错误！";
+		log.error(returnInfo);
+		returnStr = ComputerActionUtil.buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
 		return SUCCESS;
+		
 	}
 
 

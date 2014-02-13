@@ -72,5 +72,6 @@
 				
  <script>
 totalpage = $page.totalpage;
+ totalcount=$page.totalCount;
 currentpagenum = $page.pageNo;
 </script>				

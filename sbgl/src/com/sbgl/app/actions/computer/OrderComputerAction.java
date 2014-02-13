@@ -126,7 +126,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 	private String orderInfoStr;
 	
 	
-	public String toOrderComputerPage(){
+	public String toComputerIndividualorderPage(){
 		
 		
 		computerordertype = ComputerorderInfo.IndividualOrder;
@@ -188,8 +188,8 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 		
 //			设置当前时间
 			String currentDay = DateUtil.dateFormat(currentDate, DateUtil.dateformatstr1);//"2013-10-01 18:00:00";
-			 currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(DateUtil.parseDate(currentDay));
-			 System.out.println("currentPeriod: "+currentPeriod);
+			 currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(currentDate);
+			 System.out.println("currentDay:"+currentDay+"   currentPeriod: "+currentPeriod);
 		 
 			 
 			 buildShowDate(DateUtil.parseDate(currentDay));	 

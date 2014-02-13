@@ -80,10 +80,9 @@
   </div>
 </header><!--/#header-wrap-->
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
-      <ul class="nav nav-tabs">
-        <li><a href="机器预约管理首页.html">机器预约管理</a></li>
-        <li class="active"><a href="机器信息管理首页.html">机器信息管理</a></li>
-      </ul>
+     <!-- Navi -->
+		#set($currentPageType="computerInfoManage")
+		#parse("computer/includeComputerManageNavi.vm")
 	  
 	  
 	  
@@ -577,8 +576,9 @@
 					refreshComputermodelTable();
 					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框					
 				}else{
-					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
-					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});					
+					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框
+					refreshComputermodelTable();
 				}
 			}		  	  
 		});
@@ -619,7 +619,13 @@
 						refreshComputermodelTable();		
     				}
 				});
-				}		  	  
+				
+				$(".s-h").css({
+					"visibility": "hidden",
+					"opacity": "0",
+					"filter": "alpha(opacity=0)"
+				});
+			}		  	  
 			});		
 	}//end refresh
 

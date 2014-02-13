@@ -21,6 +21,11 @@
         	<result name="success">/message/messageSendbox.vm</result>			
         	<result name="usernotlogin">/error/messageError.vm</result> 
         	<result name="error">/error/messageError.vm</result> 
+        </action>  
+        <action name="toMessageSendboxNextPage" class="MessageAction" method="toMessageSendboxNextPage">
+        	<result name="success">/message/messageSendboxContent.vm</result>			
+        	<result name="usernotlogin">/error/messageError.vm</result> 
+        	<result name="error">/error/messageError.vm</result> 
         </action>   
 
 <!-- 跳转到消息回收站界面 -->

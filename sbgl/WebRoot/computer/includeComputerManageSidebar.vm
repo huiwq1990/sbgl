@@ -6,25 +6,25 @@
 	</form>
 	<div class="list-group">
 		
-		<a href="${webbaseurl}/manageKbZhengzhuangFull.action" class="list-group-item
+		<a href="${webbaseurl}/manageComputerFull.action" class="list-group-item
 		#if($currentWebpage == "computerFullManage.vm" )
 			 active        
 		#end		
 		">设备管理</a> 
 		
-		<a href="${webbaseurl}/manageKbZhengzhuangFull.action" class="list-group-item
+		<a href="${webbaseurl}/toAddComputerPage.action" class="list-group-item
 		#if($currentWebpage == "computerAdd.vm" )
 			 active        
 		#end		
 		">设备添加</a> 	
 		
-		<a href="${webbaseurl}/toAddZhengzhuangPage.action" class="list-group-item
+		<a href="${webbaseurl}/manageComputermodelFull.action" class="list-group-item
 		#if($currentWebpage == "computermodelFullManage.vm" )
 			 active        
 		#end
-		">型号添加</a>
+		">型号管理</a>
 		
-		<a href="${webbaseurl}/manageKbZhengzhuangFull.action" class="list-group-item
+		<a href="${webbaseurl}/manageComputercategoryFull.action" class="list-group-item
 		#if($currentWebpage == "computercategoryFullManage.vm" )
 			 active        
 		#end		

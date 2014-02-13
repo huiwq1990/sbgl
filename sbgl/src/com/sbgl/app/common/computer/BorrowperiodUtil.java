@@ -36,7 +36,7 @@ public class BorrowperiodUtil {
 	
 	public static int getBorrowTimePeriod(Date date){
 		int period = getTimePeriod(date);
-	
+	System.out.println(period);
 //		List<Borrowperiod> periodList = getBorrowperiodList();
 //		for (int i = 0; i < periodList.size(); i++) {
 //			if((periodList.get(i).getId() < period) && (periodList.get(i).getId() < period)){
@@ -44,20 +44,20 @@ public class BorrowperiodUtil {
 //			}
 //		}
 //		if()
-		if(period <= 6){
+//		if(period <= 6){
 			if(period%2 ==0){
 				return period;
 			}else{
 				return period+1;
 			}
-		}
+//		}
 		
-		return 0;
+//		return 0;
 	}
 	
 	public static void main(String[] args) {
 		System.out.println(PeriodUtil.getTimePeriod(13, 00));
-		String currentDay = "2013-10-01 13:00:00";
+		String currentDay = "2013-10-01 23:00:00";
 		
 		int currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(DateUtil.parseDate(currentDay));
 		 System.out.println("currentPeriod: "+currentPeriod);

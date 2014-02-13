@@ -71,6 +71,8 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 
 
 	private int pageNo=1;
+	private int totalcount = 0;
+	private int totalpage = 0;
 	private Page page = new Page();
 	private String callType;
 	private String messageIdsForDel;
@@ -365,13 +367,30 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 		}
 		
 //		查询收到的消息
-		String inboxsql = " where a.receiverid ="+uid + " a.status = "+MessageConstant.MessageStatusValid;
+		String inboxsql = " where receiverid ="+uid + " and status = "+MessageConstant.MessageStatusValid + " order by id desc ";
 		messagereceiverList =	messagereceiverService.selectMessagereceiverByCondition(inboxsql);
 			
 		if(messagereceiverList == null){
+			page.setTotalCount(0);
+			page.setPageNo(0);
+			pageNo = 0;
 			messageFullList = new ArrayList<MessageFull>();
 			return SUCCESS;
 		}
+		
+		setPageInfo(messagereceiverList.size());
+		
+		int pageIndex = page.getPageNo()-1;
+		if(pageIndex < 0){
+			pageIndex = 0;
+		}
+		int fromIndex = pageIndex * page.SIZE;
+		int toIndex = fromIndex + page.SIZE;
+		if(messagereceiverList.size() < toIndex){
+			toIndex = messagereceiverList.size();
+		}
+		messagereceiverList = messagereceiverList.subList(fromIndex, toIndex);
+		
 		for (int i = 0; i < messagereceiverList.size(); i++) {
 			String msgfullsel = " where a.id = "+ messagereceiverList.get(i).getMessageid();
 			List<MessageFull> temp = messageService.selectMessageFullByCondition(msgfullsel);
@@ -400,8 +419,58 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 		}
 		
 		
+		if(pageNo ==0){
+			pageNo =1;
+		}
+		
+//		用于统计数量
 		String sendboxsql = " where a.senderid ="+uid +" and a.status = "+MessageConstant.MessageStatusValid;
 		messageFullList = messageService.selectMessageFullByCondition(sendboxsql);
+		
+		if(messageFullList == null){
+			messageFullList = new ArrayList<MessageFull>();
+		}
+		
+		//设置总数量
+		page.setTotalCount(messageFullList.size());
+		
+		//如果页码大于总页数，重新设置
+		if(pageNo>page.getTotalpage()){
+			pageNo = page.getTotalpage();
+		}
+		
+		page.setPageNo(pageNo);
+		if(page.getTotalCount()==0){
+			page.setPageNo(0);
+			page.setTotalpage(0);
+			pageNo = 0;
+		}
+		
+		sendboxsql = " where a.senderid ="+uid +" and a.status = "+MessageConstant.MessageStatusValid;
+		messageFullList = messageService.selectMessageFullByConditionAndPage(sendboxsql, page);
+		
+		if(messageFullList == null){
+			messageFullList = new ArrayList<MessageFull>();
+		}
+		
+		return SUCCESS;
+	}
+	
+	public String toMessageSendboxNextPage() {
+		log.info("");
+		Integer uid = checkUserLogin();
+		log.info("login user id "+ uid);
+		if(uid < 0){
+			actionMsg = "用户未登录";
+			log.error(actionMsg);
+			return ComputerConfig.usernotloginreturnstr;
+		}
+		
+		setPageInfo(totalcount);
+
+		
+		String sendboxsql = " where a.senderid ="+uid +" and a.status = "+MessageConstant.MessageStatusValid;
+		messageFullList = messageService.selectMessageFullByConditionAndPage(sendboxsql, page);
 		
 		if(messageFullList == null){
 			messageFullList = new ArrayList<MessageFull>();
@@ -451,6 +520,27 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 	
 	
 	
+	
+	public void setPageInfo(int totalcount){
+		if(pageNo ==0){
+			pageNo =1;
+		}
+		
+		//设置总数量
+		page.setTotalCount(totalcount);
+		
+		//如果页码大于总页数，重新设置
+		if(pageNo>page.getTotalpage()){
+			pageNo = page.getTotalpage();
+		}
+		
+		page.setPageNo(pageNo);
+		if(page.getTotalCount()==0){
+			page.setPageNo(0);
+			page.setTotalpage(0);
+			pageNo = 0;
+		}
+	}
 	//get set
 	public void setSession(Map<String, Object> session) {
 		// TODO Auto-generated method stub
@@ -672,6 +762,22 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 
 		public void setMessageid(Integer messageid) {
 			this.messageid = messageid;
+		}
+
+		public int getTotalpage() {
+			return totalpage;
+		}
+
+		public void setTotalpage(int totalpage) {
+			this.totalpage = totalpage;
+		}
+
+		public int getTotalcount() {
+			return totalcount;
+		}
+
+		public void setTotalcount(int totalcount) {
+			this.totalcount = totalcount;
 		}
         
         

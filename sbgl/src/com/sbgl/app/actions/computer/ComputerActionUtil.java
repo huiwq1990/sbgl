@@ -8,12 +8,15 @@ import java.util.regex.Pattern;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.json.JSONObject;
+
 import org.apache.struts2.ServletActionContext;
 
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.ComputercategoryFull;
 import com.sbgl.app.entity.Computermodel;
+import com.sbgl.util.ReturnJson;
 
 public class ComputerActionUtil {
 	
@@ -92,5 +95,16 @@ public class ComputerActionUtil {
 		return uidStr;
 	}
 
+	
+	
+	public static String buildReturnStr(int flag,String errorStr){
+		ReturnJson returnJson = new ReturnJson();
+		returnJson.setFlag(flag);			
+		returnJson.setReason(errorStr);
+		
+		JSONObject jo = JSONObject.fromObject(returnJson);
+		
+		return jo.toString();
+	}
 	
 }

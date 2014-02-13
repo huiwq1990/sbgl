@@ -113,7 +113,7 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	
 	int computerordertype;
 	int computerhomeworkid;
-	
+
 	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
 	private String returnInfo;
 	private String actionMsg; // Action间传递的消息参数
@@ -346,8 +346,10 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	
 //	课程预约界面点击提交按钮后，如果computerorderFormConfirm指向成功，跳转到预约确认界面
 	public String toComputerorderConfirmPage(){	
-		log.info("toComputerorderConfirmPage"+session);
-		ReturnJson returnJson = new ReturnJson();		
+		log.info("toComputerorderConfirmPage computerordertype:"+computerordertype);
+		
+//		获取预约类型
+		computerordertype = (Integer) session.get("computerordertype");
 		
 		if(session==null || !session.containsKey("computerorderdetailFullList")){
 			return "error";

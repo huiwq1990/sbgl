@@ -9,6 +9,6 @@ public class MessageConstant {
 //	消息有效
 	public final static int MessageStatusValid = 1;
 //	消息删除
-	public final static int MessageStatusDel = 1;
+	public final static int MessageStatusDel = 2;
 	
 }
