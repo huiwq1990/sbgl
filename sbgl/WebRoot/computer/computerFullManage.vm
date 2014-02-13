@@ -77,10 +77,12 @@
         </ul>
   </div>
 </header><!--/#header-wrap-->
-<section id="main-wrap" class="clearfix"><!--main-wrap--><!-- #BeginLibraryItem "/Library/机房tabnav.lbi" -->      <ul class="nav nav-tabs">
-        <li><a href="机房预约管理首页.html">机房预约</a></li>
-        <li class="active"><a href="机房信息管理首页.html">机房管理</a></li>
-      </ul><!-- #EndLibraryItem --><!--admin-wrap start-->
+<section id="main-wrap" class="clearfix"><!--main-wrap--><!-- #BeginLibraryItem "/Library/机房tabnav.lbi" -->      
+
+			<!-- Navi -->
+		#set($currentPageType="computerInfoManage")
+		#parse("computer/includeComputerManageNavi.vm")	
+	
       <div id="admin-wrap">
         <div id="admin-content" class="clearfix">            
             <div class="control-bar clearfix"><!--control-bar start-->
@@ -206,18 +208,8 @@
   </div><!--equip-wrap end-->
 	  
 	  
-      <div id="lside"><!--sidebar start-->
-        <form class="form-group">
-          <input type="text" class="form-control" placeholder="搜索设备">
-          <i class="icon-search"></i>
-        </form>
-        <div class="list-group">
-          <a href="机房信息管理首页.html" class="list-group-item active">机房设备管理</a>
-          <a href="机房添加.html" class="list-group-item">添加设备</a>
-          <a href="机房型号管理.html" class="list-group-item">型号管理</a>
-          <a href="机房分类管理.html" class="list-group-item">分类管理</a>
-        </div>
-      </div>
+      #set($currentWebpage ="computerFullManage.vm")
+	  #parse("computer/includeComputerManageSidebar.vm")
       <!--sidebar end-->
 
 </section>

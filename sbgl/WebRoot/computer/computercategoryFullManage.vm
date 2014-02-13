@@ -78,7 +78,7 @@
   </div>
 </header><!--/#header-wrap-->
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
-	
+		<!-- Navi -->
 		#set($currentPageType="computerInfoManage")
 		#parse("computer/includeComputerManageNavi.vm")
 		
@@ -187,8 +187,13 @@
 	  
 	  
 	  <!--sidebar start-->
-       #includeSidebar("parameters=currentWebpage:computercategoryFullManage.vm,currentModel:computer,currentType:computerManageInfo")
-      <!--sidebar end-->
+       ##includeSidebar("parameters=currentWebpage:computercategoryFullManage.vm,currentModel:computer,currentType:computerManageInfo")
+    
+
+	   #set($currentWebpage ="computercategoryFullManage.vm")
+	   #parse("computer/includeComputerManageSidebar.vm")
+
+	  <!--sidebar end-->
 	  
 	  
 
