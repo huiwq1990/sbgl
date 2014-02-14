@@ -82,56 +82,62 @@
         <div id="admin-content" class="clearfix">    
             <!--control-bar start-->
             <div class="control-bar clearfix">
-              <div class="title pull-left">添加课程</div>
-              <div class="tips">在此页面下添加新的课程信息</div>
+              <div class="title pull-left">设置教学计划</div>
+              <div class="tips">在此页面下设置本学期的时间安排。</div>
             </div><!--control-bar end-->
             <div class="panel panel-default">
               <div class="panel-body">
               
                 <form class="form-horizontal" role="form">
                   <div class="form-group">
-                    <label for="inputCourseName" class="col-lg-2 control-label">课程名</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="inputCourseName" placeholder="课程名称">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputCourseNameEn" class="col-lg-2 control-label">课程英文名</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="inputCourseNameEn" placeholder="课程的英文名称">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputCourseTeacher" class="col-lg-2 control-label">任课教师</label>
-                    <div class="col-lg-4">
-                      <select class="select2 select-white form-control" id="inputCourseTeacher">
-                        <option value="2">数字摄影机</option>
-                        <option value="3">数字摄像机</option>
-                        <option value="4">单反</option>
+                    <label for="inputSchoolYear" class="col-lg-2 control-label">学年</label>
+                    <div class="col-lg-2">
+                      <select class="select2 select-white form-control" id="inputSchoolYear">
+                        <option value="2013-2014">2013-2014</option>
+                        <option value="2014-2015">2014-2015</option>
                       </select>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="inputCourseType" class="col-lg-2 control-label">课程类别</label>
-                    <div class="col-lg-4">
-                      <label class="radio-inline">
-                        <input type="radio" name="inputCourseType" id="courseType1" value="1" checked="">本科
-                      </label>
-                      <label class="radio-inline">
-                        <input type="radio" name="inputCourseType" id="courseType2" value="2">硕士
-                      </label>
-                      <label class="radio-inline">
-                        <input type="radio" name="inputCourseType" id="courseType3" value="3">博士
-                      </label>
-                      <label class="radio-inline">
-                        <input type="radio" name="inputCourseType" id="courseType4" value="4">MFA
-                      </label>
+                    <label for="inputSemester" class="col-lg-2 control-label">学期</label>
+                    <div class="col-lg-2">
+                      <select class="select2 select-white form-control" id="inputSemester">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="semester-time form-group">
+                    <label for="inputDataRange" class="col-lg-2 control-label">本学期时间</label>
+                    <div class="col-lg-7">
+                      <div class="input-daterange row">
+                        <div class="col-lg-3">
+                          <input type="text" class="form-control" id="inputDataRange" name="start" placeholder="学期第一天">
+                        </div>
+                        <div class="col-lg-1 col-no-padding">
+                          <span class="add-on">至</span>
+                        </div>
+                        <div class="col-lg-3">
+                          <input type="text" class="form-control" id="inputDataRange2" name="end" placeholder="学期最后一天">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="semester-time form-group">
+                    <label for="inputFirstDay" class="col-lg-2 control-label">第一周第一天</label>
+                    <div class="col-lg-7">
+                      <div class="input-daterange row">
+                        <div class="col-lg-3">
+                          <input type="text" class="form-control" id="inputFirstDay" placeholder="第1周第1天">
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-4">
                       <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-                      <button type="submit" class="btn btn-primary">添 加</button>
+                      <button type="submit" class="btn btn-primary">保 存</button>
                     </div>
                   </div>
                 </form>
@@ -146,11 +152,11 @@
       <div id="lside">
         <div class="list-group">
           <a href="教学管理首页.html" class="list-group-item">课程管理</a>
-          <a href="教学管理-添加课程.html" class="list-group-item active">添加课程</a>
+          <a href="教学管理-添加课程.html" class="list-group-item">添加课程</a>
           <a href="教学管理-设备预约安排.html" class="list-group-item">设备预约安排</a>
           <a href="教学管理-机房预约安排.html" class="list-group-item">机房预约安排</a>
           <a href="教学管理-机房课程安排.html" class="list-group-item">机房课程安排</a>
-		  <a href="教学管理-教学设置.html" class="list-group-item">设置</a>
+          <a href="教学管理-教学设置.html" class="list-group-item active">设置</a>
         </div>
       </div>
       <!--sidebar end-->
@@ -165,6 +171,8 @@
 <script src="../js/select2.js"></script>
 <script src="../js/bootstrap-hover-dropdown.min.js"></script>
 <script src="../js/bfa.js"></script>
+<script src="../js/bootstrap-datepicker.js"></script>
+<script src="../js/locales/bootstrap-datepicker.zh-CN.js"></script>
 
 <!--[if lt IE 10]>
   <script src="../js/jquery.placeholder.js"></script>
@@ -172,5 +180,14 @@
   $('input, textarea').placeholder();
   </script>
 <![endif]-->
+<script>
+	$('.input-daterange, #inputFirstDay').datepicker({
+		language: 'zh-CN',
+		format: 'yyyy-mm-dd',
+		todayHighlight: true,
+		autoclose: true
+	});
+</script>
+
 </body>
 </html>
