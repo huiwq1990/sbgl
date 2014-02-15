@@ -13,6 +13,7 @@ import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.OrderFinishDao;
 import com.sbgl.app.entity.Equipmenborrow;
 import com.sbgl.app.services.order.OrderFinishService;
+import com.sbgl.util.DateUtil;
 
 
 @Scope("prototype") 
@@ -41,10 +42,19 @@ public class OrderFinishServiceImpl  implements OrderFinishService  {
 	
 	public boolean finishorder(Integer borrowId,String equtitle,String equremark) throws Exception{
 		Equipmenborrow equipmenborrow = baseDao.getEntityById(Equipmenborrow.class, borrowId);
-		equipmenborrow.setTitle(equtitle);
+		if(equtitle==null||equtitle.equals("")){
+			equipmenborrow.setTitle(DateUtil.getChineseTime(equipmenborrow.getBorrowtime())+"-设备预约");
+		}else{
+			equipmenborrow.setTitle(equtitle);
+		}
 		equipmenborrow.setRemark(equremark);
 		baseDao.updateEntity(equipmenborrow);
 		return true;
+	}
+	
+	public EquipmentFull findEquipmentById(Integer equipmentId) {
+		// TODO Auto-generated method stub
+		return orderFinishDao.findEquipmentById(equipmentId);
 	}
 
 }

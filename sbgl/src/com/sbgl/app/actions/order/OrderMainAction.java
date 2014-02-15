@@ -45,6 +45,7 @@ public class OrderMainAction  extends ActionSupport  {
 	private String tag;
 	private Integer borrowId;
 	private Integer[] daynums;
+	private String listequips;
 	
 	//进入设备管理页面
 	public String equipmentBooking(){
@@ -65,6 +66,9 @@ public class OrderMainAction  extends ActionSupport  {
 		}
 		classification2List = orderMainService.findSecondEquipmentclass();
 		equipmentList = orderMainService.findEquipmentByClss(fromDate,endDate);
+		if(borrowId!=null&&!borrowId.equals("")){
+			listequips = orderMainService.findEquipmentByBorrowId(borrowId,fromDate,endDate); 
+		}
 		return SUCCESS;
 	}
 	
@@ -154,7 +158,7 @@ public class OrderMainAction  extends ActionSupport  {
 			}
 		}
 		try{	
-			borrowId = orderMainService.subOrder(equIds, equNums, fromDate, endDate);
+			borrowId = orderMainService.subOrder(equIds, equNums, fromDate, endDate,borrowId);
 			tag = "1";
 		}catch(DataError e){		
 			tag = "2";
@@ -334,6 +338,15 @@ public class OrderMainAction  extends ActionSupport  {
 		this.daynums = daynums;
 	}
 
+	public String getListequips() {
+		return listequips;
+	}
+
+	public void setListequips(String listequips) {
+		this.listequips = listequips;
+	}
+
+	
 
 	
 }

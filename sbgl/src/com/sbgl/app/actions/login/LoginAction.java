@@ -38,15 +38,14 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
-	public void doLogin(){
-		/*
+	public void doLogin(){		
 		Loginuser loginUser2 = new Loginuser();		
 		boolean flag  = false;
 		try{	
 			loginUser2 = loginService.findUser(loginuser);
 			if(loginUser2!=null){
 				CookiesUtil.addLoginCookie("id", loginUser2.getId().toString());
-				CookiesUtil.addLoginCookie("userid", loginUser2.getUserId());
+				CookiesUtil.addLoginCookie("userid", loginUser2.getUserid());
 				CookiesUtil.addLoginCookie("username", loginUser2.getName());
 				CookiesUtil.addLoginCookie("roletype", loginUser2.getRoletype());
 				flag = true;
@@ -57,7 +56,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			e.printStackTrace();			
 		}
 		Javascript(flag);
-		*/
 	}
 	
 	public void Javascript(boolean flag){
