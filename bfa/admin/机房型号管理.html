@@ -213,9 +213,15 @@
     <p>这里是修改设备型号相关说明。</p>
     <form class="form-horizontal" role="form">
       <div class="form-group">
-        <label for="modifyEModelName" class="col-xs-3 control-label">名称</label>
+        <label for="modifyModelName" class="col-xs-3 control-label">名称</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="modifyEModelName" placeholder="Arri Alexa Plus">
+          <input type="text" class="form-control" id="modifyModelName" placeholder="DELL工作站">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modifyEModelNameEn" class="col-xs-3 control-label">英文名</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="modifyModelNameEn" placeholder="设备或机房名（如DELL工作站、剪辑机房-1）">
         </div>
       </div>
       <div class="form-group">
@@ -228,11 +234,27 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="modifyEDescribe" class="col-xs-3 control-label">描述</label>
+        <label for="modifyDescribe" class="col-xs-3 control-label">描述</label>
         <div class="col-xs-7">
-          <textarea class="form-control" id="modifyEDescribe" rows="3"></textarea>
+          <textarea class="form-control" id="modifyDescribe" rows="3"></textarea>
         </div>
-      </div>    
+      </div>
+      <div class="form-group">
+        <label for="modifyDescribeEn" class="col-xs-3 control-label">英文描述</label>
+        <div class="col-xs-7">
+          <textarea class="form-control" id="modifyDescribeEn" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modifyProcmtPrice" class="col-xs-3 control-label">采购价</label>
+        <div class="col-xs-2">
+          <input type="text" class="form-control" id="modifyProcmtPrice">
+        </div>
+        <label for="modifyRentPrice" class="col-xs-2 control-label">租金</label>
+        <div class="col-xs-2">
+          <input type="text" class="form-control" id="modifyRentPrice">
+        </div>
+      </div>
       <div class="form-group">
         <label for="modifyEPic" class="col-xs-3 control-label">图片</label>
         <div class="col-xs-7">
@@ -262,9 +284,15 @@
     <p>这里是添加设备型号相关说明。</p>
     <form class="form-horizontal" role="form">
       <div class="form-group">
-        <label for="inputEModelName" class="col-xs-3 control-label">名称</label>
+        <label for="inputModelName" class="col-xs-3 control-label">名称</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="inputEModelName" placeholder="设备或机房名（如DELL工作站、剪辑机房-1）">
+          <input type="text" class="form-control" id="inputModelName" placeholder="设备或机房名（如DELL工作站、剪辑机房-1）">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputModelNameEn" class="col-xs-3 control-label">英文名</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="inputModelNameEn" placeholder="设备或机房的英文名称">
         </div>
       </div>
       <div class="form-group">
@@ -277,23 +305,38 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="inputEDescribe" class="col-xs-3 control-label">描述</label>
+        <label for="inputDescribe" class="col-xs-3 control-label">描述</label>
         <div class="col-xs-7">
-          <textarea class="form-control" id="inputEDescribe" rows="3"></textarea>
+          <textarea class="form-control" id="inputDescribe" rows="3"></textarea>
         </div>
       </div>
- 
       <div class="form-group">
-        <label for="inputEPic" class="col-xs-3 control-label">图片</label>
+        <label for="inputDescribeEn" class="col-xs-3 control-label">英文描述</label>
+        <div class="col-xs-7">
+          <textarea class="form-control" id="inputDescribeEn" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputProcmtPrice" class="col-xs-3 control-label">采购价</label>
+        <div class="col-xs-2">
+          <input type="text" class="form-control" id="inputProcmtPrice">
+        </div>
+        <label for="inputRentPrice" class="col-xs-2 control-label">租金</label>
+        <div class="col-xs-2">
+          <input type="text" class="form-control" id="inputRentPrice">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputPic" class="col-xs-3 control-label">图片</label>
         <div class="col-xs-3">
           <span class="btn btn-white file-input-button">
               <i class="icon-plus"></i>
               <span>添加图片</span>
-              <input id="inputEPic" type="file" name="files[]" multiple>
+              <input id="inputPic" type="file" name="files[]">
           </span>
         </div>
         <div class="col-xs-4">
-          <div id="progress" class="progress progress-striped active">
+          <div id="progress" class="progress progress-striped active" style="display: none; ">
             <div class="bar"></div>
           </div>
           <div id="files" class="files"></div>        
@@ -324,19 +367,15 @@
 <![endif]-->
 
 <script>
-
 $(function () {
     // Change this to the location of your server-side upload handler:
-    var url = window.location.hostname === 'blueimp.github.io' ?
-                '//jquery-file-upload.appspot.com/' : 'server/php/';
-    $('#inputEPic').fileupload({
+    var url = 'http://jquery-file-upload.appspot.com/';
+    $('#inputPic').fileupload({
         url: url,
         dataType: 'json',
         done: function (e, data) {
 			$('#progress').hide();
-            $.each(data.result.files, function (index, file) {
-                $('<p/>').text(file.name).appendTo('#files');
-            });
+            $('#files').html('上传成功！');
         },
         progressall: function (e, data) {
             var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -344,7 +383,13 @@ $(function () {
                 'width',
                 progress + '%'
             );
-        }
+        },
+		submit: function (e, data) {
+			$('#progress .bar').css(
+                'width', '0%'
+            );
+			$('#progress').show();
+		}		
     }).prop('disabled', !$.support.fileInput)
         .parent().addClass($.support.fileInput ? undefined : 'disabled');
 });
