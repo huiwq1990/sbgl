@@ -109,6 +109,8 @@
 		<mapping resource="com/sbgl/app/entity/Message.hbm.xml" />
 		<mapping resource="com/sbgl/app/entity/Notification.hbm.xml" />
 		<mapping resource="com/sbgl/app/entity/Messagereceiver.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Course.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Courseconfig.hbm.xml" />
 
 
 

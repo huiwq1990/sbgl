@@ -1,0 +1,4 @@
+//如果有多对一，则配置
+//OneToMany;attrName= ;colName=;class=;
+ManyToOne;attrName=adduserid ;colName=adduserid;class=Loginuser;fullAttrPrefix=adduser
+ManyToOne;attrName=teacherid ;colName=teacherid;class=Loginuser;fullAttrPrefix=teacher

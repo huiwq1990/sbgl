@@ -149,6 +149,12 @@ public class NotificationServiceImpl implements NotificationService{
         public List<NotificationFull>  selectNotificationFullByConditionAndPage(String condition,final Page page) {
 			return notificationDao.selectNotificationFullByConditionAndPage(condition, page);
 		}
+
+		@Override
+		public List<NotificationFull> selectNotificationFullAll() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	
 
 

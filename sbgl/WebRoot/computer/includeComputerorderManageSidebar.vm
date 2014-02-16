@@ -1,0 +1,24 @@
+
+<div id="lside">
+	<form class="form-group">
+		<input type="text" class="form-control" placeholder="搜索">
+			<i class="icon-search"></i>
+	</form>
+	<div class="list-group">
+		
+		<a href="${webbaseurl}/manageComputerFull.action" class="list-group-item
+		#if($currentWebpage == "computerorderFullManage.vm" )
+			 active        
+		#end		
+		">订单管理</a> 
+		
+		<a href="${webbaseurl}/toAddComputerPage.action" class="list-group-item
+		#if($currentWebpage == "computerAdd.vm" )
+			 active        
+		#end		
+		">预约设置</a> 	
+	
+
+		
+	</div>
+</div>

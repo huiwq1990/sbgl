@@ -217,17 +217,12 @@
           </div>
 
       </div><!--equip-wrap end-->
-      <div id="lside"><!--sidebar start-->
-        <form class="form-group">
-          <input type="text" class="form-control" placeholder="搜索预约(订单号、姓名)">
-          <i class="icon-search"></i>
-        </form>
-        <div class="list-group">
-          <a href="设备管理首页.html" class="list-group-item active">预约管理</a>
-          <a href="设备管理-添加设备.html" class="list-group-item">教学预约</a>        
-          <a href="设备管理-型号管理.html" class="list-group-item">设置</a>
-        </div>
-      </div>
+     
+	  
+	  <!--sidebar start-->
+#set($currentWebpage ="computerorderFullManage.vm")
+#parse("computer/includeComputerorderManageSidebar.vm")
+
       <!--sidebar end-->
 
 </section>

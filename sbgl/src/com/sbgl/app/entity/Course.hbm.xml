@@ -16,11 +16,17 @@
         <property name="description" type="java.lang.String">
             <column name="description" length="1000" />
         </property>
-        <property name="manager" type="java.lang.Integer">
-            <column name="manager" />
+        <property name="type" type="java.lang.Integer">
+            <column name="type" />
         </property>
-        <property name="addTime" type="java.util.Date">
-            <column name="add_time"  />
+        <property name="adduserid" type="java.lang.Integer">
+            <column name="adduserid" />
+        </property>
+        <property name="teacherid" type="java.lang.Integer">
+            <column name="teacherid" />
+        </property>
+        <property name="addtime" type="java.util.Date">
+            <column name="addtime"  />
         </property>
     </class>
 </hibernate-mapping>

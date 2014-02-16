@@ -14,8 +14,10 @@ public class Course extends com.sbgl.app.dao.DaoAbs implements
 	private Integer id;
 	private String name;
 	private String description;
-	private Integer manager;
-	private Date addTime;
+	private Integer type;
+	private Integer adduserid;
+	private Integer teacherid;
+	private Date addtime;
 
 	// Constructors
 
@@ -29,13 +31,15 @@ public class Course extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Course(Integer id, String name, String description, Integer manager,
-			Date addTime) {
+	public Course(Integer id, String name, String description, Integer type,
+			Integer adduserid, Integer teacherid, Date addtime) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.manager = manager;
-		this.addTime = addTime;
+		this.type = type;
+		this.adduserid = adduserid;
+		this.teacherid = teacherid;
+		this.addtime = addtime;
 	}
 
 	// Property accessors
@@ -64,20 +68,36 @@ public class Course extends com.sbgl.app.dao.DaoAbs implements
 		this.description = description;
 	}
 
-	public Integer getManager() {
-		return this.manager;
+	public Integer getType() {
+		return this.type;
 	}
 
-	public void setManager(Integer manager) {
-		this.manager = manager;
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
-	public Date getAddTime() {
-		return this.addTime;
+	public Integer getAdduserid() {
+		return this.adduserid;
 	}
 
-	public void setAddTime(Date addTime) {
-		this.addTime = addTime;
+	public void setAdduserid(Integer adduserid) {
+		this.adduserid = adduserid;
+	}
+
+	public Integer getTeacherid() {
+		return this.teacherid;
+	}
+
+	public void setTeacherid(Integer teacherid) {
+		this.teacherid = teacherid;
+	}
+
+	public Date getAddtime() {
+		return this.addtime;
+	}
+
+	public void setAddtime(Date addtime) {
+		this.addtime = addtime;
 	}
 
 }

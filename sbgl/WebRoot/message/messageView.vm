@@ -152,6 +152,15 @@
             </div>
           </div>
         </div>
+		
+		
+<!-- 回复消息列表开始-->
+#set($listSize = $replyMessageFullList.size() - 1)
+#if($listSize>=0)
+#set($listRegion = [0..$listSize])
+##取出所有的属性名称
+#foreach($tempKey in $listRegion)
+	#set($temp = $replyMessageFullList.get($tempKey))	
         <div class="accordion-group">
           <div class="accordion-heading">
             <div class="accordion-toggle collapsed" data-toggle="collapse" href="#msg-1">
@@ -167,15 +176,13 @@
           <div id="msg-1" class="accordion-body collapse">
             <div class="accordion-inner">
 			  <div class="msg-content">
-                <p>李老师，数字摄像机中4：4：4（4：2：2）压缩方式记录影像，这三个比例是不是分别代表YUV色彩空间的Y、U、V三个通道？换句话说数字摄像机采用的是YUV色彩空间记录数据的？但是从数字摄像机的原理知道，光通过分光镜分出R、G、B三色光分别记录在3个感光元件上，那为何又变成YUV空间了呢？是因为数据记录的需要吗？
-    另外，采用4：2：2压缩方式记录的数据量是不是只有4：4：4的2/3呢？</p>
+                <p>$temp.messagecontent</p>
     
                 <div class="quote-wrap">
                   <a class="accordion-toggle msg-quote-btn" data-toggle="collapse" href="#msg-quote-1">-显示引用文字-</a> 
                   <div id="msg-quote-1" class="collapse msg-quote">
                       <blockquote>
-                        <p>李老师，数字摄像机中4：4：4（4：2：2）压缩方式记录影像，这三个比例是不是分别代表YUV色彩空间的Y、U、V三个通道？换句话说数字摄像机采用的是YUV色彩空间记录数据的？但是从数字摄像机的原理知道，光通过分光镜分出R、G、B三色光分别记录在3个感光元件上，那为何又变成YUV空间了呢？是因为数据记录的需要吗？
-    另外，采用4：2：2压缩方式记录的数据量是不是只有4：4：4的2/3呢？</p>
+                        <p>$temp.messagecontent</p>
                         <small><cite>李全胜</cite> 在 2011-12-22 10:58:58 写道</small>
                       </blockquote>
                   </div>
@@ -192,7 +199,11 @@
             </div>
           </div>
         </div>
-      </div>
+#end
+#end			
+ <!-- 回复消息列表结束-->     
+		
+		</div> <!--end msg-accordion-->     
               
             </div>
 			

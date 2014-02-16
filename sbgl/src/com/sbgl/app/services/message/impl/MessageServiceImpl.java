@@ -149,6 +149,12 @@ public class MessageServiceImpl implements MessageService{
         public List<MessageFull>  selectMessageFullByConditionAndPage(String condition,final Page page) {
 			return messageDao.selectMessageFullByConditionAndPage(condition, page);
 		}
+
+		@Override
+		public List<MessageFull> selectMessageFullAll() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	
 
 

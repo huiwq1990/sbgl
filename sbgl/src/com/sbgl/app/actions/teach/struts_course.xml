@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="course" extends="admin">
+
+
+<!-- default entity manage action -->
+    	<action name="manageCourse" class="ManageTeachAction" method="manageCourse">
+        	<result name="success1">/teach/courseManage.vm</result>
+			<result name="success2">/teach/courseFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!-- entity full manage  -->		
+		<!-- default entity full manage action -->
+    	<action name="manageCourseFull" class="ManageTeachAction" method="manageCourseFull">
+        	<result name="success1">/teach/courseFullManage.vm</result>
+			<result name="success2">/teach/courseFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+		
+<!--添加实体-->
+    	<action name="addCourse" class="CourseAction" method="addCourse">
+        	<result type="redirectAction">
+				<param name="actionName">manageCourse</param>
+			</result>
+        </action>
+		
+<!--edit entity-->
+        <action name="editCourse" class="CourseAction" method="editCourse">
+        	<result name="success">/teach/courseEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--edit entity full-->
+        <action name="editCourseFull" class="CourseAction" method="editCourseFull">
+        	<result name="success">/teach/courseFullEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!--del-->
+        <!--del entity-->
+        <action name="deleteCourse" class="CourseAction" method="deleteCourse">
+        	<result type="redirectAction">
+				<param name="actionName">manageCourse</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteCourseFull" class="CourseAction" method="deleteCourseFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageCourseFull</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--更新实体-->
+        <action name="updateCourse" class="CourseAction" method="updateCourse">
+        	<result name="success">/teach/courseUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--update entity full-->
+        <action name="updateCourseFull" class="CourseAction" method="updateCourse">
+        	<result name="success">/teach/courseFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+<!--根据id查询实体-->
+        <action name="selectCourseById" class="CourseAction" method="selectCourseById">
+        	<result name="success">/teach/courseView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity-->		
+        <action name="viewCourse" class="CourseAction" method="viewCourse">
+        	<result name="success">/teach/courseView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity full-->		
+        <action name="viewCourseFull" class="CourseAction" method="viewCourseFull">
+        	<result name="success">/teach/courseFullView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="courseAjax" extends="json-default">
+    	<action name="addCourseAjax" class="CourseAction" method="addCourseAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        <action name="deleteCourseAjax" class="CourseAction" method="deleteCourseAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteCourseFullAjax" class="CourseAction" method="deleteCourseFullAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+    	<action name="updateCourseAjax" class="CourseAction" method="updateCourseAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
+	</package>
+
+</struts>

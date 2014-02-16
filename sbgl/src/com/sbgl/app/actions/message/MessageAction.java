@@ -48,9 +48,9 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 	private MessageFull messageFull = new MessageFull();//实例化一个模型	
 	private List<Message> messageList = new ArrayList<Message>();
 	private List<MessageFull> messageFullList = new ArrayList<MessageFull>();
-	
-	
-	
+	private List<MessageFull> replyMessageFullList = new ArrayList<MessageFull>();
+
+
 	@Resource
 	private MessagereceiverService messagereceiverService;
 	private Integer messagereceiverid; //entity full 的id属性名称		
@@ -335,7 +335,13 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 				return MessageConstant.pagenotfound;
 			}
 			
+			
 			BeanUtils.copyProperties(messageFull,temMessageFull);
+//			查询回复的消息
+			String replySql = " where a.replyid = "+messageid+" and a.status = "+MessageConstant.MessageStatusValid;
+			log.info("查询回复的消息的sql:"+replySql);
+			replyMessageFullList = messageService.selectMessageFullByCondition(replySql);
+			
 			return SUCCESS;		
 			
 		} catch (IllegalAccessException e) {
@@ -837,6 +843,14 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 
 		public void setTotalcount(int totalcount) {
 			this.totalcount = totalcount;
+		}
+
+		public List<MessageFull> getReplyMessageFullList() {
+			return replyMessageFullList;
+		}
+
+		public void setReplyMessageFullList(List<MessageFull> replyMessageFullList) {
+			this.replyMessageFullList = replyMessageFullList;
 		}
         
         
