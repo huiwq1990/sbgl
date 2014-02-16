@@ -39,6 +39,7 @@ public class FileUploadAction  extends ActionSupport {
 	private String fileFileName;
 	private String fileContentType;
 	private String savedFileName;
+	private String imgType = "equip";		//不同的上传类型,默认器材
 	private String tag;
 	private String msg;
 //	private String equipmentid;
@@ -72,7 +73,11 @@ public class FileUploadAction  extends ActionSupport {
 			savedFileName = fileFileName;
 		}
 		InputStream is = new FileInputStream(file);
-		String equipmentImagePath = PropertyUtil.readValue("/system.properties", "equipmentImagePath");
+		String equipmentImagePath = "";
+		if( "equip".equals(imgType) ) {
+			equipmentImagePath = PropertyUtil.readValue("/system.properties", "equipmentImagePath");
+		}
+		
 		//String root = ServletActionContext.getRequest().getRealPath("/equipImage");
 		File deskFile = new File(equipmentImagePath, savedFileName);
 		OutputStream os = new FileOutputStream(deskFile);
@@ -368,6 +373,13 @@ public class FileUploadAction  extends ActionSupport {
 
 	public void setSavedFileName(String savedFileName) {
 		this.savedFileName = savedFileName;
+	}
+	public String getImgType() {
+		return imgType;
+	}
+
+	public void setImgType(String imgType) {
+		this.imgType = imgType;
 	}
 //	public String getEquipmentid() {
 //		return equipmentid;
