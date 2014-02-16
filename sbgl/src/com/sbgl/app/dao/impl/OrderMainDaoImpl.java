@@ -209,7 +209,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	    	for(int i=0;i<size;i++){
 	    		String dateTemp = dateList.get(i);
 	    		sql +="(select  a.activenum-ifnull(sum(ifnull(b.borrownumber,b.applynumber)),0) as aaa from ListDetail b left outer join Equipment a on b.equipmentid=a.equipmentid " 
-	    			+ " where b.equipmentid='"+equipmentId+"'  and (('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y')))  "  ;  
+	    			+ " where b.equipmentid='"+equipmentId+"'  and (('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y')) group by a.equipmentid)  "  ;  
 	    		if(i!=size-1){
 	    			sql += " ,',', ";
 	    		}
@@ -225,6 +225,45 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		});	
 		if(equipmentList!=null&&!equipmentList.isEmpty()){
 			return equipmentList.get(0).getDaynum(); 
+		}	
+		return null;
+	}
+
+
+	public String findEquipmentByBorrowId(Integer borrowId,String fromDate,String endDate) {
+		// TODO Auto-generated method stub
+		List<String> dateList = DateUtil.dateRegion(fromDate,endDate);
+		final Integer size = dateList.size();
+		String sql = " select CONCAT(a.equipmentid,'^',a.applynumber,'^',b.equipmentname,'^',(select ifnull(b.activenum,0)-ifnull(max(tempaa.aaa),0) from( " ;
+	    	for(int i=0;i<size;i++){
+	    		String dateTemp = dateList.get(i);
+	    		sql +="(select   sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa,b.equipmentid from ListDetail b " 
+	    			+ " where ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.equipmentid )  "  ;  
+	    		if(i!=size-1){
+	    			sql += " union ";
+	    		}
+	    	}
+	    	sql+= ")tempaa where tempaa.equipmentid=a.equipmentid)) as daynum from ListDetail a " 
+	    	+ " left outer join Equipment b on a.equipmentid=b.equipmentid "
+	    	+ " where a.borrowlistid='"+borrowId+"' ";
+	    final String sql1 = sql;
+		List<EquipmentFull> equipFullList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql1);
+				query.setResultTransformer(new EscColumnToBean(EquipmentFull.class));
+				return query.list();
+			}
+		});	
+		if(equipFullList!=null&&!equipFullList.isEmpty()){
+			int len = equipFullList.size();
+			String a = "";
+			for(int i=0;i<len;i++){
+				if(i!=0){
+					a+="|";
+				}
+				a += equipFullList.get(i).getDaynum();
+			}
+			return a;
 		}	
 		return null;
 	}

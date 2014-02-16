@@ -11,4 +11,6 @@ public interface OrderFinishDao {
 	public List<EquipmentFull> findListBorrow(Integer borrowId);
 	//根据id查找订单
 	public EquipmenborrowFull findEquipmenborrow(Integer borrowId);
+	//获得设备详情
+	public EquipmentFull findEquipmentById(Integer equipmentId);
 }

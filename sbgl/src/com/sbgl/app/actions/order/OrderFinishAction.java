@@ -29,10 +29,12 @@ public class OrderFinishAction  extends ActionSupport {
 	private Integer borrowId;
 	private Equipmenborrow equipmenborrow;
 	private EquipmenborrowFull equipmenborrowFull;
+	private EquipmentFull equipmentFull;
 	private String tag;
 	private String message;
 	private String equtitle;
 	private String equremark;
+	private Integer equipmentId;
 	
 	//进入完成订单页面
 	public String equipmentFinish(){	
@@ -65,6 +67,11 @@ public class OrderFinishAction  extends ActionSupport {
 		return SUCCESS;
 	}
 
+	public String equipConfirmContent(){
+		equipmentFull = orderFinishService.findEquipmentById(equipmentId);
+		return SUCCESS;
+	}
+	
 	public Integer getBorrowId() {
 		return borrowId;
 	}
@@ -127,6 +134,22 @@ public class OrderFinishAction  extends ActionSupport {
 
 	public void setEquremark(String equremark) {
 		this.equremark = equremark;
+	}
+
+	public EquipmentFull getEquipmentFull() {
+		return equipmentFull;
+	}
+
+	public void setEquipmentFull(EquipmentFull equipmentFull) {
+		this.equipmentFull = equipmentFull;
+	}
+
+	public Integer getEquipmentId() {
+		return equipmentId;
+	}
+
+	public void setEquipmentId(Integer equipmentId) {
+		this.equipmentId = equipmentId;
 	}
 
 

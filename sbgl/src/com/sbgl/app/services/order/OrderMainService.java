@@ -37,6 +37,7 @@ public interface OrderMainService {
 	//获得每天剩余数量（根据设备号）
 	public String findDayNum(Integer equipmentId,String fromDate,String endDate);
 	//提交订单
-	public Integer subOrder(String equIds,String equNums,String fromDate,String endDate) throws Exception;
-	
+	public Integer subOrder(String equIds,String equNums,String fromDate,String endDate,Integer borrowId) throws Exception;
+	//根据订单查找选择的商品
+	public String findEquipmentByBorrowId(Integer borrowId,String fromDate,String endDate);
 }

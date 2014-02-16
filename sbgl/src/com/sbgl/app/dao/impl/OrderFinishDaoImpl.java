@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.dao.OrderFinishDao;
+import com.sbgl.util.DateUtil;
 import com.sbgl.util.EscColumnToBean;
 
 @Repository("orderFinishDao")
@@ -21,7 +22,7 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 		
 		final String sql = " select a.*,b.name as userName,c.name as teacherName from EquipmenBorrow a left outer join loginUser b on a.userid = b.id "
 			+ " left outer join loginUser c on c.id=a.teacherid "
-			+ " where b.borrowlistid='"+borrowId+"' ";
+			+ " where a.Borrowid='"+borrowId+"' ";
 		List<EquipmenborrowFull> equipmenborrowFullList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(sql);
@@ -49,6 +50,24 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 		});	
 		if(equipmentFullList!=null&&!equipmentFullList.isEmpty()){
 			return equipmentFullList;
+		}	
+		return null;
+	}
+	
+	public EquipmentFull findEquipmentById(Integer equipmentId) {
+		// TODO Auto-generated method stub
+		final String sql = " select a.Equipmentid,a.Equipmentname,c.name as categoryName from Equipment a  "
+	    	+ " left outer join EquipmentClassification c on a.classificationid = c.classificationid "
+			+ " where a.equipmentid ='"+equipmentId+"' ";
+		List<EquipmentFull> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql);
+				query.setResultTransformer(new EscColumnToBean(EquipmentFull.class));
+				return query.list();
+			}
+		});	
+		if(equipmentList!=null&&!equipmentList.isEmpty()){
+			return equipmentList.get(0); 
 		}	
 		return null;
 	}

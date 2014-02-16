@@ -10,11 +10,16 @@
 	 	<action name="equipmentConfirm" class="OrderFinishAction" method="equipmentConfirm">
         	<result name="success">/equipmentConfirm.vm</result>
         </action>
+        <!-- 进入设备预约页面 -->
+	 	<action name="equipConfirmContent" class="OrderFinishAction" method="equipConfirmContent">
+        	<result name="success">/order/equipConfirmContent.vm</result>
+        </action>
     </package>
     <package name="orderFinishAjax" extends="json-default">	
         <!-- 提交订单备注 -->
 	 	<action name="finishorder" class="OrderFinishAction" method="finishorder">
         	<result type="json"></result>
         </action>
+        
     </package>
 </struts>

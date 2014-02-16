@@ -14,4 +14,6 @@ public interface OrderFinishService {
 	public List<EquipmentFull> findListBorrow(Integer borrowId);
 	//提交订单备注
     public boolean finishorder(Integer borrowId,String equtitle,String equremark) throws Exception;
+    //获得设备详情
+	public EquipmentFull findEquipmentById(Integer equipmentId);
 }

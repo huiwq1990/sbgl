@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.f1j.paint.en;
 import com.sbgl.app.actions.order.EquipmentFull;
@@ -25,6 +26,7 @@ import com.sbgl.util.DateUtil;
 
 @Scope("prototype") 
 @Service("orderMainService")
+@Transactional
 public class OrderMainServiceImpl implements OrderMainService {
 
 	@Resource
@@ -112,13 +114,23 @@ public class OrderMainServiceImpl implements OrderMainService {
 			baseDao.saveEntity(equipmenBorrow);
 	}
 	
-	public Integer subOrder(String equIds,String equNums,String fromDate,String endDate) throws Exception{ 
+	public Integer subOrder(String equIds,String equNums,String fromDate,String endDate,Integer borrowId) throws Exception{ 
 		Equipmenborrow equipmenborrow = new Equipmenborrow();
 		String temp1[] = equIds.split(",");
 		String temp2[] = equNums.split(",");
-		equipmenborrow.setBorrowid(baseDao.getCode("equipmenborrow"));		
+		if(borrowId==null||borrowId.equals("")){
+			equipmenborrow.setBorrowid(baseDao.getCode("equipmenborrow"));			
+		}else{
+			baseDao.deleteByProperty("equipmenborrow", "borrowid", borrowId);
+			baseDao.deleteByProperty("Listdetail", "borrowlistid", borrowId);
+			equipmenborrow.setBorrowid(borrowId);	
+		}
 		if(temp1!=null&&temp1.length>0){
 			for(int i=0;i<temp1.length;i++){
+				if(i==0){
+					equipmenborrow.setBorrowtime(DateUtil.parseDate(fromDate));
+					equipmenborrow.setReturntime(DateUtil.parseDate(endDate));
+				}
 				Listdetail listdetail = new Listdetail();
 				EquipmentFull equipmentFull = orderMainDao.findEquipmentById(Integer.parseInt(temp1[i]),fromDate,endDate);
 				if(equipmentFull!=null&&equipmentFull.getBorrownum()!=null&&equipmentFull.getBorrownum()>=Integer.parseInt(temp2[i])){
@@ -164,6 +176,12 @@ public class OrderMainServiceImpl implements OrderMainService {
 	public EquipmentFull findEquipmentById(Integer equipmentId,String fromDate,String endDate) {
 		// TODO Auto-generated method stub
 		return orderMainDao.findEquipmentById(equipmentId,fromDate,endDate);
+	}
+
+
+	public String findEquipmentByBorrowId(Integer borrowId,String fromDate,String endDate) {
+		// TODO Auto-generated method stub
+		return orderMainDao.findEquipmentByBorrowId(borrowId,fromDate,endDate);
 	}
 
 	
