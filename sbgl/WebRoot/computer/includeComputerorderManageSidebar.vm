@@ -6,14 +6,14 @@
 	</form>
 	<div class="list-group">
 		
-		<a href="${webbaseurl}/manageComputerFull.action" class="list-group-item
+		<a href="${webbaseurl}/manageComputerorderFull.action" class="list-group-item
 		#if($currentWebpage == "computerorderFullManage.vm" )
 			 active        
 		#end		
 		">订单管理</a> 
 		
-		<a href="${webbaseurl}/toAddComputerPage.action" class="list-group-item
-		#if($currentWebpage == "computerAdd.vm" )
+		<a href="${webbaseurl}/manageComputerconfig.action" class="list-group-item
+		#if($currentWebpage == "computerorderConfig.vm" )
 			 active        
 		#end		
 		">预约设置</a> 	

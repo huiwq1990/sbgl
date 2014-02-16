@@ -82,10 +82,12 @@
   </div>
 </header><!--/#header-wrap-->
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="机房预约管理首页.html">机房预约</a></li>
-        <li ><a href="机房信息管理首页.html">机房管理</a></li>
-      </ul>	  
+
+	  
+	  		<!-- Navi -->
+		#set($currentPageType="computerorderManage")
+		#parse("computer/includeComputerManageNavi.vm")
+		
 	  
       <!--admin-wrap start-->
       <div id="admin-wrap">

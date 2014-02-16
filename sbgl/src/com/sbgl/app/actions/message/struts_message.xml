@@ -8,7 +8,8 @@
         	<result name="success">/message/messageAdd.vm</result>			
         	<result name="error">/error/messageError.vm</result> 
         </action>
-        
+
+               
 <!-- 跳转到消息接收界面 -->
     	<action name="toMessageInbox" class="MessageAction" method="toMessageInbox">
         	<result name="success">/message/messageInbox.vm</result>			
@@ -124,6 +125,14 @@
     
     <!-- Ajax方式 -->
     <package name="messageAjax" extends="json-default">
+    
+    <!-- 回复消息 -->
+    	<action name="replyMessageAjax" class="MessageAction" method="replyMessageAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        
     	<action name="addMessageAjax" class="MessageAction" method="addMessageAjax">
         	<result type="json">
 				<param name="root">returnStr</param>

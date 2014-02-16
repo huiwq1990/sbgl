@@ -9,9 +9,7 @@
         	<result name="success">/computer/computerconfig.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
-	
-	
-		
+
     </package>
     
     <!-- Ajax方式 -->

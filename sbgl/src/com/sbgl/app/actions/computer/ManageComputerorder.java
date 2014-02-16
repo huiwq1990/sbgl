@@ -23,9 +23,11 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.common.computer.BorrowperiodUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.common.computer.ComputerorderdetailInfo;
+import com.sbgl.app.entity.Borrowperiod;
 import com.sbgl.app.entity.Computerhomeworkreceiver;
 import com.sbgl.app.entity.ComputerhomeworkreceiverFull;
 import com.sbgl.app.entity.ComputermodelFull;
@@ -118,7 +120,7 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	private String returnInfo;
 	private String actionMsg; // Action间传递的消息参数
 	
-	
+	private List<Borrowperiod> periodList = new ArrayList<Borrowperiod>();
 
 	public int checkUserLogin(){
 		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
@@ -228,6 +230,10 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	 */
 	public String viewComputerorder(){
 		System.out.println("viewComputerorder "+ computerorderId);
+		
+//		装载时间段的信息,界面上用于显示
+		periodList = BorrowperiodUtil.getBorrowperiodList();
+		
 		computerorderFull = computerorderService.selectComputerorderFullById(computerorderId);
 		//如果找不到相应的预约单，返回错误
 		if(computerorderFull == null){
@@ -348,12 +354,18 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	public String toComputerorderConfirmPage(){	
 		log.info("toComputerorderConfirmPage computerordertype:"+computerordertype);
 		
+//		装载时间段的信息,界面上用于显示
+		periodList = BorrowperiodUtil.getBorrowperiodList();
+		
+
+		
+		
+		if(session==null || !session.containsKey("computerordertype") || !session.containsKey("computerorderdetailFullList")){
+			actionMsg = "预约信息不完整";
+			return ComputerConfig.pagenotfound;
+		}
 //		获取预约类型
 		computerordertype = (Integer) session.get("computerordertype");
-		
-		if(session==null || !session.containsKey("computerorderdetailFullList")){
-			return "error";
-		}
 		computerorderdetailFullList = (ArrayList<ComputerorderdetailFull>)session.get("computerorderdetailFullList");
 		if(computerorderdetailFullList == null ){
 			return "error";
@@ -415,8 +427,8 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	public String addComputerorderAjax(){	
 		log.info("Add Entity Ajax Manner");
 		
-		computerhomeworkid = (Integer) session.get("computerhomeworkid");
-		computerordertype = (Integer) session.get("computerordertype");
+		
+
 		
 		Integer uid = checkUserLogin();
 		if(uid < 0){			
@@ -424,6 +436,15 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 			buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
 			return SUCCESS;
 		}
+		
+		
+		if(session==null || !session.containsKey("computerordertype") || !session.containsKey("computerorderdetailFullList")){
+			returnInfo = "预约参数错误";
+			buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+			return SUCCESS;
+		}
+		computerhomeworkid = (Integer) session.get("computerhomeworkid");
+		computerordertype = (Integer) session.get("computerordertype");
 					
 		try {
 			Computerorder temp = new Computerorder();
@@ -974,6 +995,14 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 
 	public void setActionMsg(String actionMsg) {
 		this.actionMsg = actionMsg;
+	}
+
+	public List<Borrowperiod> getPeriodList() {
+		return periodList;
+	}
+
+	public void setPeriodList(List<Borrowperiod> periodList) {
+		this.periodList = periodList;
 	}
 
 

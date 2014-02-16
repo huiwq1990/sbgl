@@ -82,18 +82,11 @@
       <div class="container" id="msg">
         <div class="row">
 		
-          <div class="col-sm-3 sidebar">
-		    <form class="form-group">
-			  <input type="text" class="form-control" placeholder="搜索站内信">
-			  <i class="icon-search"></i>
-			</form>
-			<div class="list-group">
-			  <a href="消息中心-站内信.html" class="list-group-item active"><span class="badge">14</span>收件箱</a>
-			  <a href="消息中心-站内信-已发送.html" class="list-group-item">已发送</a>
-			  <a href="消息中心-站内信-回收站.html" class="list-group-item">回收站</a>
-			</div>
-          </div>
-          <div class="col-sm-9">
+			#set($currentWebpage="messageView.vm")
+		#parse("message/includeMessageSpaceSidebar.vm")
+          
+		  
+		  <div class="col-sm-9">
 			<div class="control-bar clearfix">
               <div class="operate-item pull-left">
                 <a href="#" class="btn btn-primary">回 复</a>
@@ -169,7 +162,7 @@
                 <div class="media">
                   <a rel="popover" class="pull-left" href="#" data-original-title="" title=""><img src="img/photo.jpg" width="46" height="46" class="img-circle"></a>
                   <div class="media-body">
-                    <div class="media-heading"><h5><a rel="popover" href="#" class="post-by">$temp.adduserloginuserid $temp.adduserloginusername</a><small class="post-time"> - 7月6日（XX天前）</small></h5></div>
+                    <div class="media-heading"><h5><a rel="popover" href="#" class="post-by">$temp.senderloginusername $temp.senderloginuserid</a><small class="post-time"> - 7月6日（XX天前）</small></h5></div>
                     <!--
 					<div class="info"><span class="post-to">发送至 李全胜</span></div>
 					-->
@@ -208,12 +201,22 @@
  <!-- 回复消息列表结束-->     
 		
  <!--回复框-->
-                 <div class="media">
-                  <a rel="popover" class="pull-left" href="#" data-original-title="" title=""><img src="img/photo.jpg" width="46" height="46" class="img-circle"></a>
-                  <div class="media-body">
-                    <textarea name="replyMSG" id="replyMSG" style="width:100%;height:200px;visibility:hidden;"></textarea>
+     	   <div class="accordion-group">
+                  <div class="media">
+                    <a rel="popover" class="pull-left" href="#" data-original-title="" title=""><img src="img/photo.jpg" width="46" height="46" class="img-circle"></a>
+                    <div class="media-body">
+                      <form role="form" action="javascript:void(0)">
+                        <div class="form-group" id="replyMSG">
+                          <textarea name="replyMSG" style="width:100%;height:200px;visibility:hidden;margin-bottom:10px;"></textarea>
+                        </div>
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-primary"  action-type="replyMessageButton" >发 送</button>
+                        </div>
+                      </form>
+                    </div>                    
                   </div>
                 </div>
+              </div>
   <!--回复框-->
   
 		</div> <!--end msg-accordion-->     
@@ -221,92 +224,6 @@
             </div>
 			
 			
-			<!--
-            <div class="thumbnail">
-              <div class="hd">
-                <h3>关于4：4：4（4：2：2）压缩与YUV及RGB的关系</h3>
-              </div>
-			 
-      <div class="accordion" id="msg-accordion">
-        <div class="accordion-group">
-          <div class="accordion-heading">
-            <div class="accordion-toggle" data-toggle="collapse" href="#msg-2">
-                <div class="media">
-                  <a rel="popover" class="pull-left" href="#" data-original-title="" title=""><img src="img/photo.jpg" width="46" height="46" class="img-circle"></a>
-                  <div class="media-body">
-                    <div class="media-heading"><h5><a rel="popover" href="#" class="post-by">李全胜老师</a><small class="post-time"> - 7月6日（XX天前）</small></h5></div>
-                    <div class="info"><span class="post-to">发送至 我</span></div>
-                  </div>
-                </div>
-            </div>
-          </div>
-          <div id="msg-2" class="accordion-body in collapse">
-            <div class="accordion-inner">
-              <div class="msg-content">这里是回复的正文。 Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.   
-                <div class="quote-wrap">
-                  <a class="accordion-toggle msg-quote-btn" data-toggle="collapse" href="#msg-quote-2">-显示引用文字-</a> 
-                  <div id="msg-quote-2" class="collapse msg-quote">
-                    <blockquote>
-                      <p>数字摄像与数字摄影机的记录原理区别不大,主要区别在分辨率,感光元件,记录媒介及编码格式,简单说,现在数字摄影机都是电影全幅CMOS,而摄像机还不是.摄影机一般采用3K至8K 12bit RAW逐行扫描序列帧格式,而视频采用10bit录像带记录或高清视频格式,采用YUV视频压缩及祯内压缩算法的mov文件.摄像机数字感光元件原始记录数据都是RGB格式,转成YUV主要是保证图像实时输入输出与播放的带宽要求.YUV4:2:2表示亮度信息Y全采样无压缩,UV是色度信息进行一半采样,一倍压缩,RGB转YUV有固定算法,按高清\标清略有不同,你可以查一下.Y=21%*R+72%*G+7%*B;(高清709).
-  
-  全胜</p>
-                      <small><cite>李全胜老师</cite> 在 2011-12-22 10:58:58 写道</small>
-                      <blockquote>
-                        <p>李老师，数字摄像机中4：4：4（4：2：2）压缩方式记录影像，这三个比例是不是分别代表YUV色彩空间的Y、U、V三个通道？换句话说数字摄像机采用的是YUV色彩空间记录数据的？但是从数字摄像机的原理知道，光通过分光镜分出R、G、B三色光分别记录在3个感光元件上，那为何又变成YUV空间了呢？是因为数据记录的需要吗？
-    另外，采用4：2：2压缩方式记录的数据量是不是只有4：4：4的2/3呢？</p>
-                        <small><cite>陈诚</cite> 在 2011-12-22 10:58:58 写道</small>
-                      </blockquote>
-                    </blockquote>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="accordion-group">
-          <div class="accordion-heading">
-            <div class="accordion-toggle collapsed" data-toggle="collapse" href="#msg-1">
-                <div class="media">
-                  <a rel="popover" class="pull-left" href="#" data-original-title="" title=""><img src="img/photo.jpg" width="46" height="46" class="img-circle"></a>
-                  <div class="media-body">
-                    <div class="media-heading"><h5><a rel="popover" href="#" class="post-by">陈诚</a><small class="post-time"> - 7月6日（XX天前）</small></h5></div>
-                    <div class="info"><span class="post-to">发送至 李全胜</span></div>
-                  </div>
-                </div>
-            </div>
-          </div>
-          <div id="msg-1" class="accordion-body collapse">
-            <div class="accordion-inner">
-			  <div class="msg-content">
-                <p>李老师，数字摄像机中4：4：4（4：2：2）压缩方式记录影像，这三个比例是不是分别代表YUV色彩空间的Y、U、V三个通道？换句话说数字摄像机采用的是YUV色彩空间记录数据的？但是从数字摄像机的原理知道，光通过分光镜分出R、G、B三色光分别记录在3个感光元件上，那为何又变成YUV空间了呢？是因为数据记录的需要吗？
-    另外，采用4：2：2压缩方式记录的数据量是不是只有4：4：4的2/3呢？</p>
-    
-                <div class="quote-wrap">
-                  <a class="accordion-toggle msg-quote-btn" data-toggle="collapse" href="#msg-quote-1">-显示引用文字-</a> 
-                  <div id="msg-quote-1" class="collapse msg-quote">
-                      <blockquote>
-                        <p>李老师，数字摄像机中4：4：4（4：2：2）压缩方式记录影像，这三个比例是不是分别代表YUV色彩空间的Y、U、V三个通道？换句话说数字摄像机采用的是YUV色彩空间记录数据的？但是从数字摄像机的原理知道，光通过分光镜分出R、G、B三色光分别记录在3个感光元件上，那为何又变成YUV空间了呢？是因为数据记录的需要吗？
-    另外，采用4：2：2压缩方式记录的数据量是不是只有4：4：4的2/3呢？</p>
-                        <small><cite>李全胜</cite> 在 2011-12-22 10:58:58 写道</small>
-                      </blockquote>
-                  </div>
-                </div>
-              </div>
-              <div class="msg-attach panel panel-default">
-                  <div class="panel-heading">
-                    <h3 class="panel-title">附件(X个)</h3>
-                  </div>
-                  <div class="panel-body">
-                    Panel content
-                  </div>
-                </div>
-            </div>
-          </div>
-        </div>
-      </div>
-              
-            </div>
-			-->
 			
           </div>
         </div>
@@ -357,6 +274,41 @@
 			});
 		});
 	})(jQuery);
+	
+	
+	
+		
+	
+	//回复消息
+	$("body").on("click", "button[action-type|=replyMessageButton]", function() {
+			
+			
+			var input_content =  editor.html();
+			//alert("input_content "+input_content);
+			//return;
+			var postData = {
+				"replyid":$messageFull.messageid,
+				"content": input_content
+			};
+			
+			jQuery.ajax({  
+			    url:"${webbaseurl}/replyMessageAjax.${strutsaction}",  
+			    type:"post",
+			    data:postData,
+			  	dataType: 'json',
+				success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+				if(returnJson.flag == 1){
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});
+					
+				}else{
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
+				}
+		}	});		  	  
+
+	})
+	//end 回复消息
+	
 </script>
 
 

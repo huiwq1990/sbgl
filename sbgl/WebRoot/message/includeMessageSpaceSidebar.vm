@@ -6,19 +6,19 @@
 	<div class="list-group">
 		
 		
-		<a href="${webbaseurl}/toMessageInbox.action" class="list-group-item
-		#if($currentWebpage == "messageInbox.vm" )
+		<a href="${webbaseurl}/toMessageInbox.${strutsaction}" class="list-group-item
+		#if($currentWebpage == "messageInbox.vm" || $currentWebpage == "messageView.vm" )
 			 active        
 		#end		
 		">收件箱</a> 
 		
-		<a href="${webbaseurl}/toMessageSendbox.action" class="list-group-item
+		<a href="${webbaseurl}/toMessageSendbox.${strutsaction}" class="list-group-item
 		#if($currentWebpage == "messageSendbox.vm" )
 			 active        
 		#end		
 		">已发送</a> 
 		
-		<a href="${webbaseurl}/toAddZhengzhuangPage.action" class="list-group-item
+		<a href="${webbaseurl}/toAddZhengzhuangPage.${strutsaction}" class="list-group-item
 		#if($currentWebpage == "messageTrash.vm" )
 			 active        
 		#end

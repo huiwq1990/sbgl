@@ -363,8 +363,9 @@
           <span class="btn btn-white file-input-button">
               <i class="icon-plus"></i>
               <span>添加图片</span>
-              <input id="inputEPic" type="file" name="files[]" multiple>
+              <input id="inputEPic" type="file" name="file" action-type="showFileNameForAdd" multiple>
           </span>
+		  <span id="imgFileForAdd"></span>
         </div>
       </div>
     </form>
@@ -647,8 +648,12 @@ function getComputermodelById(tcomputercategoryid){
 
 	//上传图片
 	$("#inputEPic").fileupload({
-    	url: "${webbaseurl}/uploadFile.do",
+
+    	url: "${webbaseurl}/uploadFile.${structaction}",
         dataType: 'json',
+		data:{	
+					imgType: "computermodelimg"
+					},
 		change: function (e, data) {
         	$("#submitBtnForAdd").attr("disabled", "disabled");
     	},

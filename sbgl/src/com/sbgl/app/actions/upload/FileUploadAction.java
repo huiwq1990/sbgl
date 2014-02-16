@@ -19,6 +19,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
+import org.jfree.util.Log;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.entity.Equipment;
@@ -49,6 +50,7 @@ public class FileUploadAction  extends ActionSupport {
 	}
 
 	public String uploadFile() throws Exception {
+		Log.info("添加文件");
 //		System.out.println("##############################################################");
 //		System.out.println("file name = " + file.getName());
 //		System.out.println("fileContentType = " + fileContentType);
@@ -76,6 +78,12 @@ public class FileUploadAction  extends ActionSupport {
 		String equipmentImagePath = "";
 		if( "equip".equals(imgType) ) {
 			equipmentImagePath = PropertyUtil.readValue("/system.properties", "equipmentImagePath");
+		}
+		
+		
+		if( "computermodelimg".equals(imgType) ) {
+			Log.info("保存机器模型的图片");
+			equipmentImagePath = PropertyUtil.readValue("/system.properties", "computerImagePath");
 		}
 		
 		//String root = ServletActionContext.getRequest().getRealPath("/equipImage");

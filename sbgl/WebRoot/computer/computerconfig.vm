@@ -74,10 +74,10 @@
 </header><!--/#header-wrap-->
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
 
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="设备预约首页.html">器材预约</a></li>
-        <li><a href="设备管理首页.html">器材管理</a></li>
-      </ul>
+	  		<!-- Navi -->
+		#set($currentPageType="computerorderManage")
+		#parse("computer/includeComputerManageNavi.vm")
+		
       <!--admin-wrap start-->
       <div id="admin-wrap">
         <div id="admin-content" class="clearfix">            
@@ -195,17 +195,11 @@
           </div>
 
       </div><!--equip-wrap end-->
-      <div id="lside"><!--sidebar start-->
-        <form class="form-group">
-          <input type="text" class="form-control" placeholder="搜索预约(预约号、姓名)">
-          <i class="icon-search"></i>
-        </form>
-        <div class="list-group">
-          <a href="机房预约管理首页.html" class="list-group-item">预约管理</a>
-          <!--<a href="机房预约-教学预约.html" class="list-group-item">教学预约</a>-->        
-          <a href="机房预约-设置.html" class="list-group-item active">设置</a>
-        </div>
-      </div>
+
+
+	  	  <!--sidebar start-->
+#set($currentWebpage ="computerorderConfig.vm")
+#parse("computer/includeComputerorderManageSidebar.vm")
       <!--sidebar end-->
 
 </section>

@@ -65,7 +65,9 @@
   </div>
   
   <div class="nav-wrap clearfix">
-    <div class="site-nav">
+    
+
+	<div class="site-nav">
       <div class="dropdown">
         <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 器材预约 <i class="icon-chevron-right"></i></a><!-- #BeginLibraryItem "/Library/siteNav.lbi" --><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
           <li><a href="index.html"><i class="icon-home"></i> 首页</a></li>
@@ -80,13 +82,14 @@
         </ul>
           <!-- #EndLibraryItem --></div>
     </div>
-    <div class="sub-nav">
-      <ul class="nav nav-tabs nav-tabs-google">
-        <li class="active"><a href="#">全部</a></li>
-        <li><a href="#">设备预约</a></li>
-        <li><a href="#">机房预约</a></li>
-      </ul>
-    </div>
+	
+	
+	#set($currentPageType="computerorderSpace")
+	#parse("include/includeOrderspaceSubNavi.vm")
+
+	
+	
+	
   </div>
 
 </header><!--/#header-wrap-->
@@ -99,7 +102,7 @@
           <div class="col3 container">
             <div class="control-bar clearfix">
               <div class="title pull-left">进行中的预约</div>
-              <a class="btn btn-primary pull-right" href="#selectRentType" role="button" data-toggle="modal">创建预约</a>
+              <a class="btn btn-primary pull-right" href="${webbaseurl}/toComputerIndividualorderPage.${strutsaction}" role="button" data-toggle="modal">创建预约</a>
             </div>
             <div class="row">
       

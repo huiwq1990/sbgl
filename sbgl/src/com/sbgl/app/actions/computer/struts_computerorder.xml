@@ -19,7 +19,7 @@
 <!-- 用户点击预约按钮后，跳转到预约确认界面 -->
 		<action name="toComputerorderConfirmPage" class="ManageComputerorder" method="toComputerorderConfirmPage">
         	<result name="success">/computer/computerorderConfirm.vm</result>
-        	<result name="error">/error.vm</result> 
+        	<result name="pagenotfound">/error/pagenotfound.vm</result> 
         </action>
         
         

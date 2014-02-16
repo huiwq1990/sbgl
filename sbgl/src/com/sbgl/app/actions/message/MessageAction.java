@@ -214,6 +214,52 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 
 
 	
+	/**
+	 * 回复消息
+	 * @return
+	 */
+	public String replyMessageAjax(){
+		log.info("回复消息："+message.getContent()+";回复的消息的ID："+message.getReplyid());
+		
+		Integer uid = checkUserLogin();
+		log.info("login user id "+ uid);
+		if(uid < 0){
+			returnInfo = "用户未登录";
+			buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+			return SUCCESS;
+		}
+		
+	
+		try {
+			Message temp = new Message();
+			// 将model里的属性值赋给temp
+			BeanUtils.copyProperties(temp, message);
+			temp.setSenderid(uid);
+			temp.setSendtime(DateUtil.currentDate());
+//			temp.setReplyid(0);
+			temp.setStatus(MessageConstant.MessageStatusValid);
+			
+			messageService.addMessage(temp);
+			
+		
+			
+			returnInfo = "回复成功";
+			buildReturnStr(ComputerConfig.ajaxsuccessreturn,returnInfo);
+			return SUCCESS;
+			
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}catch(Exception e){
+			e.printStackTrace();
+			log.error("类MessageAction的方法：addBbstagfavourite错误"+e);
+		}
+		
+		returnInfo = "回复失败";
+		buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+		return SUCCESS;
+	}
 	
 	//del entityfull Ajax
 	public String deleteMessageFullAjax( ){
