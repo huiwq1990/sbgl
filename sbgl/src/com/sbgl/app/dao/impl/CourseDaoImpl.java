@@ -25,7 +25,9 @@ import com.sbgl.util.*;
 public class CourseDaoImpl extends HibernateDaoSupport implements CourseDao{
 
 	private static final Log log = LogFactory.getLog(CourseDaoImpl.class);
-	private final String basicCourseFullSql = "select a.id as courseid, a.name as coursename, a.description as coursedescription, a.type as coursetype, a.adduserid as courseadduserid, a.teacherid as courseteacherid, a.addtime as courseaddtime, b.id as adduserloginuserid, b.name as adduserloginusername, b.userid as adduserloginuseruserid, b.password as adduserloginuserpassword, b.createtime as adduserloginusercreatetime, b.status as adduserloginuserstatus, b.roletype as adduserloginuserroletype, c.id as teacherloginuserid, c.name as teacherloginusername, c.userid as teacherloginuseruserid, c.password as teacherloginuserpassword, c.createtime as teacherloginusercreatetime, c.status as teacherloginuserstatus, c.roletype as teacherloginuserroletype from Course a  left join Loginuser b on a.adduserid=b.id left join Loginuser c on a.teacherid=c.id ";
+	private final String basicCourseFullSql = "select a.id as courseid, a.name as coursename, a.description as coursedescription, a.type as coursetype, a.adduserid as courseadduserid, a.teacherid as courseteacherid, a.addtime as courseaddtime, " +
+			"b.id as adduserloginuserid, b.name as adduserloginusername, b.userid as adduserloginuseruserid, b.password as adduserloginuserpassword, b.createtime as adduserloginusercreatetime, b.status as adduserloginuserstatus, b.roletype as adduserloginuserroletype, " +
+			"c.id as teacherloginuserid, c.name as teacherloginusername, c.userid as teacherloginuseruserid, c.password as teacherloginuserpassword, c.createtime as teacherloginusercreatetime, c.status as teacherloginuserstatus, c.roletype as teacherloginuserroletype from Course a  left join Loginuser b on a.adduserid=b.id left join Loginuser c on a.teacherid=c.id ";
 	
 	private final String basicCourseSql = "From Course as a ";
 	
@@ -189,28 +191,24 @@ public class CourseDaoImpl extends HibernateDaoSupport implements CourseDao{
 		}
 		return null;
 	}
+
+
+	@Override
+	public List<Course> selectCourseByLoginuserId(Integer adduserid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<CourseFull> selectCourseFullByLoginuserId(Integer adduserid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 //  根据关联查询实体full
 
-	//根据关联查询实体 
-	public List<Course> selectCourseByLoginuserId(Integer adduserid){
-	
-		return null;
-	}
-	public List<Course> selectCourseByLoginuserId(Integer teacherid){
-	
-		return null;
-	}
-  
 
-	public List<CourseFull> selectCourseFullByLoginuserId(Integer adduserid){
-	
-		return null;
-	}
-	public List<CourseFull> selectCourseFullByLoginuserId(Integer teacherid){
-	
-		return null;
-	}
 
  
 }
