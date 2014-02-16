@@ -123,8 +123,10 @@
                 <div class="media">
                   <a rel="popover" class="pull-left" href="#" data-original-title="" title=""><img src="img/photo.jpg" width="46" height="46" class="img-circle"></a>
                   <div class="media-body">
-                    <div class="media-heading"><h5><a rel="popover" href="#" class="post-by">李全胜老师</a><small class="post-time"> - 7月6日（XX天前）</small></h5></div>
-                    <div class="info"><span class="post-to">发送至 我</span></div>
+                    <div class="media-heading"><h5><a rel="popover" href="#" class="post-by">$messageFull.adduserloginusername</a><small class="post-time"> - 7月6日（XX天前）</small></h5></div>
+                     <!--
+					<div class="info"><span class="post-to">发送至 李全胜</span></div>
+					-->
                   </div>
                 </div>
             </div>
@@ -167,8 +169,10 @@
                 <div class="media">
                   <a rel="popover" class="pull-left" href="#" data-original-title="" title=""><img src="img/photo.jpg" width="46" height="46" class="img-circle"></a>
                   <div class="media-body">
-                    <div class="media-heading"><h5><a rel="popover" href="#" class="post-by">陈诚</a><small class="post-time"> - 7月6日（XX天前）</small></h5></div>
-                    <div class="info"><span class="post-to">发送至 李全胜</span></div>
+                    <div class="media-heading"><h5><a rel="popover" href="#" class="post-by">$temp.adduserloginuserid $temp.adduserloginusername</a><small class="post-time"> - 7月6日（XX天前）</small></h5></div>
+                    <!--
+					<div class="info"><span class="post-to">发送至 李全胜</span></div>
+					-->
                   </div>
                 </div>
             </div>
@@ -203,6 +207,15 @@
 #end			
  <!-- 回复消息列表结束-->     
 		
+ <!--回复框-->
+                 <div class="media">
+                  <a rel="popover" class="pull-left" href="#" data-original-title="" title=""><img src="img/photo.jpg" width="46" height="46" class="img-circle"></a>
+                  <div class="media-body">
+                    <textarea name="replyMSG" id="replyMSG" style="width:100%;height:200px;visibility:hidden;"></textarea>
+                  </div>
+                </div>
+  <!--回复框-->
+  
 		</div> <!--end msg-accordion-->     
               
             </div>
@@ -320,10 +333,23 @@
     ================================================== -->
 #parse("message/includeJsFile.vm")
 
-<script>
+<script>	
+			var editor;
+			KindEditor.ready(function(K) {
+				editor = K.create('textarea[name="replyMSG"]', {
+					resizeType : 1,
+					allowPreviewEmoticons : false,
+					allowImageUpload : false,
+					items : [
+						'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+						'insertunorderedlist', '|', 'emoticons']
+				});
+			});
 	(function($){
 		$(window).load(function(){
-		
+
+			
 			$(".msg-quote").on("show", function () {
 			   $(this).parent().find(".msg-quote-btn").html("-隐藏引用文字-");
 			}).on("hide", function () {
@@ -332,6 +358,7 @@
 		});
 	})(jQuery);
 </script>
+
 
 
 </body>
