@@ -154,7 +154,7 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 		
 		computerorderFull = computerorderService.selectComputerorderFullById(computerorderId);
 		if(computerorderFull == null){
-			actionMsg = "用户未登录";
+			actionMsg = "访问的订单不存在";
 			return ComputerConfig.usernotloginreturnstr;
 		}
 		

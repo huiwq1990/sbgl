@@ -11,4 +11,11 @@ public class MessageConstant {
 //	消息删除
 	public final static int MessageStatusDel = 2;
 	
+	
+//	用户未登录返回值
+	public final static String usernotloginreturnstr = "usernotlogin";	
+//	访问界面不存在
+	public final static String pagenotfound = "pagenotfound";
+	public final static String innererror = "innererror";
+	
 }

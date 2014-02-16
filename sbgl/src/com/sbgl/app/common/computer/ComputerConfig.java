@@ -49,7 +49,6 @@ public class ComputerConfig {
 //	用户未登录返回值
 	public final static String usernotloginreturnstr = "usernotlogin";
 	
-	
 //	访问界面不存在
 	public final static String pagenotfound = "pagenotfound";
 	public final static String innererror = "innererror";

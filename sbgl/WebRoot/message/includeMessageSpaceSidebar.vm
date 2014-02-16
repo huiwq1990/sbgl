@@ -1,19 +1,18 @@
-
-<div id="lside">
-	<form class="form-group">
+          <div class="col-sm-3 sidebar">
+<form class="form-group">
 		<input type="text" class="form-control" placeholder="搜索">
 			<i class="icon-search"></i>
 	</form>
 	<div class="list-group">
 		
 		
-		<a href="${webbaseurl}/manageKbZhengzhuangFull.action" class="list-group-item
-		#if($currentWebpage == "kbZhengzhuangFullManage.vm" )
+		<a href="${webbaseurl}/toMessageInbox.action" class="list-group-item
+		#if($currentWebpage == "messageInbox.vm" )
 			 active        
 		#end		
 		">收件箱</a> 
 		
-		<a href="${webbaseurl}/manageKbZhengzhuangFull.action" class="list-group-item
+		<a href="${webbaseurl}/toMessageSendbox.action" class="list-group-item
 		#if($currentWebpage == "messageSendbox.vm" )
 			 active        
 		#end		
@@ -26,4 +25,4 @@
 		">回收站</a>
 		
 	</div>
-</div>
+          </div>

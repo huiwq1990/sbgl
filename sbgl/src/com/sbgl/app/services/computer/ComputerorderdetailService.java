@@ -71,6 +71,10 @@ public interface ComputerorderdetailService{
 	List<Computerorderdetail> selectBookedComputerorderdetailFromStartToEnd(
 			String startDay, int startPeriod, String endDay, int endPeriod);
 
+	List<Computerorderdetail> selectBookedComputerorderdetailByModeltypeFromStartToEnd(
+			String startDay, int startPeriod, String endDay, int endPeriod,
+			String modeltypes);
+
 		
 	
 	

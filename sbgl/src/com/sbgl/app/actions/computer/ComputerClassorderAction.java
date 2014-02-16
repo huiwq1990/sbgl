@@ -183,6 +183,8 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 	
 	private int computerordertype = 0;
 
+//	可借出的pc model type
+	String borrowPcModelStr = "";
 	
 	public int checkUserLogin(){
 		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
@@ -271,8 +273,8 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 			return ComputerConfig.pagenotfound;
 		}
 		
-//		可借出的pc model type
-		String borrowPcModelStr = "";
+//		设置可借出的pc model type
+		borrowPcModelStr = "";
 		for (int i = 0; i < computerorderclassruledetailList.size(); i++) {
 			borrowPcModelStr += computerorderclassruledetailList.get(i).getAllowedcomputermodelid() + ",";
 		}
@@ -282,8 +284,7 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 		
 //		获取可以借出的PC模型信息
 		String getAvailableComputermodelFullTypeSql = " where a.languagetype="+currentlanguagetype+" and a.computermodeltype in (" + borrowPcModelStr +") ";
-//		String conditionSql = " where ";
-//		computermodelFullList = computermodelService.selectComputermodelFullByCondition(getAvailableComputermodelFullTypeSql);
+		log.info("可以借出的PC模型信息:"+getAvailableComputermodelFullTypeSql);
 		computermodelList = computermodelService.selectComputermodelByCondition(getAvailableComputermodelFullTypeSql);
 		
 		
@@ -340,7 +341,7 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 //		String getAllComputermodelTypeSql = " where a.languagetype="+currentlanguagetype+" ";
 //		computermodelList = computermodelService.selectComputermodelByCondition(getAllComputermodelTypeSql);
 		
-		for (int i = 0; i < computermodelFullList.size(); i++) {
+		for (int i = 0; i < computermodelList.size(); i++) {
 			System.out.println("当前可借数量id=" + computermodelList.get(i).getId() + "  " + " 名称："+ computermodelList.get(i).getName()
 					+ computermodelList.get(i).getAvailableborrowcountnumber());
 		}
@@ -424,10 +425,10 @@ public class ComputerClassorderAction  extends ActionSupport implements SessionA
 		System.out.println("预约订单：");
 //		ComputerorderdetailService computerorderdetailService = (ComputerorderdetailService)cxt.getBean("computerorderdetailService");
 		 
-		List<Computerorderdetail> computerorderdetailList  = computerorderdetailService.selectBookedComputerorderdetailFromStartToEnd(orderStartDateStr, currentPeriod,orderEndDateStr,8);
+		List<Computerorderdetail> computerorderdetailList  = computerorderdetailService.selectBookedComputerorderdetailByModeltypeFromStartToEnd(orderStartDateStr, currentPeriod,orderEndDateStr,8,borrowPcModelStr);
 		System.out.println(computerorderdetailList.size());
 		for(int i = 0; i <computerorderdetailList.size(); i++){
-			System.out.println("id="+computerorderdetailList.get(i).getId() + "  " +computerorderdetailList.get(i).getComputermodelid());
+			log.info("订单序号：="+computerorderdetailList.get(i).getId() + ";订单预约设备的类型:" +computerorderdetailList.get(i).getComputermodelid());
 		}
 
 		//根据预约清单计算当前可借数量			

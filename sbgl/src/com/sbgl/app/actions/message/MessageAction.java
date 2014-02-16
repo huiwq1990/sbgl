@@ -190,7 +190,7 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 				mr.setMessageid(temp.getId());
 				mr.setReceiverid(Integer.valueOf(userIds[i]));
 				mr.setHasview(0);
-				mr.setStatus(0);
+				mr.setStatus(MessageConstant.MessageStatusValid);
 				messagereceiverService.addMessagereceiver(mr);
 			}
 			
@@ -318,31 +318,26 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 
 
 /**
- * view MessageFull
- * need give parmeter id
- * get id from modle,
+ * 查看消息
  * @return
  */
-	public String viewMessageFull() {
+	public String viewMessage() {
 				
 		try {
-			int getId = message.getId();
-			log.info(this.logprefix + ";id=" + getId);
 			
-			if (getId < 0) {
-				log.error("error,id小于0不规范");
-				return "error";
-			}	
+			log.info(this.logprefix + ";查看消息的id=" + messageid);
 			
-			MessageFull temMessageFull = messageService.selectMessageFullById(getId);				
-			if(temMessageFull!=null){				
-				BeanUtils.copyProperties(messageFull,temMessageFull);
-				return SUCCESS;				
-			}else{
-				log.error("error,查询实体不存在。");
-				return "Error";
-			}			
-
+						
+			MessageFull temMessageFull = messageService.selectMessageFullById(messageid);
+			if(temMessageFull == null){
+				actionMsg = "访问的消息不存在";
+				log.error(actionMsg);
+				return MessageConstant.pagenotfound;
+			}
+			
+			BeanUtils.copyProperties(messageFull,temMessageFull);
+			return SUCCESS;		
+			
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
@@ -350,7 +345,10 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 		} catch (Exception e) {
 			e.printStackTrace();			
 		}
-		return "Error";
+		
+		actionMsg = "内部错误";
+		log.error(actionMsg);
+		return MessageConstant.innererror;
 	}
 
 	
@@ -398,6 +396,7 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 				messageFullList.add(temp.get(0));
 			}			
 		}
+		System.out.println(messageFullList.size());
 //		messageFullList = messageService.selectMessageFullByCondition(inboxsql);
 		if(messagereceiverList == null){
 			messageFullList = new ArrayList<MessageFull>();
@@ -406,6 +405,62 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 		return SUCCESS;
 	}
 	
+	
+	/**
+	 * 跳转到收件箱另外一页
+	 * @return
+	 */
+	public String toMessageInboxNextPage() {
+		log.info("");
+		Integer uid = checkUserLogin();
+		log.info("login user id "+ uid);
+		if(uid < 0){
+			actionMsg = "用户未登录";
+			log.error(actionMsg);
+			return ComputerConfig.usernotloginreturnstr;
+		}
+	
+//		查询收到的消息
+		String inboxsql = " where receiverid ="+uid + " and status = "+MessageConstant.MessageStatusValid + " order by id desc ";
+		messagereceiverList =	messagereceiverService.selectMessagereceiverByCondition(inboxsql);
+		System.out.println(messagereceiverList.size());
+		if(messagereceiverList == null){
+			page.setTotalCount(0);
+			page.setPageNo(0);
+			pageNo = 0;
+			messageFullList = new ArrayList<MessageFull>();
+			return SUCCESS;
+		}
+		
+		setPageInfo(messagereceiverList.size());
+		
+		int pageIndex = page.getPageNo()-1;
+		if(pageIndex < 0){
+			pageIndex = 0;
+		}
+		int fromIndex = pageIndex * page.SIZE;
+		int toIndex = fromIndex + page.SIZE;
+		if(messagereceiverList.size() < toIndex){
+			toIndex = messagereceiverList.size();
+		}
+		messagereceiverList = messagereceiverList.subList(fromIndex, toIndex);
+		
+		for (int i = 0; i < messagereceiverList.size(); i++) {
+			String msgfullsel = " where a.id = "+ messagereceiverList.get(i).getMessageid();
+			List<MessageFull> temp = messageService.selectMessageFullByCondition(msgfullsel);
+			if(temp != null && temp.size() == 1){
+				messageFullList.add(temp.get(0));
+			}			
+		}
+		
+//		messageFullList = messageService.selectMessageFullByCondition(inboxsql);
+		if(messagereceiverList == null){
+			messageFullList = new ArrayList<MessageFull>();
+			return SUCCESS;
+		}
+		
+		return SUCCESS;
+	}
 	/**
 	 * 消息发件箱
 	 */
@@ -456,6 +511,10 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 		return SUCCESS;
 	}
 	
+	/**
+	 * 跳转发件箱到另外一页
+	 * @return
+	 */
 	public String toMessageSendboxNextPage() {
 		log.info("");
 		Integer uid = checkUserLogin();

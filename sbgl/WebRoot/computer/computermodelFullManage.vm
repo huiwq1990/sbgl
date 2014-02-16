@@ -387,6 +387,10 @@
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 <script src="${jsDomain}/jquery.jqpagination.js"></script>
+
+<script src="${jsDomain}/fileUpload/vendor/jquery.ui.widget.js"></script>
+<script src="${jsDomain}/fileUpload/jquery.iframe-transport.js"></script>
+<script src="${jsDomain}/jquery.fileupload.js"></script>
 <script>
 	$("#modifyFaCategoryId").select2("val","2");
 </script>
@@ -458,6 +462,8 @@
 	//选择修改按钮，填充修改弹出框
 	$("body").on("click", "a[action-type|=editComputermodelFillIn]", function() {
 		var myData = $(this).data();
+	//	console.log(data);
+	//	alert(myData.computercategoryid);
 		$('#inputEditComputermodelComputercategoryid').select2("val",myData.computercategoryid);
 		
 		$("#inputEditComputermodelName").val(myData.name);		
@@ -638,6 +644,30 @@ function getComputermodelById(tcomputercategoryid){
 	refreshComputermodelTable();
 }
 
+
+	//上传图片
+	$("#inputEPic").fileupload({
+    	url: "${webbaseurl}/uploadFile.do",
+        dataType: 'json',
+		change: function (e, data) {
+        	$("#submitBtnForAdd").attr("disabled", "disabled");
+    	},
+        done: function (e, data) {
+			$("#submitBtnForAdd").removeAttr("disabled");
+            console.log(data);
+			if(data.result.tag == 0) {
+				localFileName = data.files[0].name;
+				savedFileName = data.result.savedFileName;
+				$("#imgFileForAdd").html(localFileName);
+				$("#inputEPic").prop('disabled', true);
+			} else if(data.result.tag == 1) {
+				alert("上传图片失败！");
+				localFileName = "";
+				savedFileName = "";
+			}
+            //alert(data.result.savedFileName);
+        }
+    });
 	
 	
 </script>
