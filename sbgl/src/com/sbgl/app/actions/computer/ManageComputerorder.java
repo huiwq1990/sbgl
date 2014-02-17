@@ -109,9 +109,9 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	private String orderInfoStr;
 	private Object computerorderSerialnumber;
 	
-//	确认界面参数
-	int orderpccaregorynum = 0;
-	int orderpctotalnum = 0;
+//	统计预约单的参数
+	int orderpccaregorynum = 0;//订单模型数量
+	int orderpctotalnum = 0;//订单机器数量
 	
 	int computerordertype;
 	int computerhomeworkid;
@@ -152,7 +152,10 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	 * @return
 	 */
 	public String toAuditComputerorderPage(){
-		System.out.println("toAuditComputerorderPage "+ computerorderId);
+		log.info("toAuditComputerorderPage "+ computerorderId);
+		
+//		装载时间段的信息,界面上用于显示
+		periodList = BorrowperiodUtil.getBorrowperiodList();
 		
 		computerorderFull = computerorderService.selectComputerorderFullById(computerorderId);
 		if(computerorderFull == null){
@@ -169,16 +172,17 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 		if(computerorderdetailFullList==null){
 			computerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
 		}
-		for (int i = 0; i < computerorderdetailFullList.size(); i++) {
-			int tempComputermodelId = computerorderdetailFullList.get(i).getComputerorderdetailcomputermodelid();
-			if(computerorderdetailFullMapByComputermodelId.containsKey(tempComputermodelId)){
-				computerorderdetailFullMapByComputermodelId.get(tempComputermodelId).add(computerorderdetailFullList.get(i));
-			}else{
-				ArrayList<ComputerorderdetailFull> tempComputerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
-				tempComputerorderdetailFullList.add(computerorderdetailFullList.get(i));
-				computerorderdetailFullMapByComputermodelId.put(tempComputermodelId,tempComputerorderdetailFullList);
-			}
-		}
+//		for (int i = 0; i < computerorderdetailFullList.size(); i++) {
+//			int tempComputermodelId = computerorderdetailFullList.get(i).getComputerorderdetailcomputermodelid();
+//			if(computerorderdetailFullMapByComputermodelId.containsKey(tempComputermodelId)){
+//				computerorderdetailFullMapByComputermodelId.get(tempComputermodelId).add(computerorderdetailFullList.get(i));
+//			}else{
+//				ArrayList<ComputerorderdetailFull> tempComputerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
+//				tempComputerorderdetailFullList.add(computerorderdetailFullList.get(i));
+//				computerorderdetailFullMapByComputermodelId.put(tempComputermodelId,tempComputerorderdetailFullList);
+//			}
+//		}
+		this.buildOrderInfo(computerorderdetailFullList);
 		
 		if(computerorderdetailFullMapByComputermodelId == null){
 			computerorderdetailFullMapByComputermodelId = new HashMap<Integer,ArrayList<ComputerorderdetailFull>>();
@@ -229,7 +233,7 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 	 * @return
 	 */
 	public String viewComputerorder(){
-		System.out.println("viewComputerorder "+ computerorderId);
+		log.info("viewComputerorder "+ computerorderId);
 		
 //		装载时间段的信息,界面上用于显示
 		periodList = BorrowperiodUtil.getBorrowperiodList();
@@ -237,9 +241,9 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 		computerorderFull = computerorderService.selectComputerorderFullById(computerorderId);
 		//如果找不到相应的预约单，返回错误
 		if(computerorderFull == null){
-//			Log.info("");
-			System.out.println("wrong");
-			return "PageNotFound";
+			actionMsg = "访问的页面不存在";
+			log.info(actionMsg);
+			return ComputerConfig.pagenotfound;
 		}
 		
 		String sql = " where a.computerorderid = "+computerorderId  + " and c.languagetype="+ComputerConfig.languagech ;
@@ -249,16 +253,19 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 		if(computerorderdetailFullList==null){
 			computerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
 		}
-		for (int i = 0; i < computerorderdetailFullList.size(); i++) {
-			int tempComputermodelId = computerorderdetailFullList.get(i).getComputerorderdetailcomputermodelid();
-			if(computerorderdetailFullMapByComputermodelId.containsKey(tempComputermodelId)){
-				computerorderdetailFullMapByComputermodelId.get(tempComputermodelId).add(computerorderdetailFullList.get(i));
-			}else{
-				ArrayList<ComputerorderdetailFull> tempComputerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
-				tempComputerorderdetailFullList.add(computerorderdetailFullList.get(i));
-				computerorderdetailFullMapByComputermodelId.put(tempComputermodelId,tempComputerorderdetailFullList);
-			}
-		}
+		
+//		for (int i = 0; i < computerorderdetailFullList.size(); i++) {
+//			int tempComputermodelId = computerorderdetailFullList.get(i).getComputerorderdetailcomputermodelid();
+//			if(computerorderdetailFullMapByComputermodelId.containsKey(tempComputermodelId)){
+//				computerorderdetailFullMapByComputermodelId.get(tempComputermodelId).add(computerorderdetailFullList.get(i));
+//			}else{
+//				ArrayList<ComputerorderdetailFull> tempComputerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
+//				tempComputerorderdetailFullList.add(computerorderdetailFullList.get(i));
+//				computerorderdetailFullMapByComputermodelId.put(tempComputermodelId,tempComputerorderdetailFullList);
+//			}
+//		}
+		
+		buildOrderInfo(computerorderdetailFullList);
 		
 		if(computerorderdetailFullMapByComputermodelId == null){
 			computerorderdetailFullMapByComputermodelId = new HashMap<Integer,ArrayList<ComputerorderdetailFull>>();
@@ -282,11 +289,10 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 		ReturnJson returnJson = new ReturnJson();		
 		
 		if(confirmOrderInfo(orderInfoStr) == false){
-			returnJson.setFlag(0);
-			returnJson.setReason("提交数据错误");
-			
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
+
+			returnInfo = "预约表单数据错误";
+			log.error(returnInfo);
+			this.returnStr = ComputerActionUtil.buildReturnStr(ComputerConfig.ajaxerrorreturn, returnInfo);
 			return SUCCESS;
 		}else{
 			returnJson.setFlag(1);
@@ -299,7 +305,11 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 			session.put("computerordertype", computerordertype);
 			session.put("computerorderdetailList", computerorderdetailList);
 			session.put("computerorderdetailFullList", computerorderdetailFullList);
-//			returnJson.setReason("提交数据错误");
+
+
+			returnInfo = "成功";
+			log.info(returnInfo);
+			this.returnStr = ComputerActionUtil.buildReturnStr(ComputerConfig.ajaxsuccessreturn, returnInfo);
 			return SUCCESS;
 		}
 	}
@@ -371,23 +381,8 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 			return "error";
 		}
 		
-		
-		orderpctotalnum = 0;
-		
-		for (int i = 0; i < computerorderdetailFullList.size(); i++) {
-			int tempComputermodelId = computerorderdetailFullList.get(i).getComputerorderdetailcomputermodelid();
-			if(computerorderdetailFullMapByComputermodelId.containsKey(tempComputermodelId)){
-				computerorderdetailFullMapByComputermodelId.get(tempComputermodelId).add(computerorderdetailFullList.get(i));
-			}else{
-				ArrayList<ComputerorderdetailFull> tempComputerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
-				tempComputerorderdetailFullList.add(computerorderdetailFullList.get(i));
-				computerorderdetailFullMapByComputermodelId.put(tempComputermodelId,tempComputerorderdetailFullList);
-				orderpctotalnum++;
-			}
-		}
-		
-		
-		orderpccaregorynum = computerorderdetailFullMapByComputermodelId.size();
+//		设置统计信息
+		buildOrderInfo(computerorderdetailFullList);
 		
 		
 		if(computerorderdetailFullMapByComputermodelId == null){
@@ -422,6 +417,27 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 		}
 	}
 	
+	/**
+	 * 统计订单的模型数量，借用个数，设置查看订单返回值
+	 * @param computerorderdetailFullList
+	 */
+	public void buildOrderInfo(List<ComputerorderdetailFull> computerorderdetailFullList){
+		orderpctotalnum = 0;
+		for (int i = 0; i < computerorderdetailFullList.size(); i++) {
+			int tempComputermodelId = computerorderdetailFullList.get(i).getComputerorderdetailcomputermodelid();
+			if(computerorderdetailFullMapByComputermodelId.containsKey(tempComputermodelId)){
+				computerorderdetailFullMapByComputermodelId.get(tempComputermodelId).add(computerorderdetailFullList.get(i));				
+			}else{
+				ArrayList<ComputerorderdetailFull> tempComputerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
+				tempComputerorderdetailFullList.add(computerorderdetailFullList.get(i));
+				computerorderdetailFullMapByComputermodelId.put(tempComputermodelId,tempComputerorderdetailFullList);				
+			}
+			orderpctotalnum =orderpctotalnum + computerorderdetailFullList.get(i).getComputerorderdetailborrownumber();
+		}		
+		orderpccaregorynum = computerorderdetailFullMapByComputermodelId.size();
+		
+		log.info(orderpctotalnum);
+	}
 	
 //  提交预约表单	
 	public String addComputerorderAjax(){	

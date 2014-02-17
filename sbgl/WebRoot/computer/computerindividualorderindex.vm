@@ -208,6 +208,7 @@
 <script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
 <script src="${jsDomain}/xdate.js"></script>
 <script src="${jsDomain}/computer/computerutil.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
 
 <script>
 function CreatePostBookingTable(rowCount,cellCount,startDate) {

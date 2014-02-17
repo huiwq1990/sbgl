@@ -2,16 +2,21 @@ package com.sbgl.app.actions.upload;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -19,9 +24,10 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
-import org.jfree.util.Log;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sbgl.app.actions.computer.ManageComputerorder;
+import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.entity.Equipment;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Equipmentdetail;
@@ -30,7 +36,7 @@ import com.sbgl.app.services.equipment.EquipService;
 import com.sbgl.util.PropertyUtil;
 
 public class FileUploadAction  extends ActionSupport {
-	
+	private static final Log log = LogFactory.getLog(FileUploadAction.class);
 	@Resource
 	private CommonService commonService;
 	@Resource
@@ -45,15 +51,21 @@ public class FileUploadAction  extends ActionSupport {
 	private String msg;
 //	private String equipmentid;
 	
+	
+	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
+	private String returnInfo;
+	private String actionMsg; // Action间传递的消息参数
+	
+	
 	public String getMsg() {
 		return msg;
 	}
 
 	public String uploadFile() throws Exception {
-		Log.info("添加文件");
-//		System.out.println("##############################################################");
-//		System.out.println("file name = " + file.getName());
-//		System.out.println("fileContentType = " + fileContentType);
+//		System.out.println("添加文件" +fileFileName);
+		System.out.println("##############################################################");
+		System.out.println("file name = " + file.getName());
+		System.out.println("fileContentType = " + fileContentType);
 //		System.out.println("equipmentid = " + equipmentid);
 		String fileType = fileFileName.substring( fileFileName.indexOf('.') );
 		//拦截格式不正确的文件，仅允许保存图片格式
@@ -82,7 +94,7 @@ public class FileUploadAction  extends ActionSupport {
 		
 		
 		if( "computermodelimg".equals(imgType) ) {
-			Log.info("保存机器模型的图片");
+			System.out.println("保存机器模型的图片");
 			equipmentImagePath = PropertyUtil.readValue("/system.properties", "computerImagePath");
 		}
 		
@@ -103,6 +115,98 @@ public class FileUploadAction  extends ActionSupport {
 //		equipService.alterEquipInfo( e );
 		return SUCCESS;
 	}
+	
+	
+	/**
+	 * 上传图片文件
+	 * @return
+	 * @throws Exception
+	 */
+	public String uploadImageFile() {
+
+		log.info("上传文件");
+		if(file == null || file.getName() == null || fileFileName == null){
+			returnInfo = "上传的文件不存在";
+			log.error(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return SUCCESS;
+		}
+		log.info("文件信息");
+		log.info("源文件名称：" + fileFileName);
+		log.info("上传后文件名称：" + file.getName());
+		
+		String fileType = fileFileName.substring( fileFileName.indexOf('.') );
+		//拦截格式不正确的文件，仅允许保存图片格式
+		if(fileType == null){
+			returnInfo = "上传的文件格式不能为空";
+			log.error(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return SUCCESS;			
+		}
+	
+		if(!fileType.toLowerCase().equals(".jpg") && !fileType.toLowerCase().equals(".png") &&!fileType.toLowerCase().equals(".gif")) {
+			returnInfo = "上传的文件格式不允许";
+			log.error(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return SUCCESS;
+		}
+		
+		String imagePath = "";
+		String destinationFileName = "";
+//		保存机器模型图片
+		if( "computermodelimg".equals(imgType) ) {
+			log.info("保存机器模型的图片");
+			String root = ServletActionContext.getServletContext().getRealPath("/");
+			imagePath = root + "/" + PropertyUtil.readValue("/system.properties", "computerImagePath");
+			
+			destinationFileName = String.valueOf(Calendar.getInstance().getTimeInMillis()) ;
+		}
+		
+		
+		if(imagePath.equals("") || destinationFileName.equals("")){
+			returnInfo = "无法获取保存的路径及文件名";
+			log.error(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return SUCCESS;
+		}
+		
+		InputStream is;
+		try {
+			is = new FileInputStream(file);
+			//String root = ServletActionContext.getRequest().getRealPath("/equipImage");
+			File deskFile = new File(imagePath, destinationFileName);
+			OutputStream os = new FileOutputStream(deskFile);
+			byte[] bytefer = new byte[1024];
+			int length = 0;
+			while ((length = is.read(bytefer)) != -1) {
+				os.write(bytefer, 0, length);
+			}
+			os.flush();
+			os.close();
+			is.close();
+			
+			returnInfo = destinationFileName;
+			log.info("上传成功");
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
+			return SUCCESS;
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		returnInfo = "系统错误";
+		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+		return SUCCESS;
+	}
+	
+	
+	
 	
 	public String uploadUserPhoto() throws Exception {
 		String fileType = fileFileName.substring( fileFileName.indexOf('.') );
@@ -396,4 +500,55 @@ public class FileUploadAction  extends ActionSupport {
 //	public void setEquipmentid(String equipmentid) {
 //		this.equipmentid = equipmentid;
 //	}
+
+	public CommonService getCommonService() {
+		return commonService;
+	}
+
+	public void setCommonService(CommonService commonService) {
+		this.commonService = commonService;
+	}
+
+	public EquipService getEquipService() {
+		return equipService;
+	}
+
+	public void setEquipService(EquipService equipService) {
+		this.equipService = equipService;
+	}
+
+	public String getReturnStr() {
+		return returnStr;
+	}
+
+	public void setReturnStr(String returnStr) {
+		this.returnStr = returnStr;
+	}
+
+	public String getReturnInfo() {
+		return returnInfo;
+	}
+
+	public void setReturnInfo(String returnInfo) {
+		this.returnInfo = returnInfo;
+	}
+
+	public String getActionMsg() {
+		return actionMsg;
+	}
+
+	public void setActionMsg(String actionMsg) {
+		this.actionMsg = actionMsg;
+	}
+
+	public static Log getLog() {
+		return log;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+	
+	
+	
 }

@@ -120,16 +120,12 @@
         </action>
 		
 		
-<!--根据id查询实体-->
-        <action name="selectComputerorderById" class="ComputerorderAction" method="selectComputerorderById">
-        	<result name="success">/computer/computerorderView.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
+
 
  <!-- 用户查看自己的预约 详情-->
 		<action name="viewComputerorder" class="ManageComputerorder" method="viewComputerorder">
         	<result name="success">/computer/computerorderView.vm</result>
-        
+       		<result name="pagenotfound">/common/pagenotfound.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
 

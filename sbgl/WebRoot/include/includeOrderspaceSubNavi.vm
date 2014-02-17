@@ -7,8 +7,10 @@
 		#if($currentPageType == "computerorderSpace" )
 			 class="active"      
 		#end	
-		><a href="#">机房预约</a></li>
+		><a href="${webbaseurl}/viewMineComputerorderList.${strutsaction}">机房预约</a></li>
 		
+	
+	
 		#if($currentPageType == "createorder" )
 			<li class="divider"></li>
 			<li class="active"><a href="#">预约提交</a></li>

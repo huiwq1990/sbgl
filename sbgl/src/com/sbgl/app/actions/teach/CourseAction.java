@@ -19,6 +19,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.teach.CourseService;
 import com.sbgl.util.*;
@@ -40,8 +41,7 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 	private Course course = new Course();//实例化一个模型
 	private Course courseModel = new Course();//实例化一个模型
 	private CourseFull courseFull = new CourseFull();//实例化一个模型
-	private String actionMsg; // Action间传递的消息参数
-	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
+
 	List<Course> courseList = new ArrayList<Course>();
 	List<CourseFull> courseFullList = new ArrayList<CourseFull>();
 	private Integer courseid; //entity full 的id属性名称		
@@ -52,6 +52,32 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 	private Page page = new Page();
 	private ReturnJson returnJson = new ReturnJson();
 	private String courseIdsForDel;
+	
+	
+	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
+	private String returnInfo;
+	private String actionMsg; // Action间传递的消息参数
+	
+	
+	
+//	添加时，课程英文名称
+	private String coursenameen;
+
+	public int getAdminId(){
+		
+	}
+	
+	/**
+	 * 跳转到课程添加界面
+	 * @return
+	 */
+	public String toCourseAddPage(){
+		log.info(logprefix+"toCourseAddPage");
+		
+
+		return SUCCESS;
+	}		
+			
 	
 //  manage Course
 	public String manageCourse(){
@@ -106,53 +132,27 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 	}			
 
 			
-	public String addCourse(){	
-		log.info("Add Entity");
-
-		try {
-			Course temp = new Course();
-			// 将model里的属性值赋给temp
-			BeanUtils.copyProperties(temp, course);			
-			//add your code here.
-			
-			//temp.setCreatetime(DateUtil.currentDate());
-			
-			courseService.addCourse(temp);
-			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CourseAction的方法：addBbstagfavourite错误"+e);
-		}
-		return "Error";
-	}
 	
 //  ajax add	
 	public String addCourseAjax(){	
 		log.info("Add Entity Ajax Manner");
-		
-		ReturnJson returnJson = new ReturnJson();
+	
 		
 		try {
 			Course temp = new Course();
+			
+			temp.setAddtime(DateUtil.currentDate());
 			// 将model里的属性值赋给temp
 			BeanUtils.copyProperties(temp, course);			
-			//add your code here.
-			
-			//temp.setCreatetime(DateUtil.currentDate());
 			
 			
 			courseService.addCourse(temp);
 			
-			returnJson.setFlag(1);
-			returnJson.setReason("添加成功");
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
 			
+
+			returnInfo = "添加成功";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
 			return SUCCESS;
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
@@ -163,11 +163,13 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 			log.error("类CourseAction的方法：addBbstagfavourite错误"+e);
 		}
 		
-		returnJson.setFlag(0);		
-		returnJson.setReason("添加失败");
-		JSONObject jo = JSONObject.fromObject(returnJson);
-		this.returnStr = jo.toString();
+		
+		
+		returnInfo = "添加失败";
+		log.info(returnInfo);
+		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 		return SUCCESS;
+		
 	}
 
 //删除

@@ -90,63 +90,10 @@
             <div class="control-bar col-md-12">
               <div class="title">$!computerorderFull.computerordertitle  </div>
             </div>        
-            <div class="col-md-7">                  
-                <div class="thumbnail">
-                  <div class="hd clearfix">
-                    <h3 class="pull-left">预约单</h3>
-                    <div class="pull-right">共XX种，XX个器材</div>
-                  </div>
-                  <div class="media-list">
-##判断map是否为空
-#set($computerorderMapSize = $computerorderdetailFullMapByComputermodelId.size() - 1)
-##判断数据是否为空
-#if($computerorderMapSize>=0)
-#set($computerorderMapRegion = [0..$computerorderMapSize])
-##取出所有的属性名称
-#foreach($tempKey in ${computerorderdetailFullMapByComputermodelId.keySet()}) 
-			#set($tempComputerorderdetailFullList = $computerorderdetailFullMapByComputermodelId.get($tempKey))
-
-                    <div class="media">                        
-                      <div class="group-hd">
-                        <div class="group-name pull-left">$tempComputerorderdetailFullList.get(0).computermodelname</div>
-                        <div class="group-line">
-                          <hr>
-                        </div>
-                      </div>
-                      <a class="pull-left" data-toggle="modal" href="#equip-detail" role="button">
-                        <img src="${computerImagePath}/$tempComputerorderdetailFullList.get(0).computermodelpicpath" width="100" height="100">
-                      </a>
-                      <div class="media-body">
-						#foreach($temporder in $tempComputerorderdetailFullList)
-                     
-                        <p>$temporder.computerorderdetailborrowday $temporder.computerorderdetailborrowperiod $temporder.computerorderdetailborrownumber</p>
-						#end
-                      </div>
-                    </div>
-#end
-#end					
-					
-					<!--
-                    <div class="media">                        
-                      <div class="group-hd">
-                        <div class="group-name pull-left">DELL工作站</div>
-                        <div class="group-line">
-                          <hr>
-                        </div>
-                      </div>
-                      <a class="pull-left" data-toggle="modal" href="#equip-detail" role="button">
-                        <img src="../img/dell.jpg" width="100" height="100">
-                      </a>
-                      <div class="media-body">
-                        <p>2013年9月12日 星期一 上午</p>
-                        <p>2013年9月14日 星期三 晚上</p>
-                        <p>……</p>
-                      </div>  
-                    </div>
-                 -->
-					  
-					  </div>
-                </div>                  
+            <div class="col-md-7">      
+				
+                #parse("include/includeComputerorderList.vm") 
+				
             </div>
 			
             <div class="col-md-5">
