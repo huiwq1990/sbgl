@@ -1,19 +1,46 @@
       <!--sidebar start-->
       <div id="lside">
         <div class="list-group">
-          <a href="教学管理首页.html" class="list-group-item
+          <a href="${webbaseurl}/manageCourseFull.${strutsaction}" class="list-group-item
 			#if($currentWebpage == "manageCourse" )
 			active      
 			#end	
 			">课程管理</a>
-          <a href="教学管理-添加课程.html" class="list-group-item
+          <a href="${webbaseurl}/toCourseAddPage.${strutsaction}" class="list-group-item
 			#if($currentWebpage == "courseAdd" )
 			active      
 			#end		
-			">添加课程</a>
+			">添加课程</a> 
           <a href="教学管理-设备预约安排.html" class="list-group-item">设备预约安排</a>
-          <a href="教学管理-机房预约安排.html" class="list-group-item">机房预约安排</a>
-          <a href="教学管理-机房课程安排.html" class="list-group-item ">机房课程安排</a>
+          <a href="${webbaseurl}/toAddComputerorderclassrulePage.${strutsaction}" class="list-group-item
+			#if($currentWebpage == "computerorderclassruleAdd" )
+			active      
+			#end	
+			">机房规则添加</a>
+		   
+		   <a href="${webbaseurl}/manageComputerorderclassruleFull.${strutsaction}" class="list-group-item
+			#if($currentWebpage == "computerorderclassruleManage" )
+			active      
+			#end	
+			">机房规则管理</a>
+			
+			<a href="${webbaseurl}/toAddComputerhomeworkPage.${strutsaction}" class="list-group-item
+			#if($currentWebpage == "computerhomeworkAdd" )
+			active      
+			#end	
+			">机房作业添加</a>
+		   
+		   <a href="${webbaseurl}/manageComputerhomeworkFull.${strutsaction}" class="list-group-item
+			#if($currentWebpage == "computerhomeworkManage" )
+			active      
+			#end	
+			">机房作业管理</a>
+			
+          <a href="教学管理-机房课程安排.html" class="list-group-item 		
+			#if($currentWebpage == "computerhomeworkAdd" )
+			active      
+			#end		
+			">机房课程安排</a>
 		  <a href="教学管理-教学设置.html" class="list-group-item">设置</a>
         </div>
       </div>

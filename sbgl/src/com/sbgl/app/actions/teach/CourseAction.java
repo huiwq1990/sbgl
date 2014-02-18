@@ -11,6 +11,7 @@ import net.sf.json.JSONObject;
 import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.teach.CourseService;
@@ -41,15 +43,15 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 	private Course course = new Course();//实例化一个模型
 	private Course courseModel = new Course();//实例化一个模型
 	private CourseFull courseFull = new CourseFull();//实例化一个模型
-
-	List<Course> courseList = new ArrayList<Course>();
-	List<CourseFull> courseFullList = new ArrayList<CourseFull>();
+	private List<Course> courseList = new ArrayList<Course>();
+	private List<CourseFull> courseFullList = new ArrayList<CourseFull>();
+	private List<CourseFull> courseFullListCh = new ArrayList<CourseFull>();
+	private List<CourseFull> courseFullListEn = new ArrayList<CourseFull>();
+	
 	private Integer courseid; //entity full 的id属性名称		
 	private String logprefix = "exec action method:";
 	
-	private int pageNo=1;
-	private String callType;
-	private Page page = new Page();
+
 	private ReturnJson returnJson = new ReturnJson();
 	private String courseIdsForDel;
 	
@@ -58,13 +60,45 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 	private String returnInfo;
 	private String actionMsg; // Action间传递的消息参数
 	
-	
+	private int pageNo=1;
+	private int totalcount = 0;
+	private int totalpage = 0;
+	private Page page = new Page();
+	private String callType;
 	
 //	添加时，课程英文名称
 	private String coursenameen;
-
+	private int courseiden;
+	
 	public int getAdminId(){
 		
+		Object obj = ServletActionContext.getRequest().getSession().getAttribute(CommonConfig.sessionadminid);
+		if(obj!=null){
+			return (Integer) obj;
+		}
+		
+		return -1;
+	}
+	public void setPageInfo(int totalcount){
+		if(pageNo ==0){
+			pageNo =1;
+		}
+		
+		//设置总数量
+		page.setTotalCount(totalcount);
+		
+		//如果页码大于总页数，重新设置
+		if(pageNo>page.getTotalpage()){
+			pageNo = page.getTotalpage();
+		}
+		
+		page.setPageNo(pageNo);
+		if(page.getTotalCount()==0){
+			page.setPageNo(0);
+			page.setTotalpage(0);
+			pageNo = 0;
+			System.out.println(pageNo);
+		}
 	}
 	
 	/**
@@ -78,48 +112,26 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 		return SUCCESS;
 	}		
 			
-	
-//  manage Course
-	public String manageCourse(){
-		log.info(logprefix+"manageCourseFull");
 		
-//      分页查询	
-		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
-		//page.setTotalpage(courseService.countCourseRow());
-		courseList  = courseService.selectCourseByPage(page);
-		
-//		查询全部
-//		courseList  = courseService.selectCourseById();
-		
-	    if(courseList == null){
-			courseList = new ArrayList<Course>();
-		}
-//		for(int i = 0; i < courseList.size(); i++){
-//			System.out.println("id="+courseList.get(i).getLoginusername());
-//		}
-		return SUCCESS;
-	}		
-			
 	//管理 查询
 	public String manageCourseFull(){
 		log.info("exec action method:manageCourseFull");
                 
 //      分页查询        
-        if(pageNo <= 0){
-			pageNo =1;
-        }
-        page.setTotalCount(courseService.countCourseRow());
-        if(page.getTotalpage() < pageNo){
-			pageNo = page.getTotalpage();
-        }
-        page.setPageNo(pageNo);
+        int count = courseService.countCourseRow()/2;
+        System.out.println(count);
+        this.setPageInfo(count);
+        
                 
-        courseFullList  = courseService.selectCourseFullByConditionAndPage("", page);
+        courseFullListCh  = courseService.selectCourseFullByConditionAndPage(" where a.languagetype = "+CommonConfig.languagech, page);
+        courseFullListEn  = courseService.selectCourseFullByConditionAndPage(" where a.languagetype = "+CommonConfig.languageen, page);
                
 
-        if(courseFullList == null){
-			courseFullList = new ArrayList<CourseFull>();
+        if(courseFullListCh == null){
+        	courseFullListCh = new ArrayList<CourseFull>();
+        }
+        if(courseFullListEn == null){
+        	courseFullListEn = new ArrayList<CourseFull>();
         }
 //      for(int i = 0; i < computerhomeworkFullList.size(); i++){
 //      	System.out.println("id=");
@@ -137,18 +149,30 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 	public String addCourseAjax(){	
 		log.info("Add Entity Ajax Manner");
 	
+		int aid = this.getAdminId();
+		if(aid == -1){
+			returnInfo = "管理员未登录";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxadminnotloginreturn, returnInfo);
+			return SUCCESS;
+		}
+		
 		
 		try {
-			Course temp = new Course();
 			
-			temp.setAddtime(DateUtil.currentDate());
-			// 将model里的属性值赋给temp
-			BeanUtils.copyProperties(temp, course);			
+			course.setAdduserid(aid);
+			course.setAddtime(DateUtil.currentDate());
+			
+			Course ch = new Course();	
+			BeanUtils.copyProperties(ch, course);				
+			ch.setLanguagetype(CommonConfig.languagech);
 			
 			
-			courseService.addCourse(temp);
-			
-			
+			Course en = new Course();	
+			BeanUtils.copyProperties(en, course);		
+			en.setName(coursenameen);
+			en.setLanguagetype(CommonConfig.languageen);
+			courseService.addCourse(ch,en);
 
 			returnInfo = "添加成功";
 			log.info(returnInfo);
@@ -172,67 +196,7 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 		
 	}
 
-//删除
-	public String deleteCourse( ){
-		try{
-			if(course.getId() != null && course.getId() > 0){
-				courseService.deleteCourse(course.getId());
-				actionMsg = getText("deleteCourseSuccess");
-			}else{
-				System.out.println("删除的id不存在");
-				actionMsg = getText("deleteCourseFail");
-			}
-			
-			return SUCCESS;
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CourseAction的方法：deleteCourse错误"+e);
-		}
-		return "Error";
-	}
-	
-//删除Ajax
-	public String deleteCourseAjax( ){
-		try{
-			if(course.getId() != null && course.getId() >= 0){
-				courseService.deleteCourse(course.getId());				
-			}
-			
-			return "IdNotExist";
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CourseAction的方法：deleteCourse错误"+e);
-		}
-		return "Error";
-	}
 
-	
-//	del entityfull
-	public String deleteCourseFull(){
-		try {
-		
-			Integer getId = course.getId();
-			if(getId != null && getId < 0){
-				log.info("删除的id不规范");
-				return "Error";
-			}
-		
-		
-			Course temp = courseService.selectCourseById(getId);
-			if (temp != null) {
-				courseService.deleteCourse(getId);
-				return SUCCESS;
-			} else {
-				log.info("删除的id不存在");
-				return "Error";
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "Error";
-	}
-	
 	//del entityfull Ajax
 	public String deleteCourseFullAjax( ){
 		
@@ -284,51 +248,33 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
                 return SUCCESS;
         }
 
-//修改
-	public String updateCourse(){
-		try {
-			if(course.getId() != null && course.getId() > 0){				
-				Course tempCourse = courseService.selectCourseById(course.getId());
-																				  								
-												  								
-												  								
-												  								
-												  								
-												  								
-								actionMsg = getText("viewCourseSuccess");
-			}else{
-				actionMsg = getText("viewCourseFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CourseAction的方法：viewCourse错误"+e);
-		}
 
-		return "error";
-	}
-	
 	
 	//ajax 修改
 	public String updateCourseAjax(){
-		log.info(logprefix + "updateCourseAjax,id="+course.getId());
+		log.info(logprefix + "updateCourseAjax");
 		ReturnJson returnJson = new ReturnJson();
-		try {
-			if(course.getId() != null && course.getId() > 0){				
-				Course tempCourse = courseService.selectCourseById(course.getId());
-				
-				
+		try {				
+				Course ch = courseService.selectCourseById(course.getId());
+				Course en = courseService.selectCourseById(courseiden);
+				if(ch == null || en == null){
+					
+				}
 //              选择能更改的属性，与界面一致	
-  				tempCourse.setName(course.getName());
-  				tempCourse.setDescription(course.getDescription());
-  				tempCourse.setType(course.getType());
-  				tempCourse.setAdduserid(course.getAdduserid());
-  				tempCourse.setTeacherid(course.getTeacherid());
-  				tempCourse.setAddtime(course.getAddtime());
- 
+  				ch.setName(course.getName());
+  				ch.setDescription(course.getDescription());
+  				ch.setType(course.getType());
+  				ch.setTeacherid(course.getTeacherid());
+
+  				en.setName(coursenameen);
+  				en.setDescription(course.getDescription());
+  				en.setType(course.getType());
+  				en.setTeacherid(course.getTeacherid());
 				
-				courseService.updateCourse(tempCourse);		
+  				
+  				
+				courseService.updateCourse(ch);		
+				courseService.updateCourse(en);		
 				returnJson.setFlag(1);	
 				returnJson.setReason("修改成功");
 				JSONObject jo = JSONObject.fromObject(returnJson);
@@ -336,10 +282,6 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 				//actionMsg = getText("viewCourseSuccess");
 				return SUCCESS;
 				
-			}else{
-				actionMsg = getText("viewCourseFail");
-				log.info(logprefix + "updateCourseAjax fail");
-			}			
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -353,68 +295,6 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 	}
 	
 	
-	/**
-	
-	编辑实体 action的方法，首先获取entity的信息，返回到编辑页面
-	
-	*/
-	public String editCourse(){
-		log.info(logprefix + "editCourse");
-			
-		try {
-			//实体的id可以为0
-			if(course.getId() != null && course.getId() >= 0){				
-				Course temCourse = courseService.selectCourseById(course.getId());
-				if(temCourse != null){
-					BeanUtils.copyProperties(courseModel,temCourse);	
-					//actionMsg = getText("selectCourseByIdSuccess");
-					return SUCCESS;
-				}				
-			}		
-			return "PageNotExist";
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CourseAction的方法：selectCourseById错误"+e);
-		}
-
-
-		return "error";
-	}
-	
-
-	/**
-	编辑实体Full action的方法，首先获取entityfull的信息，返回到编辑页面
-	
-	*/
-	public String editCourseFull(){
-		
-		log.info(logprefix + "viewCourse");
-		
-		try {
-			if(course.getId() != null && course.getId() > 0){				
-				CourseFull temCourseFull = courseService.selectCourseFullById(course.getId());
-				BeanUtils.copyProperties(courseFull,temCourseFull);	
-				actionMsg = getText("selectCourseByIdSuccess");
-			}else{
-				actionMsg = getText("selectCourseByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CourseAction的方法：selectCourseFullById错误"+e);
-		}
-		
-		return "error";
-	}
 
 	
 	// 查看实体 根据对象Id查询
@@ -479,68 +359,7 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 		}
 		return "Error";
 	}
-/*
-	//根据adduserid查询实体
-	public String selectCourseByLoginuserId() {
-			//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		courseList  = courseService.selectCourseAll();
-		for(int i = 0; i < courseList.size(); i++){
-			System.out.println("id="+courseList.get(i).getId());
-		}
-		return SUCCESS;
-	}
-	//根据teacherid查询实体
-	public String selectCourseByLoginuserId() {
-			//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		courseList  = courseService.selectCourseAll();
-		for(int i = 0; i < courseList.size(); i++){
-			System.out.println("id="+courseList.get(i).getId());
-		}
-		return SUCCESS;
-	}
-	//根据adduserid查询实体full
-	public String selectCourseFullByLoginuserId() {
-				//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		courseFullList  = courseService.selectCourseFullByLoginuserId(userId);
-		for(int i = 0; i < courseFullList.size(); i++){
-			//System.out.println("id="+courseFullList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}
-	//根据teacherid查询实体full
-	public String selectCourseFullByLoginuserId() {
-				//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		courseFullList  = courseService.selectCourseFullByLoginuserId(userId);
-		for(int i = 0; i < courseFullList.size(); i++){
-			//System.out.println("id="+courseFullList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}
-*/
+
 	//get set
 	public void setSession(Map<String, Object> session) {
 		// TODO Auto-generated method stub
@@ -637,4 +456,114 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
         public void setCourseIdsForDel(String courseIdsForDel) {
                 this.courseIdsForDel = courseIdsForDel;
         }
+
+		public CourseService getCourseService() {
+			return courseService;
+		}
+
+		public void setCourseService(CourseService courseService) {
+			this.courseService = courseService;
+		}
+
+		public String getLogprefix() {
+			return logprefix;
+		}
+
+		public void setLogprefix(String logprefix) {
+			this.logprefix = logprefix;
+		}
+
+		public String getCallType() {
+			return callType;
+		}
+
+		public void setCallType(String callType) {
+			this.callType = callType;
+		}
+
+		public ReturnJson getReturnJson() {
+			return returnJson;
+		}
+
+		public void setReturnJson(ReturnJson returnJson) {
+			this.returnJson = returnJson;
+		}
+
+		public String getReturnInfo() {
+			return returnInfo;
+		}
+
+		public void setReturnInfo(String returnInfo) {
+			this.returnInfo = returnInfo;
+		}
+
+		public String getActionMsg() {
+			return actionMsg;
+		}
+
+		public void setActionMsg(String actionMsg) {
+			this.actionMsg = actionMsg;
+		}
+
+		public String getCoursenameen() {
+			return coursenameen;
+		}
+
+		public void setCoursenameen(String coursenameen) {
+			this.coursenameen = coursenameen;
+		}
+
+		public static Log getLog() {
+			return log;
+		}
+
+		public Map<String, Object> getSession() {
+			return session;
+		}
+
+		public void setCourseid(Integer courseid) {
+			this.courseid = courseid;
+		}
+
+		public List<CourseFull> getCourseFullListCh() {
+			return courseFullListCh;
+		}
+
+		public void setCourseFullListCh(List<CourseFull> courseFullListCh) {
+			this.courseFullListCh = courseFullListCh;
+		}
+
+		public List<CourseFull> getCourseFullListEn() {
+			return courseFullListEn;
+		}
+
+		public void setCourseFullListEn(List<CourseFull> courseFullListEn) {
+			this.courseFullListEn = courseFullListEn;
+		}
+
+		public int getTotalcount() {
+			return totalcount;
+		}
+
+		public void setTotalcount(int totalcount) {
+			this.totalcount = totalcount;
+		}
+
+		public int getTotalpage() {
+			return totalpage;
+		}
+
+		public void setTotalpage(int totalpage) {
+			this.totalpage = totalpage;
+		}
+
+		public int getCourseiden() {
+			return courseiden;
+		}
+
+		public void setCourseiden(int courseiden) {
+			this.courseiden = courseiden;
+		}
+        
+        
 }

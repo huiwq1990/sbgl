@@ -20,38 +20,30 @@
 	#set($currentPageModule="teach")
 	#parse("include/includeAdminHeader.vm")
 </header><!--/#header-wrap-->
+
+
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
 
-      <ul class="nav nav-tabs">
-        <li><a href="">其他管理</a></li>
-        <li class="active"><a href="">管理</a></li>
-      </ul>
       <!--admin-wrap start-->
       <div id="admin-wrap">
-        <div id="admin-content" class="clearfix">            
-            <div class="control-bar clearfix"><!--control-bar start-->
-              <div class="title pull-left">管理</div>
-			  <div class="tips">在此页面下管理信息，如设备的添加、修改、删除及维护等。</div>
-			  <!--
-              <div class="filter category-filter">
-                <select id="select-categories" style="width:130px" class="select2">
-                  <option value="0" data-foo="fa">全部分类</option>
-                  <option value="1" data-foo="fa">摄影摄像机</option>
-                  <option value="2" data-foo="sub">数字摄影机</option>
-                  <option value="3" data-foo="sub">数字摄像机</option>
-                  <option value="4" data-foo="sub">单反</option>
-                  <option value="5" data-foo="fa">灯具</option>
-                  <option value="6" data-foo="sub">钨丝灯</option>
-                  <option value="7" data-foo="sub">镝灯</option>
-                </select>
+        <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">课程管理</div>
+              <div class="tips">在此页面下管理课程信息，如课程的添加、修改、删除等。</div>
+              <div class="filter user-group-filter">
+                <ul class="nav nav-tabs nav-tabs-google">
+                  <li><a href="#">MFA</a></li>
+                  <li><a href="#">博士</a></li>
+                  <li><a href="#">硕士</a></li>
+                  <li><a href="#">本科</a></li>
+                  <li class="active"><a href="#">全部</a></li>                  
+                </ul>
               </div>
-              -->
               <div class="operate-item pull-left">
-                <a href="" class="btn btn-primary">添加</a>
-                <a href="#" class="btn btn-white s-h" action-type="deleteCourseButton"><i class="icon-trash"></i> 删除</a>
+                <a href="教学管理-添加课程.html" class="btn btn-primary">添加课程</a>
+                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
               </div>
-				
-			  <!--
               <div class="page pull-right clearfix">
                 <ul class="page-index nav nav-pills pull-left">
                   <li class="dropdown">
@@ -69,95 +61,55 @@
                   </ul>
                 </div>              
               </div>
-              <ul class="status-filter nav nav-pills pull-right">
-                <li class="active"><a href="#">全部(10)（无不显示）</a></li>
-                <li><a href="#">正常(5)</a></li>
-                <li><a href="#">借出(2)</a></li>
-                <li><a href="#">维护(2)</a></li>
-                <li><a href="#">维修(2)</a></li>
-                <li><a href="#">遗失(2)</a></li>
-                <li><a href="#">回收站(1)</a></li>
-              </ul>
-			  -->
             </div><!--control-bar end-->
-            <div class="panel panel-default table-responsive">
-
-	<div id="refreshCourseTableDiv"> <!-- 刷新-->
-
-<!--管理内容从这里开始 -->
-<div id = "tablecon">
+            <div class="panel panel-default">              
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-
-             <th class="courseid">courseid</th>
-             <th class="coursename">coursename</th>
-             <th class="coursedescription">coursedescription</th>
-             <th class="coursetype">coursetype</th>
-             <th class="courseadduserid">courseadduserid</th>
-             <th class="courseteacherid">courseteacherid</th>
-             <th class="courseaddtime">courseaddtime</th>
-             <th class="adduserloginuserid">adduserloginuserid</th>
-             <th class="adduserloginusername">adduserloginusername</th>
-             <th class="adduserloginuseruserid">adduserloginuseruserid</th>
-             <th class="adduserloginuserpassword">adduserloginuserpassword</th>
-             <th class="adduserloginusercreatetime">adduserloginusercreatetime</th>
-             <th class="adduserloginuserstatus">adduserloginuserstatus</th>
-             <th class="adduserloginuserroletype">adduserloginuserroletype</th>
-             <th class="teacherloginuserid">teacherloginuserid</th>
-             <th class="teacherloginusername">teacherloginusername</th>
-             <th class="teacherloginuseruserid">teacherloginuseruserid</th>
-             <th class="teacherloginuserpassword">teacherloginuserpassword</th>
-             <th class="teacherloginusercreatetime">teacherloginusercreatetime</th>
-             <th class="teacherloginuserstatus">teacherloginuserstatus</th>
-             <th class="teacherloginuserroletype">teacherloginuserroletype</th>
-<!--
-                   <th class="name">View</th>
-				   <th class="name">Del</th>
-				   <th class="name">Edit</th>
--->				   
+                    <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="name">课程名</th>
+                    <th class="username">授课教师</th>
+                    <th class="course-type">课程类别</th>
+                    <th class="operate">操作</th>
                   </tr>
                 </thead>
-                <tbody>					
-							
-
-#foreach($tempcourse in $courseFullList)
+                <tbody>
+					
+#set($listSize = $courseFullListEn.size() - 1)
+#if($listSize>=0)
+#set($listRegion = [0..$listSize])
+##取出所有的属性名称
+#foreach($tempKey in $listRegion)
+			#set($ch = $courseFullListCh.get($tempKey))
+			#set($en = $courseFullListEn.get($tempKey))					
+	
                   <tr>
-                   <td><input class="chk" type="checkbox" name="chk-list" value="$!tempcourse.courseid"></td>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!ch.courseid"></td>
 					<!--修改属性-->
-                    <td>$!tempcourse.courseid<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="editCourseFillIn" 
-						
-						
-																								data-id="$!tempcourse.courseid"                           
-												data-name="$!tempcourse.coursename"                           
-												data-description="$!tempcourse.coursedescription"                           
-												data-type="$!tempcourse.coursetype"                           
-												data-adduserid="$!tempcourse.courseadduserid"                           
-												data-teacherid="$!tempcourse.courseteacherid"                           
-												data-addtime="$!tempcourse.courseaddtime"                           
+                    <td>$!ch.courseid<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="editCourseFillIn" 
+						data-id="$!ch.courseid"                           
+												data-name="$!ch.coursename"                           
+												data-description="$!ch.coursedescription"                           
+												data-type="$!ch.coursetype"                           
+												data-adduserid="$!ch.courseadduserid"                           
+												data-teacherid="$!ch.courseteacherid"                           
+												data-addtime="$!ch.courseaddtime"      
+												data-iden = "$!en.courseid"
+												data-nameen="$!en.coursename"     
 												>修改</a></td>    
 						
 
-<td>$!tempcourse.coursename</td>
-<td>$!tempcourse.coursedescription</td>
-<td>$!tempcourse.coursetype</td>
-<td>$!tempcourse.courseadduserid</td>
-<td>$!tempcourse.courseteacherid</td>
-<td>$!tempcourse.courseaddtime</td>
-<!--
-					<td><a href="${webbaseurl}/viewCourseFull.action?id=$!tempcourse.courseid">查看</a></td> 
-					<td><a href="${webbaseurl}/deleteCourseFull.action?id=$!tempcourse.courseid">删除</a></td>			
-					<td><a href="${webbaseurl}/editCourseFull.action?id=$!tempcourse.courseid">修改</a></td>
--->                 
+					<td>$!ch.coursename</td>
+					<td>$!ch.coursedescription</td>
+					<td>$!ch.coursetype</td>
                   </tr>
-#end            
-           
+#end
+#end				  
                 </tbody>
               </table>
- </div> 
-				
-				 <!--page -->
+            
+			</div><!--end panel -->
+							 <!--page -->
                           <div class="pagination">
                                 <a href="#" class="first" data-action="first">&laquo;</a>
                                 <a href="#" class="previous" data-action="previous">&lsaquo;</a>
@@ -166,22 +118,15 @@
                                 <a href="#" class="last" data-action="last">&raquo;</a>
                           </div>
                           <!-- end page -->
-				
-				</div><!-- end refreshTable-->
-
-            </div>
-          </div>
-
+		</div>
       </div>
-      <!--equip-wrap end-->
+      <!--admin-wrap end-->
+
+
 	  
-	  
-      #set($currentPageType="manageCourse")
+      #set($currentWebpage="manageCourse")
 	  #parse("include/includeTeachSidebar.vm")
       <!--sidebar end-->
-
-
-
 
 </section>
 
@@ -275,27 +220,12 @@
 
 
 <script>
-//	当前页
-	var currentpagenum=1;
-	var totalpage=$page.totalpage;
+//当前页
+var currentpagenum=$pageNo;
+var totalpage=$page.totalpage;
+var totalcount=$page.totalCount;
 
-	var cookie = { 
-  		//读取COOKIES,n为COOKIE名 
-   		Get:function(n){ 
-       		var re=new RegExp(n+'=([^;]*);?','gi');
-       	    var r=re.exec(document.cookie)||[];
-       	    return (r.length>1?r[1]:null)
-   		}
-	};
 
-//	换页时调用方法
-	$('.pagination').jqPagination({
-    	paged: function(page) {
-        	// do something with the page variable
-       		currentpagenum = page;
-        	refreshComputerTable();
-        }
-    });	
 	
 //	选择修改按钮，填充修改弹出框
 	$("body").on("click", "a[action-type|=editCourseFillIn]", function() {
@@ -418,32 +348,7 @@
 //end delete
 
 
-//	刷新数据
-	function refreshTable(){
-		jQuery.ajax({  
-        	url: '${webbaseurl}/manageCourseFull.action',  
-            type: "post",
-            data:{ 
-				pageNo:currentpagenum,
-                callType:'ajaxType'
-               
-            },
-            dataType: 'html',
-            success: function(data){
-            	$('#refreshCourseTableDiv').html(data);
-                //设置分页绑定事件
-                $('.pagination').jqPagination({
-                	link_string : '/?page={page_number}',
-                    max_page : totalpage,
-                    current_page:currentpagenum,
-                    paged: function(page) {               
-                    	currentpagenum = page;
-                        refreshTable();                
-                    }
-                 });
-            }// end success                       
-       	});// end jquery                
-	}//end refreshTable
+
 	
 	
 //  刷新后，绑定删除按钮	
@@ -554,6 +459,42 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 	})	
 	
 	
+	
+	//换页时调用方法
+	$('.pagination').jqPagination({
+    	paged: function(page) {
+     	   // do something with the page variable
+			currentpagenum = page;
+			refreshTable();		
+    	}
+	});
+	
+	
+	
+	
+	//	刷新数据
+	function refreshTable(){
+		jQuery.ajax({  
+        	url: '${webbaseurl}/manageCourseFull.action',  
+            type: "post",
+            data:{pageNo:currentpagenum,totalpage:totalpage,totalcount:totalcount,callType:'ajaxType'},
+            dataType: 'html',
+            success: function(data){
+            	$('#refreshCourseTableDiv').html(data);
+                //设置分页绑定事件
+                $('.pagination').jqPagination({
+                	link_string : '/?page={page_number}',
+                    max_page : totalpage,
+                    current_page:currentpagenum,
+                    paged: function(page) {               
+                    	currentpagenum = page;
+                        refreshTable();                
+                    }
+                 });
+            }// end success                       
+       	});// end jquery                
+	}//end refreshTable
+
 	
 </script>
 

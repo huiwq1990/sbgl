@@ -7,8 +7,18 @@
     <constant name="struts.multipart.maxSize" value ="1073741824" />
     <constant name="struts.custom.i18n.resources" value ="messages" />
     
+    <constant name="struts.velocity.toolboxlocation" value="WEB-INF/toolbox.xml" />
+	<constant name="struts.velocity.configfile" value="WEB-INF/velocity.properties" />
+
+    
     <!-- 定义一个admin的总包余下包继承该包 -->  
 	<package name="admin"  extends="struts-default">
+	 <!-- 
+		<result-types>    	
+    		<result-type name="velocity" class="service.actions.remind.VelocityLayoutResult"  default="true"/>
+   		</result-types>
+   		
+   		-->
         <!-- 定义一个拦截器 -->  
         <interceptors>  
            <!-- 拦截器栈 -->  

@@ -10,19 +10,9 @@
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="${cssDomain}/jqpagination.css" type="text/css" />
-<!--[if lt IE 10]>
-  <script src="${jsDomain}/jquery.placeholder.js"></script>
-  <script>
-  $('input, textarea').placeholder();
-  </script>
-<![endif]-->
-<!--[if lt IE 9]>
-  <script src="${jsDomain}/html5shiv.js"></script>
-  <script src="${jsDomain}/respond.min.js"></script>
-<![endif]-->
-<!--[if IE 7]>
-<link rel="stylesheet" href="${cssDomain}/font-awesome-ie7.min.css">
-<![endif]-->
+
+#parse("include/includePageCompatibility.vm")
+
 </head>
 
 <body id="admin">
@@ -284,10 +274,13 @@ var cookie = {
 					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});
 					clearAddForm();
 					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框					
-				}else{
-					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+				}
+				if(returnJson.flag == 0){
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});					
 					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
 				}
+				
+			
 			}		  	  
 		});
 	});

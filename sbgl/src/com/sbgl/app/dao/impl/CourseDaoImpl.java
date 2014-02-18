@@ -25,7 +25,7 @@ import com.sbgl.util.*;
 public class CourseDaoImpl extends HibernateDaoSupport implements CourseDao{
 
 	private static final Log log = LogFactory.getLog(CourseDaoImpl.class);
-	private final String basicCourseFullSql = "select a.id as courseid, a.name as coursename, a.description as coursedescription, a.type as coursetype, a.adduserid as courseadduserid, a.teacherid as courseteacherid, a.addtime as courseaddtime, " +
+	private final String basicCourseFullSql = " select a.id as courseid, a.name as coursename, a.description as coursedescription, a.type as coursetype, a.coursetype as coursecoursetype, a.languagetype as courselanguagetype, a.adduserid as courseadduserid, a.teacherid as courseteacherid, a.addtime as courseaddtime, a.status as coursestatus, "+
 //			"b.id as adduserloginuserid, b.name as adduserloginusername, b.userid as adduserloginuseruserid, b.password as adduserloginuserpassword, b.createtime as adduserloginusercreatetime, b.status as adduserloginuserstatus, b.roletype as adduserloginuserroletype, " +
 			"b.id as adduserloginuserid, b.name as adduserloginusername, "+
 //			"c.id as teacherloginuserid, c.name as teacherloginusername, c.userid as teacherloginuseruserid, c.password as teacherloginuserpassword, c.createtime as teacherloginusercreatetime, c.status as teacherloginuserstatus, c.roletype as teacherloginuserroletype " +

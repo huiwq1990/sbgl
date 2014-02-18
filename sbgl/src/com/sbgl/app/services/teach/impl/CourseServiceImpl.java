@@ -35,7 +35,7 @@ public class CourseServiceImpl implements CourseService{
 	@Override
 	public void addCourse(Course ch,Course en){
 		
-	/*
+
 		int type = baseDao.getCode("Coursetype");
 		ch.setId(baseDao.getCode("Course"));
 		ch.setCoursetype(type);
@@ -43,7 +43,7 @@ public class CourseServiceImpl implements CourseService{
 		en.setCoursetype(type);
 		baseDao.saveEntity(ch);	
 		baseDao.saveEntity(en);		
-	*/
+
 	}
 
 	@Override

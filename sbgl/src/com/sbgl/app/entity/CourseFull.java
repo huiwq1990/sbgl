@@ -10,9 +10,12 @@ public class CourseFull extends DaoAbs implements java.io.Serializable {
 			private String coursename;
 			private String coursedescription;
 			private Integer coursetype;
+			private Integer coursecoursetype;
+			private Integer courselanguagetype;
 			private Integer courseadduserid;
 			private Integer courseteacherid;
 			private Date courseaddtime;
+			private Integer coursestatus;
 			private Integer adduserloginuserid;
 			private String adduserloginusername;
 			private String adduserloginuseruserid;
@@ -54,6 +57,18 @@ public class CourseFull extends DaoAbs implements java.io.Serializable {
 		public Integer getCoursetype(){		
 			return this.coursetype;
 		}
+			public void setCoursecoursetype(Integer coursecoursetype){		
+			this.coursecoursetype = coursecoursetype;
+		}
+		public Integer getCoursecoursetype(){		
+			return this.coursecoursetype;
+		}
+			public void setCourselanguagetype(Integer courselanguagetype){		
+			this.courselanguagetype = courselanguagetype;
+		}
+		public Integer getCourselanguagetype(){		
+			return this.courselanguagetype;
+		}
 			public void setCourseadduserid(Integer courseadduserid){		
 			this.courseadduserid = courseadduserid;
 		}
@@ -71,6 +86,12 @@ public class CourseFull extends DaoAbs implements java.io.Serializable {
 		}
 		public Date getCourseaddtime(){		
 			return this.courseaddtime;
+		}
+			public void setCoursestatus(Integer coursestatus){		
+			this.coursestatus = coursestatus;
+		}
+		public Integer getCoursestatus(){		
+			return this.coursestatus;
 		}
 			public void setAdduserloginuserid(Integer adduserloginuserid){		
 			this.adduserloginuserid = adduserloginuserid;

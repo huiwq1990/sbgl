@@ -19,6 +19,12 @@
         <property name="type" type="java.lang.Integer">
             <column name="type" />
         </property>
+        <property name="coursetype" type="java.lang.Integer">
+            <column name="coursetype" />
+        </property>
+        <property name="languagetype" type="java.lang.Integer">
+            <column name="languagetype" />
+        </property>
         <property name="adduserid" type="java.lang.Integer">
             <column name="adduserid" />
         </property>
@@ -27,6 +33,9 @@
         </property>
         <property name="addtime" type="java.util.Date">
             <column name="addtime"  />
+        </property>
+        <property name="status" type="java.lang.Integer">
+            <column name="status" />
         </property>
     </class>
 </hibernate-mapping>

@@ -23,6 +23,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.actions.computer.ComputerActionUtil;
+import com.sbgl.app.actions.util.PageActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.message.MessageService;
@@ -70,7 +71,7 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 	private String actionMsg; // Action间传递的消息参数
 
 
-	private int pageNo=1;
+	private int pageNo=0;
 	private int totalcount = 0;
 	private int totalpage = 0;
 	private Page page = new Page();
@@ -604,12 +605,13 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 		}
 		
 //		查询用户删除的发送的消息
-		String delsendboxsql = " where a.senderid ="+uid +" and a.status = "+MessageConstant.MessageStatusDel;
+//		查询的是发送的消息，不包括回复的信息
+		String delsendboxsql = " where a.senderid ="+uid +" and a.replyid =0 and a.status = "+MessageConstant.MessageStatusDel;
 		messageFullList = messageService.selectMessageFullByCondition(delsendboxsql);
 		
 //		查询删除的收到的信息		
 //		查询收到的消息
-		String delinboxsql = " where a.receiverid ="+uid + " a.status = "+MessageConstant.MessageStatusDel;
+		String delinboxsql = " where a.receiverid ="+uid + "and a.status = "+MessageConstant.MessageStatusDel;
 		messagereceiverList =	messagereceiverService.selectMessagereceiverByCondition(delinboxsql);
 			
 		if(messagereceiverList != null){
@@ -622,7 +624,15 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 			}
 		}
 		
+		if(messageFullList != null){
+			page = PageActionUtil.getPage(messageFullList.size(), pageNo);
+			pageNo = page.getPageNo();
+		}
+		
+		System.out.println(pageNo);
+		
 		if(messageFullList == null){
+			
 			messageFullList = new ArrayList<MessageFull>();
 		}
 		

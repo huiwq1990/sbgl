@@ -4,6 +4,7 @@ public class ReturnJson {
 
 	private int flag;
 	private String reason;
+	private String errortype;
 	public int getFlag() {
 		return flag;
 	}
@@ -15,6 +16,12 @@ public class ReturnJson {
 	}
 	public void setReason(String reason) {
 		this.reason = reason;
+	}
+	public String getErrortype() {
+		return errortype;
+	}
+	public void setErrortype(String errortype) {
+		this.errortype = errortype;
 	}
 	
 	

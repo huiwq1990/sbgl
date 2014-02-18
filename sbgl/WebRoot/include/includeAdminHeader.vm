@@ -22,7 +22,7 @@
         <li><a href="#">设置</a></li>
 		
 		<li 
-		#if($currentPageModule == "computer" )
+		#if($currentPageModule == "teach" )
 			 class="active"      
 		#end		
 		><a href="教学管理首页.html">教学</a></li>

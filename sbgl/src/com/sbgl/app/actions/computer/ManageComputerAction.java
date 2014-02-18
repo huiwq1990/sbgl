@@ -21,6 +21,7 @@ import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sbgl.app.actions.util.PageActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.entity.Computer;
@@ -792,7 +793,7 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	//管理作业
 	public String manageComputerhomeworkFull(){
 		log.info("exec action method:manageComputerhomeworkFull");
-		
+		/*
 //      分页查询	
 		if(pageNo ==0){
 			pageNo =1;
@@ -812,6 +813,11 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 			pageNo = page.getTotalpage();
 		}
 		page.setPageNo(pageNo);
+		*/
+		
+		int totalcount = computerhomeworkService.countComputerhomeworkRow();
+		page = PageActionUtil.getPage(totalcount, pageNo);
+		this.pageNo = page.getPageNo();
 		
 		computerhomeworkFullList  = computerhomeworkService.selectComputerhomeworkFullByConditionAndPage("", page);
 		System.out.println("computerhomeworkFullList.size"+computerhomeworkFullList.size());

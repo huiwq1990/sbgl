@@ -18,7 +18,7 @@
 		#end		
 		">已发送</a> 
 		
-		<a href="${webbaseurl}/toAddZhengzhuangPage.${strutsaction}" class="list-group-item
+		<a href="${webbaseurl}/toMessageTrash.${strutsaction}" class="list-group-item
 		#if($currentWebpage == "messageTrash.vm" )
 			 active        
 		#end
