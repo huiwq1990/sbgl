@@ -15,6 +15,11 @@
         <action name="doLogout" class="LoginAction" method="doLogout">
         	<result name="success">/login.vm</result> 
         </action>
+        
+        <!-- 处理管理员登陆 -->
+    	<action name="doManagerLogin" class="LoginAction" method="doManagerLogin">
+        	<result name="success"></result>
+        </action>
     </package>
     <package name="loginAjax" extends="json-default">
 	 	<!-- 进入登陆页面 -->

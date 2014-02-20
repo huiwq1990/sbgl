@@ -18,6 +18,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.services.login.LoginService;
+import com.sbgl.common.SBGLConsistent;
 import com.sbgl.util.CookiesUtil;
 import com.sbgl.util.JavascriptWriter;
 import com.sbgl.util.WebUtils;
@@ -48,6 +49,35 @@ public class LoginAction extends ActionSupport implements SessionAware {
 				CookiesUtil.addLoginCookie("userid", loginUser2.getUserid());
 				CookiesUtil.addLoginCookie("username", loginUser2.getName());
 				CookiesUtil.addLoginCookie("roletype", loginUser2.getRoletype());
+				flag = true;
+			}
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();			
+		}
+		Javascript(flag);
+	}
+	
+	public void doManagerLogin() {		
+		Loginuser loginUser3 = new Loginuser();		
+		boolean flag  = false;
+		try{	
+			loginUser3 = loginService.findUser(loginuser);
+			if(loginUser3 != null) {
+				CookiesUtil.addLoginCookie("id", loginUser3.getId().toString());
+				CookiesUtil.addLoginCookie("userid", loginUser3.getUserid());
+				CookiesUtil.addLoginCookie("username", loginUser3.getName());
+				CookiesUtil.addLoginCookie("roletype", loginUser3.getRoletype());
+				
+				if( "100".equals(loginUser3.getRoletype()) ) {
+					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN1);
+				} else if( "200".equals(loginUser3.getRoletype()) ) {
+					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN2);
+				} else if( "300".equals(loginUser3.getRoletype()) ) {
+					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN3);
+				}
+				
 				flag = true;
 			}
 			
