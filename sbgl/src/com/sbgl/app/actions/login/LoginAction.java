@@ -110,6 +110,11 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
+	public String doManagerLogout(){
+		session.remove("Loginuser");
+		return SUCCESS;
+	}
+	
 	public void setSession(Map<String, Object> session) {
 		// TODO Auto-generated method stub
 	    this.session = session;
