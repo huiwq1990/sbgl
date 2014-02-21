@@ -31,7 +31,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	private Map<String, Object> session;
 	private Loginuser loginuser;
 	
-	
+
 	@Resource
 	private LoginService loginService;
 	
@@ -59,9 +59,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		Javascript(flag);
 	}
 	
-	public void doManagerLogin() {		
+	public String doManagerLogin() {		
 		Loginuser loginUser3 = new Loginuser();		
-		boolean flag  = false;
 		try{	
 			loginUser3 = loginService.findUser(loginuser);
 			if(loginUser3 != null) {
@@ -72,20 +71,22 @@ public class LoginAction extends ActionSupport implements SessionAware {
 				
 				if( "100".equals(loginUser3.getRoletype()) ) {
 					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN1);
+					return "super";
 				} else if( "200".equals(loginUser3.getRoletype()) ) {
 					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN2);
+					return "equip";
 				} else if( "300".equals(loginUser3.getRoletype()) ) {
 					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN3);
+					return "room";
 				}
 				
-				flag = true;
 			}
 			
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();			
 		}
-		Javascript(flag);
+		return "faild";
 	}
 	
 	public void Javascript(boolean flag){
@@ -120,11 +121,11 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	    this.session = session;
 	}
 
-	public Loginuser getLoginUser() {
+	public Loginuser getLoginuser() {
 		return loginuser;
 	}
 
-	public void setLoginUser(Loginuser loginuser) {
+	public void setLoginuser(Loginuser loginuser) {
 		this.loginuser = loginuser;
 	}
 
