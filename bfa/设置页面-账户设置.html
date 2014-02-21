@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 消息中心</title>
+<title>北京电影学院摄影系</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -67,7 +67,7 @@
   <div class="nav-wrap">
     <div class="site-nav">
       <div class="dropdown">
-        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-bell-alt icon-large"></i> 消息中心</a><!-- #BeginLibraryItem "/Library/siteNav.lbi" --><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-cog"></i> 设置与帮助</a><!-- #BeginLibraryItem "/Library/siteNav.lbi" --><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
           <li><a href="index.html"><i class="icon-home"></i> 首页</a></li>
           <li class="divider"></li>
           <li><a href="预约首页.html">我的预约</a></li>
@@ -80,61 +80,69 @@
     </div>
     <div class="sub-nav">
       <ul class="nav nav-tabs nav-tabs-google">
-        <li class="active"><a href="消息中心.html">消息</a></li>
-        <li><a href="消息中心-请求.html">请求</a></li>
-        <li><a href="消息中心-站内信.html">站内信</a></li>
+        <li class="active"><a href="#">账户设置</a></li>
+        <li><a href="#">帮助</a></li>
       </ul>
     </div>
   </div>
   
 </header><!--/#header-wrap-->
 <section id="main-wrap"><!--main-wrap-->
-
   <div id="main-content" class="clearfix"><!--main-content start-->
-
-      <div class="container">
+    <div id="stream-wrap">
+      <div id="stream" class="container">
         <div class="row">
-          <div class="col-sm-3 sidebar">
-                <div class="list-group">
-				  <a href="设备管理首页.html" class="list-group-item active"><span class="badge">14</span>预约消息</a>
-				  <a href="设备管理-添加设备.html" class="list-group-item">系统消息</a>
-				</div>
-          </div>
-          <div class="col-sm-9">
-
-            <div class="thumbnail">
-              <div class="hd clearfix">
-                <h3 class="pull-left">消息</h3>
-                <a href="#" class="more lk pull-right">查看全部</a>
-              </div>
+          <div class="col-md-4">
+            <div class="list-group">
+              <a href="设置页面-账户设置.html" class="list-group-item active">账户</a>
+              <a href="设置页面-账户设置-密码.html" class="list-group-item">密码</a>
             </div>
           </div>
-		  </div>
+          <div class="col-md-8">
+            <div class="thumbnail">
+              <div class="hd">
+                <h3>账号</h3>
+              </div>
+              <form class="form-horizontal" role="form">
+                <div class="form-group">
+                  <label for="inputTrueName" class="col-md-3 control-label">真实姓名</label>
+                  <div class="col-md-4"><p class="help-block">XXXX</p></div>
+                  <div class="col-md-offset-3 col-md-6"><P class="text-muted">真实姓名用于系统预约中的身份确认，不可修改。</P></div>
+                </div>
+                <div class="form-group">
+                  <label for="inputLanguage" class="col-md-3 control-label">语言</label>
+                  <div class="col-md-4">
+                    <select class="select2 select-white form-control" id="inputLanguage">
+                      <option value="1">简体中文</option>
+                      <option value="2">English</option>
+                    </select>
+
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-offset-3 col-md-4">
+                    <button type="submit" class="btn btn-primary">保存更改</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+    <!--stream-wrap end-->
   </div>
   <!---main-content end-->
 </section>
 
 
-<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
-  <img src="img/cover-img.jpg" class="cover" alt="封面照片" />
-  <div class="cover-layout"></div>
-  <div class="avatar"><img src="img/photo.jpg" width="80" height="80" class="img-circle"></div>
-  <div class="user-wrap">
-    <div class="user-name"><a href="#">用户名</a></div>
-    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
-    <div class="user-info">职务等信息</div>
-    <div class="user-info">地点</div>
-  </div>
-  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
-</div>
-
-    <!-- Le javascript
+    <!-- javascript
     ================================================== -->
 <script src="js/jquery.js"></script>
 <script src="js/loader.min.js"></script>
 <script src="js/bootstrap-hover-dropdown.min.js"></script>
 <script src="js/select2.js"></script>
 <script src="js/bfa.js"></script>
+
 </body>
 </html>
