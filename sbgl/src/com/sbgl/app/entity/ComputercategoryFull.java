@@ -1,11 +1,17 @@
 package com.sbgl.app.entity;
 
 import com.sbgl.app.dao.DaoAbs;
+import com.sbgl.app.services.computer.ComputercategoryService;
+import com.sbgl.app.services.computer.ComputermodelService;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import javax.annotation.Resource;
 
 
-public class ComputercategoryFull extends DaoAbs implements java.io.Serializable {
+public class 	ComputercategoryFull extends DaoAbs implements java.io.Serializable {
 			private Integer computercategoryid;
 			private Integer computercategorycomputercategorytype;
 			private String computercategorylanguagetype;

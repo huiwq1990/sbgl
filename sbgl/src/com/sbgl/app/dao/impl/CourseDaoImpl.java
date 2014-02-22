@@ -196,22 +196,6 @@ public class CourseDaoImpl extends HibernateDaoSupport implements CourseDao{
 	}
 
 
-	@Override
-	public List<Course> selectCourseByLoginuserId(Integer adduserid) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<CourseFull> selectCourseFullByLoginuserId(Integer adduserid) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-//  根据关联查询实体full
-
-
 
  
 }

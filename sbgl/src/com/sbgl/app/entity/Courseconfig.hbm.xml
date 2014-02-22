@@ -25,6 +25,12 @@
         <property name="firstweekfirstday" type="java.util.Date">
             <column name="firstweekfirstday"  />
         </property>
+        <property name="weeknum" type="java.lang.Integer">
+            <column name="weeknum" />
+        </property>
+        <property name="currentsemester" type="java.lang.Integer">
+            <column name="currentsemester" />
+        </property>
         <property name="status" type="java.lang.Integer">
             <column name="status" />
         </property>

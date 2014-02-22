@@ -150,6 +150,13 @@ public class CourseconfigServiceImpl implements CourseconfigService{
 			return courseconfigDao.selectCourseconfigFullByConditionAndPage(condition, page);
 		}
 	
+    	@Override
+    	public int execSql(String sql) {
+//    		String sql = "delete from Computerorderdetail " + condition;
+    		baseDao.createSQL(sql);
+    		return 1;
+    		
+    	}
 
 
 }
