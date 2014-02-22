@@ -135,7 +135,7 @@
                     <div class="col-lg-4">
                       <select class="select2 form-control" id="inputUserGroup">
 						#foreach($item in $allGroupList)
-						  #if($!item.type == 8)
+						  #if($!item.type == 3)
 							<option value=$!item.id>$!item.name</option>
 						  #end
 						#end
@@ -294,7 +294,7 @@
 			"manager.password": userPass,
 			"manager.privilege": userPrivilege,
 			"group.id": userGroup,
-			"group.type": 8
+			"group.type": 3
 		};
 		url = "${webbaseurl}/addManager.do";
 		

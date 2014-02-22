@@ -64,6 +64,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		try{	
 			loginUser3 = loginService.findUser(loginuser);
 			if(loginUser3 != null) {
+				//id password cookie
 				CookiesUtil.addLoginCookie("id", loginUser3.getId().toString());
 				CookiesUtil.addLoginCookie("userid", loginUser3.getUserid());
 				CookiesUtil.addLoginCookie("username", loginUser3.getName());

@@ -19,7 +19,7 @@ public class WorkerServiceImpl implements WorkerService {
 
 	@Override
 	public int addWorker(Worker worker) {
-		int id = baseDao.getCode("workerId");
+		int id = baseDao.getCode("userId");
 		worker.setId( id );
 		
 		try {
