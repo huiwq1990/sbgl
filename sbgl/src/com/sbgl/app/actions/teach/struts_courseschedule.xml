@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="courseschedule" extends="admin">
+
+<!-- default entity manage action -->
+    	<action name="toAddCourseschedulePage" class="CoursescheduleAction" method="toAddCourseschedulePage">
+        	<result name="success">/teach/coursescheduleAdd.vm</result>
+        	
+			<result name="notsetcourseconfig">/teach/coursescheduleAddError.vm</result> 
+        	<result name="error">/error.vm</result> 
+        </action>
+
+
+	
+<!-- entity full manage  -->		
+		<!-- default entity full manage action -->
+    	<action name="manageCoursescheduleFull" class="CoursescheduleAction" method="manageCoursescheduleFull">
+        	<result name="success">/teach/coursescheduleFullManage.vm</result>
+			<result name="success2">/teach/coursescheduleFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+
+
+
+<!--更新实体-->
+        <action name="updateCourseschedule" class="CoursescheduleAction" method="updateCourseschedule">
+        	<result name="success">/teach/coursescheduleUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--update entity full-->
+        <action name="updateCoursescheduleFull" class="CoursescheduleAction" method="updateCourseschedule">
+        	<result name="success">/teach/coursescheduleFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="coursescheduleAjax" extends="json-default">
+    	<action name="addCoursescheduleAjax" class="CoursescheduleAction" method="addCoursescheduleAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        <action name="deleteCoursescheduleAjax" class="CoursescheduleAction" method="deleteCoursescheduleAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteCoursescheduleFullAjax" class="CoursescheduleAction" method="deleteCoursescheduleFullAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+    	<action name="updateCoursescheduleAjax" class="CoursescheduleAction" method="updateCoursescheduleAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
+	</package>
+
+</struts>
