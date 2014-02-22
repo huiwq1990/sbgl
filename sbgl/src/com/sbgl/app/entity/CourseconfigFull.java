@@ -12,6 +12,7 @@ public class CourseconfigFull extends DaoAbs implements java.io.Serializable {
 			private Date courseconfigfirstday;
 			private Date courseconfiglastday;
 			private Date courseconfigfirstweekfirstday;
+			private Integer courseconfigcurrentsemester;
 			private Integer courseconfigstatus;
 		
 	
@@ -51,6 +52,12 @@ public class CourseconfigFull extends DaoAbs implements java.io.Serializable {
 		}
 		public Date getCourseconfigfirstweekfirstday(){		
 			return this.courseconfigfirstweekfirstday;
+		}
+			public void setCourseconfigcurrentsemester(Integer courseconfigcurrentsemester){		
+			this.courseconfigcurrentsemester = courseconfigcurrentsemester;
+		}
+		public Integer getCourseconfigcurrentsemester(){		
+			return this.courseconfigcurrentsemester;
 		}
 			public void setCourseconfigstatus(Integer courseconfigstatus){		
 			this.courseconfigstatus = courseconfigstatus;

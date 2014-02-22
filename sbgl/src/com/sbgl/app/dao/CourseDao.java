@@ -26,14 +26,5 @@ public List<Course> selectCourseByCondition(String condition);
 	public List<CourseFull> selectCourseFullByPage(Page page);
 
 
-
-	//根据关联查询实体 
-	public List<Course> selectCourseByLoginuserId(Integer adduserid);
-	//根据关联查询实体 
-	public List<Course> selectCourseByLoginuserId(Integer teacherid);
-
-	public List<CourseFull> selectCourseFullByLoginuserId(Integer adduserid);
-	public List<CourseFull> selectCourseFullByLoginuserId(Integer teacherid);
-
  
 }

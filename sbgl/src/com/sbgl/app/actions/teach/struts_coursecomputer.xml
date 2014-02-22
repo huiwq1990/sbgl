@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="coursecomputer" extends="admin">
+
+
+<!-- default entity manage action -->
+    	<action name="manageCoursecomputer" class="ManageTeachAction" method="manageCoursecomputer">
+        	<result name="success1">/teach/coursecomputerManage.vm</result>
+			<result name="success2">/teach/coursecomputerFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!-- entity full manage  -->		
+		<!-- default entity full manage action -->
+    	<action name="manageCoursecomputerFull" class="ManageTeachAction" method="manageCoursecomputerFull">
+        	<result name="success1">/teach/coursecomputerFullManage.vm</result>
+			<result name="success2">/teach/coursecomputerFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+		
+<!--添加实体-->
+    	<action name="addCoursecomputer" class="CoursecomputerAction" method="addCoursecomputer">
+        	<result type="redirectAction">
+				<param name="actionName">manageCoursecomputer</param>
+			</result>
+        </action>
+		
+<!--edit entity-->
+        <action name="editCoursecomputer" class="CoursecomputerAction" method="editCoursecomputer">
+        	<result name="success">/teach/coursecomputerEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--edit entity full-->
+        <action name="editCoursecomputerFull" class="CoursecomputerAction" method="editCoursecomputerFull">
+        	<result name="success">/teach/coursecomputerFullEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!--del-->
+        <!--del entity-->
+        <action name="deleteCoursecomputer" class="CoursecomputerAction" method="deleteCoursecomputer">
+        	<result type="redirectAction">
+				<param name="actionName">manageCoursecomputer</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteCoursecomputerFull" class="CoursecomputerAction" method="deleteCoursecomputerFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageCoursecomputerFull</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--更新实体-->
+        <action name="updateCoursecomputer" class="CoursecomputerAction" method="updateCoursecomputer">
+        	<result name="success">/teach/coursecomputerUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--update entity full-->
+        <action name="updateCoursecomputerFull" class="CoursecomputerAction" method="updateCoursecomputer">
+        	<result name="success">/teach/coursecomputerFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+<!--根据id查询实体-->
+        <action name="selectCoursecomputerById" class="CoursecomputerAction" method="selectCoursecomputerById">
+        	<result name="success">/teach/coursecomputerView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity-->		
+        <action name="viewCoursecomputer" class="CoursecomputerAction" method="viewCoursecomputer">
+        	<result name="success">/teach/coursecomputerView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity full-->		
+        <action name="viewCoursecomputerFull" class="CoursecomputerAction" method="viewCoursecomputerFull">
+        	<result name="success">/teach/coursecomputerFullView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="coursecomputerAjax" extends="json-default">
+    	<action name="addCoursecomputerAjax" class="CoursecomputerAction" method="addCoursecomputerAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        <action name="deleteCoursecomputerAjax" class="CoursecomputerAction" method="deleteCoursecomputerAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteCoursecomputerFullAjax" class="CoursecomputerAction" method="deleteCoursecomputerFullAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+    	<action name="updateCoursecomputerAjax" class="CoursecomputerAction" method="updateCoursecomputerAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
+	</package>
+
+</struts>

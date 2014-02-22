@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+#parse("include/includePageCompatibility.vm")
+
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+	#set($currentPageModule="teach")
+	#parse("include/includeAdminHeader.vm")
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+          <!--control-bar start-->
+          <div class="control-bar clearfix">
+            <div class="title pull-left">机房课程安排</div>
+            <div class="tips">布置教学任务后，指定的收件人将会收到教学预约通知，收件人在相关说明的指导下完成机房预约。</div>
+          </div><!--control-bar end-->
+		  没有初始化学信息
+        </div>
+      </div>
+      <!--equip-wrap end-->
+
+	  #set($currentWebpage="coursescheduleAdd")
+	  #parse("include/includeTeachSidebar.vm")
+</section>
+
+
+    <!-- javascript
+    ================================================== -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/jquery.jqpagination.js"></script>
+
+<!--[if lt IE 10]>
+  <script src="${jsDomain}/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+
+<script>      
+/* ============ 课程安排 ============= */
+$("body").on("click", ".selectable", function() {
+	$(this).toggleClass("selected");	
+	if($(this).hasClass("selected")) {		// 如果选中
+		$(this).append('<code><i class="icon-ok"></i></code>');
+	} else {					
+		$(this).find("code").remove();		// 移除选中标识		
+	}
+});	
+
+
+
+	$("body").on("click", "button[action-type|=addCoursescheduleButton]", function() {
+		var _this = $(this);
+		
+		//一周每一天的课
+		var dayperiod = "";
+		$('.selectable').each(function(){
+			var data = $(this).data();
+			if($(this).hasClass("selected")) {		// 如果选中
+				dayperiod += data.week + ","+data.slot+";";
+			}
+		});
+		dayperiod = dayperiod.substring(0,dayperiod.length-1);
+		
+		//周
+		var inputweek = "";
+		$("input[name='inputWeek']").each(function() {			
+			if($(this).prop("checked") === true) {		// 如果选中
+				inputweek += $(this).prop("value") + ";";
+			}
+		});
+		inputweek = inputweek.substring(0,inputweek.length-1);
+
+		
+		
+		//pc
+		
+		var computerorderinfo = "";
+		$("input[name='computerorderinfo']").each(function() {
+			if($(this).prop("value") != "0"){
+				computerorderinfo += $(this).data("computermodeltype")+","+$(this).prop("value") + ";";
+			}
+		});
+		computerorderinfo = computerorderinfo.substring(0,computerorderinfo.length-1);
+
+		alert(dayperiod);
+		alert(inputWeek);
+				alert(computerorderinfo);
+			 return;
+			 
+           
+               	var postData = {
+					dayperiod:dayperiod,
+					inputweek:inputweek,
+					computerorderinfo:computerorderinfo
+				}
+				
+                //alert("add computer");
+                jQuery.ajax({  
+                    url:"${webbaseurl}/addCoursescheduleAjax.${strutsaction}",  
+                    type:"post",
+                    data:postData,
+                        dataType: 'json',
+                        success: function(data){
+                                var returnJson = jQuery.parseJSON(data); 
+                                if(returnJson.flag == 1){
+                                        var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});
+                                        clearAddForm();
+                                        _this.parents('.modal').modal('toggle');                // 提交成功，关闭模态对话框                                        
+                                }else{
+                                        var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});                                        
+                                        _this.parents('.modal').modal('toggle');                // 提交成功，关闭模态对话框                
+                                }
+                        }                            
+                });
+        });
+        //end add computer
+        
+        function clearAddForm(){
+										$('#input_add_courseschedule_id').val("");
+					
+        }
+        
+</script>        
+
+</body>
+</html>

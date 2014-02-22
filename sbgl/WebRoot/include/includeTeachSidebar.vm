@@ -36,12 +36,23 @@
 			#end	
 			">机房作业管理</a>
 			
-          <a href="教学管理-机房课程安排.html" class="list-group-item 		
-			#if($currentWebpage == "computerhomeworkAdd" )
+          <a href="${webbaseurl}/toAddCourseschedulePage.${strutsaction}" class="list-group-item 		
+			#if($currentWebpage == "coursescheduleAdd" )
 			active      
 			#end		
 			">机房课程安排</a>
-		  <a href="教学管理-教学设置.html" class="list-group-item">设置</a>
+			
+			          <a href="${webbaseurl}/manageCoursescheduleFull.${strutsaction}" class="list-group-item 		
+			#if($currentWebpage == "coursescheduleManage" )
+			active      
+			#end		
+			">机房课程管理</a>
+			
+		  <a href="${webbaseurl}/toAddCourseconfigPage.${strutsaction}" class="list-group-item 
+			#if($currentWebpage == "courseconfigAdd" )
+			active      
+			#end	
+			">设置</a>
         </div>
       </div>
       <!--sidebar end-->

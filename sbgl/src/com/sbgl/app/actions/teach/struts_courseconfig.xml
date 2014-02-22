@@ -3,9 +3,14 @@
 <struts>
 	 <package name="courseconfig" extends="admin">
 
+<!-- default entity manage action -->
+    	<action name="toAddCourseconfigPage" class="CourseconfigAction" method="toAddCourseconfigPage">
+        	<result name="success">/teach/courseconfigAdd.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
 
 <!-- default entity manage action -->
-    	<action name="manageCourseconfig" class="ManageTeachAction" method="manageCourseconfig">
+    	<action name="manageCourseconfig" class="CourseconfigAction" method="manageCourseconfig">
         	<result name="success1">/teach/courseconfigManage.vm</result>
 			<result name="success2">/teach/courseconfigFullManageContent.vm</result>
         	<result name="error">/error.vm</result> 
@@ -13,81 +18,16 @@
 	
 <!-- entity full manage  -->		
 		<!-- default entity full manage action -->
-    	<action name="manageCourseconfigFull" class="ManageTeachAction" method="manageCourseconfigFull">
+    	<action name="manageCourseconfigFull" class="CourseconfigAction" method="manageCourseconfigFull">
         	<result name="success1">/teach/courseconfigFullManage.vm</result>
 			<result name="success2">/teach/courseconfigFullManageContent.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
 		
 		
-		
-<!--添加实体-->
-    	<action name="addCourseconfig" class="CourseconfigAction" method="addCourseconfig">
-        	<result type="redirectAction">
-				<param name="actionName">manageCourseconfig</param>
-			</result>
-        </action>
-		
-<!--edit entity-->
-        <action name="editCourseconfig" class="CourseconfigAction" method="editCourseconfig">
-        	<result name="success">/teach/courseconfigEdit.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		
-<!--edit entity full-->
-        <action name="editCourseconfigFull" class="CourseconfigAction" method="editCourseconfigFull">
-        	<result name="success">/teach/courseconfigFullEdit.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
+
+
 	
-<!--del-->
-        <!--del entity-->
-        <action name="deleteCourseconfig" class="CourseconfigAction" method="deleteCourseconfig">
-        	<result type="redirectAction">
-				<param name="actionName">manageCourseconfig</param>
-			</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<!--del entityfull-->
-        <action name="deleteCourseconfigFull" class="CourseconfigAction" method="deleteCourseconfigFull">
-        	<result type="redirectAction">
-				<param name="actionName">manageCourseconfigFull</param>
-			</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		
-<!--更新实体-->
-        <action name="updateCourseconfig" class="CourseconfigAction" method="updateCourseconfig">
-        	<result name="success">/teach/courseconfigUpdate.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		
-<!--update entity full-->
-        <action name="updateCourseconfigFull" class="CourseconfigAction" method="updateCourseconfig">
-        	<result name="success">/teach/courseconfigFullUpdate.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-	
-		
-<!--根据id查询实体-->
-        <action name="selectCourseconfigById" class="CourseconfigAction" method="selectCourseconfigById">
-        	<result name="success">/teach/courseconfigView.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		
-<!-- View entity-->		
-        <action name="viewCourseconfig" class="CourseconfigAction" method="viewCourseconfig">
-        	<result name="success">/teach/courseconfigView.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		
-<!-- View entity full-->		
-        <action name="viewCourseconfigFull" class="CourseconfigAction" method="viewCourseconfigFull">
-        	<result name="success">/teach/courseconfigFullView.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-	
-		
     </package>
     
     <!-- Ajax方式 -->

@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <toolbox>
   
-    <tool>
+      <tool>
         <key>date</key>
         <scope>application</scope>
         <class>org.apache.velocity.tools.generic.DateTool</class>
     </tool>
+    
+    <tool>
+        <key>link</key>
+        <scope>application</scope>
+        <class>com.sbgl.toolbox.UrlUtil</class>
+    </tool>
+   
+   <tool>
+        <key>resource</key>
+        <scope>request</scope>
+        <class>com.sbgl.toolbox.ResourceTool</class>
+    </tool>
+
    <!--  
     <tool>
         <key>math</key>

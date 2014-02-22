@@ -10,191 +10,106 @@
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
-<!--[if lt IE 10]>
-  <script src="../js/jquery.placeholder.js"></script>
-  <script>
-  $('input, textarea').placeholder();
-  </script>
-<![endif]-->
-<!--[if lt IE 9]>
-  <script src="../js/html5shiv.js"></script>
-  <script src="../js/respond.min.js"></script>
-<![endif]-->
-<!--[if IE 7]>
-<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
-<![endif]-->
+#parse("include/includePageCompatibility.vm")
+
 </head>
 
 <body id="admin">
 <header id="header-wrap"><!--header-wrap-->
-  <div class="nav-wrap clearfix">
-    <div class="site-nav">
-      <div class="dropdown">
-        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a><!-- #BeginLibraryItem "/Library/siteNav.lbi" -->
-       </div>
-    </div>
-    <div class="sub-nav">
-      <ul class="nav nav-tabs nav-tabs-google">
-        <li><a href="#">首页</a></li>
-        <li><a href="#">设置</a></li>
-        <li><a href="用户管理首页.html">用户</a></li>
-        <li class="active"><a href="设备管理首页.html">部位</a></li>
-        <li><a href="#">内容</a></li>
-      </ul>
-    </div>    
-    <ul class="account-wrap nav nav-pills pull-right">
-          <li class="notice dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">消息1</a></li>
-              <li><a href="#">消息2</a></li>
-            </ul>
-          </li>     
-          <li class="social dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">Admin</span><img src="../img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
-            <div class="dropdown-menu">
-              <div class="media">
-                <a class="pull-left" href="#">
-                  <img src="../img/photo.jpg" width="96" height="96" class="img-rounded">
-                </a>
-                <div class="media-body">
-                  <div class="media-heading"><h5><a href="#">Admin</a></h5></div>
-                  
-                </div>
-              </div>
-            </div>      
-          </li>
-        </ul>
-  </div>
+	#set($currentPageModule="teach")
+	#parse("include/includeAdminHeader.vm")
 </header><!--/#header-wrap-->
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
-
-      <ul class="nav nav-tabs">
-        
-        <li class="active"><a href="">部位管理</a></li>
-      </ul>
       <!--admin-wrap start-->
       <div id="admin-wrap">
-        <div id="admin-content" class="clearfix">            
-            <div class="control-bar clearfix"><!--control-bar start-->
-              <div class="title pull-left">添加</div>
-			 
-			  <!--
-              <div class="page pull-right clearfix">
-                <ul class="page-index nav nav-pills pull-left">
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">最新</a></li>
-                      <li><a href="#">最旧</a></li>
-                    </ul>
-                  </li>              
-                </ul>
-                <div class="pagination pull-right">
-                  <ul>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
-                  </ul>
-                </div>              
-              </div>
-              <ul class="status-filter nav nav-pills pull-right">
-                <li class="active"><a href="#">全部(10)（无不显示）</a></li>
-                <li><a href="#">正常(5)</a></li>
-                <li><a href="#">借出(2)</a></li>
-                <li><a href="#">维护(2)</a></li>
-                <li><a href="#">维修(2)</a></li>
-                <li><a href="#">遗失(2)</a></li>
-                <li><a href="#">回收站(1)</a></li>
-              </ul>
-			   -->
-            
-			</div><!--control-bar end-->
+        <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">设置教学计划</div>
+              <div class="tips">在此页面下设置本学期的时间安排。</div>
+            </div><!--control-bar end-->
             <div class="panel panel-default">
               <div class="panel-body">
- <!--Add 表单-->             
-               <form  role="form" class="form-horizontal"  action="javascript:void(0)" name="AddCourseconfigForm">
-		<div class="form-group">
-                    <label for="label_courseconfig_id" class="col-lg-2 control-label">id</label>
-                    <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_add_courseconfig_id" name="id"  placeholder="id">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="label_courseconfig_schoolyear" class="col-lg-2 control-label">schoolyear</label>
-                    <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_add_courseconfig_schoolyear" name="schoolyear"  placeholder="schoolyear">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="label_courseconfig_semester" class="col-lg-2 control-label">semester</label>
-                    <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_add_courseconfig_semester" name="semester"  placeholder="semester">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="label_courseconfig_firstday" class="col-lg-2 control-label">firstday</label>
-                    <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_add_courseconfig_firstday" name="firstday"  placeholder="firstday">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="label_courseconfig_lastday" class="col-lg-2 control-label">lastday</label>
-                    <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_add_courseconfig_lastday" name="lastday"  placeholder="lastday">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="label_courseconfig_firstweekfirstday" class="col-lg-2 control-label">firstweekfirstday</label>
-                    <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_add_courseconfig_firstweekfirstday" name="firstweekfirstday"  placeholder="firstweekfirstday">
-                    </div>
-                  </div>
-		<div class="form-group">
-                    <label for="label_courseconfig_status" class="col-lg-2 control-label">status</label>
-                    <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_add_courseconfig_status" name="status"  placeholder="status">
-                    </div>
-                  </div>
-	              <!--
-                 <div class="form-group">
-                    <div class="col-lg-offset-2 col-lg-4">
-                      <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-                      <button type="submit" class="btn btn-primary">添 加</button>
-                   </div>
-               </div>
-			   -->
-				  <div class="form-group">
-                    <div class="col-lg-offset-2 col-lg-4">
-                      <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-                      <button action-type="addCourseconfigButton" class="btn btn-primary">添 加</button>
-                   </div>
-               </div>
-               </form>
               
-
-<!--Add 表单-->                    
-
-              </div>			  
+                <form class="form-horizontal" action="javascript:void(0)" role="form">
+                  <div class="form-group">
+                    <label for="inputSchoolYear" class="col-lg-2 control-label">学年</label>
+                    <div class="col-lg-2">
+                      <select class="select2 select-white form-control" id="inputSchoolYear">
+						#set($by = $currentyear-1)
+						#set($ay = $currentyear+1)
+                        <option value="${by}-${currentyear}">${by}-${currentyear}</option>
+                        <option value="${currentyear}-${ay}">${currentyear}-${ay}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputSemester" class="col-lg-2 control-label">学期</label>
+                    <div class="col-lg-2">
+                      <select class="select2 select-white form-control" id="inputSemester">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="semester-time form-group">
+                    <label for="inputDataRange" class="col-lg-2 control-label">本学期时间</label>
+                    <div class="col-lg-7">
+                      <div class="input-daterange row">
+                        <div class="col-lg-3">
+                          <input type="text" class="form-control" id="inputDataRange" name="start" placeholder="学期第一天">
+                        </div>
+                        <div class="col-lg-1 col-no-padding">
+                          <span class="add-on">至</span>
+                        </div>
+                        <div class="col-lg-3">
+                          <input type="text" class="form-control" id="inputDataRange2" name="end" placeholder="学期最后一天">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputFirstDay" class="col-lg-2 control-label">第一周第一天</label>
+                    <div class="col-lg-7">
+                      <div class="input-daterange row">
+                        <div class="col-lg-3">
+                          <input type="text" class="form-control" id="inputFirstDay" placeholder="第1周第1天">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+				  
+				 <div class="form-group">
+                    <label for="weeknum" class="col-lg-2 control-label">星期数</label>
+                    <div class="col-lg-2">
+                  
+                          <input type="text" class="form-control" id="weeknum" placeholder="学期星期数">
+                      
+                    </div>
+                  </div>
+				  
+                  <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-4">
+                      <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+                      <button type="submit" class="btn btn-primary" action-type="addCourseconfigButton">保 存</button>
+                    </div>
+                  </div>
+                </form>
+              
+              </div>
             </div>
           </div>
 
       </div>
       <!--equip-wrap end-->
-       <!--sidebar start-->
-      <div id="lside">
-        <form class="form-group">
-          <input type="text" class="form-control" placeholder="搜索">
-          <i class="icon-search"></i>
-        </form>
-        <div class="list-group">
-          <a href="${webbaseurl}/manageCourseconfigFull.action" class="list-group-item">管理</a>
-          <a href="${webbaseurl}/teach/courseconfigAdd.vm" class="list-group-item">添加</a>
-          
-        </div>
-      </div>
+      <!--sidebar start-->
+	  #set($currentWebpage="courseconfigAdd")
+	  #parse("include/includeTeachSidebar.vm")
       <!--sidebar end-->
 
 </section>
+
 
 
     <!-- javascript
@@ -206,38 +121,31 @@
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 <script src="${jsDomain}/jquery.jqpagination.js"></script>
+<script src="${jsDomain}/bootstrap-datepicker.js"></script>
+<script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
 
-<!--[if lt IE 10]>
-  <script src="${jsDomain}/jquery.placeholder.js"></script>
-  <script>
-  $('input, textarea').placeholder();
-  </script>
-<![endif]-->
 
 <script>        
-var cookie = { 
-                  //读取COOKIES,n为COOKIE名 
-                   Get:function(n){ 
-                       var re=new RegExp(n+'=([^;]*);?','gi');
-                   var r=re.exec(document.cookie)||[];
-                   return (r.length>1?r[1]:null)
-                   }
-        };
+
+//设置输入框为时间
+	$('.input-daterange, #inputFirstDay').datepicker({
+		language: 'zh-CN',
+		format: 'yyyy-mm-dd',
+		todayHighlight: true,
+		autoclose: true
+	});
         
         //add computer
         $("body").on("click", "button[action-type|=addCourseconfigButton]", function() {
        		 var _this = $(this);
-                var createuserid = cookie.Get("id");
+
                	var postData = {
-					//最后一个没有分号
-																							id: $('#input_add_courseconfig_id').val(),
-																								schoolyear: $('#input_add_courseconfig_schoolyear').val(),
-																								semester: $('#input_add_courseconfig_semester').val(),
-																								firstday: $('#input_add_courseconfig_firstday').val(),
-																								lastday: $('#input_add_courseconfig_lastday').val(),
-																								firstweekfirstday: $('#input_add_courseconfig_firstweekfirstday').val(),
-																								status: $('#input_add_courseconfig_status').val()
-																
+					schoolyear: $('#inputSchoolYear').val(),
+					semester: $('#inputSemester').val(),
+					firstday: $('#inputDataRange').val(),
+					lastday: $('#inputDataRange2').val(),
+					firstweekfirstday: $('#inputFirstDay').val(),
+					weeknum:$('#weeknum').val()
 				}
 				
                 //alert("add computer");
@@ -250,10 +158,10 @@ var cookie = {
                                 var returnJson = jQuery.parseJSON(data); 
                                 if(returnJson.flag == 1){
                                         var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});
-                                        clearAddForm();
+                                       // clearAddForm();
                                         _this.parents('.modal').modal('toggle');                // 提交成功，关闭模态对话框                                        
                                 }else{
-                                        var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});                                        
+                                        var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});                                        
                                         _this.parents('.modal').modal('toggle');                // 提交成功，关闭模态对话框                
                                 }
                         }                            
@@ -261,17 +169,17 @@ var cookie = {
         });
         //end add computer
         
-        function clearAddForm(){
+      /*  function clearAddForm(){
 										$('#input_add_courseconfig_id').val("");
 							$('#input_add_courseconfig_schoolyear').val("");
 							$('#input_add_courseconfig_semester').val("");
 							$('#input_add_courseconfig_firstday').val("");
-							$('#input_add_courseconfig_lastday').val("");
-							$('#input_add_courseconfig_firstweekfirstday').val("");
-							$('#input_add_courseconfig_status').val("");
+							$('#inputDataRange').val("");
+							$('#inputDataRange2').val("");
+							$('#inputFirstDay').val("");
 					
         }
-        
+        */
 </script>        
 
 </body>

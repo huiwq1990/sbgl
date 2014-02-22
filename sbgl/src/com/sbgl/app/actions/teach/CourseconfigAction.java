@@ -1,5 +1,6 @@
 package com.sbgl.app.actions.teach;
 
+import java.util.Calendar;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.teach.CourseconfigService;
 import com.sbgl.util.*;
@@ -53,28 +55,18 @@ public class CourseconfigAction extends ActionSupport implements SessionAware,Mo
 	private ReturnJson returnJson = new ReturnJson();
 	private String courseconfigIdsForDel;
 	
-//  manage Courseconfig
-	public String manageCourseconfig(){
-		log.info(logprefix+"manageCourseconfigFull");
+	public int currentyear;
+	
+	//管理 查询
+	public String toAddCourseconfigPage(){
 		
-//      分页查询	
-		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
-		//page.setTotalpage(courseconfigService.countCourseconfigRow());
-		courseconfigList  = courseconfigService.selectCourseconfigByPage(page);
+		   Calendar cal = Calendar.getInstance();
+		   currentyear= cal.get(Calendar.YEAR);
 		
-//		查询全部
-//		courseconfigList  = courseconfigService.selectCourseconfigById();
-		
-	    if(courseconfigList == null){
-			courseconfigList = new ArrayList<Courseconfig>();
-		}
-//		for(int i = 0; i < courseconfigList.size(); i++){
-//			System.out.println("id="+courseconfigList.get(i).getLoginusername());
-//		}
 		return SUCCESS;
-	}		
-			
+	}			
+
+		
 	//管理 查询
 	public String manageCourseconfigFull(){
 		log.info("exec action method:manageCourseconfigFull");
@@ -105,37 +97,12 @@ public class CourseconfigAction extends ActionSupport implements SessionAware,Mo
         }	
 	}			
 
-			
-	public String addCourseconfig(){	
-		log.info("Add Entity");
 
-		try {
-			Courseconfig temp = new Courseconfig();
-			// 将model里的属性值赋给temp
-			BeanUtils.copyProperties(temp, courseconfig);			
-			//add your code here.
-			
-			//temp.setCreatetime(DateUtil.currentDate());
-			
-			courseconfigService.addCourseconfig(temp);
-			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CourseconfigAction的方法：addBbstagfavourite错误"+e);
-		}
-		return "Error";
-	}
-	
 //  ajax add	
 	public String addCourseconfigAjax(){	
 		log.info("Add Entity Ajax Manner");
 		
-		ReturnJson returnJson = new ReturnJson();
+		
 		
 		try {
 			Courseconfig temp = new Courseconfig();
@@ -145,14 +112,16 @@ public class CourseconfigAction extends ActionSupport implements SessionAware,Mo
 			
 			//temp.setCreatetime(DateUtil.currentDate());
 			
+//			将所有当前学期设置不是当前学期
+			courseconfigService.execSql(" update Courseconfig set currentsemester = "+TeachConstant.coursesconfigcurrentsemester+" where currentsemester = "+TeachConstant.coursesconfigcurrentsemester);
+			temp.setStatus(TeachConstant.coursesconfigvalidstatus);
+//			将添加的设置为当前学期
+			temp.setCurrentsemester(TeachConstant.coursesconfigcurrentsemester);
 			
+			temp.setStatus(TeachConstant.coursesconfigvalidstatus);
 			courseconfigService.addCourseconfig(temp);
 			
-			returnJson.setFlag(1);
-			returnJson.setReason("添加成功");
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
-			
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, "添加当前学期成功");			
 			return SUCCESS;
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
@@ -170,315 +139,8 @@ public class CourseconfigAction extends ActionSupport implements SessionAware,Mo
 		return SUCCESS;
 	}
 
-//删除
-	public String deleteCourseconfig( ){
-		try{
-			if(courseconfig.getId() != null && courseconfig.getId() > 0){
-				courseconfigService.deleteCourseconfig(courseconfig.getId());
-				actionMsg = getText("deleteCourseconfigSuccess");
-			}else{
-				System.out.println("删除的id不存在");
-				actionMsg = getText("deleteCourseconfigFail");
-			}
-			
-			return SUCCESS;
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CourseconfigAction的方法：deleteCourseconfig错误"+e);
-		}
-		return "Error";
-	}
-	
-//删除Ajax
-	public String deleteCourseconfigAjax( ){
-		try{
-			if(courseconfig.getId() != null && courseconfig.getId() >= 0){
-				courseconfigService.deleteCourseconfig(courseconfig.getId());				
-			}
-			
-			return "IdNotExist";
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CourseconfigAction的方法：deleteCourseconfig错误"+e);
-		}
-		return "Error";
-	}
-
-	
-//	del entityfull
-	public String deleteCourseconfigFull(){
-		try {
-		
-			Integer getId = courseconfig.getId();
-			if(getId != null && getId < 0){
-				log.info("删除的id不规范");
-				return "Error";
-			}
-		
-		
-			Courseconfig temp = courseconfigService.selectCourseconfigById(getId);
-			if (temp != null) {
-				courseconfigService.deleteCourseconfig(getId);
-				return SUCCESS;
-			} else {
-				log.info("删除的id不存在");
-				return "Error";
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "Error";
-	}
-	
-	//del entityfull Ajax
-	public String deleteCourseconfigFullAjax( ){
-		
-		log.info(logprefix + "deleteComputercategoryFullAjax");
-             
-		try{
-			String ids[] = courseconfigIdsForDel.split(";");
-			for(int i=0; i < ids.length;i++){
-                                
-				Integer tempDelId = Integer.valueOf(ids[i]);                        
-				log.info(tempDelId);
-                                //检查id
-                                if(tempDelId == null || tempDelId < 0){
-                                        returnJson.setFlag(0);
-                                        returnJson.setReason("删除的id不规范");
-                                        log.info("删除的id不规范");
-                                        JSONObject jo = JSONObject.fromObject(returnJson);
-                                        this.returnStr = jo.toString();
-                                        return SUCCESS;
-                                }        
-                                //del
-                                Courseconfig temp = courseconfigService.selectCourseconfigById(tempDelId);                        
-                                if (temp != null) {                        
-                                        //其他操作                                        
-                                        courseconfigService.deleteCourseconfig(tempDelId);                                        
-                                } else {
-                                        log.info("删除的id不存在");                
-                                        returnJson.setFlag(0);
-                                        returnJson.setReason("删除的id不存在");
-                                        JSONObject jo = JSONObject.fromObject(returnJson);
-                                        this.returnStr = jo.toString();
-                                        return SUCCESS;
-                                }
-                        }
-                        returnJson.setFlag(1);
-                        returnJson.setReason("删除成功");
-                        JSONObject jo = JSONObject.fromObject(returnJson);
-                        this.returnStr = jo.toString();
-                        return SUCCESS;
-                        
-                } catch (Exception e) {
-                        e.printStackTrace();
-                }
-                
-                returnJson.setFlag(0);
-                returnJson.setReason("删除的内部错误");
-                JSONObject jo = JSONObject.fromObject(returnJson);
-                this.returnStr = jo.toString();
-                return SUCCESS;
-        }
-
-//修改
-	public String updateCourseconfig(){
-		try {
-			if(courseconfig.getId() != null && courseconfig.getId() > 0){				
-				Courseconfig tempCourseconfig = courseconfigService.selectCourseconfigById(courseconfig.getId());
-																				  								
-												  								
-												  								
-												  								
-												  								
-												  								
-								actionMsg = getText("viewCourseconfigSuccess");
-			}else{
-				actionMsg = getText("viewCourseconfigFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CourseconfigAction的方法：viewCourseconfig错误"+e);
-		}
-
-		return "error";
-	}
-	
-	
-	//ajax 修改
-	public String updateCourseconfigAjax(){
-		log.info(logprefix + "updateCourseconfigAjax,id="+courseconfig.getId());
-		ReturnJson returnJson = new ReturnJson();
-		try {
-			if(courseconfig.getId() != null && courseconfig.getId() > 0){				
-				Courseconfig tempCourseconfig = courseconfigService.selectCourseconfigById(courseconfig.getId());
-				
-				
-//              选择能更改的属性，与界面一致	
-  				tempCourseconfig.setSchoolyear(courseconfig.getSchoolyear());
-  				tempCourseconfig.setSemester(courseconfig.getSemester());
-  				tempCourseconfig.setFirstday(courseconfig.getFirstday());
-  				tempCourseconfig.setLastday(courseconfig.getLastday());
-  				tempCourseconfig.setFirstweekfirstday(courseconfig.getFirstweekfirstday());
-  				tempCourseconfig.setStatus(courseconfig.getStatus());
- 
-				
-				courseconfigService.updateCourseconfig(tempCourseconfig);		
-				returnJson.setFlag(1);	
-				returnJson.setReason("修改成功");
-				JSONObject jo = JSONObject.fromObject(returnJson);
-				this.returnStr = jo.toString();
-				//actionMsg = getText("viewCourseconfigSuccess");
-				return SUCCESS;
-				
-			}else{
-				actionMsg = getText("viewCourseconfigFail");
-				log.info(logprefix + "updateCourseconfigAjax fail");
-			}			
-			
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CourseconfigAction的方法：viewCourseconfig错误"+e);
-		}
-
-			returnJson.setFlag(0);		
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
-			return SUCCESS;
-	}
-	
-	
-	/**
-	
-	编辑实体 action的方法，首先获取entity的信息，返回到编辑页面
-	
-	*/
-	public String editCourseconfig(){
-		log.info(logprefix + "editCourseconfig");
-			
-		try {
-			//实体的id可以为0
-			if(courseconfig.getId() != null && courseconfig.getId() >= 0){				
-				Courseconfig temCourseconfig = courseconfigService.selectCourseconfigById(courseconfig.getId());
-				if(temCourseconfig != null){
-					BeanUtils.copyProperties(courseconfigModel,temCourseconfig);	
-					//actionMsg = getText("selectCourseconfigByIdSuccess");
-					return SUCCESS;
-				}				
-			}		
-			return "PageNotExist";
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CourseconfigAction的方法：selectCourseconfigById错误"+e);
-		}
 
 
-		return "error";
-	}
-	
-
-	/**
-	编辑实体Full action的方法，首先获取entityfull的信息，返回到编辑页面
-	
-	*/
-	public String editCourseconfigFull(){
-		
-		log.info(logprefix + "viewCourseconfig");
-		
-		try {
-			if(courseconfig.getId() != null && courseconfig.getId() > 0){				
-				CourseconfigFull temCourseconfigFull = courseconfigService.selectCourseconfigFullById(courseconfig.getId());
-				BeanUtils.copyProperties(courseconfigFull,temCourseconfigFull);	
-				actionMsg = getText("selectCourseconfigByIdSuccess");
-			}else{
-				actionMsg = getText("selectCourseconfigByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CourseconfigAction的方法：selectCourseconfigFullById错误"+e);
-		}
-		
-		return "error";
-	}
-
-	
-	// 查看实体 根据对象Id查询
-	public String viewCourseconfig(){
-		log.info("viewCourseconfig");
-		try {
-			if(courseconfig.getId() != null && courseconfig.getId() > 0){				
-				Courseconfig temCourseconfig = courseconfigService.selectCourseconfigById(courseconfig.getId());
-				BeanUtils.copyProperties(courseconfigModel,temCourseconfig);	
-				actionMsg = getText("selectCourseconfigByIdSuccess");
-			}else{
-				actionMsg = getText("selectCourseconfigByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CourseconfigAction的方法：selectCourseconfigById错误"+e);
-		}
-
-
-		return "error";
-
-	}	
-
-/**
- * view CourseconfigFull
- * need give parmeter id
- * get id from modle,
- * @return
- */
-	public String viewCourseconfigFull() {
-				
-		try {
-			int getId = courseconfig.getId();
-			log.info(this.logprefix + ";id=" + getId);
-			
-			if (getId < 0) {
-				log.error("error,id小于0不规范");
-				return "error";
-			}	
-			
-			CourseconfigFull temCourseconfigFull = courseconfigService.selectCourseconfigFullById(getId);				
-			if(temCourseconfigFull!=null){				
-				BeanUtils.copyProperties(courseconfigFull,temCourseconfigFull);
-				return SUCCESS;				
-			}else{
-				log.error("error,查询实体不存在。");
-				return "Error";
-			}			
-
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();			
-		}
-		return "Error";
-	}
-/*
-*/
 	//get set
 	public void setSession(Map<String, Object> session) {
 		// TODO Auto-generated method stub
@@ -575,4 +237,84 @@ public class CourseconfigAction extends ActionSupport implements SessionAware,Mo
         public void setCourseconfigIdsForDel(String courseconfigIdsForDel) {
                 this.courseconfigIdsForDel = courseconfigIdsForDel;
         }
+
+
+		public CourseconfigService getCourseconfigService() {
+			return courseconfigService;
+		}
+
+
+		public void setCourseconfigService(CourseconfigService courseconfigService) {
+			this.courseconfigService = courseconfigService;
+		}
+
+
+		public String getActionMsg() {
+			return actionMsg;
+		}
+
+
+		public void setActionMsg(String actionMsg) {
+			this.actionMsg = actionMsg;
+		}
+
+
+		public String getLogprefix() {
+			return logprefix;
+		}
+
+
+		public void setLogprefix(String logprefix) {
+			this.logprefix = logprefix;
+		}
+
+
+		public String getCallType() {
+			return callType;
+		}
+
+
+		public void setCallType(String callType) {
+			this.callType = callType;
+		}
+
+
+		public ReturnJson getReturnJson() {
+			return returnJson;
+		}
+
+
+		public void setReturnJson(ReturnJson returnJson) {
+			this.returnJson = returnJson;
+		}
+
+
+		public int getCurrentyear() {
+			return currentyear;
+		}
+
+
+		public void setCurrentyear(int currentyear) {
+			this.currentyear = currentyear;
+		}
+
+
+		public static Log getLog() {
+			return log;
+		}
+
+
+		public Map<String, Object> getSession() {
+			return session;
+		}
+
+
+		public void setCourseconfigid(Integer courseconfigid) {
+			this.courseconfigid = courseconfigid;
+		}
+        
+        
+        
+        
+        
 }

@@ -17,6 +17,8 @@ public class Courseconfig extends com.sbgl.app.dao.DaoAbs implements
 	private Date firstday;
 	private Date lastday;
 	private Date firstweekfirstday;
+	private Integer weeknum;
+	private Integer currentsemester;
 	private Integer status;
 
 	// Constructors
@@ -33,13 +35,15 @@ public class Courseconfig extends com.sbgl.app.dao.DaoAbs implements
 	/** full constructor */
 	public Courseconfig(Integer id, String schoolyear, Integer semester,
 			Date firstday, Date lastday, Date firstweekfirstday,
-			Integer status) {
+			Integer weeknum, Integer currentsemester, Integer status) {
 		this.id = id;
 		this.schoolyear = schoolyear;
 		this.semester = semester;
 		this.firstday = firstday;
 		this.lastday = lastday;
 		this.firstweekfirstday = firstweekfirstday;
+		this.weeknum = weeknum;
+		this.currentsemester = currentsemester;
 		this.status = status;
 	}
 
@@ -91,6 +95,22 @@ public class Courseconfig extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setFirstweekfirstday(Date firstweekfirstday) {
 		this.firstweekfirstday = firstweekfirstday;
+	}
+
+	public Integer getWeeknum() {
+		return this.weeknum;
+	}
+
+	public void setWeeknum(Integer weeknum) {
+		this.weeknum = weeknum;
+	}
+
+	public Integer getCurrentsemester() {
+		return this.currentsemester;
+	}
+
+	public void setCurrentsemester(Integer currentsemester) {
+		this.currentsemester = currentsemester;
 	}
 
 	public Integer getStatus() {

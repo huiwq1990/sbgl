@@ -39,7 +39,7 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 	//Service	
 	@Resource
 	private CourseService courseService;
-	
+	private Integer courseid; //entity full 的id属性名称		
 	private Course course = new Course();//实例化一个模型
 	private Course courseModel = new Course();//实例化一个模型
 	private CourseFull courseFull = new CourseFull();//实例化一个模型
@@ -48,7 +48,6 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 	private List<CourseFull> courseFullListCh = new ArrayList<CourseFull>();
 	private List<CourseFull> courseFullListEn = new ArrayList<CourseFull>();
 	
-	private Integer courseid; //entity full 的id属性名称		
 	private String logprefix = "exec action method:";
 	
 

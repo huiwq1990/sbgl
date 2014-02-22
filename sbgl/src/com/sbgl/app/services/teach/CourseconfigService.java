@@ -50,6 +50,8 @@ public interface CourseconfigService{
 	
 	// 查询实体full        
     public List<CourseconfigFull>  selectCourseconfigFullByConditionAndPage(String condition,final Page page);
+
+	int execSql(String sql);
 		
 	
 	

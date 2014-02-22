@@ -3,6 +3,9 @@ package com.sbgl.app.actions.common;
 
 public class CommonConfig {
 	
+	public final static String WebBaseUrl = "http://localhost:8080/sbgl"; 
+	public final static String strutsaction="action";
+	
 //	模块名称
 	public final static String ComputerModelName = "computer";
 	
