@@ -8,7 +8,7 @@
 	<session-factory>
 
 		<!-- 公用common -->
-		<mapping resource="com/sbgl/app/entity/Loginuser.hbm.xml" />
+		<!-- <mapping resource="com/sbgl/app/entity/Loginuser.hbm.xml" /> -->
 		<mapping resource="com/sbgl/app/entity/Maxno.hbm.xml" />
 
 
