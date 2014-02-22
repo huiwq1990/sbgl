@@ -81,7 +81,7 @@ public class GroupAction extends ActionSupport implements SessionAware {
 				this.tag = "0";
 				this.message = "添加组信息成功！";
 				
-				if(group.getType() == 2 || group.getType() == 6 || group.getType() == -1) {
+				if(group.getType() == 1 || group.getType() == 2 || group.getType() == 4) {
 					whichGroup = 0;
 				} else {
 					whichGroup = 1;
@@ -114,7 +114,7 @@ public class GroupAction extends ActionSupport implements SessionAware {
 			this.tag = "0";
 			this.message = "修改组信息成功！";
 
-			if(group.getType() == 2 || group.getType() == 6 || group.getType() == -1) {
+			if(group.getType() == 1 || group.getType() == 2 || group.getType() == 4) {
 				whichGroup = 0;
 			} else {
 				whichGroup = 1;
@@ -177,13 +177,13 @@ public class GroupAction extends ActionSupport implements SessionAware {
 		
 		if(whichGroup == 0) {
 			for (Usergroup ug : tempList) {
-				if(ug.getType() == 2 || ug.getType() == 6 || ug.getType() == -1) {
+				if(ug.getType() == 1 || ug.getType() == 2 || ug.getType() == 4) {
 					allGroupList.add( ug );
 				}
 			}
 		} else {
 			for (Usergroup ug : tempList) {
-				if(ug.getType() == 7 || ug.getType() == 8) {
+				if(ug.getType() == 3) {
 					allGroupList.add( ug );
 				}
 			}

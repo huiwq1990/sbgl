@@ -180,9 +180,9 @@
         <label for="inputFaCategoryId" class="col-xs-3 control-label">类别</label>
         <div class="col-xs-7">
           <select class="select2 select-white form-control" id="inputTypeId">
-		    <option value="2">学生</option>
-            <option value="6">教师</option>
-            <option value="-1">其他</option>
+		    <option value="1">学生</option>
+            <option value="2">教师</option>
+            <option value="4">其他</option>
           </select>
         </div>
       </div>
@@ -211,9 +211,9 @@
         <label for="modifyFaCategoryId" class="col-xs-3 control-label">类别</label>
         <div class="col-xs-7">
           <select class="select2 select-white form-control" id="modifyTypeId">
-		    <option value="2">学生</option>
-            <option value="6">教师</option>
-            <option value="-1">其他</option>
+		    <option value="1">学生</option>
+            <option value="2">教师</option>
+            <option value="4">其他</option>
           </select>
         </div>
       </div>

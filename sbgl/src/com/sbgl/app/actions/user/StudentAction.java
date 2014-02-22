@@ -261,7 +261,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 							  (tList != null ? tList.size() : 0) + 
 							  (wList != null ? wList.size() : 0) );
 		
-		if(sList != null && ("0".equals(type) || "2".equals(type))) {
+		if(sList != null && ("0".equals(type) || "1".equals(type))) {
 			for(Student s : sList) {
 				Usergrouprelation ugr = userGroupRelationService.getRelationByType( s.getId(), 2 );
 				Usergroup ug = null;
@@ -280,7 +280,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 											   s.getPassword(),
 											   String.valueOf( ugr == null ? "-1" : ug.getId() ),
 											   ugr == null ? "无分组" : ug.getName(),
-											   "2",
+											   "1",
 											   String.valueOf( s.getClassid() ),
 											   s.getClassid() == -1 ? "无班级" : clazz.getClassname(),
 											   s.getTelephone(),
@@ -293,7 +293,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 				
 			}
 		}
-		if(tList != null && ("0".equals(type) || "6".equals(type))) {
+		if(tList != null && ("0".equals(type) || "2".equals(type))) {
 			for(Teacher t : tList) {
 				Usergrouprelation ugr = userGroupRelationService.getRelationByType( t.getId(), 6 );
 				Usergroup ug = null;
@@ -308,7 +308,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 											   t.getPassword(),
 											   String.valueOf( ugr == null ? "-1" : ug.getId() ),
 											   ugr == null ? "无分组" : ug.getName(),
-											   "6",
+											   "2",
 											   "",
 											   "",
 											   t.getTelephone(),
@@ -320,7 +320,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 				allUserList.add( uc );
 			}		
 		}
-		if(wList != null && ("0".equals(type) || "-1".equals(type))) {
+		if(wList != null && ("0".equals(type) || "4".equals(type))) {
 			for(Worker w : wList) {
 				Usergrouprelation ugr = userGroupRelationService.getRelationByType( w.getId(), -1 );
 				Usergroup ug = null;
@@ -335,7 +335,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 											   w.getPassword(),
 											   String.valueOf( ugr == null ? "-1" : ug.getId() ),
 											   ugr == null ? "无分组" : ug.getName(),
-											   "-1",
+											   "4",
 											   "",
 											   "",
 											   w.getTelephone(),
@@ -387,11 +387,11 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		List<Usergroup> subList2 = new ArrayList<Usergroup>();
 		List<Usergroup> subList3 = new ArrayList<Usergroup>();
 		for (Usergroup up : tempList) {
-			if(up.getType() == 2) {
+			if(up.getType() == 1) {
 				subList1.add( up );
-			} else if(up.getType() == 6) {
+			} else if(up.getType() == 2) {
 				subList2.add( up );
-			} else if(up.getType() == -1) {
+			} else if(up.getType() == 4) {
 				subList3.add( up );
 			}
 		}
@@ -409,7 +409,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		allGroupList = new ArrayList<Usergroup>();
 		List<Usergroup> tempList = groupService.getAllUserGroup();
 		for (Usergroup ug : tempList) {
-			if(ug.getType() == 2 || ug.getType() == 6 || ug.getType() == -1) {
+			if(ug.getType() == 1 || ug.getType() == 2 || ug.getType() == 4) {
 				allGroupList.add( ug );
 			}
 		}
