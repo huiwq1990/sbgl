@@ -157,6 +157,19 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 	      }
 	}
 	
+	public <T> List<T> getEntityByIntProperty(String entityClass, String propertyName, int propertyValue) {
+		// TODO Auto-generated method stub
+		log.debug("正在查询");
+		try {
+			String queryString = "from "+entityClass+" as model where model." 
+					+ propertyName + "="+propertyValue;
+			return getHibernateTemplate().find(queryString);
+		} catch (RuntimeException re) {
+			log.error("查询失败", re);
+			throw re;
+		}
+	}
+	
 	public <T> List<T> executeHQL(String hql) {
 		List<T> resultList = getHibernateTemplate().find(hql);
 		return resultList;

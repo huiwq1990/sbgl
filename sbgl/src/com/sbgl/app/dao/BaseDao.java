@@ -24,6 +24,7 @@ public interface BaseDao {
 	//根据列值得到
 
 	public <T> List<T> getEntityByProperty(String tableName,String propertyName, String propertyValue);
+	public <T> List<T> getEntityByIntProperty(String tableName,String propertyName, int propertyValue);
 	public <T> void createSQL(String sql);
 	//获得主键
 	public Integer getCode(String codeType);

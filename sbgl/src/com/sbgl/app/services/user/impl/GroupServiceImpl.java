@@ -78,4 +78,9 @@ public class GroupServiceImpl implements GroupService {
 		return baseDao.getEntityById(Usergroup.class, groupId);
 	}
 
+	@Override
+	public List<Usergroup> getUserGroupByType(int typeId) {
+		return baseDao.getEntityByIntProperty(Usergroup.class.getName(), "type", typeId);
+	}
+
 }
