@@ -19,9 +19,11 @@ public class Loginuser extends com.sbgl.app.dao.DaoAbs implements
 	private Date createtime;
 	private Integer status;
 	private String roletype;
+	private Integer privilege;
 	
 
 	// Constructors
+
 
 	/** default constructor */
 	public Loginuser() {
@@ -34,7 +36,7 @@ public class Loginuser extends com.sbgl.app.dao.DaoAbs implements
 
 	/** full constructor */
 	public Loginuser(Integer id, String name, Date createtime,
-			Integer status,String userid,String password,String roletype) {
+			Integer status,String userid,String password,String roletype, Integer privilege) {
 		this.id = id;
 		this.name = name;
 		this.createtime = createtime;
@@ -42,6 +44,7 @@ public class Loginuser extends com.sbgl.app.dao.DaoAbs implements
 		this.password=password;
 		this.userid=userid;
 		this.roletype = roletype;
+		this.privilege = privilege;
 	}
 
 	// Property accessors
@@ -102,6 +105,14 @@ public class Loginuser extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setRoletype(String roletype) {
 		this.roletype = roletype;
+	}
+	
+	public Integer getPrivilege() {
+		return privilege;
+	}
+
+	public void setPrivilege(Integer privilege) {
+		this.privilege = privilege;
 	}
 
 }
