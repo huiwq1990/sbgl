@@ -25,5 +25,13 @@ public class SBGLConsistent {
 	
 	public final static int HQL_VALUE_STR = 15;  //条件间或关系
 	public final static int HQL_VALUE_INT = 16;  //条件间或关系
-	
+	/**
+	 * 登录用户类型判断，也同时决定了其权限
+	 */
+	public final static int USER_TYPE_ADMIN1 = 17;  //超级管理员
+	public final static int USER_TYPE_ADMIN2 = 18;  //设备管理员
+	public final static int USER_TYPE_ADMIN3 = 19;  //机房管理员
+	public final static int USER_TYPE_STU = 20;  //条件间或关系
+	public final static int USER_TYPE_TEA = 21;  //条件间或关系
+	public final static int USER_TYPE_WRK = 22;  //条件间或关系
 }

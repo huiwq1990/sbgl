@@ -15,6 +15,18 @@
         <action name="doLogout" class="LoginAction" method="doLogout">
         	<result name="success">/login.vm</result> 
         </action>
+        
+        <!-- 处理管理员登陆 -->
+    	<action name="doManagerLogin" class="LoginAction" method="doManagerLogin">
+    		<result name="super">/admin/userManageAdmin.vm</result>
+        	<result name="equip">/admin/equipMangerAdmin.vm</result>
+        	<result name="room">/admin/equipMangerAdmin.vm</result>
+        	<result name="faild">/login2.vm</result>
+        </action>
+        <!-- 处理管理员退出 -->
+        <action name="doManagerLogout" class="LoginAction" method="doManagerLogout">
+        	<result name="success">/login2.vm</result>
+        </action>
     </package>
     <package name="loginAjax" extends="json-default">
 	 	<!-- 进入登陆页面 -->

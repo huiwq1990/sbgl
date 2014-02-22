@@ -30,20 +30,16 @@
   <div class="nav-wrap clearfix">
     <div class="site-nav">
       <div class="dropdown">
-        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a>
-        <!-- #BeginLibraryItem "/Library/siteNav.lbi" -->
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a><!-- #BeginLibraryItem "/Library/siteNav.lbi" --><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
           <li><a href="../index.html"><i class="icon-home"></i> 首页</a></li>
-          <li class="divider"></li>
-          <li><a href="#anotherAction">个人主页</a></li>
-          <li><a href="#">通讯录</a></li>
           <li class="divider"></li>
           <li><a href="../预约首页.html">我的预约</a></li>
           <li><a href="../消息中心-站内信.html">站内信</a></li>
           <li class="divider"></li>
+          <li><a href="../设置页面-账户设置.html">设置与帮助</a></li>
           <li><a href="管理中心首页.html">管理中心</a></li>
         </ul>
-      <!-- #EndLibraryItem --> </div>
+          <!-- #EndLibraryItem --></div>
     </div>
 	<div class="sub-nav">
       <ul class="nav nav-tabs nav-tabs-google">
@@ -98,23 +94,18 @@
             </div><!--control-bar end-->
             <div class="panel panel-default">              
               <div class="panel-body">
-                <form class="form-horizontal" role="form">
+              
+                <form class="form-horizontal col-lg-6" role="form">
                   <h4 class="form-group-title">基本信息</h4>
                   <div class="form-group">
-                    <label for="inputTrueName" class="col-lg-2 control-label">真实姓名</label>
-                    <div class="col-lg-4">
+                    <label for="inputTrueName" class="col-lg-4 control-label">真实姓名</label>
+                    <div class="col-lg-8">
                       <input type="text" class="form-control" id="inputTrueName" placeholder="真实姓名">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="inputNickname" class="col-lg-2 control-label">昵称</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="inputNickname" placeholder="现昵称">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputGender" class="col-lg-2 control-label">性别</label>
-                    <div class="col-lg-4">
+                    <label for="inputGender" class="col-lg-4 control-label">性别</label>
+                    <div class="col-lg-8">
                       <label class="radio-inline">
                         <input type="radio" name="inputGender" id="gender-male" value="1" checked="">男
                       </label>
@@ -124,11 +115,11 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="inputBirthday" class="col-lg-2 control-label">生日</label>
-                    <div class="col-lg-1">
+                    <label for="inputBirthday" class="col-lg-4 control-label">生日</label>
+                    <div class="col-lg-2">
                       <input type="text" class="form-control" id="inputBirthday" placeholder="1989">
                     </div>
-                    <div class="col-lg-1">
+                    <div class="col-lg-2">
                       <select class="select2 select-white form-control" id="inputBirthMonth">
                         <option value="1">1</option><option value="2">2</option>
                         <option value="3">3</option><option value="4">4</option>
@@ -138,7 +129,7 @@
                         <option value="11">11</option><option value="12">12</option>
                       </select>
                     </div>
-                    <div class="col-lg-1">
+                    <div class="col-lg-2">
                       <select class="select2 select-white form-control" id="inputBirthDay">
                         <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
                         <option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option>
@@ -151,33 +142,25 @@
                       </select>
                     </div>
                   </div>
-                  
-                  <div class="form-group">
-                    <label for="inputIDNumber" class="col-lg-2 control-label">身份证号</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="inputIDNumber" placeholder="身份证号">
-                    </div>
-                  </div>
-
-                  <div class="form-group"><div class="col-lg-6"><hr></div></div>
+                  <div class="form-group"><hr></div>
                   <h4 class="form-group-title">联系信息</h4>
                   <div class="form-group">
-                    <label for="inputPhone" class="col-lg-2 control-label">手机号码</label>
-                    <div class="col-lg-4">
+                    <label for="inputPhone" class="col-lg-4 control-label">手机号码</label>
+                    <div class="col-lg-8">
                       <input type="text" class="form-control" id="inputPhone" placeholder="用户的联系电话">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="inputEmail" class="col-lg-2 control-label">电子邮箱</label>
-                    <div class="col-lg-4">
+                    <label for="inputEmail" class="col-lg-4 control-label">电子邮箱</label>
+                    <div class="col-lg-8">
                       <input type="email" class="form-control" id="inputEmail" placeholder="xxx@xxx.xxx">
                     </div>
                   </div>  
-                  <div class="form-group"><div class="col-lg-6"><hr></div></div>
+                  <div class="form-group"><hr></div>
                   <h4 class="form-group-title">用户类型</h4>
                   <div class="form-group">
-                    <label for="inputUserType" class="col-lg-2 control-label">用户类型</label>
-                    <div class="col-lg-4">
+                    <label for="inputUserType" class="col-lg-4 control-label">用户类型</label>
+                    <div class="col-lg-8">
                       <label class="radio-inline">
                         <input type="radio" name="inputUserType" id="userType-stu" value="1" checked="">学生
                       </label>
@@ -189,39 +172,88 @@
                       </label>
                     </div>
                   </div>
-                  <div class="user-detail-info">
-                    <div class="form-group">
-                      <label for="inputUserGroup" class="col-lg-2 control-label">用户组</label>
-                      <div class="col-lg-4">
-                        <select class="select2 select-white form-control" id="inputUserGroup">
-                          <option value="1">本科</option>
-                          <option value="2">硕士</option>
-                          <option value="3">博士</option>
-                        </select>
+                  <div id="user-detail-info"><!-- user-detail-info -->
+                    <div id="user-student"><!-- user-student -->
+                      <div class="user-group-student">
+                        <div class="form-group">
+                          <label for="inputUserGroupStudent-1" class="col-lg-4 control-label">用户组</label>
+                          <div class="col-lg-8">
+                            <select class="select2 select-white form-control" id="inputUserGroupStudent-1">
+                              <option value="1">本科</option>
+                              <option value="2">硕士</option>
+                              <option value="3">博士</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputStuYear" class="col-lg-4 control-label">年份</label>
+                          <div class="col-lg-2">
+                            <input type="text" class="form-control list-inline" id="inputBirthday" placeholder="2008">
+                          </div>
+                          <div class="col-lg-1 text-center"> 至 </div>
+                          <div class="col-lg-2">
+                          <input type="text" class="form-control list-inline" id="inputBirthday" placeholder="2012">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputStuClass" class="col-lg-4 control-label">班级</label>
+                          <div class="col-lg-8">
+                            <select class="select2 select-white form-control" id="inputStuClass">
+                              <option value="1">2012级电影制作</option>
+                              <option value="2">2012级电影摄影</option>
+                              <option value="3">2012级多媒体</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputStudentID" class="col-lg-4 control-label">学号</label>
+                          <div class="col-lg-8">
+                            <input type="text" class="form-control" id="inputStudentID" placeholder="04122049">
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="inputStuClass" class="col-lg-2 control-label">班级</label>
-                      <div class="col-lg-4">
-                        <select class="select2 select-white form-control" id="inputStuClass">
-                          <option value="1">2012级电影制作</option>
-                          <option value="2">2012级电影摄影</option>
-                          <option value="3">2012级多媒体</option>
-                        </select>
+                      <!--
+                      <div class="form-group" id="add-study-info">
+                        <div class="col-lg-offset-4 col-lg-8">
+                          <button type="submit" class="btn btn-white" action-type="addStudyInfo">添 加</button>
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="inputUserID" class="col-lg-2 control-label">学号</label>
-                      <div class="col-lg-4">
-                        <input type="text" class="form-control" id="inputUserID" placeholder="04122049">
+                      -->
+                    </div><!-- /#user-student -->
+                    <div id="user-teacher" style="display: none;"><!-- user-teacher -->
+                      <div class="form-group">
+                        <label for="inputUserGroupTeacher" class="col-lg-4 control-label">用户组</label>
+                        <div class="col-lg-8">
+                          <select class="select2 select-white form-control" id="inputUserGroupTeacher">
+                            <option value="4">在职</option>
+                            <option value="5">退休</option>
+                          </select>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="form-group"><div class="col-lg-6"><hr></div></div>
+                      <div class="form-group">
+                        <label for="inputTeacherID" class="col-lg-4 control-label">教工号</label>
+                        <div class="col-lg-8">
+                          <input type="text" class="form-control" id="inputTeacherID" placeholder="04122049">
+                        </div>
+                      </div>
+                    </div><!-- /#user-teacher -->
+                    <div id="user-other" style="display: none;"><!-- user-other -->
+                      <div class="form-group">
+                        <label for="inputUserGroupOther" class="col-lg-4 control-label">用户组</label>
+                        <div class="col-lg-8">
+                          <select class="select2 select-white form-control" id="inputUserGroupOther">
+                            <option value="4">在职</option>
+                            <option value="5">退休</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div><!-- /#user-other -->
+                  </div><!-- /#user-detail-info -->
+                  <div class="form-group"><hr></div>
                   <h4 class="form-group-title">个性设置</h4>
                   <div class="form-group">
-                    <label for="inputDefaultLang" class="col-lg-2 control-label">界面语言</label>
-                    <div class="col-lg-4">
+                    <label for="inputDefaultLang" class="col-lg-4 control-label">界面语言</label>
+                    <div class="col-lg-8">
                       <label class="radio-inline">
                         <input type="radio" name="inputDefaultLang" id="lang-cn" value="1" checked="">中文
                       </label>
@@ -231,19 +263,19 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="inputPassword1" class="col-lg-2 control-label">新密码</label>
-                    <div class="col-lg-4">
+                    <label for="inputPassword1" class="col-lg-4 control-label">新密码</label>
+                    <div class="col-lg-8">
                       <input type="text" class="form-control" id="inputPassword1" placeholder="新密码">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="inputPassword2" class="col-lg-2 control-label">确认密码</label>
-                    <div class="col-lg-4">
+                    <label for="inputPassword2" class="col-lg-4 control-label">确认密码</label>
+                    <div class="col-lg-8">
                       <input type="text" class="form-control" id="inputPassword2" placeholder="确认新的密码">
                     </div>
                   </div>
                   <div class="form-group">
-                    <div class="col-lg-offset-2 col-lg-4">
+                    <div class="col-lg-offset-4 col-lg-8">
                       <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
                       <button type="submit" class="btn btn-primary" action-type="updateUser">更 新</button>
                     </div>
@@ -290,39 +322,20 @@
 $("input[name=inputUserType]").on("click", function(event) {
 	
 	var item = $(this).val();
-	var html;
-	$("#inputUserGroup").empty();
-	$("#s2id_inputUserGroup > a > span").empty();
 	if (item == 1) {
-		html = 
-		'<option value="1">本科</option>' +
-		'<option value="2">硕士</option>' +
-		'<option value="3">博士</option>';
-		$("#s2id_inputUserGroup > a > span").append("本科");
-		$("label[for=inputUserID]").parent().show();
-		$("label[for=inputUserID]").html("学号");
-		$("label[for=inputStuClass]").parent().show();
-		$("#user-other-info").hide();
+		$("#user-other").hide();
+		$("#user-teacher").hide();
+		$("#user-student").show();
 	} else if (item == 2) {
-		html =
-		'<option value="4">在职</option>' +
-		'<option value="5">退休</option>';
-		$("#s2id_inputUserGroup > a > span").append("在职");
-		$("label[for=inputUserID]").parent().show();
-		$("label[for=inputUserID]").html("教工号");
-		$("label[for=inputStuClass]").parent().hide();
-		$("#user-other-info").hide();
+		$("#user-student").hide();
+		$("#user-other").hide();
+		$("#user-teacher").show();
 	} else if (item == 3) {
-		html =
-		'<option value="6">其他</option>';
-		$("#s2id_inputUserGroup > a > span").append("其他");
-		$("label[for=inputUserID]").parent().hide();
-		$("label[for=inputStuClass]").parent().hide();
-		$("#user-other-info").show();
+		$("#user-student").hide();
+		$("#user-teacher").hide();
+		$("#user-other").show();
 	}
-	$("#inputUserGroup").append(html);
-	})
-
+});
 </script>
 </body>
 </html>

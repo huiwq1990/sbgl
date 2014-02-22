@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系</title>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/todc-bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/global.css" rel="stylesheet" type="text/css" />
+<script >
+	function afterSubmit(flag,content){
+		if(flag){
+			location.href="./index.vm";
+		}else{
+			alert("登陆失败"+content);
+		}
+	}
+</script>
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+<![endif]-->
+</head>
+
+<body class="ab">
+<div class="fullscreen-post-bg">
+  <img src="img/original_eD7F_053100003d1c1191.jpg">
+</div>
+<div class="center">
+  <h1 class="center-logo">北京电影学院摄影系</h1>
+  <form action="./doManagerLogin.do" method="post" name="fm" target="submit" role="form">
+    <div class="form-group">
+        <input type="text" id="inputUsername" class="form-control" name="loginuser.userid" placeholder="用户名">
+    </div>
+    <div class="form-group">
+        <input type="password" id="inputPassword" class="form-control" name="loginuser.password" placeholder="密码">
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary input-block-level">登 录</button>
+        <label class="checkbox keep-login">
+          <input type="checkbox"> <span class="text-shadow">保持登录状态</span>
+        </label>
+    </div>
+  </form>
+</div>
+<footer class="container">
+  <div class="navbar navbar-fixed-bottom">
+    <div class="posted-by pull-right">
+      <span class="author text-shadow">作者：<strong>XXXX</strong></span><span class="avatar"><img src="img/photo.jpg" width="25" height="25"></span>
+    </div> 
+  </div>
+</footer>
+<iframe name="submit" width="0" height="0" />
+
+</body>
+</html>

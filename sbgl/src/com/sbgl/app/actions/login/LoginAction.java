@@ -18,6 +18,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.services.login.LoginService;
+import com.sbgl.common.SBGLConsistent;
 import com.sbgl.util.CookiesUtil;
 import com.sbgl.util.JavascriptWriter;
 import com.sbgl.util.WebUtils;
@@ -30,7 +31,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	private Map<String, Object> session;
 	private Loginuser loginuser;
 	
-	
+
 	@Resource
 	private LoginService loginService;
 	
@@ -58,6 +59,36 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		Javascript(flag);
 	}
 	
+	public String doManagerLogin() {		
+		Loginuser loginUser3 = new Loginuser();		
+		try{	
+			loginUser3 = loginService.findUser(loginuser);
+			if(loginUser3 != null) {
+				CookiesUtil.addLoginCookie("id", loginUser3.getId().toString());
+				CookiesUtil.addLoginCookie("userid", loginUser3.getUserid());
+				CookiesUtil.addLoginCookie("username", loginUser3.getName());
+				CookiesUtil.addLoginCookie("roletype", loginUser3.getRoletype());
+				
+				if( "100".equals(loginUser3.getRoletype()) ) {
+					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN1);
+					return "super";
+				} else if( "200".equals(loginUser3.getRoletype()) ) {
+					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN2);
+					return "equip";
+				} else if( "300".equals(loginUser3.getRoletype()) ) {
+					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN3);
+					return "room";
+				}
+				
+			}
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();			
+		}
+		return "faild";
+	}
+	
 	public void Javascript(boolean flag){
 		try{
 			HttpServletResponse response = WebUtils.getHttpServletResponse();
@@ -80,16 +111,21 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
+	public String doManagerLogout(){
+		session.remove("Loginuser");
+		return SUCCESS;
+	}
+	
 	public void setSession(Map<String, Object> session) {
 		// TODO Auto-generated method stub
 	    this.session = session;
 	}
 
-	public Loginuser getLoginUser() {
+	public Loginuser getLoginuser() {
 		return loginuser;
 	}
 
-	public void setLoginUser(Loginuser loginuser) {
+	public void setLoginuser(Loginuser loginuser) {
 		this.loginuser = loginuser;
 	}
 
