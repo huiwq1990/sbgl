@@ -19,7 +19,7 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Override
 	public int addTeacher(Teacher teacher) {
-		int id = baseDao.getCode("teacherId");
+		int id = baseDao.getCode("userId");
 		teacher.setId( id );
 		
 		try {

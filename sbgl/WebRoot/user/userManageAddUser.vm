@@ -142,21 +142,21 @@
                       <select class="select2 form-control" id="inputUserGroup">
 						<optgroup label="学生">
 						#foreach($item in $allGroupList)
-						  #if($!item.type == "2")
+						  #if($!item.type == 1)
 							<option value=$!item.id>$!item.name</option>
 						  #end
 						#end
 						</optgroup>
 						<optgroup label="教师">
 						#foreach($item in $allGroupList)
-						  #if($!item.type == 6)
+						  #if($!item.type == 2)
 							<option value=$!item.id>$!item.name</option>
 						  #end
 						#end
 						</optgroup>
 						<optgroup label="其他">
 						#foreach($item in $allGroupList)
-						  #if($!item.type == -1)
+						  #if($!item.type == 4)
 							<option value=$!item.id>$!item.name</option>
 						  #end
 						#end
@@ -332,7 +332,7 @@
     			"student.classid": userClazz,
     			"student.couldBorrow": userCould,
 				"group.id": userGroup,
-				"group.type": 2
+				"group.type": 1
     		};
 			url = "${webbaseurl}/addStu.do";
 		} else if(isTea) {
@@ -345,7 +345,7 @@
     			"teacher.photo": savedFileName,
     			"teacher.password": userPass,
 				"group.id": userGroup,
-				"group.type": 6
+				"group.type": 2
     		};
 			url = "${webbaseurl}/addTea.do";
 		} else if(isWkr) {
@@ -358,7 +358,7 @@
     			"worker.photo": savedFileName,
     			"worker.password": userPass,
 				"group.id": userGroup,
-				"group.type": -1
+				"group.type": 4
     		};
 			url = "${webbaseurl}/addWkr.do";
 		} else {

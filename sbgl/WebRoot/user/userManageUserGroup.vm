@@ -120,11 +120,11 @@
 					  <tr>
                         <td><input class="chk" type="checkbox" name="chk-list" value="$!group.id"></td>
                         <td>$!group.name<a class="btn btn-white btn-mini" action-type="beforeModify" data-id="$!group.id" data-name="$!group.name" data-type="$!group.type" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
-						#if($!group.type == 2)
+						#if($!group.type == 1)
 						<td>学生</td>
-						#elseif($!group.type == 6)
+						#elseif($!group.type == 2)
 						<td>教师</td>
-						#elseif($!group.type == -1)
+						#elseif($!group.type == 4)
 						<td>其他</td>
 						#end
                   	 </tr>
@@ -180,9 +180,9 @@
         <label for="inputFaCategoryId" class="col-xs-3 control-label">类别</label>
         <div class="col-xs-7">
           <select class="select2 select-white form-control" id="inputTypeId">
-		    <option value="2">学生</option>
-            <option value="6">教师</option>
-            <option value="-1">其他</option>
+		    <option value="1">学生</option>
+            <option value="2">教师</option>
+            <option value="4">其他</option>
           </select>
         </div>
       </div>
@@ -211,9 +211,9 @@
         <label for="modifyFaCategoryId" class="col-xs-3 control-label">类别</label>
         <div class="col-xs-7">
           <select class="select2 select-white form-control" id="modifyTypeId">
-		    <option value="2">学生</option>
-            <option value="6">教师</option>
-            <option value="-1">其他</option>
+		    <option value="1">学生</option>
+            <option value="2">教师</option>
+            <option value="4">其他</option>
           </select>
         </div>
       </div>

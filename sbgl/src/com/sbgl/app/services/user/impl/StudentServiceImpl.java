@@ -19,7 +19,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public int addStudent(Student student) {
-		int id = baseDao.getCode("stuId");
+		int id = baseDao.getCode("userId");
 		student.setId( id );
 		
 		try {

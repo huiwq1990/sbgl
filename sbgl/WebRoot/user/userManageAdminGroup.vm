@@ -174,7 +174,7 @@
         <label for="inputFaCategoryId" class="col-xs-3 control-label">类别</label>
         <div class="col-xs-7">
           <select class="select2 select-white form-control" id="inputTypeId">
-		    <option value="8">管理员</option>
+		    <option value="3">管理员</option>
           </select>
         </div>
       </div>
@@ -334,7 +334,7 @@
     			postData = {
 					"group.id": alterGroupId,
 					"group.name": newGroupName,
-    				"group.type": 8
+    				"group.type": 4
         		};
 				actionUrl = "${webbaseurl}/alterAdminGroup.do";
 				tip = "修改管理员组成功！";

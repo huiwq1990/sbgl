@@ -226,7 +226,7 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 		allGroupList = new ArrayList<Usergroup>();
 		List<Usergroup> tempList = groupService.getAllUserGroup();
 		for (Usergroup ug : tempList) {
-			if(ug.getType() == 8) {
+			if(ug.getType() == 3) {
 				allGroupList.add( ug );
 			}
 		}

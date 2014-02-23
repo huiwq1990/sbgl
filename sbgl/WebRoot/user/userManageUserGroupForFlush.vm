@@ -24,11 +24,11 @@
 					  <tr>
                         <td><input class="chk" type="checkbox" name="chk-list" value="$!group.id"></td>
                         <td>$!group.name<a class="btn btn-white btn-mini" action-type="beforeModify" data-id="$!group.id" data-name="$!group.name" data-type="$!group.type" data-toggle="modal" href="#modify-equip-category" role="button">修改</a></td>
-						#if($!group.type == 2)
+						#if($!group.type == 1)
 						<td>学生</td>
-						#elseif($!group.type == 6)
+						#elseif($!group.type == 2)
 						<td>教师</td>
-						#elseif($!group.type == -1)
+						#elseif($!group.type == 4)
 						<td>其他</td>
 						#end
                   	 </tr>
