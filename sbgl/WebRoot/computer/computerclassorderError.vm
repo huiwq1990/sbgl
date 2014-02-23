@@ -7,6 +7,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
@@ -34,147 +35,7 @@
             
             <div class="row">
 
-              <div class="post-list-warp"><!--post-list-warp start-->  
-                <div class="post-list">              
-                  <div class="control-bar"><!--control-bar start-->
-                    <div class="title">机房预约</div>
-                    <div class="tips">当前可预约 2 周内的机房设备，选择您所需要的设备、使用日期、时段及数量。</div>
-                  </div><!--control-bar end-->
-    
-				  
-             
-               
-#set($computermodelListSize = $computermodelList.size() - 1)
-#if($computermodelListSize>=0)
-#set($computermodelListRegion = [0..$computermodelListSize])
-##取出所有的PC Model
-#foreach($tempmodelindex in $computermodelListRegion)
-	#set($tempmodel = $computermodelList.get($tempmodelindex))		
-	<!--PC 某个模型的信息 -->			   
-			   <!--start-->
-				  <div class="panel panel-default">
-    
-                    <div class="row panel-body">
-                  
-                        <div class="col-md-3">
-                          <img src="img/dell.jpg" class="img-responsive">
-                        </div>
-                        <div class="col-md-9">
-                          <h3 class="equip-title">$tempmodel.name</h3>
-                          <p class="detail">一段文字描述。</p>
-                          <div class="carousel-bar">
-                            <a class="btn btn-white" href="#post-equip-$!tempmodel.id" data-slide="prev"><i class="icon-chevron-left"></i></a>
-                            <a class="btn btn-white" href="#post-equip-$!tempmodel.id" data-slide="next"><i class="icon-chevron-right"></i></a>
-                          </div>
-                          <div id="post-equip-$!tempmodel.id" class="carousel slide">
-                            <div class="carousel-inner">
-      
-						<!--构建所有的Table -->
-		#set($weektablenum = $computeroderadvanceorderday /$computerodertablercolumn - 1 )		##一共有几个周的Table 用可以预约的天数除以7				
-		#set($weektableregion = [0..$weektablenum])
-		#foreach($tempweektableindex in $weektableregion)
-			
-	<!--构建某个模型的某一周的Table -->	
-	#set($borrowperiodListSize = $borrowperiodList.size() - 1)
-	#if($borrowperiodListSize>=0)
-		#set($borrowperiodListRegion = [0..$borrowperiodListSize])
-		
-								<!--tabel start-->
-								##激活第一个表格
-								#if($tempweektableindex ==0)
-									<div class="active item table-responsive">
-								#else
-								<div class=" item table-responsive">
-								#end
-                                <table class="table" data-table-name="$tempmodel.name">
-									
-                                    <thead>
-                                      <tr>
-                                        <th class="time-slop">时间</th>
-										##所有时间段 上午、中午、晚上 取出所有的属性名称
-										#set($weekdayRegion = [0..$computerodertablercolumn-1])
-										#set($weekDateList = $showDateMap.get($tempweektableindex))
-										#set($trueDateList = $dateMap.get($tempweektableindex))
-										
-										#foreach($tempday in $weekdayRegion)
-                                        <th><br>$weekDateList.get($tempday)</th>
-                                        #end                
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-		##所有时间段 上午、中午、晚上 取出所有的属性名称
-		#foreach($tempperiod in $borrowperiodListRegion)
-			#set($tempBorrowperiod = $borrowperiodList.get($tempperiod))##取出某个时间段				
-                 <tr>
-					<td class="time-slot">$tempBorrowperiod.peroidname</td>
-					
-			##对于可以借的每一天		
-			#foreach($tempday in [0..$computerodertablercolumn-1])		
-				#set($thisday =$tempweektableindex * $computerodertablercolumn+$tempday )
-				#set($availnum = $availableBorrowModelMap.get($tempmodel.computermodeltype).get($tempBorrowperiod.id).get($thisday))
-				#if($availnum ==0)
-                       <td></td>
-				#else
-					#set($tableindex = $tempweektableindex*21 + $tempperiod*7 + $tempday)
-					<td class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-slot="$tempBorrowperiod.id" data-pcname = "$tempmodel.name" data-max-num="$availnum">$availnum<br/>可预约</td>
-				#end                 
-					
-			#end ##end day info computerorderTotalOrderDay
-			
-			
-			 </tr>
-		#end ##end borrowperiodLis
-                                    </tbody>
-                                </table>
-                              
-                              </div>
-							  <!--tabel end-->
-	
-		#end						  
-		<!--end 构建某个模型的某一周的Table -->	
-		
-#end ##end weektable
-<!-- end 构建所有Table-->
-		
-		
-		
-					
-							  
-                            </div>        
-                          </div>
-    
-                        </div>
-             
-                    </div>
-                  </div>  
-				<!--end-->		
-#end
-#end					
-				
-				
-				
-				</div>
-              </div><!--post-list-warp end-->
-              
-              <div class="post-sidebar-warp"><!--post-sidebar-warp start-->
-                <form action="javascript:void(0)">
-			   <div id="post-sidebar" class="thumbnail wizard">
-                  <h3>预约单</h3>
-				 
-                  <div id="rent-list">
-                    <p class="no-add">尚未添加任何预约项。</p>
-                  
-                  </div>
-                  <div class="form-actions actions">  
-                    <button type="button" class="btn btn-white btn-clear">清 空</button>
-                    <button action-type="confirmComputerButton"  class="btn btn-primary">提交预约</button>
-                  </div>
-                </div>
-				</from>
-				
-              </div><!--post-sidebar-warp start-->
-            </div>           
-            
+             $actionMsg
 
           </div>
   </div>

@@ -1,0 +1,34 @@
+    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="#">全部</a></li>
+        
+		<li><a href="#">器材作业</a></li>
+		
+        <li
+		#if($currentPageType == "computerHomeworkSpace" )
+			 class="active"      
+		#end	
+		><a href="${webbaseurl}/toComputerhomeworkInboxPage.${strutsaction}">机房作业</a></li>
+		
+	
+	
+		#if($currentPageType == "createorder" )
+			<li class="divider"></li>
+			<li class="active"><a href="#">预约提交</a></li>
+		#end	
+		
+		#if($currentPageType == "computerorderfinish" )
+			<li class="divider"></li>
+			<li class="active"><a href="#">预约完成</a></li>
+		#end
+		
+		
+		#if($currentPageType == "computerorderview" )
+			<li class="divider"></li>
+			<li class="active"><a href="#">订单查看</a></li>
+		#end
+		
+        
+      </ul>
+    </div>
+  </div>

@@ -12,7 +12,7 @@
 <!-- 跳转到课程预约页面 -->
 		<action name="toComputerClassorderPage" class="ComputerClassorderAction" method="toComputerClassorderPage">
         	<result name="success">/computer/computerclassorderindex.vm</result>
-        	<result name="pagenotfound">/computer/errorpage.vm</result>
+        	<result name="pagenotfound">/computer/computerclassorderError.vm</result>
 			<result name="innererror">/computer/errorpage.vm</result>
 		</action>
 		

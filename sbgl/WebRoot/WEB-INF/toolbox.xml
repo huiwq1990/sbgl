@@ -18,6 +18,13 @@
         <scope>request</scope>
         <class>com.sbgl.toolbox.ResourceTool</class>
     </tool>
+    
+      
+    <tool>
+        <key>pcimg</key>
+        <scope>application</scope>
+        <class>com.sbgl.toolbox.ComputerImageUrlTool</class>
+    </tool> 
 
    <!--  
     <tool>

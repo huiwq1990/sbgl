@@ -10,6 +10,7 @@
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 <link  href="${cssDomain}/jqpagination.css" rel="stylesheet" type="text/css" />
+
 #parse("include/includePageCompatibility.vm")
 
 </head>

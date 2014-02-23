@@ -162,6 +162,8 @@ public class FileUploadAction  extends ActionSupport {
 			destinationFileName = String.valueOf(Calendar.getInstance().getTimeInMillis()) ;
 		}
 		
+		destinationFileName = destinationFileName+fileType;
+		
 		
 		if(imagePath.equals("") || destinationFileName.equals("")){
 			returnInfo = "无法获取保存的路径及文件名";

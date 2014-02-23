@@ -24,6 +24,7 @@ import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.teach.CourseService;
+import com.sbgl.app.services.user.GroupService;
 import com.sbgl.util.*;
 
 
@@ -47,6 +48,13 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 	private List<CourseFull> courseFullList = new ArrayList<CourseFull>();
 	private List<CourseFull> courseFullListCh = new ArrayList<CourseFull>();
 	private List<CourseFull> courseFullListEn = new ArrayList<CourseFull>();
+	
+	
+	
+	@Resource
+	private GroupService groupService;
+	private List<Usergroup> userGroupList = new ArrayList<Usergroup>();
+	
 	
 	private String logprefix = "exec action method:";
 	
@@ -107,6 +115,12 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 	public String toCourseAddPage(){
 		log.info(logprefix+"toCourseAddPage");
 		
+		userGroupList = groupService.getUserGroupByType(CommonConfig.usergroupstudentid);
+		
+		
+		if(userGroupList == null){
+			userGroupList = new ArrayList<Usergroup>();
+		}
 
 		return SUCCESS;
 	}		
@@ -155,6 +169,8 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxadminnotloginreturn, returnInfo);
 			return SUCCESS;
 		}
+		
+		
 		
 		
 		try {
@@ -562,6 +578,18 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 
 		public void setCourseiden(int courseiden) {
 			this.courseiden = courseiden;
+		}
+		public GroupService getGroupService() {
+			return groupService;
+		}
+		public void setGroupService(GroupService groupService) {
+			this.groupService = groupService;
+		}
+		public List<Usergroup> getUserGroupList() {
+			return userGroupList;
+		}
+		public void setUserGroupList(List<Usergroup> userGroupList) {
+			this.userGroupList = userGroupList;
 		}
         
         

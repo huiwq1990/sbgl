@@ -143,11 +143,23 @@
                     <dd>
                       <select class="select2 select-white form-control" id="inputCourseName" data-placeholder="请选择课程名称">
 						 <option></option>
+						 
+						 #foreach($gp in $usergroupList)
+							<optgroup label="$gp.name">
+							#set( $tcfl = $courseFullByGroupId.get($gp.id) )
+							#foreach($tempCourseFull in  $tcfl )					
+								<option value="$!tempCourseFull.courseid" >$tempCourseFull.coursename - $!tempCourseFull.teacherloginusername</option>                                           
+							#end		
+							</optgroup>
+							
+						#end
+						 <!--
 						 <optgroup label="本科">
 #foreach($ch in $courseFullList)					
                         <option value="$!ch.courseid" >$!ch.coursename - $!ch.teacherloginusername</option>                                           
 #end						
  </optgroup>
+ -->
 						<!--
                         <option></option>
                         <optgroup label="本科">

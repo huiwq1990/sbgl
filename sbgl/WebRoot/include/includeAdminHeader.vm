@@ -25,8 +25,9 @@
 		#if($currentPageModule == "teach" )
 			 class="active"      
 		#end		
-		><a href="教学管理首页.html">教学</a></li>
+		><a href="${webbaseurl}/manageCourseFull.${strutsaction}">教学</a></li>
 		
+	
         <li><a href="用户管理首页.html">用户</a></li>
 		
 		
@@ -35,7 +36,8 @@
 		#if($currentPageModule == "computer" )
 			 class="active"      
 		#end	
-		><a href="设备管理首页.html">机器</a></li>
+		><a href="${webbaseurl}/manageComputerorderFull.${strutsaction}">机器</a></li>
+	
 	
         <li><a href="#">内容</a></li>
       </ul>

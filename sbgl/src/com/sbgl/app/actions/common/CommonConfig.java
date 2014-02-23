@@ -3,6 +3,9 @@ package com.sbgl.app.actions.common;
 
 public class CommonConfig {
 	
+//	用户组 学生的id
+	public final static int usergroupstudentid = 1;
+	
 	public final static String WebBaseUrl = "http://localhost:8080/sbgl"; 
 	public final static String strutsaction="action";
 	

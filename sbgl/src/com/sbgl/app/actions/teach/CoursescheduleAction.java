@@ -32,6 +32,7 @@ import com.sbgl.app.services.teach.CourseService;
 import com.sbgl.app.services.teach.CoursecomputerService;
 import com.sbgl.app.services.teach.CourseconfigService;
 import com.sbgl.app.services.teach.CoursescheduleService;
+import com.sbgl.app.services.user.GroupService;
 import com.sbgl.util.*;
 
 
@@ -107,6 +108,15 @@ public class CoursescheduleAction extends ActionSupport implements SessionAware,
 	private List<Coursecomputer> coursecomputerList = new ArrayList<Coursecomputer>();
 	private List<CoursecomputerFull> coursecomputerFullList = new ArrayList<CoursecomputerFull>();
 	
+	
+	@Resource
+	private GroupService groupService;
+	private List<Usergroup> usergroupList = new ArrayList<Usergroup>();
+	
+	private HashMap<Integer, ArrayList<Course>> courseByGroupId = new HashMap<Integer,ArrayList<Course>>();
+	private HashMap<Integer, ArrayList<CourseFull>> courseFullByGroupId = new HashMap<Integer,ArrayList<CourseFull>>();
+
+	
 	private String logprefix = "exec action method:";
 	
 	private int pageNo=1;
@@ -170,11 +180,15 @@ public class CoursescheduleAction extends ActionSupport implements SessionAware,
 		
 		computermodelByComputercategoryId = ComputerActionUtil.categoryModelMap(computercategoryList, computermodelList);
 		
+//		课程组信息
+		usergroupList = groupService.getUserGroupByType(CommonConfig.usergroupstudentid);		
 //		课程信息
 		courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+CommonConfig.languagech);
-		System.out.println(courseFullList.size());
-		 
-		System.out.println(computermodelByComputercategoryId.get(-1).size());
+		courseFullByGroupId = TeachActionUtil.couseFullUsergroupMap(usergroupList, courseFullList);
+//		System.out.println(courseFullList.size());
+		System.out.println("courseFullByGroupId size:"+courseFullByGroupId.size());
+//		 System.out.println("courseFullByIdGroupId"+courseFullByGroupId.get(1).get(0).getCoursename());
+//		System.out.println(computermodelByComputercategoryId.get(-1).size());
 		 
 
 	     if(courseFullList == null){
@@ -186,6 +200,10 @@ public class CoursescheduleAction extends ActionSupport implements SessionAware,
 		
 		if(computermodelByComputercategoryId == null){
 			computermodelByComputercategoryId = new HashMap<Integer,ArrayList<Computermodel>>();
+		}
+		
+		if(courseFullByGroupId == null){
+			courseFullByGroupId = new HashMap<Integer,ArrayList<CourseFull>>();
 		}
 		
 		return SUCCESS;
@@ -216,9 +234,9 @@ public class CoursescheduleAction extends ActionSupport implements SessionAware,
 		
 //		课程信息
 		courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+CommonConfig.languagech);
-		System.out.println(courseFullList.size());
+//		System.out.println(courseFullList.size());
 		 
-		System.out.println(computermodelByComputercategoryId.get(-1).size());
+//		System.out.println(computermodelByComputercategoryId.get(-1).size());
 		 
 
 	     if(courseFullList == null){
@@ -341,9 +359,6 @@ public class CoursescheduleAction extends ActionSupport implements SessionAware,
 			log.error("类CoursescheduleAction的方法：addBbstagfavourite错误"+e);
 		}
 
-		
-
-		
 		returnInfo = "内部错误";
 		log.info(returnInfo);
 		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
@@ -365,21 +380,22 @@ public class CoursescheduleAction extends ActionSupport implements SessionAware,
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 			return false;
 		}
-		
-		if( inputcomputerorderinfo==null || inputcomputerorderinfo.length() ==0 ){
+	if(intputcourseid==null || intputcourseid.length() ==0 ){
+			
 			returnInfo = "请选择课程";
 			log.info(returnInfo);
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 			return false;
 		}
+		if( inputcomputerorderinfo==null || inputcomputerorderinfo.length() ==0 ){
+			returnInfo = "请选择预约机房";
 		
-		if(intputcourseid==null || intputcourseid.length() ==0 ){
-			
-			returnInfo = "请选择机房";
 			log.info(returnInfo);
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 			return false;
 		}
+		
+	
 		return true;
 	}
 //删除
@@ -1381,7 +1397,51 @@ public class CoursescheduleAction extends ActionSupport implements SessionAware,
 		public void setTotalweeknum(int totalweeknum) {
 			this.totalweeknum = totalweeknum;
 		}
-        
+
+
+		public GroupService getGroupService() {
+			return groupService;
+		}
+
+
+		public void setGroupService(GroupService groupService) {
+			this.groupService = groupService;
+		}
+
+
+		public List<Usergroup> getUsergroupList() {
+			return usergroupList;
+		}
+
+
+		public void setUsergroupList(List<Usergroup> usergroupList) {
+			this.usergroupList = usergroupList;
+		}
+
+
+		public HashMap<Integer, ArrayList<Course>> getCourseByGroupId() {
+			return courseByGroupId;
+		}
+
+
+		public void setCourseByGroupId(
+				HashMap<Integer, ArrayList<Course>> courseByGroupId) {
+			this.courseByGroupId = courseByGroupId;
+		}
+
+
+		public HashMap<Integer, ArrayList<CourseFull>> getCourseFullByGroupId() {
+			return courseFullByGroupId;
+		}
+
+
+		public void setCourseFullByGroupId(
+				HashMap<Integer, ArrayList<CourseFull>> courseFullByGroupId) {
+			this.courseFullByGroupId = courseFullByGroupId;
+		}
+
+
+		
         
         
 }
