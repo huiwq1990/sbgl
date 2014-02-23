@@ -10,13 +10,13 @@
 		#if($currentWebpage == "computerFullManage.vm" )
 			 active        
 		#end		
-		">设备管理</a> 
+		">机器管理</a> 
 		
 		<a href="${webbaseurl}/toAddComputerPage.action" class="list-group-item
 		#if($currentWebpage == "computerAdd.vm" )
 			 active        
 		#end		
-		">设备添加</a> 	
+		">机器添加</a> 	
 		
 		<a href="${webbaseurl}/manageComputermodelFull.action" class="list-group-item
 		#if($currentWebpage == "computermodelFullManage.vm" )

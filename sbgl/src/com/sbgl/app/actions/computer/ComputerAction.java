@@ -546,47 +546,8 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	}	
 
 	
-	//查询全部Full
-	public String selectComputerFullAll(){
-		log.info("exec selectComputerFullAll");
-		computerFullList  = computerService.selectComputerFullAll();
-		for(int i = 0; i < computerFullList.size(); i++){
-		//	System.out.println("id="+computerFullList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}
 
 
-	//根据computermodelid 查询实体
-	public String selectComputerByComputermodelId() {
-			//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		computerList  = computerService.selectComputerAll();
-		for(int i = 0; i < computerList.size(); i++){
-			System.out.println("id="+computerList.get(i).getId());
-		}
-		return SUCCESS;
-	}
-	//根据computermodelid 查询实体full
-	public String selectComputerFullByComputermodelId() {
-				//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		computerFullList  = computerService.selectComputerFullByComputermodelId(userId);
-		for(int i = 0; i < computerFullList.size(); i++){
-			//System.out.println("id="+computerFullList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}
 
 	//get set
 	public void setSession(Map<String, Object> session) {

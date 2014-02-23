@@ -21,6 +21,8 @@ import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sbgl.app.actions.common.CommonConfig;
+import com.sbgl.app.actions.teach.TeachActionUtil;
 import com.sbgl.app.actions.util.PageActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderInfo;
@@ -40,6 +42,13 @@ import com.sbgl.app.entity.Computerorderclassrule;
 import com.sbgl.app.entity.ComputerorderclassruleFull;
 import com.sbgl.app.entity.Computerstatus;
 import com.sbgl.app.entity.ComputerstatusFull;
+import com.sbgl.app.entity.Course;
+import com.sbgl.app.entity.CourseFull;
+import com.sbgl.app.entity.Coursecomputer;
+import com.sbgl.app.entity.CoursecomputerFull;
+import com.sbgl.app.entity.Courseconfig;
+import com.sbgl.app.entity.CourseconfigFull;
+import com.sbgl.app.entity.Usergroup;
 import com.sbgl.app.services.computer.ComputerService;
 import com.sbgl.app.services.computer.ComputercategoryService;
 import com.sbgl.app.services.computer.ComputerhomeworkService;
@@ -48,6 +57,10 @@ import com.sbgl.app.services.computer.ComputermodelService;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.services.computer.ComputerorderclassruleService;
 import com.sbgl.app.services.computer.ComputerstatusService;
+import com.sbgl.app.services.teach.CourseService;
+import com.sbgl.app.services.teach.CoursecomputerService;
+import com.sbgl.app.services.teach.CourseconfigService;
+import com.sbgl.app.services.user.GroupService;
 import com.sbgl.util.ComputerDirective;
 import com.sbgl.util.Page;
 import com.sbgl.util.SpringContextUtil;
@@ -149,6 +162,42 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	private List<ComputerhomeworkreceiverFull> computerhomeworkreceiverFullList = new ArrayList<ComputerhomeworkreceiverFull>();
 	
 	
+	
+	@Resource
+	private CourseService courseService;
+	private Integer courseid; //entity full 的id属性名称		
+	private Course course = new Course();//实例化一个模型
+	private Course courseModel = new Course();//实例化一个模型
+	private CourseFull courseFull = new CourseFull();//实例化一个模型
+	private List<Course> courseList = new ArrayList<Course>();
+	private List<CourseFull> courseFullList = new ArrayList<CourseFull>();
+	
+	
+	@Resource
+	private CourseconfigService courseconfigService;
+	private Courseconfig courseconfig = new Courseconfig();//实例化一个模型
+	private Courseconfig courseconfigModel = new Courseconfig();//实例化一个模型
+	private CourseconfigFull courseconfigFull = new CourseconfigFull();//实例化一个模型
+	List<Courseconfig> courseconfigList = new ArrayList<Courseconfig>();
+	List<CourseconfigFull> courseconfigFullList = new ArrayList<CourseconfigFull>();
+	private Integer courseconfigid; //entity full 的id属性名称
+	
+	@Resource
+	private CoursecomputerService coursecomputerService;
+	private Integer coursecomputerid; //entity full 的id属性名称		
+	private Coursecomputer coursecomputer = new Coursecomputer();//实例化一个模型
+	private Coursecomputer coursecomputerModel = new Coursecomputer();//实例化一个模型
+	private CoursecomputerFull coursecomputerFull = new CoursecomputerFull();//实例化一个模型
+	private List<Coursecomputer> coursecomputerList = new ArrayList<Coursecomputer>();
+	private List<CoursecomputerFull> coursecomputerFullList = new ArrayList<CoursecomputerFull>();
+	
+	
+	@Resource
+	private GroupService groupService;
+	private List<Usergroup> usergroupList = new ArrayList<Usergroup>();
+	
+	private HashMap<Integer, ArrayList<Course>> courseByGroupId = new HashMap<Integer,ArrayList<Course>>();
+	private HashMap<Integer, ArrayList<CourseFull>> courseFullByGroupId = new HashMap<Integer,ArrayList<CourseFull>>();
 	
 	
 	
@@ -739,10 +788,22 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		
 //		将模型与分类关联
 		computermodelByComputercategoryId = ComputerActionUtil.categoryModelMap(computercategoryList,computermodelList);
-	
+		
+//		课程组信息
+		usergroupList = groupService.getUserGroupByType(CommonConfig.usergroupstudentid);		
+//		课程信息
+		courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+CommonConfig.languagech);
+		courseFullByGroupId = TeachActionUtil.couseFullUsergroupMap(usergroupList, courseFullList);
 		
 		if(computercategoryList == null){
 			computercategoryList = new ArrayList<Computercategory>();
+		}
+	     if(courseFullList == null){
+	        	courseFullList = new ArrayList<CourseFull>();
+	        }
+
+		if(computermodelByComputercategoryId == null){
+			computermodelByComputercategoryId = new HashMap<Integer,ArrayList<Computermodel>>();
 		}
 		
 		return SUCCESS;
@@ -1372,6 +1433,259 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	public void setComputercategoryComputerSize(
 			List<Integer> computercategoryComputerSize) {
 		this.computercategoryComputerSize = computercategoryComputerSize;
+	}
+
+
+	public CourseService getCourseService() {
+		return courseService;
+	}
+
+
+	public void setCourseService(CourseService courseService) {
+		this.courseService = courseService;
+	}
+
+
+	public Integer getCourseid() {
+		return courseid;
+	}
+
+
+	public void setCourseid(Integer courseid) {
+		this.courseid = courseid;
+	}
+
+
+	public Course getCourse() {
+		return course;
+	}
+
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+
+	public Course getCourseModel() {
+		return courseModel;
+	}
+
+
+	public void setCourseModel(Course courseModel) {
+		this.courseModel = courseModel;
+	}
+
+
+	public CourseFull getCourseFull() {
+		return courseFull;
+	}
+
+
+	public void setCourseFull(CourseFull courseFull) {
+		this.courseFull = courseFull;
+	}
+
+
+	public List<Course> getCourseList() {
+		return courseList;
+	}
+
+
+	public void setCourseList(List<Course> courseList) {
+		this.courseList = courseList;
+	}
+
+
+	public List<CourseFull> getCourseFullList() {
+		return courseFullList;
+	}
+
+
+	public void setCourseFullList(List<CourseFull> courseFullList) {
+		this.courseFullList = courseFullList;
+	}
+
+
+	public CourseconfigService getCourseconfigService() {
+		return courseconfigService;
+	}
+
+
+	public void setCourseconfigService(CourseconfigService courseconfigService) {
+		this.courseconfigService = courseconfigService;
+	}
+
+
+	public Courseconfig getCourseconfig() {
+		return courseconfig;
+	}
+
+
+	public void setCourseconfig(Courseconfig courseconfig) {
+		this.courseconfig = courseconfig;
+	}
+
+
+	public Courseconfig getCourseconfigModel() {
+		return courseconfigModel;
+	}
+
+
+	public void setCourseconfigModel(Courseconfig courseconfigModel) {
+		this.courseconfigModel = courseconfigModel;
+	}
+
+
+	public CourseconfigFull getCourseconfigFull() {
+		return courseconfigFull;
+	}
+
+
+	public void setCourseconfigFull(CourseconfigFull courseconfigFull) {
+		this.courseconfigFull = courseconfigFull;
+	}
+
+
+	public List<Courseconfig> getCourseconfigList() {
+		return courseconfigList;
+	}
+
+
+	public void setCourseconfigList(List<Courseconfig> courseconfigList) {
+		this.courseconfigList = courseconfigList;
+	}
+
+
+	public List<CourseconfigFull> getCourseconfigFullList() {
+		return courseconfigFullList;
+	}
+
+
+	public void setCourseconfigFullList(List<CourseconfigFull> courseconfigFullList) {
+		this.courseconfigFullList = courseconfigFullList;
+	}
+
+
+	public Integer getCourseconfigid() {
+		return courseconfigid;
+	}
+
+
+	public void setCourseconfigid(Integer courseconfigid) {
+		this.courseconfigid = courseconfigid;
+	}
+
+
+	public CoursecomputerService getCoursecomputerService() {
+		return coursecomputerService;
+	}
+
+
+	public void setCoursecomputerService(CoursecomputerService coursecomputerService) {
+		this.coursecomputerService = coursecomputerService;
+	}
+
+
+	public Integer getCoursecomputerid() {
+		return coursecomputerid;
+	}
+
+
+	public void setCoursecomputerid(Integer coursecomputerid) {
+		this.coursecomputerid = coursecomputerid;
+	}
+
+
+	public Coursecomputer getCoursecomputer() {
+		return coursecomputer;
+	}
+
+
+	public void setCoursecomputer(Coursecomputer coursecomputer) {
+		this.coursecomputer = coursecomputer;
+	}
+
+
+	public Coursecomputer getCoursecomputerModel() {
+		return coursecomputerModel;
+	}
+
+
+	public void setCoursecomputerModel(Coursecomputer coursecomputerModel) {
+		this.coursecomputerModel = coursecomputerModel;
+	}
+
+
+	public CoursecomputerFull getCoursecomputerFull() {
+		return coursecomputerFull;
+	}
+
+
+	public void setCoursecomputerFull(CoursecomputerFull coursecomputerFull) {
+		this.coursecomputerFull = coursecomputerFull;
+	}
+
+
+	public List<Coursecomputer> getCoursecomputerList() {
+		return coursecomputerList;
+	}
+
+
+	public void setCoursecomputerList(List<Coursecomputer> coursecomputerList) {
+		this.coursecomputerList = coursecomputerList;
+	}
+
+
+	public List<CoursecomputerFull> getCoursecomputerFullList() {
+		return coursecomputerFullList;
+	}
+
+
+	public void setCoursecomputerFullList(
+			List<CoursecomputerFull> coursecomputerFullList) {
+		this.coursecomputerFullList = coursecomputerFullList;
+	}
+
+
+	public GroupService getGroupService() {
+		return groupService;
+	}
+
+
+	public void setGroupService(GroupService groupService) {
+		this.groupService = groupService;
+	}
+
+
+	public List<Usergroup> getUsergroupList() {
+		return usergroupList;
+	}
+
+
+	public void setUsergroupList(List<Usergroup> usergroupList) {
+		this.usergroupList = usergroupList;
+	}
+
+
+	public HashMap<Integer, ArrayList<Course>> getCourseByGroupId() {
+		return courseByGroupId;
+	}
+
+
+	public void setCourseByGroupId(
+			HashMap<Integer, ArrayList<Course>> courseByGroupId) {
+		this.courseByGroupId = courseByGroupId;
+	}
+
+
+	public HashMap<Integer, ArrayList<CourseFull>> getCourseFullByGroupId() {
+		return courseFullByGroupId;
+	}
+
+
+	public void setCourseFullByGroupId(
+			HashMap<Integer, ArrayList<CourseFull>> courseFullByGroupId) {
+		this.courseFullByGroupId = courseFullByGroupId;
 	}
 
 

@@ -167,11 +167,14 @@
 <script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
 <script src="${jsDomain}/xdate.js"></script>
 <script src="${jsDomain}/computer/computerutil.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+
 
 <script>
 
 	$("body").on("click", "button[action-type|=saveComputerconfigButton]", function() {
 	
+		var _this = $(this);
 		var openbook = $("input[name=inputOpenBook]:checked").val();
 		var bookperiod='';
 		
@@ -198,9 +201,12 @@
 			success: function(data){
 				var returnJson = jQuery.parseJSON(data); 
 				if(returnJson.flag == 1){
-					location.href = "${webbaseurl}/manageComputerconfig.${strutsaction}";			
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+					//location.href = "${webbaseurl}/manageComputerconfig.${strutsaction}";			
 				}else{
-					
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});					
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
 				}
 			}		  	  
 		});

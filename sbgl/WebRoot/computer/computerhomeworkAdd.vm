@@ -111,9 +111,14 @@
        
 			  </div><!--end main-content-->
               </div>
+			  
+			  
          <!--sidebar start-->
-     	  #set($currentWebpage="computerhomeworkAdd")
-		  #parse("include/includeTeachSidebar.vm")
+		 
+		 <!--
+     	  ##set($currentWebpage="computerhomeworkAdd")
+		 ##parse("include/includeTeachSidebar.vm")
+		  -->
       <!--sidebar end-->
 </section>
 

@@ -10,6 +10,7 @@ import com.sbgl.app.entity.Computercategoryi18n;
 import com.sbgl.app.services.computer.ComputercategoryService;
 import com.sbgl.app.dao.ComputercategoryDao;
 import com.sbgl.app.dao.BaseDao;
+import com.sbgl.app.dao.ComputermodelDao;
 
 import com.sbgl.util.*;
 
@@ -26,6 +27,9 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 	private BaseDao baseDao;
 	@Resource
 	private ComputercategoryDao computercategoryDao;
+	
+	@Resource
+	private ComputermodelDao computermodelDao;
 	
 	
 	//http://blog.csdn.net/softimes/article/details/7008875 实体添加时需要配置hibernate
@@ -63,10 +67,23 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 		return 1;
 	}
 	
+
+	
+	
 	@Override
 	public int deleteComputercategoryByType(Integer computercategoryType){
 		String sql = "delete from Computercategory where computercategorytype="+computercategoryType;
 		baseDao.createSQL(sql);
+		return 1;
+	}
+	
+	@Override	
+	public int deleteComputercategoryByType(List<Integer> computercategoryTypeList){
+//		Computercategory computercategory = new Computercategory();
+//		computercategory.setId(computercategoryId);
+//		//return computercategoryDao.deleteEntity(computercategoryId);	
+//		//baseDao.deleteEntityById(Computercategory.class,computercategoryId);
+//		baseDao.deleteEntity(computercategory);
 		return 1;
 	}
 

@@ -22,133 +22,70 @@
 </header><!--/#header-wrap-->
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
 
-      <!--admin-wrap start-->
+  <!--admin-wrap start-->
       <div id="admin-wrap">
-        <div id="admin-content" class="clearfix">            
-            
+        <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">添加课程</div>
+              <div class="tips">在此页面下添加新的课程信息</div>
+            </div><!--control-bar end-->
             <div class="panel panel-default">
               <div class="panel-body">
- <!--Add 表单-->             
-              <form id="AddComputerorderclassruleForm" action="javascript:void(0)" class="form-horizontal" role="form">
-					<div class="form-group">
-                    <label for="label_computerorderclassrule_name" class="col-lg-2 control-label">规则名称</label>
+              
+                <form class="form-horizontal" role="form">
+                  <div class="form-group">
+                    <label for="inputCourseName" class="col-lg-2 control-label">课程名</label>
                     <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_computerorderclassrule_name" name="name"  placeholder="name">
+                      <input type="text" class="form-control" id="inputCourseName" placeholder="课程名称">
                     </div>
                   </div>
-				  
-				  <div class="form-group">
-                    <label for="label_computerorderclassrule_name" class="col-lg-2 control-label">课程名称</label>
+                  <div class="form-group">
+                    <label for="inputCourseNameEn" class="col-lg-2 control-label">课程英文名</label>
                     <div class="col-lg-4">
-
-						  <select class="select2 select-white form-control" id="input_computerorderclassrule_classname" data-placeholder="请选择课程名称">
-						 <option></option>
-						 
-						 #foreach($gp in $usergroupList)
-							<optgroup label="$gp.name">
-							#set( $tcfl = $courseFullByGroupId.get($gp.id) )
-							#foreach($tempCourseFull in  $tcfl )					
-								<option value="$!tempCourseFull.courseid" >$tempCourseFull.coursename - $!tempCourseFull.teacherloginusername</option>                                           
-							#end		
-							</optgroup>
-							
-						#end
+                      <input type="text" class="form-control" id="inputCourseNameEn" placeholder="课程的英文名称">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputCourseTeacher" class="col-lg-2 control-label">任课教师</label>
+                    <div class="col-lg-4">
+                      <select class="select2 select-white form-control" id="inputCourseTeacher">
+                        <option value="2">数字摄影机</option>
+                        <option value="3">数字摄像机</option>
+                        <option value="4">单反</option>
                       </select>
-					  
                     </div>
                   </div>
-				  <!--
-				  <div class="form-group">
-                    <label for="label_computerorderclassrule_classname" class="col-lg-2 control-label">classname</label>
+                  <div class="form-group">
+                    <label for="inputCourseType" class="col-lg-2 control-label">课程类别</label>
                     <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_computerorderclassrule_classname" name="classname"  placeholder="classname">
+                      <label class="radio-inline">
+                        <input type="radio" name="inputCourseType" id="courseType1" value="1" checked="">本科
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="inputCourseType" id="courseType2" value="2">硕士
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="inputCourseType" id="courseType3" value="3">博士
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="inputCourseType" id="courseType4" value="4">MFA
+                      </label>
                     </div>
                   </div>
-				  <div class="form-group">
-                    <label for="label_computerorderclassrule_classid" class="col-lg-2 control-label">classid</label>
-                    <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_computerorderclassrule_classid" name="classid"  placeholder="classid">
-                    </div>
-                  </div>
-				  -->
-				  <div class="form-group input-daterange">
-                    <label for="label_computerorderclassrule_orderstarttime" class="col-lg-2 control-label">预约开始时间</label>
-                    <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_computerorderclassrule_orderstarttime" name="orderstarttime"  placeholder="orderstarttime">
-                    </div>
-                  </div>
-				  <div class="form-group input-daterange">
-                    <label for="label_computerorderclassrule_orderendtime" class="col-lg-2 control-label">预约结束时间</label>
-                    <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_computerorderclassrule_orderendtime" name="orderendtime"  placeholder="orderendtime">
-                    </div>
-                  </div>
-				  <div class="form-group">
-                    <label for="label_computerorderclassrule_availableordertime" class="col-lg-2 control-label">总共允许时间</label>
-                    <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_computerorderclassrule_availableordertime" name="availableordertime"  placeholder="availableordertime">
-                    </div>
-                  </div>
-				  
-				  <!--
-				<div class="form-group">
-					<label for="label_computerorderclassrule_allowborrowpcids" class="col-lg-2 control-label">允许借的机器类型</label>
-                    <div class="col-lg-4">
-                     <input type="text" class="form-control" id="input_computerorderclassrule_allowborrowpcids" name="allowborrowpcids"  placeholder="">					
-					</div>               
-				</div>
-				
-				 <div class="form-group user-group">
-                  <a href="#createEquipRule" role="button" class="btn btn-white btn-large btn-block" data-toggle="modal">添加 +</a>
-                </div>
-				  
-				-->
-				
-				<div class="form-group">
-					
-                    <label for="inputRentableGroup" class="col-lg-2 control-label">允许借的机器类型</label>
-                    <div class="col-lg-4">
-						
-					#foreach($categoryfull in ${computercategoryList})
-						<div class="group-hd">
-							<div class="group-name pull-left">$!categoryfull.name</div>
-							<div class="group-line"><hr></div>
-						</div>
-						
-						#set($categorytype = $categoryfull.computercategorytype)		
-						#set($modelList = $computermodelByComputercategoryId.get($categorytype))
-						#if($modelList=='null' || $modelList.size() ==0)
-							<label class="checkbox-inline">
-								分类没有模型
-                     		</label>	
-						#end	
-						#foreach($model in $modelList)
-							<label class="checkbox-inline">
-								<input type="checkbox" name="inputAviBorrowModelGroup" id="rentGroup_$model.computermodeltype" value="$model.computermodeltype" >$model.name
-                     		</label>						
-						#end                    
-						
-					#end
-                    
-                    </div>
-                  </div>
-				
-				
-				
-				 <div class="form-group">
+                  <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-4">
                       <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-                      <button class="btn btn-primary"  action-type="addComputerorderclassruleButton" >添 加</button>					
+                      <button type="submit" class="btn btn-primary">添 加</button>
                     </div>
                   </div>
-           </form><!--end Add 表单-->                    
-
-              </div>			  
+                </form>
+              
+              </div>
             </div>
           </div>
 
       </div>
-      <!--equip-wrap end-->
        <!--sidebar start-->
      	  #set($currentWebpage="computerorderclassruleAdd")
 		  #parse("include/includeTeachSidebar.vm")

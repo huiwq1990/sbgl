@@ -27,6 +27,7 @@ import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputerhomeworkService;
 import com.sbgl.app.services.computer.ComputerhomeworkreceiverService;
 import com.sbgl.app.services.computer.ComputerorderclassruledetailService;
+import com.sbgl.app.services.teach.CourseService;
 import com.sbgl.util.*;
 
 
@@ -46,11 +47,25 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 	private Computerhomework computerhomework = new Computerhomework();//实例化一个模型
 	private Computerhomework computerhomeworkModel = new Computerhomework();//实例化一个模型
 	private ComputerhomeworkFull computerhomeworkFull = new ComputerhomeworkFull();//实例化一个模型
-	
-
 	List<Computerhomework> computerhomeworkList = new ArrayList<Computerhomework>();
 	List<ComputerhomeworkFull> computerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
 	private Integer computerhomeworkid; //entity full 的id属性名称		
+	
+	
+	@Resource
+	private CourseService courseService;
+	private Integer courseid; //entity full 的id属性名称		
+	private Course course = new Course();//实例化一个模型
+	private Course courseModel = new Course();//实例化一个模型
+	private CourseFull courseFull = new CourseFull();//实例化一个模型
+	private List<Course> courseList = new ArrayList<Course>();
+	private List<CourseFull> courseFullList = new ArrayList<CourseFull>();
+	private List<CourseFull> courseFullListCh = new ArrayList<CourseFull>();
+	private List<CourseFull> courseFullListEn = new ArrayList<CourseFull>();
+	
+	
+
+
 	private String logprefix = "exec action method:";		
 	Page page = new Page();
 	Integer pageNo=1;	
@@ -474,6 +489,13 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 					computerorderclassruledetailFullList = computerorderclassruledetailService.selectComputerorderclassruledetailFullByCondition(borrowPcSql);				
 				}
 				
+//				查询课程信息
+				
+//				String sql = 
+				courseFull = courseService.selectCourseFullById(computerhomeworkFull.getComputerorderclassruleclassid());
+				
+				System.out.println(courseFull.getCoursename());
+				
 				if(computerorderclassruledetailFullList == null){
 					computerorderclassruledetailFullList = new ArrayList<ComputerorderclassruledetailFull>();
 				}
@@ -878,6 +900,78 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 
 		public void setReturnInfo(String returnInfo) {
 			this.returnInfo = returnInfo;
+		}
+
+		public CourseService getCourseService() {
+			return courseService;
+		}
+
+		public void setCourseService(CourseService courseService) {
+			this.courseService = courseService;
+		}
+
+		public Integer getCourseid() {
+			return courseid;
+		}
+
+		public void setCourseid(Integer courseid) {
+			this.courseid = courseid;
+		}
+
+		public Course getCourse() {
+			return course;
+		}
+
+		public void setCourse(Course course) {
+			this.course = course;
+		}
+
+		public Course getCourseModel() {
+			return courseModel;
+		}
+
+		public void setCourseModel(Course courseModel) {
+			this.courseModel = courseModel;
+		}
+
+		public CourseFull getCourseFull() {
+			return courseFull;
+		}
+
+		public void setCourseFull(CourseFull courseFull) {
+			this.courseFull = courseFull;
+		}
+
+		public List<Course> getCourseList() {
+			return courseList;
+		}
+
+		public void setCourseList(List<Course> courseList) {
+			this.courseList = courseList;
+		}
+
+		public List<CourseFull> getCourseFullList() {
+			return courseFullList;
+		}
+
+		public void setCourseFullList(List<CourseFull> courseFullList) {
+			this.courseFullList = courseFullList;
+		}
+
+		public List<CourseFull> getCourseFullListCh() {
+			return courseFullListCh;
+		}
+
+		public void setCourseFullListCh(List<CourseFull> courseFullListCh) {
+			this.courseFullListCh = courseFullListCh;
+		}
+
+		public List<CourseFull> getCourseFullListEn() {
+			return courseFullListEn;
+		}
+
+		public void setCourseFullListEn(List<CourseFull> courseFullListEn) {
+			this.courseFullListEn = courseFullListEn;
 		}
 		
 		

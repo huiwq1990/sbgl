@@ -7,7 +7,6 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
@@ -17,17 +16,20 @@
 
 <body id="admin">
 <header id="header-wrap"><!--header-wrap-->
-	
-	#set($currentPageModule="computer")
+	#set($currentPageModule="teach")
 	#parse("include/includeAdminHeader.vm")
-
 </header><!--/#header-wrap-->
 
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
            
       <div class="control-bar clearfix"><!--control-bar start-->
         <div class="title pull-left">作业查看</div>     
-       
+        <div class="pagination pull-right">
+          <ul>
+            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="上一个"><i class="icon-chevron-left"></i></a></li>
+            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="下一个"><i class="icon-chevron-right"></i></a></li>
+          </ul>
+        </div>       
       </div><!--control-bar end-->
               
       <div class="row">
@@ -58,8 +60,7 @@
                       </div>
                       <a class="pull-left" data-toggle="modal" href="#equip-detail" role="button">
                         <img src="${computerImagePath}/$temp.computermodelpicpath" width="100" height="100">
-                      </a>
-                  
+                      </a>                  
                     </div>
 #end
 #end
@@ -69,44 +70,50 @@
 					  </div>
                 </div>                  
             </div>
-            <div class="col-md-7">
+           
+
+			
+			<div class="col-md-7">
+               
                 <div class="thumbnail">
                   <div class="hd">
-                    <h3>规则详情</h3>
-                  </div>
-                  <div class="caption">
-                    
-					<div class="name">规则名称：$computerhomeworkFull.computerorderclassrulename</div>
-                  <div class="name">规则课程名称：$computerhomeworkFull.computerorderclassruleclassname</div>
-					
-                  </div>
-                </div>
-                <div class="thumbnail">
-                  <div class="hd">
-                    <h3>作业详情</h3>
+                    <h3>详情</h3>
                   </div>
                   <div class="caption">
                     <div class="rent-detail">
 						<div class="name">作业名称：$computerhomeworkFull.computerhomeworkname</div>
-						<div class="name">作业描述：$computerhomeworkFull.computerhomeworkcontent</div>
+					 
+						<div class="name">预约时间：$date.format("yyyy年MM月dd日",$computerhomeworkFull.computerorderclassruleorderstarttime) 至 $date.format("yyyy年MM月dd日",$computerhomeworkFull.computerorderclassruleorderendtime)</div>
+					
+						<div class="name">总共学时：$computerhomeworkFull.computerorderclassruleavailableordertime</div>
+						
+						<div class="name">课程名称：$courseFull.coursename</div>
+						
+						<div class="name">教师名称：$courseFull.teacherloginusername</div>
+						
+						
+	
+                      <div class="rent-remark"><i class="icon-pencil"></i></div>
                     </div>
                     <hr>
                   </div>                        
-                  <ul class="media-list">
+                 
+				  <!--
+				  <ul class="media-list">
                     <li class="media">
                       <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
                         <img src="../img/photo.jpg" width="28" height="28" class="img-rounded">
                       </a>
                       <div class="media-body">
-                        <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">教师名</a></h5><span class="post-time" title="详细时间">下午4:53</span></div>
-                        <p>审核老师发的审核驳回说明</p>
+                        <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">$courseFull.teacherloginusername</a></h5><span class="post-time" title="详细时间">下午4:53</span></div>
+                       
                       </div>
                     </li>
                   </ul>
-                                            
+                   -->                         
                 </div>               
-            </div>                    
-      </div>
+            </div> 	
+	</div>
 
 
 

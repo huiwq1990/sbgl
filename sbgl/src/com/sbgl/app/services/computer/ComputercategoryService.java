@@ -81,6 +81,8 @@ public List<ComputercategoryFull> selectComputercategoryFullByCondition(String c
 // 查询实体full        
 public List<ComputercategoryFull>  selectComputercategoryFullByConditionAndPage(String condition,final Page page);
 
+int deleteComputercategoryByType(List<Integer> computercategoryTypeList);
+
 
 
 

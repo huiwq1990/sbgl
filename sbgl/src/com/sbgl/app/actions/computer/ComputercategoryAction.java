@@ -246,36 +246,16 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 		
 		try{
 			String ids[] = computercategoryIdsForDel.split(";");
+			
+//			for(int i=0; i < ids.length;i++){
+//				
+//			}
+			
 			for(int i=0; i < ids.length;i++){
 				
 				Integer typeId = Integer.valueOf(ids[i]);			
 				log.info(typeId);
-				//检查id
-				/*
-				if(tempDelId == null || tempDelId < 0){
-					returnJson.setFlag(0);
-					returnJson.setReason("删除的id不规范");
-					log.info("删除的id不规范");
-					JSONObject jo = JSONObject.fromObject(returnJson);
-					this.returnStr = jo.toString();
-					return SUCCESS;
-				}	
-				//del
-				Computercategory temp = computercategoryService.selectComputercategoryById(typeId);			
-				if (temp != null) {			
-					//将相应的PC类型分类设置成-1
-					computermodelService.updateCategoryComputermodel(typeId);
-					computercategoryService.deleteComputercategory(typeId);
-					
-				} else {
-					log.info("删除的id不存在");		
-					returnJson.setFlag(0);
-					returnJson.setReason("删除的id不存在");
-					JSONObject jo = JSONObject.fromObject(returnJson);
-					this.returnStr = jo.toString();
-					return SUCCESS;
-				}
-				*/
+				
 				computermodelService.updateCategoryComputermodel(typeId);
 				computercategoryService.deleteComputercategoryByType(typeId);
 				
@@ -547,37 +527,6 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 		return SUCCESS;
 	}
 
-
-	//根据parentcomputercategoryid 查询实体
-	public String selectComputercategoryByComputercategoryId() {
-			//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		computercategoryList  = computercategoryService.selectComputercategoryAll();
-		for(int i = 0; i < computercategoryList.size(); i++){
-			System.out.println("id="+computercategoryList.get(i).getId());
-		}
-		return SUCCESS;
-	}
-	//根据parentcomputercategoryid 查询实体full
-	public String selectComputercategoryFullByComputercategoryId() {
-				//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		computercategoryFullList  = computercategoryService.selectComputercategoryFullByComputercategoryId(userId);
-		for(int i = 0; i < computercategoryFullList.size(); i++){
-			//System.out.println("id="+computercategoryFullList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}
 
 	//get set
 	public void setSession(Map<String, Object> session) {

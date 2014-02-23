@@ -278,14 +278,7 @@
 <script src="${jsDomain}/editor/lang/zh_CN.js"></script>
 
 <script>
-	var cookie = { 
-  		//读取COOKIES,n为COOKIE名 
-   		Get:function(n){ 
-       		var re=new RegExp(n+'=([^;]*);?','gi');
-       	    var r=re.exec(document.cookie)||[];
-       	    return (r.length>1?r[1]:null)
-   		}
-	};
+
 	var editComputercategoryId;
 	var editComputercategoryName;
 
