@@ -33,11 +33,10 @@
               <div class="tips">在此页面下管理课程信息，如课程的添加、修改、删除等。</div>
               <div class="filter user-group-filter">
                 <ul class="nav nav-tabs nav-tabs-google">
-                  <li><a href="#">MFA</a></li>
-                  <li><a href="#">博士</a></li>
-                  <li><a href="#">硕士</a></li>
-                  <li><a href="#">本科</a></li>
-                  <li class="active"><a href="#">全部</a></li>                  
+					#foreach($temp in $userGroupList)
+						<li><a href="#" onclick="getCourseByUsergroupId($temp.id)">$temp.name</a></li>
+					#end
+                  <li class="active" onclick="getCourseByUsergroupId(0)"><a href="#">全部</a></li>                  
                 </ul>
               </div>
               <div class="operate-item pull-left">
@@ -62,7 +61,9 @@
                 </div>              
               </div>
             </div><!--control-bar end-->
-            <div class="panel panel-default">              
+           
+			<div id="refreshCourseTableDiv">
+			<div class="panel panel-default">              
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -86,7 +87,7 @@
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!ch.courseid"></td>
 					<!--修改属性-->
-                    <td>$!ch.courseid<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="editCourseFillIn" 
+                    <td>$!ch.coursename<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="editCourseFillIn" 
 						data-id="$!ch.courseid"                           
 												data-name="$!ch.coursename"                           
 												data-description="$!ch.coursedescription"                           
@@ -99,8 +100,8 @@
 												>修改</a></td>    
 						
 
-					<td>$!ch.coursename</td>
-					<td>$!ch.coursedescription</td>
+					<td>$!ch.teacherloginusername</td>
+					<td>$!ch.usergroupname</td>
 					<td>$!ch.coursetype</td>
                   </tr>
 #end
@@ -109,6 +110,10 @@
               </table>
             
 			</div><!--end panel -->
+			
+				</div><!--refreshCourseTableDiv-->
+							 
+							 
 							 <!--page -->
                           <div class="pagination">
                                 <a href="#" class="first" data-action="first">&laquo;</a>
@@ -145,55 +150,44 @@
       <p>修改信息。</p>
       <form class="form-horizontal" role="form">
 		
-							
-			<div class="form-group">
-          <label for="id" class="col-xs-3 control-label">id</label>
-          <div class="col-xs-7">
-            <input type="text" class="form-control" id="inputEditCourseid" placeholder="" value="">
-          </div>
-        </div>
+					<input type="hidden" class="form-control" id="inputEditCourseid" placeholder="" value="">		
+		
 				
 			<div class="form-group">
-          <label for="name" class="col-xs-3 control-label">name</label>
+          <label for="name" class="col-xs-3 control-label">课程名称</label>
           <div class="col-xs-7">
             <input type="text" class="form-control" id="inputEditCoursename" placeholder="" value="">
           </div>
         </div>
-				
+		
+		
 			<div class="form-group">
-          <label for="description" class="col-xs-3 control-label">description</label>
+          <label for="name" class="col-xs-3 control-label">课程英文名称</label>
           <div class="col-xs-7">
-            <input type="text" class="form-control" id="inputEditCoursedescription" placeholder="" value="">
+            <input type="text" class="form-control" id="inputEditCoursenameEn" placeholder="" value="">
           </div>
         </div>
 				
+		
 			<div class="form-group">
-          <label for="type" class="col-xs-3 control-label">type</label>
+          <label for="teacherid" class="col-xs-3 control-label">任课老师</label>
+          <div class="col-xs-7">
+            <input type="text" class="form-control" id="inputEditCourseteacherid" placeholder="" value="">
+          </div>
+        </div>
+						
+			<div class="form-group">
+          <label for="type" class="col-xs-3 control-label">课程类别</label>
           <div class="col-xs-7">
             <input type="text" class="form-control" id="inputEditCoursetype" placeholder="" value="">
           </div>
         </div>
 				
-			<div class="form-group">
-          <label for="adduserid" class="col-xs-3 control-label">adduserid</label>
-          <div class="col-xs-7">
-            <input type="text" class="form-control" id="inputEditCourseadduserid" placeholder="" value="">
-          </div>
-        </div>
+		
 				
-			<div class="form-group">
-          <label for="teacherid" class="col-xs-3 control-label">teacherid</label>
-          <div class="col-xs-7">
-            <input type="text" class="form-control" id="inputEditCourseteacherid" placeholder="" value="">
-          </div>
-        </div>
+		
 				
-			<div class="form-group">
-          <label for="addtime" class="col-xs-3 control-label">addtime</label>
-          <div class="col-xs-7">
-            <input type="text" class="form-control" id="inputEditCourseaddtime" placeholder="" value="">
-          </div>
-        </div>
+		
 	      </form>
     </div>
   <div class="modal-footer">
@@ -224,26 +218,31 @@
 var currentpagenum=$pageNo;
 var totalpage=$page.totalpage;
 var totalcount=$page.totalCount;
+var usergroupid = 0;
 
+//更改状态的高亮显示
+  $(".user-group-filter li").click(function () {
+                $("li[class='active']").removeAttr("class");
+                $(this).addClass("active"); 
+  });
 
 	
 //	选择修改按钮，填充修改弹出框
 	$("body").on("click", "a[action-type|=editCourseFillIn]", function() {
 		var data = $(this).data();
-							$("#inputEditCourseid").val(data.id);       
-			var editid = data.id;
-					$("#inputEditCoursename").val(data.name);       
-			var editname = data.name;
-					$("#inputEditCoursedescription").val(data.description);       
-			var editdescription = data.description;
-					$("#inputEditCoursetype").val(data.type);       
-			var edittype = data.type;
-					$("#inputEditCourseadduserid").val(data.adduserid);       
-			var editadduserid = data.adduserid;
-					$("#inputEditCourseteacherid").val(data.teacherid);       
-			var editteacherid = data.teacherid;
-					$("#inputEditCourseaddtime").val(data.addtime);       
-			var editaddtime = data.addtime;
+		
+		$("#inputEditCourseid").val(data.id);       
+
+		$("#inputEditCoursename").val(data.name);       
+
+		$("#inputEditCoursetype").val(data.type);       
+
+		$("#inputEditCourseteacherid").val(data.teacherid);       
+	
+		$("#inputEditCourseidEn").val(data.iden);    
+
+		$("#inputEditCoursenameEn").val(data.nameen);    
+		
 			})
 //end 	editCourseFillIn
 
@@ -254,28 +253,18 @@ var totalcount=$page.totalCount;
 		var actionUrl = "${webbaseurl}/updateCourseAjax.action";
 		//获取修改的值	
 							var id = $("#inputEditCourseid").val();      
-					var name = $("#inputEditCoursename").val();      
-					var description = $("#inputEditCoursedescription").val();      
+					var name = $("#inputEditCoursename").val();       
 					var type = $("#inputEditCoursetype").val();      
-					var adduserid = $("#inputEditCourseadduserid").val();      
+				
 					var teacherid = $("#inputEditCourseteacherid").val();      
-					var addtime = $("#inputEditCourseaddtime").val();      
 					
 		var postData = {
 										
 								id: id,
-											
-								name: name,
-											
-								description: description,
-											
+								name: name,							
 								type: type,
-											
-								adduserid: adduserid,
-											
-								teacherid: teacherid,
-											
-								addtime: addtime
+							
+								teacherid: teacherid
 									}
 			
 			
@@ -390,73 +379,18 @@ var totalcount=$page.totalCount;
 	
 	
 	
+	//根据用户组分类查看课程
+	function getCourseByUsergroupId(tempusergroupid){
 	
-// 触发提交按钮事件
-$('.modal').on('click', ('button.btn-primary'), function () {		
-		var _this = $(this);
-
-		//处理添加
-		if(_this.attr('action-type') == 'addComputercategoryButton')
-		{
-			//alert('test add');
-			var actionUrl = "${webbaseurl}/addComputercategoryAjax.action";
-			var inputCategoryName = $('#addComputercategoryName').val();			
-			var postData = {
-				"createuserid": cookie.Get("id"),
-				"name": inputCategoryName		
-			}
-			var successStr = "添加分类成功！";
-			var failedStr = "添加分类失败！";				
-		}
-		// ebd add
+		usergroupid = tempusergroupid;
+		//设置为默认页
+		pageNo = 1;
 		
-		//处理update
-		
-		/*if(_this.attr('action-type') == 'updateCourseButton')
-		{
-			//alert('test add');
-			var actionUrl = "${webbaseurl}/updateCourseAjax.action";
-												var id = $("#inputEditCourseid").val();      
-								var name = $("#inputEditCoursename").val();      
-								var description = $("#inputEditCoursedescription").val();      
-								var type = $("#inputEditCoursetype").val();      
-								var adduserid = $("#inputEditCourseadduserid").val();      
-								var teacherid = $("#inputEditCourseteacherid").val();      
-								var addtime = $("#inputEditCourseaddtime").val();      
-						var postData = {
-													id: id,
-									name: name,
-									description: description,
-									type: type,
-									adduserid: adduserid,
-									teacherid: teacherid,
-									addtime: addtime,
-							}
-		}*/
-		//end update
-		
-		
-		
-		// 如果是其它的提交操作，对照上一行的if代码处理		
-		
-		// 提交处理
-		jQuery.ajax({  
-		    url: actionUrl,  
-		    type: "post",
-		    data: postData,
-		    dataType: 'json',
-			success: function(data){
-				var returnJson = jQuery.parseJSON(data); 
-				if(returnJson.flag == 1){
-					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
-					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
-					
-				}else{
-					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
-				}
-			}		  	  
-		});		
-	})	
+		refreshTable();
+	
+	}
+	
+	
 	
 	
 	
@@ -477,7 +411,12 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 		jQuery.ajax({  
         	url: '${webbaseurl}/manageCourseFull.action',  
             type: "post",
-            data:{pageNo:currentpagenum,totalpage:totalpage,totalcount:totalcount,callType:'ajaxType'},
+            data:{
+				pageNo:currentpagenum,
+				totalpage:totalpage,
+				totalcount:totalcount,
+				usergroupid:usergroupid,
+				callType:'ajaxType'},
             dataType: 'html',
             success: function(data){
             	$('#refreshCourseTableDiv').html(data);

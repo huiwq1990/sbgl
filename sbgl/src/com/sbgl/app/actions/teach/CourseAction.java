@@ -20,22 +20,24 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.actions.common.BaseAction;
 import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.teach.CourseService;
 import com.sbgl.app.services.user.GroupService;
+import com.sbgl.app.services.user.TeacherService;
 import com.sbgl.util.*;
 
 
 
 @Scope("prototype") 
 @Controller("CourseAction")
-public class CourseAction extends ActionSupport implements SessionAware,ModelDriven<Course>{
+public class CourseAction extends BaseAction implements ModelDriven<Course>{
 	
 	private static final Log log = LogFactory.getLog(CourseAction.class);
 
-	private Map<String, Object> session;
+
 	
 	//Service	
 	@Resource
@@ -55,27 +57,27 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 	private GroupService groupService;
 	private List<Usergroup> userGroupList = new ArrayList<Usergroup>();
 	
+	@Resource
+	private TeacherService teacherService;
+	private List<Teacher> teacherList = new ArrayList<Teacher>();
 	
 	private String logprefix = "exec action method:";
 	
 
-	private ReturnJson returnJson = new ReturnJson();
 	private String courseIdsForDel;
+
 	
 	
-	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
-	private String returnInfo;
-	private String actionMsg; // Action间传递的消息参数
-	
-	private int pageNo=1;
-	private int totalcount = 0;
-	private int totalpage = 0;
-	private Page page = new Page();
-	private String callType;
-	
-//	添加时，课程英文名称
-	private String coursenameen;
+//	添加时，课程英文名称 修改时也用
 	private int courseiden;
+	private String coursenameen;
+
+	
+//	管理参数
+	private Integer usergroupid;
+	
+	
+
 	
 	public int getAdminId(){
 		
@@ -86,27 +88,8 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 		
 		return -1;
 	}
-	public void setPageInfo(int totalcount){
-		if(pageNo ==0){
-			pageNo =1;
-		}
-		
-		//设置总数量
-		page.setTotalCount(totalcount);
-		
-		//如果页码大于总页数，重新设置
-		if(pageNo>page.getTotalpage()){
-			pageNo = page.getTotalpage();
-		}
-		
-		page.setPageNo(pageNo);
-		if(page.getTotalCount()==0){
-			page.setPageNo(0);
-			page.setTotalpage(0);
-			pageNo = 0;
-			System.out.println(pageNo);
-		}
-	}
+	
+	
 	
 	/**
 	 * 跳转到课程添加界面
@@ -115,11 +98,15 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 	public String toCourseAddPage(){
 		log.info(logprefix+"toCourseAddPage");
 		
-		userGroupList = groupService.getUserGroupByType(CommonConfig.usergroupstudentid);
-		
+		userGroupList = groupService.getUserGroupByType(CommonConfig.usergroupstudentid);		
+		teacherList = teacherService.getAllTeacher();
 		
 		if(userGroupList == null){
 			userGroupList = new ArrayList<Usergroup>();
+		}
+		
+		if(teacherList == null){
+			 teacherList = new ArrayList<Teacher>();
 		}
 
 		return SUCCESS;
@@ -129,23 +116,53 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 	//管理 查询
 	public String manageCourseFull(){
 		log.info("exec action method:manageCourseFull");
+		
+//		配置参数
+		if(usergroupid == null || usergroupid<=0){
+			usergroupid = 0;
+		}
+		
+//		获取学生分组信息
+		userGroupList = groupService.getUserGroupByType(CommonConfig.usergroupstudentid);
+		if(userGroupList == null){
+			userGroupList = new ArrayList<Usergroup>();
+		}
+		
                 
-//      分页查询        
-        int count = courseService.countCourseRow()/2;
-        System.out.println(count);
-        this.setPageInfo(count);
-        
-                
-        courseFullListCh  = courseService.selectCourseFullByConditionAndPage(" where a.languagetype = "+CommonConfig.languagech, page);
-        courseFullListEn  = courseService.selectCourseFullByConditionAndPage(" where a.languagetype = "+CommonConfig.languageen, page);
-               
+//      分页查询 
+		String courseSqlCh = " where  a.languagetype = "+CommonConfig.languagech;
+		
+		String courseSqlEn = " where  a.languagetype = "+CommonConfig.languageen;
+		
+		if(usergroupid != 0){
+			courseSqlCh += "  and a.type="+usergroupid ;			
+			courseSqlEn += "  and a.type="+usergroupid ;
+		}
+		courseFullListCh  = courseService.selectCourseFullByCondition(courseSqlCh);
+		if(courseFullListCh == null){
+	     courseFullListCh = new ArrayList<CourseFull>();
+	    }
 
-        if(courseFullListCh == null){
-        	courseFullListCh = new ArrayList<CourseFull>();
-        }
-        if(courseFullListEn == null){
-        	courseFullListEn = new ArrayList<CourseFull>();
-        }
+		for(CourseFull c : courseFullListCh){
+			System.out.println(c.getCoursename());
+		}
+		 
+        int count = courseFullListCh.size();
+        setPageInfo(count);
+        System.out.println(count);
+        
+    	courseFullListCh  = courseService.selectCourseFullByConditionAndPage( courseSqlCh,page);        
+        courseFullListEn  = courseService.selectCourseFullByConditionAndPage(courseSqlEn, page);
+		 if(courseFullListCh == null){
+		     courseFullListCh = new ArrayList<CourseFull>();
+		    }
+			 
+			 if(courseFullListEn == null){
+		        	courseFullListEn = new ArrayList<CourseFull>();
+		     } 
+
+       
+       
 //      for(int i = 0; i < computerhomeworkFullList.size(); i++){
 //      	System.out.println("id=");
 //      }
@@ -169,10 +186,7 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxadminnotloginreturn, returnInfo);
 			return SUCCESS;
 		}
-		
-		
-		
-		
+
 		try {
 			
 			course.setAdduserid(aid);
@@ -215,7 +229,7 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 	//del entityfull Ajax
 	public String deleteCourseFullAjax( ){
 		
-		log.info(logprefix + "deleteComputercategoryFullAjax");
+	/*	log.info(logprefix + "deleteComputercategoryFullAjax");
              
 		try{
 			String ids[] = courseIdsForDel.split(";");
@@ -259,7 +273,7 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
                 returnJson.setFlag(0);
                 returnJson.setReason("删除的内部错误");
                 JSONObject jo = JSONObject.fromObject(returnJson);
-                this.returnStr = jo.toString();
+                this.returnStr = jo.toString();*/
                 return SUCCESS;
         }
 
@@ -268,33 +282,30 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 	//ajax 修改
 	public String updateCourseAjax(){
 		log.info(logprefix + "updateCourseAjax");
-		ReturnJson returnJson = new ReturnJson();
+
 		try {				
 				Course ch = courseService.selectCourseById(course.getId());
 				Course en = courseService.selectCourseById(courseiden);
 				if(ch == null || en == null){
-					
+					this.returnInfo = "获取修改信息出错";					
+					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+					return SUCCESS;
 				}
 //              选择能更改的属性，与界面一致	
   				ch.setName(course.getName());
-  				ch.setDescription(course.getDescription());
   				ch.setType(course.getType());
   				ch.setTeacherid(course.getTeacherid());
 
   				en.setName(coursenameen);
-  				en.setDescription(course.getDescription());
   				en.setType(course.getType());
   				en.setTeacherid(course.getTeacherid());
 				
   				
   				
-				courseService.updateCourse(ch);		
-				courseService.updateCourse(en);		
-				returnJson.setFlag(1);	
-				returnJson.setReason("修改成功");
-				JSONObject jo = JSONObject.fromObject(returnJson);
-				this.returnStr = jo.toString();
-				//actionMsg = getText("viewCourseSuccess");
+				courseService.updateCourse(ch,en);	
+				
+				this.returnInfo = "修改成功";					
+				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
 				return SUCCESS;
 				
 			
@@ -303,294 +314,251 @@ public class CourseAction extends ActionSupport implements SessionAware,ModelDri
 			log.error("类CourseAction的方法：viewCourse错误"+e);
 		}
 
-			returnJson.setFlag(0);		
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
-			return SUCCESS;
-	}
-	
-	
-
-	
-	// 查看实体 根据对象Id查询
-	public String viewCourse(){
-		log.info("viewCourse");
-		try {
-			if(course.getId() != null && course.getId() > 0){				
-				Course temCourse = courseService.selectCourseById(course.getId());
-				BeanUtils.copyProperties(courseModel,temCourse);	
-				actionMsg = getText("selectCourseByIdSuccess");
-			}else{
-				actionMsg = getText("selectCourseByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CourseAction的方法：selectCourseById错误"+e);
-		}
-
-
-		return "error";
-
-	}	
-
-/**
- * view CourseFull
- * need give parmeter id
- * get id from modle,
- * @return
- */
-	public String viewCourseFull() {
-				
-		try {
-			int getId = course.getId();
-			log.info(this.logprefix + ";id=" + getId);
-			
-			if (getId < 0) {
-				log.error("error,id小于0不规范");
-				return "error";
-			}	
-			
-			CourseFull temCourseFull = courseService.selectCourseFullById(getId);				
-			if(temCourseFull!=null){				
-				BeanUtils.copyProperties(courseFull,temCourseFull);
-				return SUCCESS;				
-			}else{
-				log.error("error,查询实体不存在。");
-				return "Error";
-			}			
-
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();			
-		}
-		return "Error";
+		this.returnInfo = "内部错误";					
+		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+		return SUCCESS;
 	}
 
-	//get set
-	public void setSession(Map<String, Object> session) {
-		// TODO Auto-generated method stub
-	    this.session = session;
-	}
 	
 	@Override
 	public Course getModel() {
 		// TODO Auto-generated method stub
 		return course;
 	}
+	
 
-//  
+
+	public CourseService getCourseService() {
+		return courseService;
+	}
+
+
+
+	public void setCourseService(CourseService courseService) {
+		this.courseService = courseService;
+	}
+
+
+
+	public Integer getCourseid() {
+		return courseid;
+	}
+
+
+
+	public void setCourseid(Integer courseid) {
+		this.courseid = courseid;
+	}
+
+
+
 	public Course getCourse() {
 		return course;
 	}
-	
+
+
+
 	public void setCourse(Course course) {
 		this.course = course;
 	}
-//  entityModel
+
+
+
 	public Course getCourseModel() {
 		return courseModel;
 	}
-	
+
+
+
 	public void setCourseModel(Course courseModel) {
 		this.courseModel = courseModel;
 	}
-	
+
+
+
 	public CourseFull getCourseFull() {
 		return courseFull;
 	}
-	
+
+
+
 	public void setCourseFull(CourseFull courseFull) {
 		this.courseFull = courseFull;
 	}
-	
+
+
+
 	public List<Course> getCourseList() {
 		return courseList;
 	}
+
 
 
 	public void setCourseList(List<Course> courseList) {
 		this.courseList = courseList;
 	}
 
+
+
 	public List<CourseFull> getCourseFullList() {
 		return courseFullList;
 	}
+
 
 
 	public void setCourseFullList(List<CourseFull> courseFullList) {
 		this.courseFullList = courseFullList;
 	}
 
-	public String getReturnStr() {
-		return returnStr;
+
+
+	public List<CourseFull> getCourseFullListCh() {
+		return courseFullListCh;
 	}
 
 
-	public void setReturnStr(String returnStr) {
-		this.returnStr = returnStr;
-	}
-	
-	public Page getPage() {
-		return page;
+
+	public void setCourseFullListCh(List<CourseFull> courseFullListCh) {
+		this.courseFullListCh = courseFullListCh;
 	}
 
 
-	public void setPage(Page page) {
-		this.page = page;
-	}
-	
-	public int getCourseid() {
-		return courseid;
+
+	public List<CourseFull> getCourseFullListEn() {
+		return courseFullListEn;
 	}
 
-	public void setCourseid(int courseid) {
-		this.courseid = courseid;
-	}
-		public int getPageNo() {
-		return pageNo;
+
+
+	public void setCourseFullListEn(List<CourseFull> courseFullListEn) {
+		this.courseFullListEn = courseFullListEn;
 	}
 
-	public void setPageNo(int pageNo) {
-		this.pageNo = pageNo;
+
+
+	public GroupService getGroupService() {
+		return groupService;
 	}
-	
-	
+
+
+
+	public void setGroupService(GroupService groupService) {
+		this.groupService = groupService;
+	}
+
+
+
+	public List<Usergroup> getUserGroupList() {
+		return userGroupList;
+	}
+
+
+
+	public void setUserGroupList(List<Usergroup> userGroupList) {
+		this.userGroupList = userGroupList;
+	}
+
+
+
+	public String getLogprefix() {
+		return logprefix;
+	}
+
+
+
+	public void setLogprefix(String logprefix) {
+		this.logprefix = logprefix;
+	}
+
+
+
 	public String getCourseIdsForDel() {
-                return courseIdsForDel;
-        }
+		return courseIdsForDel;
+	}
 
-        public void setCourseIdsForDel(String courseIdsForDel) {
-                this.courseIdsForDel = courseIdsForDel;
-        }
 
-		public CourseService getCourseService() {
-			return courseService;
-		}
 
-		public void setCourseService(CourseService courseService) {
-			this.courseService = courseService;
-		}
+	public void setCourseIdsForDel(String courseIdsForDel) {
+		this.courseIdsForDel = courseIdsForDel;
+	}
 
-		public String getLogprefix() {
-			return logprefix;
-		}
 
-		public void setLogprefix(String logprefix) {
-			this.logprefix = logprefix;
-		}
 
-		public String getCallType() {
-			return callType;
-		}
+	public String getCoursenameen() {
+		return coursenameen;
+	}
 
-		public void setCallType(String callType) {
-			this.callType = callType;
-		}
 
-		public ReturnJson getReturnJson() {
-			return returnJson;
-		}
 
-		public void setReturnJson(ReturnJson returnJson) {
-			this.returnJson = returnJson;
-		}
+	public void setCoursenameen(String coursenameen) {
+		this.coursenameen = coursenameen;
+	}
 
-		public String getReturnInfo() {
-			return returnInfo;
-		}
 
-		public void setReturnInfo(String returnInfo) {
-			this.returnInfo = returnInfo;
-		}
 
-		public String getActionMsg() {
-			return actionMsg;
-		}
+	public int getCourseiden() {
+		return courseiden;
+	}
 
-		public void setActionMsg(String actionMsg) {
-			this.actionMsg = actionMsg;
-		}
 
-		public String getCoursenameen() {
-			return coursenameen;
-		}
 
-		public void setCoursenameen(String coursenameen) {
-			this.coursenameen = coursenameen;
-		}
+	public void setCourseiden(int courseiden) {
+		this.courseiden = courseiden;
+	}
 
-		public static Log getLog() {
-			return log;
-		}
 
-		public Map<String, Object> getSession() {
-			return session;
-		}
 
-		public void setCourseid(Integer courseid) {
-			this.courseid = courseid;
-		}
 
-		public List<CourseFull> getCourseFullListCh() {
-			return courseFullListCh;
-		}
 
-		public void setCourseFullListCh(List<CourseFull> courseFullListCh) {
-			this.courseFullListCh = courseFullListCh;
-		}
+	public Integer getUsergroupid() {
+		return usergroupid;
+	}
 
-		public List<CourseFull> getCourseFullListEn() {
-			return courseFullListEn;
-		}
 
-		public void setCourseFullListEn(List<CourseFull> courseFullListEn) {
-			this.courseFullListEn = courseFullListEn;
-		}
 
-		public int getTotalcount() {
-			return totalcount;
-		}
+	public void setUsergroupid(Integer usergroupid) {
+		this.usergroupid = usergroupid;
+	}
 
-		public void setTotalcount(int totalcount) {
-			this.totalcount = totalcount;
-		}
 
-		public int getTotalpage() {
-			return totalpage;
-		}
 
-		public void setTotalpage(int totalpage) {
-			this.totalpage = totalpage;
-		}
+	public static Log getLog() {
+		return log;
+	}
 
-		public int getCourseiden() {
-			return courseiden;
-		}
 
-		public void setCourseiden(int courseiden) {
-			this.courseiden = courseiden;
-		}
-		public GroupService getGroupService() {
-			return groupService;
-		}
-		public void setGroupService(GroupService groupService) {
-			this.groupService = groupService;
-		}
-		public List<Usergroup> getUserGroupList() {
-			return userGroupList;
-		}
-		public void setUserGroupList(List<Usergroup> userGroupList) {
-			this.userGroupList = userGroupList;
-		}
-        
+
+	public TeacherService getTeacherService() {
+		return teacherService;
+	}
+
+
+
+	public void setTeacherService(TeacherService teacherService) {
+		this.teacherService = teacherService;
+	}
+
+
+
+	public List<Teacher> getTeacherList() {
+		return teacherList;
+	}
+
+
+
+	public void setTeacherList(List<Teacher> teacherList) {
+		this.teacherList = teacherList;
+	}
+
+
+
+	
+
+
+	
+	
+	
+	
+
         
 }

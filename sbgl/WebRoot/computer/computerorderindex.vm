@@ -54,6 +54,7 @@
                           <h4 class="pull-left"><a class="lk" href="${webbaseurl}/viewComputerorder.action?computerorderId=$temp.computerorderid">$!temp.computerordertitle</a></h4>
                         </div>
                          <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> 
+							机房预约<br>
 							#if($!temp.computerorderordertype==2) 
 								课程预约 
 							#else 
@@ -99,6 +100,7 @@
                           <h4 class="pull-left"><a class="lk" href="${webbaseurl}/viewComputerorder.action?computerorderId=$temp.computerorderid">$!temp.computerordertitle</a></h4>
                         </div>
                         <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> 
+							机房预约<br>
 							#if($!temp.computerorderordertype==2) 
 								课程预约 
 							#else 

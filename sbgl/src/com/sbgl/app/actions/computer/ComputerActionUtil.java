@@ -20,6 +20,9 @@ import com.sbgl.util.ReturnJson;
 
 public class ComputerActionUtil {
 	
+	
+	
+	
 	public static HashMap<Integer, ArrayList<Computermodel>> categoryModelMap(List<Computercategory> computercategoryList,List<Computermodel>  computermodelList){
 		//model的分类信息，只显示中文的
 //		String categorysqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";

@@ -82,6 +82,18 @@ public class CourseServiceImpl implements CourseService{
 		baseDao.updateEntity(tempCourse);
 
 	}
+	
+	
+	
+	@Override
+	public boolean updateCourse(Course ch,Course en){
+		
+		baseDao.updateEntity(ch);
+		baseDao.updateEntity(en);
+		
+		return true;		
+
+	}
 
 //	根据id查询实体类			
 	@Override

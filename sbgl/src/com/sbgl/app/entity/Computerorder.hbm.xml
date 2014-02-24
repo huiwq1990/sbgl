@@ -28,6 +28,12 @@
         <property name="remark" type="java.lang.String">
             <column name="remark" length="2000" />
         </property>
+        <property name="rejectreason" type="java.lang.String">
+            <column name="rejectreason" length="500" />
+        </property>
+        <property name="audituserid" type="java.lang.Integer">
+            <column name="audituserid" />
+        </property>
         <property name="status" type="java.lang.Integer">
             <column name="status" />
         </property>

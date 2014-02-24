@@ -18,6 +18,8 @@ public class Computerorder extends com.sbgl.app.dao.DaoAbs implements
 	private Integer ordertype;
 	private Date createtime;
 	private String remark;
+	private String rejectreason;
+	private Integer audituserid;
 	private Integer status;
 
 	// Constructors
@@ -34,7 +36,8 @@ public class Computerorder extends com.sbgl.app.dao.DaoAbs implements
 	/** full constructor */
 	public Computerorder(Integer id, String serialnumber, Integer userid,
 			String title, Integer ordertype, Date createtime,
-			String remark, Integer status) {
+			String remark, String rejectreason, Integer audituserid,
+			Integer status) {
 		this.id = id;
 		this.serialnumber = serialnumber;
 		this.userid = userid;
@@ -42,6 +45,8 @@ public class Computerorder extends com.sbgl.app.dao.DaoAbs implements
 		this.ordertype = ordertype;
 		this.createtime = createtime;
 		this.remark = remark;
+		this.rejectreason = rejectreason;
+		this.audituserid = audituserid;
 		this.status = status;
 	}
 
@@ -101,6 +106,22 @@ public class Computerorder extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getRejectreason() {
+		return this.rejectreason;
+	}
+
+	public void setRejectreason(String rejectreason) {
+		this.rejectreason = rejectreason;
+	}
+
+	public Integer getAudituserid() {
+		return this.audituserid;
+	}
+
+	public void setAudituserid(Integer audituserid) {
+		this.audituserid = audituserid;
 	}
 
 	public Integer getStatus() {

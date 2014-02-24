@@ -302,6 +302,13 @@
 
 <script>
 
+
+//更改状态的高亮显示
+  $(".status-filter li").click(function () {
+                $("li[class='active']").removeAttr("class");
+                $(this).addClass("active"); 
+  });
+
 /*
 $("#inputEditComputerComputercategoryid").on("change", function(e) {
 	var html;

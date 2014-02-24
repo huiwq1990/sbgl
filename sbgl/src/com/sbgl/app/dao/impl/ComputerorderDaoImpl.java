@@ -25,7 +25,7 @@ import com.sbgl.util.*;
 public class ComputerorderDaoImpl extends HibernateDaoSupport implements ComputerorderDao{
 
 	private static final Log log = LogFactory.getLog(ComputerorderDaoImpl.class);
-	private final String basicComputerorderFullSql = "select a.id as computerorderid, a.serialnumber as computerorderserialnumber, a.userid as computerorderuserid, a.title as computerordertitle, a.ordertype as computerorderordertype, a.createtime as computerordercreatetime, a.remark as computerorderremark, a.status as computerorderstatus, " +
+	private final String basicComputerorderFullSql = "select a.id as computerorderid, a.serialnumber as computerorderserialnumber, a.userid as computerorderuserid, a.title as computerordertitle, a.ordertype as computerorderordertype, a.createtime as computerordercreatetime, a.remark as computerorderremark, a.status as computerorderstatus, a.rejectreason as computerorderrejectreason, a.audituserid as computerorderaudituserid," +
 			"b.id as loginuserid, b.name as loginusername" +
 			" from Computerorder a  left join Loginuser b on a.userid=b.id ";
 	

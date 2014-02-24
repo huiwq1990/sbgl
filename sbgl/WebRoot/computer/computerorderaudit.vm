@@ -10,69 +10,16 @@
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
-<!--[if lt IE 9]>
-  <script src="../js/html5shiv.js"></script>
-  <script src="../js/respond.min.js"></script>
-<![endif]-->
-<!--[if IE 7]>
-<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
-<![endif]-->
+#parse("include/includePageCompatibility.vm")
+
 </head>
 
 <body id="admin">
 <header id="header-wrap"><!--header-wrap-->
-  <div class="nav-wrap clearfix">
-    <div class="site-nav">
-      <div class="dropdown">
-        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a>
-        <!-- #BeginLibraryItem "/Library/siteNav.lbi" -->
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-          <li><a href="../index.html"><i class="icon-home"></i> 首页</a></li>
-          <li class="divider"></li>
-          <li><a href="#anotherAction">个人主页</a></li>
-          <li><a href="#">通讯录</a></li>
-          <li class="divider"></li>
-          <li><a href="../预约首页.html">我的预约</a></li>
-          <li><a href="../消息中心-站内信.html">站内信</a></li>
-          <li class="divider"></li>
-          <li><a href="管理中心首页.html">管理中心</a></li>
-        </ul>
-      <!-- #EndLibraryItem --> </div>
-    </div><!-- #BeginLibraryItem "/Library/机房subnav.lbi" -->    <div class="sub-nav">
-      <ul class="nav nav-tabs nav-tabs-google">
-        <li><a href="#">首页</a></li>
-        <li><a href="#">设置</a></li>
-        <li><a href="用户管理首页.html">用户</a></li>
-        <li><a href="设备预约首页.html">器材</a></li>
-        <li class="active"><a href="机房预约管理首页.html">机房</a></li>
-        <li><a href="#">内容</a></li>
-      </ul>
-    </div><!-- #EndLibraryItem --><ul class="account-wrap nav nav-pills pull-right">
-          <li class="notice dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">消息1</a></li>
-              <li><a href="#">消息2</a></li>
-            </ul>
-      </li>     
-          <li class="social dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="../img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
-            <div class="dropdown-menu">
-              <div class="media">
-                <a class="pull-left" href="#">
-                  <img src="../img/photo.jpg" width="96" height="96" class="img-rounded">
-                </a>
-                <div class="media-body">
-                  <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
-                  <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
-                  <div class="setting"><a href="#">账户设置</a></div>
-                  <button class="btn btn-primary" type="button">查看个人主页</button>
-                </div>
-              </div>
-            </div>      
-          </li>
-    </ul>
-  </div>
+	
+	#set($currentPageModule="computer")
+	#parse("include/includeAdminHeader.vm")
+	
 </header><!--/#header-wrap-->
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
            
@@ -108,11 +55,14 @@
 
                       </div>
                       <hr>
-                      <strong>审核人可能进行的操作:</strong><br>                      
-                      <a class="btn btn-primary" onclick="auditOrder( $computerorderFull.computerorderid ,$!ComputerorderStatusAduitPass)" href="#">审核通过</a>
-                      <a class="btn btn-white" onclick="auditOrder( $computerorderFull.computerorderid ,$!ComputerorderStatusAduitReject)" data-toggle="modal" href="#reject" role="button">驳 回</a>
+                      <strong>审核人可能进行的操作:</strong><br>  
+					
+						<div class="orderstatus">
+                      <a class="btn btn-primary" onclick="auditOrder( $computerorderFull.computerorderid ,$!ComputerorderStatusAduitPass)" href="#" role="button">审核通过</a>
+                      <a class="btn btn-white" data-toggle="modal" href="#reject" role="button">驳 回</a>
                       <a class="btn btn-white" onclick="auditOrder( $computerorderFull.computerorderid ,$!ComputerorderStatusAduitDel)" data-toggle="modal" href="#reject" role="button">删 除</a>
-                  </div>
+                        </div>
+				  </div>
                 </div>
                 <div class="thumbnail">
                   <div class="hd">
@@ -148,6 +98,42 @@
 
 </section>
 
+<!-- Modal -->
+<div id="reject" class="modal hide fade" role="dialog" aria-labelledby="myRejectLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myRejectLabel">驳回预约</h3>
+  </div>
+  <div class="modal-body">
+      <p>您确定要驳回XXX的预约申请吗？确定驳回预约申请，请在下方填写驳回原因，系统会将告知申请者。</p>
+      <form class="form-horizontal" role="form">
+        <div class="form-group">
+          <label for="inputRejectReason" class="col-xs-3 control-label">驳回原因</label>
+          <div class="col-xs-7">
+            <textarea class="form-control" id="inputRejectReason" rows="3" placeholder="请在此填写驳回申请的原因。"></textarea>
+          </div>
+        </div>
+      </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary" onclick="auditOrder( $computerorderFull.computerorderid ,$!ComputerorderStatusAduitReject)" >确 定</button>
+  </div>
+</div>
+<div id="delete" class="modal hide fade" role="dialog" aria-labelledby="myDeleteLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myDeleteLabel">删除预约</h3>
+  </div>
+  <div class="modal-body">
+      <p>您确定要删除XXX的预约申请吗？删除预约申请后系统将会通知申请人该条预约申请已被删除，但申请人无法得知删除原因。</p>
+      <p>如申请者因提交的设备无法满足需要重新申请预约，建议使用驳回功能。</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary">确 定</button>
+  </div>
+</div>
 
 
 <div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
@@ -180,6 +166,24 @@
   </script>
 <![endif]-->
 <script>
+
+
+
+
+
+
+
+
+//更改状态的高亮显示
+  $(".orderstatus a").click(function () {
+  				$("a[class='btn-primary']").addClass("btn-white");
+                $("a[class='btn-white']").removeClass("btn-primary");
+				
+                $(this).addClass("btn-primary"); 
+  });
+
+
+
 
 //审核预约
 function auditOrder(id,status){

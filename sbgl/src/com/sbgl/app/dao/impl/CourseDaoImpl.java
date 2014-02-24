@@ -29,8 +29,9 @@ public class CourseDaoImpl extends HibernateDaoSupport implements CourseDao{
 //			"b.id as adduserloginuserid, b.name as adduserloginusername, b.userid as adduserloginuseruserid, b.password as adduserloginuserpassword, b.createtime as adduserloginusercreatetime, b.status as adduserloginuserstatus, b.roletype as adduserloginuserroletype, " +
 			"b.id as adduserloginuserid, b.name as adduserloginusername, "+
 //			"c.id as teacherloginuserid, c.name as teacherloginusername, c.userid as teacherloginuseruserid, c.password as teacherloginuserpassword, c.createtime as teacherloginusercreatetime, c.status as teacherloginuserstatus, c.roletype as teacherloginuserroletype " +
-			"c.id as teacherloginuserid, c.name as teacherloginusername "+
-			"from Course a  left join Loginuser b on a.adduserid=b.id left join Loginuser c on a.teacherid=c.id ";
+			"c.id as teacherloginuserid, c.name as teacherloginusername, "+
+			"d.name as usergroupname "+
+			"from Course a  left join Loginuser b on a.adduserid=b.id left join Loginuser c on a.teacherid=c.id left join Usergroup d on a.type=d.id ";
 	
 	private final String basicCourseSql = "From Course as a ";
 	

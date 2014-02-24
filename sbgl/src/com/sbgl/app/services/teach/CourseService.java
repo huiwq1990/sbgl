@@ -50,6 +50,8 @@ public interface CourseService{
 	
 	// 查询实体full        
     public List<CourseFull>  selectCourseFullByConditionAndPage(String condition,final Page page);
+
+	boolean updateCourse(Course ch, Course en);
 		
 	
 	

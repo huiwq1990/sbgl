@@ -13,11 +13,14 @@ public class ComputerorderFull extends DaoAbs implements java.io.Serializable {
 			private Integer computerorderordertype;
 			private Date computerordercreatetime;
 			private String computerorderremark;
+			private String computerorderrejectreason;
+			private Integer computerorderaudituserid;
 			private Integer computerorderstatus;
-			private Integer loginuserid;
+			private String loginuseruserid;
 			private String loginusername;
-			private Date loginusercreatetime;
-			private Integer loginuserstatus;
+			private String loginuserroletype;
+			private Integer loginuserprivilege;
+			private String loginuserpassword;
 		
 	
 			
@@ -63,17 +66,29 @@ public class ComputerorderFull extends DaoAbs implements java.io.Serializable {
 		public String getComputerorderremark(){		
 			return this.computerorderremark;
 		}
+			public void setComputerorderrejectreason(String computerorderrejectreason){		
+			this.computerorderrejectreason = computerorderrejectreason;
+		}
+		public String getComputerorderrejectreason(){		
+			return this.computerorderrejectreason;
+		}
+			public void setComputerorderaudituserid(Integer computerorderaudituserid){		
+			this.computerorderaudituserid = computerorderaudituserid;
+		}
+		public Integer getComputerorderaudituserid(){		
+			return this.computerorderaudituserid;
+		}
 			public void setComputerorderstatus(Integer computerorderstatus){		
 			this.computerorderstatus = computerorderstatus;
 		}
 		public Integer getComputerorderstatus(){		
 			return this.computerorderstatus;
 		}
-			public void setLoginuserid(Integer loginuserid){		
-			this.loginuserid = loginuserid;
+			public void setLoginuseruserid(String loginuseruserid){		
+			this.loginuseruserid = loginuseruserid;
 		}
-		public Integer getLoginuserid(){		
-			return this.loginuserid;
+		public String getLoginuseruserid(){		
+			return this.loginuseruserid;
 		}
 			public void setLoginusername(String loginusername){		
 			this.loginusername = loginusername;
@@ -81,17 +96,23 @@ public class ComputerorderFull extends DaoAbs implements java.io.Serializable {
 		public String getLoginusername(){		
 			return this.loginusername;
 		}
-			public void setLoginusercreatetime(Date loginusercreatetime){		
-			this.loginusercreatetime = loginusercreatetime;
+			public void setLoginuserroletype(String loginuserroletype){		
+			this.loginuserroletype = loginuserroletype;
 		}
-		public Date getLoginusercreatetime(){		
-			return this.loginusercreatetime;
+		public String getLoginuserroletype(){		
+			return this.loginuserroletype;
 		}
-			public void setLoginuserstatus(Integer loginuserstatus){		
-			this.loginuserstatus = loginuserstatus;
+			public void setLoginuserprivilege(Integer loginuserprivilege){		
+			this.loginuserprivilege = loginuserprivilege;
 		}
-		public Integer getLoginuserstatus(){		
-			return this.loginuserstatus;
+		public Integer getLoginuserprivilege(){		
+			return this.loginuserprivilege;
+		}
+			public void setLoginuserpassword(String loginuserpassword){		
+			this.loginuserpassword = loginuserpassword;
+		}
+		public String getLoginuserpassword(){		
+			return this.loginuserpassword;
 		}
 		
 	

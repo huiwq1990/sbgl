@@ -617,13 +617,6 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 	public void setComputerhomeworkid(int computerhomeworkid) {
 		this.computerhomeworkid = computerhomeworkid;
 	}
-		public Integer getPageNo() {
-		return pageNo;
-	}
-
-	public void setPageNo(Integer pageNo) {
-		this.pageNo = pageNo;
-	}
 	
 	
 	public String getComputerhomeworkIdsForDel() {

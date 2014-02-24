@@ -1,0 +1,57 @@
+           
+			<div id="refreshCourseTableDiv">
+			<div class="panel panel-default">              
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="name">课程名</th>
+                    <th class="username">授课教师</th>
+                    <th class="course-type">课程类别</th>
+                    <th class="operate">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+					
+#set($listSize = $courseFullListEn.size() - 1)
+#if($listSize>=0)
+#set($listRegion = [0..$listSize])
+##取出所有的属性名称
+#foreach($tempKey in $listRegion)
+			#set($ch = $courseFullListCh.get($tempKey))
+			#set($en = $courseFullListEn.get($tempKey))					
+	
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!ch.courseid"></td>
+					<!--修改属性-->
+                    <td>$!ch.coursename<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="editCourseFillIn" 
+						data-id="$!ch.courseid"                           
+												data-name="$!ch.coursename"                           
+												data-description="$!ch.coursedescription"                           
+												data-type="$!ch.coursetype"                           
+												data-adduserid="$!ch.courseadduserid"                           
+												data-teacherid="$!ch.courseteacherid"                           
+												data-addtime="$!ch.courseaddtime"      
+												data-iden = "$!en.courseid"
+												data-nameen="$!en.coursename"     
+												>修改</a></td>    
+						
+
+					<td>$!ch.coursename</td>
+					<td>$!ch.coursedescription</td>
+					<td>$!ch.coursetype</td>
+                  </tr>
+#end
+#end				  
+                </tbody>
+              </table>
+            
+			</div><!--end panel -->
+			
+				</div><!--refreshCourseTableDiv-->
+							 
+					  			  	 <script>
+totalpage = $page.totalpage;
+currentpagenum = $page.pageNo;
+usergroupid = $usergroupid;
+</script>	

@@ -31,8 +31,18 @@ public class CourseFull extends DaoAbs implements java.io.Serializable {
 			private Integer teacherloginuserstatus;
 			private String teacherloginuserroletype;
 		
-	
+			private String usergroupname;
 			
+			
+			
+			
+			
+			public String getUsergroupname() {
+				return usergroupname;
+			}
+			public void setUsergroupname(String usergroupname) {
+				this.usergroupname = usergroupname;
+			}
 			public void setCourseid(Integer courseid){		
 			this.courseid = courseid;
 		}
