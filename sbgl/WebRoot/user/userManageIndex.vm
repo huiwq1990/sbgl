@@ -132,9 +132,9 @@
               </div>
               <ul class="status-filter nav nav-pills pull-right">
                 <li class="active" action-type="active" id="0"><a href="#">全部(<span id="totalSum">$!sum</span>)</a></li>
-                <li action-type="active" id="2"><a href="#">学生(<span id="sSum">$!sum1</span>)</a></li>
-                <li action-type="active" id="6"><a href="#">教师(<span id="tSum">$!sum2</span>)</a></li>
-                <li action-type="active" id="-1"><a href="#">其他(<span id="wSum">$!sum3</span>)</a></li>
+                <li action-type="active" id="1"><a href="#">学生(<span id="sSum">$!sum1</span>)</a></li>
+                <li action-type="active" id="2"><a href="#">教师(<span id="tSum">$!sum2</span>)</a></li>
+                <li action-type="active" id="4"><a href="#">其他(<span id="wSum">$!sum3</span>)</a></li>
               </ul>
             </div><!--control-bar end-->
             <div class="panel panel-default">              
@@ -156,11 +156,11 @@
                     <td>$!user.userCode<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="beforeModify" data-id="$!user.id" data-code="$!user.userCode" data-name="$!user.userName" data-sex="$!user.gender" data-pass="$!user.userPass" data-gid="$!user.userGroupId" data-gname="$!user.userGroupName" data-gtype="$!user.userGroupType"data-cid="$!user.clazzId" data-cname="$!user.clazzName" data-tel="$!user.tel" data-mail="$!user.mail" data-can="$!user.canBorrow" data-pic="$!user.photo">修改</a></td>
                     <td>$!user.userName</td>
                     <td>$!user.userGroupName</td>
-					#if($!user.userGroupType == 2)
+					#if($!user.userGroupType == 1)
 						<td>学生</td>
-					#elseif($!user.userGroupType == 6)
+					#elseif($!user.userGroupType == 2)
 						<td>教师</td>
-					#elseif($!user.userGroupType == -1)
+					#elseif($!user.userGroupType == 4)
 						<td>其他</td>
 					#end
                     <td>$!user.tel</td>
@@ -238,21 +238,21 @@
           <select class="select2 form-control" id="inputUserGroup">
 		  <optgroup label="学生">
 			#foreach($item in $allGroupList)
-			  #if($!item.type == "2")
+			  #if($!item.type == "1")
 				<option value=$!item.id>$!item.name</option>
 			  #end
 			#end
 			</optgroup>
 			<optgroup label="教师">
 			#foreach($item in $allGroupList)
-			  #if($!item.type == 6)
+			  #if($!item.type == 2)
 				<option value=$!item.id>$!item.name</option>
 			  #end
 			#end
 			</optgroup>
 			<optgroup label="其他">
 			#foreach($item in $allGroupList)
-			  #if($!item.type == -1)
+			  #if($!item.type == 4)
 				<option value=$!item.id>$!item.name</option>
 			  #end
 			#end
@@ -398,7 +398,7 @@
 				console.log(id+"$$$$$$$$");
 				console.log(type+"********");
 				
-				if(type == 2) {
+				if(type == 1) {
 					idsForDel1 += id + "_";
 				} else if(type == 6) {
 					idsForDel2 += id + "_";
@@ -433,21 +433,21 @@
         alterPhoto = myData.pic;
 		
 		
-		if(alterGroupType == "2") {
+		if(alterGroupType == "1") {
 			isStu = true;
 			isTea = false;
 			isWkr = false;
-		} else if(alterGroupType == "6") {
+		} else if(alterGroupType == "2") {
 			isStu = false;
 			isTea = true;
 			isWkr = false;
-		} else if(alterGroupType == "-1") {
+		} else if(alterGroupType == "4") {
 			isStu = false;
 			isTea = false;
 			isWkr = true;
 		}
 		
-		if(alterGroupType == 2) {
+		if(alterGroupType == 1) {
 			$("#inputStuClass").select2("val", alterClazzId);
 			$("#inputStuCould").select2("val", alterCan);
 		} else {
@@ -455,7 +455,7 @@
 			$("#inputStuCould").attr("disabled", true);
 		}
 		
-		if(alterGroupId != -1) {
+		if(alterGroupId != 4) {
 			$("#inputUserGroup").select2("val", alterGroupId);
 		}
 		$("#inputUserGroup").attr("disabled", true);
@@ -536,7 +536,7 @@
             			"student.classid": userClazz,
             			"student.couldBorrow": userCould,
 						"group.id": userGroup,
-						"group.type": 2
+						"group.type": 1
             		};
 					actionUrl = "${webbaseurl}/alterStu.do";
 					tip = "修改学生信息成功！";
@@ -566,7 +566,7 @@
             			"worker.photo": savedFileName,
             			"worker.password": userPass,
 						"group.id": userGroup,
-						"group.type": 2
+						"group.type": 4
             		};
 					actionUrl = "${webbaseurl}/alterWkr.do";
 					tip = "修改其他人员信息成功！";
@@ -628,19 +628,19 @@
 			data: postData,
 			success: function(data,textStatus,jq) {
 				//alert(data.groupType);
-				if(data.groupType == "2") {
+				if(data.groupType == "1") {
 					$("#inputStuClass").attr("disabled", false);
 					$("#inputStuCould").attr("disabled", false);
 					isStu = true;
         			isTea = false;
         			isWkr = false;
-				} else if(data.groupType == "6") {
+				} else if(data.groupType == "2") {
 					$("#inputStuClass").attr("disabled", true);
 					$("#inputStuCould").attr("disabled", true);
 					isStu = false;
         			isTea = true;
         			isWkr = false;
-				} else if(data.groupType == "-1") {
+				} else if(data.groupType == "4") {
 					$("#inputStuClass").attr("disabled", true);
 					$("#inputStuCould").attr("disabled", true);
 					isStu = false;

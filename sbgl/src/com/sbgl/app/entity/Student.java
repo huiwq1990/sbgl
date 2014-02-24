@@ -1,5 +1,7 @@
 package com.sbgl.app.entity;
 
+import java.util.Date;
+
 /**
  * Student entity. @author MyEclipse Persistence Tools
  */
@@ -10,7 +12,7 @@ public class Student extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer id;
-	private String studentId;
+	private String studentid;
 	private String name;
 	private String gender;
 	private String telephone;
@@ -18,7 +20,9 @@ public class Student extends com.sbgl.app.dao.DaoAbs implements
 	private String photo;
 	private String password;
 	private Integer classid;
-	private String couldBorrow;
+	private String couldborrow;
+	private Date makedate;
+	private Date modifydate;
 
 	// Constructors
 
@@ -32,11 +36,12 @@ public class Student extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Student(Integer id, String studentId, String name, String gender,
+	public Student(Integer id, String studentid, String name, String gender,
 			String telephone, String email, String photo, String password,
-			Integer classid, String couldBorrow) {
+			Integer classid, String couldborrow, Date makedate,
+			Date modifydate) {
 		this.id = id;
-		this.studentId = studentId;
+		this.studentid = studentid;
 		this.name = name;
 		this.gender = gender;
 		this.telephone = telephone;
@@ -44,7 +49,9 @@ public class Student extends com.sbgl.app.dao.DaoAbs implements
 		this.photo = photo;
 		this.password = password;
 		this.classid = classid;
-		this.couldBorrow = couldBorrow;
+		this.couldborrow = couldborrow;
+		this.makedate = makedate;
+		this.modifydate = modifydate;
 	}
 
 	// Property accessors
@@ -57,12 +64,12 @@ public class Student extends com.sbgl.app.dao.DaoAbs implements
 		this.id = id;
 	}
 
-	public String getStudentId() {
-		return this.studentId;
+	public String getStudentid() {
+		return this.studentid;
 	}
 
-	public void setStudentId(String studentId) {
-		this.studentId = studentId;
+	public void setStudentid(String studentid) {
+		this.studentid = studentid;
 	}
 
 	public String getName() {
@@ -121,12 +128,28 @@ public class Student extends com.sbgl.app.dao.DaoAbs implements
 		this.classid = classid;
 	}
 
-	public String getCouldBorrow() {
-		return this.couldBorrow;
+	public String getCouldborrow() {
+		return this.couldborrow;
 	}
 
-	public void setCouldBorrow(String couldBorrow) {
-		this.couldBorrow = couldBorrow;
+	public void setCouldborrow(String couldborrow) {
+		this.couldborrow = couldborrow;
+	}
+
+	public Date getMakedate() {
+		return this.makedate;
+	}
+
+	public void setMakedate(Date makedate) {
+		this.makedate = makedate;
+	}
+
+	public Date getModifydate() {
+		return this.modifydate;
+	}
+
+	public void setModifydate(Date modifydate) {
+		this.modifydate = modifydate;
 	}
 
 }

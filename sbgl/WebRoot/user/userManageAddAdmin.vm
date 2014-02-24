@@ -296,7 +296,7 @@
 		var postData = {};
 		var url = "";
 		postData = {
-			"manager.administratorId": userCode,
+			"manager.administratorid": userCode,
 			"manager.name": userName,
 			"manager.gender": userSex,
 			"manager.telephone": userTel,

@@ -75,7 +75,7 @@ public class WorkerAction extends ActionSupport implements SessionAware {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		
-		Boolean isExist = workerService.isExistWorkerCode( worker.getWorkId() );
+		Boolean isExist = workerService.isExistWorkerCode( worker.getWorkid() );
 		
 		if(!isExist) {
 			int returnCode = workerService.addWorker( worker );

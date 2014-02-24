@@ -92,7 +92,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		
-		Boolean isExist = studentService.isExistStudentCode( student.getStudentId() );
+		Boolean isExist = studentService.isExistStudentCode( student.getStudentid() );
 		
 		if(!isExist) {
 			int returnCode = studentService.addStudent( student );
@@ -263,7 +263,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		
 		if(sList != null && ("0".equals(type) || "1".equals(type))) {
 			for(Student s : sList) {
-				Usergrouprelation ugr = userGroupRelationService.getRelationByType( s.getId(), 2 );
+				Usergrouprelation ugr = userGroupRelationService.getRelationByType( s.getId(), 1 );
 				Usergroup ug = null;
 				Clazz clazz = null;
 				if(ugr != null) {
@@ -275,7 +275,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 				
 				UserCourse uc = new UserCourse(String.valueOf( s.getId() ),
 											   s.getGender(),
-											   s.getStudentId(),
+											   s.getStudentid(),
 											   s.getName(),
 											   s.getPassword(),
 											   String.valueOf( ugr == null ? "-1" : ug.getId() ),
@@ -285,7 +285,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 											   s.getClassid() == -1 ? "无班级" : clazz.getClassname(),
 											   s.getTelephone(),
 											   s.getEmail(),
-											   s.getCouldBorrow(),
+											   s.getCouldborrow(),
 											   s.getPhoto(),
 											   ""
 											   );
@@ -295,7 +295,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		}
 		if(tList != null && ("0".equals(type) || "2".equals(type))) {
 			for(Teacher t : tList) {
-				Usergrouprelation ugr = userGroupRelationService.getRelationByType( t.getId(), 6 );
+				Usergrouprelation ugr = userGroupRelationService.getRelationByType( t.getId(), 2 );
 				Usergroup ug = null;
 				if(ugr != null) {
 					ug = groupService.getUserGroupByid( ugr.getGroupId() );
@@ -303,7 +303,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 				
 				UserCourse uc = new UserCourse(String.valueOf( t.getId() ),
 											   t.getGender(),
-											   t.getTeacherId(),
+											   t.getTeacherid(),
 											   t.getName(),
 											   t.getPassword(),
 											   String.valueOf( ugr == null ? "-1" : ug.getId() ),
@@ -322,7 +322,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		}
 		if(wList != null && ("0".equals(type) || "4".equals(type))) {
 			for(Worker w : wList) {
-				Usergrouprelation ugr = userGroupRelationService.getRelationByType( w.getId(), -1 );
+				Usergrouprelation ugr = userGroupRelationService.getRelationByType( w.getId(), 4 );
 				Usergroup ug = null;
 				if(ugr != null) {
 					ug = groupService.getUserGroupByid( ugr.getGroupId() );
@@ -330,7 +330,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 				
 				UserCourse uc = new UserCourse(String.valueOf( w.getId() ),
 											   w.getGender(),
-											   w.getWorkId(),
+											   w.getWorkid(),
 											   w.getName(),
 											   w.getPassword(),
 											   String.valueOf( ugr == null ? "-1" : ug.getId() ),

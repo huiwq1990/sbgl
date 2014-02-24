@@ -1,5 +1,6 @@
 package com.sbgl.app.services.user.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -19,8 +20,9 @@ public class ManagerServiceImpl implements ManagerService {
 	
 	@Override
 	public int addManager(Administrator administrator) {
-		int id = baseDao.getCode("managerId");
+		int id = baseDao.getCode("userId");
 		administrator.setId( id );
+		administrator.setMakedate( new Date() );
 		
 		try {
 			baseDao.saveEntity( administrator );
@@ -35,7 +37,7 @@ public class ManagerServiceImpl implements ManagerService {
 		int id = administrator.getId();
 		Administrator storeAdministrator = baseDao.getEntityById(Administrator.class, id);
 		
-		storeAdministrator.setAdministratorId( administrator.getAdministratorId() );
+		storeAdministrator.setAdministratorid( administrator.getAdministratorid() );
 		storeAdministrator.setEmail( administrator.getEmail() );
 		storeAdministrator.setGender( administrator.getGender() );
 		storeAdministrator.setName( administrator.getName() );
@@ -43,6 +45,7 @@ public class ManagerServiceImpl implements ManagerService {
 		storeAdministrator.setPhoto( administrator.getPhoto() );
 		storeAdministrator.setPrivilege( administrator.getPrivilege() );
 		storeAdministrator.setTelephone( administrator.getTelephone() );
+		storeAdministrator.setModifydate( new Date() );
 		
 		try {
 			baseDao.updateEntity( storeAdministrator );

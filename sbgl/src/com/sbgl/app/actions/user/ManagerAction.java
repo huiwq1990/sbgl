@@ -77,7 +77,7 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		
-		Boolean isExist = managerService.isExistManagerCode( manager.getAdministratorId() );
+		Boolean isExist = managerService.isExistManagerCode( manager.getAdministratorid() );
 		
 		if(!isExist) {
 			int returnCode = managerService.addManager( manager );
@@ -193,13 +193,13 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 		
 		List<Administrator> allAdminList = managerService.getAllManager();
 		for (Administrator admin : allAdminList) {
-			Usergrouprelation ugr = userGroupRelationService.getRelationByType( admin.getId(), 8 );
+			Usergrouprelation ugr = userGroupRelationService.getRelationByType( admin.getId(), 3 );
 			Usergroup ug = null;
 			
 			UserCourse uc = new UserCourse();
 			uc.setUserName( admin.getName() );
 			uc.setUserPass( admin.getPassword() );
-			uc.setUserCode( admin.getAdministratorId() );
+			uc.setUserCode( admin.getAdministratorid() );
 			uc.setGender( admin.getGender() );
 			uc.setId( String.valueOf( admin.getId() ) );
 			uc.setPhoto( admin.getPhoto() );

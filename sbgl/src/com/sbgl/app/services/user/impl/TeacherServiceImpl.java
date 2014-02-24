@@ -1,5 +1,6 @@
 package com.sbgl.app.services.user.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -21,6 +22,7 @@ public class TeacherServiceImpl implements TeacherService {
 	public int addTeacher(Teacher teacher) {
 		int id = baseDao.getCode("userId");
 		teacher.setId( id );
+		teacher.setMakedate( new Date() );
 		
 		try {
 			baseDao.saveEntity( teacher );
@@ -40,9 +42,10 @@ public class TeacherServiceImpl implements TeacherService {
 		storeTeacher.setName( teacher.getName() );
 		storeTeacher.setPassword( teacher.getPassword() );
 		storeTeacher.setPhoto( teacher.getPhoto() );
-		storeTeacher.setTeacherId( teacher.getTeacherId() );
+		storeTeacher.setTeacherid( teacher.getTeacherid() );
 		storeTeacher.setTelephone( teacher.getTelephone() );
 		storeTeacher.setEmail( teacher.getEmail() );
+		storeTeacher.setModifydate( new Date() );
 		
 		try {
 			baseDao.updateEntity( storeTeacher );

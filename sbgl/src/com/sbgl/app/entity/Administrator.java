@@ -1,5 +1,7 @@
 package com.sbgl.app.entity;
 
+import java.util.Date;
+
 /**
  * Administrator entity. @author MyEclipse Persistence Tools
  */
@@ -10,7 +12,7 @@ public class Administrator extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer id;
-	private String administratorId;
+	private String administratorid;
 	private String name;
 	private String gender;
 	private String telephone;
@@ -18,6 +20,8 @@ public class Administrator extends com.sbgl.app.dao.DaoAbs implements
 	private String photo;
 	private Integer privilege;
 	private String password;
+	private Date makedate;
+	private Date modifydate;
 
 	// Constructors
 
@@ -31,11 +35,12 @@ public class Administrator extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Administrator(Integer id, String administratorId, String name,
+	public Administrator(Integer id, String administratorid, String name,
 			String gender, String telephone, String email, String photo,
-			Integer privilege, String password) {
+			Integer privilege, String password, Date makedate,
+			Date modifydate) {
 		this.id = id;
-		this.administratorId = administratorId;
+		this.administratorid = administratorid;
 		this.name = name;
 		this.gender = gender;
 		this.telephone = telephone;
@@ -43,6 +48,8 @@ public class Administrator extends com.sbgl.app.dao.DaoAbs implements
 		this.photo = photo;
 		this.privilege = privilege;
 		this.password = password;
+		this.makedate = makedate;
+		this.modifydate = modifydate;
 	}
 
 	// Property accessors
@@ -55,12 +62,12 @@ public class Administrator extends com.sbgl.app.dao.DaoAbs implements
 		this.id = id;
 	}
 
-	public String getAdministratorId() {
-		return this.administratorId;
+	public String getAdministratorid() {
+		return this.administratorid;
 	}
 
-	public void setAdministratorId(String administratorId) {
-		this.administratorId = administratorId;
+	public void setAdministratorid(String administratorid) {
+		this.administratorid = administratorid;
 	}
 
 	public String getName() {
@@ -117,6 +124,22 @@ public class Administrator extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Date getMakedate() {
+		return this.makedate;
+	}
+
+	public void setMakedate(Date makedate) {
+		this.makedate = makedate;
+	}
+
+	public Date getModifydate() {
+		return this.modifydate;
+	}
+
+	public void setModifydate(Date modifydate) {
+		this.modifydate = modifydate;
 	}
 
 }

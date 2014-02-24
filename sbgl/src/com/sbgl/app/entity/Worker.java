@@ -1,5 +1,7 @@
 package com.sbgl.app.entity;
 
+import java.util.Date;
+
 /**
  * Worker entity. @author MyEclipse Persistence Tools
  */
@@ -10,13 +12,15 @@ public class Worker extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer id;
-	private String workId;
+	private String workid;
 	private String name;
 	private String gender;
 	private String telephone;
 	private String email;
 	private String photo;
 	private String password;
+	private Date makedate;
+	private Date modifydate;
 
 	// Constructors
 
@@ -30,16 +34,19 @@ public class Worker extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Worker(Integer id, String workId, String name, String gender,
-			String telephone, String email, String photo, String password) {
+	public Worker(Integer id, String workid, String name, String gender,
+			String telephone, String email, String photo, String password,
+			Date makedate, Date modifydate) {
 		this.id = id;
-		this.workId = workId;
+		this.workid = workid;
 		this.name = name;
 		this.gender = gender;
 		this.telephone = telephone;
 		this.email = email;
 		this.photo = photo;
 		this.password = password;
+		this.makedate = makedate;
+		this.modifydate = modifydate;
 	}
 
 	// Property accessors
@@ -52,12 +59,12 @@ public class Worker extends com.sbgl.app.dao.DaoAbs implements
 		this.id = id;
 	}
 
-	public String getWorkId() {
-		return this.workId;
+	public String getWorkid() {
+		return this.workid;
 	}
 
-	public void setWorkId(String workId) {
-		this.workId = workId;
+	public void setWorkid(String workid) {
+		this.workid = workid;
 	}
 
 	public String getName() {
@@ -106,6 +113,22 @@ public class Worker extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Date getMakedate() {
+		return this.makedate;
+	}
+
+	public void setMakedate(Date makedate) {
+		this.makedate = makedate;
+	}
+
+	public Date getModifydate() {
+		return this.modifydate;
+	}
+
+	public void setModifydate(Date modifydate) {
+		this.modifydate = modifydate;
 	}
 
 }

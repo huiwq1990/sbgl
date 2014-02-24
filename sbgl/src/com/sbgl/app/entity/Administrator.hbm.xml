@@ -10,8 +10,8 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <property name="administratorId" type="java.lang.String">
-            <column name="administratorId" length="15" />
+        <property name="administratorid" type="java.lang.String">
+            <column name="administratorid" length="15" />
         </property>
         <property name="name" type="java.lang.String">
             <column name="name" length="100" />
@@ -33,6 +33,12 @@
         </property>
         <property name="password" type="java.lang.String">
             <column name="password" length="500" />
+        </property>
+        <property name="makedate" type="java.util.Date">
+            <column name="makedate" length="19" />
+        </property>
+        <property name="modifydate" type="java.util.Date">
+            <column name="modifydate" length="19" />
         </property>
     </class>
 </hibernate-mapping>

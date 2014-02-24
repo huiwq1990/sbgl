@@ -74,7 +74,7 @@ public class TeacherAction extends ActionSupport implements SessionAware {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		
-		Boolean isExist = teacherService.isExistTeacherCode( teacher.getTeacherId() );
+		Boolean isExist = teacherService.isExistTeacherCode( teacher.getTeacherid() );
 		
 		if(!isExist) {
 			int returnCode = teacherService.addTeacher( teacher );
