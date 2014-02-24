@@ -74,7 +74,7 @@ public class WorkerServiceImpl implements WorkerService {
 
 	@Override
 	public boolean isExistWorkerCode(String workerCode) {
-		return baseDao.isExist(Worker.class, "workId", workerCode);
+		return baseDao.isExist(Worker.class, "workid", workerCode);
 	}
 
 	@Override

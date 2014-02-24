@@ -74,7 +74,7 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Override
 	public boolean isExistTeacherCode(String teacherCode) {
-		return baseDao.isExist(Teacher.class, "teacherId", teacherCode);
+		return baseDao.isExist(Teacher.class, "teacherid", teacherCode);
 	}
 
 	@Override

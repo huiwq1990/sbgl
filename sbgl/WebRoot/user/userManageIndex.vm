@@ -526,7 +526,7 @@
 				if(isStu) {
     				postData = {
     					"student.id": alterUserId,
-    					"student.studentId": userCode,
+    					"student.studentid": userCode,
             			"student.name": userName,
             			"student.gender": userSex,
             			"student.telephone": userTel,
@@ -534,7 +534,7 @@
             			"student.photo": savedFileName,
             			"student.password": userPass,
             			"student.classid": userClazz,
-            			"student.couldBorrow": userCould,
+            			"student.couldborrow": userCould,
 						"group.id": userGroup,
 						"group.type": 1
             		};
@@ -543,7 +543,7 @@
 				} else if(isTea) {
 					postData = {
 						"teacher.id": alterUserId,
-						"teacher.teacherId": userCode,
+						"teacher.teacherid": userCode,
             			"teacher.name": userName,
             			"teacher.gender": userSex,
             			"teacher.telephone": userTel,
@@ -558,7 +558,7 @@
 				} else if(isWkr) {
 					postData = {
     					"worker.id": alterUserId,
-    					"worker.workId": userCode,
+    					"worker.workid": userCode,
             			"worker.name": userName,
             			"worker.gender": userSex,
             			"worker.telephone": userTel,

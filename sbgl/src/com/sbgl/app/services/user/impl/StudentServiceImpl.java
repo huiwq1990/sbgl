@@ -76,7 +76,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public boolean isExistStudentCode(String stuCode) {
-		return baseDao.isExist(Student.class, "studentId", stuCode);
+		return baseDao.isExist(Student.class, "studentid", stuCode);
 	}
 
 	@Override

@@ -1,7 +1,10 @@
 package com.sbgl.app.services.user;
 
 import java.util.List;
+import java.util.Map;
+
 import com.sbgl.app.entity.Clazz;
+import com.sbgl.app.entity.Student;
 
 public interface ClazzService {
 	//添加班级信息
@@ -16,4 +19,6 @@ public interface ClazzService {
 	public boolean isExistClazzName(String clazzName);
 	//根据id获取班级
 	public Clazz getClazzById(int clazzId);
+	//获取全部班级的具体人员信息
+	public List<Map<Clazz, List<Student>>> getAllClazzDetail();
 }

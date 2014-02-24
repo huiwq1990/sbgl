@@ -322,7 +322,7 @@
 		var url = "";
 		if(isStu) {
 			postData = {
-    			"student.studentId": userCode,
+    			"student.studentid": userCode,
     			"student.name": userName,
     			"student.gender": userSex,
     			"student.telephone": userTel,
@@ -330,14 +330,14 @@
     			"student.photo": savedFileName,
     			"student.password": userPass,
     			"student.classid": userClazz,
-    			"student.couldBorrow": userCould,
+    			"student.couldborrow": userCould,
 				"group.id": userGroup,
 				"group.type": 1
     		};
 			url = "${webbaseurl}/addStu.do";
 		} else if(isTea) {
     		postData = {
-    			"teacher.teacherId": userCode,
+    			"teacher.teacherid": userCode,
     			"teacher.name": userName,
     			"teacher.gender": userSex,
     			"teacher.telephone": userTel,
@@ -350,7 +350,7 @@
 			url = "${webbaseurl}/addTea.do";
 		} else if(isWkr) {
 			postData = {
-    			"worker.workId": userCode,
+    			"worker.workid": userCode,
     			"worker.name": userName,
     			"worker.gender": userSex,
     			"worker.telephone": userTel,
