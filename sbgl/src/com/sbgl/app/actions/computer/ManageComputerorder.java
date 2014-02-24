@@ -498,7 +498,7 @@ public class ManageComputerorder extends ActionSupport implements SessionAware,C
 					return SUCCESS;
 				}
 				
-				String updateChrSql = " update Computerhomeworkreceiver set hasorder=1 , hasview=1 where id = "+computerhomeworkreceiverList.get(0).getId();
+				String updateChrSql = " update Computerhomeworkreceiver set hasorder="+ComputerConfig.computerhomeworkhasorder+" , hasview="+ComputerConfig.computerhomeworkhasview+" where id = "+computerhomeworkreceiverList.get(0).getId();
 				computerhomeworkreceiverService.execSql(updateChrSql);
 			}
 

@@ -1,5 +1,6 @@
 package com.sbgl.app.actions.util;
 
+import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.util.Page;
 
 public class PageActionUtil {
@@ -25,6 +26,31 @@ public class PageActionUtil {
 			page.setTotalpage(0);
 			pageNo = 0;
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//      分页查询		
+		if(pageNo ==0){
+			pageNo =1;
+		}		
+
+			
+		//设置总数量
+		page.setTotalCount( totalcount );
+		//如果页码大于总页数，重新设置
+		if(pageNo>page.getTotalpage()){
+			pageNo = page.getTotalpage();
+		}
+		page.setPageNo(pageNo);
+		
+		
+		
 		
 		return page;
 	}

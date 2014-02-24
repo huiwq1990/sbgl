@@ -22,6 +22,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.actions.common.BaseAction;
 import com.sbgl.app.actions.computer.ComputerActionUtil;
 import com.sbgl.app.actions.util.PageActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
@@ -34,11 +35,10 @@ import com.sbgl.util.*;
 
 @Scope("prototype") 
 @Controller("MessageAction")
-public class MessageAction extends ActionSupport implements SessionAware,ModelDriven<Message>{
+public class MessageAction extends BaseAction implements ModelDriven<Message>{
 	
 	private static final Log log = LogFactory.getLog(MessageAction.class);
 
-	private Map<String, Object> session;
 	
 	//Service	
 	@Resource
@@ -89,10 +89,7 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 		}
 		return Integer.valueOf(uidStr);
 	}
-	
-	public int getCurrentLanguage(){
-		return ComputerActionUtil.getLanguagetype((String) session.get(ComputerConfig.sessionLanguagetype));		
-	}
+
 	
 	public void buildReturnStr(int flag,String errorStr){
 		ReturnJson returnJson = new ReturnJson();
@@ -409,7 +406,7 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 	 * 消息收件箱
 	 */
 	public String toMessageInbox() {
-		Integer uid = checkUserLogin();
+		Integer uid = this.getCurrentUserId();
 		log.info("login user id "+ uid);
 		if(uid < 0){
 			actionMsg = "用户未登录";
@@ -421,15 +418,28 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 		String inboxsql = " where receiverid ="+uid + " and status = "+MessageConstant.MessageStatusValid + " order by id desc ";
 		messagereceiverList =	messagereceiverService.selectMessagereceiverByCondition(inboxsql);
 			
-		if(messagereceiverList == null){
-			page.setTotalCount(0);
+		if(messagereceiverList == null || messagereceiverList.size() == 0){
+			messageFullList = new ArrayList<MessageFull>();			
+			/*page.setTotalCount(0);
 			page.setPageNo(0);
 			pageNo = 0;
 			messageFullList = new ArrayList<MessageFull>();
-			return SUCCESS;
+			log.info("收件箱为空");
+			return SUCCESS;*/
 		}
 		
-		setPageInfo(messagereceiverList.size());
+		if(pageNo ==0){
+			pageNo =1;
+		}	
+		
+//		setPageInfo(messagereceiverList.size());
+		page.setTotalCount(messagereceiverList.size());
+		//如果页码大于总页数，重新设置
+		if(pageNo>page.getTotalpage()){
+			pageNo = page.getTotalpage();
+		}
+		page.setPageNo(pageNo);
+		System.out.println("page count:"+page.getTotalCount());
 		
 		int pageIndex = page.getPageNo()-1;
 		if(pageIndex < 0){
@@ -452,8 +462,7 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 		System.out.println(messageFullList.size());
 //		messageFullList = messageService.selectMessageFullByCondition(inboxsql);
 		if(messagereceiverList == null){
-			messageFullList = new ArrayList<MessageFull>();
-			return SUCCESS;
+			messageFullList = new ArrayList<MessageFull>();			
 		}
 		return SUCCESS;
 	}
@@ -553,7 +562,7 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 			page.setTotalpage(0);
 			pageNo = 0;
 		}
-		
+	
 		sendboxsql = " where a.senderid ="+uid +" and a.status = "+MessageConstant.MessageStatusValid;
 		messageFullList = messageService.selectMessageFullByConditionAndPage(sendboxsql, page);
 		
@@ -662,11 +671,7 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 			pageNo = 0;
 		}
 	}
-	//get set
-	public void setSession(Map<String, Object> session) {
-		// TODO Auto-generated method stub
-	    this.session = session;
-	}
+	
 	
 	@Override
 	public Message getModel() {
@@ -877,9 +882,7 @@ public class MessageAction extends ActionSupport implements SessionAware,ModelDr
 			return log;
 		}
 
-		public Map<String, Object> getSession() {
-			return session;
-		}
+
 
 		public void setMessageid(Integer messageid) {
 			this.messageid = messageid;

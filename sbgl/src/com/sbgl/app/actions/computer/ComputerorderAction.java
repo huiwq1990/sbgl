@@ -22,6 +22,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.common.computer.ComputerorderdetailInfo;
@@ -70,7 +71,7 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	private int ComputerorderStatusAduitDel = ComputerorderInfo.ComputerorderStatusAduitDel;
 	private int ComputerorderStatusAduitWait = ComputerorderInfo.ComputerorderStatusAduitWait;
 	private int IndividualOrder = ComputerorderInfo.IndividualOrder;
-	private int ClassOrder = ComputerorderInfo.IndividualOrder;
+	private int ClassOrder = ComputerorderInfo.ClassOrder;
 	
 	
 	
@@ -88,31 +89,8 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	private String actionMsg; // Action间传递的消息参数
 	
 //	public int auditStatus;//审核结果
-	
 
-	public int checkUserLogin(){
-		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
-		if(uidStr==null || uidStr.trim().equals("0") || uidStr.trim().equals("")){
-			return -1;
-		}
-		return Integer.valueOf(uidStr);
-	}
-	
-	public int getCurrentLanguage(){
-		return ComputerActionUtil.getLanguagetype((String) session.get(ComputerConfig.sessionLanguagetype));		
-	}
-	
-	public void buildReturnStr(int flag,String errorStr){
-		ReturnJson returnJson = new ReturnJson();
-		returnJson.setFlag(flag);			
-		returnJson.setReason(errorStr);
-		
-		JSONObject jo = JSONObject.fromObject(returnJson);
-		this.returnStr = jo.toString();
-//		return SUCCESS;
-	}
-	
+
 	
 	//del entityfull Ajax
 	public String deleteComputerorderFullAjax( ){
@@ -221,7 +199,7 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 				Computerorder tempComputerorder = computerorderService.selectComputerorderById(computerorder.getId());
 				if(tempComputerorder==null){
 					returnInfo = "获取审核表单失败";
-					buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+					this.returnStr= JsonActionUtil.buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
 					return SUCCESS;
 				}
 				
@@ -234,7 +212,7 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 
 				
 				returnInfo = "审核完成";
-				buildReturnStr(ComputerConfig.ajaxsuccessreturn,returnInfo);
+				this.returnStr= JsonActionUtil.buildReturnStr(ComputerConfig.ajaxsuccessreturn,returnInfo);
 				return SUCCESS;
 				
 				
@@ -244,7 +222,7 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 		}
 
 			returnInfo = "审核失败,发生内部错误";
-			buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+			this.returnStr= JsonActionUtil.buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
 			return SUCCESS;
 	}
 	

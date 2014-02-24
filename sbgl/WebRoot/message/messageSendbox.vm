@@ -59,7 +59,7 @@
                     <img src="img/photo.jpg" width="46" height="46" class="img-rounded">
                   </a>
                   <div class="media-body">
-                    <div class="media-heading"><h5><a rel="popover" href="#">林韬</a></h5><span>$!temp.messagesendtime</span></div>
+                    <div class="media-heading"><h5><a rel="popover" href="#">$temp.senderloginusername</a></h5><span>$!date.format("yyyy年MM月dd日",$temp.messagesendtime)</span></div>
                     <a class="title" href="#">$!temp.messagetitle</a>
                     <a href="#" class="btn btn-mini btn-white">删除</a>
                   </div>

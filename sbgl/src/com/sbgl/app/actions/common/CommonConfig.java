@@ -28,6 +28,9 @@ public class CommonConfig {
 	public final static String sessionadminid = "sessionadminid";
 	
 //	用户登录信息放置的cookie的名称
+	public final static String sessionuser = "loginuser";
+	
+//	用户登录信息放置的cookie的名称
 	public final static String cookieuserid = "userid";
 	
 //	用户语言信息的session信息

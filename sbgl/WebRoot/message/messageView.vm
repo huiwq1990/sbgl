@@ -12,66 +12,16 @@
 
 <body>
 <header id="header-wrap"><!--header-wrap-->
-  <div id="global-header">
-    <div id="logo"><a class="brand" href="#"><img src="img/logo.png" alt="北京电影学院摄影系"></a></div>
-    <div id="hdc-wrap">
-      <div class="search-wrap">
-        <form class="form-search">
-          <div class="ipt-wrap form-group"><input type="text" class="form-control"></div>
-          <button type="submit" class="btn btn-primary"><i class="icon-search"></i></button>
-        </form>
-      </div>
-    </div>
-    <ul class="account-wrap nav nav-pills pull-right">
-      <li class="notice dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">消息1</a></li>
-          <li><a href="#">消息2</a></li>
-        </ul>
-      </li>     
-      <li class="social dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="img/photo.jpg" width="48" height="48" class="img-circle"> <b class="caret"></b></a>
-        <div class="dropdown-menu">
-          <div class="media">
-            <a class="pull-left" href="#">
-              <img src="img/photo.jpg" width="96" height="96" class="img-rounded">
-            </a>
-            <div class="media-body">
-              <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
-              <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
-              <div class="setting"><a href="#">账户设置</a></div>
-              <button class="btn btn-primary" type="button">查看个人主页</button>
-            </div>
-          </div>
-        </div>      
-      </li>
-    </ul>
-  </div>
   
-  <div class="nav-wrap">
-    <div class="site-nav">
-      <div class="dropdown">
-        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-bell-alt icon-large"></i> 消息中心</a><!-- #BeginLibraryItem "/Library/siteNav.lbi" --><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-          <li><a href="index.html"><i class="icon-home"></i> 首页</a></li>
-          <li class="divider"></li>
-          <li><a href="#anotherAction">个人主页</a></li>
-          <li><a href="#">通讯录</a></li>
-          <li class="divider"></li>
-          <li><a href="预约首页.html">我的预约</a></li>
-          <li><a href="消息中心-站内信.html">站内信</a></li>
-          <li class="divider"></li>
-          <li><a href="admin/管理中心首页.html">管理中心</a></li>
-        </ul>
-          <!-- #EndLibraryItem --></div>
-    </div>
-    <div class="sub-nav">
-      <ul class="nav nav-tabs nav-tabs-google">
-        <li><a href="消息中心.html">消息</a></li>
-        <li><a href="#">请求</a></li>
-        <li class="active"><a href="#">站内信</a></li>
-      </ul>
-    </div>
+	#parse("include/includeGlobalHeader.vm")
+  
+	<div class="nav-wrap clearfix">
+	
+		#parse("include/includeSiteNavi.vm")
+	
+		#set($currentPageType="messageSpace")
+		#parse("message/includeMessageSpaceNavi.vm")
+	
   </div>
   
 </header><!--/#header-wrap-->
@@ -82,7 +32,7 @@
       <div class="container" id="msg">
         <div class="row">
 		
-			#set($currentWebpage="messageView.vm")
+		#set($currentWebpage="messageView.vm")
 		#parse("message/includeMessageSpaceSidebar.vm")
           
 		  
@@ -106,7 +56,7 @@
 			<!--消息开始-->
 			    <div class="thumbnail">
               <div class="hd">
-                <h3>$messageFull.messagetitle</h3>
+                <h3>$!messageFull.messagetitle</h3>
               </div>
 			 
       <div class="accordion" id="msg-accordion">
@@ -116,7 +66,7 @@
                 <div class="media">
                   <a rel="popover" class="pull-left" href="#" data-original-title="" title=""><img src="img/photo.jpg" width="46" height="46" class="img-circle"></a>
                   <div class="media-body">
-                    <div class="media-heading"><h5><a rel="popover" href="#" class="post-by">$messageFull.adduserloginusername</a><small class="post-time"> - 7月6日（XX天前）</small></h5></div>
+                    <div class="media-heading"><h5><a rel="popover" href="#" class="post-by">$!messageFull.senderloginusername</a><small class="post-time"> - $!date.format("yyyy年MM月dd日",$messageFull.messagesendtime) </small></h5></div>
                      <!--
 					<div class="info"><span class="post-to">发送至 李全胜</span></div>
 					-->
@@ -124,10 +74,13 @@
                 </div>
             </div>
           </div>
+		  
           <div id="msg-2" class="accordion-body in collapse">
             <div class="accordion-inner">
               <div class="msg-content">$messageFull.messagecontent
-                <div class="quote-wrap">
+                
+				<!--
+				<div class="quote-wrap">
                   <a class="accordion-toggle msg-quote-btn" data-toggle="collapse" href="#msg-quote-2">-显示引用文字-</a> 
                   <div id="msg-quote-2" class="collapse msg-quote">
                     <blockquote>
@@ -143,9 +96,13 @@
                     </blockquote>
                   </div>
                 </div>
+				-->
+				
               </div>
             </div>
           </div>
+		  
+		  
         </div>
 		
 		
@@ -158,11 +115,11 @@
 	#set($temp = $replyMessageFullList.get($tempKey))	
         <div class="accordion-group">
           <div class="accordion-heading">
-            <div class="accordion-toggle collapsed" data-toggle="collapse" href="#msg-1">
+            <div class="accordion-toggle collapsed" data-toggle="collapse" href="#msg-$!temp.messageid">
                 <div class="media">
                   <a rel="popover" class="pull-left" href="#" data-original-title="" title=""><img src="img/photo.jpg" width="46" height="46" class="img-circle"></a>
                   <div class="media-body">
-                    <div class="media-heading"><h5><a rel="popover" href="#" class="post-by">$temp.senderloginusername $temp.senderloginuserid</a><small class="post-time"> - 7月6日（XX天前）</small></h5></div>
+                    <div class="media-heading"><h5><a rel="popover" href="#" class="post-by">$temp.senderloginusername</a><small class="post-time"> -  $!date.format("yyyy年MM月dd日",$temp.messagesendtime) </small></h5></div>
                     <!--
 					<div class="info"><span class="post-to">发送至 李全胜</span></div>
 					-->
@@ -170,11 +127,12 @@
                 </div>
             </div>
           </div>
-          <div id="msg-1" class="accordion-body collapse">
+          <div id="msg-$!temp.messageid" class="accordion-body collapse in">
             <div class="accordion-inner">
 			  <div class="msg-content">
                 <p>$temp.messagecontent</p>
-    
+		
+				<!--
                 <div class="quote-wrap">
                   <a class="accordion-toggle msg-quote-btn" data-toggle="collapse" href="#msg-quote-1">-显示引用文字-</a> 
                   <div id="msg-quote-1" class="collapse msg-quote">
@@ -184,6 +142,7 @@
                       </blockquote>
                   </div>
                 </div>
+				
               </div>
               <div class="msg-attach panel panel-default">
                   <div class="panel-heading">
@@ -193,6 +152,7 @@
                     Panel content
                   </div>
                 </div>
+				-->
             </div>
           </div>
         </div>
@@ -308,6 +268,11 @@
 
 	})
 	//end 回复消息
+	
+	
+	
+	
+	
 	
 </script>
 

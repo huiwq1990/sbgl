@@ -83,13 +83,13 @@
                     <div class="rent-detail">
 						<div class="name">作业名称：$computerhomeworkFull.computerhomeworkname</div>
 					 
-						<div class="name">预约时间：$date.format("yyyy年MM月dd日",$computerhomeworkFull.computerorderclassruleorderstarttime) 至 $date.format("yyyy年MM月dd日",$computerhomeworkFull.computerorderclassruleorderendtime)</div>
+						<div class="name">预约时间：$!date.format("yyyy年MM月dd日",$computerhomeworkFull.computerorderclassruleorderstarttime) 至  $!date.format("yyyy年MM月dd日",$computerhomeworkFull.computerorderclassruleorderendtime)</div>
 					
-						<div class="name">总共学时：$computerhomeworkFull.computerorderclassruleavailableordertime</div>
+						<div class="name">总共学时：$!computerhomeworkFull.computerorderclassruleavailableordertime</div>
 						
-						<div class="name">课程名称：$courseFull.coursename</div>
+						<div class="name">课程名称：$!courseFull.coursename</div>
 						
-						<div class="name">教师名称：$courseFull.teacherloginusername</div>
+						<div class="name">教师名称：$!courseFull.teacherloginusername</div>
 						
 						
 	

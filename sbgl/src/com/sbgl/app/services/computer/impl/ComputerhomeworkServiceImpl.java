@@ -25,6 +25,8 @@ public class ComputerhomeworkServiceImpl implements ComputerhomeworkService{
 	@Resource
 	private ComputerhomeworkDao computerhomeworkDao;
 	
+	
+	
 	//http://blog.csdn.net/softimes/article/details/7008875 实体添加时需要配置hibernate
 	@Override
 	public void addComputerhomework(Computerhomework computerhomework){
@@ -69,6 +71,25 @@ public class ComputerhomeworkServiceImpl implements ComputerhomeworkService{
 		return deleteComputerhomework(computerhomework.getId());
 	}
 
+	@Override
+	public boolean deleteComputerhomework(Integer delIdArray[]) {
+		
+		StringBuffer sb = new StringBuffer();
+		for(int i=0;i<delIdArray.length;i++){
+			sb.append(delIdArray[i]);
+			if(i!=delIdArray.length-1){
+				sb.append(",");
+			}
+			
+		}
+			
+		String sql = "delete from Computerhomework where id in("+sb.toString()+")";
+		
+		baseDao.createSQL(sql);
+		
+		return true;
+			
+	}
 	
 	@Override
 	public void updateComputerhomework(Computerhomework computerhomework){

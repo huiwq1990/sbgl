@@ -120,12 +120,7 @@
 				<param name="root">returnStr</param>
 			</result>
         </action>
-<!--del entityfull ajax -->		
-		<action name="deleteComputerhomeworkFullAjax" class="ComputerhomeworkAction" method="deleteComputerhomeworkFullAjax">
-        	<result type="json">
-				<param name="root">returnStr</param>
-			</result>
-        </action>
+
     	<action name="updateComputerhomeworkAjax" class="ComputerhomeworkAction" method="updateComputerhomeworkAjax">
         	<result type="json">
 				<param name="root">returnStr</param>

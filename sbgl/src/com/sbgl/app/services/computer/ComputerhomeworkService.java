@@ -57,6 +57,8 @@ public interface ComputerhomeworkService{
 //根据关联查询实体full	
 	public List<ComputerhomeworkFull> selectComputerhomeworkFullByComputerorderclassruleId(Integer computerorderclassruleid );
 
+	boolean deleteComputerhomework(Integer[] delIdArray);
+
 		
 	
 	

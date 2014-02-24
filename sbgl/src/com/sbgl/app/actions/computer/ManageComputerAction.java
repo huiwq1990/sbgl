@@ -548,6 +548,9 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		}
 		page.setPageNo(pageNo);
 		
+		log.info("pageNo "+pageNo);
+		log.info(page.getTotalCount());
+		
 		computerorderFullList  = computerorderService.selectComputerorderFullByConditionAndPage(sql, page);
 
 		

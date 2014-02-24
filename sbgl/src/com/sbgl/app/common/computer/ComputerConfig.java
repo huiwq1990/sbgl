@@ -54,4 +54,13 @@ public class ComputerConfig {
 	public final static String innererror = "innererror";
 	
 	
+//	作业已经查看预约
+	public final static int computerhomeworkhasview = 1;
+	public final static int computerhomeworkhasorder = 1;
+	
+	
+	
+	
+	
+	
 }

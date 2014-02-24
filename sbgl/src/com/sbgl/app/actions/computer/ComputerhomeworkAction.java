@@ -11,6 +11,7 @@ import net.sf.json.JSONObject;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
@@ -22,6 +23,8 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.actions.common.BaseAction;
+import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputerhomeworkService;
@@ -34,11 +37,11 @@ import com.sbgl.util.*;
 
 @Scope("prototype") 
 @Controller("ComputerhomeworkAction")
-public class ComputerhomeworkAction extends ActionSupport implements SessionAware,ModelDriven<Computerhomework>{
+public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Computerhomework>{
 	
 	private static final Log log = LogFactory.getLog(ComputerhomeworkAction.class);
 
-	private Map<String, Object> session;
+	
 	
 	//Service	
 	@Resource
@@ -107,38 +110,17 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 	private String actionMsg; // Action间传递的消息参数
 	
 	
-	public int checkUserLogin(){
-		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
-		if(uidStr==null || uidStr.trim().equals("0") || uidStr.trim().equals("")){
-			return -1;
-		}
-		return Integer.valueOf(uidStr);
-	}
-	
-	public int getCurrentLanguage(){
-		return ComputerActionUtil.getLanguagetype((String) session.get(ComputerConfig.sessionLanguagetype));		
-	}
-	
-	public void buildReturnStr(int flag,String errorStr){
-		ReturnJson returnJson = new ReturnJson();
-		returnJson.setFlag(flag);			
-		returnJson.setReason(errorStr);
-		
-		JSONObject jo = JSONObject.fromObject(returnJson);
-		this.returnStr = jo.toString();
-//		return SUCCESS;
-	}
+
 	
 //	学生查看作业收件箱
 	public String toComputerhomeworkInboxPage(){
 		log.info(logprefix +" toComputerhomeworkInboxPage");
 		
-		Integer uid = checkUserLogin();
+		Integer uid = getCurrentUserId();
 		log.info("login user id "+ uid);
 		if(uid < 0){
 			returnInfo = "用户未登录";
-			buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
 			return SUCCESS;
 		}
 		
@@ -159,13 +141,16 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 		}
 			
 		for(int i=0; i<computerhomeworkreceiverList.size();i++){
-			if(computerhomeworkreceiverList.get(i).getHasorder()==null || computerhomeworkreceiverList.get(i).getHasorder() != 1){
+			System.out.println(computerhomeworkreceiverList.get(i).getHasorder());
+			if( (computerhomeworkreceiverList.get(i).getHasorder()==null) || (computerhomeworkreceiverList.get(i).getHasorder() != ComputerConfig.computerhomeworkhasorder)){
 					newhomeworksql += computerhomeworkreceiverList.get(i).getComputerhomeworkid()+",";
 			}else{
 				finishehomeworksql += computerhomeworkreceiverList.get(i).getComputerhomeworkid()+",";
 			}
 		}
 		
+		log.info("new :"+newhomeworksql);
+		log.info("new :"+finishehomeworksql);
 			if(finishehomeworksql.length() > 1){
 				finishehomeworksql = finishehomeworksql.substring(0,finishehomeworksql.length()-1);
 				finishehomeworksql = " where a.id in (" +finishehomeworksql+") "  + " order by computerhomeworkcreatetime desc ";
@@ -267,83 +252,57 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 	}
 
 
-	//del entityfull Ajax
-	public String deleteComputerhomeworkFullAjax( ){
+	//del Ajax
+	public String deleteComputerhomeworkAjax( ){
 		
 		log.info(logprefix + "deleteComputercategoryFullAjax");
-		ReturnJson returnJson = new ReturnJson();
-		try{
-			String ids[] = computerhomeworkIdsForDel.split(";");
-			for(int i=0; i < ids.length;i++){
-                                
-				Integer tempDelId = Integer.valueOf(ids[i]);                        
-				log.info(tempDelId);
-                                //检查id
-                                if(tempDelId == null || tempDelId < 0){
-                                        returnJson.setFlag(0);
-                                        returnJson.setReason("删除的id不规范");
-                                        log.info("删除的id不规范");
-                                        JSONObject jo = JSONObject.fromObject(returnJson);
-                                        this.returnStr = jo.toString();
-                                        return SUCCESS;
-                                }        
-                                //del
-                                Computerhomework temp = computerhomeworkService.selectComputerhomeworkById(tempDelId);                        
-                                if (temp != null) {                        
-                                        //其他操作                                        
-                                        computerhomeworkService.deleteComputerhomework(tempDelId);                                        
-                                } else {
-                                        log.info("删除的id不存在");                
-                                        returnJson.setFlag(0);
-                                        returnJson.setReason("删除的id不存在");
-                                        JSONObject jo = JSONObject.fromObject(returnJson);
-                                        this.returnStr = jo.toString();
-                                        return SUCCESS;
-                                }
-                        }
-                        returnJson.setFlag(1);
-//                        returnJson.setReason("删除的id不存在");
-                        JSONObject jo = JSONObject.fromObject(returnJson);
-                        this.returnStr = jo.toString();
-                        return SUCCESS;
-                        
-                } catch (Exception e) {
-                        e.printStackTrace();
-                }
-                
-                returnJson.setFlag(0);
-                returnJson.setReason("删除的内部错误");
-                JSONObject jo = JSONObject.fromObject(returnJson);
-                this.returnStr = jo.toString();
-                return SUCCESS;
-        }
-
-//修改
-	public String updateComputerhomework(){
-		try {
-			if(computerhomework.getId() != null && computerhomework.getId() > 0){				
-				Computerhomework tempComputerhomework = computerhomeworkService.selectComputerhomeworkById(computerhomework.getId());
-																				  								
-												  								
-												  								
-												  								
-												  								
-												  								
-												  								
-								actionMsg = getText("viewComputerhomeworkSuccess");
-			}else{
-				actionMsg = getText("viewComputerhomeworkFail");
-				System.out.println(actionMsg);
-			}			
+		
+		if(computerhomeworkIdsForDel == null || computerhomeworkIdsForDel.trim().equals("")){
+			this.returnInfo = "没有选择要删除的数据";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 			return SUCCESS;
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerhomeworkAction的方法：viewComputerhomework错误"+e);
 		}
-
-		return "error";
-	}
+		
+		String ids[] = computerhomeworkIdsForDel.split(";");
+		Integer delIdArray[] = new Integer[ids.length];
+//		List<Integer> delIdList = new ArrayList<Integer>();
+		
+		for(int i=0; i < ids.length;i++){
+			
+			if(!NumberUtils.isNumber(ids[i])){					
+				this.returnInfo = "删除数据格式不正确";
+				log.info(returnInfo);
+				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+				return SUCCESS;
+			}
+			Integer tempDelId = Integer.valueOf(ids[i]);
+			
+			delIdArray[i]=tempDelId;
+		}
 	
+		try{
+			
+			
+			computerhomeworkService.deleteComputerhomework(delIdArray);
+			this.returnInfo = "删除成功";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
+			return SUCCESS;
+                        
+            } catch (Exception e) {
+                        e.printStackTrace();
+            }
+            
+            
+            this.returnInfo = "删除的内部错误";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return SUCCESS;
+        
+	}
+
+
 	
 	//ajax 修改
 	public String updateComputerhomeworkAjax(){
@@ -582,11 +541,7 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 		return SUCCESS;
 	}
 */
-	//get set
-	public void setSession(Map<String, Object> session) {
-		// TODO Auto-generated method stub
-	    this.session = session;
-	}
+
 	
 	@Override
 	public Computerhomework getModel() {
@@ -730,9 +685,6 @@ public class ComputerhomeworkAction extends ActionSupport implements SessionAwar
 			return log;
 		}
 
-		public Map<String, Object> getSession() {
-			return session;
-		}
 
 		public void setComputerhomeworkid(Integer computerhomeworkid) {
 			this.computerhomeworkid = computerhomeworkid;

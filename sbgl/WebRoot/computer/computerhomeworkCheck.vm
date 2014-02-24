@@ -13,15 +13,24 @@
 #parse("include/includePageCompatibility.vm")
 
 </head>
-
-<body id="admin">
+<body>
 <header id="header-wrap"><!--header-wrap-->
-	#set($currentPageModule="teach")
-	#parse("include/includeAdminHeader.vm")
+
+	#parse("include/includeGlobalHeader.vm")
+  
+  <div class="nav-wrap clearfix">	
+	#parse("include/includeSiteNavi.vm")	
+	#set($currentPageType="computerHomeworkSpace")
+	#parse("include/includeHomeworkspaceSubNavi.vm") 
+  </div>
+  
 </header><!--/#header-wrap-->
 
-<section id="main-wrap" class="clearfix"><!--main-wrap-->
+<section id="main-wrap"><!--main-wrap-->
            
+	  <!--main-content start-->
+  <div id="main-content" class="clearfix">
+	
       <div class="control-bar clearfix"><!--control-bar start-->
         <div class="title pull-left">作业查看</div>     
         <div class="pagination pull-right">
@@ -115,7 +124,7 @@
             </div> 	
 	</div>
 
-
+				</div>
 
 
 </section>

@@ -268,14 +268,10 @@
 
 
 <script>
-	var cookie = { 
-  		//读取COOKIES,n为COOKIE名 
-   		Get:function(n){ 
-       		var re=new RegExp(n+'=([^;]*);?','gi');
-       	    var r=re.exec(document.cookie)||[];
-       	    return (r.length>1?r[1]:null)
-   		}
-	};
+//当前页
+var currentpagenum=$pageNo;
+var totalpage=$page.totalpage;
+	var idsForDel;	
 	var editComputercategoryId;
 	var editComputercategoryName;
 
@@ -403,15 +399,34 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 	
 	
 	
-	var idsForDel;	
+
 	/* 处理CheckBox选中事件用于删除处理 */
-	$("input[type='checkbox']").click(function() {
-		//var num = 0;
-		idsForDel = "";
-		
+	$("body").on("click", "input[type='checkbox']", function() {
+		var num = 0;
 		if($(this).attr("id") === "chk-all") {
 			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
 		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true){
+				num++;  
+			}
+		});
+		if(num > 0){
+			$(".s-h").css({
+				"visibility": "visible",
+				"opacity": "1",
+				"filter": "alpha(opacity=100)"
+			});
+		} else {
+			$(".s-h").css({
+				"visibility": "hidden",
+				"opacity": "0",
+				"filter": "alpha(opacity=0)"
+			});
+		}
+		
+		idsForDel = "";
+		
 		$("input[name='chk-list']").each(function() {
 			if($(this).prop("checked") === true) {
 				//num++;
@@ -419,35 +434,31 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 			}
 		});
 	});
-	//end box
+	//end checkbox
 	
 	//delete分类
-	$("body").on("click", "a[action-type|=deleteComputercategory]", function() {
+	$("body").on("click", "a[action-type|=deleteComputerhomeworkButton]", function() {
 		idsForDel = idsForDel.substring(0,idsForDel.length-1);
 		var postData = {
-			computercategoryIdsForDel: idsForDel
+			computerhomeworkIdsForDel:idsForDel
 		}
 		//alert(idsForDel);
 		jQuery.ajax({  
-		    url:"${webbaseurl}/deleteComputercategoryFullAjax.${strutsaction}",  
+		    url:"${webbaseurl}/deleteComputerhomeworkAjax.${strutsaction}",  
 		    type:"post",
 		    data:postData,
 			  dataType: 'json',
 			success: function(data){
 				var returnJson = jQuery.parseJSON(data); 
-
-				
 				if(returnJson.flag == 1){
-					var n = noty({text: 'sss', timeout: 2500, type: 'success'});					
-					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框					
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框	
+					refreshComputerhomeworkTable();
 				}else{
-					var n = noty({text: failedStr, timeout: 2500, type: 'error'});
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
 				}
-
-				
-				
-				}		  	  
-			});
+			}		  	  
+		});
 	})
 	//end delete 分类
 	
@@ -485,8 +496,15 @@ function refreshComputerhomeworkTable(){
 						refreshComputerhomeworkTable();		
     				}
 				});
-				}		  	  
-			});		
+				
+				$(".s-h").css({
+				"visibility": "hidden",
+				"opacity": "0",
+				"filter": "alpha(opacity=0)"
+				});
+				
+			}		  	  
+		});		
 }//end refreshComputerhomeworkTable
 	
 	

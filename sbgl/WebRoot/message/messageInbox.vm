@@ -49,7 +49,7 @@
 
             <div class="thumbnail">
               <div class="hd clearfix">
-                <h3 class="pull-left">收件箱 $link.getUrl()</h3>
+                <h3 class="pull-left">收件箱</h3>
                 <div class="pull-right view-option"></div>
               </div>
               <ul class="media-list" id="messageInboxRefresh">
@@ -80,7 +80,7 @@
                     <img src="img/photo.jpg" width="46" height="46" class="img-rounded">
                   </a>
                   <div class="media-body">
-                    <div class="media-heading"><h5><a rel="popover" href="#">林韬</a></h5><span>7月6日</span></div>
+                    <div class="media-heading"><h5><a rel="popover" href="#">$temp.senderloginusername</a></h5><span>$!date.format("yyyy年MM月dd日",$temp.messagesendtime) </span></div>
                     <a class="title" href="${webbaseurl}\viewMessage.${strutsaction}?messageid=$!temp.messageid">$!temp.messagetitle</a>
                     <a href="" class="btn btn-mini btn-white">删除</a>
                   </div>
@@ -97,7 +97,7 @@
               
 			  
 			   <!--page -->
-			  <div class="pagination">
+  <div class="pagination">
 				<a href="#" class="first" data-action="first">&laquo;</a>
 				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
 				<input type="text" readonly="readonly" data-max-page="$!page.totalpage" />
@@ -131,13 +131,22 @@
 
     <!-- Le javascript
     ================================================== -->
-#parse("message/includeJsFile.vm")
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/jquery.jqpagination.js"></script>
 
 
 
 <script>
+
+
+
 //当前页
-var currentpagenum=$pageNo;
+var currentpagenum=1;
 var totalpage=$page.totalpage;
 var totalcount=$page.totalCount;
 
@@ -163,8 +172,8 @@ var totalcount=$page.totalCount;
 				$("#messageInboxRefresh").html(data);
 				
 				$('.pagination').jqPagination({
-					link_string	: '/?page={page_number}',
-					max_page	: totalpage,
+					link_string:'/?page={page_number}',
+					max_page:totalpage,
 					current_page:currentpagenum,
 					paged: function(page) {     	  
 						currentpagenum = page;
