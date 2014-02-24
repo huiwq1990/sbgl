@@ -1,5 +1,6 @@
 package com.sbgl.app.services.user.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -21,6 +22,7 @@ public class WorkerServiceImpl implements WorkerService {
 	public int addWorker(Worker worker) {
 		int id = baseDao.getCode("userId");
 		worker.setId( id );
+		worker.setMakedate( new Date() );
 		
 		try {
 			baseDao.saveEntity( worker );
@@ -41,7 +43,8 @@ public class WorkerServiceImpl implements WorkerService {
 		storeWorker.setPassword( worker.getPassword() );
 		storeWorker.setPhoto( worker.getPhoto() );
 		storeWorker.setTelephone( worker.getTelephone() );
-		storeWorker.setWorkId( worker.getWorkId() );
+		storeWorker.setWorkid( worker.getWorkid() );
+		storeWorker.setModifydate( new Date() );
 		
 		try {
 			baseDao.updateEntity( storeWorker );
@@ -71,7 +74,7 @@ public class WorkerServiceImpl implements WorkerService {
 
 	@Override
 	public boolean isExistWorkerCode(String workerCode) {
-		return baseDao.isExist(Worker.class, "workId", workerCode);
+		return baseDao.isExist(Worker.class, "workid", workerCode);
 	}
 
 	@Override

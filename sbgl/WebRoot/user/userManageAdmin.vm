@@ -448,7 +448,7 @@
     		} else {
 				postData = {
 					"manager.id": alterUserId,
-					"manager.administratorId": userCode,
+					"manager.administratorid": userCode,
         			"manager.name": userName,
         			"manager.gender": userSex,
         			"manager.telephone": userTel,
@@ -457,7 +457,7 @@
         			"manager.password": userPass,
         			"manager.privilege": userPrivilege,
 					"group.id": userGroup,
-					"group.type": 8
+					"group.type": 3
         		};
     		}
 	    }

@@ -1,6 +1,9 @@
 package com.sbgl.app.services.user.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.entity.Clazz;
+import com.sbgl.app.entity.Student;
 import com.sbgl.app.services.user.ClazzService;
 
 @Scope("prototype") 
@@ -71,6 +75,25 @@ public class ClazzServiceImpl implements ClazzService {
 	@Override
 	public Clazz getClazzById(int clazzId) {
 		return baseDao.getEntityById(Clazz.class, clazzId);
+	}
+
+	@Override
+	public List<Map<Clazz, List<Student>>> getAllClazzDetail() {
+		List<Map<Clazz, List<Student>>> resultList = new ArrayList<Map<Clazz, List<Student>>>();
+		Map<Clazz, List<Student>> clazzMap = new HashMap<Clazz, List<Student>>();
+		
+		List<Clazz> allClazz = baseDao.getAllEntity(Clazz.class);
+		List<Student> allStu = null;
+		for (Clazz c : allClazz) {
+			allStu = baseDao.getEntityByIntProperty(Student.class.getName(), "classid", c.getClassId());
+			if(allStu != null && allStu.size() > 0) {
+				clazzMap.put(c, allStu);
+				resultList.add(clazzMap);
+			}
+			
+		}
+		
+		return resultList.size() > 0 ? resultList : null;
 	}
 
 }
