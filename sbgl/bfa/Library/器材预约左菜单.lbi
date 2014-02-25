@@ -1,0 +1,11 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <form class="form-group">
+          <input type="text" class="form-control" placeholder="搜索预约(订单号、姓名)">
+          <i class="icon-search"></i>
+        </form>
+        <div class="list-group">
+          <a href="../admin/设备预约首页.html" class="list-group-item active">预约管理</a>
+          <a href="../admin/设备预约-新建预约.html" class="list-group-item">新建预约</a>
+          <a href="../admin/设备管理-型号管理.html" class="list-group-item">课程预约规则</a>
+          <a href="../admin/设备管理-型号管理.html" class="list-group-item">设置</a>
+        </div>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 消息中心</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 10]>
+  <script src="js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body>
+<header id="header-wrap"><!--header-wrap-->
+  <div id="global-header">
+    <div id="logo"><a class="brand" href="#"><img src="img/logo.png" alt="北京电影学院摄影系"></a></div>
+    <div id="hdc-wrap">
+      <div class="search-wrap">
+        <form class="form-search">
+          <div class="ipt-wrap form-group"><input type="text" class="form-control"></div>
+          <button type="submit" class="btn btn-primary"><i class="icon-search"></i></button>
+        </form>
+      </div>
+    </div>
+    <ul class="account-wrap nav nav-pills pull-right">
+      <li class="notice dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">消息1</a></li>
+          <li><a href="#">消息2</a></li>
+        </ul>
+      </li>     
+      <li class="social dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="img/photo.jpg" width="48" height="48" class="img-circle"> <b class="caret"></b></a>
+        <div class="dropdown-menu">
+          <div class="media">
+            <a class="pull-left" href="#">
+              <img src="img/photo.jpg" width="96" height="96" class="img-rounded">
+            </a>
+            <div class="media-body">
+              <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+              <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+              <div class="setting"><a href="#">账户设置</a></div>
+              <button class="btn btn-primary" type="button">查看个人主页</button>
+            </div>
+          </div>
+        </div>      
+      </li>
+    </ul>
+  </div>
+  
+  <div class="nav-wrap">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-bell-alt icon-large"></i> 消息中心</a><!-- #BeginLibraryItem "/Library/siteNav.lbi" --><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="index.html"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="预约首页.html">我的预约</a></li>
+          <li><a href="消息中心-站内信.html">站内信</a></li>
+          <li class="divider"></li>
+          <li><a href="设置页面-账户设置.html">设置与帮助</a></li>
+          <li><a href="admin/管理中心首页.html">管理中心</a></li>
+        </ul>
+          <!-- #EndLibraryItem --></div>
+    </div>
+    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="消息中心.html">消息</a></li>
+        <li><a href="#">请求</a></li>
+        <li class="active"><a href="#">站内信</a></li>
+      </ul>
+    </div>
+  </div>
+  
+</header><!--/#header-wrap-->
+<section id="main-wrap"><!--main-wrap-->
+
+  <div id="main-content" class="clearfix"><!--main-content start-->
+
+      <div class="container" id="msg">
+        <div class="row">
+		
+          <div class="col-sm-3 sidebar">
+		    <form class="form-group">
+			  <input type="text" class="form-control" placeholder="搜索站内信">
+			  <i class="icon-search"></i>
+			</form>
+			<div class="list-group">
+			  <a href="消息中心-站内信.html" class="list-group-item active"><span class="badge">14</span>收件箱</a>
+			  <a href="消息中心-站内信-已发送.html" class="list-group-item">已发送</a>
+			  <a href="消息中心-站内信-回收站.html" class="list-group-item">回收站</a>
+			</div>
+          </div>
+          <div class="col-sm-9">
+			<div class="control-bar clearfix">
+              <div class="operate-item pull-left">
+                <a href="#replyMSG" class="btn btn-primary">回 复</a>
+                <a href="#" class="btn btn-white">删 除</a>
+              </div>
+
+              <div class="page pull-right clearfix">
+                <div class="pagination pull-right">
+                  <ul>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+            </div>
+
+            <div class="thumbnail">
+              <div class="hd">
+                <h3>关于4：4：4（4：2：2）压缩与YUV及RGB的关系</h3>
+              </div>
+
+              <div class="accordion" id="msg-accordion">
+                <div class="accordion-group">
+                  <div class="accordion-heading">
+                    <div class="accordion-toggle collapsed" data-toggle="collapse" href="#msg-1">
+                        <div class="media">
+                          <a rel="popover" class="pull-left" href="#" data-original-title="" title=""><img src="img/photo.jpg" width="46" height="46" class="img-circle"></a>
+                          <div class="media-body">
+                            <div class="media-heading"><h5><a rel="popover" href="#" class="post-by">陈诚</a><small class="post-time"> - 7月6日（XX天前）</small></h5></div>
+                            <div class="info"><span class="post-to">发送至 李全胜</span></div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div id="msg-1" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                      <div class="msg-content">
+                        <p>李老师，数字摄像机中4：4：4（4：2：2）压缩方式记录影像，这三个比例是不是分别代表YUV色彩空间的Y、U、V三个通道？换句话说数字摄像机采用的是YUV色彩空间记录数据的？但是从数字摄像机的原理知道，光通过分光镜分出R、G、B三色光分别记录在3个感光元件上，那为何又变成YUV空间了呢？是因为数据记录的需要吗？
+            另外，采用4：2：2压缩方式记录的数据量是不是只有4：4：4的2/3呢？</p>
+            
+                        <div class="quote-wrap">
+                          <a class="accordion-toggle msg-quote-btn" data-toggle="collapse" href="#msg-quote-1">-显示引用文字-</a> 
+                          <div id="msg-quote-1" class="collapse msg-quote">
+                              <blockquote>
+                                <p>李老师，数字摄像机中4：4：4（4：2：2）压缩方式记录影像，这三个比例是不是分别代表YUV色彩空间的Y、U、V三个通道？换句话说数字摄像机采用的是YUV色彩空间记录数据的？但是从数字摄像机的原理知道，光通过分光镜分出R、G、B三色光分别记录在3个感光元件上，那为何又变成YUV空间了呢？是因为数据记录的需要吗？
+            另外，采用4：2：2压缩方式记录的数据量是不是只有4：4：4的2/3呢？</p>
+                                <small><cite>李全胜</cite> 在 2011-12-22 10:58:58 写道</small>
+                              </blockquote>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="msg-attach panel panel-default">
+                          <div class="panel-heading">
+                            <h3 class="panel-title">附件(X个)</h3>
+                          </div>
+                          <div class="panel-body">
+                            Panel content
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-group">
+                  <div class="accordion-heading">
+                    <div class="accordion-toggle" data-toggle="collapse" href="#msg-2">
+                        <div class="media">
+                          <a rel="popover" class="pull-left" href="#" data-original-title="" title=""><img src="img/photo.jpg" width="46" height="46" class="img-circle"></a>
+                          <div class="media-body">
+                            <div class="media-heading"><h5><a rel="popover" href="#" class="post-by">李全胜老师</a><small class="post-time"> - 7月6日（XX天前）</small></h5></div>
+                            <div class="info"><span class="post-to">发送至 我</span></div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div id="msg-2" class="accordion-body in collapse">
+                    <div class="accordion-inner">
+                      <div class="msg-content">这里是回复的正文。 Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.   
+                        <div class="quote-wrap">
+                          <a class="accordion-toggle msg-quote-btn" data-toggle="collapse" href="#msg-quote-2">-显示引用文字-</a> 
+                          <div id="msg-quote-2" class="collapse msg-quote">
+                            <blockquote>
+                              <p>数字摄像与数字摄影机的记录原理区别不大,主要区别在分辨率,感光元件,记录媒介及编码格式,简单说,现在数字摄影机都是电影全幅CMOS,而摄像机还不是.摄影机一般采用3K至8K 12bit RAW逐行扫描序列帧格式,而视频采用10bit录像带记录或高清视频格式,采用YUV视频压缩及祯内压缩算法的mov文件.摄像机数字感光元件原始记录数据都是RGB格式,转成YUV主要是保证图像实时输入输出与播放的带宽要求.YUV4:2:2表示亮度信息Y全采样无压缩,UV是色度信息进行一半采样,一倍压缩,RGB转YUV有固定算法,按高清\标清略有不同,你可以查一下.Y=21%*R+72%*G+7%*B;(高清709).
+          
+          全胜</p>
+                              <small><cite>李全胜老师</cite> 在 2011-12-22 10:58:58 写道</small>
+                              <blockquote>
+                                <p>李老师，数字摄像机中4：4：4（4：2：2）压缩方式记录影像，这三个比例是不是分别代表YUV色彩空间的Y、U、V三个通道？换句话说数字摄像机采用的是YUV色彩空间记录数据的？但是从数字摄像机的原理知道，光通过分光镜分出R、G、B三色光分别记录在3个感光元件上，那为何又变成YUV空间了呢？是因为数据记录的需要吗？
+            另外，采用4：2：2压缩方式记录的数据量是不是只有4：4：4的2/3呢？</p>
+                                <small><cite>陈诚</cite> 在 2011-12-22 10:58:58 写道</small>
+                              </blockquote>
+                            </blockquote>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-group">
+                  <div class="media">
+                    <a rel="popover" class="pull-left" href="#" data-original-title="" title=""><img src="img/photo.jpg" width="46" height="46" class="img-circle"></a>
+                    <div class="media-body">
+                      <form role="form">
+                        <div class="form-group" id="replyMSG">
+                          <textarea name="replyMSG" style="width:100%;height:200px;visibility:hidden;margin-bottom:10px;"></textarea>
+                        </div>
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-primary">发 送</button>
+                        </div>
+                      </form>
+                    </div>                    
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <!---main-content end-->
+</section>
+
+
+<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
+  <img src="img/cover-img.jpg" class="cover" alt="封面照片" />
+  <div class="cover-layout"></div>
+  <div class="avatar"><img src="img/photo.jpg" width="80" height="80" class="img-circle"></div>
+  <div class="user-wrap">
+    <div class="user-name"><a href="#">用户名</a></div>
+    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
+    <div class="user-info">职务等信息</div>
+    <div class="user-info">地点</div>
+  </div>
+  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
+</div>
+
+    <!-- Le javascript
+    ================================================== -->
+<script src="js/jquery.js"></script>
+<script src="js/loader.min.js"></script>
+<script src="js/bootstrap-hover-dropdown.min.js"></script>
+<script src="js/select2.js"></script>
+<script src="js/bfa.js"></script>
+<script src="js/editor/kindeditor-min.js"></script>
+<script src="js/editor/lang/zh_CN.js"></script>
+
+<script>	
+			var editor;
+			KindEditor.ready(function(K) {
+				editor = K.create('textarea[name="replyMSG"]', {
+					resizeType : 1,
+					allowPreviewEmoticons : false,
+					allowImageUpload : false,
+					items : [
+						'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+						'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+						'insertunorderedlist', '|', 'emoticons']
+				});
+			});
+	(function($){
+		$(window).load(function(){
+
+			
+			$(".msg-quote").on("show", function () {
+			   $(this).parent().find(".msg-quote-btn").html("-隐藏引用文字-");
+			}).on("hide", function () {
+			   $(this).parent().find(".msg-quote-btn").html("-显示引用文字-");
+			});
+		});
+	})(jQuery);
+</script>
+
+
+</body>
+</html>

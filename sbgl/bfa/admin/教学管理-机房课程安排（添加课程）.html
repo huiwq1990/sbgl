@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 教学管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="../css/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script src="../js/html5shiv.js"></script>
+  <script src="../js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a><!-- #BeginLibraryItem "/Library/siteNav.lbi" --><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="../index.html"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="../预约首页.html">我的预约</a></li>
+          <li><a href="../消息中心-站内信.html">站内信</a></li>
+          <li class="divider"></li>
+          <li><a href="../设置页面-账户设置.html">设置与帮助</a></li>
+          <li><a href="管理中心首页.html">管理中心</a></li>
+        </ul>
+          <!-- #EndLibraryItem --></div>
+    </div>
+	<div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="管理中心首页.html">首页</a></li>
+        <li class="active"><a href="教学管理首页.html">教学</a></li>
+        <li><a href="用户管理首页.html">用户</a></li>
+        <li><a href="设备预约首页.html">器材</a></li>
+        <li><a href="机房预约管理首页.html">机房</a></li>
+        <li><a href="#">内容</a></li>
+      </ul>
+    </div>
+    <ul class="account-wrap nav nav-pills pull-right">
+      <li class="notice dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">消息1</a></li>
+          <li><a href="#">消息2</a></li>
+        </ul>
+      </li>     
+      <li class="social dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="../img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+        <div class="dropdown-menu">
+          <div class="media">
+            <a class="pull-left" href="#">
+              <img src="../img/photo.jpg" width="96" height="96" class="img-rounded">
+            </a>
+            <div class="media-body">
+              <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+              <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+              <div class="setting"><a href="#">账户设置</a></div>
+              <button class="btn btn-primary" type="button">查看个人主页</button>
+            </div>
+          </div>
+        </div>      
+      </li>
+    </ul>
+  </div>
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+          <!--control-bar start-->
+          <div class="control-bar clearfix">
+            <div class="title pull-left">机房课程安排</div>
+            <div class="tips">布置教学任务后，指定的收件人将会收到教学预约通知，收件人在相关说明的指导下完成机房预约。</div>
+          </div><!--control-bar end-->
+          <div class="row">
+            <div class="col-sm-12 col-md-3 col-lg-3">
+              <div class="control-bar"><a href="#" class="btn btn-primary">添加</a></div>
+              <div class="list-group">
+                <a href="#" class="list-group-item">
+                  <h4 class="list-group-item-heading">全部课程</h4>
+                  <p class="list-group-item-text">浏览本学期全部课程</p>
+                </a>
+                <a href="#" class="list-group-item active">
+                  <h4 class="list-group-item-heading">课程名称</h4>
+                  <p class="list-group-item-text">任课教师：</p>
+                </a>
+                <a href="#" class="list-group-item">
+                  <h4 class="list-group-item-heading">课程名称</h4>
+                  <p class="list-group-item-text">任课教师：</p>
+                </a>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-9 col-lg-8">
+              <div class="control-bar clearfix">
+                <div class="title pull-left">添加课程安排</div>
+                <div class="tips">选择课程的上课时间、周次、课程名称以及上课所需的教学设备。</div>
+                <div class="operate-item pull-left">
+                  <button type="button" class="btn btn-primary">保存</button>
+                  <a herf="#" class="btn btn-white">取消</a>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <table class="table course-week-table">
+                  <thead>
+                    <tr>
+                      <th class="time-slot" colspan="2">时间</th>
+                      <th>周一</th>
+                      <th>周二</th>
+                      <th>周三</th>
+                      <th>周四</th>
+                      <th>周五</th>
+                      <th>周六</th>
+                      <th>周日</th>                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="time-slot" rowspan="2">上午</td>
+                      <td class="time-num">1</td>
+                      <td data-week="1" data-slot="1" class="selectable"></td>
+                      <td data-week="2" data-slot="1" class="selectable"></td>
+                      <td data-week="3" data-slot="1" class="selectable"></td>
+                      <td data-week="4" data-slot="1" class="selectable"></td>
+                      <td data-week="5" data-slot="1" class="selectable"></td>
+                      <td data-week="6" data-slot="1" class="selectable"></td>
+                      <td data-week="7" data-slot="1" class="selectable"></td>
+                    </tr>
+                    <tr>
+                      <td class="time-num">2</td>
+                      <td data-week="1" data-slot="2" class="selectable"></td>
+                      <td data-week="2" data-slot="2" class="selectable"></td>
+                      <td data-week="3" data-slot="2" class="selectable"></td>
+                      <td data-week="4" data-slot="2" class="selectable"></td>
+                      <td data-week="5" data-slot="2" class="selectable"></td>
+                      <td data-week="6" data-slot="2" class="selectable"></td>
+                      <td data-week="7" data-slot="2" class="selectable"></td>
+                    </tr>
+                    <tr>
+                      <td rowspan="2" class="time-slot">下午</td>
+                      <td class="time-num">3</td>
+                      <td data-week="1" data-slot="3" class="selectable"></td>
+                      <td data-week="2" data-slot="3" class="selectable"></td>
+                      <td data-week="3" data-slot="3" class="selectable"></td>
+                      <td data-week="4" data-slot="3" class="selectable"></td>
+                      <td data-week="5" data-slot="3" class="selectable"></td>
+                      <td data-week="6" data-slot="3" class="selectable"></td>
+                      <td data-week="7" data-slot="3" class="selectable"></td>
+                    </tr>
+                    <tr>
+                      <td class="time-num">4</td>
+                      <td data-week="1" data-slot="4" class="selectable"></td>
+                      <td data-week="2" data-slot="4" class="selectable"></td>
+                      <td data-week="3" data-slot="4" class="selectable"></td>
+                      <td data-week="4" data-slot="4" class="selectable"></td>
+                      <td data-week="5" data-slot="4" class="selectable"></td>
+                      <td data-week="6" data-slot="4" class="selectable"></td>
+                      <td data-week="7" data-slot="4" class="selectable"></td>
+                    </tr>
+                    <tr>
+                      <td class="time-slot">晚上</td>
+                      <td class="time-num">5</td>
+                      <td data-week="1" data-slot="5" class="selectable"></td>
+                      <td data-week="2" data-slot="5" class="selectable"></td>
+                      <td data-week="3" data-slot="5" class="selectable"></td>
+                      <td data-week="4" data-slot="5" class="selectable"></td>
+                      <td data-week="5" data-slot="5" class="selectable"></td>
+                      <td data-week="6" data-slot="5" class="selectable"></td>
+                      <td data-week="7" data-slot="5" class="selectable"></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="panel-footer">
+                  <dl class="course-week form-group dl-horizontal">
+                    <dt><label for="inputWeek" class="control-label">课程周次</label></dt>
+                    <dd>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek1" value="1" checked="">第1周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek2" value="2" checked="">第2周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek3" value="3" checked="">第3周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="4" checked="">第4周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="5" checked="">第5周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="6" checked="">第6周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="7" checked="">第7周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="8" checked="">第8周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="9" checked="">第9周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="10" checked="">第10周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="11" checked="">第11周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="12" checked="">第12周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="13" checked="">第13周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="14" checked="">第14周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="15" checked="">第15周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="16" checked="">第16周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="17" checked="">第17周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="18" checked="">第18周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="19" checked="">第19周
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="20" checked="">第20周
+                      </label>
+                    </dd>
+                  </dl>
+                  <dl class="form-group dl-horizontal">
+                    <dt><label for="inputCourseName" class="control-label">课程名称</label></dt>
+                    <dd>
+                      <select class="select2 select-white form-control" id="inputCourseName" data-placeholder="请选择课程名称">
+                        <option></option>
+                        <optgroup label="本科">
+                          <option value="AK">课程名 - 教师名</option>
+                          <option value="HI">课程名 - 教师名</option>
+                          <option value="HI">课程名 - 教师名</option>
+                        </optgroup>
+                        <optgroup label="硕士">
+                          <option value="CA">课程名 - 教师名</option>
+                          <option value="CA">课程名 - 教师名</option>
+                          <option value="CA">课程名 - 教师名</option>
+                        </optgroup>
+                        <optgroup label="博士">
+                          <option value="AZ">课程名 - 教师名</option>
+                          <option value="AZ">课程名 - 教师名</option>
+                        </optgroup>
+                        <optgroup label="MFA">
+                          <option value="AL">课程名 - 教师名</option>
+                        </optgroup>
+                      </select>
+                    </dd>
+                  </dl>
+                  <dl class="form-group dl-horizontal">
+                    <dt><label for="inputCourseNeed" class="control-label">所需课程资源</label></dt>
+                    <dd>
+                      <div class="group-hd">
+                        <div class="group-name pull-left">工作站</div>
+                        <div class="group-line"><hr></div>
+                      </div>
+                      <div class="row">
+                        <div class="form-inline form-group col-md-6">
+                          <div class="form-group">
+                            <label class="checkbox-inline">
+                              <input type="checkbox" name="inputCourseNeed" id="CourseNeed1" value="1" checked="">MAC Pro工作站
+                            </label>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" id="CourseNeed1-Num" class="form-control" placeholder="数量">
+                          </div>
+                        </div>
+                        <div class="form-inline form-group col-md-6">
+                          <div class="form-group">
+                            <label class="checkbox-inline">
+                              <input type="checkbox" name="inputCourseNeed" id="CourseNeed2" value="2" checked="">DELL工作站
+                            </label>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" id="CourseNeed2-Num" class="form-control" placeholder="数量">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="group-hd">
+                        <div class="group-name pull-left">剪辑机房</div>
+                        <div class="group-line"><hr></div>
+                      </div>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputCourseNeed" id="inputCourseNeedEditor1" value="1" checked="">剪辑机房1
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputCourseNeed" id="inputCourseNeedEditor2" value="2" checked="">剪辑机房2
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputCourseNeed" id="inputCourseNeedEditor3" value="3" checked="">剪辑机房3
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputCourseNeed" id="inputCourseNeedEditor4" value="4" checked="">剪辑机房4
+                      </label>
+                      <div class="group-hd">
+                        <div class="group-name pull-left">调色机房</div>
+                        <div class="group-line"><hr></div>
+                      </div>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputCourseNeed" id="inputCourseNeedColor1" value="1" checked="">达芬奇
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputCourseNeed" id="inputCourseNeedColor2" value="2" checked="">宽泰
+                      </label>
+                    </dd>
+                  </dl>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--equip-wrap end-->
+
+      <!--sidebar start-->
+      <div id="lside">
+        <div class="list-group">
+          <a href="教学管理首页.html" class="list-group-item">课程管理</a>
+          <a href="教学管理-添加课程.html" class="list-group-item">添加课程</a>
+          <a href="教学管理-设备预约安排.html" class="list-group-item">设备预约安排</a>
+          <a href="教学管理-机房预约安排.html" class="list-group-item">机房预约安排</a>
+          <a href="教学管理-机房课程安排.html" class="list-group-item active">机房课程安排</a>
+		  <a href="教学管理-教学设置.html" class="list-group-item">设置</a>
+        </div>
+      </div>
+      <!--sidebar end-->
+
+</section>
+
+
+    <!-- javascript
+    ================================================== -->
+<script src="../js/jquery.js"></script>
+<script src="../js/loader.min.js"></script>
+<script src="../js/select2.js"></script>
+<script src="../js/bootstrap-hover-dropdown.min.js"></script>
+<script src="../js/bfa.js"></script>
+
+<script>
+/* ============ 课程安排 ============= */
+$("body").on("click", ".selectable", function() {
+	$(this).toggleClass("selected");	
+	if($(this).hasClass("selected")) {		// 如果选中
+		$(this).append('<code><i class="icon-ok"></i></code>');
+	} else {					
+		$(this).find("code").remove();		// 移除选中标识		
+	}
+});	
+				
+</script>
+</body>
+</html>
