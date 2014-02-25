@@ -10,7 +10,13 @@
     <constant name="struts.velocity.toolboxlocation" value="WEB-INF/toolbox.xml" />
 	<constant name="struts.velocity.configfile" value="WEB-INF/velocity.properties" />
 
-    
+	<package name="default" extends="struts-default">
+	   <default-action-ref name="notFound" />
+	   <action name="notFound">
+	    <result>/error.vm</result>
+	   </action>
+	</package>
+	
     <!-- 定义一个admin的总包余下包继承该包 -->  
 	<package name="admin"  extends="struts-default">
 	 <!-- 
@@ -32,7 +38,12 @@
         <global-results>  
             <!-- 当返回login视图名时，转入/login.jsp页面 -->  
             <result name="login">/login.vm</result>  
-        </global-results>      
+            <result name="exception-error">/error.vm</result>
+        </global-results>
+        
+        <global-exception-mappings>
+            <exception-mapping result="exception-error" exception="java.lang.Exception"></exception-mapping>
+        </global-exception-mappings>
     </package>
     
     <package name="superManage" extends="struts-default">
