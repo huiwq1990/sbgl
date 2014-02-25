@@ -1,4 +1,1 @@
-This is Sublime Text 2 test!!!!!!!!!
-123445325
-12324
-5435463
+This is Sublime Text 2 test!
