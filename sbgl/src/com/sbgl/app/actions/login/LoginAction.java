@@ -47,7 +47,12 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			if(loginUser2 != null){
 				CookiesUtil.addLoginCookie("id", loginUser2.getId().toString());
 				CookiesUtil.addLoginCookie("userid", loginUser2.getUserId());
+				CookiesUtil.addLoginCookie("username", loginUser2.getName());
 				CookiesUtil.addLoginCookie("userpass", loginUser2.getPassword());
+				CookiesUtil.addLoginCookie("roletype", loginUser2.getRoletype());
+				CookiesUtil.addLoginCookie("privilege", loginUser2.getPrivilege());
+				
+				
 				flag = true;
 				session.put("loginUser", loginUser2);
 			}
@@ -68,6 +73,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
 				CookiesUtil.addLoginCookie("userid", loginUser3.getUserId());
 				CookiesUtil.addLoginCookie("username", loginUser3.getName());
 				CookiesUtil.addLoginCookie("roletype", loginUser3.getRoletype());
+				CookiesUtil.addLoginCookie("privilege", loginUser3.getPrivilege());
+				CookiesUtil.addLoginCookie("id", loginUser3.getId().toString());
 				
 				if( "100".equals(loginUser3.getRoletype()) ) {
 					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN1);

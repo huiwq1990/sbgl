@@ -33,7 +33,7 @@
   </filter>
   
   <!-- 登录拦截器 -->
-  <!--  
+   
    <filter> 
 	    <filter-name>loginFilter</filter-name> 
 	    <filter-class>com.sbgl.app.actions.login.LoginFilter</filter-class> 
@@ -48,7 +48,7 @@
 	</filter-mapping>
 	
 	
-	-->
+	
 	
   <display-name>Archetype Created Web Application</display-name> 
   <servlet>
