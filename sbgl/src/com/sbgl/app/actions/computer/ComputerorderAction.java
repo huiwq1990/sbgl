@@ -22,6 +22,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.actions.common.BaseAction;
 import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderInfo;
@@ -35,11 +36,10 @@ import com.sbgl.util.*;
 
 @Scope("prototype") 
 @Controller("ComputerorderAction")
-public class ComputerorderAction extends ActionSupport implements SessionAware,ModelDriven<Computerorder>{
+public class ComputerorderAction extends BaseAction implements ModelDriven<Computerorder>{
 	
 	private static final Log log = LogFactory.getLog(ComputerorderAction.class);
 
-	private Map<String, Object> session;
 	
 	//Service	
 	@Resource
@@ -64,7 +64,7 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	
 	
 	
-	
+//	订单状态
 	private int ComputerorderStatusAduitAll = ComputerorderInfo.ComputerorderStatusAduitAll;
 	private int ComputerorderStatusAduitPass = ComputerorderInfo.ComputerorderStatusAduitPass;
 	private int ComputerorderStatusAduitReject = ComputerorderInfo.ComputerorderStatusAduitReject;
@@ -76,21 +76,66 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 	
 	
 	private String logprefix = "exec action method:";		
-	Page page = new Page();
-	Integer pageNo=1;	
+
 	
 
 	
 	public String computerorderIdsForDel;
 
-//	return info
-	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
-	private String returnInfo;
-	private String actionMsg; // Action间传递的消息参数
+
 	
 //	public int auditStatus;//审核结果
 
+	
+//	Pc订单管理前台传参，获取某状态下的Order
+	private int computerorderStatus;
 
+	//管理 PC预约
+	public String manageComputerorderFull(){
+		log.info("exec action method:manageComputerorderFull");
+		
+//      分页查询		
+		if(pageNo ==0){
+			pageNo =1;
+		}		
+		
+		
+//		装载数据
+		String sql = " ";	
+		if(computerorderStatus==ComputerorderInfo.ComputerorderStatusAduitAll){
+			
+		}else{
+			sql = sql+" where a.status="+computerorderStatus+" ";
+		}
+		
+		sql += " order by a.createtime desc";
+			
+		//设置总数量
+		page.setTotalCount(computerorderService.selectComputerorderFullByCondition(sql).size());
+		//如果页码大于总页数，重新设置
+		if(pageNo>page.getTotalpage()){
+			pageNo = page.getTotalpage();
+		}
+		page.setPageNo(pageNo);
+		
+		log.info("pageNo "+pageNo);
+		log.info(page.getTotalCount());
+		
+		computerorderFullList  = computerorderService.selectComputerorderFullByConditionAndPage(sql, page);
+
+		
+		if(computerorderFullList == null){
+			computerorderFullList = new ArrayList<ComputerorderFull>();
+		}
+
+		//进入管理界面直接请求，Ajax请求使用AjaxType
+		if(callType!=null&&callType.equals("ajaxType")){
+			return "success2";
+		}else{
+			return "success1";
+		}
+	}	
+	
 	
 	//del entityfull Ajax
 	public String deleteComputerorderFullAjax( ){
@@ -161,7 +206,7 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 				
 //              选择能更改的属性，与界面一致	
   				tempComputerorder.setSerialnumber(computerorder.getSerialnumber());
-  				tempComputerorder.setUserid(computerorder.getUserid());
+  				tempComputerorder.setCreateuserid(computerorder.getCreateuserid());
   				tempComputerorder.setCreatetime(computerorder.getCreatetime());
   				tempComputerorder.setStatus(computerorder.getStatus());
  
@@ -205,12 +250,10 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 				
 //              修改状态				
   				tempComputerorder.setStatus(computerorder.getStatus());
-			
-				computerorderService.execSql("  update Computerorder set status="+computerorder.getStatus()+" where id = "+computerorder.getId());
-
-				computerorderdetailService.execSql(" update Computerorderdetail set status="+computerorder.getStatus()+" where computerorderid = "+computerorder.getId());
-
-				
+  				tempComputerorder.setRejectreason(computerorder.getRejectreason());
+  				
+  				computerorderService.auditComputerorder(tempComputerorder);
+  				
 				returnInfo = "审核完成";
 				this.returnStr= JsonActionUtil.buildReturnStr(ComputerConfig.ajaxsuccessreturn,returnInfo);
 				return SUCCESS;
@@ -355,46 +398,53 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 
 
 	
-
-
-
-	//get set
-	public void setSession(Map<String, Object> session) {
-		// TODO Auto-generated method stub
-	    this.session = session;
-	}
-	
 	@Override
 	public Computerorder getModel() {
 		// TODO Auto-generated method stub
 		return computerorder;
 	}
 
-//  
+
+	public ComputerorderService getComputerorderService() {
+		return computerorderService;
+	}
+
+
+	public void setComputerorderService(ComputerorderService computerorderService) {
+		this.computerorderService = computerorderService;
+	}
+
+
 	public Computerorder getComputerorder() {
 		return computerorder;
 	}
-	
+
+
 	public void setComputerorder(Computerorder computerorder) {
 		this.computerorder = computerorder;
 	}
-//  entityModel
+
+
 	public Computerorder getComputerorderModel() {
 		return computerorderModel;
 	}
-	
+
+
 	public void setComputerorderModel(Computerorder computerorderModel) {
 		this.computerorderModel = computerorderModel;
 	}
-	
+
+
 	public ComputerorderFull getComputerorderFull() {
 		return computerorderFull;
 	}
-	
+
+
 	public void setComputerorderFull(ComputerorderFull computerorderFull) {
 		this.computerorderFull = computerorderFull;
 	}
-	
+
+
 	public List<Computerorder> getComputerorderList() {
 		return computerorderList;
 	}
@@ -404,199 +454,198 @@ public class ComputerorderAction extends ActionSupport implements SessionAware,M
 		this.computerorderList = computerorderList;
 	}
 
+
 	public List<ComputerorderFull> getComputerorderFullList() {
 		return computerorderFullList;
 	}
 
 
-	public void setComputerorderFullList(List<ComputerorderFull> computerorderFullList) {
+	public void setComputerorderFullList(
+			List<ComputerorderFull> computerorderFullList) {
 		this.computerorderFullList = computerorderFullList;
 	}
 
-	public String getReturnStr() {
-		return returnStr;
-	}
 
-
-	public void setReturnStr(String returnStr) {
-		this.returnStr = returnStr;
-	}
-	
-	public Page getPage() {
-		return page;
-	}
-
-
-	public void setPage(Page page) {
-		this.page = page;
-	}
-	
-	public int getComputerorderid() {
+	public Integer getComputerorderid() {
 		return computerorderid;
 	}
 
-	public void setComputerorderid(int computerorderid) {
+
+	public void setComputerorderid(Integer computerorderid) {
 		this.computerorderid = computerorderid;
 	}
-		public Integer getPageNo() {
-		return pageNo;
-	}
 
-	public void setPageNo(Integer pageNo) {
-		this.pageNo = pageNo;
-	}
-
-	public ComputerorderService getComputerorderService() {
-		return computerorderService;
-	}
-
-	public void setComputerorderService(ComputerorderService computerorderService) {
-		this.computerorderService = computerorderService;
-	}
-
-	public String getActionMsg() {
-		return actionMsg;
-	}
-
-	public void setActionMsg(String actionMsg) {
-		this.actionMsg = actionMsg;
-	}
 
 	public ComputerorderdetailService getComputerorderdetailService() {
 		return computerorderdetailService;
 	}
+
 
 	public void setComputerorderdetailService(
 			ComputerorderdetailService computerorderdetailService) {
 		this.computerorderdetailService = computerorderdetailService;
 	}
 
+
 	public Computerorderdetail getComputerorderdetail() {
 		return computerorderdetail;
 	}
+
 
 	public void setComputerorderdetail(Computerorderdetail computerorderdetail) {
 		this.computerorderdetail = computerorderdetail;
 	}
 
+
 	public ComputerorderdetailFull getComputerorderdetailFull() {
 		return computerorderdetailFull;
 	}
+
 
 	public void setComputerorderdetailFull(
 			ComputerorderdetailFull computerorderdetailFull) {
 		this.computerorderdetailFull = computerorderdetailFull;
 	}
 
+
 	public List<Computerorderdetail> getComputerorderdetailList() {
 		return computerorderdetailList;
 	}
+
 
 	public void setComputerorderdetailList(
 			List<Computerorderdetail> computerorderdetailList) {
 		this.computerorderdetailList = computerorderdetailList;
 	}
 
+
 	public List<ComputerorderdetailFull> getComputerorderdetailFullList() {
 		return computerorderdetailFullList;
 	}
+
 
 	public void setComputerorderdetailFullList(
 			List<ComputerorderdetailFull> computerorderdetailFullList) {
 		this.computerorderdetailFullList = computerorderdetailFullList;
 	}
 
+
 	public Integer getComputerorderdetailid() {
 		return computerorderdetailid;
 	}
+
 
 	public void setComputerorderdetailid(Integer computerorderdetailid) {
 		this.computerorderdetailid = computerorderdetailid;
 	}
 
-	public String getLogprefix() {
-		return logprefix;
-	}
-
-	public void setLogprefix(String logprefix) {
-		this.logprefix = logprefix;
-	}
-
-	public String getComputerorderIdsForDel() {
-		return computerorderIdsForDel;
-	}
-
-	public void setComputerorderIdsForDel(String computerorderIdsForDel) {
-		this.computerorderIdsForDel = computerorderIdsForDel;
-	}
-
-	public static Log getLog() {
-		return log;
-	}
-
-	public Map<String, Object> getSession() {
-		return session;
-	}
-
-	public void setComputerorderid(Integer computerorderid) {
-		this.computerorderid = computerorderid;
-	}
 
 	public int getComputerorderStatusAduitAll() {
 		return ComputerorderStatusAduitAll;
 	}
 
+
 	public void setComputerorderStatusAduitAll(int computerorderStatusAduitAll) {
 		ComputerorderStatusAduitAll = computerorderStatusAduitAll;
 	}
+
 
 	public int getComputerorderStatusAduitPass() {
 		return ComputerorderStatusAduitPass;
 	}
 
+
 	public void setComputerorderStatusAduitPass(int computerorderStatusAduitPass) {
 		ComputerorderStatusAduitPass = computerorderStatusAduitPass;
 	}
+
 
 	public int getComputerorderStatusAduitReject() {
 		return ComputerorderStatusAduitReject;
 	}
 
+
 	public void setComputerorderStatusAduitReject(int computerorderStatusAduitReject) {
 		ComputerorderStatusAduitReject = computerorderStatusAduitReject;
 	}
+
 
 	public int getComputerorderStatusAduitDel() {
 		return ComputerorderStatusAduitDel;
 	}
 
+
 	public void setComputerorderStatusAduitDel(int computerorderStatusAduitDel) {
 		ComputerorderStatusAduitDel = computerorderStatusAduitDel;
 	}
+
 
 	public int getComputerorderStatusAduitWait() {
 		return ComputerorderStatusAduitWait;
 	}
 
+
 	public void setComputerorderStatusAduitWait(int computerorderStatusAduitWait) {
 		ComputerorderStatusAduitWait = computerorderStatusAduitWait;
 	}
+
 
 	public int getIndividualOrder() {
 		return IndividualOrder;
 	}
 
+
 	public void setIndividualOrder(int individualOrder) {
 		IndividualOrder = individualOrder;
 	}
+
 
 	public int getClassOrder() {
 		return ClassOrder;
 	}
 
+
 	public void setClassOrder(int classOrder) {
 		ClassOrder = classOrder;
 	}
+
+
+	public String getLogprefix() {
+		return logprefix;
+	}
+
+
+	public void setLogprefix(String logprefix) {
+		this.logprefix = logprefix;
+	}
+
+
+	public String getComputerorderIdsForDel() {
+		return computerorderIdsForDel;
+	}
+
+
+	public void setComputerorderIdsForDel(String computerorderIdsForDel) {
+		this.computerorderIdsForDel = computerorderIdsForDel;
+	}
+
+
+	public int getComputerorderStatus() {
+		return computerorderStatus;
+	}
+
+
+	public void setComputerorderStatus(int computerorderStatus) {
+		this.computerorderStatus = computerorderStatus;
+	}
+
+
+	public static Log getLog() {
+		return log;
+	}
+
+	
+	
 	
 	
 }

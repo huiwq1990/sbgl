@@ -520,51 +520,7 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		}
 	}		
 	
-	//管理 PC预约
-	public String manageComputerorderFull(){
-		log.info("exec action method:manageComputerorderFull");
 		
-//      分页查询		
-		if(pageNo ==0){
-			pageNo =1;
-		}		
-		
-		
-//		装载数据
-		String sql = " ";	
-		if(computerorderStatus==ComputerorderInfo.ComputerorderStatusAduitAll){
-			
-		}else{
-			sql = sql+" where a.status="+computerorderStatus+" ";
-		}
-		
-		sql += " order by a.createtime desc";
-			
-		//设置总数量
-		page.setTotalCount(computerorderService.selectComputerorderFullByCondition(sql).size());
-		//如果页码大于总页数，重新设置
-		if(pageNo>page.getTotalpage()){
-			pageNo = page.getTotalpage();
-		}
-		page.setPageNo(pageNo);
-		
-		log.info("pageNo "+pageNo);
-		log.info(page.getTotalCount());
-		
-		computerorderFullList  = computerorderService.selectComputerorderFullByConditionAndPage(sql, page);
-
-		
-		if(computerorderFullList == null){
-			computerorderFullList = new ArrayList<ComputerorderFull>();
-		}
-
-		//进入管理界面直接请求，Ajax请求使用AjaxType
-		if(callType!=null&&callType.equals("ajaxType")){
-			return "success2";
-		}else{
-			return "success1";
-		}
-	}			
 	
 	public void categoryModelMap(){
 		//model的分类信息，只显示中文的

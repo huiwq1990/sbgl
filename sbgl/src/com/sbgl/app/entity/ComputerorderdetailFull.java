@@ -17,7 +17,7 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 			private Integer computerorderdetailstatus;
 			private Integer computerorderid;
 			private String computerorderserialnumber;
-			private Integer computerorderuserid;
+			private Integer computerordercreateuserid;
 			private String computerordertitle;
 			private Integer computerorderordertype;
 			private Date computerordercreatetime;
@@ -114,11 +114,12 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 		public String getComputerorderserialnumber(){		
 			return this.computerorderserialnumber;
 		}
-			public void setComputerorderuserid(Integer computerorderuserid){		
-			this.computerorderuserid = computerorderuserid;
+	
+			public Integer getComputerordercreateuserid() {
+			return computerordercreateuserid;
 		}
-		public Integer getComputerorderuserid(){		
-			return this.computerorderuserid;
+		public void setComputerordercreateuserid(Integer computerordercreateuserid) {
+			this.computerordercreateuserid = computerordercreateuserid;
 		}
 			public void setComputerordertitle(String computerordertitle){		
 			this.computerordertitle = computerordertitle;

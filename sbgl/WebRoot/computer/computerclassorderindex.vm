@@ -116,7 +116,7 @@
                        <td></td>
 				#else
 					#set($tableindex = $tempweektableindex*21 + $tempperiod*7 + $tempday)
-					<td class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-slot="$tempBorrowperiod.id" data-pcname = "$tempmodel.name" data-max-num="$availnum">$availnum<br/>可预约</td>
+					<td class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-slot="$tempBorrowperiod.id" data-pcname = "$tempmodel.name" data-pcpicpath = "$tempmodel.picpath"  data-max-num="$availnum">$availnum<br/>可预约</td>
 				#end                 
 					
 			#end ##end day info computerorderTotalOrderDay
@@ -193,7 +193,7 @@
 <script src="${jsDomain}/bootstrap-datepicker.js"></script>
 <script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
 <script src="${jsDomain}/xdate.js"></script>
-<script src="${jsDomain}/computer/computerutil.js"></script>
+<script src="${jsDomain}/computer/computerorder.js"></script>
 
 <script>
 function CreatePostBookingTable(rowCount,cellCount,startDate) {
@@ -318,21 +318,22 @@ $(window).load(function(){
 	$("body").on("click", "button[action-type|=confirmComputerButton]", function() {
 		var str = "";
 		$("input[name='pcorderinfo']").each(function() {			
-				str += $(this).attr("orderpcid") +","+ $(this).prop("value") +","+$(this).attr("orderdate")+","+$(this).attr("orderperiod")+","+$(this).attr("orderpcname")+ ";";			
+				str += $(this).attr("orderpcid") +","+ $(this).prop("value") +","+$(this).attr("orderdate")+","+$(this).attr("orderperiod")+","+$(this).attr("orderpcname")+","+$(this).attr("picpath")+ ";";			
 		});
 	
 			
 		str = str.substring(0,str.length-1);
 	
-		var createuserid = cookie.getUserId();
-		//alert(createuserid);
+		
 		var postData = {
-			userid : createuserid,
-			orderInfoStr : str,
-			computerordertype : $computerordertype,
-			computerhomeworkid : $computerhomeworkid
+			
+			"orderInfoStr":str,
+			"curcomputerhomeworkid":$!computerhomeworkid,
+			"computerordertype":$!computerordertype
+			
 		};
 		
+		alert(postData.curcomputerhomeworkid);
 		jQuery.ajax({  
 		    url:"${webbaseurl}/computerorderFormConfirm.${strutsaction}",  
 		    type:"post",
@@ -345,7 +346,7 @@ $(window).load(function(){
 					//$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框
 					location.href = "${webbaseurl}/toComputerorderConfirmPage.${strutsaction}";
 				}else{
-					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});					
 					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
 				}
 			}		  	  

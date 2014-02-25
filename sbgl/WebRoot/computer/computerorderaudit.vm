@@ -60,7 +60,7 @@
 						<div class="orderstatus">
                       <a class="btn btn-primary" onclick="auditOrder( $computerorderFull.computerorderid ,$!ComputerorderStatusAduitPass)" href="#" role="button">审核通过</a>
                       <a class="btn btn-white" data-toggle="modal" href="#reject" role="button">驳 回</a>
-                      <a class="btn btn-white" onclick="auditOrder( $computerorderFull.computerorderid ,$!ComputerorderStatusAduitDel)" data-toggle="modal" href="#reject" role="button">删 除</a>
+                      <a class="btn btn-white" data-toggle="modal" href="#delete" role="button">删 除</a>
                         </div>
 				  </div>
                 </div>
@@ -70,14 +70,22 @@
                   </div>
                   <div class="caption">
                     <div class="rent-detail">
-                      <span class="rent-user"><strong>申请者：<a rel="popover" class="lk" href="#" data-original-title="" title="">用户名 (我)</a></strong></span>
-                      <span class="rent-num"><strong> - 预约号：432420427</strong></span>
-                      <div class="rent-contact">联系方式：XXXXXX</div>
-                      <div class="rent-remark"><i class="icon-pencil"></i> 这里是预约备注（无则不显示）</div>
+                      <span class="rent-user"><strong>申请者：<a rel="popover" class="lk" href="#" data-original-title="" title="">我</a></strong></span>
+                      <span class="rent-num"><strong> - 预约号：$!computerorderFull.computerorderserialnumber</strong></span>
+					  #if($computerorderFull.computerorderordertype == $ClassOrder)
+						 <div class="rent-contact">预约方式：课程预约</div>
+						#else
+							 <div class="rent-contact">联系方式：个人预约</div>
+						#end
+                     <!-- <div class="rent-contact">联系方式：XXXXXX</div> -->
+                      <div class="rent-remark"><i class="icon-pencil"></i> $computerorderFull.computerorderremark</div>
                     </div>
                     <hr>
                   </div>                        
-                  <ul class="media-list">
+                  
+				 
+				  
+				  <ul class="media-list">
                     <li class="media">
                       <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
                         <img src="../img/photo.jpg" width="28" height="28" class="img-rounded">
@@ -120,6 +128,8 @@
     <button class="btn btn-primary" onclick="auditOrder( $computerorderFull.computerorderid ,$!ComputerorderStatusAduitReject)" >确 定</button>
   </div>
 </div>
+
+
 <div id="delete" class="modal hide fade" role="dialog" aria-labelledby="myDeleteLabel" aria-hidden="true" style="display: none; ">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
@@ -131,7 +141,7 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary">确 定</button>
+    <button class="btn btn-primary" onclick="auditOrder( $computerorderFull.computerorderid ,$!ComputerorderStatusAduitDel)" >确 定</button>
   </div>
 </div>
 
@@ -186,14 +196,15 @@
 
 
 //审核预约
-function auditOrder(id,status){
+function auditOrder(id,status,rejectreason){
 	var _this = $(this);
 	jQuery.ajax({  
 		url: '${webbaseurl}/auditComputerorderAjax.action',  
 		type: "post",
 		data:{
 			id:id,
-			status:status
+			status:status,
+			rejectreason:$("#inputRejectReason").val()
 		},
 		dataType: 'json',
 		success: function(data){
@@ -209,6 +220,8 @@ function auditOrder(id,status){
 	});
 }
 //end audit
+
+
 
 </script>
 </body>

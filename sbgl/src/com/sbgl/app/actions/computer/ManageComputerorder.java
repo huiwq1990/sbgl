@@ -115,8 +115,9 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	int orderpccaregorynum = 0;//订单模型数量
 	int orderpctotalnum = 0;//订单机器数量
 	
-	int computerordertype;
-	int computerhomeworkid;
+	private	int computerordertype;
+	private int computerhomeworkid;
+	private int curcomputerhomeworkid;
 
 
 	
@@ -184,13 +185,13 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		
 
 //		进行中的预约是：状态未审核的预约
-		String selunderwayordersql = "  where a.userid="+userid + " and a.status="+ComputerorderInfo.ComputerorderStatusAduitWait+" order by a.createtime desc";
+		String selunderwayordersql = "  where a.createuserid="+userid + " and a.status="+ComputerorderInfo.ComputerorderStatusAduitWait+" order by a.createtime desc";
 		computerorderFullUnderwayList = computerorderService.selectComputerorderFullByCondition(selunderwayordersql);
 		
-		String selfinordersql = "  where a.userid="+userid + " and a.status !="+ComputerorderInfo.ComputerorderStatusAduitWait+" order by a.createtime desc";
+		String selfinordersql = "  where a.createuserid="+userid + " and a.status !="+ComputerorderInfo.ComputerorderStatusAduitWait+" order by a.createtime desc";
 		computerorderFullFinishList = computerorderService.selectComputerorderFullByCondition(selfinordersql);
 		
-		
+		System.out.println(computerorderFullUnderwayList.size());
 //		String sql = " where a.computerorderid = "+computerorderId  + " and c.languagetype="+ComputerConfig.languagech ;
 		if(computerorderFullUnderwayList==null){
 			computerorderFullUnderwayList = new ArrayList<ComputerorderFull>();
@@ -262,22 +263,17 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	 */
 	public String computerorderFormConfirm(){	
 		log.info("computerorderFormConfirm"+computerordertype);
-		ReturnJson returnJson = new ReturnJson();		
-		
+	
 		if(confirmOrderInfo(orderInfoStr) == false){
 
 			returnInfo = "预约表单数据错误";
 			log.error(returnInfo);
-			this.returnStr = ComputerActionUtil.buildReturnStr(ComputerConfig.ajaxerrorreturn, returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 			return SUCCESS;
 		}else{
-			returnJson.setFlag(1);
-			returnJson.setReason(orderInfoStr);
 			
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
-			
-			session.put("computerhomeworkid", computerhomeworkid);
+			session.put("computerhomeworkid", curcomputerhomeworkid);
+			System.out.println("computerhomeworkid"+curcomputerhomeworkid);
 			session.put("computerordertype", computerordertype);
 			session.put("computerorderdetailList", computerorderdetailList);
 			session.put("computerorderdetailFullList", computerorderdetailFullList);
@@ -285,7 +281,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 
 			returnInfo = "成功";
 			log.info(returnInfo);
-			this.returnStr = ComputerActionUtil.buildReturnStr(ComputerConfig.ajaxsuccessreturn, returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
 			return SUCCESS;
 		}
 	}
@@ -304,27 +300,32 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 //		List<Computerorderdetail> computerorderdetailList
 		for (int i = 0; i < orderDetailStrArray.length; i++) {
 			String temp = orderDetailStrArray[i];
-			if(temp==null || temp.length()==0 || temp.split(",").length != 5){
+			if(temp==null || temp.length()==0 || temp.split(",").length != 6){
 				continue;
 			}
 			String[] info = temp.split(",");
 			
-			ComputerorderdetailFull f = new ComputerorderdetailFull();
-			f.setComputerorderdetailcomputermodelid(Integer.valueOf(info[0]));
-			f.setComputerorderdetailborrownumber(Integer.valueOf(info[1]));
-			f.setComputerorderdetailborrowday(DateUtil.parseDate(info[2]));
-			f.setComputerorderdetailborrowperiod(Integer.valueOf(info[3]));
-			f.setComputermodelname(info[4]);
-					
-			computerorderdetailFullList.add(f);	
+			if(Integer.valueOf(info[0]) > 0){
+				ComputerorderdetailFull f = new ComputerorderdetailFull();
+				f.setComputerorderdetailcomputermodelid(Integer.valueOf(info[0]));
+				f.setComputerorderdetailborrownumber(Integer.valueOf(info[1]));
+				f.setComputerorderdetailborrowday(DateUtil.parseDate(info[2]));
+				f.setComputerorderdetailborrowperiod(Integer.valueOf(info[3]));
+				f.setComputermodelname(info[4]);
+				f.setComputermodelpicpath(info[5]);	
+				computerorderdetailFullList.add(f);	
+				
+//				用于save时调用
+				Computerorderdetail te = new Computerorderdetail();
+				te.setComputermodelid(Integer.valueOf(info[0]));
+				te.setBorrownumber(Integer.valueOf(info[1]));
+				te.setBorrowday(DateUtil.parseDate(info[2]));
+				te.setBorrowperiod(Integer.valueOf(info[3]));
+	
+				computerorderdetailList.add(te);	
+			}
 			
-//			用于save时调用
-			Computerorderdetail te = new Computerorderdetail();
-			te.setComputermodelid(Integer.valueOf(info[0]));
-			te.setBorrownumber(Integer.valueOf(info[1]));
-			te.setBorrowday(DateUtil.parseDate(info[2]));
-			te.setBorrowperiod(Integer.valueOf(info[3]));
-			computerorderdetailList.add(te);	
+			
 		}
 		
 		if(computerorderdetailFullList != null && computerorderdetailFullList.size() != 0){
@@ -339,6 +340,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 //	课程预约界面点击提交按钮后，如果computerorderFormConfirm指向成功，跳转到预约确认界面
 	public String toComputerorderConfirmPage(){	
 		log.info("toComputerorderConfirmPage computerordertype:"+computerordertype);
+		System.out.println(session.get("computerordertype"));
 		
 //		装载时间段的信息,界面上用于显示
 		periodList = BorrowperiodUtil.getBorrowperiodList();
@@ -450,7 +452,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 
 			
 			
-			temp.setUserid(uid);
+			temp.setCreateuserid(uid);
 			temp.setCreatetime(DateUtil.currentDate());
 			temp.setOrdertype(computerordertype);
 			temp.setStatus(ComputerorderInfo.ComputerorderStatusAduitWait);
@@ -507,6 +509,14 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		return SUCCESS;
 	}
 
+	
+
+	@Override
+	public Computerorder getModel() {
+		// TODO Auto-generated method stub
+		return computerorder;
+	}
+	
 
 	public ComputerorderService getComputerorderService() {
 		return computerorderService;
@@ -927,12 +937,16 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	}
 
 
-	@Override
-	public Computerorder getModel() {
-		// TODO Auto-generated method stub
-		return computerorder;
+	public int getCurcomputerhomeworkid() {
+		return curcomputerhomeworkid;
 	}
-	
+
+
+	public void setCurcomputerhomeworkid(int curcomputerhomeworkid) {
+		this.curcomputerhomeworkid = curcomputerhomeworkid;
+	}
+
+
 
 
 	

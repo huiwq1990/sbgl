@@ -25,9 +25,8 @@ import com.sbgl.util.*;
 public class ComputerorderDaoImpl extends HibernateDaoSupport implements ComputerorderDao{
 
 	private static final Log log = LogFactory.getLog(ComputerorderDaoImpl.class);
-	private final String basicComputerorderFullSql = "select a.id as computerorderid, a.serialnumber as computerorderserialnumber, a.userid as computerorderuserid, a.title as computerordertitle, a.ordertype as computerorderordertype, a.createtime as computerordercreatetime, a.remark as computerorderremark, a.status as computerorderstatus, a.rejectreason as computerorderrejectreason, a.audituserid as computerorderaudituserid," +
-			"b.id as loginuserid, b.name as loginusername" +
-			" from Computerorder a  left join Loginuser b on a.userid=b.id ";
+	private final String basicComputerorderFullSql = "select a.id as computerorderid, a.serialnumber as computerorderserialnumber, a.createuserid as computerordercreateuserid, a.title as computerordertitle, a.ordertype as computerorderordertype, a.createtime as computerordercreatetime, a.remark as computerorderremark, a.rejectreason as computerorderrejectreason, a.computerhomeworkid as computerordercomputerhomeworkid, a.audituserid as computerorderaudituserid, a.status as computerorderstatus, b.id as createuserid, b.userId as createuseruserid, b.name as createusername, b.roletype as createuserroletype, b.privilege as createuserprivilege, b.password as createuserpassword, c.id as audituserid, c.userId as audituseruserid, c.name as auditusername, c.roletype as audituserroletype, c.privilege as audituserprivilege, c.password as audituserpassword, d.id as computerhomeworkid, d.name as computerhomeworkname, d.computerorderclassruleid as computerhomeworkcomputerorderclassruleid, d.content as computerhomeworkcontent, d.createuserid as computerhomeworkcreateuserid, d.attachment as computerhomeworkattachment, d.status as computerhomeworkstatus, d.createtime as computerhomeworkcreatetime from Computerorder a  left join Loginuser b on a.createuserid=b.id left join Loginuser c on a.audituserid=c.id left join Computerhomework d on a.computerhomeworkid=d.id ";
+	
 	
 	private final String basicComputerorderSql = "From Computerorder as a ";
 	

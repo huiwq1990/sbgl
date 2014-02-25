@@ -52,6 +52,8 @@ public interface ComputerorderService{
         public List<ComputerorderFull>  selectComputerorderFullByConditionAndPage(String condition,final Page page);
 
 		int execSql(String sql);
+
+		boolean auditComputerorder(Computerorder cr);
 		
 	
 //根据关联查询实体	

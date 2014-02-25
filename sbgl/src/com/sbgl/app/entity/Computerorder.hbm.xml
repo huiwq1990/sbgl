@@ -13,8 +13,8 @@
         <property name="serialnumber" type="java.lang.String">
             <column name="serialnumber" length="100" />
         </property>
-        <property name="userid" type="java.lang.Integer">
-            <column name="userid" />
+        <property name="createuserid" type="java.lang.Integer">
+            <column name="createuserid" />
         </property>
         <property name="title" type="java.lang.String">
             <column name="title" length="200" />
@@ -30,6 +30,9 @@
         </property>
         <property name="rejectreason" type="java.lang.String">
             <column name="rejectreason" length="500" />
+        </property>
+        <property name="computerhomeworkid" type="java.lang.Integer">
+            <column name="computerhomeworkid" />
         </property>
         <property name="audituserid" type="java.lang.Integer">
             <column name="audituserid" />

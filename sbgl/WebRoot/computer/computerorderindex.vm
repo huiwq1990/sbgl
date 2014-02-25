@@ -153,11 +153,12 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-<script src="js/jquery.js"></script>
-<script src="js/loader.min.js"></script>
-<script src="js/bootstrap-hover-dropdown.min.js"></script>
-<script src="js/select2.js"></script>
-<script src="js/bfa.js"></script>
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+
 
 <!-- Modal -->
 <div id="selectRentType" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="selectRentTypeLabel" aria-hidden="true">

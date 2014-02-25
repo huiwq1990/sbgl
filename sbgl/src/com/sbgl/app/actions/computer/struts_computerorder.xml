@@ -52,74 +52,16 @@
         	<result name="error">/error.vm</result> 
         </action>
 
-<!-- default entity manage action -->
-    	<action name="manageComputerorder" class="ManageComputerAction" method="manageComputerorder">
-        	<result name="success">/computer/computerorderManage.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
 
 <!-- entity full manage  -->		
 		<!-- default entity full manage action -->
-    	<action name="manageComputerorderFull" class="ManageComputerAction" method="manageComputerorderFull">
+    	<action name="manageComputerorderFull" class="ComputerorderAction" method="manageComputerorderFull">
         	<result name="success1">/computer/computerorderFullManage.vm</result>
         	<result name="success2">/computer/computerorderFullManageContent.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
 		
-		
-<!--添加实体-->
-    	<action name="addComputerorder" class="ComputerorderAction" method="addComputerorder">
-        	<result type="redirectAction">
-				<param name="actionName">manageComputerorder</param>
-			</result>
-        </action>
-		
-		
-		
-<!--del-->
-        <!--del entity-->
-        <action name="deleteComputerorder" class="ComputerorderAction" method="deleteComputerorder">
-        	<result type="redirectAction">
-				<param name="actionName">manageComputerorder</param>
-			</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<!--del entityfull-->
-        <action name="deleteComputerorderFull" class="ComputerorderAction" method="deleteComputerorderFull">
-        	<result type="redirectAction">
-				<param name="actionName">manageComputerorderFull</param>
-			</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		
-<!--更新实体-->
-        <action name="updateComputerorder" class="ComputerorderAction" method="updateComputerorder">
-        	<result name="success">/computer/computerorderUpdate.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<action name="updateComputerorderJsp" class="ComputerorderAction" method="updateComputerorder">
-        	<result name="success">/computer/computerorderUpdate.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<action name="updateComputerorderVm" class="ComputerorderAction" method="updateComputerorder">
-        	<result name="success">/computer/computerorderUpdate.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-<!--update entity full-->
-        <action name="updateComputerorderFull" class="ComputerorderAction" method="updateComputerorder">
-        	<result name="success">/computer/computerorderFullUpdate.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<action name="updateComputerorderFullJsp" class="ComputerorderAction" method="updateComputerorder">
-        	<result name="success">/computer/computerorderFullUpdate.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<action name="updateComputerorderFullVm" class="ComputerorderAction" method="updateComputerorder">
-        	<result name="success">/computer/computerorderFullUpdate.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		
-		
+
 
 
  <!-- 用户查看自己的预约 详情-->

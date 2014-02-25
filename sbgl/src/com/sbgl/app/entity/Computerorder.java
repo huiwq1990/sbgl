@@ -13,12 +13,13 @@ public class Computerorder extends com.sbgl.app.dao.DaoAbs implements
 
 	private Integer id;
 	private String serialnumber;
-	private Integer userid;
+	private Integer createuserid;
 	private String title;
 	private Integer ordertype;
 	private Date createtime;
 	private String remark;
 	private String rejectreason;
+	private Integer computerhomeworkid;
 	private Integer audituserid;
 	private Integer status;
 
@@ -34,18 +35,19 @@ public class Computerorder extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Computerorder(Integer id, String serialnumber, Integer userid,
+	public Computerorder(Integer id, String serialnumber, Integer createuserid,
 			String title, Integer ordertype, Date createtime,
-			String remark, String rejectreason, Integer audituserid,
-			Integer status) {
+			String remark, String rejectreason, Integer computerhomeworkid,
+			Integer audituserid, Integer status) {
 		this.id = id;
 		this.serialnumber = serialnumber;
-		this.userid = userid;
+		this.createuserid = createuserid;
 		this.title = title;
 		this.ordertype = ordertype;
 		this.createtime = createtime;
 		this.remark = remark;
 		this.rejectreason = rejectreason;
+		this.computerhomeworkid = computerhomeworkid;
 		this.audituserid = audituserid;
 		this.status = status;
 	}
@@ -68,12 +70,12 @@ public class Computerorder extends com.sbgl.app.dao.DaoAbs implements
 		this.serialnumber = serialnumber;
 	}
 
-	public Integer getUserid() {
-		return this.userid;
+	public Integer getCreateuserid() {
+		return this.createuserid;
 	}
 
-	public void setUserid(Integer userid) {
-		this.userid = userid;
+	public void setCreateuserid(Integer createuserid) {
+		this.createuserid = createuserid;
 	}
 
 	public String getTitle() {
@@ -114,6 +116,14 @@ public class Computerorder extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setRejectreason(String rejectreason) {
 		this.rejectreason = rejectreason;
+	}
+
+	public Integer getComputerhomeworkid() {
+		return this.computerhomeworkid;
+	}
+
+	public void setComputerhomeworkid(Integer computerhomeworkid) {
+		this.computerhomeworkid = computerhomeworkid;
 	}
 
 	public Integer getAudituserid() {

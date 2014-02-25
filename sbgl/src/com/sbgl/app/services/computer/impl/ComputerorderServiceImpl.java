@@ -7,6 +7,8 @@ import java.util.List;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
 import com.sbgl.app.services.computer.ComputerorderService;
+import com.sbgl.app.actions.util.JsonActionUtil;
+import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.dao.ComputerorderDao;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.util.*;
@@ -101,6 +103,18 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 		return computerorderDao.selectComputerorderFullById(computerorderId); 
 	}	
 	
+	@Override
+	public boolean auditComputerorder(Computerorder cr){
+
+
+			
+//		computerorderService.execSql("  update Computerorder set rejectreason= "+computerorder.getRejectreason()+" and status="+computerorder.getStatus()+" where id = "+computerorder.getId());
+
+		baseDao.updateEntity(cr);
+		baseDao.createSQL(" update Computerorderdetail set status="+cr.getStatus()+" where computerorderid = "+cr.getId());
+
+		return true;
+	}
 	
 	
 
