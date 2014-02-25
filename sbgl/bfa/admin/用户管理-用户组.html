@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 用户管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="../css/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script src="../js/html5shiv.js"></script>
+  <script src="../js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a><!-- #BeginLibraryItem "/Library/siteNav.lbi" --><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="../index.html"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="../预约首页.html">我的预约</a></li>
+          <li><a href="../消息中心-站内信.html">站内信</a></li>
+          <li class="divider"></li>
+          <li><a href="../设置页面-账户设置.html">设置与帮助</a></li>
+          <li><a href="管理中心首页.html">管理中心</a></li>
+        </ul>
+          <!-- #EndLibraryItem --></div>
+    </div>
+	<div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="管理中心首页.html">首页</a></li>
+        <li><a href="教学管理首页.html">教学</a></li>
+        <li class="active"><a href="用户管理首页.html">用户</a></li>
+        <li><a href="设备预约首页.html">器材</a></li>
+        <li><a href="机房预约管理首页.html">机房</a></li>
+        <li><a href="#">内容</a></li>
+      </ul>
+    </div>
+    <ul class="account-wrap nav nav-pills pull-right">
+      <li class="notice dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">消息1</a></li>
+          <li><a href="#">消息2</a></li>
+        </ul>
+      </li>     
+      <li class="social dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="../img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+        <div class="dropdown-menu">
+          <div class="media">
+            <a class="pull-left" href="#">
+              <img src="../img/photo.jpg" width="96" height="96" class="img-rounded">
+            </a>
+            <div class="media-body">
+              <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+              <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+              <div class="setting"><a href="#">账户设置</a></div>
+              <button class="btn btn-primary" type="button">查看个人主页</button>
+            </div>
+          </div>
+        </div>      
+      </li>
+    </ul>
+  </div>
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">用户组</div>
+              <div class="tips">在此页面下管理用户组信息，如用户组的添加、修改、删除等。</div>
+              <div class="operate-item pull-left">
+                <a href="#add-user-group" class="btn btn-primary" data-toggle="modal" role="button">新建用户组</a>
+                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+              </div>
+              <div class="page pull-right clearfix">
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">最新</a></li>
+                      <li><a href="#">最旧</a></li>
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+                  <ul>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+              <ul class="status-filter nav nav-pills pull-right">
+                <li class="active"><a href="#">全部(6)</a></li>
+                <li><a href="#">学生(3)</a></li>
+                <li><a href="#">教师(2)</a></li>
+                <li><a href="#">其他(1)</a></li>
+              </ul>
+            </div><!--control-bar end-->
+            <div class="panel panel-default">              
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="id">编号</th>
+                    <th class="group-name">用户组名称</th>
+                    <th class="group-type">用户组类型</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
+                    <td>1</td>
+                    <td>本科<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-user-group" role="button">修改</a></td>
+                    <td>学生</td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="2"></td>
+                    <td>2</td>
+                    <td>硕士<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-user-group" role="button">修改</a></td>
+                    <td>学生</td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>3</td>
+                    <td>博士<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-user-group" role="button">修改</a></td>
+                    <td>学生</td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>4</td>
+                    <td>在职<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-user-group" role="button">修改</a></td>
+                    <td>教师</td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>5</td>
+                    <td>退休<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-user-group" role="button">修改</a></td>
+                    <td>教师</td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>6</td>
+                    <td>其他<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-user-group" role="button">修改</a></td>
+                    <td>其他</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+      </div>
+      <!--equip-wrap end-->
+
+      <!--sidebar start-->
+      <div id="lside">
+        <form class="form-group">
+          <input type="text" class="form-control" placeholder="搜索用户">
+          <i class="icon-search"></i>
+        </form>
+        <div class="list-group">
+          <a href="用户管理首页.html" class="list-group-item">用户管理</a>
+          <a href="用户管理-添加用户.html" class="list-group-item">添加用户</a>
+          <a href="用户管理-用户组.html" class="list-group-item active">用户组</a>
+          <a href="用户管理-班级管理.html" class="list-group-item">班级管理</a>
+          <a href="用户管理-发送通知.html" class="list-group-item">发送通知</a>
+          <a href="用户管理-管理员管理.html" class="list-group-item">管理员管理</a>
+          <a href="用户管理-添加管理员.html" class="list-group-item">添加管理员</a>
+          <!--<a href="用户管理-管理组.html" class="list-group-item">管理组</a>-->
+          <!--<a href="用户管理-用户认证.html" class="list-group-item">用户认证</a>-->
+        </div>
+      </div>
+      <!--sidebar end-->
+
+</section>
+
+<!-- Modal -->
+<div id="add-user-group" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">新建用户组</h3>
+  </div>
+  <div class="modal-body">
+    <p>根据用户组类型新建用户组。</p>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="inputUserGroupName" class="col-xs-3 control-label">用户组名称</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="inputUserGroupName" placeholder="用户组名称">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputUserGroupType" class="col-xs-3 control-label">所属类别</label>
+        <div class="col-xs-7">
+          <select class="select2 select-white form-control" id="inputUserGroupType">
+            <option value="1">学生</option>
+            <option value="2">教师</option>
+            <option value="6">其他</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary">确 定</button>
+  </div>
+</div>
+<div id="modify-user-group" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">修改用户组</h3>
+  </div>
+  <div class="modal-body">
+    <p>修改用户组名称或其对应类别。</p>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="modifyUserGroupName" class="col-xs-3 control-label">用户组名称</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="modifyUserGroupName" placeholder="用户组名称">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modifyUserGroupType" class="col-xs-3 control-label">所属类别</label>
+        <div class="col-xs-7">
+          <select class="select2 select-white form-control" id="modifyUserGroupType">
+            <option value="1">学生</option>
+            <option value="2">教师</option>
+            <option value="6">其他</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary">确 定</button>
+  </div>
+</div>
+<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
+  <img src="../img/cover-img.jpg" class="cover" alt="封面照片">
+  <div class="cover-layout"></div>
+  <div class="avatar"><img src="../img/photo.jpg" width="80" height="80" class="img-circle"></div>
+  <div class="user-wrap">
+    <div class="user-name"><a href="#">用户名</a></div>
+    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
+    <div class="user-info">职务等信息</div>
+    <div class="user-info">地点</div>
+  </div>
+  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
+</div>
+
+    <!-- javascript
+    ================================================== -->
+<script src="../js/jquery.js"></script>
+<script src="../js/loader.min.js"></script>
+<script src="../js/select2.js"></script>
+<script src="../js/bootstrap-hover-dropdown.min.js"></script>
+<script src="../js/bfa.js"></script>
+
+</body>
+</html>
