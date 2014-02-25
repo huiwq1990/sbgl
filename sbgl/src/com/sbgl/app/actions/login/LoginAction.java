@@ -5,16 +5,13 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.services.login.LoginService;
@@ -123,10 +120,6 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
-	public void setSession(Map<String, Object> session) {
-		// TODO Auto-generated method stub
-	    this.session = session;
-	}
 
 	public Loginuser getLoginuser() {
 		return loginuser;
@@ -134,6 +127,11 @@ public class LoginAction extends ActionSupport implements SessionAware {
 
 	public void setLoginuser(Loginuser loginuser) {
 		this.loginuser = loginuser;
+	}
+
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
 	}
 
 
