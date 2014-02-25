@@ -1,2 +1,1 @@
-This is Git GUI test!!!!!
 This is Sublime Text 2 test!!!!!!!!!
