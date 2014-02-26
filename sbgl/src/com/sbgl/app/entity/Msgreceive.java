@@ -3,47 +3,47 @@ package com.sbgl.app.entity;
 import java.util.Date;
 
 /**
- * Notification entity. @author MyEclipse Persistence Tools
+ * Msgreceive entity. @author MyEclipse Persistence Tools
  */
 
-public class Notification extends com.sbgl.app.dao.DaoAbs implements
+public class Msgreceive extends com.sbgl.app.dao.DaoAbs implements
 		java.io.Serializable {
 
 	// Fields
 
 	private Integer id;
-	private String title;
-	private String content;
 	private Integer senderid;
 	private Integer receiverid;
+	private String title;
+	private String content;
+	private Integer type;
 	private Date sendtime;
-	private Integer readstatus;
-	private Integer modeltype;
+	private Date readtime;
 	private Integer status;
 
 	// Constructors
 
 	/** default constructor */
-	public Notification() {
+	public Msgreceive() {
 	}
 
 	/** minimal constructor */
-	public Notification(Integer id) {
+	public Msgreceive(Integer id) {
 		this.id = id;
 	}
 
 	/** full constructor */
-	public Notification(Integer id, String title, String content,
-			Integer senderid, Integer receiverid, Date sendtime,
-			Integer readstatus, Integer modeltype, Integer status) {
+	public Msgreceive(Integer id, Integer senderid, Integer receiverid,
+			String title, String content, Integer type, Date sendtime,
+			Date readtime, Integer status) {
 		this.id = id;
-		this.title = title;
-		this.content = content;
 		this.senderid = senderid;
 		this.receiverid = receiverid;
+		this.title = title;
+		this.content = content;
+		this.type = type;
 		this.sendtime = sendtime;
-		this.readstatus = readstatus;
-		this.modeltype = modeltype;
+		this.readtime = readtime;
 		this.status = status;
 	}
 
@@ -55,22 +55,6 @@ public class Notification extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getTitle() {
-		return this.title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getContent() {
-		return this.content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
 	}
 
 	public Integer getSenderid() {
@@ -89,6 +73,30 @@ public class Notification extends com.sbgl.app.dao.DaoAbs implements
 		this.receiverid = receiverid;
 	}
 
+	public String getTitle() {
+		return this.title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		return this.content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public Integer getType() {
+		return this.type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
 	public Date getSendtime() {
 		return this.sendtime;
 	}
@@ -97,20 +105,12 @@ public class Notification extends com.sbgl.app.dao.DaoAbs implements
 		this.sendtime = sendtime;
 	}
 
-	public Integer getReadstatus() {
-		return this.readstatus;
+	public Date getReadtime() {
+		return this.readtime;
 	}
 
-	public void setReadstatus(Integer readstatus) {
-		this.readstatus = readstatus;
-	}
-
-	public Integer getModeltype() {
-		return this.modeltype;
-	}
-
-	public void setModeltype(Integer modeltype) {
-		this.modeltype = modeltype;
+	public void setReadtime(Date readtime) {
+		this.readtime = readtime;
 	}
 
 	public Integer getStatus() {

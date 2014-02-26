@@ -177,8 +177,7 @@ var totalcount=$page.totalCount;
 					current_page:currentpagenum,
 					paged: function(page) {     	  
 						currentpagenum = page;
-						refreshMessageInboxTable();
-		
+						refreshMessageInboxTable();		
     				}
 				});
 				

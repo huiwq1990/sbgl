@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="msgreceive" extends="admin">
+
+
+<!-- default entity manage action -->
+    	<action name="manageMsgreceive" class="ManageMessageAction" method="manageMsgreceive">
+        	<result name="success1">/message/msgreceiveManage.vm</result>
+			<result name="success2">/message/msgreceiveFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!-- entity full manage  -->		
+		<!-- default entity full manage action -->
+    	<action name="manageMsgreceiveFull" class="ManageMessageAction" method="manageMsgreceiveFull">
+        	<result name="success1">/message/msgreceiveFullManage.vm</result>
+			<result name="success2">/message/msgreceiveFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+		
+<!--添加实体-->
+    	<action name="addMsgreceive" class="MsgreceiveAction" method="addMsgreceive">
+        	<result type="redirectAction">
+				<param name="actionName">manageMsgreceive</param>
+			</result>
+        </action>
+		
+<!--edit entity-->
+        <action name="editMsgreceive" class="MsgreceiveAction" method="editMsgreceive">
+        	<result name="success">/message/msgreceiveEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--edit entity full-->
+        <action name="editMsgreceiveFull" class="MsgreceiveAction" method="editMsgreceiveFull">
+        	<result name="success">/message/msgreceiveFullEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!--del-->
+        <!--del entity-->
+        <action name="deleteMsgreceive" class="MsgreceiveAction" method="deleteMsgreceive">
+        	<result type="redirectAction">
+				<param name="actionName">manageMsgreceive</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteMsgreceiveFull" class="MsgreceiveAction" method="deleteMsgreceiveFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageMsgreceiveFull</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--更新实体-->
+        <action name="updateMsgreceive" class="MsgreceiveAction" method="updateMsgreceive">
+        	<result name="success">/message/msgreceiveUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--update entity full-->
+        <action name="updateMsgreceiveFull" class="MsgreceiveAction" method="updateMsgreceive">
+        	<result name="success">/message/msgreceiveFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+<!--根据id查询实体-->
+        <action name="selectMsgreceiveById" class="MsgreceiveAction" method="selectMsgreceiveById">
+        	<result name="success">/message/msgreceiveView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity-->		
+        <action name="viewMsgreceive" class="MsgreceiveAction" method="viewMsgreceive">
+        	<result name="success">/message/msgreceiveView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity full-->		
+        <action name="viewMsgreceiveFull" class="MsgreceiveAction" method="viewMsgreceiveFull">
+        	<result name="success">/message/msgreceiveFullView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="msgreceiveAjax" extends="json-default">
+    	<action name="addMsgreceiveAjax" class="MsgreceiveAction" method="addMsgreceiveAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        <action name="deleteMsgreceiveAjax" class="MsgreceiveAction" method="deleteMsgreceiveAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteMsgreceiveFullAjax" class="MsgreceiveAction" method="deleteMsgreceiveFullAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+    	<action name="updateMsgreceiveAjax" class="MsgreceiveAction" method="updateMsgreceiveAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
+	</package>
+
+</struts>

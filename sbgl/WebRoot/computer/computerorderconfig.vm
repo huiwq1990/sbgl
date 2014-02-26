@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 器材管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+#parse("include/includePageCompatibility.vm")
+
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+	
+	#set($currentPageModule="computer")
+	#parse("include/includeAdminHeader.vm")
+
+</header><!--/#header-wrap-->
+
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+	  		<!-- Navi -->
+		#set($currentPageType="computerorderManage")
+		#parse("computer/includeComputerManageNavi.vm")
+		
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">            
+            <div class="control-bar clearfix"><!--control-bar start-->
+              <div class="title pull-left">预约设置 $!actionMsg</div>
+			  <div class="tips">在此页面下管理课程预约规则，如规则的添加、修改、删除及维护等。</div>
+            </div><!--control-bar end-->
+            <div class="panel panel-default">
+              <div class="panel-body">
+                 <form id="manageComputerconfig" action="javascript:void(0)" class="form-horizontal" role="form">
+                  <div class="form-group">
+                    <label for="inputOpenBook" class="col-lg-2 control-label">开放预约</label>
+                    <div class="col-lg-4">
+                      <label class="radio-inline">
+                      	#if($computerorderconfig.openorder == 1)
+                        	<input type="radio" name="inputOpenBook" id="openBook1" value="1" checked="">是
+                        #else
+                        	<input type="radio" name="inputOpenBook" id="openBook1" value="1" >是
+                        #end	
+                      </label>
+                      <label class="radio-inline">
+                      	#if($computerorderconfig.openorder == 1)
+                       		<input type="radio" name="inputOpenBook" id="openBook2" value="0">否
+                       	  #else
+                        	<input type="radio" name="inputOpenBook" id="openBook2" value="0" checked="">否
+                        #end	
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputBookableSlot" class="col-lg-2 control-label">预约时段</label>
+                    <div class="col-lg-4">
+                      <label class="checkbox-inline">
+                      	#if($computerorderconfig.orderperiod.charAt(0) == 1)
+                        	<input type="checkbox" name="inputBookableSlot" id="bookSlot1" value="1" checked>上午
+                        #else
+                        	<input type="checkbox" name="inputBookableSlot" id="bookSlot1" value="1" >上午
+                        #end
+                      </label>
+                      <label class="checkbox-inline">
+                      	#if($computerorderconfig.orderperiod.charAt(1) == 1)
+                        	<input type="checkbox" name="inputBookableSlot" id="bookSlot2" value="2" checked>下午
+                         #else
+                        	<input type="checkbox" name="inputBookableSlot" id="bookSlot1" value="1" >上午
+                        #end
+                      </label>
+                      <label class="checkbox-inline">
+                       
+                        #if($computerorderconfig.orderperiod.charAt(2) == 1)
+                        	 <input type="checkbox" name="inputBookableSlot" id="bookSlot3" value="3" checked>晚上
+                         #else
+                        	 <input type="checkbox" name="inputBookableSlot" id="bookSlot3" value="3" >晚上
+                        #end
+                      </label>
+                    </div>
+                  </div>
+                  <!--
+                  <div class="form-group">
+                    <label for="inputRentableGroup" class="col-lg-2 control-label">可预约用户组</label>
+                    <div class="col-lg-4">
+                      <div class="group-hd">
+                        <div class="group-name pull-left">学生</div>
+                        <div class="group-line"><hr></div>
+                      </div>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputRentableGroup" id="rentGroup1" value="1" checked>本科
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputRentableGroup" id="rentGroup2" value="2" checked>硕士
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputRentableGroup" id="rentGroup3" value="3" checked>博士
+                      </label>
+                      <div class="group-hd">
+                        <div class="group-name pull-left">教师</div>
+                        <div class="group-line"><hr></div>
+                      </div>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputRentableGroup" id="rentGroup4" value="4" checked>在职
+                      </label>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputRentableGroup" id="rentGroup5" value="5" checked>退休
+                      </label>
+                      <div class="group-hd">
+                        <div class="group-name pull-left">其他</div>
+                        <div class="group-line"><hr></div>
+                      </div>
+                      <label class="checkbox-inline">
+                        <input type="checkbox" name="inputRentableGroup" id="rentGroup6" value="6" checked>其他
+                      </label>
+                    </div>
+                  </div>
+                  -->
+                  <div class="form-group">
+                    <label for="inputMaxDay" class="col-lg-2 control-label">最大预约天数</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" name = "maxorderday" id="maxorderday" value="$!computerorderconfig.maxorderday">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputRuleDetail" class="col-lg-2 control-label">预约规则说明</label>
+                    <div class="col-lg-4">
+                      <textarea class="form-control" id="inputRuleDetail" rows="4">$!computerorderconfig.orderintroduction</textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-4">
+                      <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+                      <button  class="btn btn-primary" action-type="saveComputerconfigButton">保 存</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+      </div><!--equip-wrap end-->
+
+
+	  	  <!--sidebar start-->
+#set($currentWebpage ="computerorderConfig.vm")
+#parse("computer/includeComputerorderManageSidebar.vm")
+      <!--sidebar end-->
+
+</section>
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/bootstrap-datepicker.js"></script>
+<script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="${jsDomain}/xdate.js"></script>
+<script src="${jsDomain}/computer/computerutil.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+
+
+<script>
+
+	$("body").on("click", "button[action-type|=saveComputerconfigButton]", function() {
+	
+		var _this = $(this);
+		var openbook = $("input[name=inputOpenBook]:checked").val();
+		var bookperiod='';
+		
+		$("input[name='inputBookableSlot']").each(function() {
+			if($(this).prop("checked") === true) {
+				bookperiod += "1";
+			}else{
+				bookperiod += "0";
+			}
+		});
+		
+		var postData = {
+			"openorder":openbook,	
+			"orderperiod":bookperiod,
+	 		"maxorderday":$('#maxorderday').val()
+		};
+	//	alert(bookperiod);
+		
+		jQuery.ajax({  
+		    url:"${webbaseurl}/addComputerorderconfigAjax.${strutsaction}",  
+		    type:"post",
+		    data:postData,
+			dataType: 'json',
+			success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+				if(returnJson.flag == 1){
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+					//location.href = "${webbaseurl}/manageComputerconfig.${strutsaction}";			
+				}else{
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});					
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+				}
+			}		  	  
+		});
+	});
+	//end add computer
+
+
+
+</script>
+
+
+<!--[if lt IE 10]>
+  <script src="${jsDomain}/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+</body>
+</html>

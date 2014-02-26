@@ -4,6 +4,12 @@
 	 <package name="notification" extends="admin">
 
 
+<!--跳转到通知首页-->
+        <action name="toNotificationInbox" class="NotificationAction" method="toNotificationInbox">
+        	<result name="success">/message/notificationInbox.vm</result>
+        	<result name="error">/common/error.vm</result> 
+        </action>
+
 <!-- default entity manage action -->
     	<action name="manageNotification" class="ManageMessageAction" method="manageNotification">
         	<result name="success1">/message/notificationManage.vm</result>
@@ -31,7 +37,7 @@
 <!--edit entity-->
         <action name="editNotification" class="NotificationAction" method="editNotification">
         	<result name="success">/message/notificationEdit.vm</result>
-        	<result name="error">/error.vm</result> 
+        	<result name="error">/common/error.vm</result> 
         </action>
 		
 <!--edit entity full-->

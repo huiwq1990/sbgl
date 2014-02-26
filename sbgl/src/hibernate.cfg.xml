@@ -114,6 +114,10 @@
 		<mapping resource="com/sbgl/app/entity/Courseschedule.hbm.xml" />
 		<mapping resource="com/sbgl/app/entity/Coursecomputer.hbm.xml" />
 		<mapping resource="com/sbgl/app/entity/Loginuser.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Msgsend.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Msgreceive.hbm.xml" />
+		<mapping
+			resource="com/sbgl/app/entity/Computerorderconfig.hbm.xml" />
 
 
 

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 消息中心</title>
+<title>$resource.str("messageinbox.title")</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -13,8 +13,10 @@
 </head>
 
 <body>
-<header id="header-wrap"><!--header-wrap-->
 
+
+<header id="header-wrap"><!--header-wrap-->
+  
 	#parse("include/includeGlobalHeader.vm")
   
 	<div class="nav-wrap clearfix">
@@ -27,6 +29,7 @@
   </div>
   
 </header><!--/#header-wrap-->
+
 <section id="main-wrap"><!--main-wrap-->
 
   <div id="main-content" class="clearfix"><!--main-content start-->
@@ -34,11 +37,14 @@
       <div class="container">
         <div class="row">
 		
-       	#set($currentWebpage="messageSendbox.vm")
+			
+		#set($currentWebpage="messageInbox.vm")
 		#parse("message/includeMessageSpaceSidebar.vm")
-		
-          <div class="col-sm-9">
 
+		  
+		  
+          <div class="col-sm-9">
+			
 			#parse("message/includeMessageControlbar.vm")
 
             <div class="thumbnail">
@@ -46,7 +52,22 @@
                 <h3 class="pull-left">收件箱</h3>
                 <div class="pull-right view-option"></div>
               </div>
-              <ul class="media-list" id="messageSendboxRefresh">
+              <ul class="media-list" id="messageInboxRefresh">
+				
+				<!--
+                <li class="media">
+                  <a rel="popover" class="pull-left" href="#">
+                    <img src="img/photo.jpg" width="46" height="46" class="img-rounded">
+                  </a>
+                  <div class="media-body">
+                    <div class="media-heading"><h5><a rel="popover" href="#">李全胜</a></h5><span>7月6日</span></div>
+                    <a class="title" href="消息中心-站内信-查看站内信.html">回复：关于HDR图像的问题 </a> <span class="label">3</span>
+                    <a href="#" class="btn btn-mini btn-white">删除</a>
+                  </div>
+                </li>
+				-->
+				
+				
 			<!-- 消息列表开始-->
 #set($listSize = $messageFullList.size() - 1)
 #if($listSize>=0)
@@ -59,9 +80,9 @@
                     <img src="img/photo.jpg" width="46" height="46" class="img-rounded">
                   </a>
                   <div class="media-body">
-                    <div class="media-heading"><h5><a rel="popover" href="#">$temp.senderloginusername</a></h5><span>$!date.format("yyyy年MM月dd日",$temp.messagesendtime)</span></div>
-                    <a class="title" href="#">$!temp.messagetitle</a>
-                    <a href="#" class="btn btn-mini btn-white">删除</a>
+                    <div class="media-heading"><h5><a rel="popover" href="#">$temp.senderloginusername</a></h5><span>$!date.format("yyyy年MM月dd日",$temp.messagesendtime) </span></div>
+                    <a class="title" href="${webbaseurl}\viewMessage.${strutsaction}?messageid=$!temp.messageid">$!temp.messagetitle</a>
+                    <a href="" class="btn btn-mini btn-white">删除</a>
                   </div>
                 </li>
 #end
@@ -73,8 +94,10 @@
                 <li><a href="#" rel="tooltip" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
                 <li><a href="#" rel="tooltip" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
               </ul>
-			    <!--page -->
-			  <div class="pagination">
+              
+			  
+			   <!--page -->
+  <div class="pagination">
 				<a href="#" class="first" data-action="first">&laquo;</a>
 				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
 				<input type="text" readonly="readonly" data-max-page="$!page.totalpage" />
@@ -82,7 +105,8 @@
 				<a href="#" class="last" data-action="last">&raquo;</a>
 			  </div>
 			  <!-- end page -->
-              
+			  
+			  
             </div>
           </div>
         </div>
@@ -107,40 +131,57 @@
 
     <!-- Le javascript
     ================================================== -->
-#parse("message/includeJsFile.vm")
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/jquery.jqpagination.js"></script>
+
+
 
 <script>
+
+
+
 //当前页
-var currentpagenum=$pageNo;
+var currentpagenum=1;
 var totalpage=$page.totalpage;
 var totalcount=$page.totalCount;
 
-
-$(function () {
 //换页时调用方法
 	$('.pagination').jqPagination({
     	paged: function(page) {
      	   // do something with the page variable
 			currentpagenum = page;
-			refreshMessageSendboxTable();
+			refreshMessageInboxTable();
 		
     	}
 	});
-});
-
 	
 
-	function refreshMessageSendboxTable(){
-	//alert("refreshMessageSendboxTable");
+	function refreshMessageInboxTable(){
+		//alert("refreshMessageInboxTable");
 		jQuery.ajax({  
-		    url: '${webbaseurl}/toMessageSendboxNextPage.action',  
+		    url: '${webbaseurl}/toMessageInboxNextPage.action',  
 		    type: "post",
 		    data:{pageNo:currentpagenum,totalpage:totalpage,totalcount:totalcount,callType:'ajaxType'},
 		    dataType: 'html',
 			success: function(data){
-				$("#messageSendboxRefresh").html(data);
+				$("#messageInboxRefresh").html(data);
 				
-			
+				$('.pagination').jqPagination({
+					link_string:'/?page={page_number}',
+					max_page:totalpage,
+					current_page:currentpagenum,
+					paged: function(page) {     	  
+						currentpagenum = page;
+						refreshMessageInboxTable();
+		
+    				}
+				});
+				
 				
 			}		  	  
 		});		

@@ -22,6 +22,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.actions.common.BaseAction;
 import com.sbgl.app.actions.computer.ComputerActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.*;
@@ -32,11 +33,10 @@ import com.sbgl.util.*;
 
 @Scope("prototype") 
 @Controller("NotificationAction")
-public class NotificationAction extends ActionSupport implements SessionAware,ModelDriven<Notification>{
+public class NotificationAction extends BaseAction implements ModelDriven<Notification>{
 	
 	private static final Log log = LogFactory.getLog(NotificationAction.class);
 
-	private Map<String, Object> session;
 	
 	//Service	
 	@Resource
@@ -50,45 +50,11 @@ public class NotificationAction extends ActionSupport implements SessionAware,Mo
 		
 	private String logprefix = "exec action method:";
 	
-	private int pageNo=1;
-	private String callType;
-	private Page page = new Page();
-	private ReturnJson returnJson = new ReturnJson();
+
 	
 	private String notificationIdsForDel;
-	
-	
-	
-	
-
-	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
-	private String returnInfo;
-	private String actionMsg; // Action间传递的消息参数
 
 
-
-	public int checkUserLogin(){
-		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
-		if(uidStr==null || uidStr.trim().equals("0") || uidStr.trim().equals("")){
-			return -1;
-		}
-		return Integer.valueOf(uidStr);
-	}
-	
-	public int getCurrentLanguage(){
-		return ComputerActionUtil.getLanguagetype((String) session.get(ComputerConfig.sessionLanguagetype));		
-	}
-	
-	public void buildReturnStr(int flag,String errorStr){
-		ReturnJson returnJson = new ReturnJson();
-		returnJson.setFlag(flag);			
-		returnJson.setReason(errorStr);
-		
-		JSONObject jo = JSONObject.fromObject(returnJson);
-		this.returnStr = jo.toString();
-//		return SUCCESS;
-	}
 	
 		
 //	/**
@@ -99,6 +65,38 @@ public class NotificationAction extends ActionSupport implements SessionAware,Mo
 //		
 //		
 //	}
+	
+//	查看站内信列表
+	public String toNotificationInbox(){
+		try{
+			
+		int uid = this.getCurrentUserId();
+		
+		String notifySql = " where receiverid = "+uid;
+		notificationList  = notificationService.selectNotificationByCondition(notifySql);
+		if(notificationList == null){
+			notificationList = new ArrayList<Notification>();
+		}
+		this.totalcount = notificationList.size();
+		this.setPageInfo(totalcount);
+		
+		notificationList  = notificationService.selectNotificationByConditionAndPage(notifySql, page);
+		if(notificationList == null){
+			notificationList = new ArrayList<Notification>();
+		}
+		
+		return SUCCESS;
+		
+		}catch(Exception e){
+			e.printStackTrace();
+			log.error("类NotificationAction的方法：addBbstagfavourite错误"+e);
+		}
+		
+		this.actionMsg = "内部错误";
+		return "error";
+         
+
+	}
 	
 	
 	//管理 查询
@@ -202,6 +200,7 @@ public class NotificationAction extends ActionSupport implements SessionAware,Mo
 	//del entityfull Ajax
 	public String deleteNotificationFullAjax( ){
 		
+		/*
 		log.info(logprefix + "deleteComputercategoryFullAjax");
              
 		try{
@@ -242,11 +241,9 @@ public class NotificationAction extends ActionSupport implements SessionAware,Mo
                 } catch (Exception e) {
                         e.printStackTrace();
                 }
-                
-                returnJson.setFlag(0);
-                returnJson.setReason("删除的内部错误");
-                JSONObject jo = JSONObject.fromObject(returnJson);
-                this.returnStr = jo.toString();
+                */
+               
+             
                 return SUCCESS;
         }
 
@@ -290,7 +287,7 @@ public class NotificationAction extends ActionSupport implements SessionAware,Mo
 //              选择能更改的属性，与界面一致	
   				tempNotification.setTitle(notification.getTitle());
   				tempNotification.setContent(notification.getContent());
-  				tempNotification.setSenderrid(notification.getSenderrid());
+  				tempNotification.setSenderid(notification.getSenderid());
   				tempNotification.setReceiverid(notification.getReceiverid());
   				tempNotification.setSendtime(notification.getSendtime());
   				tempNotification.setReadstatus(notification.getReadstatus());
@@ -388,100 +385,10 @@ public class NotificationAction extends ActionSupport implements SessionAware,Mo
 		return "Error";
 	}
 
-	//get set
-	public void setSession(Map<String, Object> session) {
-		// TODO Auto-generated method stub
-	    this.session = session;
-	}
-	
 	@Override
 	public Notification getModel() {
 		// TODO Auto-generated method stub
 		return notification;
 	}
 
-//  
-	public Notification getNotification() {
-		return notification;
-	}
-	
-	public void setNotification(Notification notification) {
-		this.notification = notification;
-	}
-//  entityModel
-	public Notification getNotificationModel() {
-		return notificationModel;
-	}
-	
-	public void setNotificationModel(Notification notificationModel) {
-		this.notificationModel = notificationModel;
-	}
-	
-	public NotificationFull getNotificationFull() {
-		return notificationFull;
-	}
-	
-	public void setNotificationFull(NotificationFull notificationFull) {
-		this.notificationFull = notificationFull;
-	}
-	
-	public List<Notification> getNotificationList() {
-		return notificationList;
-	}
-
-
-	public void setNotificationList(List<Notification> notificationList) {
-		this.notificationList = notificationList;
-	}
-
-	public List<NotificationFull> getNotificationFullList() {
-		return notificationFullList;
-	}
-
-
-	public void setNotificationFullList(List<NotificationFull> notificationFullList) {
-		this.notificationFullList = notificationFullList;
-	}
-
-	public String getReturnStr() {
-		return returnStr;
-	}
-
-
-	public void setReturnStr(String returnStr) {
-		this.returnStr = returnStr;
-	}
-	
-	public Page getPage() {
-		return page;
-	}
-
-
-	public void setPage(Page page) {
-		this.page = page;
-	}
-	
-	public int getNotificationid() {
-		return notificationid;
-	}
-
-	public void setNotificationid(int notificationid) {
-		this.notificationid = notificationid;
-	}
-		public int getPageNo() {
-		return pageNo;
-	}
-
-	public void setPageNo(int pageNo) {
-		this.pageNo = pageNo;
-	}
-	
-	
-	public String getNotificationIdsForDel() {
-                return notificationIdsForDel;
-        }
-
-        public void setNotificationIdsForDel(String notificationIdsForDel) {
-                this.notificationIdsForDel = notificationIdsForDel;
-        }
 }

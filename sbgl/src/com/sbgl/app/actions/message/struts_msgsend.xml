@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="msgsend" extends="admin">
+
+<!-- 跳转到发送站内信界面 -->
+        <action name="toSendMsgPage" class="MsgsendAction" method="toSendMsgPage">
+        	<result name="success">/message/msgsendAdd.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+
+     
+
+<!-- default entity manage action -->
+    	<action name="manageMsgsend" class="ManageMessageAction" method="manageMsgsend">
+        	<result name="success1">/message/msgsendManage.vm</result>
+			<result name="success2">/message/msgsendFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!-- entity full manage  -->		
+		<!-- default entity full manage action -->
+    	<action name="manageMsgsendFull" class="ManageMessageAction" method="manageMsgsendFull">
+        	<result name="success1">/message/msgsendFullManage.vm</result>
+			<result name="success2">/message/msgsendFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+		
+<!--添加实体-->
+    	<action name="addMsgsend" class="MsgsendAction" method="addMsgsend">
+        	<result type="redirectAction">
+				<param name="actionName">manageMsgsend</param>
+			</result>
+        </action>
+		
+<!--edit entity-->
+        <action name="editMsgsend" class="MsgsendAction" method="editMsgsend">
+        	<result name="success">/message/msgsendEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--edit entity full-->
+        <action name="editMsgsendFull" class="MsgsendAction" method="editMsgsendFull">
+        	<result name="success">/message/msgsendFullEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!--del-->
+        <!--del entity-->
+        <action name="deleteMsgsend" class="MsgsendAction" method="deleteMsgsend">
+        	<result type="redirectAction">
+				<param name="actionName">manageMsgsend</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteMsgsendFull" class="MsgsendAction" method="deleteMsgsendFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageMsgsendFull</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--更新实体-->
+        <action name="updateMsgsend" class="MsgsendAction" method="updateMsgsend">
+        	<result name="success">/message/msgsendUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--update entity full-->
+        <action name="updateMsgsendFull" class="MsgsendAction" method="updateMsgsend">
+        	<result name="success">/message/msgsendFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+<!--根据id查询实体-->
+        <action name="selectMsgsendById" class="MsgsendAction" method="selectMsgsendById">
+        	<result name="success">/message/msgsendView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity-->		
+        <action name="viewMsgsend" class="MsgsendAction" method="viewMsgsend">
+        	<result name="success">/message/msgsendView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity full-->		
+        <action name="viewMsgsendFull" class="MsgsendAction" method="viewMsgsendFull">
+        	<result name="success">/message/msgsendFullView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="msgsendAjax" extends="json-default">
+    
+    	<action name="sendMsgAjax" class="MsgsendAction" method="sendMsgAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        <action name="deleteMsgsendAjax" class="MsgsendAction" method="deleteMsgsendAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteMsgsendFullAjax" class="MsgsendAction" method="deleteMsgsendFullAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+    	<action name="updateMsgsendAjax" class="MsgsendAction" method="updateMsgsendAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
+	</package>
+
+</struts>

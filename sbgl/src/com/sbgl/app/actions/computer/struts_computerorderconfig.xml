@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="computerorderconfig" extends="admin">
+
+        <action name="toSetComputerorderconfig" class="ComputerorderconfigAction" method="toSetComputerorderconfig">
+        	<result name="success">/computer/computerorderconfig.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+
+<!-- default entity manage action -->
+    	<action name="manageComputerorderconfig" class="ManageComputerAction" method="manageComputerorderconfig">
+        	<result name="success1">/computer/computerorderconfigManage.vm</result>
+			<result name="success2">/computer/computerorderconfigFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!-- entity full manage  -->		
+		<!-- default entity full manage action -->
+    	<action name="manageComputerorderconfigFull" class="ManageComputerAction" method="manageComputerorderconfigFull">
+        	<result name="success1">/computer/computerorderconfigFullManage.vm</result>
+			<result name="success2">/computer/computerorderconfigFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+		
+<!--添加实体-->
+    	<action name="addComputerorderconfig" class="ComputerorderconfigAction" method="addComputerorderconfig">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerorderconfig</param>
+			</result>
+        </action>
+		
+<!--edit entity-->
+        <action name="editComputerorderconfig" class="ComputerorderconfigAction" method="editComputerorderconfig">
+        	<result name="success">/computer/computerorderconfigEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--edit entity full-->
+        <action name="editComputerorderconfigFull" class="ComputerorderconfigAction" method="editComputerorderconfigFull">
+        	<result name="success">/computer/computerorderconfigFullEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!--del-->
+        <!--del entity-->
+        <action name="deleteComputerorderconfig" class="ComputerorderconfigAction" method="deleteComputerorderconfig">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerorderconfig</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteComputerorderconfigFull" class="ComputerorderconfigAction" method="deleteComputerorderconfigFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageComputerorderconfigFull</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--更新实体-->
+        <action name="updateComputerorderconfig" class="ComputerorderconfigAction" method="updateComputerorderconfig">
+        	<result name="success">/computer/computerorderconfigUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--update entity full-->
+        <action name="updateComputerorderconfigFull" class="ComputerorderconfigAction" method="updateComputerorderconfig">
+        	<result name="success">/computer/computerorderconfigFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+<!--根据id查询实体-->
+        <action name="selectComputerorderconfigById" class="ComputerorderconfigAction" method="selectComputerorderconfigById">
+        	<result name="success">/computer/computerorderconfigView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity-->		
+        <action name="viewComputerorderconfig" class="ComputerorderconfigAction" method="viewComputerorderconfig">
+        	<result name="success">/computer/computerorderconfigView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity full-->		
+        <action name="viewComputerorderconfigFull" class="ComputerorderconfigAction" method="viewComputerorderconfigFull">
+        	<result name="success">/computer/computerorderconfigFullView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="computerorderconfigAjax" extends="json-default">
+    	<action name="addComputerorderconfigAjax" class="ComputerorderconfigAction" method="addComputerorderconfigAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        <action name="deleteComputerorderconfigAjax" class="ComputerorderconfigAction" method="deleteComputerorderconfigAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteComputerorderconfigFullAjax" class="ComputerorderconfigAction" method="deleteComputerorderconfigFullAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+    	<action name="updateComputerorderconfigAjax" class="ComputerorderconfigAction" method="updateComputerorderconfigAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
+	</package>
+
+</struts>

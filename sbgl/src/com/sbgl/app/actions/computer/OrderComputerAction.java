@@ -29,6 +29,7 @@ import com.sbgl.app.entity.Computer;
 import com.sbgl.app.entity.ComputerFull;
 import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.ComputercategoryFull;
+import com.sbgl.app.entity.Computerconfig;
 import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.app.entity.Computerorder;
@@ -38,6 +39,7 @@ import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.services.computer.ComputerService;
 import com.sbgl.app.services.computer.ComputercategoryService;
+import com.sbgl.app.services.computer.ComputerconfigService;
 import com.sbgl.app.services.computer.ComputermodelService;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
@@ -97,6 +99,11 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 	private Integer computerorderdetailid; //entity full 的id属性名称		
 	
 	
+	@Resource
+	private ComputerconfigService computerconfigService;	
+	private Computerconfig computerconfig = new Computerconfig();//实例化一个模型
+	private List<Computerconfig> computerconfigList = new ArrayList<Computerconfig>();
+	
 	List<String> ordernum = new ArrayList<String>();
 
 	private String logprefix = "exec method";
@@ -119,7 +126,7 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 	HashMap<Integer,ArrayList<String>> dateMap = new HashMap<Integer,ArrayList<String>>();
 
 	
-	
+//	预约类型
 	int computerordertype;
 	
 //	提交预约表单的参数
@@ -127,6 +134,12 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 	
 	
 	public String toComputerIndividualorderPage(){
+		
+//		查询全部
+		computerconfigList = computerconfigService.selectComputerconfigAll();
+		computerconfigList.size()
+		if()
+		
 		
 		
 		computerordertype = ComputerorderInfo.IndividualOrder;
