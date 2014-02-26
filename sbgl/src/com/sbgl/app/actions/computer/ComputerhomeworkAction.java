@@ -1,5 +1,6 @@
 package com.sbgl.app.actions.computer;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputerhomeworkService;
 import com.sbgl.app.services.computer.ComputerhomeworkreceiverService;
+import com.sbgl.app.services.computer.ComputerorderclassruleService;
 import com.sbgl.app.services.computer.ComputerorderclassruledetailService;
 import com.sbgl.app.services.teach.CourseService;
 import com.sbgl.util.*;
@@ -70,22 +72,27 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 
 
 	private String logprefix = "exec action method:";		
-	Page page = new Page();
-	Integer pageNo=1;	
+
 	
 	private List<ComputerhomeworkFull> newComputerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
 	private List<ComputerhomeworkFull> finishComputerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
 
 	
 //	add homework	
-	private String receiverids;//接收者
+
 
 
 // del 
 	String computerhomeworkIdsForDel;
 	
 	
-	
+	@Resource
+	private ComputerorderclassruleService computerorderclassruleService;	
+	private Computerorderclassrule computerorderclassrule = new Computerorderclassrule();//实例化一个模型
+	private Computerorderclassrule computerorderclassruleModel = new Computerorderclassrule();//实例化一个模型
+	private ComputerorderclassruleFull computerorderclassruleFull = new ComputerorderclassruleFull();//实例化一个模型
+	List<Computerorderclassrule> computerorderclassruleList = new ArrayList<Computerorderclassrule>();
+	List<ComputerorderclassruleFull> computerorderclassruleFullList = new ArrayList<ComputerorderclassruleFull>();
 	
 	@Resource
 	private ComputerhomeworkreceiverService computerhomeworkreceiverService;
@@ -104,10 +111,15 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 	List<Computerorderclassruledetail> computerorderclassruledetailList = new ArrayList<Computerorderclassruledetail>();
 	List<ComputerorderclassruledetailFull> computerorderclassruledetailFullList = new ArrayList<ComputerorderclassruledetailFull>();
 	
-	
-	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
-	private String returnInfo;
-	private String actionMsg; // Action间传递的消息参数
+
+//	改进的Homework添加
+	private String receiverids;//接收者
+	private Integer classid;
+	private Date orderstarttime;
+	private Date orderendtime;
+	private Integer availableordertime;
+//	规则允许借的pc
+	private String allowborrowpcids;
 	
 	
 
@@ -252,6 +264,77 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 	}
 
 
+//  ajax add	
+	public String addComputerhomeworkAjaxNew(){	
+		log.info("Add Entity Ajax Manner");
+		
+		
+		
+		try {
+			
+//			添加规则
+			Computerorderclassrule tempRule = new Computerorderclassrule();
+			tempRule.setClassid(classid);
+			tempRule.setAvailableordertime(availableordertime);
+			tempRule.setOrderstarttime(orderstarttime);
+			tempRule.setOrderendtime(orderendtime);
+			computerorderclassruleService.addComputerorderclassrule(tempRule);
+			
+//			规则详情
+			String[] pcid = allowborrowpcids.split(";");			
+			for (int i = 0; i < pcid.length; i++) {
+				Computerorderclassruledetail c = new Computerorderclassruledetail();
+				c.setAllowedcomputermodelid(Integer.valueOf(pcid[i]));
+				c.setComputerorderclassruleid(tempRule.getId());
+				computerorderclassruledetailService.addComputerorderclassruledetail(c);
+			}
+			
+			
+			
+			Computerhomework temp = new Computerhomework();
+//			设置规则id
+			
+			// 将model里的属性值赋给temp
+			BeanUtils.copyProperties(temp, computerhomework);			
+			temp.setCreatetime(DateUtil.currentDate());
+			temp.setComputerorderclassruleid(tempRule.getId());
+//			先添加homework，再添加接收者
+			computerhomeworkService.addComputerhomework(temp);
+			
+			String[] userIds = receiverids.split(",");
+			for (int i = 0; i < userIds.length; i++) {
+				Computerhomeworkreceiver chr = new Computerhomeworkreceiver();
+				chr.setComputerhomeworkid(temp.getId());
+				chr.setUserid(Integer.valueOf(userIds[i]));
+				chr.setHasorder(0);
+				chr.setStatus(0);
+				chr.setHasview(0);
+				computerhomeworkreceiverService.addComputerhomeworkreceiver(chr);
+			}
+			
+			
+
+			
+			
+			
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn,"作业发送成功");
+			
+			return SUCCESS;
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}catch(Exception e){
+			e.printStackTrace();
+			log.error("类ComputerhomeworkAction的方法：addBbstagfavourite错误"+e);
+		}
+		
+		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn,"内部错误");		
+		return SUCCESS;
+	}
+
+
+	
 	//del Ajax
 	public String deleteComputerhomeworkAjax( ){
 		
@@ -549,376 +632,550 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 		return computerhomework;
 	}
 
-//  
+
+
+	public ComputerhomeworkService getComputerhomeworkService() {
+		return computerhomeworkService;
+	}
+
+
+
+	public void setComputerhomeworkService(
+			ComputerhomeworkService computerhomeworkService) {
+		this.computerhomeworkService = computerhomeworkService;
+	}
+
+
+
 	public Computerhomework getComputerhomework() {
 		return computerhomework;
 	}
-	
+
+
+
 	public void setComputerhomework(Computerhomework computerhomework) {
 		this.computerhomework = computerhomework;
 	}
-//  entityModel
+
+
+
 	public Computerhomework getComputerhomeworkModel() {
 		return computerhomeworkModel;
 	}
-	
+
+
+
 	public void setComputerhomeworkModel(Computerhomework computerhomeworkModel) {
 		this.computerhomeworkModel = computerhomeworkModel;
 	}
-	
+
+
+
 	public ComputerhomeworkFull getComputerhomeworkFull() {
 		return computerhomeworkFull;
 	}
-	
+
+
+
 	public void setComputerhomeworkFull(ComputerhomeworkFull computerhomeworkFull) {
 		this.computerhomeworkFull = computerhomeworkFull;
 	}
-	
+
+
+
 	public List<Computerhomework> getComputerhomeworkList() {
 		return computerhomeworkList;
 	}
+
 
 
 	public void setComputerhomeworkList(List<Computerhomework> computerhomeworkList) {
 		this.computerhomeworkList = computerhomeworkList;
 	}
 
+
+
 	public List<ComputerhomeworkFull> getComputerhomeworkFullList() {
 		return computerhomeworkFullList;
 	}
 
 
-	public void setComputerhomeworkFullList(List<ComputerhomeworkFull> computerhomeworkFullList) {
+
+	public void setComputerhomeworkFullList(
+			List<ComputerhomeworkFull> computerhomeworkFullList) {
 		this.computerhomeworkFullList = computerhomeworkFullList;
 	}
 
-	public String getReturnStr() {
-		return returnStr;
-	}
 
 
-	public void setReturnStr(String returnStr) {
-		this.returnStr = returnStr;
-	}
-	
-	public Page getPage() {
-		return page;
-	}
-
-
-	public void setPage(Page page) {
-		this.page = page;
-	}
-	
-	public int getComputerhomeworkid() {
+	public Integer getComputerhomeworkid() {
 		return computerhomeworkid;
 	}
 
-	public void setComputerhomeworkid(int computerhomeworkid) {
+
+
+	public void setComputerhomeworkid(Integer computerhomeworkid) {
 		this.computerhomeworkid = computerhomeworkid;
 	}
-	
-	
+
+
+
+	public CourseService getCourseService() {
+		return courseService;
+	}
+
+
+
+	public void setCourseService(CourseService courseService) {
+		this.courseService = courseService;
+	}
+
+
+
+	public Integer getCourseid() {
+		return courseid;
+	}
+
+
+
+	public void setCourseid(Integer courseid) {
+		this.courseid = courseid;
+	}
+
+
+
+	public Course getCourse() {
+		return course;
+	}
+
+
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+
+
+	public Course getCourseModel() {
+		return courseModel;
+	}
+
+
+
+	public void setCourseModel(Course courseModel) {
+		this.courseModel = courseModel;
+	}
+
+
+
+	public CourseFull getCourseFull() {
+		return courseFull;
+	}
+
+
+
+	public void setCourseFull(CourseFull courseFull) {
+		this.courseFull = courseFull;
+	}
+
+
+
+	public List<Course> getCourseList() {
+		return courseList;
+	}
+
+
+
+	public void setCourseList(List<Course> courseList) {
+		this.courseList = courseList;
+	}
+
+
+
+	public List<CourseFull> getCourseFullList() {
+		return courseFullList;
+	}
+
+
+
+	public void setCourseFullList(List<CourseFull> courseFullList) {
+		this.courseFullList = courseFullList;
+	}
+
+
+
+	public List<CourseFull> getCourseFullListCh() {
+		return courseFullListCh;
+	}
+
+
+
+	public void setCourseFullListCh(List<CourseFull> courseFullListCh) {
+		this.courseFullListCh = courseFullListCh;
+	}
+
+
+
+	public List<CourseFull> getCourseFullListEn() {
+		return courseFullListEn;
+	}
+
+
+
+	public void setCourseFullListEn(List<CourseFull> courseFullListEn) {
+		this.courseFullListEn = courseFullListEn;
+	}
+
+
+
+	public String getLogprefix() {
+		return logprefix;
+	}
+
+
+
+	public void setLogprefix(String logprefix) {
+		this.logprefix = logprefix;
+	}
+
+
+
+	public List<ComputerhomeworkFull> getNewComputerhomeworkFullList() {
+		return newComputerhomeworkFullList;
+	}
+
+
+
+	public void setNewComputerhomeworkFullList(
+			List<ComputerhomeworkFull> newComputerhomeworkFullList) {
+		this.newComputerhomeworkFullList = newComputerhomeworkFullList;
+	}
+
+
+
+	public List<ComputerhomeworkFull> getFinishComputerhomeworkFullList() {
+		return finishComputerhomeworkFullList;
+	}
+
+
+
+	public void setFinishComputerhomeworkFullList(
+			List<ComputerhomeworkFull> finishComputerhomeworkFullList) {
+		this.finishComputerhomeworkFullList = finishComputerhomeworkFullList;
+	}
+
+
+
 	public String getComputerhomeworkIdsForDel() {
-                return computerhomeworkIdsForDel;
-        }
+		return computerhomeworkIdsForDel;
+	}
 
-        public void setComputerhomeworkIdsForDel(String computerhomeworkIdsForDel) {
-                this.computerhomeworkIdsForDel = computerhomeworkIdsForDel;
-        }
 
-		public ComputerhomeworkService getComputerhomeworkService() {
-			return computerhomeworkService;
-		}
 
-		public void setComputerhomeworkService(
-				ComputerhomeworkService computerhomeworkService) {
-			this.computerhomeworkService = computerhomeworkService;
-		}
+	public void setComputerhomeworkIdsForDel(String computerhomeworkIdsForDel) {
+		this.computerhomeworkIdsForDel = computerhomeworkIdsForDel;
+	}
 
-		public String getActionMsg() {
-			return actionMsg;
-		}
 
-		public void setActionMsg(String actionMsg) {
-			this.actionMsg = actionMsg;
-		}
 
-		public String getLogprefix() {
-			return logprefix;
-		}
+	public ComputerorderclassruleService getComputerorderclassruleService() {
+		return computerorderclassruleService;
+	}
 
-		public void setLogprefix(String logprefix) {
-			this.logprefix = logprefix;
-		}
 
-		public ComputerhomeworkreceiverService getComputerhomeworkreceiverService() {
-			return computerhomeworkreceiverService;
-		}
 
-		public void setComputerhomeworkreceiverService(
-				ComputerhomeworkreceiverService computerhomeworkreceiverService) {
-			this.computerhomeworkreceiverService = computerhomeworkreceiverService;
-		}
+	public void setComputerorderclassruleService(
+			ComputerorderclassruleService computerorderclassruleService) {
+		this.computerorderclassruleService = computerorderclassruleService;
+	}
+
+
+
+	public Computerorderclassrule getComputerorderclassrule() {
+		return computerorderclassrule;
+	}
+
+
+
+	public void setComputerorderclassrule(
+			Computerorderclassrule computerorderclassrule) {
+		this.computerorderclassrule = computerorderclassrule;
+	}
+
+
+
+	public Computerorderclassrule getComputerorderclassruleModel() {
+		return computerorderclassruleModel;
+	}
+
+
+
+	public void setComputerorderclassruleModel(
+			Computerorderclassrule computerorderclassruleModel) {
+		this.computerorderclassruleModel = computerorderclassruleModel;
+	}
+
+
+
+	public ComputerorderclassruleFull getComputerorderclassruleFull() {
+		return computerorderclassruleFull;
+	}
+
+
+
+	public void setComputerorderclassruleFull(
+			ComputerorderclassruleFull computerorderclassruleFull) {
+		this.computerorderclassruleFull = computerorderclassruleFull;
+	}
+
+
+
+	public List<Computerorderclassrule> getComputerorderclassruleList() {
+		return computerorderclassruleList;
+	}
+
+
+
+	public void setComputerorderclassruleList(
+			List<Computerorderclassrule> computerorderclassruleList) {
+		this.computerorderclassruleList = computerorderclassruleList;
+	}
+
+
+
+	public List<ComputerorderclassruleFull> getComputerorderclassruleFullList() {
+		return computerorderclassruleFullList;
+	}
+
+
+
+	public void setComputerorderclassruleFullList(
+			List<ComputerorderclassruleFull> computerorderclassruleFullList) {
+		this.computerorderclassruleFullList = computerorderclassruleFullList;
+	}
+
+
+
+	public ComputerhomeworkreceiverService getComputerhomeworkreceiverService() {
+		return computerhomeworkreceiverService;
+	}
+
+
+
+	public void setComputerhomeworkreceiverService(
+			ComputerhomeworkreceiverService computerhomeworkreceiverService) {
+		this.computerhomeworkreceiverService = computerhomeworkreceiverService;
+	}
+
+
+
+	public Computerhomeworkreceiver getComputerhomeworkreceiver() {
+		return computerhomeworkreceiver;
+	}
+
+
+
+	public void setComputerhomeworkreceiver(
+			Computerhomeworkreceiver computerhomeworkreceiver) {
+		this.computerhomeworkreceiver = computerhomeworkreceiver;
+	}
+
+
+
+	public ComputerhomeworkreceiverFull getComputerhomeworkreceiverFull() {
+		return computerhomeworkreceiverFull;
+	}
+
+
+
+	public void setComputerhomeworkreceiverFull(
+			ComputerhomeworkreceiverFull computerhomeworkreceiverFull) {
+		this.computerhomeworkreceiverFull = computerhomeworkreceiverFull;
+	}
+
+
+
+	public List<Computerhomeworkreceiver> getComputerhomeworkreceiverList() {
+		return computerhomeworkreceiverList;
+	}
+
+
+
+	public void setComputerhomeworkreceiverList(
+			List<Computerhomeworkreceiver> computerhomeworkreceiverList) {
+		this.computerhomeworkreceiverList = computerhomeworkreceiverList;
+	}
+
+
+
+	public List<ComputerhomeworkreceiverFull> getComputerhomeworkreceiverFullList() {
+		return computerhomeworkreceiverFullList;
+	}
+
+
+
+	public void setComputerhomeworkreceiverFullList(
+			List<ComputerhomeworkreceiverFull> computerhomeworkreceiverFullList) {
+		this.computerhomeworkreceiverFullList = computerhomeworkreceiverFullList;
+	}
+
+
+
+	public ComputerorderclassruledetailService getComputerorderclassruledetailService() {
+		return computerorderclassruledetailService;
+	}
+
+
+
+	public void setComputerorderclassruledetailService(
+			ComputerorderclassruledetailService computerorderclassruledetailService) {
+		this.computerorderclassruledetailService = computerorderclassruledetailService;
+	}
+
+
+
+	public Computerorderclassruledetail getComputerorderclassruledetail() {
+		return computerorderclassruledetail;
+	}
+
+
+
+	public void setComputerorderclassruledetail(
+			Computerorderclassruledetail computerorderclassruledetail) {
+		this.computerorderclassruledetail = computerorderclassruledetail;
+	}
+
+
+
+	public Computerorderclassruledetail getComputerorderclassruledetailModel() {
+		return computerorderclassruledetailModel;
+	}
+
+
+
+	public void setComputerorderclassruledetailModel(
+			Computerorderclassruledetail computerorderclassruledetailModel) {
+		this.computerorderclassruledetailModel = computerorderclassruledetailModel;
+	}
+
+
+
+	public ComputerorderclassruledetailFull getComputerorderclassruledetailFull() {
+		return computerorderclassruledetailFull;
+	}
+
+
+
+	public void setComputerorderclassruledetailFull(
+			ComputerorderclassruledetailFull computerorderclassruledetailFull) {
+		this.computerorderclassruledetailFull = computerorderclassruledetailFull;
+	}
+
+
+
+	public List<Computerorderclassruledetail> getComputerorderclassruledetailList() {
+		return computerorderclassruledetailList;
+	}
+
+
+
+	public void setComputerorderclassruledetailList(
+			List<Computerorderclassruledetail> computerorderclassruledetailList) {
+		this.computerorderclassruledetailList = computerorderclassruledetailList;
+	}
+
+
+
+	public List<ComputerorderclassruledetailFull> getComputerorderclassruledetailFullList() {
+		return computerorderclassruledetailFullList;
+	}
+
+
+
+	public void setComputerorderclassruledetailFullList(
+			List<ComputerorderclassruledetailFull> computerorderclassruledetailFullList) {
+		this.computerorderclassruledetailFullList = computerorderclassruledetailFullList;
+	}
+
+
+
+	public String getReceiverids() {
+		return receiverids;
+	}
+
+
+
+	public void setReceiverids(String receiverids) {
+		this.receiverids = receiverids;
+	}
+
+
+
+	public Integer getClassid() {
+		return classid;
+	}
+
+
+
+	public void setClassid(Integer classid) {
+		this.classid = classid;
+	}
+
+
+
+	public Date getOrderstarttime() {
+		return orderstarttime;
+	}
+
+
+
+	public void setOrderstarttime(Date orderstarttime) {
+		this.orderstarttime = orderstarttime;
+	}
+
+
+
+	public Date getOrderendtime() {
+		return orderendtime;
+	}
+
+
+
+	public void setOrderendtime(Date orderendtime) {
+		this.orderendtime = orderendtime;
+	}
+
+
+
+	public Integer getAvailableordertime() {
+		return availableordertime;
+	}
+
+
+
+	public void setAvailableordertime(Integer availableordertime) {
+		this.availableordertime = availableordertime;
+	}
+
+
+
+	public String getAllowborrowpcids() {
+		return allowborrowpcids;
+	}
+
+
+
+	public void setAllowborrowpcids(String allowborrowpcids) {
+		this.allowborrowpcids = allowborrowpcids;
+	}
+
+
+
+	public static Log getLog() {
+		return log;
+	}
 
 	
-
-		public String getReceiverids() {
-			return receiverids;
-		}
-
-
-
-		public void setReceiverids(String receiverids) {
-			this.receiverids = receiverids;
-		}
-
-
-		public static Log getLog() {
-			return log;
-		}
-
-
-		public void setComputerhomeworkid(Integer computerhomeworkid) {
-			this.computerhomeworkid = computerhomeworkid;
-		}
-
-
-
-		public Computerhomeworkreceiver getComputerhomeworkreceiver() {
-			return computerhomeworkreceiver;
-		}
-
-
-
-		public void setComputerhomeworkreceiver(
-				Computerhomeworkreceiver computerhomeworkreceiver) {
-			this.computerhomeworkreceiver = computerhomeworkreceiver;
-		}
-
-
-
-		public ComputerhomeworkreceiverFull getComputerhomeworkreceiverFull() {
-			return computerhomeworkreceiverFull;
-		}
-
-
-
-		public void setComputerhomeworkreceiverFull(
-				ComputerhomeworkreceiverFull computerhomeworkreceiverFull) {
-			this.computerhomeworkreceiverFull = computerhomeworkreceiverFull;
-		}
-
-
-
-		public List<Computerhomeworkreceiver> getComputerhomeworkreceiverList() {
-			return computerhomeworkreceiverList;
-		}
-
-
-
-		public void setComputerhomeworkreceiverList(
-				List<Computerhomeworkreceiver> computerhomeworkreceiverList) {
-			this.computerhomeworkreceiverList = computerhomeworkreceiverList;
-		}
-
-
-
-		public List<ComputerhomeworkreceiverFull> getComputerhomeworkreceiverFullList() {
-			return computerhomeworkreceiverFullList;
-		}
-
-
-
-		public void setComputerhomeworkreceiverFullList(
-				List<ComputerhomeworkreceiverFull> computerhomeworkreceiverFullList) {
-			this.computerhomeworkreceiverFullList = computerhomeworkreceiverFullList;
-		}
-
-
-
-		public ComputerorderclassruledetailService getComputerorderclassruledetailService() {
-			return computerorderclassruledetailService;
-		}
-
-
-
-		public void setComputerorderclassruledetailService(
-				ComputerorderclassruledetailService computerorderclassruledetailService) {
-			this.computerorderclassruledetailService = computerorderclassruledetailService;
-		}
-
-
-
-		public Computerorderclassruledetail getComputerorderclassruledetail() {
-			return computerorderclassruledetail;
-		}
-
-
-
-		public void setComputerorderclassruledetail(
-				Computerorderclassruledetail computerorderclassruledetail) {
-			this.computerorderclassruledetail = computerorderclassruledetail;
-		}
-
-
-
-		public Computerorderclassruledetail getComputerorderclassruledetailModel() {
-			return computerorderclassruledetailModel;
-		}
-
-
-
-		public void setComputerorderclassruledetailModel(
-				Computerorderclassruledetail computerorderclassruledetailModel) {
-			this.computerorderclassruledetailModel = computerorderclassruledetailModel;
-		}
-
-
-
-		public ComputerorderclassruledetailFull getComputerorderclassruledetailFull() {
-			return computerorderclassruledetailFull;
-		}
-
-
-
-		public void setComputerorderclassruledetailFull(
-				ComputerorderclassruledetailFull computerorderclassruledetailFull) {
-			this.computerorderclassruledetailFull = computerorderclassruledetailFull;
-		}
-
-
-
-		public List<Computerorderclassruledetail> getComputerorderclassruledetailList() {
-			return computerorderclassruledetailList;
-		}
-
-
-
-		public void setComputerorderclassruledetailList(
-				List<Computerorderclassruledetail> computerorderclassruledetailList) {
-			this.computerorderclassruledetailList = computerorderclassruledetailList;
-		}
-
-
-
-		public List<ComputerorderclassruledetailFull> getComputerorderclassruledetailFullList() {
-			return computerorderclassruledetailFullList;
-		}
-
-
-
-		public void setComputerorderclassruledetailFullList(
-				List<ComputerorderclassruledetailFull> computerorderclassruledetailFullList) {
-			this.computerorderclassruledetailFullList = computerorderclassruledetailFullList;
-		}
-
-
-
-		public List<ComputerhomeworkFull> getNewComputerhomeworkFullList() {
-			return newComputerhomeworkFullList;
-		}
-
-
-
-		public void setNewComputerhomeworkFullList(
-				List<ComputerhomeworkFull> newComputerhomeworkFullList) {
-			this.newComputerhomeworkFullList = newComputerhomeworkFullList;
-		}
-
-
-
-		public List<ComputerhomeworkFull> getFinishComputerhomeworkFullList() {
-			return finishComputerhomeworkFullList;
-		}
-
-
-
-		public void setFinishComputerhomeworkFullList(
-				List<ComputerhomeworkFull> finishComputerhomeworkFullList) {
-			this.finishComputerhomeworkFullList = finishComputerhomeworkFullList;
-		}
-
-		public String getReturnInfo() {
-			return returnInfo;
-		}
-
-		public void setReturnInfo(String returnInfo) {
-			this.returnInfo = returnInfo;
-		}
-
-		public CourseService getCourseService() {
-			return courseService;
-		}
-
-		public void setCourseService(CourseService courseService) {
-			this.courseService = courseService;
-		}
-
-		public Integer getCourseid() {
-			return courseid;
-		}
-
-		public void setCourseid(Integer courseid) {
-			this.courseid = courseid;
-		}
-
-		public Course getCourse() {
-			return course;
-		}
-
-		public void setCourse(Course course) {
-			this.course = course;
-		}
-
-		public Course getCourseModel() {
-			return courseModel;
-		}
-
-		public void setCourseModel(Course courseModel) {
-			this.courseModel = courseModel;
-		}
-
-		public CourseFull getCourseFull() {
-			return courseFull;
-		}
-
-		public void setCourseFull(CourseFull courseFull) {
-			this.courseFull = courseFull;
-		}
-
-		public List<Course> getCourseList() {
-			return courseList;
-		}
-
-		public void setCourseList(List<Course> courseList) {
-			this.courseList = courseList;
-		}
-
-		public List<CourseFull> getCourseFullList() {
-			return courseFullList;
-		}
-
-		public void setCourseFullList(List<CourseFull> courseFullList) {
-			this.courseFullList = courseFullList;
-		}
-
-		public List<CourseFull> getCourseFullListCh() {
-			return courseFullListCh;
-		}
-
-		public void setCourseFullListCh(List<CourseFull> courseFullListCh) {
-			this.courseFullListCh = courseFullListCh;
-		}
-
-		public List<CourseFull> getCourseFullListEn() {
-			return courseFullListEn;
-		}
-
-		public void setCourseFullListEn(List<CourseFull> courseFullListEn) {
-			this.courseFullListEn = courseFullListEn;
-		}
-		
-		
-        
+	
+	
 }

@@ -119,7 +119,9 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	private int computerhomeworkid;
 	private int curcomputerhomeworkid;
 
-
+//重新预约
+	int reorder = 0;
+//	int computerorderid;
 	
 	private List<Borrowperiod> periodList = new ArrayList<Borrowperiod>();
 
@@ -185,10 +187,10 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		
 
 //		进行中的预约是：状态未审核的预约
-		String selunderwayordersql = "  where a.createuserid="+userid + " and a.status="+ComputerorderInfo.ComputerorderStatusAduitWait+" order by a.createtime desc";
+		String selunderwayordersql = "  where a.createuserid="+userid + " and a.status in("+ComputerorderInfo.ComputerorderStatusAduitWait+","+ComputerorderInfo.ComputerorderStatusAduitReject+") order by a.createtime desc";
 		computerorderFullUnderwayList = computerorderService.selectComputerorderFullByCondition(selunderwayordersql);
 		
-		String selfinordersql = "  where a.createuserid="+userid + " and a.status !="+ComputerorderInfo.ComputerorderStatusAduitWait+" order by a.createtime desc";
+		String selfinordersql = "  where a.createuserid="+userid + " and a.status ="+ComputerorderInfo.ComputerorderStatusAduitPass+" order by a.createtime desc";
 		computerorderFullFinishList = computerorderService.selectComputerorderFullByCondition(selfinordersql);
 		
 		System.out.println(computerorderFullUnderwayList.size());
@@ -339,7 +341,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	
 //	课程预约界面点击提交按钮后，如果computerorderFormConfirm指向成功，跳转到预约确认界面
 	public String toComputerorderConfirmPage(){	
-		log.info("toComputerorderConfirmPage computerordertype:"+computerordertype);
+		log.info("toComputerorderConfirmPage computerordertype:"+computerordertype+"  "+reorder);
 		System.out.println(session.get("computerordertype"));
 		
 //		装载时间段的信息,界面上用于显示
@@ -362,6 +364,12 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 //		设置统计信息
 		buildOrderInfo(computerorderdetailFullList);
 		
+//		如果是重新预约，显示相关信息
+		if(reorder == 1){
+			computerorder = computerorderService.selectComputerorderById(computerorderid);
+		}else{
+			computerorder = new Computerorder();
+		}
 		
 		if(computerorderdetailFullMapByComputermodelId == null){
 			computerorderdetailFullMapByComputermodelId = new HashMap<Integer,ArrayList<ComputerorderdetailFull>>();
@@ -447,6 +455,12 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			System.out.println("computerordertitle"+computerorder.getTitle());
 			
 			String uuid = SnActionUtil.genComputerorderSn(uid, computerordertype, DateUtil.currentDate());
+			
+			if(reorder == 1){
+				computerorder = computerorderService.selectComputerorderById(computerorderid);
+				uuid = computerorder.getSerialnumber();
+			}
+			
 			temp.setSerialnumber(uuid);
 			session.put("computerorderSerialnumber", uuid);
 
@@ -456,7 +470,17 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			temp.setCreatetime(DateUtil.currentDate());
 			temp.setOrdertype(computerordertype);
 			temp.setStatus(ComputerorderInfo.ComputerorderStatusAduitWait);
-			computerorderService.addComputerorder(temp);
+			if(reorder == 1){
+				temp.setId(computerorderid);
+			computerorderService.updateComputerorder(temp);
+			}else{
+				computerorderService.addComputerorder(temp);
+			}
+			
+			if(reorder == 1){
+				String delSql = " delete from computerorderdetail where computerorderid = "+computerorderid;
+				computerorderdetailService.execSql(delSql);
+			}
 			
 			computerorderdetailList = (ArrayList<Computerorderdetail>)session.get("computerorderdetailList");
 			for(int i=0 ; i < computerorderdetailList.size();i++){
@@ -944,6 +968,16 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 
 	public void setCurcomputerhomeworkid(int curcomputerhomeworkid) {
 		this.curcomputerhomeworkid = curcomputerhomeworkid;
+	}
+
+
+	public int getReorder() {
+		return reorder;
+	}
+
+
+	public void setReorder(int reorder) {
+		this.reorder = reorder;
 	}
 
 

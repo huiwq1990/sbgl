@@ -2,14 +2,14 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 课程预约规则添加</title>
+<title>北京电影学院摄影系 - 教学管理</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+
+	<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
-<link href="${jsDomain}/editor/themes/default/default.css" rel="stylesheet" type="text/css" />
 
 #parse("include/includePageCompatibility.vm")
 
@@ -22,132 +22,256 @@
 </header><!--/#header-wrap-->
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
 
-  <!--admin-wrap start-->
+      <!--admin-wrap start-->
       <div id="admin-wrap">
         <div id="admin-content" class="clearfix">    
             <!--control-bar start-->
             <div class="control-bar clearfix">
-              <div class="title pull-left">添加课程</div>
-              <div class="tips">在此页面下添加新的课程信息</div>
+              <div class="title pull-left">布置新教学任务</div>
+              <div class="tips">布置教学任务后，指定的收件人将会收到教学预约通知，收件人在相关说明的指导下完成机房预约。</div>
             </div><!--control-bar end-->
-            <div class="panel panel-default">
-              <div class="panel-body">
-              
-                <form class="form-horizontal" role="form">
-                  <div class="form-group">
-                    <label for="inputCourseName" class="col-lg-2 control-label">课程名</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="inputCourseName" placeholder="课程名称">
+            
+			<div id="msg">
+              <form role="form" action="javascript:void(0)"  role="form">
+                <div class="row">
+                  <div class="send-to-warp">
+                    <div class="form-group send-to">
+                      <label class="sr-only" for="inputSendTo">收件人</label>
+                      <input type="text" id="inputSendTo" class="send-to form-control input-lg" placeholder="添加收件人">
                     </div>
                   </div>
-                  <div class="form-group">
-                    <label for="inputCourseNameEn" class="col-lg-2 control-label">课程英文名</label>
-                    <div class="col-lg-4">
-                      <input type="text" class="form-control" id="inputCourseNameEn" placeholder="课程的英文名称">
-                    </div>
+                  <div class="form-group user-group">
+                    <a href="#userGroup" role="button" class="btn btn-white btn-large btn-block" data-toggle="modal"><i class="icon-group"> +</i></a>
                   </div>
-                  <div class="form-group">
-                    <label for="inputCourseTeacher" class="col-lg-2 control-label">任课教师</label>
+                </div>
+				
+				
+							  <div class="form-group">
+                    <label for="label_computerorderclassrule_name" class="col-lg-2 control-label">课程名称</label>
                     <div class="col-lg-4">
-                      <select class="select2 select-white form-control" id="inputCourseTeacher">
-                        <option value="2">数字摄影机</option>
-                        <option value="3">数字摄像机</option>
-                        <option value="4">单反</option>
+
+						  <select class="select2 select-white form-control" id="input_computerorderclassrule_classname" data-placeholder="请选择课程名称">
+						 <option></option>
+						 
+						 #foreach($gp in $usergroupList)
+							<optgroup label="$gp.name">
+							#set( $tcfl = $courseFullByGroupId.get($gp.id) )
+							#foreach($tempCourseFull in  $tcfl )					
+								<option value="$!tempCourseFull.courseid" >$tempCourseFull.coursename - $!tempCourseFull.teacherloginusername</option>                                           
+							#end		
+							</optgroup>
+							
+						#end
                       </select>
+					  
                     </div>
                   </div>
-                  <div class="form-group">
-                    <label for="inputCourseType" class="col-lg-2 control-label">课程类别</label>
+				
+                <div class="form-group send-title">
+                  <label class="sr-only" for="inputMsgTitle">标题</label>
+                  <input type="text" class="form-control input-lg" id="inputMsgTitle" placeholder="添加标题">
+                </div>
+				
+				
+				
+                <div class="msg-content-warp">
+                  <div class="msg-content">
+                    <textarea name="content" id="inputContent" style="width:100%;height:300px;visibility:hidden;"></textarea>                
+                  </div>
+                </div>
+                <div class="form-group attach-file-warp">
+                  <div class="btn btn-white btn-block file-input-button">
+                      <i class="icon-paper-clip"></i>
+                      <span>添加附件</span>
+                      <input id="inputFilePath" type="file" name="files[]" multiple>
+                  </div>
+                  <p>附件上传说明</p>
+                </div>
+                <div class="clearfix"></div>
+                <div class="rent-time form-group row">
+                  <label for="inputDataRange" class="col-md-1 control-label">使用时间</label>
+                  <div class="col-lg-6">
+                    <div class="input-daterange row">
+                      <div class="col-lg-5">
+                        <input type="text" class="form-control" id="inputDataRange" name="start" placeholder="起始日期">
+                      </div>
+                      <div class="col-lg-1">
+                        <span class="add-on">至</span>
+                      </div>
+                      <div class="col-lg-5">
+                        <input type="text" class="form-control" id="inputDataRange2" name="end" placeholder="截止日期">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+				
+				
+				<div class="form-group send-title">
+                  <label class="sr-only" for="inputTotaltime">总共允许时间</label>
+                  <input type="text" class="form-control input-lg" id="inputTotaltime" placeholder="总共允许借用时间">
+                </div>
+				
+                <div class="rent-time form-group row">
+                  <label for="inputResource" class="col-md-1 control-label">指定设备/资源</label>
+                  <div class="col-lg-6">
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="inputResource" id="inputResource1" value="1" checked="">MAC Pro工作站
+                    </label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="inputResource" id="inputResource2" value="2" checked="">DELL工作站
+                    </label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="inputResource" id="inputResource3" value="3" checked="">剪辑机房
+                    </label>
+                    <label class="checkbox-inline">
+                      <input type="checkbox" name="inputResource" id="inputResource4" value="4" checked="">调色机房
+                    </label>
+                  </div>
+                </div>
+				
+								<div class="form-group">
+					
+                    <label for="inputRentableGroup" class="col-lg-2 control-label">允许借的机器类型</label>
                     <div class="col-lg-4">
-                      <label class="radio-inline">
-                        <input type="radio" name="inputCourseType" id="courseType1" value="1" checked="">本科
-                      </label>
-                      <label class="radio-inline">
-                        <input type="radio" name="inputCourseType" id="courseType2" value="2">硕士
-                      </label>
-                      <label class="radio-inline">
-                        <input type="radio" name="inputCourseType" id="courseType3" value="3">博士
-                      </label>
-                      <label class="radio-inline">
-                        <input type="radio" name="inputCourseType" id="courseType4" value="4">MFA
-                      </label>
+						
+					#foreach($categoryfull in ${computercategoryList})
+						<div class="group-hd">
+							<div class="group-name pull-left">$!categoryfull.name</div>
+							<div class="group-line"><hr></div>
+						</div>
+						
+						#set($categorytype = $categoryfull.computercategorytype)		
+						#set($modelList = $computermodelByComputercategoryId.get($categorytype))
+						#if($modelList=='null' || $modelList.size() ==0)
+							<label class="checkbox-inline">
+								分类没有模型
+                     		</label>	
+						#end	
+						#foreach($model in $modelList)
+							<label class="checkbox-inline">
+								<input type="checkbox" name="inputAviBorrowModelGroup" id="rentGroup_$model.computermodeltype" value="$model.computermodeltype" >$model.name
+                     		</label>						
+						#end                    
+						
+					#end
+                    
                     </div>
                   </div>
-                  <div class="form-group">
-                    <div class="col-lg-offset-2 col-lg-4">
-                      <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-                      <button type="submit" class="btn btn-primary">添 加</button>
-                    </div>
-                  </div>
-                </form>
-              
-              </div>
+				
+				
+                <a class="btn btn-white" href="">取 消</a>
+                <button type="submit" class="btn btn-primary" action-type="addComputerhomeworkButton" >发 送</button>
+              </form>
             </div>
-          </div>
+        
+		</div>
 
       </div>
-       <!--sidebar start-->
-     	  #set($currentWebpage="computerorderclassruleAdd")
-		  #parse("include/includeTeachSidebar.vm")
+      <!--equip-wrap end-->
+
+      <!--sidebar start-->
+       #set($currentWebpage="computerhomeworkAdd")
+		 #parse("include/includeTeachSidebar.vm")
       <!--sidebar end-->
 
 </section>
 
-<div id="createEquipRule" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="createEquipRuleLabel" aria-hidden="true">
- 
+<!-- Modal -->
+<div id="userGroup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">浏览用户</h3>
+  </div>
   <div class="modal-body">
-    
-    <div class="tabbable tabs-left">
-      <ul class="nav nav-tabs">
-		#foreach($categoryfull in ${computercategoryList})
-			<li><a href="#$!categoryfull.computercategorytype" data-toggle="tab">$!categoryfull.name</a></li>
-		#end        
-      </ul>
-      <div class="tab-content">
-		
-		#foreach($category in ${computercategoryList})
-			#set($categoryid = $category.computercategorytype)
-		<div class="tab-pane" id="$!categoryid">
-          <div class="row model-list">
-			#set($modelList = $computermodelByComputercategoryId.get($categoryid))
-			
-			#foreach($model in $modelList)
-			<div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="$model.computermodeltype" data-is-select="false"><i class="icon-check-empty icon-large"></i>$model.name</div>
-			#end           
-          </div>
-        </div>
-		#end
-		
-      
-      </div><!--content-->
-    </div><!--left-->
+    <p>用户列表</p>
   </div>
   <div class="modal-footer">
-        <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary" action-type="setComputerorderclassruleButton">确 定</button>
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary">完 成</button>
   </div>
 </div>
-  
-    <!-- Le javascript
+
+<div id="createEquipRule" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="createEquipRuleLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="createEquipRuleLabel">创建规则</h3>
+  </div>
+  <div class="modal-body">
+    <p>根据课程教学要求确定器材使用范围。选择课程名称后为新的规则起一个名称，并在器材列表中选取该规则下能使用的器材范围。规则创建后可多次重复使用。</p>
+    <div class="row">
+      <div class="col-md-4">
+        <select id="inputCourseName" class="select2 form-control select-white" data-placeholder="请选择课程" style="width: 100%;">
+          <option></option>
+          <option value="11111">MV、广告创作</option>
+          <option value="22222">故事片创作</option>
+          <option value="33333">其它</option>
+        </select>
+      </div>
+      <div class="col-md-8">
+        <div class="form-group rule-name">
+        <label class="sr-only" for="inputSendTo">收件人</label>
+        <input type="text" id="inputRuleName" class="form-control" placeholder="规则名称">
+        </div>
+      </div>
+    </div>
+    <div class="tabbable tabs-left">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#lA" data-toggle="tab">摄影机</a></li>
+        <li><a href="#lB" data-toggle="tab">镜头</a></li>
+        <li><a href="#lC" data-toggle="tab">灯具</a></li>
+        <li><a href="#lD" data-toggle="tab">器材一级分类</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="lA">
+          <div class="row model-list">
+            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="111" data-is-select="false"><i class="icon-check-empty icon-large"></i>ARRI ALEXA</div>
+            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="222" data-is-select="false"><i class="icon-check-empty icon-large"></i>RED EPIC</div>
+            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="333" data-is-select="false"><i class="icon-check-empty icon-large"></i>RED SCARLET</div>
+            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="2" data-model-id="444" data-is-select="false"><i class="icon-check-empty icon-large"></i>EOS 5D MARK II</div>
+          </div>
+        </div>
+        <div class="tab-pane" id="lB">
+          <div class="row model-list">
+            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="7777" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 18mm/T3.6</div>
+            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="8888" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 21mm/T2.9</div>
+            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="9999" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 25mm/T2.9</div>
+            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="2" data-model-id="0000" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 28mm/T2.1</div>
+          </div>
+        </div>
+        <div class="tab-pane" id="lC">
+          <p>列表3</p>
+        </div>
+        <div class="tab-pane" id="lD">
+          <p>列表4</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary" id="submit">完 成</button>
+  </div>
+</div>
+
+    <!-- javascript
     ================================================== -->
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
 <script src="${jsDomain}/editor/kindeditor-min.js"></script>
 <script src="${jsDomain}/editor/lang/zh_CN.js"></script>
 <script src="${jsDomain}/bootstrap-datepicker.js"></script>
 <script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
-<script src="${jsDomain}/jquery.noty.js"></script>
-<script src="${jsDomain}/jquery.jqpagination.js"></script>
 
 <script>
-
 	$('.input-daterange').datepicker({
-	language: 'zh-CN',
-	format: 'yyyy-mm-dd',
-	todayHighlight: true,
+		language: 'zh-CN',
+		format: 'yyyy-mm-dd',
+		todayHighlight: true,
+		autoclose: true
 	});
 
 	$("#inputSendTo").select2({
@@ -175,45 +299,36 @@
 	$('body').on('click', ('#createEquipRule .model-list > .list-item'), function () {
 		if ($(this).children('i').hasClass('icon-check-empty')) {
 			$(this).children('i').removeClass('icon-check-empty').addClass('icon-check');
-			$(this).data('is-select', 'true');
+			$(this).data('isSelect', 'true');
 		} else if ($(this).children('i').hasClass('icon-check')) {
 			$(this).children('i').removeClass('icon-check').addClass('icon-check-empty');
-			$(this).data('is-select', 'false');
+			$(this).data('isSelect', 'false');
 		}
 	});
-	
-	//获取课程规则 的PC
-	$('body').on('click',  "button[action-type|=setComputerorderclassruleButton]", function () {
-		var _this = $(this);
-		var pcIds = "";
+	$('body').on('click', ('#createEquipRule #submit'), function () {
+		var courseId = $('#inputCourseName').select2('val');
+		if (courseId == '') {
+			courseId = -1;	
+		}
+		var ruleName = $('#inputRuleName').val();
+		alert(courseId + ',' + ruleName);
 		$('.model-list > .list-item').each(function(index, elem) {
-			if($(elem).data('is-select') == 'true') {
-			//if($(elem).children('i').hasClass('icon-check')) {
+			if($(elem).data('isSelect')) {
             	var myData = $(elem).data();
-				pcIds += myData.modelId+";";				
+				alert(myData.modelId);
 			}
         });
-		pcIds = pcIds.substring(0,pcIds.length-1);
-		//alert(pcIds);
+	});
+	
+	
+	
+	
+	
+	
 		
-		_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
-		$('#input_computerorderclassrule_allowborrowpcids').val(pcIds);
-		
-	});//end add classrule
-	
-	
-	
-	//添加预约规则
-	$("body").on("click", "button[action-type|=addComputerorderclassruleButton]", function() {
-			var _this = $(this);
-			
-			var input_computerorderclassrule_name = $("#input_computerorderclassrule_name").val();		
-			var input_computerorderclassrule_classname = $("#input_computerorderclassrule_classname").val();		
-			var orderstarttime = $("#input_computerorderclassrule_orderstarttime").val();
-			var orderendtime = $("#input_computerorderclassrule_orderendtime").val();
-			var input_computerorderclassrule_availableordertime = $("#input_computerorderclassrule_availableordertime").val();
-			//var input_computerorderclassrule_allowborrowpcids = $("#input_computerorderclassrule_allowborrowpcids").val();
-			
+	//添加作业
+	$("body").on("click", "button[action-type|=addComputerhomeworkButton]", function() {
+
 			var allowborrowpcids="";
 			$("input[name='inputAviBorrowModelGroup']").each(function() {
 				if($(this).prop("checked") === true) {
@@ -222,56 +337,38 @@
 			});
 			allowborrowpcids = allowborrowpcids.substring(0,allowborrowpcids.length-1);
 			
-			//orderstarttime += " 00:00:00";
-		//	orderendtime += " 00:00:00";
-			//alert(allowborrowpcids);
-		//	return;
 			var postData = {
-				"name": input_computerorderclassrule_name,
-				"classid" : input_computerorderclassrule_classname,
-				"orderstarttime" : orderstarttime,
-				"orderendtime" : orderendtime,
-				"availableordertime": input_computerorderclassrule_availableordertime,
-				"allowborrowpcids": allowborrowpcids
+				"receiverids": $('#inputSendTo').val(),
+				"classid":$('#input_computerorderclassrule_classname').val(),
+				"name": $('#inputMsgTitle').val(),
+				"content": editor.html(),
+				"orderstarttime": $('#inputDataRange').val(),
+				"orderendtime": $('#inputDataRange2').val(),
+				"availableordertime": $('#inputTotaltime').val(),
+				"allowborrowpcids": allowborrowpcids,
+				"receiverids": $('#inputSendTo').val()				
 			};
 			
 			jQuery.ajax({  
-			    url:"${webbaseurl}/addComputerorderclassruleAjax.${strutsaction}",  
+			    url:"${webbaseurl}/addComputerhomeworkAjaxNew.${strutsaction}",  
 			    type:"post",
 			    data:postData,
 			  	dataType: 'json',
 				success: function(data){
 				var returnJson = jQuery.parseJSON(data); 
 				if(returnJson.flag == 1){
-					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
-					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
-					addFormClear();
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});
+					//clearInput();
 				}else{
 					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
-					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
 				}
 		}	});		  	  
 
 	})
-	//end 添加预约规则
-	
-	function addFormClear(){
-		$("#input_computerorderclassrule_name").val("");		
-		$("#input_computerorderclassrule_classname").val("");		
-		$("#input_computerorderclassrule_orderstarttime").val("");
-		$("#input_computerorderclassrule_orderendtime").val("");
-		$("#input_computerorderclassrule_availableordertime").val("");
-		
-		$("input[name='inputAviBorrowModelGroup']").each(function() {
-			$(this).removeAttr("checked"); 				
-		});
-		//$("#input_computerorderclassrule_allowborrowpcids").val("");
-	}
+	//end 添加作业
 	
 	
 	
 </script>
-	
-	
 </body>
 </html>

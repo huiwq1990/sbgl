@@ -25,6 +25,12 @@
         <scope>application</scope>
         <class>com.sbgl.toolbox.ComputerImageUrlTool</class>
     </tool> 
+    
+    <tool>
+        <key>imgtool</key>
+        <scope>application</scope>
+        <class>com.sbgl.toolbox.ImageUrlTool</class>
+    </tool> 
 
    <!--  
     <tool>

@@ -106,7 +106,7 @@
 			  <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!temp.computerorderid"></td>
                     <td>$!temp.computerorderserialnumber<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
-                    <td>$!temp.loginusername</td>
+                    <td>$!temp.createusername</td>
 					
                     <td><a href="${webbaseurl}/toAuditComputerorderPage.${strutsaction}?computerorderId=$!temp.computerorderid">$!temp.computerordertitle</a></td>
                      #if($!temp.computerorderstatus == $ComputerorderStatusAduitPass)
@@ -124,7 +124,7 @@
 					 #if($!temp.computerorderordertype == $ClassOrder)
                     <td>课程</td>   
 					#else 
-							<td>个人ss</td>
+							<td>个人</td>
 					 #end
                     <td>$!temp.computerorderremark</td>
                   </tr>
@@ -268,7 +268,7 @@ var idsForDel;
                 }
                 alert(idsForDel);
                 jQuery.ajax({  
-                    url:"${webbaseurl}/deleteComputerorderFullAjax.action",  
+                    url:"${webbaseurl}/deleteComputerorderFullAjax.${strutsaction}",  
                     type:"post",
                     data:postData,
                     dataType: 'json',
@@ -304,7 +304,7 @@ $('.pagination').jqPagination({
 //刷新换页后的信息
 function refreshComputerorderTable(){
 			jQuery.ajax({  
-		    url: '${webbaseurl}/manageComputerorderFull.action',  
+		    url: '${webbaseurl}/manageComputerorderFull.${strutsaction}',  
 		    type: "post",
 		    data:{	
 				pageNo : currentpagenum,

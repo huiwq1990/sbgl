@@ -798,6 +798,13 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 //		查询可以选择的预约规则
 		computerorderclassruleFullList  = computerorderclassruleService.selectComputerorderclassruleFullByCondition("");
 		
+		
+//		课程组信息
+		usergroupList = groupService.getUserGroupByType(CommonConfig.usergroupstudentid);		
+//		课程信息
+		courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+CommonConfig.languagech);
+		courseFullByGroupId = TeachActionUtil.couseFullUsergroupMap(usergroupList, courseFullList);
+		
 		if(computercategoryList == null){
 			computercategoryList = new ArrayList<Computercategory>();
 		}

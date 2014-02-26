@@ -70,9 +70,21 @@
                           
 						  </div>
                           <hr />
+						  #if($!temp.computerorderstatus == $ComputerorderStatusAduitWait)
                           <div class="rent-status clearfix">
-                            <div class="status pull-left"><span class="label label-info">状态</span> 等待审核</div>
+							#set($curstatus = $temp.computerorderstatus)
+                            <div class="status pull-left"><span class="label label-info">状态</span>#parse("computer/includeComputerorderStatus.vm")</div>
                           </div>
+						  #elseif($!temp.computerorderstatus == $ComputerorderStatusAduitReject)
+							  <div class="rent-status clearfix">
+                            <div class="status pull-left"><span class="label label-warning">状态</span> 预约被驳回，需修改后重新提交预约</div>
+                            <a class="btn btn-white pull-right" action-type="" action-data="" href="${webbaseurl}/viewComputerorder.action?computerorderId=$temp.computerorderid">查看原因</a>
+                          </div>
+						  #else
+							  <div class="rent-status clearfix">
+                            <div class="status pull-left"><span class="label label-error">状态</span> 状态出错</div>
+                          </div>
+							#end
                         </div>
                       </div>                  
                   </div>
@@ -109,14 +121,17 @@
 						</div>
                         <div class="caption">
                           <div class="rent-info">
-                            <div class="rent-num">预约号：432420427（无则不显示）</div>
-                            <div class="rent-time"><i class="icon-time"></i> 2013年10月18日 - 2013年10月23日（无则不显示）</div>
-                            <div class="rent-remark"><i class="icon-pencil"></i> 这里是预约备注（无则不显示）附近开发就给你说拉刚接完福建武平如果奋力反击我的积分我觉得怕人家分邱娥国该恶风哥怕阿娇大家都疯狂了</div>
-                          </div>
+                            
+							   <div class="rent-num">预约号：$!temp.computerorderserialnumber</div>							
+                            <div class="rent-time"><i class="icon-time"></i>$date.format("yyyy年MM月dd日",$!temp.computerordercreatetime)</div>
+                            <div class="rent-remark"><i class="icon-pencil">$!temp.computerorderremark</i></div>
+                          
+						  
+						  </div>
                           <hr />
                           <div class="rent-status clearfix">
 							#set($curstatus = $temp.computerorderstatus)
-                            <div class="status pull-left"><span class="label label-info">状态</span> #parse("computer/includeComputerorderStatus.vm")</div>
+                            <div class="status pull-left"><span class="label label-success">状态</span> #parse("computer/includeComputerorderStatus.vm")</div>
                           </div>
                         </div>
                       </div>                  

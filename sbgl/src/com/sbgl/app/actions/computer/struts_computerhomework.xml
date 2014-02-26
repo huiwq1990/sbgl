@@ -16,6 +16,10 @@
         
 
 <!-- 跳转到添加作业界面 -->
+		 <action name="toAddComputerhomework" class="ManageComputerAction" method="toAddComputerhomeworkPage">
+        	<result name="success">/computer/computerhomeworkAdd_new.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
     	<action name="toAddComputerhomeworkPage" class="ManageComputerAction" method="toAddComputerhomeworkPage">
         	<result name="success">/computer/computerhomeworkAdd.vm</result>
         	<result name="error">/error.vm</result> 
@@ -111,6 +115,11 @@
     <!-- Ajax方式 -->
     <package name="computerhomeworkAjax" extends="json-default">
     	<action name="addComputerhomeworkAjax" class="ComputerhomeworkAction" method="addComputerhomeworkAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+            	<action name="addComputerhomeworkAjaxNew" class="ComputerhomeworkAction" method="addComputerhomeworkAjaxNew">
         	<result type="json">
 				<param name="root">returnStr</param>
 			</result>

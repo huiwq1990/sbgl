@@ -72,9 +72,26 @@
                       <hr>
                       <strong> 
 						#set($curstatus = $computerorderFull.computerorderstatus)
-                           <td> #parse("computer/includeComputerorderStatus.vm") </td>
-
-					  </strong><br>                      
+                        <td> #parse("computer/includeComputerorderStatus.vm") </td>
+                        <td>#if($!computerorderFull.computerorderordertype==2) 
+								课程预约 
+							#else 
+								个人预约 
+							#end</td>
+					  </strong><br>      
+						
+						
+						 <hr />
+                <strong>预约人可进行的操作: </strong><br>
+					 #if($curstatus == $ComputerorderStatusAduitReject)
+						#if($!computerorderFull.computerorderordertype==2) 
+							<a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}\toComputerClassorder.${strutsaction}?computerorderid=$!computerorderFull.computerorderid&computerhomeworkid=$!computerorderFull.computerordercomputerhomeworkid&reorder=1">重新预约</a>
+						#elseif($!computerorderFull.computerorderordertype==1)  
+							<a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}\toComputerIndividualorder.${strutsaction}?computerorderid=$!computerorderFull.computerorderid&reorder=1">重新预约</a>
+						#else
+							错误
+							#end
+						#end
                        </div>
                 </div>
                 <div class="thumbnail">
@@ -94,6 +111,20 @@
                     </div>
                     <hr>
                   </div>  
+				  
+				  #if($curstatus == $ComputerorderStatusAduitReject)
+					<ul class="media-list">
+                    <li class="media">
+                      <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
+                        <img src="$imgtool.url("user","$!computerorderFull.audituserpicpath")" width="28" height="28" class="img-rounded">
+                      </a>
+                      <div class="media-body">
+                        <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">$!computerorderFull.auditusername</a></h5><span class="post-time" title="详细时间">下午4:53</span></div>
+                        <p>驳回原因：$!computerorderFull.computerorderrejectreason</p>
+                      </div>
+                    </li>
+                  </ul>
+				  #end
 				  
 				  <!--
                   <ul class="media-list">

@@ -169,30 +169,8 @@
 <script src="${jsDomain}/jquery.noty.js"></script>
 <script src="${jsDomain}/jquery.jqpagination.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
-<!--[if lt IE 10]>
-  <script src="../js/jquery.placeholder.js"></script>
-  <script>
-  $('input, textarea').placeholder();
-  </script>
-<![endif]-->
+
 <script>
-
-
-
-
-
-
-
-
-//更改状态的高亮显示
-  $(".orderstatus a").click(function () {
-  				$("a[class='btn-primary']").addClass("btn-white");
-                $("a[class='btn-white']").removeClass("btn-primary");
-				
-                $(this).addClass("btn-primary"); 
-  });
-
-
 
 
 //审核预约
@@ -211,8 +189,8 @@ function auditOrder(id,status,rejectreason){
 			var returnJson = jQuery.parseJSON(data); 
 			if(returnJson.flag == 1){
 				var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
-				_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
-				
+				//_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+				$('.modal').modal('hide');
 			}else{
 				var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
 			}

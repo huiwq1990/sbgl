@@ -133,13 +133,17 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 	private String orderInfoStr;
 	
 	
+//	判断是否已经预约
+	int reorder = 0;//默认为0或者没有，如果为1，则为重新预约
+	
+	
 	public String toComputerIndividualorderPage(){
 		
 //		查询全部
 		computerconfigList = computerconfigService.selectComputerconfigAll();
-		computerconfigList.size()
-		if()
-		
+//		computerconfigList.size()
+//		if()
+//		
 		
 		
 		computerordertype = ComputerorderInfo.IndividualOrder;
@@ -786,6 +790,46 @@ public class OrderComputerAction  extends ActionSupport implements SessionAware{
 
 	public void setComputerordertype(int computerordertype) {
 		this.computerordertype = computerordertype;
+	}
+
+
+	public ComputerconfigService getComputerconfigService() {
+		return computerconfigService;
+	}
+
+
+	public void setComputerconfigService(ComputerconfigService computerconfigService) {
+		this.computerconfigService = computerconfigService;
+	}
+
+
+	public Computerconfig getComputerconfig() {
+		return computerconfig;
+	}
+
+
+	public void setComputerconfig(Computerconfig computerconfig) {
+		this.computerconfig = computerconfig;
+	}
+
+
+	public List<Computerconfig> getComputerconfigList() {
+		return computerconfigList;
+	}
+
+
+	public void setComputerconfigList(List<Computerconfig> computerconfigList) {
+		this.computerconfigList = computerconfigList;
+	}
+
+
+	public int getReorder() {
+		return reorder;
+	}
+
+
+	public void setReorder(int reorder) {
+		this.reorder = reorder;
 	}
 	
 	

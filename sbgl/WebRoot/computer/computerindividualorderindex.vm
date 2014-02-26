@@ -333,7 +333,9 @@ $(window).load(function(){
 		var postData = {
 			userid : createuserid,
 			orderInfoStr : str,
-			computerordertype : $computerordertype
+			computerordertype : $computerordertype,
+			reorder:$reorder,//重新预约时用
+			computerorderid:$computerorderid
 		};
 		
 		jQuery.ajax({  
@@ -346,7 +348,7 @@ $(window).load(function(){
 				if(returnJson.flag == 1){
 					//var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
 					//$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框
-					location.href = "${webbaseurl}/toComputerorderConfirmPage.${strutsaction}";
+					location.href = "${webbaseurl}/toComputerorderConfirmPage.${strutsaction}?computerorderid=$!computerorderid&reorder=$!reorder";
 				}else{
 					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
 					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		

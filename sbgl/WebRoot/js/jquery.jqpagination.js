@@ -283,15 +283,15 @@
 				}
 				
 				// apply each page number to the link string, set it back to the element href attribute
-				base.$el.find('a.first').attr('href', link_string.replace('{page_number}', '1'));
-				base.$el.find('a.prev, a.previous').attr('href', link_string.replace('{page_number}', previous));
-				base.$el.find('a.next').attr('href', link_string.replace('{page_number}', next));
-				base.$el.find('a.last').attr('href', link_string.replace('{page_number}', max_page));
+				base.$el.find('a.first, li.first a').attr('href', link_string.replace('{page_number}', '1'));
+				base.$el.find('a.prev, a.previous, li.previous a').attr('href', link_string.replace('{page_number}', previous));
+				base.$el.find('a.next, li.next a').attr('href', link_string.replace('{page_number}', next));
+				base.$el.find('a.last, li.last a').attr('href', link_string.replace('{page_number}', max_page));
 				
 			}
 
 			// set disable class on appropriate links
-			base.$el.find('a').removeClass('disabled');
+			base.$el.find('li').removeClass('disabled');
 
 			if (current_page === max_page) {
 				base.$el.find('.next, .last').addClass('disabled');
