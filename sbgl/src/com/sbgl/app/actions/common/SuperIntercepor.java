@@ -14,14 +14,15 @@ public class SuperIntercepor extends AbstractInterceptor {
 
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
-		Map<String, Object> map = invocation.getInvocationContext().getSession();
-		
-		if(null == map.get("userType")) {
-			return "login";
-		} else if( (Integer)map.get("userType") == SBGLConsistent.USER_TYPE_ADMIN1 ) {
-			return invocation.invoke();
-		} else {
-			return "denied";
-		}
+		//Map<String, Object> map = invocation.getInvocationContext().getSession();
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		//if(null == map.get("userType")) {
+//			return "login";
+//		} else if( (Integer)map.get("userType") == SBGLConsistent.USER_TYPE_ADMIN1 ) {
+//			return invocation.invoke();
+//		} else {
+//			return "denied";
+//		}
+		return invocation.invoke();
 	}
 }
