@@ -47,6 +47,12 @@
         <global-exception-mappings>
             <exception-mapping result="exception-error" exception="java.lang.Exception"></exception-mapping>
         </global-exception-mappings>
+        
+        <action name="indexInfo">
+        	<result>
+        		/index-info.vm
+        	</result>
+        </action>
     </package>
     
     <package name="superManage" extends="struts-default">
