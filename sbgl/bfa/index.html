@@ -27,7 +27,7 @@
 
 <body>
 <header id="header-wrap"><!--header-wrap-->
-  <div id="global-header">
+  <div id="global-header" class="header-fixed">
     <div id="logo"><a class="brand" href="#"><img src="img/logo.png" alt="北京电影学院摄影系"></a></div>
     <div id="hdc-wrap">
       <div class="search-wrap">
@@ -219,7 +219,24 @@
 <script src="js/bootstrap-hover-dropdown.min.js"></script>
 <script src="js/select2.js"></script>
 <script src="js/bfa.js"></script>
+<script src="js/headroom.min.js"></script>
 
+<script>
+
+(function() {
+    new Headroom(document.querySelector("#global-header"), {
+        tolerance: 10,
+        offset : 205,
+        classes: {
+          initial: "animated",
+          pinned: "slideDown",
+          unpinned: "slideUp"
+        }
+    }).init();
+
+}());
+
+</script>
 
 <div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
   <img src="img/cover-img.jpg" class="cover" alt="封面照片" />

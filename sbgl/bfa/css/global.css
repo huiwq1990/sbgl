@@ -2,6 +2,7 @@
 @import url("font-awesome.min.css");
 @import url("select2.css");
 @import url("datepicker.css");
+@import url("datepicker.css");
 *,
 *:before,
 *:after {
@@ -50,14 +51,142 @@ dd input[type="text"], dd input[type="password"], dd input[type="datetime"], dd 
 dd input[type="date"], dd input[type="month"], dd input[type="time"], dd input[type="week"], 
 dd input[type="number"], dd input[type="email"], dd input[type="url"], dd input[type="search"], 
 dd input[type="tel"], dd input[type="color"], dd .uneditable-input { margin: 0; }
+
+.animated {
+	-webkit-animation-duration: .5s;
+	-moz-animation-duration: .5s;
+	-o-animation-duration: .5s;
+	animation-duration: .5s;
+	-webkit-animation-fill-mode: both;
+	-moz-animation-fill-mode: both;
+	-o-animation-fill-mode: both;
+	animation-fill-mode: both
+}
+@-webkit-keyframes slideDown {
+	0% {
+		-webkit-transform: translateY(-80px)
+	}
+	100% {
+		-webkit-transform: translateY(0)
+	}
+}
+@-moz-keyframes slideDown {
+	0% {
+		-moz-transform: translateY(-80px)
+	}
+	100% {
+		-moz-transform: translateY(0)
+	}
+}
+@-o-keyframes slideDown {
+	0% {
+		-o-transform: translateY(-80px)
+	}
+	100% {
+		-o-transform: translateY(0)
+	}
+}
+@keyframes slideDown {
+	0% {
+		transform: translateY(-80px)
+	}
+	100% {
+		transform: translateY(0)
+	}
+}
+.animated.slideDown {
+	-webkit-animation-name: slideDown;
+	-moz-animation-name: slideDown;
+	-o-animation-name: slideDown;
+	animation-name: slideDown
+}
+@-webkit-keyframes slideUp {
+	0% {
+		-webkit-transform: translateY(0)
+	}
+	100% {
+		-webkit-transform: translateY(-80px)
+	}
+}
+@-moz-keyframes slideUp {
+	0% {
+		-moz-transform: translateY(0)
+	}
+	100% {
+		-moz-transform: translateY(-80px)
+	}
+}
+@-o-keyframes slideUp {
+	0% {
+		-o-transform: translateY(0)
+	}
+	100% {
+		-o-transform: translateY(-80px)
+	}
+}
+@keyframes slideUp {
+	0% {
+		transform: translateY(0)
+	}
+	100% {
+		transform: translateY(-80px)
+	}
+}
+.animated.slideUp {
+	-webkit-animation-name: slideUp;
+	-moz-animation-name: slideUp;
+	-o-animation-name: slideUp;
+	animation-name: slideUp
+}
+@-webkit-keyframes swingInX {
+	0% {
+		-webkit-transform: perspective(400px) rotateX(-90deg)
+	}
+	100% {
+		-webkit-transform: perspective(400px) rotateX(0deg)
+	}
+}
+@-moz-keyframes swingInX {
+	0% {
+		-moz-transform: perspective(400px) rotateX(-90deg)
+	}
+	100% {
+		-moz-transform: perspective(400px) rotateX(0deg)
+	}
+}
+@-o-keyframes swingInX {
+	0% {
+		-o-transform: perspective(400px) rotateX(-90deg)
+	}
+	100% {
+		-o-transform: perspective(400px) rotateX(0deg)
+	}
+}
+@keyframes swingInX {
+	0% {
+		transform: perspective(400px) rotateX(-90deg)
+	}
+	100% {
+		transform: perspective(400px) rotateX(0deg)
+	}
+}
+.header-fixed {
+	position: fixed;
+	z-index: 10;
+	right: 0;
+	left: 0;
+	top: 0;
+}
 .input-xxlarge {
 	width: 460px;
 }
+
 .hr-block {
 	border-top: none;
 	border-bottom: 1px solid #C5C5C5;
 	margin: 0 0 30px 0;
 }
+
 .form-group .help-block { margin-bottom: 0; }
 i { font-size: 14px; }
 .thumbnail .lk {
@@ -175,7 +304,6 @@ i { font-size: 14px; }
 }
 
 #global-header {
-	position: fixed;
 	z-index: 500;
 	width: 100%;
 	height: 80px;
@@ -1336,14 +1464,14 @@ a.list-group-item.active:focus .list-group-item-text {
 
 }
 #admin .table { margin: 0; }
-#admin .table.course-week-table,
-#admin .table.course-week-table th { text-align: center; }
-#admin .table.course-week-table tbody > tr { height: 50px; }
-#admin .table.course-week-table th.time-slot { width: 80px; }
-#admin .table.course-week-table td.time-slot,
-#admin .table.course-week-table td.time-num { width: 40px; vertical-align: middle; }
-#admin .table.course-week-table .selectable {	cursor: pointer; position: relative; }
-#admin .table.course-week-table .selectable:hover { background-color: #F5F9FC; }
+#admin #course-week-table,
+#admin #course-week-table th { text-align: center; }
+#admin #course-week-table tbody > tr { height: 50px; }
+#admin #course-week-table th.time-slot { width: 80px; }
+#admin #course-week-table td.time-slot,
+#admin #course-week-table td.time-num { width: 40px; vertical-align: middle; }
+#admin #course-week-table .selectable {	cursor: pointer; position: relative; }
+#admin #course-week-table .selectable:hover { background-color: #F5F9FC; }
 
 .select2-results .sub { padding-left: 12px; }
 
