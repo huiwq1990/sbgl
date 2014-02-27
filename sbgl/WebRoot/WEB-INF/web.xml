@@ -34,7 +34,7 @@
   
   <!-- 登录拦截器 -->
    
-   <filter> 
+   <!-- <filter> 
 	    <filter-name>loginFilter</filter-name> 
 	    <filter-class>com.sbgl.app.actions.login.LoginFilter</filter-class> 
 	</filter> 
@@ -45,7 +45,7 @@
 	<filter-mapping> 
 	    <filter-name>loginFilter</filter-name> 
 	    <url-pattern>*.do</url-pattern> 
-	</filter-mapping>
+	</filter-mapping> -->
 	
 	
 	

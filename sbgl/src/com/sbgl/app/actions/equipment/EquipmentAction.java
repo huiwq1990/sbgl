@@ -25,6 +25,7 @@ import com.sbgl.app.dao.QueryResult;
 import com.sbgl.app.entity.Equipment;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Equipmentdetail;
+import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.services.equipment.EquipService;
 import com.sbgl.common.HQLOption;
 import com.sbgl.common.SBGLConsistent;
@@ -87,6 +88,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	}
 
 	public String addEquipmentclassification() {
+		
+		System.out.println(((Loginuser)session.get("loginUser")).getName());
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		Boolean isExist = equipService.isExistThisClassification( equipClassforAdd.getName() );

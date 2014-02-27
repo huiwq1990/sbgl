@@ -347,11 +347,11 @@
     			postData = {
     				"equipClassforAdd.parentid": pId,
     				"equipClassforAdd.name": className,
-    				"equipClassforAdd.userid": userId,
+    				//"equipClassforAdd.userid": userId,
     				"equipClassforAdd.lanType": "CH",
     				"equipClassforAddEN.parentid": pId,
     				"equipClassforAddEN.name": classNameEN,
-    				"equipClassforAddEN.userid": userId,
+    				//"equipClassforAddEN.userid": userId,
     				"equipClassforAddEN.lanType": "EN",
 					"currentPage": currentPageNo
     			}
