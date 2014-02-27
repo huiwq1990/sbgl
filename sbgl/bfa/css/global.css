@@ -201,6 +201,7 @@ i { font-size: 14px; }
 .thumbnail:hover .lk {
 	color: #427FED;
 	-webkit-transition: color .3s ease-in-out;
+
 	transition: color .3s ease-in-out;
 }
 .thumbnail .t-r { position: absolute; top: 20px; right: 20px; text-align: right; }
@@ -416,7 +417,7 @@ border-bottom: 2px solid #427FED !important;
 .nav-wrap .nav-tabs-google > li.active > a,
 .nav-wrap .nav-tabs-google > li.active > a:hover,
 .nav-wrap .nav-tabs-google > li.active > a:focus { border: 0 0 2px 0; }
-	
+
 .nav-wrap .nav-tabs > .active > a, .nav-wrap .nav-tabs > .active > a:hover, .nav-wrap .nav-tabs > .active > a:focus { background-color: transparent; }
 .nav-wrap .nav-tabs { border-bottom: none; }
 
@@ -651,7 +652,7 @@ border-bottom: 2px solid #427FED !important;
 /*.sidebar { position:absolute; top: 100px; bottom: 0 ; left:0 ; right: 0; }*/
 
 .keep-login { margin: 10px 0 0 0; }
-	
+
 .pos-absolute {
 	position: absolute;
 	height: 100%;
@@ -979,7 +980,7 @@ transition: none;
 	height: 30px;
 	width: 160px;
 	padding-left: 28px;
-	
+
 }
 .control-bar .navbar-search .icon-search {
 	position: absolute;
@@ -1577,3 +1578,42 @@ a.list-group-item.active:focus .list-group-item-text {
 #user-header .nav-tabs-google > li > a:active:focus,
 #user-header .nav-tabs-google > li.active > a:focus { border-bottom: 2px solid #427FED !important; }
 
+
+
+/* 搜索图标内嵌input ================================================= */
+.inner-search-icon {
+	margin: 0 0 -2px 0;
+	position: relative;
+	z-index: 10;
+}
+.inner-search-icon .form-control {
+	padding: 5px 12px 5px 30px;
+}
+.inner-search-icon .icon-search {
+	position: absolute;
+	top: 8px;
+	left: 12px;
+	color: #427FED;
+}
+
+/* 浏览用户 ================================================= */
+#user-list { padding: 0 10px; }
+#user-list li.media {
+	float: left;
+	width: 31.44444444%;
+	height: 50px;
+	padding: 1px;
+	margin: 5px;
+	line-height: 1.4;
+	border: 1px solid #ddd;
+	cursor: pointer;
+}
+#user-list li.media.selected {
+	background-color: #4285f4;
+}
+#user-list li.media.selected .media-body .text-muted{
+	color: #e1edf7;
+}
+#user-list li.media.selected .media-body .media-heading {
+	color: #FFF;
+}
