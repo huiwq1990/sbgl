@@ -42,13 +42,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		try{	
 			loginUser2 = loginService.findUser(loginuser);
 			if(loginUser2 != null){
-				CookiesUtil.addLoginCookie("id", loginUser2.getId().toString());
-				CookiesUtil.addLoginCookie("userid", loginUser2.getUserId());
-				CookiesUtil.addLoginCookie("username", loginUser2.getName());
+				CookiesUtil.addLoginCookie("uid", String.valueOf(loginUser2.getId()));
 				CookiesUtil.addLoginCookie("userpass", loginUser2.getPassword());
-				CookiesUtil.addLoginCookie("roletype", loginUser2.getRoletype());
-				CookiesUtil.addLoginCookie("privilege", loginUser2.getPrivilege());
-				
 				
 				flag = true;
 				session.put("loginUser", loginUser2);
@@ -67,7 +62,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			loginUser3 = loginService.findUser(loginuser);
 			if(loginUser3 != null) {
 				//id password cookie
-				CookiesUtil.addLoginCookie("userid", loginUser3.getUserId());
+				CookiesUtil.addLoginCookie("userid", loginUser3.getUserid());
 				CookiesUtil.addLoginCookie("username", loginUser3.getName());
 				CookiesUtil.addLoginCookie("roletype", loginUser3.getRoletype());
 				CookiesUtil.addLoginCookie("privilege", loginUser3.getPrivilege());

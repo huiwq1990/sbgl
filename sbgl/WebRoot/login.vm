@@ -29,7 +29,7 @@
   <h1 class="center-logo">北京电影学院摄影系</h1>
   <form action="./doLogin.do" method="post" name="fm" target="submit" role="form">
     <div class="form-group">
-        <input type="text" id="inputUsername" class="form-control" name="loginuser.userId" placeholder="用户名">
+        <input type="text" id="inputUsername" class="form-control" name="loginuser.userid" placeholder="用户名">
     </div>
     <div class="form-group">
         <input type="password" id="inputPassword" class="form-control" name="loginuser.password" placeholder="密码">

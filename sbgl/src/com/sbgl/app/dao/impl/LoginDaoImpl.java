@@ -19,7 +19,7 @@ public class LoginDaoImpl extends HibernateDaoSupport implements LoginDao {
 	@Override
 	public Loginuser findUser(Loginuser loginuser) {
 		// TODO Auto-generated method stub
-		final String sql = "select * from loginuser where userId='"+loginuser.getUserId()+"' " +
+		final String sql = "select * from loginuser where userid='"+loginuser.getUserid()+"' " +
 				" and password='"+loginuser.getPassword()+"' ";
 		List<Loginuser> loginUserList = getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{

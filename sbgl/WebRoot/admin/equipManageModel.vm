@@ -450,7 +450,7 @@
 			if(modelName != "") {
 				//console.log("**********" + modelName);
     			postData = {
-        			"equipment.administrationid": cookie.Get("id"),
+        			"equipment.administrationid": cookie.Get("uid"),
         			"equipment.equipmentname": modelName,
         			"equipmentEN.equipmentname": modelNameEN,
         			"equipment.classificationid": clazzId,

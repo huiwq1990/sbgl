@@ -341,17 +341,17 @@
 	        var className = $("#inputCategoryName").val();
 	        var classNameEN = $("#inputCategoryNameEN").val();
     		var pId = $("#inputFaCategoryId").val();
-    		var userId = cookie.Get("id");
+    		var userId = cookie.Get("uid");
     		
     		if(className != "") {
     			postData = {
     				"equipClassforAdd.parentid": pId,
     				"equipClassforAdd.name": className,
-    				//"equipClassforAdd.userid": userId,
+    				"equipClassforAdd.userid": userId,
     				"equipClassforAdd.lanType": "CH",
     				"equipClassforAddEN.parentid": pId,
     				"equipClassforAddEN.name": classNameEN,
-    				//"equipClassforAddEN.userid": userId,
+    				"equipClassforAddEN.userid": userId,
     				"equipClassforAddEN.lanType": "EN",
 					"currentPage": currentPageNo
     			}
@@ -367,8 +367,7 @@
 	        var newClassName = $("#modifyCategoryName").val() == "" ? alterClassName : $("#modifyCategoryName").val();
 	        var newClassNameEN = $("#modifyCategoryNameEN").val() == "" ? alterClassNameEN : $("#modifyCategoryNameEN").val();
     		var parentClassId = $("#modifyFaCategoryId").val();
-    		var userId=cookie.Get("id");
-    		
+    		var userId=cookie.Get("uid");
     		if(alterClassName == newClassName && parentClassId == parentId && alterClassNameEN == newClassNameEN) {
     			alert("并未做修改！");
 				return;

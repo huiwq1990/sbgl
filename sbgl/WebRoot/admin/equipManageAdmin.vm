@@ -547,7 +547,7 @@
     				"equipmentdetail.equipserial": es,
     				"equipmentdetail.equipmentid": dMid,
     				"equipmentdetail.status": dStatus,
-    				"equipmentdetail.administrationid": cookie.Get("id"),
+    				"equipmentdetail.administrationid": cookie.Get("uid"),
     				"equipmentdetail.usermark": dMemo,
 					"crtDetailPage": currentPageNo,
 					"equipmentdetail.classificationid": ci,

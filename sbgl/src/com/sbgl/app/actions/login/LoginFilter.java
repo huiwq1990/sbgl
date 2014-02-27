@@ -51,7 +51,7 @@ public class LoginFilter implements Filter  {
             	} else {
             		Loginuser user = new Loginuser();
             		user.setId(Integer.valueOf(CookiesUtil.getCookie("id",request)));
-            		user.setUserId(CookiesUtil.getCookie("userid",request));
+            		user.setUserid(CookiesUtil.getCookie("userid",request));
             		user.setPassword(CookiesUtil.getCookie("userpass",request));
             		user.setName(CookiesUtil.getCookie("username",request));
             		user.setPrivilege(CookiesUtil.getCookie("privilege",request));

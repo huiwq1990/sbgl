@@ -322,7 +322,7 @@
 		console.log("state" + state);
 		console.log("modelId" + modelId);
 		console.log("memo" + memo);
-		console.log("administrationid" + cookie.Get("id"));
+		console.log("administrationid" + cookie.Get("uid"));
 		*/
 		
 		if(assetNumber == "") {
@@ -330,7 +330,7 @@
 			return;
 		}
 		var postData = {
-			"equipmentdetail.administrationid": cookie.Get("id"),
+			"equipmentdetail.administrationid": cookie.Get("uid"),
 			"equipmentdetail.equipserial": equipserial,
 			"equipmentdetail.equipmentid": modelId,
 			"equipmentdetail.status": state,
