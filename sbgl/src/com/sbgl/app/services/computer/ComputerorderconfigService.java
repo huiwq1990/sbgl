@@ -50,6 +50,8 @@ public interface ComputerorderconfigService{
 	
 	// 查询实体full        
     public List<ComputerorderconfigFull>  selectComputerorderconfigFullByConditionAndPage(String condition,final Page page);
+
+	Computerorderconfig selectCurrentComputerorderconfig();
 		
 	
 	

@@ -29,6 +29,28 @@ public class ComputerorderconfigDaoImpl extends HibernateDaoSupport implements C
 	
 	private final String basicComputerorderconfigSql = "From Computerorderconfig as a ";
 	
+
+	
+	@Override
+	public Computerorderconfig selectCurrentComputerorderconfig() {
+		
+		final String  sql = basicComputerorderconfigSql +" " + " where currentconfig = 1";
+		
+		try {
+             List<Computerorderconfig> l = this.getHibernateTemplate().find(sql);
+             if(l == null || l.size()==0){
+            	 return null;
+             }else{
+            	 return l.get(0);
+             }
+			 
+        } catch (RuntimeException re) {
+            log.error("失败", re);
+            throw re;
+        }
+	}
+	
+	
 	// 根据条件查询查询实体
 	@Override
 	public List<Computerorderconfig> selectComputerorderconfigByCondition(String condition) {
