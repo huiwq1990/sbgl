@@ -115,9 +115,9 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	int orderpccaregorynum = 0;//订单模型数量
 	int orderpctotalnum = 0;//订单机器数量
 	
-	private	int computerordertype;
-	private int computerhomeworkid;
-	private int curcomputerhomeworkid;
+	private	int computerordertype = 0;
+	private int computerhomeworkid = 0;
+//	private int curcomputerhomeworkid = 0;
 
 //重新预约
 	int reorder = 0;
@@ -131,6 +131,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	 * @return
 	 */
 	public String toAuditComputerorderPage(){
+		
 		log.info("toAuditComputerorderPage "+ computerorderId);
 		
 //		装载时间段的信息,界面上用于显示
@@ -255,10 +256,6 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	}
 	
 	
-	
-	
-
-	
 	/**
 	 * 在预约界面按提交按钮提交表单,将详细信息放到session中
 	 * @return
@@ -274,13 +271,15 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			return SUCCESS;
 		}else{
 			
-			session.put("computerhomeworkid", curcomputerhomeworkid);
-			System.out.println("computerhomeworkid"+curcomputerhomeworkid);
-			session.put("computerordertype", computerordertype);
-			session.put("computerorderdetailList", computerorderdetailList);
-			session.put("computerorderdetailFullList", computerorderdetailFullList);
+			
+			
+//			session.put("computerhomeworkid", curcomputerhomeworkid);
+//			System.out.println("computerhomeworkid"+curcomputerhomeworkid);
+//			session.put("computerordertype", computerordertype);
+//			session.put("computerorderdetailList", computerorderdetailList);
+//			session.put("computerorderdetailFullList", computerorderdetailFullList);
 
-
+			
 			returnInfo = "成功";
 			log.info(returnInfo);
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
@@ -348,23 +347,27 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		periodList = BorrowperiodUtil.getBorrowperiodList();
 		
 
-		
-		
-		if(session==null || !session.containsKey("computerordertype") || !session.containsKey("computerorderdetailFullList")){
+		if(confirmOrderInfo(orderInfoStr) == false){
+//		if(session==null || !session.containsKey("computerordertype") || !session.containsKey("computerorderdetailFullList")){
 			actionMsg = "预约信息不完整";
 			return ComputerConfig.pagenotfound;
 		}
 //		获取预约类型
-		computerordertype = (Integer) session.get("computerordertype");
-		computerorderdetailFullList = (ArrayList<ComputerorderdetailFull>)session.get("computerorderdetailFullList");
-		if(computerorderdetailFullList == null ){
-			return "error";
+//		computerordertype = (Integer) session.get("computerordertype");
+//		computerorderdetailFullList = (ArrayList<ComputerorderdetailFull>)session.get("computerorderdetailFullList");
+//		if(computerorderdetailFullList == null ){
+//			return "error";
+//		}
+		
+//		如果是个人预约，默认作业id
+		if(computerordertype == ComputerorderInfo.IndividualOrder){
+			computerhomeworkid = 0;
 		}
 		
 //		设置统计信息
 		buildOrderInfo(computerorderdetailFullList);
 		
-//		如果是重新预约，显示相关信息
+//		如果是重新预约，调用表单id获取相关信息，在确认界面显示
 		if(reorder == 1){
 			computerorder = computerorderService.selectComputerorderById(computerorderid);
 		}else{
@@ -427,8 +430,9 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	
 //  提交预约表单	
 	public String addComputerorderAjax(){	
-		log.info("Add Entity Ajax Manner");
+		log.info("Add Entity Ajax Manner" + computerorder.getComputerhomeworkid());
 		
+//		computerhomeworkid=computerorder.getComputerhomeworkid();
 		
 		try {
 		
@@ -439,76 +443,25 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			return SUCCESS;
 		}
 		
-		
-		if(session==null || !session.containsKey("computerordertype") || !session.containsKey("computerorderdetailFullList")){
-			returnInfo = "预约参数错误";
+		if(confirmOrderInfo(orderInfoStr) == false){
+			returnInfo = "表单不正确";
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn,returnInfo);
 			return SUCCESS;
 		}
-		computerhomeworkid = (Integer) session.get("computerhomeworkid");
-		computerordertype = (Integer) session.get("computerordertype");
-					
+
+//		如果是重新预约，则是知道预约id的
+		if(reorder == 1){
+			computerorder.setId(computerorderid);
+			
+		}
 		
-			Computerorder temp = new Computerorder();
-			// 将model里的属性值赋给temp
-			BeanUtils.copyProperties(temp, computerorder);
-			System.out.println("computerordertitle"+computerorder.getTitle());
-			
-			String uuid = SnActionUtil.genComputerorderSn(uid, computerordertype, DateUtil.currentDate());
-			
-			if(reorder == 1){
-				computerorder = computerorderService.selectComputerorderById(computerorderid);
-				uuid = computerorder.getSerialnumber();
-			}
-			
-			temp.setSerialnumber(uuid);
-			session.put("computerorderSerialnumber", uuid);
-
-			
-			
-			temp.setCreateuserid(uid);
-			temp.setCreatetime(DateUtil.currentDate());
-			temp.setOrdertype(computerordertype);
-			temp.setStatus(ComputerorderInfo.ComputerorderStatusAduitWait);
-			if(reorder == 1){
-				temp.setId(computerorderid);
-			computerorderService.updateComputerorder(temp);
-			}else{
-				computerorderService.addComputerorder(temp);
-			}
-			
-			if(reorder == 1){
-				String delSql = " delete from computerorderdetail where computerorderid = "+computerorderid;
-				computerorderdetailService.execSql(delSql);
-			}
-			
-			computerorderdetailList = (ArrayList<Computerorderdetail>)session.get("computerorderdetailList");
-			for(int i=0 ; i < computerorderdetailList.size();i++){
-				Computerorderdetail cd = computerorderdetailList.get(i);
-				cd.setComputerorderid(temp.getId());
-				cd.setStatus(ComputerorderInfo.ComputerorderStatusAduitWait);
-				computerorderdetailService.addComputerorderdetail(cd);
-			}
-			
-//			如果是课程预约，需要修改作业的状态，一次作业只能预约一次
-			if(computerordertype == ComputerorderInfo.ClassOrder){
-				String hmresql = " where computerhomeworkid = "+ computerhomeworkid +" and userid="+checkUserLogin();
-//				System.out.println(hmresql);
-				computerhomeworkreceiverList = computerhomeworkreceiverService.selectComputerhomeworkreceiverByCondition(hmresql);
-				if(computerhomeworkreceiverList == null || computerhomeworkreceiverList.size()!=1){
-					returnInfo = "修改用户课程预约的预约状态失败";
-					returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn,returnInfo);
-					return SUCCESS;
-				}
-				
-				String updateChrSql = " update Computerhomeworkreceiver set hasorder="+ComputerConfig.computerhomeworkhasorder+" , hasview="+ComputerConfig.computerhomeworkhasview+" where id = "+computerhomeworkreceiverList.get(0).getId();
-				computerhomeworkreceiverService.execSql(updateChrSql);
-			}
-
-			
-			returnInfo = "预约成功";
-			returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn,returnInfo);
-			return SUCCESS;
+		computerorderService.addComputerorder(computerorder, computerordertype, reorder, uid, computerorderdetailList);
+		
+		session.put("computerorderSerialnumber", computerorder.getSerialnumber());
+		System.out.println( computerorder.getSerialnumber());
+		returnInfo = "预约成功";
+		returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn,returnInfo);
+		return SUCCESS;
 			
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
@@ -961,14 +914,6 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	}
 
 
-	public int getCurcomputerhomeworkid() {
-		return curcomputerhomeworkid;
-	}
-
-
-	public void setCurcomputerhomeworkid(int curcomputerhomeworkid) {
-		this.curcomputerhomeworkid = curcomputerhomeworkid;
-	}
 
 
 	public int getReorder() {

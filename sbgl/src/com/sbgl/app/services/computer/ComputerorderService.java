@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
+import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.util.*;
 
 public interface ComputerorderService{
@@ -54,6 +55,10 @@ public interface ComputerorderService{
 		int execSql(String sql);
 
 		boolean auditComputerorder(Computerorder cr);
+
+		void addComputerorder(Computerorder computerorder,
+				int computerordertype, int reorder, int uid,
+				List<Computerorderdetail> computerorderdetailList) throws Exception;
 		
 	
 //根据关联查询实体	

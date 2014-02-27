@@ -4,16 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import com.sbgl.app.entity.Computerhomeworkreceiver;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
+import com.sbgl.app.entity.Computerorderdetail;
+import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.actions.util.JsonActionUtil;
+import com.sbgl.app.actions.util.SnActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
+import com.sbgl.app.common.computer.ComputerorderInfo;
+import com.sbgl.app.dao.ComputerhomeworkreceiverDao;
 import com.sbgl.app.dao.ComputerorderDao;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.util.*;
 
 import javax.annotation.Resource;
+
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,11 +35,85 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 	@Resource
 	private ComputerorderDao computerorderDao;
 	
+	@Resource
+	private ComputerhomeworkreceiverDao computerhomeworkreceiverDao;
+	
 	//http://blog.csdn.net/softimes/article/details/7008875 实体添加时需要配置hibernate
 	@Override
 	public void addComputerorder(Computerorder computerorder){
 		computerorder.setId(baseDao.getCode("Computerorder"));
 		baseDao.saveEntity(computerorder);		
+	}
+	
+	@Override
+	public void addComputerorder(Computerorder tempcomputerorder,int computerordertype,int reorder,int uid,List<Computerorderdetail> computerorderdetailList) throws Exception{
+		Computerorder computerorder = new Computerorder();
+		String uuid = "";
+		//		如果是驳回预约，则序列号不变
+		if(reorder == 1){
+			computerorder = baseDao.getEntityById(Computerorder.class,tempcomputerorder.getId());
+			
+			if(computerorder == null){
+				 throw new RuntimeException("重新预约，无法获取原有订单");  
+			}else{
+//			computerorder中的序列号是原有的，重新预约不改变			
+				computerorder.setTitle(tempcomputerorder.getTitle());
+			}
+			
+		}else{
+			uuid = SnActionUtil.genComputerorderSn(uid, computerordertype, DateUtil.currentDate());
+			computerorder.setSerialnumber(uuid);
+		}
+		
+		computerorder.setCreateuserid(uid);
+		computerorder.setOrdertype(computerordertype);
+		computerorder.setCreatetime(DateUtil.currentDate());
+		computerorder.setStatus(ComputerorderInfo.ComputerorderStatusAduitWait);
+//		保存订单信息
+		if(reorder == 1){
+//			temp.setId(computerorderid);
+			baseDao.updateEntity(computerorder);
+		}else{
+			computerorder.setId(baseDao.getCode("Computerorder"));
+			baseDao.saveEntity(computerorder);
+		}
+		
+//		方便返回信息
+		BeanUtils.copyProperties( tempcomputerorder , computerorder);			
+		
+//		如果是重新预约，需要删除原有的预约
+		if(reorder == 1){
+			String delSql = " delete from computerorderdetail where computerorderid = "+computerorder.getId();
+			baseDao.createSQL(delSql);
+		}
+		
+//		computerorderdetailList = (ArrayList<Computerorderdetail>)session.get("computerorderdetailList");
+		
+//		需要先保存order，获取id，再保存详情
+		for(int i=0 ; i < computerorderdetailList.size();i++){
+			Computerorderdetail cd = computerorderdetailList.get(i);
+			cd.setComputerorderid(computerorder.getId());
+			cd.setStatus(ComputerorderInfo.ComputerorderStatusAduitWait);
+			cd.setCreatetime(DateUtil.currentDate());
+			
+			cd.setId(baseDao.getCode("Computerorderdetail"));
+			baseDao.saveEntity(cd);
+		}
+		
+//		如果是课程预约，需要修改作业的状态，一次作业只能预约一次
+		if(computerordertype == ComputerorderInfo.ClassOrder){
+			String hmresql = " where computerhomeworkid = "+ computerorder.getComputerhomeworkid() +" and userid="+ uid;
+System.out.println(hmresql);
+			List<Computerhomeworkreceiver> computerhomeworkreceiverList = computerhomeworkreceiverDao.selectComputerhomeworkreceiverByCondition(hmresql);
+			if(computerhomeworkreceiverList == null || computerhomeworkreceiverList.size()!=1){
+				throw new RuntimeException("无法更改作业状态");  
+			}
+			
+			String updateChrSql = " update Computerhomeworkreceiver set hasorder="+ComputerConfig.computerhomeworkhasorder+" , hasview="+ComputerConfig.computerhomeworkhasview+" where id = "+computerhomeworkreceiverList.get(0).getId();
+			baseDao.createSQL(updateChrSql);
+		}
+
+		
 	}
 	
 	@Override

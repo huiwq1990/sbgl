@@ -1,28 +1,21 @@
 package com.sbgl.app.actions.computer;
 
-import java.lang.reflect.InvocationTargetException;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 
-import net.sf.json.JSONObject;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.interceptor.SessionAware;
-import org.springframework.context.ApplicationContext;
+
 import org.springframework.context.annotation.Scope;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 
-import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.actions.common.BaseAction;
 import com.sbgl.app.common.computer.BorrowperiodUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
@@ -32,8 +25,7 @@ import com.sbgl.app.entity.Computer;
 import com.sbgl.app.entity.ComputerFull;
 import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.ComputercategoryFull;
-import com.sbgl.app.entity.Computerconfig;
-import com.sbgl.app.entity.ComputerconfigFull;
+
 import com.sbgl.app.entity.Computerhomework;
 import com.sbgl.app.entity.ComputerhomeworkFull;
 import com.sbgl.app.entity.Computerhomeworkreceiver;
@@ -46,6 +38,7 @@ import com.sbgl.app.entity.Computerorderclassrule;
 import com.sbgl.app.entity.ComputerorderclassruleFull;
 import com.sbgl.app.entity.Computerorderclassruledetail;
 import com.sbgl.app.entity.ComputerorderclassruledetailFull;
+import com.sbgl.app.entity.Computerorderconfig;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.services.computer.ComputerService;
@@ -57,12 +50,10 @@ import com.sbgl.app.services.computer.ComputermodelService;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.services.computer.ComputerorderclassruleService;
 import com.sbgl.app.services.computer.ComputerorderclassruledetailService;
+import com.sbgl.app.services.computer.ComputerorderconfigService;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
-import com.sbgl.util.ComputerDirective;
 import com.sbgl.util.DateUtil;
-import com.sbgl.util.Page;
-import com.sbgl.util.ReturnJson;
-import com.sbgl.util.SpringUtil;
+
 
 
 @Scope("prototype") 
@@ -143,15 +134,13 @@ public class ComputerClassorderAction  extends BaseAction  {
 	private ComputerhomeworkreceiverFull computerhomeworkreceiverFull = new ComputerhomeworkreceiverFull();//实例化一个模型
 	private List<Computerhomeworkreceiver> computerhomeworkreceiverList = new ArrayList<Computerhomeworkreceiver>();
 	private List<ComputerhomeworkreceiverFull> computerhomeworkreceiverFullList = new ArrayList<ComputerhomeworkreceiverFull>();
-		
+	
 	
 	@Resource
-	private ComputerconfigService computerconfigService;
-	private Computerconfig computerconfig = new Computerconfig();//实例化一个模型
-	private ComputerconfigFull computerconfigFull = new ComputerconfigFull();//实例化一个模型
-	List<Computerconfig> computerconfigList = new ArrayList<Computerconfig>();
-	List<ComputerconfigFull> computerconfigFullList = new ArrayList<ComputerconfigFull>();
-	private Integer computerconfigid; //entity full 的id属性名称		
+	private ComputerorderconfigService computerorderconfigService;	
+	private Computerorderconfig computerorderconfig = new Computerorderconfig();//实例化一个模型
+	private List<Computerorderconfig> computerorderconfigList = new ArrayList<Computerorderconfig>();
+	
 	
 	List<String> ordernum = new ArrayList<String>();
 
@@ -160,17 +149,16 @@ public class ComputerClassorderAction  extends BaseAction  {
 
 	private String userid;
 	
-	int currentPeriod ;
-//	int computerorderTotalOrderDay ;
-	int computeroderadvanceorderday;
-	int computerodertablercolumn;
-	List<Borrowperiod> borrowperiodList   = new ArrayList<Borrowperiod>();
-	HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> availableBorrowModelMap = new HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> ();
+	private int currentPeriod ;
+	private int computeroderadvanceorderday;
+	private int computerodertablercolumn;
+	private List<Borrowperiod> borrowperiodList   = new ArrayList<Borrowperiod>();
+	private HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> availableBorrowModelMap = new HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> ();
 	
-	List<Borrowperiod> showtimeList   = new ArrayList<Borrowperiod>();
+	private List<Borrowperiod> showtimeList   = new ArrayList<Borrowperiod>();
 	
-	HashMap<Integer,ArrayList<String>> showDateMap = new HashMap<Integer,ArrayList<String>>();
-	HashMap<Integer,ArrayList<String>> dateMap = new HashMap<Integer,ArrayList<String>>();
+	private HashMap<Integer,ArrayList<String>> showDateMap = new HashMap<Integer,ArrayList<String>>();
+	private HashMap<Integer,ArrayList<String>> dateMap = new HashMap<Integer,ArrayList<String>>();
 
 	
 //	提交预约表单的参数
@@ -179,7 +167,7 @@ public class ComputerClassorderAction  extends BaseAction  {
 	private int computerordertype = 0;
 
 //	可借出的pc model type
-	String borrowPcModelStr = "";
+	private String borrowPcModelStr = "";
 
 
 //	判断是否已经预约
@@ -188,7 +176,7 @@ public class ComputerClassorderAction  extends BaseAction  {
 	private int reorder = 0;//默认为0或者没有，如果为1，则为重新预约
 	
 	
-private String passType;
+	private String passType;
 	
 
 	
@@ -255,6 +243,18 @@ private String passType;
 			log.error(actionMsg);
 			return ComputerConfig.pagenotfound;
 		}
+		
+		
+//		获取预约配置信息
+		computerorderconfig = computerorderconfigService.selectCurrentComputerorderconfig();
+		if(computerorderconfig == null){
+			computerorderconfig = ComputerActionUtil.getDefaultComputerorderconfig();
+		}		
+		if(computerorderconfig.getOpenorder() == 0){
+			this.actionMsg = "预约功能暂时关闭。";
+			return "orderclose";
+		}		
+		
 		
 		
 //		根据作业获取规则的id
@@ -484,18 +484,6 @@ private String passType;
 		
 	
 	}
-	
-	
-
-	public String getPassType() {
-		return passType;
-	}
-
-
-
-	public void setPassType(String passType) {
-		this.passType = passType;
-	}
 
 
 	public ComputerService getComputerService() {
@@ -660,16 +648,6 @@ private String passType;
 	public void setComputerorderFullList(
 			List<ComputerorderFull> computerorderFullList) {
 		this.computerorderFullList = computerorderFullList;
-	}
-
-
-	public Integer getComputerorderid() {
-		return computerorderid;
-	}
-
-
-	public void setComputerorderid(Integer computerorderid) {
-		this.computerorderid = computerorderid;
 	}
 
 
@@ -985,64 +963,35 @@ private String passType;
 	}
 
 
-	public ComputerconfigService getComputerconfigService() {
-		return computerconfigService;
+	public ComputerorderconfigService getComputerorderconfigService() {
+		return computerorderconfigService;
 	}
 
 
-	public void setComputerconfigService(ComputerconfigService computerconfigService) {
-		this.computerconfigService = computerconfigService;
+	public void setComputerorderconfigService(
+			ComputerorderconfigService computerorderconfigService) {
+		this.computerorderconfigService = computerorderconfigService;
 	}
 
 
-	public Computerconfig getComputerconfig() {
-		return computerconfig;
+	public Computerorderconfig getComputerorderconfig() {
+		return computerorderconfig;
 	}
 
 
-	public void setComputerconfig(Computerconfig computerconfig) {
-		this.computerconfig = computerconfig;
+	public void setComputerorderconfig(Computerorderconfig computerorderconfig) {
+		this.computerorderconfig = computerorderconfig;
 	}
 
 
-	public ComputerconfigFull getComputerconfigFull() {
-		return computerconfigFull;
+	public List<Computerorderconfig> getComputerorderconfigList() {
+		return computerorderconfigList;
 	}
 
 
-	public void setComputerconfigFull(ComputerconfigFull computerconfigFull) {
-		this.computerconfigFull = computerconfigFull;
-	}
-
-
-	public List<Computerconfig> getComputerconfigList() {
-		return computerconfigList;
-	}
-
-
-	public void setComputerconfigList(List<Computerconfig> computerconfigList) {
-		this.computerconfigList = computerconfigList;
-	}
-
-
-	public List<ComputerconfigFull> getComputerconfigFullList() {
-		return computerconfigFullList;
-	}
-
-
-	public void setComputerconfigFullList(
-			List<ComputerconfigFull> computerconfigFullList) {
-		this.computerconfigFullList = computerconfigFullList;
-	}
-
-
-	public Integer getComputerconfigid() {
-		return computerconfigid;
-	}
-
-
-	public void setComputerconfigid(Integer computerconfigid) {
-		this.computerconfigid = computerconfigid;
+	public void setComputerorderconfigList(
+			List<Computerorderconfig> computerorderconfigList) {
+		this.computerorderconfigList = computerorderconfigList;
 	}
 
 
@@ -1187,6 +1136,16 @@ private String passType;
 	}
 
 
+	public Integer getComputerorderid() {
+		return computerorderid;
+	}
+
+
+	public void setComputerorderid(Integer computerorderid) {
+		this.computerorderid = computerorderid;
+	}
+
+
 	public int getOrderstatus() {
 		return orderstatus;
 	}
@@ -1207,11 +1166,23 @@ private String passType;
 	}
 
 
+	public String getPassType() {
+		return passType;
+	}
+
+
+	public void setPassType(String passType) {
+		this.passType = passType;
+	}
+
+
 	public static Log getLog() {
 		return log;
 	}
-
 	
+	
+
+
 	
 
 }

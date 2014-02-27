@@ -21,11 +21,13 @@
 		<action name="toComputerClassorder" class="ComputerClassorderAction" method="toComputerClassorderPage">
         	<result name="success">/computer/computerclassorderindex.vm</result>
         	<result name="pagenotfound">/computer/computerclassorderError.vm</result>
+        	<result name="orderclose">/computer/computerclassorderError.vm</result>     	
 			<result name="innererror">/computer/errorpage.vm</result>
 		</action>
 		<action name="toComputerClassorderPage" class="ComputerClassorderAction" method="toComputerClassorderPage">
         	<result name="success">/computer/computerclassorderindex.vm</result>
         	<result name="pagenotfound">/computer/computerclassorderError.vm</result>
+        	<result name="orderclose">/computer/computerclassorderError.vm</result>     	
 			<result name="innererror">/computer/errorpage.vm</result>
 		</action>
 		

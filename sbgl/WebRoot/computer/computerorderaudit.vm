@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 设备管理</title>
+<title>北京电影学院摄影系 - 订单审核</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -50,8 +50,12 @@
                   </div>
                   <div class="caption">
                       <div class="status">
-                      订单当前状态：#set($curstatus = $computerorderFull.computerorderstatus)
+						订单当前状态：#set($curstatus = $computerorderFull.computerorderstatus)
 					  #parse("computer/includeComputerorderStatus.vm")
+					  <br>
+					  #if($computerorderFull.computerorderstatus ==$ComputerorderStatusAduitReject)
+						驳回原因：$!computerorderFull.computerorderrejectreason
+						#end
 
                       </div>
                       <hr>
@@ -71,7 +75,8 @@
                   <div class="caption">
                     <div class="rent-detail">
                       <span class="rent-user"><strong>申请者：<a rel="popover" class="lk" href="#" data-original-title="" title="">我</a></strong></span>
-                      <span class="rent-num"><strong> - 预约号：$!computerorderFull.computerorderserialnumber</strong></span>
+                      <br>
+					  <span class="rent-num"><strong> 预约号：$!computerorderFull.computerorderserialnumber</strong></span>
 					  #if($computerorderFull.computerorderordertype == $ClassOrder)
 						 <div class="rent-contact">预约方式：课程预约</div>
 						#else

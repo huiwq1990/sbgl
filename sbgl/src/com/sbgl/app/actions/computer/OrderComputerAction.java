@@ -132,6 +132,7 @@ public class OrderComputerAction  extends BaseAction {
 	
 //	预约类型
 	int computerordertype;
+	int computerhomeworkid;
 	
 //	提交预约表单的参数
 	private String orderInfoStr;
@@ -144,6 +145,10 @@ public class OrderComputerAction  extends BaseAction {
 	public String toComputerIndividualorderPage(){
 		
 		computerordertype = ComputerorderInfo.IndividualOrder;
+//		如果是个人预约，默认作业id
+		if(computerordertype == ComputerorderInfo.IndividualOrder){
+			computerhomeworkid = 0;
+		}
 
 //		获取预约配置信息
 		computerorderconfig = computerorderconfigService.selectCurrentComputerorderconfig();
@@ -774,6 +779,16 @@ public class OrderComputerAction  extends BaseAction {
 
 	public static Log getLog() {
 		return log;
+	}
+
+
+	public int getComputerhomeworkid() {
+		return computerhomeworkid;
+	}
+
+
+	public void setComputerhomeworkid(int computerhomeworkid) {
+		this.computerhomeworkid = computerhomeworkid;
 	}
 	
 	
