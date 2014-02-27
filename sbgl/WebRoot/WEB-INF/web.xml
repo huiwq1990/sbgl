@@ -48,8 +48,6 @@
 	</filter-mapping> -->
 	
 	
-	
-	
   <display-name>Archetype Created Web Application</display-name> 
   <servlet>
     <servlet-name>velocity</servlet-name>

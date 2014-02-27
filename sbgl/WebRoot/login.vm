@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <title>北京电影学院摄影系</title>
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="css/todc-bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="css/global.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/todc-bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 <script >
 	function afterSubmit(flag,content){
 		if(flag){

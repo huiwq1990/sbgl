@@ -4,10 +4,12 @@ import java.io.PrintWriter;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -36,7 +38,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
-	public void doLogin(){		
+	public void doLogin(){
+		HttpServletRequest request = ServletActionContext.getRequest();
 		Loginuser loginUser2 = new Loginuser();		
 		boolean flag  = false;
 		try{	
@@ -44,7 +47,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 			if(loginUser2 != null){
 				CookiesUtil.addLoginCookie("uid", String.valueOf(loginUser2.getId()));
 				CookiesUtil.addLoginCookie("userpass", loginUser2.getPassword());
-				
+				CookiesUtil.addLoginCookie("userid", String.valueOf(loginUser2.getUserid()));
 				flag = true;
 				session.put("loginUser", loginUser2);
 			}
@@ -56,8 +59,8 @@ public class LoginAction extends ActionSupport implements SessionAware {
 		Javascript(flag);
 	}
 	
-	public String doManagerLogin() {		
-		Loginuser loginUser3 = new Loginuser();		
+	public String doManagerLogin() {
+		Loginuser loginUser3 = new Loginuser();
 		try{	
 			loginUser3 = loginService.findUser(loginuser);
 			if(loginUser3 != null) {
