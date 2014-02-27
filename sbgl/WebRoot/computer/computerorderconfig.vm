@@ -41,45 +41,51 @@
                   <div class="form-group">
                     <label for="inputOpenBook" class="col-lg-2 control-label">开放预约</label>
                     <div class="col-lg-4">
-                      <label class="radio-inline">
-                      	#if($computerorderconfig.openorder == 1)
-                        	<input type="radio" name="inputOpenBook" id="openBook1" value="1" checked="">是
-                        #else
-                        	<input type="radio" name="inputOpenBook" id="openBook1" value="1" >是
-                        #end	
-                      </label>
-                      <label class="radio-inline">
-                      	#if($computerorderconfig.openorder == 1)
-                       		<input type="radio" name="inputOpenBook" id="openBook2" value="0">否
-                       	  #else
-                        	<input type="radio" name="inputOpenBook" id="openBook2" value="0" checked="">否
-                        #end	
-                      </label>
+						
+						#if($computerorderconfig.openorder == 0)
+							<label class="radio-inline">
+								<input type="radio" name="inputOpenBook" id="openBook1" value="1" >是
+									</label>
+									<label class="radio-inline">
+								<input type="radio" name="inputOpenBook" id="openBook2" value="0" checked="">否
+                     		</label>
+						#else	
+					  		<label class="radio-inline">
+								<input type="radio" name="inputOpenBook" id="openBook1" value="1" checked="">是
+									</label>
+									<label class="radio-inline">
+								<input type="radio" name="inputOpenBook" id="openBook2" value="0" >否
+                     		</label>
+					  #end
+						
+            
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputBookableSlot" class="col-lg-2 control-label">预约时段</label>
                     <div class="col-lg-4">
                       <label class="checkbox-inline">
-                      	#if($computerorderconfig.orderperiod.charAt(0) == 1)
-                        	<input type="checkbox" name="inputBookableSlot" id="bookSlot1" value="1" checked>上午
-                        #else
+                      	#if($computerorderconfig.orderperiod.charAt(0) == 0)
                         	<input type="checkbox" name="inputBookableSlot" id="bookSlot1" value="1" >上午
+                        #else
+							<input type="checkbox" name="inputBookableSlot" id="bookSlot1" value="1" checked>上午
+                        	
                         #end
                       </label>
                       <label class="checkbox-inline">
-                      	#if($computerorderconfig.orderperiod.charAt(1) == 1)
-                        	<input type="checkbox" name="inputBookableSlot" id="bookSlot2" value="2" checked>下午
-                         #else
+                      	#if($computerorderconfig.orderperiod.charAt(1) == 0)
                         	<input type="checkbox" name="inputBookableSlot" id="bookSlot1" value="1" >上午
+                         #else                        	
+							<input type="checkbox" name="inputBookableSlot" id="bookSlot2" value="2" checked>下午	
                         #end
                       </label>
                       <label class="checkbox-inline">
                        
-                        #if($computerorderconfig.orderperiod.charAt(2) == 1)
-                        	 <input type="checkbox" name="inputBookableSlot" id="bookSlot3" value="3" checked>晚上
+                        #if($computerorderconfig.orderperiod.charAt(2) == 0)
+                        	  <input type="checkbox" name="inputBookableSlot" id="bookSlot3" value="3" >晚上
                          #else
-                        	 <input type="checkbox" name="inputBookableSlot" id="bookSlot3" value="3" >晚上
+							<input type="checkbox" name="inputBookableSlot" id="bookSlot3" value="3" checked>晚上
+                        	
                         #end
                       </label>
                     </div>

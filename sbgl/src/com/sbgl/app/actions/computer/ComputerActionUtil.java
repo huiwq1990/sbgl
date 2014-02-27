@@ -16,6 +16,7 @@ import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.ComputercategoryFull;
 import com.sbgl.app.entity.Computermodel;
+import com.sbgl.app.entity.Computerorderconfig;
 import com.sbgl.util.ReturnJson;
 
 public class ComputerActionUtil {
@@ -108,6 +109,16 @@ public class ComputerActionUtil {
 		JSONObject jo = JSONObject.fromObject(returnJson);
 		
 		return jo.toString();
+	}
+	
+	
+	public static Computerorderconfig getDefaultComputerorderconfig(){
+		Computerorderconfig computerorderconfig = new Computerorderconfig();
+		computerorderconfig.setOpenorder(1);
+		computerorderconfig.setOrderperiod("111");
+		computerorderconfig.setMaxorderday(14);
+		computerorderconfig.setOrderintroduction("默认配置");
+		return computerorderconfig;
 	}
 	
 	

@@ -32,5 +32,7 @@ public List<Computerorderconfig> selectComputerorderconfigByCondition(String con
 
 	public List<ComputerorderconfigFull> selectComputerorderconfigFullByLoginuserId(Integer createuserid);
 
+	Computerorderconfig selectCurrentComputerorderconfig();
+
  
 }

@@ -59,7 +59,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	private ComputerorderFull computerorderFull = new ComputerorderFull();//实例化一个模型
 	List<Computerorder> computerorderList = new ArrayList<Computerorder>();
 	List<ComputerorderFull> computerorderFullList = new ArrayList<ComputerorderFull>();
-	private int computerorderid; //entity full 的id属性名称		
+	private int computerorderid = 0; //entity full 的id属性名称		
 	int computerorderId;//订单的id
 	
 	@Resource

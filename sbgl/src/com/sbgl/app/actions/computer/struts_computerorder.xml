@@ -6,11 +6,14 @@
 <!--跳转到个人预约页面 -->
 		<action name="toComputerIndividualorder" class="OrderComputerAction" method="toComputerIndividualorderPage">
         	<result name="success">/computer/computerindividualorderindex.vm</result>
+        	<result name="orderclose">/computer/computerindividualorderError.vm</result>
+        	
         	<result name="error">/error.vm</result> 
 		</action>
 
 		<action name="toComputerIndividualorderPage" class="OrderComputerAction" method="toComputerIndividualorderPage">
         	<result name="success">/computer/computerindividualorderindex.vm</result>
+        	<result name="orderclose">/computer/computerindividualorderError.vm</result>     	
         	<result name="error">/error.vm</result> 
 		</action>
 

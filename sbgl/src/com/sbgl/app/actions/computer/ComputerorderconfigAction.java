@@ -36,19 +36,17 @@ public class ComputerorderconfigAction extends BaseAction implements ModelDriven
 
 	//Service	
 	@Resource
-	private ComputerorderconfigService computerorderconfigService;
-	
+	private ComputerorderconfigService computerorderconfigService;	
 	private Computerorderconfig computerorderconfig = new Computerorderconfig();//实例化一个模型
-	private Computerorderconfig computerorderconfigModel = new Computerorderconfig();//实例化一个模型
-	private ComputerorderconfigFull computerorderconfigFull = new ComputerorderconfigFull();//实例化一个模型
-
-	List<Computerorderconfig> computerorderconfigList = new ArrayList<Computerorderconfig>();
-	List<ComputerorderconfigFull> computerorderconfigFullList = new ArrayList<ComputerorderconfigFull>();
-	private Integer computerorderconfigid; //entity full 的id属性名称		
+	private List<Computerorderconfig> computerorderconfigList = new ArrayList<Computerorderconfig>();
+//	private ComputerorderconfigFull computerorderconfigFull = new ComputerorderconfigFull();//实例化一个模型
+//	private List<ComputerorderconfigFull> computerorderconfigFullList = new ArrayList<ComputerorderconfigFull>();
+	
+	
 	private String logprefix = "exec action method:";
 	
-
-	private String computerorderconfigIdsForDel;
+//	private Integer computerorderconfigid; //entity full 的id属性名称	
+//	private String computerorderconfigIdsForDel;
 	
 	
 	public String toSetComputerorderconfig(){
@@ -56,18 +54,18 @@ public class ComputerorderconfigAction extends BaseAction implements ModelDriven
 		computerorderconfigList = computerorderconfigService.selectComputerorderconfigByCondition(sql);
 		
 		if(computerorderconfigList == null || computerorderconfigList.size()==0){
-			computerorderconfig.setOpenorder(1);
-			computerorderconfig.setOrderperiod("111");
-			computerorderconfig.setMaxorderday(14);
+			computerorderconfig = ComputerActionUtil.getDefaultComputerorderconfig();
+			
 			this.actionMsg = "默认配置";
 		}else{
 			computerorderconfig = computerorderconfigList.get(0);
 		}
-		
+		System.out.println(computerorderconfig.getOrderperiod());
 		return SUCCESS;
 	}
 			
 	//管理 查询
+	/*
 	public String manageComputerorderconfigFull(){
 		log.info("exec action method:manageComputerorderconfigFull");
                 
@@ -96,10 +94,13 @@ public class ComputerorderconfigAction extends BaseAction implements ModelDriven
            return "success1";
         }	
 	}			
-
+*/
 			
 
 //  ajax add	
+	/**
+	 * 保存时需要将其它的配置的当前状态设置为0
+	 */
 	public String addComputerorderconfigAjax(){	
 		log.info("Add Entity Ajax Manner");
 		
@@ -324,260 +325,55 @@ public class ComputerorderconfigAction extends BaseAction implements ModelDriven
 			this.returnStr = jo.toString();
 			return SUCCESS;
 	}
-	
-	
-	/**
-	
-	编辑实体 action的方法，首先获取entity的信息，返回到编辑页面
-	
-	*/
-	public String editComputerorderconfig(){
-		log.info(logprefix + "editComputerorderconfig");
-			
-		try {
-			//实体的id可以为0
-			if(computerorderconfig.getId() != null && computerorderconfig.getId() >= 0){				
-				Computerorderconfig temComputerorderconfig = computerorderconfigService.selectComputerorderconfigById(computerorderconfig.getId());
-				if(temComputerorderconfig != null){
-					BeanUtils.copyProperties(computerorderconfigModel,temComputerorderconfig);	
-					//actionMsg = getText("selectComputerorderconfigByIdSuccess");
-					return SUCCESS;
-				}				
-			}		
-			return "PageNotExist";
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerorderconfigAction的方法：selectComputerorderconfigById错误"+e);
-		}
 
 
-		return "error";
-	}
-	
-
-	/**
-	编辑实体Full action的方法，首先获取entityfull的信息，返回到编辑页面
-	
-	*/
-	public String editComputerorderconfigFull(){
-		
-		log.info(logprefix + "viewComputerorderconfig");
-		
-		try {
-			if(computerorderconfig.getId() != null && computerorderconfig.getId() > 0){				
-				ComputerorderconfigFull temComputerorderconfigFull = computerorderconfigService.selectComputerorderconfigFullById(computerorderconfig.getId());
-				BeanUtils.copyProperties(computerorderconfigFull,temComputerorderconfigFull);	
-				actionMsg = getText("selectComputerorderconfigByIdSuccess");
-			}else{
-				actionMsg = getText("selectComputerorderconfigByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerorderconfigAction的方法：selectComputerorderconfigFullById错误"+e);
-		}
-		
-		return "error";
-	}
-
-	
-	// 查看实体 根据对象Id查询
-	public String viewComputerorderconfig(){
-		log.info("viewComputerorderconfig");
-		try {
-			if(computerorderconfig.getId() != null && computerorderconfig.getId() > 0){				
-				Computerorderconfig temComputerorderconfig = computerorderconfigService.selectComputerorderconfigById(computerorderconfig.getId());
-				BeanUtils.copyProperties(computerorderconfigModel,temComputerorderconfig);	
-				actionMsg = getText("selectComputerorderconfigByIdSuccess");
-			}else{
-				actionMsg = getText("selectComputerorderconfigByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerorderconfigAction的方法：selectComputerorderconfigById错误"+e);
-		}
-
-
-		return "error";
-
-	}	
-
-/**
- * view ComputerorderconfigFull
- * need give parmeter id
- * get id from modle,
- * @return
- */
-	public String viewComputerorderconfigFull() {
-				
-		try {
-			int getId = computerorderconfig.getId();
-			log.info(this.logprefix + ";id=" + getId);
-			
-			if (getId < 0) {
-				log.error("error,id小于0不规范");
-				return "error";
-			}	
-			
-			ComputerorderconfigFull temComputerorderconfigFull = computerorderconfigService.selectComputerorderconfigFullById(getId);				
-			if(temComputerorderconfigFull!=null){				
-				BeanUtils.copyProperties(computerorderconfigFull,temComputerorderconfigFull);
-				return SUCCESS;				
-			}else{
-				log.error("error,查询实体不存在。");
-				return "Error";
-			}			
-
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();			
-		}
-		return "Error";
-	}
-/*
-	//根据createuserid查询实体
-	public String selectComputerorderconfigByLoginuserId() {
-			//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		computerorderconfigList  = computerorderconfigService.selectComputerorderconfigAll();
-		for(int i = 0; i < computerorderconfigList.size(); i++){
-			System.out.println("id="+computerorderconfigList.get(i).getId());
-		}
-		return SUCCESS;
-	}
-	//根据createuserid查询实体full
-	public String selectComputerorderconfigFullByLoginuserId() {
-				//检查用户登录
-		Loginuser lu = (Loginuser)session.get("Loginuser");
-		if(lu==null || lu.getId()==null){
-			return "toLogin";
-		}
-		Integer userId = lu.getId();
-		
-		computerorderconfigFullList  = computerorderconfigService.selectComputerorderconfigFullByLoginuserId(userId);
-		for(int i = 0; i < computerorderconfigFullList.size(); i++){
-			//System.out.println("id="+computerorderconfigFullList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}
-*/
-	//get set
-	public void setSession(Map<String, Object> session) {
-		// TODO Auto-generated method stub
-	    this.session = session;
-	}
-	
 	@Override
 	public Computerorderconfig getModel() {
 		// TODO Auto-generated method stub
 		return computerorderconfig;
 	}
 
-//  
+	public ComputerorderconfigService getComputerorderconfigService() {
+		return computerorderconfigService;
+	}
+
+	public void setComputerorderconfigService(
+			ComputerorderconfigService computerorderconfigService) {
+		this.computerorderconfigService = computerorderconfigService;
+	}
+
 	public Computerorderconfig getComputerorderconfig() {
 		return computerorderconfig;
 	}
-	
+
 	public void setComputerorderconfig(Computerorderconfig computerorderconfig) {
 		this.computerorderconfig = computerorderconfig;
 	}
-//  entityModel
-	public Computerorderconfig getComputerorderconfigModel() {
-		return computerorderconfigModel;
-	}
-	
-	public void setComputerorderconfigModel(Computerorderconfig computerorderconfigModel) {
-		this.computerorderconfigModel = computerorderconfigModel;
-	}
-	
-	public ComputerorderconfigFull getComputerorderconfigFull() {
-		return computerorderconfigFull;
-	}
-	
-	public void setComputerorderconfigFull(ComputerorderconfigFull computerorderconfigFull) {
-		this.computerorderconfigFull = computerorderconfigFull;
-	}
-	
+
 	public List<Computerorderconfig> getComputerorderconfigList() {
 		return computerorderconfigList;
 	}
 
-
-	public void setComputerorderconfigList(List<Computerorderconfig> computerorderconfigList) {
+	public void setComputerorderconfigList(
+			List<Computerorderconfig> computerorderconfigList) {
 		this.computerorderconfigList = computerorderconfigList;
 	}
 
-	public List<ComputerorderconfigFull> getComputerorderconfigFullList() {
-		return computerorderconfigFullList;
+	public String getLogprefix() {
+		return logprefix;
 	}
 
-
-	public void setComputerorderconfigFullList(List<ComputerorderconfigFull> computerorderconfigFullList) {
-		this.computerorderconfigFullList = computerorderconfigFullList;
+	public void setLogprefix(String logprefix) {
+		this.logprefix = logprefix;
 	}
 
-	public String getReturnStr() {
-		return returnStr;
-	}
-
-
-	public void setReturnStr(String returnStr) {
-		this.returnStr = returnStr;
-	}
-	
-	public Page getPage() {
-		return page;
-	}
-
-
-	public void setPage(Page page) {
-		this.page = page;
-	}
-	
-	public int getComputerorderconfigid() {
-		return computerorderconfigid;
-	}
-
-	public void setComputerorderconfigid(int computerorderconfigid) {
-		this.computerorderconfigid = computerorderconfigid;
-	}
-		public int getPageNo() {
-		return pageNo;
-	}
-
-	public void setPageNo(int pageNo) {
-		this.pageNo = pageNo;
+	public static Log getLog() {
+		return log;
 	}
 	
 	
-	public String getComputerorderconfigIdsForDel() {
-                return computerorderconfigIdsForDel;
-        }
-
-        public void setComputerorderconfigIdsForDel(String computerorderconfigIdsForDel) {
-                this.computerorderconfigIdsForDel = computerorderconfigIdsForDel;
-        }
+	
+	
+	
+	
 }

@@ -98,8 +98,7 @@ public class ComputerClassorderAction  extends BaseAction  {
 	private ComputerorderFull computerorderFull = new ComputerorderFull();//实例化一个模型
 	List<Computerorder> computerorderList = new ArrayList<Computerorder>();
 	List<ComputerorderFull> computerorderFullList = new ArrayList<ComputerorderFull>();
-	private Integer computerorderid; //entity full 的id属性名称		
-	
+
 	@Resource
 	private ComputerorderdetailService computerorderdetailService;	
 	private Computerorderdetail computerorderdetail = new Computerorderdetail();//实例化一个模型
@@ -184,6 +183,7 @@ public class ComputerClassorderAction  extends BaseAction  {
 
 
 //	判断是否已经预约
+	private Integer computerorderid =0; //entity full 的id属性名称		
 	private int orderstatus;
 	private int reorder = 0;//默认为0或者没有，如果为1，则为重新预约
 	
@@ -244,6 +244,7 @@ private String passType;
 		
 		if(computerhomeworkreceiverList == null){
 			orderstatus = 0;
+			computerorderid = 0;
 		}else{
 			orderstatus = computerhomeworkreceiverList.get(0).getHasorder();
 		}

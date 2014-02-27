@@ -92,6 +92,11 @@ public class ComputerorderconfigServiceImpl implements ComputerorderconfigServic
 	public Computerorderconfig selectComputerorderconfigById(Integer computerorderconfigId){		
 		return baseDao.getEntityById(Computerorderconfig.class, computerorderconfigId);
 	}
+
+	@Override
+	public Computerorderconfig selectCurrentComputerorderconfig( ){		
+		return computerorderconfigDao.selectCurrentComputerorderconfig();
+	}
 	
 	/*
 	@Override
