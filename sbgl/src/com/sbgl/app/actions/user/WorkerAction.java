@@ -115,7 +115,7 @@ public class WorkerAction extends ActionSupport implements SessionAware {
 			this.tag = "1";
 			this.message = "修改其他人员信息失败！";
 		} else {
-			Usergrouprelation ugr = userGroupRelationService.getRelationByType(worker.getId(), -1);
+			Usergrouprelation ugr = userGroupRelationService.getRelationByType(worker.getId(), 4);
 			ugr.setGroupId( group.getId() );
 			userGroupRelationService.alterUserGroupRelation( ugr );
 			this.tag = "0";
@@ -146,7 +146,7 @@ public class WorkerAction extends ActionSupport implements SessionAware {
 		for (String id : ids) {
 			Integer oneId = Integer.valueOf( id );
 			Worker wk = workerService.getWorkerById( oneId );
-			Usergrouprelation temp = userGroupRelationService.getRelationByType(wk.getId(), -1);
+			Usergrouprelation temp = userGroupRelationService.getRelationByType(wk.getId(), 4);
 			if(workerService.deleteWorker( oneId ) == 0 && userGroupRelationService.deleteUserGroupRelation( temp.getId() ) == 0) {
 				this.message = "删除其他人员信息成功！";
 				this.tag = "0";

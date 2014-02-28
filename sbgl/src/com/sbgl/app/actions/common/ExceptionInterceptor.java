@@ -38,7 +38,7 @@ public class ExceptionInterceptor extends AbstractInterceptor {
 		session = request.getSession();
 		String url = request.getRequestURL().toString();
 		String uid = CookiesUtil.getCookie("uid");
-		System.out.println("============================" + uid);
+//		System.out.println("============================" + uid);
 		loginuser = (Loginuser)session.getAttribute("loginUser");
 //		System.out.println("++++++++++++++++++++++++++++" + loginuser!=null?loginuser.getUserid():"未找到");
 		if( uid == null && loginuser == null && url.indexOf("doLogin") == -1) {
