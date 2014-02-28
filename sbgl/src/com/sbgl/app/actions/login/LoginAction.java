@@ -1,16 +1,15 @@
 package com.sbgl.app.actions.login;
 
 import java.io.PrintWriter;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -24,10 +23,10 @@ import com.sbgl.util.WebUtils;
 
 @Scope("prototype") 
 @Controller("LoginAction")
-public class LoginAction extends ActionSupport implements SessionAware {
+public class LoginAction extends ActionSupport {
 	
 	private static final Log log = LogFactory.getLog(LoginAction.class);
-	private Map<String, Object> session;
+	private HttpSession session;
 	private Loginuser loginuser;
 	
 
@@ -40,6 +39,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	
 	public void doLogin(){
 		HttpServletRequest request = ServletActionContext.getRequest();
+		session = request.getSession();
 		Loginuser loginUser2 = new Loginuser();		
 		boolean flag  = false;
 		try{	
@@ -49,7 +49,7 @@ public class LoginAction extends ActionSupport implements SessionAware {
 				CookiesUtil.addLoginCookie("userpass", loginUser2.getPassword());
 				CookiesUtil.addLoginCookie("userid", String.valueOf(loginUser2.getUserid()));
 				flag = true;
-				session.put("loginUser", loginUser2);
+				session.setAttribute("loginUser", loginUser2);
 			}
 			
 		}catch (Exception e) {
@@ -71,16 +71,16 @@ public class LoginAction extends ActionSupport implements SessionAware {
 				CookiesUtil.addLoginCookie("privilege", loginUser3.getPrivilege());
 				CookiesUtil.addLoginCookie("id", loginUser3.getId().toString());
 				
-				if( "100".equals(loginUser3.getRoletype()) ) {
-					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN1);
-					return "super";
-				} else if( "200".equals(loginUser3.getRoletype()) ) {
-					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN2);
-					return "equip";
-				} else if( "300".equals(loginUser3.getRoletype()) ) {
-					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN3);
-					return "room";
-				}
+//				if( "100".equals(loginUser3.getRoletype()) ) {
+//					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN1);
+//					return "super";
+//				} else if( "200".equals(loginUser3.getRoletype()) ) {
+//					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN2);
+//					return "equip";
+//				} else if( "300".equals(loginUser3.getRoletype()) ) {
+//					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN3);
+//					return "room";
+//				}
 				
 			}
 			
@@ -109,12 +109,12 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	}
 	
 	public String doLogout(){
-		session.remove("Loginuser");
+		session.removeAttribute("Loginuser");
 		return SUCCESS;
 	}
 	
 	public String doManagerLogout(){
-		session.remove("Loginuser");
+		session.removeAttribute("Loginuser");
 		return SUCCESS;
 	}
 	
@@ -126,11 +126,4 @@ public class LoginAction extends ActionSupport implements SessionAware {
 	public void setLoginuser(Loginuser loginuser) {
 		this.loginuser = loginuser;
 	}
-
-	@Override
-	public void setSession(Map<String, Object> session) {
-		this.session = session;
-	}
-
-
 }
