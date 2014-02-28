@@ -26,6 +26,7 @@ import com.sbgl.app.actions.teach.TeachActionUtil;
 import com.sbgl.app.actions.util.PageActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderInfo;
+import com.sbgl.app.entity.Clazz;
 import com.sbgl.app.entity.Computer;
 import com.sbgl.app.entity.ComputerFull;
 import com.sbgl.app.entity.Computercategory;
@@ -48,6 +49,7 @@ import com.sbgl.app.entity.Coursecomputer;
 import com.sbgl.app.entity.CoursecomputerFull;
 import com.sbgl.app.entity.Courseconfig;
 import com.sbgl.app.entity.CourseconfigFull;
+import com.sbgl.app.entity.Student;
 import com.sbgl.app.entity.Usergroup;
 import com.sbgl.app.services.computer.ComputerService;
 import com.sbgl.app.services.computer.ComputercategoryService;
@@ -60,6 +62,7 @@ import com.sbgl.app.services.computer.ComputerstatusService;
 import com.sbgl.app.services.teach.CourseService;
 import com.sbgl.app.services.teach.CoursecomputerService;
 import com.sbgl.app.services.teach.CourseconfigService;
+import com.sbgl.app.services.user.ClazzService;
 import com.sbgl.app.services.user.GroupService;
 import com.sbgl.util.ComputerDirective;
 import com.sbgl.util.Page;
@@ -199,6 +202,10 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	private HashMap<Integer, ArrayList<Course>> courseByGroupId = new HashMap<Integer,ArrayList<Course>>();
 	private HashMap<Integer, ArrayList<CourseFull>> courseFullByGroupId = new HashMap<Integer,ArrayList<CourseFull>>();
 	
+	
+	@Resource
+	ClazzService clazzService;	
+	public List<Map<Clazz, List<Student>>> classStuListMap = new  ArrayList<Map<Clazz, List<Student>>>();
 	
 	
 	HashMap<Integer, ArrayList<Computermodel>> computermodelByComputercategoryId = new HashMap<Integer,ArrayList<Computermodel>>();
@@ -804,6 +811,8 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 //		课程信息
 		courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+CommonConfig.languagech);
 		courseFullByGroupId = TeachActionUtil.couseFullUsergroupMap(usergroupList, courseFullList);
+		
+//		classStuListMap = clazzService.getAllClazzDetail();
 		
 		if(computercategoryList == null){
 			computercategoryList = new ArrayList<Computercategory>();

@@ -1,27 +1,40 @@
 package com.sbgl.app.services.computer.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 
+import com.sbgl.app.entity.Borrowperiod;
 import com.sbgl.app.entity.Computerhomeworkreceiver;
+import com.sbgl.app.entity.Computermodel;
+import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.services.computer.ComputerorderService;
+import com.sbgl.app.actions.common.CommonConfig;
+import com.sbgl.app.actions.computer.ComputerorderActionUtil;
+import com.sbgl.app.actions.computer.ManageComputerorder;
 import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.actions.util.SnActionUtil;
+import com.sbgl.app.common.computer.BorrowperiodUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.dao.ComputerhomeworkreceiverDao;
+import com.sbgl.app.dao.ComputermodelDao;
 import com.sbgl.app.dao.ComputerorderDao;
 import com.sbgl.app.dao.BaseDao;
+import com.sbgl.app.dao.ComputerorderdetailDao;
 import com.sbgl.util.*;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,13 +43,23 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("computerorderService")
 @Transactional
 public class ComputerorderServiceImpl implements ComputerorderService{
+	
+	private static final Log log = LogFactory.getLog(ComputerorderServiceImpl.class);
+
 	@Resource
 	private BaseDao baseDao;
 	@Resource
 	private ComputerorderDao computerorderDao;
 	
 	@Resource
+	private ComputerorderdetailDao computerorderdetailDao;
+	
+	@Resource
+	private ComputermodelDao computermodelDao;
+	
+	@Resource
 	private ComputerhomeworkreceiverDao computerhomeworkreceiverDao;
+
 	
 	//http://blog.csdn.net/softimes/article/details/7008875 实体添加时需要配置hibernate
 	@Override
@@ -64,12 +87,13 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 			uuid = SnActionUtil.genComputerorderSn(uid, computerordertype, DateUtil.currentDate());
 			computerorder.setSerialnumber(uuid);
 		}
-		
+//		需要设置课程预约的作业id
+		computerorder.setComputerhomeworkid(tempcomputerorder.getComputerhomeworkid());
 		computerorder.setCreateuserid(uid);
 		computerorder.setOrdertype(computerordertype);
 		computerorder.setCreatetime(DateUtil.currentDate());
 		computerorder.setStatus(ComputerorderInfo.ComputerorderStatusAduitWait);
-//		保存订单信息
+//		保存订单信息 如果是驳回预约，则是更新
 		if(reorder == 1){
 //			temp.setId(computerorderid);
 			baseDao.updateEntity(computerorder);
@@ -103,7 +127,7 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 //		如果是课程预约，需要修改作业的状态，一次作业只能预约一次
 		if(computerordertype == ComputerorderInfo.ClassOrder){
 			String hmresql = " where computerhomeworkid = "+ computerorder.getComputerhomeworkid() +" and userid="+ uid;
-System.out.println(hmresql);
+			System.out.println(hmresql);
 			List<Computerhomeworkreceiver> computerhomeworkreceiverList = computerhomeworkreceiverDao.selectComputerhomeworkreceiverByCondition(hmresql);
 			if(computerhomeworkreceiverList == null || computerhomeworkreceiverList.size()!=1){
 				throw new RuntimeException("无法更改作业状态");  
@@ -134,6 +158,27 @@ System.out.println(hmresql);
 	public void addComputerorderWithId(Computerorder computerorder){
 	
 		baseDao.saveEntity(computerorder);		
+	}
+	
+	/**
+	 * 验证表单中的预约数量能否满足
+	 */
+	@Override
+	public boolean vaildComputerorderForm(List<Computerorderdetail> newOrderComputerorderdetailList,Date currentDate, int currentPeriod ,Date endDate, int endPeriod ,int currentLanguage, List<Borrowperiod> borrowperiodList,int computeroderadvanceorderday){
+		
+//		查找所有的模型
+		List<Computermodel> computermodelList = new ArrayList<Computermodel>();
+		String getAllComputermodelTypeSql = " where a.languagetype="+CommonConfig.languagech+" ";
+		computermodelList = computermodelDao.selectComputermodelByCondition(getAllComputermodelTypeSql);
+		
+//		根据模型构建 模型、时间段、日期的map
+		HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> availableBorrowModelMap = ComputerorderActionUtil.computermodelPeriodDayInfo(computermodelList, currentPeriod, borrowperiodList, computeroderadvanceorderday);
+		
+		
+//		获取已经预约的表单
+		List<Computerorderdetail> haveOrderedValidComputerorderdetailList  = computerorderdetailDao.selectValidComputerorderdetailFromStartToEnd(currentDate, currentPeriod, endDate, endPeriod);
+		
+		return ComputerorderActionUtil.checkVaildComputerorderForm(availableBorrowModelMap, haveOrderedValidComputerorderdetailList, newOrderComputerorderdetailList, currentDate);
 	}
 
 //  根据id删除实体	

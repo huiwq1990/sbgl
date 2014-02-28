@@ -2,6 +2,7 @@ package com.sbgl.app.dao.impl;
 
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -13,6 +14,8 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.sbgl.app.common.computer.ComputerConfig;
+import com.sbgl.app.common.computer.ComputerorderdetailInfo;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.DaoAbs;
 
@@ -37,6 +40,65 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	private final String basicComputerorderdetailSql = "From Computerorderdetail as a ";
 	
 	private final String basicComputerorderdetailDelSql = "delete from  Computerorderdetail as a ";
+	/*
+    @Override
+    public List<Computerorderdetail> selectComputerorderdetailAfterNow(String currentDay,int currentPeriod){
+
+            int computerorderTotalOrderDay = ComputerConfig.computeroderadvanceorderday;
+//            int computerorderTotalOrderPeriod = ComputerConfig.computerorderTotalOrderPeriod;
+            Date curDate = DateUtil.parseDate(currentDay);
+            Date endDate = DateUtil.addDay(curDate, computerorderTotalOrderDay);
+            String endate = DateUtil.dateFormat(endDate,DateUtil.dateformatstr1);
+            String cond = "where ( (borrowday = '" + currentDay+"' and borrowperiod >="+currentPeriod+") or ";
+            cond +=  "             ((borrowday > '" + currentDay+"') and (borrowday < '" + endate+"') )";
+            cond +=  "            ) and ";
+            cond +=  "            ( status in ("+ComputerorderdetailInfo.ComputerorderdetailStatusAduitPass+","+ComputerorderdetailInfo.ComputerorderdetailStatusAduitWait+") ) ";
+//            cond = " ";
+    System.out.println(cond);
+            return computerorderdetailDao.selectComputerorderdetailByCondition(cond);
+
+    }
+	*/
+	
+	/**
+	 * 查询某个时间段内有效的订单详情
+	 */
+    @Override
+	public List<Computerorderdetail> selectValidComputerorderdetailFromStartToEnd(Date startDate, int startPeriod, Date endDate, int endPeriod){
+    	
+//		日期格式化为 yyyy-MM-dd 00:00:00
+		String startDateStr= DateUtil.dateFormat(DateUtil.getDateDayDate(startDate), DateUtil.dateformatstr1);
+    	String endDateStr = DateUtil.dateFormat(DateUtil.getDateDayDate(endDate), DateUtil.dateformatstr1);
+        
+            String cond = "where ( (borrowday = '" + startDateStr+"' and borrowperiod >="+startPeriod+") or ";//今天当前时段之后的
+            cond +=  "             ((borrowday > '" + startDateStr+"') and (borrowday < '" + endDateStr+"'))  or";//明天到最后一天前之前的
+            cond +=  "             ((borrowday = '" + endDateStr+"') and (borrowperiod <= '" + endPeriod+"') )";//最后一天时间小于
+            cond +=  "           ) and ";
+            cond +=  "            ( status in ("+ComputerorderdetailInfo.ComputerorderdetailStatusAduitPass+","+ComputerorderdetailInfo.ComputerorderdetailStatusAduitWait+") ) ";
+//            cond = " ";
+            log.info(cond);
+            return selectComputerorderdetailByCondition(cond);
+
+    }
+    
+    @Override
+	public List<Computerorderdetail> selectValidComputerorderdetailFromStartToEndByModel(Date startDate, int startPeriod, Date endDate, int endPeriod,String modeltypeStr){
+    	
+//		日期格式化为 yyyy-MM-dd 00:00:00
+		String startDateStr= DateUtil.dateFormat(DateUtil.getDateDayDate(startDate), DateUtil.dateformatstr1);
+    	String endDateStr = DateUtil.dateFormat(DateUtil.getDateDayDate(endDate), DateUtil.dateformatstr1);
+        
+            String cond = "where ( (borrowday = '" + startDateStr+"' and borrowperiod >="+startPeriod+") or ";//今天当前时段之后的
+            cond +=  "             ((borrowday > '" + startDateStr+"') and (borrowday < '" + endDateStr+"'))  or";//明天到最后一天前之前的
+            cond +=  "             ((borrowday = '" + endDateStr+"') and (borrowperiod <= '" + endPeriod+"') )";//最后一天时间小于
+            cond +=  "           ) and ";
+            cond +=  "            ( status in ("+ComputerorderdetailInfo.ComputerorderdetailStatusAduitPass+","+ComputerorderdetailInfo.ComputerorderdetailStatusAduitWait+") ) ";
+            cond += "                 and";
+            cond += "              (computermodelid in ("+modeltypeStr+") )";
+            log.info(cond);
+            return selectComputerorderdetailByCondition(cond);
+
+    }
 	
 	// 根据条件查询查询实体
 	@Override

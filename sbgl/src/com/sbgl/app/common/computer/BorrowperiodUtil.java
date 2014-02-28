@@ -12,7 +12,7 @@ import com.sbgl.util.DateUtil;
 
 public class BorrowperiodUtil {
 	
-	static int[][] workTime ={{8,0},{11,30},{13,30},{18,0},{19,0},{21,30},{24,0}};
+	static int[][] workTime ={{8,0},{11,30},{13,30},{18,0},{19,0},{22,30},{24,0}};
 	public static int getTimePeriod(int hour,int min){
 		
 		for(int i=0; i<workTime.length;i++){
@@ -33,8 +33,15 @@ public class BorrowperiodUtil {
 		
 	}
 	
-	
+	/**
+	 * 获取date的时间段
+	 * @param date
+	 * @return
+	 */
 	public static int getBorrowTimePeriod(Date date){
+		
+		
+		
 		int period = getTimePeriod(date);
 	System.out.println(period);
 //		List<Borrowperiod> periodList = getBorrowperiodList();
@@ -55,12 +62,25 @@ public class BorrowperiodUtil {
 //		return 0;
 	}
 	
+	
+	public static int getMaxPeriod(){
+		String currentDay = "2013-10-01 23:59:59";
+		
+		return BorrowperiodUtil.getBorrowTimePeriod(DateUtil.parseDate(currentDay));
+	}
+	
 	public static void main(String[] args) {
+		
+		System.out.println(getBorrowperiodByNum(2).getPeroidname());
+		
 		System.out.println(PeriodUtil.getTimePeriod(13, 00));
 		String currentDay = "2013-10-01 23:00:00";
 		
 		int currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(DateUtil.parseDate(currentDay));
 		 System.out.println("currentPeriod: "+currentPeriod);
+		 
+		 
+		 System.out.println(getMaxPeriod());
 	}
 
 	
@@ -70,19 +90,19 @@ public class BorrowperiodUtil {
 		List<Borrowperiod> periodList = new ArrayList<Borrowperiod>();
 		
 		Borrowperiod p2 = new Borrowperiod();
-		p2.setId(0);
+		p2.setId(2);
 		p2.setPeriodnum(2);
 		p2.setPeroidname("上午");
 		periodList.add(p2);
 		
 		Borrowperiod p4 = new Borrowperiod();
-		p4.setId(1);
+		p4.setId(4);
 		p4.setPeriodnum(4);
 		p4.setPeroidname("下午");
 		periodList.add(p4);
 		
 		Borrowperiod p6 = new Borrowperiod();
-		p6.setId(2);
+		p6.setId(6);
 		p6.setPeriodnum(6);
 		p6.setPeroidname("晚上");
 		periodList.add(p6);
@@ -94,24 +114,17 @@ public class BorrowperiodUtil {
 	public static Map<Integer,Borrowperiod> getBorrowperiodMap(){
 		
 		Map<Integer,Borrowperiod> periodMap = new HashMap<Integer,Borrowperiod>();
+		List<Borrowperiod> periodList = getBorrowperiodList();
+		for(Borrowperiod bp : periodList){
+			periodMap.put(bp.getId(), bp);
+		}
 		
-		Borrowperiod p = new Borrowperiod();
-		p.setId(2);
-		p.setPeriodnum(2);
-		p.setPeroidname("上午");
-		periodMap.put(p.getId(), p);
-		
-		p.setId(4);
-		p.setPeriodnum(4);
-		p.setPeroidname("下午");
-		periodMap.put(p.getId(), p);
-		
-		p.setId(6);
-		p.setPeriodnum(6);
-		p.setPeroidname("晚上");
-		periodMap.put(p.getId(), p);
 		
 		return periodMap;
 	}
 
+	
+	public static Borrowperiod getBorrowperiodByNum(int num){
+		return getBorrowperiodMap().get(num);
+	}
 }

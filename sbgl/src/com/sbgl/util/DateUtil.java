@@ -237,6 +237,18 @@ public class DateUtil {
 		return calendar.getTime();
 	}
 	
+	/**
+	 * 
+	 * @param startDate
+	 * @param in
+	 * @return
+	 */
+//	public static Date endDateIn(Date startDate, int in){
+//
+//		   SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd"); 
+//		   df.format(new Date(startDate - in * 24 * 60 * 60 * 1000));
+//		return calendar.getTime();
+//	}
 
 	public static String addDay2(String inDate, int day) {
 		Date datetemp = parseDate(inDate);
@@ -246,7 +258,23 @@ public class DateUtil {
 		return date.format(calendar.getTime());
 	}
 
-
+	/**
+	 * 获取某个时间段的day
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public static Date getDateDayDate(Date date) {
+		String pattern = "yyyy-MM-dd";
+		SimpleDateFormat df = new SimpleDateFormat(pattern);
+		String tString = df.format(date);
+		
+		return parseDate(tString);
+		
+//		return tString;
+	}
+	
+	
 	/**
 	 * 获取某个时间段的day
 	 * 

@@ -1,5 +1,6 @@
 package com.sbgl.app.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.sbgl.app.entity.Computerorderdetail;
@@ -39,6 +40,13 @@ public List<Computerorderdetail> selectComputerorderdetailByCondition(String con
 	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerId(Integer computerid );
 
 	int deleteComputerorderdetailByCondition(String condition);
+
+	public List<Computerorderdetail> selectValidComputerorderdetailFromStartToEnd(
+			Date currentDate, int startPeriod, Date endDate, int endPeriod);
+
+	List<Computerorderdetail> selectValidComputerorderdetailFromStartToEndByModel(
+			Date startDate, int startPeriod, Date endDate, int endPeriod,
+			String modeltypeStr);
 
  
 }

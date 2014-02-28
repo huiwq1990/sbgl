@@ -2,6 +2,7 @@ package com.sbgl.app.actions.computer;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,12 +37,14 @@ import com.sbgl.app.entity.ComputerhomeworkreceiverFull;
 import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
+import com.sbgl.app.entity.Computerorderconfig;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.entity.Computerstatus;
 import com.sbgl.app.entity.ComputerstatusFull;
 import com.sbgl.app.services.computer.ComputerhomeworkreceiverService;
 import com.sbgl.app.services.computer.ComputerorderService;
+import com.sbgl.app.services.computer.ComputerorderconfigService;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
 import com.sbgl.app.services.computer.ComputerstatusService;
 import com.sbgl.util.DateUtil;
@@ -89,6 +92,8 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	private List<Computerhomeworkreceiver> computerhomeworkreceiverList = new ArrayList<Computerhomeworkreceiver>();
 	private ComputerhomeworkreceiverFull computerhomeworkreceiverFull = new ComputerhomeworkreceiverFull();//实例化一个模型
 	
+	@Resource
+	ComputerorderconfigService computerorderconfigService;
 	
 	private int ComputerorderStatusAduitAll = ComputerorderInfo.ComputerorderStatusAduitAll;
 	private int ComputerorderStatusAduitPass = ComputerorderInfo.ComputerorderStatusAduitPass;
@@ -263,6 +268,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	public String computerorderFormConfirm(){	
 		log.info("computerorderFormConfirm"+computerordertype);
 	
+		try{
 		if(confirmOrderInfo(orderInfoStr) == false){
 
 			returnInfo = "预约表单数据错误";
@@ -271,20 +277,57 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			return SUCCESS;
 		}else{
 			
+			Computerorderconfig config = computerorderconfigService.getCurrentComputerorderconfig();
+			if(config == null || config.getMaxorderday() == 0){
+				returnInfo = "获取预约配置信息出错";
+				log.error(returnInfo);
+				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+				return SUCCESS;
+			}
+			
+			if(!checkOrderDateAndPeriod()){
+				returnInfo = "不能预约过去的PC";
+				log.error(returnInfo);
+				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+				return SUCCESS;
+			}
+
+			boolean pass = validOrderForm(config);
+
+			if(!pass){
+				returnInfo = "预约数量不能满足";
+				log.error(returnInfo);
+				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+				return SUCCESS;
+			}
+			
+		}
 			
 			
-//			session.put("computerhomeworkid", curcomputerhomeworkid);
+			//			session.put("computerhomeworkid", curcomputerhomeworkid);
 //			System.out.println("computerhomeworkid"+curcomputerhomeworkid);
 //			session.put("computerordertype", computerordertype);
 //			session.put("computerorderdetailList", computerorderdetailList);
 //			session.put("computerorderdetailFullList", computerorderdetailFullList);
-
+			
+			
 			
 			returnInfo = "成功";
 			log.info(returnInfo);
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
 			return SUCCESS;
+			
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			log.error("addComputerorderAjax错误"+e);
+		
 		}
+		
+		returnInfo = "内部错误";
+		log.info(returnInfo);
+		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+		return SUCCESS;
 	}
 
 	/**
@@ -307,6 +350,8 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			String[] info = temp.split(",");
 			
 			if(Integer.valueOf(info[0]) > 0){
+				
+				
 				ComputerorderdetailFull f = new ComputerorderdetailFull();
 				f.setComputerorderdetailcomputermodelid(Integer.valueOf(info[0]));
 				f.setComputerorderdetailborrownumber(Integer.valueOf(info[1]));
@@ -337,6 +382,28 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	}
 
 	
+	public boolean checkOrderDateAndPeriod(){
+		Date currentDate = DateUtil.currentDate();
+		Date currentDayDate = DateUtil.getDateDayDate(currentDate);
+//		String startDateStr= DateUtil.dateFormat(, DateUtil.dateformatstr1);
+		int currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(currentDate);
+		for(Computerorderdetail od : computerorderdetailList){
+//			if(startDateStr)
+			Date odDate = od.getBorrowday();
+			int odP = od.getBorrowperiod();
+//			int pnum = BorrowperiodUtil.getBorrowperiodMap().get(odP).getPeriodnum();
+//			不能预约今天之前的Pc
+			if(odDate.before(currentDayDate)){
+				return false;
+			}
+//			不能预约今天已经过去时间段的PC
+			if( odDate.equals(currentDayDate) && currentPeriod > odP ){
+				return false;
+			}
+		}
+		
+		return true;
+	}
 	
 //	课程预约界面点击提交按钮后，如果computerorderFormConfirm指向成功，跳转到预约确认界面
 	public String toComputerorderConfirmPage(){	
@@ -428,6 +495,23 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		log.info(orderpctotalnum);
 	}
 	
+//	验证表单数据是否满足
+	public boolean validOrderForm(Computerorderconfig config){
+		Date currentDate = DateUtil.currentDate();
+		int currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(currentDate);
+//		可以预约 n天之内的PC,结束日期是最大预约天数减一
+		log.info("验证数量能否满足");
+		Date endDate = DateUtil.addDay(currentDate, config.getMaxorderday()-1);
+		int endPeriod = BorrowperiodUtil.getMaxPeriod();
+		int currentLanguage = this.getCurrentLanguage();
+		List<Borrowperiod> borrowperiodList = BorrowperiodUtil.getBorrowperiodList();
+		int computeroderadvanceorderday = config.getMaxorderday();
+		boolean pass = computerorderService.vaildComputerorderForm(computerorderdetailList, currentDate , currentPeriod, endDate, endPeriod, currentLanguage , borrowperiodList, computeroderadvanceorderday);
+//		
+		return pass;
+	}
+	
+	
 //  提交预约表单	
 	public String addComputerorderAjax(){	
 		log.info("Add Entity Ajax Manner" + computerorder.getComputerhomeworkid());
@@ -448,6 +532,22 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn,returnInfo);
 			return SUCCESS;
 		}
+		
+		Computerorderconfig config = computerorderconfigService.getCurrentComputerorderconfig();
+		if(config == null || config.getMaxorderday() == 0){
+			returnInfo = "获取预约配置信息出错";
+			log.error(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return SUCCESS;
+		}
+		boolean pass = validOrderForm(config);
+		if(!pass){
+			returnInfo = "预约数量不能满足";
+			log.error(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return SUCCESS;
+		}
+		
 
 //		如果是重新预约，则是知道预约id的
 		if(reorder == 1){

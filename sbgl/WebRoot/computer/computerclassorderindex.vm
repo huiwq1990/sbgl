@@ -57,7 +57,7 @@
                     <div class="row panel-body">
                   
                         <div class="col-md-3">
-                          <img src="img/dell.jpg" class="img-responsive">
+                          <img src="$pcimg.url($tempmodel.picpath)" class="img-responsive">
                         </div>
                         <div class="col-md-9">
                           <h3 class="equip-title">$tempmodel.name</h3>
@@ -111,12 +111,12 @@
 			##对于可以借的每一天		
 			#foreach($tempday in [0..$computerodertablercolumn-1])		
 				#set($thisday =$tempweektableindex * $computerodertablercolumn+$tempday )
-				#set($availnum = $availableBorrowModelMap.get($tempmodel.computermodeltype).get($tempBorrowperiod.id).get($thisday))
+				#set($availnum = $availableBorrowModelMap.get($tempmodel.computermodeltype).get($tempBorrowperiod.periodnum).get($thisday))
 				#if($availnum ==0)
                        <td></td>
 				#else
 					#set($tableindex = $tempweektableindex*21 + $tempperiod*7 + $tempday)
-					<td class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-slot="$tempBorrowperiod.id" data-pcname = "$tempmodel.name" data-pcpicpath = "$tempmodel.picpath"  data-max-num="$availnum">$availnum<br/>可预约</td>
+					<td class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name" data-pcpicpath = "$tempmodel.picpath"  data-max-num="$availnum">$availnum<br/>可预约</td>
 				#end                 
 					
 			#end ##end day info computerorderTotalOrderDay
@@ -275,13 +275,13 @@ function getBookingTime(bookingData, startDate) {
 	
 	switch(timeSlot)
 	{
-	case 0:
+	case 2:
 		timeSlotStr = "上午";
 		break;
-	case 1:
+	case 4:
 		timeSlotStr = "下午";
 		break;
-	case 2:
+	case 6:
 		timeSlotStr = "晚上";
 		break;
 	}

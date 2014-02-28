@@ -2,6 +2,9 @@ package com.sbgl.app.dao.impl;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -13,12 +16,17 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.sbgl.app.actions.common.CommonConfig;
+import com.sbgl.app.common.computer.BorrowperiodUtil;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.DaoAbs;
 
 import com.sbgl.app.dao.ComputermodelDao;
+import com.sbgl.app.entity.Borrowperiod;
 import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.entity.ComputermodelFull;
+import com.sbgl.app.entity.Computerorder;
+import com.sbgl.app.entity.ComputerorderFull;
 import com.sbgl.util.*;
 
 @Repository("computermodelDao")
@@ -29,6 +37,54 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
 			" left join Computercategory b on a.computercategoryid=b.computercategorytype ";
 	
 	private final String basicComputermodelSql = "From Computermodel  as a ";
+	
+	
+//	构建某一个型号，某一时段 某一天的可借数量         天的长度是可提前预约的天数（预约n天内的PC）
+	public 	HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> computermodelPeriodDayInfo(int currentPeriod , List<Borrowperiod> borrowperiodList,int computeroderadvanceorderday){
+
+		HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> availableBorrowModelMap = new HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> ();
+
+		
+		List<Computermodel> computermodelList = new ArrayList<Computermodel>();
+		List<ComputermodelFull> computermodelFullList = new ArrayList<ComputermodelFull>();
+		
+//		查找所有的模型
+		String getAllComputermodelTypeSql = " where a.languagetype="+CommonConfig.languagech+" ";
+		computermodelList = selectComputermodelByCondition(getAllComputermodelTypeSql);
+		
+//		初始化每个型号每个时段每天可借数量	
+		for(int tempmodelindex=0;tempmodelindex<computermodelList.size();tempmodelindex++){
+			Computermodel tempmodel =  computermodelList.get(tempmodelindex);//full list已经赋值
+			HashMap<Integer,ArrayList<Integer>> periodDayAvailInfo = new HashMap<Integer,ArrayList<Integer>>();
+			for(int tempperiod=0; tempperiod < borrowperiodList.size(); tempperiod++){
+				Borrowperiod tempBorrowperiod = borrowperiodList.get(tempperiod);
+				ArrayList<Integer> dayInfo = new ArrayList<Integer>();
+				
+				//对于今天过去的时间段处理
+				int todaynum = 0;
+//				System.out.println("period "+tempBorrowperiod.getPeriodnum());
+				if(tempBorrowperiod.getPeriodnum() < currentPeriod ){
+					todaynum = 0;
+				}else{
+//					todaynum = tempmodelFull.getComputermodelavailableborrowcountnumber();
+					todaynum = tempmodel.getAvailableborrowcountnumber();
+				}
+				dayInfo.add(todaynum);
+				
+				
+				for(int tempday=1; tempday < computeroderadvanceorderday; tempday++){	
+					dayInfo.add( tempmodel.getAvailableborrowcountnumber());
+				}				
+				periodDayAvailInfo.put(tempBorrowperiod.getId(), dayInfo);
+			}
+//			availableBorrowModelMap.put(tempmodelFull.getComputermodelcomputermodeltype(), periodDayAvailInfo);
+			availableBorrowModelMap.put(tempmodel.getComputermodeltype(), periodDayAvailInfo);
+		}
+		
+		return availableBorrowModelMap;
+	}
+	
+	
 	
 	// 根据条件查询查询实体
 	@Override

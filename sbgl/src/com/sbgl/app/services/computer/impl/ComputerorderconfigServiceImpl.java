@@ -7,6 +7,7 @@ import java.util.List;
 import com.sbgl.app.entity.Computerorderconfig;
 import com.sbgl.app.entity.ComputerorderconfigFull;
 import com.sbgl.app.services.computer.ComputerorderconfigService;
+import com.sbgl.app.actions.computer.ComputerActionUtil;
 import com.sbgl.app.dao.ComputerorderconfigDao;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.util.*;
@@ -24,6 +25,24 @@ public class ComputerorderconfigServiceImpl implements ComputerorderconfigServic
 	private BaseDao baseDao;
 	@Resource
 	private ComputerorderconfigDao computerorderconfigDao;
+	
+	
+	@Override
+	public Computerorderconfig getCurrentComputerorderconfig(){
+		
+		String sql = " where currentconfig = 1";
+		List<Computerorderconfig> computerorderconfigList = computerorderconfigDao.selectComputerorderconfigByCondition(sql);
+		
+		Computerorderconfig computerorderconfig;
+		if(computerorderconfigList == null || computerorderconfigList.size()==0){
+			computerorderconfig = ComputerActionUtil.getDefaultComputerorderconfig();
+			
+		}else{
+			computerorderconfig = computerorderconfigList.get(0);
+		}
+		
+		return computerorderconfig;
+	}
 	
 	//http://blog.csdn.net/softimes/article/details/7008875 实体添加时需要配置hibernate
 	@Override

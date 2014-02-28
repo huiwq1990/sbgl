@@ -1,7 +1,11 @@
 package com.sbgl.app.dao;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import com.sbgl.app.entity.Borrowperiod;
 import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.util.*;
@@ -31,6 +35,8 @@ public List<Computermodel> selectComputermodelByCondition(String condition);
 	public List<Computermodel> selectComputermodelByComputercategoryId(Integer computercategoryid );
 
 	public List<ComputermodelFull> selectComputermodelFullByComputercategoryId(Integer computercategoryid );
+
+
 
  
 }
