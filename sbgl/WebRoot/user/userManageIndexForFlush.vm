@@ -36,9 +36,9 @@
       </div>
       <ul class="status-filter nav nav-pills pull-right">
         <li class="active" action-type="active" id="0"><a href="#">全部(<span id="totalSum">$!sum</span>)</a></li>
-        <li action-type="active" id="2"><a href="#">学生(<span id="sSum">$!sum1</span>)</a></li>
-        <li action-type="active" id="6"><a href="#">教师(<span id="tSum">$!sum2</span>)</a></li>
-        <li action-type="active" id="-1"><a href="#">其他(<span id="wSum">$!sum3</span>)</a></li>
+        <li action-type="active" id="1"><a href="#">学生(<span id="sSum">$!sum1</span>)</a></li>
+        <li action-type="active" id="2"><a href="#">教师(<span id="tSum">$!sum2</span>)</a></li>
+        <li action-type="active" id="4"><a href="#">其他(<span id="wSum">$!sum3</span>)</a></li>
       </ul>
     </div><!--control-bar end-->
     <div class="panel panel-default">              
@@ -60,11 +60,11 @@
             <td>$!user.userCode<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="beforeModify" data-id="$!user.id" data-code="$!user.userCode" data-name="$!user.userName" data-sex="$!user.gender" data-pass="$!user.userPass" data-gid="$!user.userGroupId" data-gname="$!user.userGroupName" data-gtype="$!user.userGroupType"data-cid="$!user.clazzId" data-cname="$!user.clazzName" data-tel="$!user.tel" data-mail="$!user.mail" data-can="$!user.canBorrow" data-pic="$!user.photo">修改</a></td>
             <td>$!user.userName</td>
             <td>$!user.userGroupName</td>
-			#if($!user.userGroupType == 2)
+			#if($!user.userGroupType == 1)
 				<td>学生</td>
-			#elseif($!user.userGroupType == 6)
+			#elseif($!user.userGroupType == 2)
 				<td>教师</td>
-			#elseif($!user.userGroupType == -1)
+			#elseif($!user.userGroupType == 4)
 				<td>其他</td>
 			#end
             <td>$!user.tel</td>

@@ -400,9 +400,9 @@
 				
 				if(type == 1) {
 					idsForDel1 += id + "_";
-				} else if(type == 6) {
+				} else if(type == 2) {
 					idsForDel2 += id + "_";
-				} else if(type == -1) {
+				} else if(type == 4) {
 					idsForDel3 += id + "_";
 				}
 				console.log(idsForDel1+"1********");

@@ -363,7 +363,7 @@
 				console.log(type+"********");
 				
 				idsForDel += id + "_";
-				console.log(idsForDel+"********");
+				//console.log(idsForDel+"********");
 			}
 		});
 	});
