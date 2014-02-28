@@ -26,9 +26,9 @@
    		
    		-->
         <!-- 定义一个拦截器 -->  
-        <!-- <interceptors>  
+        <interceptors>  
            <interceptor name="myException"  class="com.sbgl.app.actions.common.ExceptionInterceptor"/>
-           拦截器栈  
+           	<!-- 拦截器栈  --> 
            <interceptor-stack name="mydefault">
            	   <interceptor-ref name="myException" />
                <interceptor-ref name="defaultStack" />  
@@ -36,11 +36,11 @@
            <interceptor name="myinterceptor" class="com.sbgl.common.common.MyIntercepor">
             </interceptor> 
 	    </interceptors>  
-	    <default-interceptor-ref name="mydefault" /> -->
+	    <default-interceptor-ref name="mydefault" />
 	    <!-- 定义全局Result -->  
         <global-results>  
             <!-- 当返回login视图名时，转入/login.jsp页面 -->  
-            <result name="login">/login.vm</result>  
+            <result name="login">/login.vm</result>
             <result name="exception-error">/error.vm</result>
         </global-results>
         
@@ -54,33 +54,6 @@
         	</result>
         </action>
     </package>
-    
-    <package name="superManage" extends="struts-default">
-    	<!-- 定义后台器材管理员拦截器 -->
-    	<!-- <interceptors>  
-           <interceptor name="superInterceptor" class="com.sbgl.app.actions.common.SuperIntercepor">
-           </interceptor>
-	    </interceptors> 
-	    <default-interceptor-ref name="superInterceptor" /> -->
-    </package>
-   
-    <package name="equipManage" extends="json-default">
-    	<!-- 定义后台器材管理员拦截器 -->
-    	<!-- <interceptors>  
-           <interceptor name="equipInterceptor" class="com.sbgl.app.actions.common.EquipIntercepor">
-           </interceptor>
-	    </interceptors> 
-	    <default-interceptor-ref name="equipInterceptor" /> -->
-    </package>
-    
-    <package name="roomManage" extends="json-default">
-    	<!-- 定义后台机房管理员拦截器 -->
-    	<!-- <interceptors>  
-           <interceptor name="roomInterceptor" class="com.sbgl.app.actions.common.RoomIntercepor">
-           </interceptor>
-	    </interceptors> 
-	    <default-interceptor-ref name="roomInterceptor" /> -->
-    </package> 
     
     
     <!-- 根据不同的包引入自己的struts文件 -->

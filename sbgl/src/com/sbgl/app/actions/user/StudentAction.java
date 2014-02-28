@@ -132,7 +132,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 			this.tag = "1";
 			this.message = "修改学生信息失败！";
 		} else {
-			Usergrouprelation ugr = userGroupRelationService.getRelationByType( student.getId(), 2 );
+			Usergrouprelation ugr = userGroupRelationService.getRelationByType( student.getId(), 1 );
 			ugr.setGroupId( group.getId() );
 			userGroupRelationService.alterUserGroupRelation( ugr );
 			this.tag = "0";
@@ -164,7 +164,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		for (String id : ids) {
 			Integer oneId = Integer.valueOf( id );
 			Student stu = studentService.getStudentById( oneId );
-			Usergrouprelation temp = userGroupRelationService.getRelationByType( stu.getId(), 2 );
+			Usergrouprelation temp = userGroupRelationService.getRelationByType( stu.getId(), 1 );
 			if(studentService.deleteStudent( oneId ) == 0 && userGroupRelationService.deleteUserGroupRelation( temp.getId() ) == 0) {
 				this.message = "删除学生信息成功！";
 				this.tag = "0";

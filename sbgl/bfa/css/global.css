@@ -1457,6 +1457,8 @@ a.list-group-item.active:focus .list-group-item-text {
 }
 .table-hover tbody tr:hover td .btn,
 .table-hover tbody tr:hover th .btn,
+.table.table-btn-hover td:hover .btn,
+.table.table-btn-hover td:focus .btn,
 .media-list li:hover .media-body .btn
  {
 	visibility: visible;
@@ -1469,11 +1471,13 @@ a.list-group-item.active:focus .list-group-item-text {
 #admin #course-week-table th { text-align: center; }
 #admin #course-week-table tbody > tr { height: 50px; }
 #admin #course-week-table th.time-slot { width: 80px; }
+#admin #course-week-table td { width: 14%; vertical-align: middle;}
 #admin #course-week-table td.time-slot,
-#admin #course-week-table td.time-num { width: 40px; vertical-align: middle; }
+#admin #course-week-table td.time-num { width: 50px; vertical-align: middle; }
+#admin #course-week-table td .btn { margin: 0px; }
 #admin #course-week-table .selectable {	cursor: pointer; position: relative; }
 #admin #course-week-table .selectable:hover { background-color: #F5F9FC; }
-
+#admin #course-week-table .selected { background-color: #F5F9FC; }
 .select2-results .sub { padding-left: 12px; }
 
 .form-group .progress { margin: 10px 0; }

@@ -114,7 +114,7 @@ public class TeacherAction extends ActionSupport implements SessionAware {
 			this.tag = "1";
 			this.message = "修改教师信息失败！";
 		} else {
-			Usergrouprelation ugr = userGroupRelationService.getRelationByType(teacher.getId(), 6);
+			Usergrouprelation ugr = userGroupRelationService.getRelationByType(teacher.getId(), 2);
 			ugr.setGroupId( group.getId() );
 			userGroupRelationService.alterUserGroupRelation( ugr );
 			this.tag = "0";
@@ -145,7 +145,7 @@ public class TeacherAction extends ActionSupport implements SessionAware {
 		for (String id : ids) {
 			Integer oneId = Integer.valueOf( id );
 			Teacher tc = teacherService.getTeacherById( oneId );
-			Usergrouprelation temp = userGroupRelationService.getRelationByType(tc.getId(), 6);
+			Usergrouprelation temp = userGroupRelationService.getRelationByType(tc.getId(), 2);
 			if(teacherService.deleteTeacher( oneId ) == 0 && userGroupRelationService.deleteUserGroupRelation( temp.getId() ) == 0) {
 				this.message = "删除教师信息成功！";
 				this.tag = "0";

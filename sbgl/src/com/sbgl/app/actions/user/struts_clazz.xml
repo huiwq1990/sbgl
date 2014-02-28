@@ -2,7 +2,7 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 
-	 <package name="clazz"  extends="struts-default">
+	 <package name="clazz"  extends="admin">
 	 	<action name="userManageClass" class="ClazzAction" method="gotoUserManageClass">
         	<result name="success">
         		/user/userManageClass.vm

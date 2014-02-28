@@ -2,7 +2,7 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 
-	<package name="manager"  extends="struts-default">
+	<package name="manager"  extends="admin">
 	 	<action name="userManageAdmin" class="ManagerAction" method="gotoUserManageAdmin">
         	<result name="success">
         		/user/userManageAdmin.vm
