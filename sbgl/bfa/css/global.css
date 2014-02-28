@@ -964,8 +964,11 @@ transition: none;
 	margin-bottom: 10px;
 }
 
+.page-bar .pagination,
+.page-bar .page-index,
 .control-bar .pagination,
 .control-bar .page-index { margin: 0 0 0 10px; }
+.page-bar .page-index .record { padding-top: 7px; margin-right: 10px; }
 .control-bar .page-index .record { padding-top: 6px; margin-right: 10px; }
 .page-index .dropdown-toggle .caret { color: #000; }
 .control-bar .nav-pills > li > a { margin: 0; padding: 8px 8px; color: #000; }
