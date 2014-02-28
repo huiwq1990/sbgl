@@ -88,7 +88,7 @@
 //            });
 			
 			$('body').tooltip({
-				selector: 'a[rel=tooltip],input[rel=tooltip],abbr[rel=tooltip],strong[rel=tooltip],code[rel=tooltip]',
+				selector: 'a[rel=tooltip],input[rel=tooltip],abbr[rel=tooltip],strong[rel=tooltip],code[rel=tooltip],button[rel=tooltip]'
 			});
 			$('a[rel=popover]').popover({
 				trigger: "manual",
