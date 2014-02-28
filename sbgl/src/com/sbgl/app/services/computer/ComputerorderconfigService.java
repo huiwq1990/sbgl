@@ -52,6 +52,8 @@ public interface ComputerorderconfigService{
     public List<ComputerorderconfigFull>  selectComputerorderconfigFullByConditionAndPage(String condition,final Page page);
 
 	Computerorderconfig selectCurrentComputerorderconfig();
+
+	Computerorderconfig getCurrentComputerorderconfig();
 		
 	
 	

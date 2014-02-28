@@ -1,5 +1,6 @@
 package com.sbgl.app.services.computer;
 
+import java.util.Date;
 import java.util.List;
 
 import com.sbgl.app.entity.Computerorderdetail;
@@ -74,6 +75,13 @@ public interface ComputerorderdetailService{
 	List<Computerorderdetail> selectBookedComputerorderdetailByModeltypeFromStartToEnd(
 			String startDay, int startPeriod, String endDay, int endPeriod,
 			String modeltypes);
+
+	List<Computerorderdetail> selectValidComputerorderdetailFromStartToEnd(
+			Date startDate, int startPeriod, Date endDate, int endPeriod);
+
+	List<Computerorderdetail> selectValidComputerorderdetailFromStartToEndByModel(
+			Date startDate, int startPeriod, Date endDate, int endPeriod,
+			String modeltypeStr);
 
 		
 	

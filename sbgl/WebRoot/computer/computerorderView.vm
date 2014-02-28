@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 设备管理</title>
+<title>北京电影学院摄影系 - 订单查看</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -10,13 +10,8 @@
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
-<!--[if lt IE 9]>
-  <script src="../js/html5shiv.js"></script>
-  <script src="../js/respond.min.js"></script>
-<![endif]-->
-<!--[if IE 7]>
-<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
-<![endif]-->
+#parse("include/includePageCompatibility.vm")
+
 </head>
 
 <body >
@@ -98,19 +93,23 @@
                   <div class="hd">
                     <h3>详情</h3>
                   </div>
-                  <div class="caption">
+        
+				  <div class="caption">
                     <div class="rent-detail">
-					<!--
-                      <span class="rent-user"><strong>申请者：<a rel="popover" class="lk" href="#" data-original-title="" title="">用户名 (我)</a></strong></span>
-                      -->
-					  <span class="rent-num"><strong>预约号：$!computerorderFull.computerorderserialnumber</strong></span>
-					  <!--
-                      <div class="rent-contact">联系方式：XXXXXX</div>
-                      <div class="rent-remark"><i class="icon-pencil"></i> 这里是预约备注（无则不显示）</div>
-					  -->
+                      <span class="rent-user"><strong>申请者：<a rel="popover" class="lk" href="#" data-original-title="" title="">我</a></strong></span>
+                      <br>
+					  <span class="rent-num"><strong> 预约号：$!computerorderFull.computerorderserialnumber</strong></span>
+					  #if($computerorderFull.computerorderordertype == $ClassOrder)
+						 <div class="rent-contact">预约方式：课程预约</div>
+						#else
+							 <div class="rent-contact">联系方式：个人预约</div>
+						#end
+                     <!-- <div class="rent-contact">联系方式：XXXXXX</div> -->
+                      <div class="rent-remark"><i class="icon-pencil"></i> $computerorderFull.computerorderremark</div>
                     </div>
                     <hr>
-                  </div>  
+                  </div>
+				  
 				  
 				  #if($curstatus == $ComputerorderStatusAduitReject)
 					<ul class="media-list">

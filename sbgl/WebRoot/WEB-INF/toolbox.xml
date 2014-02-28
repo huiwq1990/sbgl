@@ -31,7 +31,12 @@
         <scope>application</scope>
         <class>com.sbgl.toolbox.ImageUrlTool</class>
     </tool> 
-
+    
+    <tool>
+        <key>bptool</key>
+        <scope>application</scope>
+        <class>com.sbgl.toolbox.BorrowperiodTool</class>
+    </tool> 
    <!--  
     <tool>
         <key>math</key>

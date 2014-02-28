@@ -113,12 +113,12 @@
 			##对于可以借的每一天		
 			#foreach($tempday in [0..$computerodertablercolumn-1])		
 				#set($thisday =$tempweektableindex * $computerodertablercolumn+$tempday )
-				#set($availnum = $availableBorrowModelMap.get($tempmodel.computermodeltype).get($tempBorrowperiod.id).get($thisday))
+				#set($availnum = $availableBorrowModelMap.get($tempmodel.computermodeltype).get($tempBorrowperiod.periodnum).get($thisday))
 				#if($availnum ==0)
                        <td></td>
 				#else
 					#set($tableindex = $tempweektableindex*21 + $tempperiod*7 + $tempday)
-					<td class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-slot="$tempBorrowperiod.id" data-pcname = "$tempmodel.name"  data-pcpicpath = "$tempmodel.picpath" data-max-num="$availnum">$availnum<br/>可预约</td>
+					<td class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name"  data-pcpicpath = "$tempmodel.picpath" data-max-num="$availnum">$availnum<br/>可预约</td>
 				#end                 
 					
 			#end ##end day info computerorderTotalOrderDay
@@ -279,13 +279,13 @@ function getBookingTime(bookingData, startDate) {
 	
 	switch(timeSlot)
 	{
-	case 0:
+	case 2:
 		timeSlotStr = "上午";
 		break;
-	case 1:
+	case 4:
 		timeSlotStr = "下午";
 		break;
-	case 2:
+	case 6:
 		timeSlotStr = "晚上";
 		break;
 	}
@@ -320,22 +320,21 @@ $(window).load(function(){
 	
 //提交预约单
 	$("body").on("click", "button[action-type|=confirmComputerButton]", function() {
-		var str = "";
+		var orderInfoStr = "";
 		$("input[name='pcorderinfo']").each(function() {			
-				str += $(this).attr("orderpcid") +","+ $(this).prop("value") +","+$(this).attr("orderdate")+","+$(this).attr("orderperiod")+","+$(this).attr("orderpcname")+","+$(this).attr("picpath")+ ";";			
+				orderInfoStr += $(this).attr("orderpcid") +","+ $(this).prop("value") +","+$(this).attr("orderdate")+","+$(this).attr("orderperiod")+","+$(this).attr("orderpcname")+","+$(this).attr("picpath")+ ";";			
 		});
 	
 			
-		str = str.substring(0,str.length-1);
-	
-		var createuserid = cookie.getUserId();
-		//alert(createuserid);
+		orderInfoStr = orderInfoStr.substring(0,orderInfoStr.length-1);
+
 		var postData = {
-			userid : createuserid,
-			orderInfoStr : str,
-			computerordertype : $computerordertype,
-			reorder:$reorder,//重新预约时用
-			computerorderid:$computerorderid
+			"orderInfoStr" : orderInfoStr,
+			"computerhomeworkid":0,
+			"computerordertype" : $computerordertype,
+			"reorder":$reorder,//重新预约时用
+			"computerorderid":$computerorderid
+			
 		};
 		
 		jQuery.ajax({  
@@ -348,7 +347,7 @@ $(window).load(function(){
 				if(returnJson.flag == 1){
 					//var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
 					//$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框
-					location.href = "${webbaseurl}/toComputerorderConfirmPage.${strutsaction}?computerorderid=$!computerorderid&reorder=$!reorder";
+					location.href = "${webbaseurl}/toComputerorderConfirmPage.${strutsaction}?computerordertype=$computerordertype&orderInfoStr="+orderInfoStr+"&computerorderid=$!computerorderid&computerhomeworkid=0&reorder=$!reorder";
 				}else{
 					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
 					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		

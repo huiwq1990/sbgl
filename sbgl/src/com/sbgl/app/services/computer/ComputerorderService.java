@@ -1,9 +1,12 @@
 package com.sbgl.app.services.computer;
 
+import java.util.Date;
 import java.util.List;
 
+import com.sbgl.app.entity.Borrowperiod;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
+import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.util.*;
 
 public interface ComputerorderService{
@@ -54,6 +57,17 @@ public interface ComputerorderService{
 		int execSql(String sql);
 
 		boolean auditComputerorder(Computerorder cr);
+
+		void addComputerorder(Computerorder computerorder,
+				int computerordertype, int reorder, int uid,
+				List<Computerorderdetail> computerorderdetailList) throws Exception;
+
+		boolean vaildComputerorderForm(
+				List<Computerorderdetail> orderComputerorderdetailList,
+				Date currentDate, int currentPeriod, Date endDate,
+				int endPeriod, int currentLanguage,
+				List<Borrowperiod> borrowperiodList,
+				int computeroderadvanceorderday);
 		
 	
 //根据关联查询实体	

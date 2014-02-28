@@ -277,6 +277,16 @@ public class ComputerorderdetailServiceImpl implements ComputerorderdetailServic
     }
     
     
+    
+    @Override
+	public List<Computerorderdetail> selectValidComputerorderdetailFromStartToEnd(Date startDate, int startPeriod, Date endDate, int endPeriod){
+    	return computerorderdetailDao.selectValidComputerorderdetailFromStartToEnd(startDate, startPeriod, endDate, endPeriod);
+    }
+    @Override
+	public List<Computerorderdetail> selectValidComputerorderdetailFromStartToEndByModel(Date startDate, int startPeriod, Date endDate, int endPeriod,String modeltypeStr){
+    	return computerorderdetailDao.selectValidComputerorderdetailFromStartToEndByModel(startDate, startPeriod, endDate, endPeriod, modeltypeStr);
+    }
+    
 	@Override
 	public int execSql(String sql) {
 //		String sql = "delete from Computerorderdetail " + condition;

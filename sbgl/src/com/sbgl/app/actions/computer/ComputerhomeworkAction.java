@@ -33,6 +33,7 @@ import com.sbgl.app.services.computer.ComputerhomeworkreceiverService;
 import com.sbgl.app.services.computer.ComputerorderclassruleService;
 import com.sbgl.app.services.computer.ComputerorderclassruledetailService;
 import com.sbgl.app.services.teach.CourseService;
+import com.sbgl.app.services.user.ClazzService;
 import com.sbgl.util.*;
 
 
@@ -111,6 +112,7 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 	List<Computerorderclassruledetail> computerorderclassruledetailList = new ArrayList<Computerorderclassruledetail>();
 	List<ComputerorderclassruledetailFull> computerorderclassruledetailFullList = new ArrayList<ComputerorderclassruledetailFull>();
 	
+
 
 //	改进的Homework添加
 	private String receiverids;//接收者
@@ -431,68 +433,6 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 	}
 	
 	
-	/**
-	
-	编辑实体 action的方法，首先获取entity的信息，返回到编辑页面
-	
-	*/
-	public String editComputerhomework(){
-		log.info(logprefix + "editComputerhomework");
-			
-		try {
-			//实体的id可以为0
-			if(computerhomework.getId() != null && computerhomework.getId() >= 0){				
-				Computerhomework temComputerhomework = computerhomeworkService.selectComputerhomeworkById(computerhomework.getId());
-				if(temComputerhomework != null){
-					BeanUtils.copyProperties(computerhomeworkModel,temComputerhomework);	
-					//actionMsg = getText("selectComputerhomeworkByIdSuccess");
-					return SUCCESS;
-				}				
-			}		
-			return "PageNotExist";
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerhomeworkAction的方法：selectComputerhomeworkById错误"+e);
-		}
-
-
-		return "error";
-	}
-	
-
-	/**
-	编辑实体Full action的方法，首先获取entityfull的信息，返回到编辑页面
-	
-	*/
-	public String editComputerhomeworkFull(){
-		
-		log.info(logprefix + "viewComputerhomework");
-		
-		try {
-			if(computerhomework.getId() != null && computerhomework.getId() > 0){				
-				ComputerhomeworkFull temComputerhomeworkFull = computerhomeworkService.selectComputerhomeworkFullById(computerhomework.getId());
-				BeanUtils.copyProperties(computerhomeworkFull,temComputerhomeworkFull);	
-				actionMsg = getText("selectComputerhomeworkByIdSuccess");
-			}else{
-				actionMsg = getText("selectComputerhomeworkByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerhomeworkAction的方法：selectComputerhomeworkFullById错误"+e);
-		}
-		
-		return "error";
-	}
 
 
 	/**

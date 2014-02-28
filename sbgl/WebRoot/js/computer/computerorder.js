@@ -1,4 +1,5 @@
-	(function($){
+
+(function($){
 
 /* ============ 机房预约 ============= */
 $("body").on("click", ".bookable", function() {
