@@ -1,11 +1,12 @@
-	<div class="panel panel-default table-responsive">                          
+				<div class="panel panel-default table-responsive">                          
               <table class="table table-hover">
                 <thead>
                   <tr>
                     <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
                     <th class="id">编号</th>
                     <th class="name">设备名称(型号)</th>
-                    <th class="categories">分类</th>
+					<!--
+                    <th class="categories">分类</th>-->
                     <th class="status">状态</th>
                     <th class="remark">备注</th>
                   </tr>
@@ -38,9 +39,10 @@
 						
 						>修改</a></td>
                     <td>$ch.computermodelname</td>
-                    <td>工作站</td>
+					<!--
+                    <td>$ch.computermodelname</td>-->
                     <td>$!ch.computerstatusname</td>
-                    <td></td>
+                    <td>$!ch.computermodeldescription</td>
                   </tr>				  
 #end
 #end
@@ -59,7 +61,7 @@
            		 </div>
 			
 				 <!--page bar-->
-				 #parse("include/includePagebar.vm") 
+				 #parse("include/includePagebar.vm")
 
 
  <script>

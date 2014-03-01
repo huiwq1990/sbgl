@@ -83,6 +83,8 @@ public List<ComputercategoryFull>  selectComputercategoryFullByConditionAndPage(
 
 int deleteComputercategoryByType(List<Integer> computercategoryTypeList);
 
+void updateComputercategory(Computercategory ch, Computercategory en);
+
 
 
 

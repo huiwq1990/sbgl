@@ -74,6 +74,18 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 		return 1;
 	}
 	
+	
+	@Override
+	public int deleteComputermodelByType(List<Integer> typeList){
+		
+		for(Integer type : typeList){
+			String sql = "delete from Computermodel where computermodeltype="+type;
+			baseDao.createSQL(sql);
+		}
+		
+		return 1;
+	}
+	
 	@Override
 	public void updateComputermodel(Computermodel computermodel){
 		
@@ -84,6 +96,22 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 		
 		
 		baseDao.updateEntity(tempComputermodel);
+
+	}
+	
+	@Override
+	public void updateComputermodel(Computermodel ch,Computermodel en){
+		
+		Computermodel tempch = new Computermodel();
+		//tempComputermodel = baseDao.getEntityById(Computermodel.class, computermodel.getId());
+		tempch = ch;
+		//add your code here
+		
+		baseDao.updateEntity(tempch);
+		
+		Computermodel tempen = new Computermodel();
+		tempen = en;
+		baseDao.updateEntity(tempen);
 
 	}
 	
