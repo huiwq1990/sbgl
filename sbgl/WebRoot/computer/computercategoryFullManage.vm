@@ -40,7 +40,8 @@
 	
             </div><!--control-bar end-->				 
            
-				<div id="formComputerorderdetailManage">
+		
+		<div id="formComputerorderdetailManage">
 					
 			<div class="panel panel-default">
 
@@ -414,6 +415,18 @@ $(function() {
 			success: function(data){
 				$("#formComputerorderdetailManage").html(data);
 
+				    $('.page-bar').jqPagination({
+    	link_string	: '/?page={page_number}',
+    	max_page	: totalpage,
+    	current_page:currentpagenum,
+    	paged: function(page) {     	  
+    		currentpagenum = page;
+    		refreshComputercategoryTable();
+    
+    	}
+    });
+				
+				
 				$(".s-h").css({
 					"visibility": "hidden",
 					"opacity": "0",

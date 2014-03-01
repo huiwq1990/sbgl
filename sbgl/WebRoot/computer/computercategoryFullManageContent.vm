@@ -1,4 +1,6 @@
+			<div class="panel panel-default">
 
+			
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -38,6 +40,17 @@
 #end
                 </tbody>
               </table>
+			  <!--page -->
+
+			  <!-- end page -->
+			  
+
+            </div>
+			
+			 <!--page bar-->
+			  #parse("include/includePagebar.vm")
+			  
+			  
 			  
 			  				<script>
 totalpage = $page.totalpagenum;
