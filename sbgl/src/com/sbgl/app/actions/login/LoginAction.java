@@ -14,9 +14,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sbgl.app.entity.Clazz;
 import com.sbgl.app.entity.Loginuser;
+import com.sbgl.app.entity.Student;
 import com.sbgl.app.services.login.LoginService;
-import com.sbgl.common.SBGLConsistent;
+import com.sbgl.app.services.user.ClazzService;
+import com.sbgl.app.services.user.StudentService;
 import com.sbgl.util.CookiesUtil;
 import com.sbgl.util.JavascriptWriter;
 import com.sbgl.util.WebUtils;
@@ -29,11 +32,44 @@ public class LoginAction extends ActionSupport {
 	private HttpSession session;
 	private Loginuser loginuser;
 	
-
+	//显示用户基本信息用
+	private String userName;
+	private String gender;
+	private String email;
+	private String phone;
+	private String classBelongTo;
+	private String userId;
+	
 	@Resource
 	private LoginService loginService;
+	@Resource
+	private ClazzService clazzService;
+	@Resource
+	private StudentService studentService;
 	
 	public String login(){
+		return SUCCESS;
+	}
+	
+	public String showUserInfo() {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		session = request.getSession();
+		
+		Loginuser user = (Loginuser) session.getAttribute("loginUser");
+		if(user != null) {
+			userId = user.getUserid();
+			userName = user.getName();
+			gender = "0".equals( user.getGender() ) ? "男" : "女";
+			phone = user.getTelephone();
+			email = user.getEmail();
+			if( "1".equals( user.getRoletype() ) ) {
+				Student stu = studentService.getStudentById( user.getId() );
+				Clazz clazz = clazzService.getClazzById( stu.getClassid() );
+				classBelongTo = clazz.getClassname();
+			}
+			
+		}
+		
 		return SUCCESS;
 	}
 	
@@ -125,5 +161,54 @@ public class LoginAction extends ActionSupport {
 
 	public void setLoginuser(Loginuser loginuser) {
 		this.loginuser = loginuser;
+	}
+	
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getClassBelongTo() {
+		return classBelongTo;
+	}
+
+	public void setClassBelongTo(String classBelongTo) {
+		this.classBelongTo = classBelongTo;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 }

@@ -7,8 +7,8 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="css/global.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
 <!--[if lt IE 10]>
   <script src="js/jquery.placeholder.js"></script>
@@ -28,7 +28,7 @@
 <body>
 <header id="header-wrap"><!--header-wrap-->
   <div id="global-header">
-    <div id="logo"><a class="brand" href="#"><img src="img/logo.png" alt="北京电影学院摄影系"></a></div>
+    <div id="logo"><a class="brand" href="#"><img src="${imageDomain}/logo.png" alt="北京电影学院摄影系"></a></div>
     <div id="hdc-wrap">
       <div class="search-wrap">
         <form class="form-search">
@@ -46,11 +46,11 @@
         </ul>
       </li>     
       <li class="social dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="img/photo.jpg" width="48" height="48" class="img-circle"> <b class="caret"></b></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="${imageDomain}/photo.jpg" width="48" height="48" class="img-circle"> <b class="caret"></b></a>
         <div class="dropdown-menu">
           <div class="media">
             <a class="pull-left" href="#">
-              <img src="img/photo.jpg" width="96" height="96" class="img-rounded">
+              <img src="${imageDomain}/photo.jpg" width="96" height="96" class="img-rounded">
             </a>
             <div class="media-body">
               <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
@@ -74,14 +74,14 @@
           <li><a href="消息中心-站内信.html">站内信</a></li>
           <li class="divider"></li>
           <li><a href="设置页面-账户设置.html">设置与帮助</a></li>
-          <li><a href="admin/管理中心首页.html">管理中心</a></li>
+          <li><a href="${webbaseurl}/adminCenter.do">管理中心</a></li>
         </ul>
           <!-- #EndLibraryItem --></div>
     </div>
     <div class="sub-nav">
       <ul class="nav nav-tabs nav-tabs-google">
-        <li><a href="index-简介.html">简介</a></li>
-        <li class="active"><a href="index.html">信息</a></li>
+        <li class="active"><a href="${webbaseurl}/indexInfo.do">简介</a></li>
+        <li><a href="${webbaseurl}/index.do">信息</a></li>
       </ul>
     </div>
   </div>
@@ -93,7 +93,7 @@
     <div id="user-profile">
       <div class="media">
         <div id="user-profile-photo" class="pull-left">
-          <img src="img/photo.jpg" width="120" height="120" class="img-circle">
+          <img src="${imageDomain}/photo.jpg" width="120" height="120" class="img-circle">
         </div>
         <div id="user-profile-info" class="media-body">
           <h4 class="profile-name media-heading">Frank Chen 陈诚</h4>
@@ -101,11 +101,11 @@
         </div>
       </div>
     </div>
-    <div class="user-bg-pic"><img src="img/img8.jpg" class="img-responsive"></div>
+    <div class="user-bg-pic"><img src="${imageDomain}/img8.jpg" class="img-responsive"></div>
     <nav class="user-nav">
       <ul class="nav nav-tabs nav-tabs-google">
-        <li class="active"><a href="index-简介.html">简介</a></li>
-        <li><a href="index.html">信息</a></li>
+        <li class="active"><a href="${webbaseurl}/indexInfo.do">简介</a></li>
+        <li><a href="${webbaseurl}/index.do">信息</a></li>
       </ul>
     </nav>
   </div>
@@ -124,15 +124,14 @@
                 <a href="#modify-basic" class="lk pull-right" data-toggle="modal" role="button">编辑</a>
               </div>
               <dl class="dl-horizontal">
-                <dt>生日</dt>
-                <dd>XXXX年XX月XX日</dd>
+                <dt>姓名</dt>
+                <dd>$!userName</dd>
                 <dt>性别</dt>
-                <dd>男/女</dd>
-                <dt>学籍</dt>
-                <dd>
-                  <p>2012级电影制作 - 硕士</p>
-                  <p>2008级电影制作 - 本科</p>
-                </dd>
+                <dd>$!gender</dd>
+				 #if($!classBelongTo != "")
+                    <dt>所在班级</dt>
+                    <dd>$!classBelongTo</dd>
+				 #end
               </dl>
             </div>
           </div>
@@ -144,9 +143,9 @@
               </div>
               <dl class="dl-horizontal">
                 <dt>电子邮箱</dt>
-                <dd>XXXXXXXX@XXX.XXX</dd>
+                <dd>$!email</dd>
                 <dt>手机号码</dt>
-                <dd>XXXXXXXXXXXX（如果没有：<a href="">添加</a>）</dd>
+                <dd>$!phone（如果没有：<a href="">添加</a>）</dd>
               </dl>
             </div>
           </div>
@@ -241,11 +240,11 @@
 </div>
     <!-- javascript
     ================================================== -->
-<script src="js/jquery.js"></script>
-<script src="js/loader.min.js"></script>
-<script src="js/bootstrap-hover-dropdown.min.js"></script>
-<script src="js/select2.js"></script>
-<script src="js/bfa.js"></script>
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
 
 </body>
 </html>
