@@ -167,6 +167,8 @@ public class OrderComputerAction  extends BaseAction {
 		
 		//设置提前预约的天数
 		computeroderadvanceorderday = computerorderconfig.getMaxorderday();
+//		if()
+		log.info("提前预约最大天数" + computeroderadvanceorderday);
 //		设备预约表格显示的列数，默认是7
 		computerodertablercolumn = ComputerConfig.computerodertablercolumn;
 
@@ -200,7 +202,7 @@ public class OrderComputerAction  extends BaseAction {
 
 	
 	public void buildShowDate(Date orderStartDate,int computeroderadvanceorderday,int computerodertablercolumn){
-		int weeknum = computeroderadvanceorderday/computerodertablercolumn;
+		int weeknum = computeroderadvanceorderday/computerodertablercolumn ;
 		for(int i=0; i< weeknum;i++){
 			ArrayList<String> weekday = new ArrayList<String>();
 			ArrayList<String> time = new ArrayList<String>();
@@ -229,10 +231,14 @@ public class OrderComputerAction  extends BaseAction {
 
 //		调整预约时间，使时间是7的倍数
 		if(computeroderadvanceorderday%computerodertablercolumn !=0){
+			
 			showComputeroderadvanceorderday = (computeroderadvanceorderday/computerodertablercolumn + 1) * computerodertablercolumn ;			
+		}else{
+			showComputeroderadvanceorderday = computeroderadvanceorderday;
 		}
 		
-		System.out.println("showComputeroderadvanceorderday "+computeroderadvanceorderday +"showComputeroderadvanceorderday "+showComputeroderadvanceorderday);
+//		log.info("")
+		System.out.println("computeroderadvanceorderday "+computeroderadvanceorderday +"showComputeroderadvanceorderday "+showComputeroderadvanceorderday);
 //		int computerorderTotalOrderPeriod = ComputerConfig.computerorderTotalOrderPeriod;
 		
 //			设置当前时间
@@ -246,6 +252,23 @@ public class OrderComputerAction  extends BaseAction {
 
 		borrowperiodList =  BorrowperiodUtil.getBorrowperiodList();
 		
+		for(Computermodel model : computermodelList){
+			HashMap<Integer,ArrayList<Integer>> periodDay = new HashMap<Integer,ArrayList<Integer>>();
+			availableBorrowModelMap.put(model.getComputermodeltype(),periodDay);
+			
+			for(Borrowperiod bp : borrowperiodList){
+			
+				ArrayList<Integer> dayList = new ArrayList<Integer>();
+				for(int tempday=0; tempday < computeroderadvanceorderday; tempday++){				
+					dayList.add(0);					
+				}
+				
+				periodDay.put(bp.getPeriodnum(), dayList);
+				
+			}
+			System.out.println();
+//			availableBorrowModelMap.put(modelList.get(tempmodel).getComputermodeltype(), periodDayAvailInfo);
+		}
 		
 //		根据模型构建 模型、时间段、日期的map
 		availableBorrowModelMap = ComputerorderActionUtil.computermodelPeriodDayInfo(computermodelList, currentPeriod, borrowperiodList, computeroderadvanceorderday);

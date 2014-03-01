@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>管理</title>
+<title>北京电影学院摄影系 - 机房管理</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -32,7 +32,7 @@
             <!--control-bar start-->
             <div class="control-bar clearfix">
               <div class="title pull-left">分类管理</div>
-              <div class="tips">在此页面下你可以添加新的设备分类，也可以管理现有设备分类。……</div>
+              <div class="tips">在此页面下你可以添加新的设备/资源分类，也可以管理现有设备分类。</div>
               <div class="operate-item pull-left">
                 <a href="#add-equip-category" class="btn btn-primary" data-toggle="modal" role="button">添加分类</a>
                 <a href="#" class="btn btn-white s-h" action-type="deleteComputercategory"><i class="icon-trash"></i>删除</a>
@@ -41,19 +41,15 @@
             </div><!--control-bar end-->				 
            
 		
-		<div id="formComputerorderdetailManage">
-					
-			<div class="panel panel-default">
-
-			
+		<div id="formComputerorderdetailManage">					
+			<div class="panel panel-default">			
               <table class="table table-hover">
                 <thead>
                   <tr>
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-                    <th class="name">中文名称</th>
-					<th class="name">英文名称</th>
-                    <th class="model-num">型号数量</th>
-                    <th class="equip-num">设备数量</th>
+                    <th class="name">分类名称</th>
+                    <th class="num">型号数量</th>
+                    <th class="num">设备数量</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -75,8 +71,9 @@
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!ch.computercategorycomputercategorytype"></td>
                     <td>$!ch.computercategoryname<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button" action-type="editComputercategoryFillIn" 
 						data-id="$!ch.computercategoryid" data-name="$!ch.computercategoryname"
-						data-iden="$!en.computercategoryid" data-nameen="$!en.computercategoryname">修改</a></td>
-					<td>$!en.computercategoryname</td>
+						data-iden="$!en.computercategoryid" data-nameen="$!en.computercategoryname">修改</a>
+						<br><small>$!en.computercategoryname</small>
+					</td>
                     <td>$modelSize</td>
                     <td>$computerSize</td>
                   </tr>
@@ -129,18 +126,18 @@
     <h3 id="myModalLabel">添加分类</h3>
   </div>
   <div class="modal-body">
-    <p>添加设备分类目录。</p>
+    <p>添加设备或资源的分类目录。</p>
     <form class="form-horizontal" role="form">
       <div class="form-group">
-        <label for="inputCategoryNameCh" class="col-xs-3 control-label">分类名称</label>
+        <label for="addComputercategoryNameCh" class="col-xs-3 control-label">分类名称</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="addComputercategoryNameCh" placeholder="设备类型（如：工作站）">
+          <input type="text" class="form-control" id="addComputercategoryNameCh" placeholder="设备分类名称（如：工作站）">
         </div>
       </div>
 	   <div class="form-group">
-        <label for="inputCategoryNameEn" class="col-xs-3 control-label">分类英文名称</label>
+        <label for="addComputercategoryNameEn" class="col-xs-3 control-label">英文名称</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="addComputercategoryNameEn" placeholder="">
+          <input type="text" class="form-control" id="addComputercategoryNameEn" placeholder="Like：WorkStation">
         </div>
       </div>
 	  <!--
@@ -171,18 +168,18 @@
     <h3 id="myModalLabel">修改</h3>
   </div>
   <div class="modal-body">
-    <p>修改当前选定的设备分类目录。</p>
+    <p>修改当前选定设备或资源的分类目录名称。</p>
     <form class="form-horizontal" role="form">
       <div class="form-group">
-        <label for="modifyCategoryName" class="col-xs-3 control-label">分类中文名称</label>
+        <label for="inputEditComputercategoryName" class="col-xs-3 control-label">分类名称</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="inputEditComputercategoryName" placeholder="工作站">
+          <input type="text" class="form-control" id="inputEditComputercategoryName" placeholder="分类名称（如：工作站）">
         </div>
       </div>
 	  <div class="form-group">
-        <label for="modifyCategoryName" class="col-xs-3 control-label">分类英文名称</label>
+        <label for="inputEditComputercategoryNameEn" class="col-xs-3 control-label">英文名称</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="inputEditComputercategoryNameEn" placeholder="工作站">
+          <input type="text" class="form-control" id="inputEditComputercategoryNameEn" placeholder="Like：WorkStation">
         </div>
       </div>
 	  <!--获取父级分类 
@@ -322,25 +319,7 @@ $(function() {
 	})
 	//end update
 	
-	
-	
-	var idsForDel;	
-	/* 处理CheckBox选中事件用于删除处理 */
-	/*$("input[type='checkbox']").click(function() {
-		//var num = 0;
-		idsForDel = "";
-		
-		if($(this).attr("id") === "chk-all") {
-			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
-		}
-		$("input[name='chk-list']").each(function() {
-			if($(this).prop("checked") === true) {
-				//num++;
-				idsForDel += $(this).prop("value") + ";";
-			}
-		});
-	});*/
-	
+
 	$("body").on("click", "input[type='checkbox']", function() {
 		var num = 0;
 		if($(this).attr("id") === "chk-all") {
@@ -365,24 +344,19 @@ $(function() {
 			});
 		}
 		
-		idsForDel = "";
-		
-		$("input[name='chk-list']").each(function() {
-			if($(this).prop("checked") === true) {
-				//num++;
-				idsForDel += $(this).prop("value") + ";";
-			}
-		});
+
 	});
 	//end checkbox
-	
+
 	//delete分类
-	$("body").on("click", "a[action-type|=deleteComputercategory]", function() {
+	$("body").on("click", "a[action-type|=deleteComputercategory]", function() {	
+		var idsForDel = getSelectedCheckboxList();		
 		idsForDel = idsForDel.substring(0,idsForDel.length-1);
+
 		var postData = {
 			computercategoryIdsForDel:idsForDel
 		}
-		//alert(idsForDel);
+
 		jQuery.ajax({  
 		    url:"${webbaseurl}/deleteComputercategoryFullAjax.${strutsaction}",  
 		    type:"post",

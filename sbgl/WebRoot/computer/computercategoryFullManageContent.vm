@@ -1,14 +1,12 @@
-			<div class="panel panel-default">
-
-			
+				
+			<div class="panel panel-default">			
               <table class="table table-hover">
                 <thead>
                   <tr>
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-                    <th class="name">中文名称</th>
-					<th class="name">英文名称</th>
-                    <th class="model-num">型号数量</th>
-                    <th class="equip-num">设备数量</th>
+                    <th class="name">分类名称</th>
+                    <th class="num">型号数量</th>
+                    <th class="num">设备数量</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -30,8 +28,9 @@
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!ch.computercategorycomputercategorytype"></td>
                     <td>$!ch.computercategoryname<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button" action-type="editComputercategoryFillIn" 
 						data-id="$!ch.computercategoryid" data-name="$!ch.computercategoryname"
-						data-iden="$!en.computercategoryid" data-nameen="$!en.computercategoryname">修改</a></td>
-					<td>$!en.computercategoryname</td>
+						data-iden="$!en.computercategoryid" data-nameen="$!en.computercategoryname">修改</a>
+						<br><small>$!en.computercategoryname</small>
+					</td>
                     <td>$modelSize</td>
                     <td>$computerSize</td>
                   </tr>
@@ -49,10 +48,10 @@
 			
 			 <!--page bar-->
 			  #parse("include/includePagebar.vm")
-			  
-			  
-			  
-			  				<script>
-totalpage = $page.totalpagenum;
-currentpagenum = $page.pageNo;
+			
+			
+
+<script>
+	totalpage = $page.totalpagenum;
+	currentpagenum = $page.pageNo;
 </script>			
