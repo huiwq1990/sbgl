@@ -32,18 +32,27 @@ import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.common.computer.ComputerorderdetailInfo;
 import com.sbgl.app.entity.Borrowperiod;
+import com.sbgl.app.entity.Computerhomework;
+import com.sbgl.app.entity.ComputerhomeworkFull;
 import com.sbgl.app.entity.Computerhomeworkreceiver;
 import com.sbgl.app.entity.ComputerhomeworkreceiverFull;
 import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
+import com.sbgl.app.entity.Computerorderclassrule;
+import com.sbgl.app.entity.ComputerorderclassruleFull;
+import com.sbgl.app.entity.Computerorderclassruledetail;
+import com.sbgl.app.entity.ComputerorderclassruledetailFull;
 import com.sbgl.app.entity.Computerorderconfig;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.entity.Computerstatus;
 import com.sbgl.app.entity.ComputerstatusFull;
+import com.sbgl.app.services.computer.ComputerhomeworkService;
 import com.sbgl.app.services.computer.ComputerhomeworkreceiverService;
 import com.sbgl.app.services.computer.ComputerorderService;
+import com.sbgl.app.services.computer.ComputerorderclassruleService;
+import com.sbgl.app.services.computer.ComputerorderclassruledetailService;
 import com.sbgl.app.services.computer.ComputerorderconfigService;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
 import com.sbgl.app.services.computer.ComputerstatusService;
@@ -62,7 +71,8 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	private ComputerorderFull computerorderFull = new ComputerorderFull();//实例化一个模型
 	List<Computerorder> computerorderList = new ArrayList<Computerorder>();
 	List<ComputerorderFull> computerorderFullList = new ArrayList<ComputerorderFull>();
-	private int computerorderid = 0; //entity full 的id属性名称		
+	
+	int computerorderid = 0; //entity full 的id属性名称		
 	int computerorderId;//订单的id
 	
 	@Resource
@@ -85,6 +95,14 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	List<Computerstatus> computerstatusList = new ArrayList<Computerstatus>();
 	List<ComputerstatusFull> computerstatusFullList = new ArrayList<ComputerstatusFull>();
 	
+	@Resource
+	private ComputerorderclassruledetailService computerorderclassruledetailService;	
+	private Computerorderclassruledetail computerorderclassruledetail = new Computerorderclassruledetail();//实例化一个模型
+	private ComputerorderclassruledetailFull computerorderclassruledetailFull = new ComputerorderclassruledetailFull();//实例化一个模型
+	List<Computerorderclassruledetail> computerorderclassruledetailList = new ArrayList<Computerorderclassruledetail>();
+	List<ComputerorderclassruledetailFull> computerorderclassruledetailFullList = new ArrayList<ComputerorderclassruledetailFull>();
+	private Integer computerorderclassruledetailid; //entity full 的id属性名称		
+	
 	
 	@Resource
 	private ComputerhomeworkreceiverService computerhomeworkreceiverService;	
@@ -94,6 +112,26 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	
 	@Resource
 	ComputerorderconfigService computerorderconfigService;
+	
+	@Resource
+	private ComputerorderclassruleService computerorderclassruleService;	
+	private Computerorderclassrule computerorderclassrule = new Computerorderclassrule();//实例化一个模型
+	private ComputerorderclassruleFull computerorderclassruleFull = new ComputerorderclassruleFull();//实例化一个模型
+	List<Computerorderclassrule> computerorderclassruleList = new ArrayList<Computerorderclassrule>();
+	List<ComputerorderclassruleFull> computerorderclassruleFullList = new ArrayList<ComputerorderclassruleFull>();
+	private Integer computerorderclassruleid; //entity full 的id属性名称		
+	
+	
+	
+
+	@Resource	
+	private ComputerhomeworkService computerhomeworkService;	
+	private Computerhomework computerhomework = new Computerhomework();//实例化一个模型
+	private ComputerhomeworkFull computerhomeworkFull = new ComputerhomeworkFull();//实例化一个模型
+	private List<Computerhomework> computerhomeworkList = new ArrayList<Computerhomework>();
+	private List<ComputerhomeworkFull> computerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
+	
+
 	
 	private int ComputerorderStatusAduitAll = ComputerorderInfo.ComputerorderStatusAduitAll;
 	private int ComputerorderStatusAduitPass = ComputerorderInfo.ComputerorderStatusAduitPass;
@@ -122,7 +160,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	
 	private	int computerordertype = 0;
 	private int computerhomeworkid = 0;
-//	private int curcomputerhomeworkid = 0;
+	private int curcomputerhomeworkid = 0;
 
 //重新预约
 	int reorder = 0;
@@ -130,7 +168,6 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	
 	private List<Borrowperiod> periodList = new ArrayList<Borrowperiod>();
 
-	
 	/**
 	 * 跳转到订单审核界面
 	 * @return
@@ -266,7 +303,8 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	 * @return
 	 */
 	public String computerorderFormConfirm(){	
-		log.info("computerorderFormConfirm"+computerordertype);
+		log.info("computerorderFormConfirm"+computerordertype + " "+ computerhomeworkid);
+
 	
 		try{
 		if(confirmOrderInfo(orderInfoStr) == false){
@@ -292,14 +330,26 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 				return SUCCESS;
 			}
 
-			boolean pass = validOrderForm(config);
+			if(computerordertype == ComputerorderInfo.IndividualOrder){
+				boolean pass = validOrderForm(config);
 
-			if(!pass){
-				returnInfo = "预约数量不能满足";
-				log.error(returnInfo);
-				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
-				return SUCCESS;
+				if(!pass){
+					returnInfo = "预约数量不能满足";
+					log.error(returnInfo);
+					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+					return SUCCESS;
+				}
+			}else{
+				boolean pass = validClassOrderForm(computerorder.getComputerhomeworkid());
+
+				if(!pass){
+					returnInfo = "预约数量不能满足";
+					log.error(returnInfo);
+					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+					return SUCCESS;
+				}
 			}
+			
 			
 		}
 			
@@ -512,19 +562,34 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	}
 	
 //	验证表单数据是否满足
-	public boolean validClassOrderForm(Computerorderconfig config){
+	public boolean validClassOrderForm(int computerhomeworkid){
 		
-		computerorderclassruleList = computerorderclassruleService.selectComputerorderclassruleByCondition( " where a.id = "+computerorderclassruleid+" " );
+		System.out.println("curcomputerhomeworkid"+curcomputerhomeworkid);
+		
+		computerhomeworkList = computerhomeworkService.selectComputerhomeworkByCondition(" where id= "+ computerhomeworkid+"  ");
+		
+		int ruleid = computerhomeworkList.get(0).getComputerorderclassruleid();
+		computerorderclassruleList = computerorderclassruleService.selectComputerorderclassruleByCondition( " where a.id = "+ruleid+" " );
+		
+		computerorderclassrule = computerorderclassruleList.get(0);
+		
 		
 		Date currentDate = DateUtil.currentDate();
+//		if(currentDate.after(orderstartDate)){
+//			orderstartDate = currentDate;
+//			log.info("orderstartDate" + DateUtil.dateFormat(orderstartDate, DateUtil.dateformatstr1));
+//		}
+		
+		currentDate = computerorderclassrule.getOrderstarttime();
+		
 		int currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(currentDate);
 //		可以预约 n天之内的PC,结束日期是最大预约天数减一
 		log.info("验证数量能否满足");
-		Date endDate = DateUtil.addDay(currentDate, config.getMaxorderday()-1);
+		Date endDate = computerorderclassrule.getOrderendtime();
 		int endPeriod = BorrowperiodUtil.getMaxPeriod();
 		int currentLanguage = this.getCurrentLanguage();
 		List<Borrowperiod> borrowperiodList = BorrowperiodUtil.getBorrowperiodList();
-		int computeroderadvanceorderday = config.getMaxorderday();
+		int computeroderadvanceorderday = DateUtil.daysBetween(currentDate, endDate)+1;
 		boolean pass = computerorderService.vaildComputerorderForm(computerorderdetailList, currentDate , currentPeriod, endDate, endPeriod, currentLanguage , borrowperiodList, computeroderadvanceorderday);
 //		
 		return pass;
@@ -559,12 +624,25 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 			return SUCCESS;
 		}
-		boolean pass = validOrderForm(config);
-		if(!pass){
-			returnInfo = "预约数量不能满足";
-			log.error(returnInfo);
-			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
-			return SUCCESS;
+	
+		if(computerordertype == ComputerorderInfo.IndividualOrder){
+			boolean pass = validOrderForm(config);
+
+			if(!pass){
+				returnInfo = "预约数量不能满足";
+				log.error(returnInfo);
+				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+				return SUCCESS;
+			}
+		}else{
+			boolean pass = validClassOrderForm(computerorder.getComputerhomeworkid());
+
+			if(!pass){
+				returnInfo = "预约数量不能满足";
+				log.error(returnInfo);
+				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+				return SUCCESS;
+			}
 		}
 		
 
@@ -1052,6 +1130,210 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 
 	public void setReorder(int reorder) {
 		this.reorder = reorder;
+	}
+
+
+	public ComputerorderclassruledetailService getComputerorderclassruledetailService() {
+		return computerorderclassruledetailService;
+	}
+
+
+	public void setComputerorderclassruledetailService(
+			ComputerorderclassruledetailService computerorderclassruledetailService) {
+		this.computerorderclassruledetailService = computerorderclassruledetailService;
+	}
+
+
+	public Computerorderclassruledetail getComputerorderclassruledetail() {
+		return computerorderclassruledetail;
+	}
+
+
+	public void setComputerorderclassruledetail(
+			Computerorderclassruledetail computerorderclassruledetail) {
+		this.computerorderclassruledetail = computerorderclassruledetail;
+	}
+
+
+	public ComputerorderclassruledetailFull getComputerorderclassruledetailFull() {
+		return computerorderclassruledetailFull;
+	}
+
+
+	public void setComputerorderclassruledetailFull(
+			ComputerorderclassruledetailFull computerorderclassruledetailFull) {
+		this.computerorderclassruledetailFull = computerorderclassruledetailFull;
+	}
+
+
+	public List<Computerorderclassruledetail> getComputerorderclassruledetailList() {
+		return computerorderclassruledetailList;
+	}
+
+
+	public void setComputerorderclassruledetailList(
+			List<Computerorderclassruledetail> computerorderclassruledetailList) {
+		this.computerorderclassruledetailList = computerorderclassruledetailList;
+	}
+
+
+	public List<ComputerorderclassruledetailFull> getComputerorderclassruledetailFullList() {
+		return computerorderclassruledetailFullList;
+	}
+
+
+	public void setComputerorderclassruledetailFullList(
+			List<ComputerorderclassruledetailFull> computerorderclassruledetailFullList) {
+		this.computerorderclassruledetailFullList = computerorderclassruledetailFullList;
+	}
+
+
+	public Integer getComputerorderclassruledetailid() {
+		return computerorderclassruledetailid;
+	}
+
+
+	public void setComputerorderclassruledetailid(
+			Integer computerorderclassruledetailid) {
+		this.computerorderclassruledetailid = computerorderclassruledetailid;
+	}
+
+
+	public ComputerorderconfigService getComputerorderconfigService() {
+		return computerorderconfigService;
+	}
+
+
+	public void setComputerorderconfigService(
+			ComputerorderconfigService computerorderconfigService) {
+		this.computerorderconfigService = computerorderconfigService;
+	}
+
+
+	public ComputerorderclassruleService getComputerorderclassruleService() {
+		return computerorderclassruleService;
+	}
+
+
+	public void setComputerorderclassruleService(
+			ComputerorderclassruleService computerorderclassruleService) {
+		this.computerorderclassruleService = computerorderclassruleService;
+	}
+
+
+	public Computerorderclassrule getComputerorderclassrule() {
+		return computerorderclassrule;
+	}
+
+
+	public void setComputerorderclassrule(
+			Computerorderclassrule computerorderclassrule) {
+		this.computerorderclassrule = computerorderclassrule;
+	}
+
+
+	public ComputerorderclassruleFull getComputerorderclassruleFull() {
+		return computerorderclassruleFull;
+	}
+
+
+	public void setComputerorderclassruleFull(
+			ComputerorderclassruleFull computerorderclassruleFull) {
+		this.computerorderclassruleFull = computerorderclassruleFull;
+	}
+
+
+	public List<Computerorderclassrule> getComputerorderclassruleList() {
+		return computerorderclassruleList;
+	}
+
+
+	public void setComputerorderclassruleList(
+			List<Computerorderclassrule> computerorderclassruleList) {
+		this.computerorderclassruleList = computerorderclassruleList;
+	}
+
+
+	public List<ComputerorderclassruleFull> getComputerorderclassruleFullList() {
+		return computerorderclassruleFullList;
+	}
+
+
+	public void setComputerorderclassruleFullList(
+			List<ComputerorderclassruleFull> computerorderclassruleFullList) {
+		this.computerorderclassruleFullList = computerorderclassruleFullList;
+	}
+
+
+	public Integer getComputerorderclassruleid() {
+		return computerorderclassruleid;
+	}
+
+
+	public void setComputerorderclassruleid(Integer computerorderclassruleid) {
+		this.computerorderclassruleid = computerorderclassruleid;
+	}
+
+
+	public ComputerhomeworkService getComputerhomeworkService() {
+		return computerhomeworkService;
+	}
+
+
+	public void setComputerhomeworkService(
+			ComputerhomeworkService computerhomeworkService) {
+		this.computerhomeworkService = computerhomeworkService;
+	}
+
+
+	public Computerhomework getComputerhomework() {
+		return computerhomework;
+	}
+
+
+	public void setComputerhomework(Computerhomework computerhomework) {
+		this.computerhomework = computerhomework;
+	}
+
+
+	public ComputerhomeworkFull getComputerhomeworkFull() {
+		return computerhomeworkFull;
+	}
+
+
+	public void setComputerhomeworkFull(ComputerhomeworkFull computerhomeworkFull) {
+		this.computerhomeworkFull = computerhomeworkFull;
+	}
+
+
+	public List<Computerhomework> getComputerhomeworkList() {
+		return computerhomeworkList;
+	}
+
+
+	public void setComputerhomeworkList(List<Computerhomework> computerhomeworkList) {
+		this.computerhomeworkList = computerhomeworkList;
+	}
+
+
+	public List<ComputerhomeworkFull> getComputerhomeworkFullList() {
+		return computerhomeworkFullList;
+	}
+
+
+	public void setComputerhomeworkFullList(
+			List<ComputerhomeworkFull> computerhomeworkFullList) {
+		this.computerhomeworkFullList = computerhomeworkFullList;
+	}
+
+
+	public int getCurcomputerhomeworkid() {
+		return curcomputerhomeworkid;
+	}
+
+
+	public void setCurcomputerhomeworkid(int curcomputerhomeworkid) {
+		this.curcomputerhomeworkid = curcomputerhomeworkid;
 	}
 
 

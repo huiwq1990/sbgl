@@ -180,7 +180,7 @@ public class ComputerClassorderAction  extends BaseAction  {
 	
 	private String passType;
 	
-
+int curcomputerhomeworkid;
 	
 	/**
 	 * 跳转到机房课程预约界面
@@ -190,7 +190,7 @@ public class ComputerClassorderAction  extends BaseAction  {
 	public String toComputerClassorderPage(){		
 		log.info("exec toComputerClassorderPage");
 		
-
+//		curcomputerhomeworkid = 
 		
 //		设置当前时间
 		Date currentDate = DateUtil.currentDate();
