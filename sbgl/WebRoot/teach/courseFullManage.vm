@@ -39,7 +39,7 @@
                 </ul>
               </div>
               <div class="operate-item pull-left">
-                <a href="教学管理-添加课程.html" class="btn btn-primary">添加课程</a>
+                <a href="${webbaseurl}/toCourseAddPage.${strutsaction}" class="btn btn-primary">添加课程</a>
                 <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
               </div>
 			  <!--

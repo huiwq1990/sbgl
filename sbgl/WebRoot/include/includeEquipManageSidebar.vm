@@ -4,13 +4,13 @@
 	#if($currentWebpage == "equipManageAdmin" )
 	active      
 	#end	
-	">设备管理</a>
+	">器材管理</a>
 	
 	<a href="${webbaseurl}/equipManageEquip.${strutsaction}" class="list-group-item
 	#if($currentWebpage == "equipManageEquip" )
 	active      
 	#end	
-	">添加设备</a>
+	">添加器材</a>
 	
 	<a href="${webbaseurl}/equipManageModel.${strutsaction}" class="list-group-item
 	#if($currentWebpage == "equipManageModel" )

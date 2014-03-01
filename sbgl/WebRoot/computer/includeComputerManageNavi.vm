@@ -5,10 +5,10 @@
 		#if($currentPageType == "computerorderManage" )
 			 class="active"      
 		#end		
-			><a href="${webbaseurl}/manageComputerorderFull.${strutsaction}">机器预约管理</a></li>
+			><a href="${webbaseurl}/manageComputerorderFull.${strutsaction}">机房预约管理</a></li>
         <li 
 		#if($currentPageType == "computerInfoManage" )
 			 class="active"      
 		#end
-			><a href="${webbaseurl}/manageComputerFull.${strutsaction}">机器信息管理</a></li>
+			><a href="${webbaseurl}/manageComputerFull.${strutsaction}">机房信息管理</a></li>
       </ul>
