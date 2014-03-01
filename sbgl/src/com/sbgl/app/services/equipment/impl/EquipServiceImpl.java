@@ -447,7 +447,7 @@ public class EquipServiceImpl implements EquipService {
 			List<Equipmentclassification> childrenList = this.getAllChildEquipmentclassificationsByParentId( classificationId );
 			if( childrenList != null && childrenList.size() > 0 ) {
 				for (Equipmentclassification c : childrenList) {
-					final String modelCountSQL = "select count(1) from Equipment where lanType = 'CH' and classificationid = " + c.getClassificationid();
+					final String modelCountSQL = "select count(1) from Equipment where lanType = '0' and classificationid = " + c.getClassificationid();
 					BigInteger EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
 						public Object doInHibernate(Session session) throws HibernateException{
 							Query query = session.createSQLQuery(modelCountSQL);
@@ -461,7 +461,7 @@ public class EquipServiceImpl implements EquipService {
 			}
 			return totalSum;
 		} else {
-			final String modelCountSQL = "select count(1) from Equipment where lanType = 'CH' and classificationid = " + classificationId;
+			final String modelCountSQL = "select count(1) from Equipment where lanType = '0' and classificationid = " + classificationId;
 			BigInteger EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
 				public Object doInHibernate(Session session) throws HibernateException{
 					Query query = session.createSQLQuery(modelCountSQL);
@@ -483,7 +483,7 @@ public class EquipServiceImpl implements EquipService {
 			List<Equipmentclassification> childrenList = this.getAllChildEquipmentclassificationsByParentId( classificationId );
 			if( childrenList != null && childrenList.size() > 0 ) {
 				for (Equipmentclassification c : childrenList) {
-					if( "CH".equals( c.getLanType() ) ) {
+					if( "0".equals( c.getLanType() ) ) {
 						final String modelCountSQL = "select count(1) from Equipmentdetail where classificationid = " + c.getClassificationid();
 						BigInteger EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
 							public Object doInHibernate(Session session) throws HibernateException{
@@ -696,7 +696,7 @@ public class EquipServiceImpl implements EquipService {
 
 	@Override
 	public List<Equipmentclassification> getAllCHEquipmentclassifications() {
-		return baseDao.getEntityByProperty(Equipmentclassification.class.getName(), "lanType", "CH");
+		return baseDao.getEntityByProperty(Equipmentclassification.class.getName(), "lanType", "0");
 	}
 
 	@Override

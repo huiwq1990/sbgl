@@ -53,9 +53,10 @@ public class RoomReservationAction extends ActionSupport {
 						dto = new StuInClassDto();
 						dto.setClassId( clazz.getClassId() );
 						dto.setClassName( clazz.getClassname() );
-						dto.setStuId( stu.getId() );
-						dto.setStuName( stu.getName() );
-						dtoList.add( dto );
+						dto.setStudentid( stu.getStudentid() );
+						dto.setId( stu.getId() );
+						dto.setName( stu.getName() );
+						dto.setPhoto( stu.getPhoto() );
 					}
 				}
 			}

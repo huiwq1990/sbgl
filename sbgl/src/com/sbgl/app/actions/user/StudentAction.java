@@ -133,8 +133,11 @@ public class StudentAction extends ActionSupport implements SessionAware {
 			this.message = "修改学生信息失败！";
 		} else {
 			Usergrouprelation ugr = userGroupRelationService.getRelationByType( student.getId(), 1 );
-			ugr.setGroupid( group.getId() );
-			userGroupRelationService.alterUserGroupRelation( ugr );
+			if(ugr != null) {
+				ugr.setGroupid( group.getId() );
+				userGroupRelationService.alterUserGroupRelation( ugr );
+			}
+			
 			this.tag = "0";
 			this.message = "修改学生信息成功！";
 		}

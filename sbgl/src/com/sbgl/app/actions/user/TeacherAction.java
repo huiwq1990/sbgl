@@ -83,9 +83,9 @@ public class TeacherAction extends ActionSupport implements SessionAware {
 				this.message = "添加教师信息失败！";
 			} else {
 				Usergrouprelation ugr = new Usergrouprelation();
-				ugr.setGroupId( group.getId() );
-				ugr.setUserId( returnCode );
-				ugr.setGroupType( group.getType() );
+				ugr.setGroupid( group.getId() );
+				ugr.setUserid( returnCode );
+				ugr.setGrouptype( group.getType() );
 				userGroupRelationService.addUserGroupRelation( ugr );
 				this.tag = "0";
 				this.message = "添加教师信息成功！";
@@ -115,7 +115,7 @@ public class TeacherAction extends ActionSupport implements SessionAware {
 			this.message = "修改教师信息失败！";
 		} else {
 			Usergrouprelation ugr = userGroupRelationService.getRelationByType(teacher.getId(), 2);
-			ugr.setGroupId( group.getId() );
+			ugr.setGroupid( group.getId() );
 			userGroupRelationService.alterUserGroupRelation( ugr );
 			this.tag = "0";
 			this.message = "修改教师信息成功！";

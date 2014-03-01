@@ -398,8 +398,8 @@
         			"equipmentEN.imgNameSaved": savedFileName,
         			"equipment.equipmentdetail": memo,
         			"equipmentEN.equipmentdetail": memoEN,
-        			"equipment.lanType": "CH",
-        			"equipmentEN.lanType": "EN",
+        			"equipment.lanType": "0",
+        			"equipmentEN.lanType": "1",
 					"crtModelPage": currentPageNo
         		}
     			
