@@ -147,7 +147,7 @@
 					<td><a href="${webbaseurl}/orderalibrary.do?borrowId=$row.borrowid" target="_blank">$row.title</a></td>
                     <td>待出库</td>  
 					#elseif($!row.status==5||$!row.status==6)
-					<td><a href="${webbaseurl}/equipmentExaming.do?borrowId=$row.borrowid" target="_blank">$row.title</a></td>
+					<td><a href="${webbaseurl}/orderstorage.do?borrowId=$row.borrowid" target="_blank">$row.title</a></td>
                     <td>待入库</td>  
 					#end          
 					#if($!row.category==1)

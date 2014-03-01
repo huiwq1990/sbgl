@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.entity.Equipment;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Loginuser;
@@ -73,9 +74,16 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 			class1Name = classification1List.get(0).getName();
 		}
 		classification2List = orderMainService.findSecondEquipmentclass();
-		equipmentList = orderMainService.findEquipmentByClss(fromDate,endDate);
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
+		equipmentList = orderMainService.findEquipmentByClss(fromDate,endDate,lantype);
 		if(borrowId!=null&&!borrowId.equals("")){
 			listequips = orderMainService.findEquipmentByBorrowId(borrowId,fromDate,endDate); 
+		}
+		if(orderCate==null||orderCate.equals("")){
+			orderCate="1";
 		}
 		return SUCCESS;
 	}
@@ -92,22 +100,25 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 				endDate = fromDate;
 			}
 		}
-		
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
 		Equipmentclassification equipmentclassification = new Equipmentclassification();
 		equipmentclassification = orderMainService.findEquipmentclassification(parentClassId);
 		class1Name = equipmentclassification.getName();
 		classification2List = orderMainService.findSecondEquipmentclass(parentClassId);
 		if(serach!=null&&!serach.equals("")){
 			if(classificationId==0){
-				equipmentList = orderMainService.findEquipmentByClss(parentClassId,fromDate,endDate,serach);
+				equipmentList = orderMainService.findEquipmentByClss(parentClassId,fromDate,endDate,lantype,serach);
 			}else{
-				equipmentList = orderMainService.findEquipmentByClss(classificationId,fromDate,endDate,serach);
+				equipmentList = orderMainService.findEquipmentByClss(classificationId,fromDate,endDate,lantype,serach);
 			}
 		}else{
 			if(classificationId==0){
-				equipmentList = orderMainService.findEquipmentByClss(parentClassId,fromDate,endDate);
+				equipmentList = orderMainService.findEquipmentByClss(parentClassId,fromDate,endDate,lantype);
 			}else{
-				equipmentList = orderMainService.findEquipmentByClss(classificationId,fromDate,endDate);
+				equipmentList = orderMainService.findEquipmentByClss(classificationId,fromDate,endDate,lantype);
 			}
 		}
 		return SUCCESS;

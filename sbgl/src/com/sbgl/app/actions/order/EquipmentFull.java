@@ -1,6 +1,7 @@
 package com.sbgl.app.actions.order;
 
 import java.util.Date;
+import java.util.List;
 
 import com.sbgl.app.dao.DaoAbs;
 
@@ -30,6 +31,9 @@ public class EquipmentFull extends DaoAbs {
 	private String categoryName; //分类名称
 	private String daynum;   
 	private Integer applynumber;
+	private String equipDetailids;
+	private Integer listdetailid;
+	private List<String> equipDetailidlist;
 	
 	
 	public Integer getActivenum() {
@@ -176,6 +180,24 @@ public class EquipmentFull extends DaoAbs {
 	}
 	public void setApplynumber(Integer applynumber) {
 		this.applynumber = applynumber;
+	}
+	public String getEquipDetailids() {
+		return equipDetailids;
+	}
+	public void setEquipDetailids(String equipDetailids) {
+		this.equipDetailids = equipDetailids;
+	}
+	public List<String> getEquipDetailidlist() {
+		return equipDetailidlist;
+	}
+	public void setEquipDetailidlist(List<String> equipDetailidlist) {
+		this.equipDetailidlist = equipDetailidlist;
+	}
+	public Integer getListdetailid() {
+		return listdetailid;
+	}
+	public void setListdetailid(Integer listdetailid) {
+		this.listdetailid = listdetailid;
 	}
 	
 
