@@ -99,6 +99,8 @@
 		<mapping resource="com/sbgl/app/entity/Listdetail.hbm.xml" />
 		<mapping resource="com/sbgl/app/entity/Equipmenborrow.hbm.xml" />
 		<mapping resource="com/sbgl/app/entity/Listequipdetail.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Ordercourseruledetail.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Ordercourserule.hbm.xml" />
 
 
 		<mapping resource="com/sbgl/app/entity/Clazz.hbm.xml" />
