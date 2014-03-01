@@ -60,8 +60,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	public Map<String,Object> getReturnJSON() {
 		return returnJSON;
 	}
-
-//	public String getTag() {
+	
+	//	public String getTag() {
 //		return tag;
 //	}
 //	
@@ -303,7 +303,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 						if(equipList != null) {
 							for (Equipment equipment : equipList) {
 								equipment.setClassificationid( Integer.valueOf(-1) );
-								equipService.alterEquipInfo( equipment );
+								equipService.alterEquipInfo( equipment, "1" );
 							}
 						}
 						equipService.deleteEquipmentclassification( e.getClassificationid() );
@@ -314,7 +314,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				if(equipList != null) {
 					for (Equipment equipment : equipList) {
 						equipment.setClassificationid( Integer.valueOf(-1) );
-						equipService.alterEquipInfo( equipment );
+						equipService.alterEquipInfo( equipment, "1" );
 					}
 				}
 			}
@@ -444,8 +444,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	public String alterEquipInfo() {
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
-		long returnCode = equipService.alterEquipInfo( equipment );
-		long returnCodeEN = equipService.alterEquipInfo( equipmentEN );
+		long returnCode = equipService.alterEquipInfo( equipment, "1" );
+		long returnCodeEN = equipService.alterEquipInfo( equipmentEN, "1" );
 		if( returnCode != -1 && returnCodeEN != -1 ) {
 			this.tag = "0";
 			this.message = "修改型号成功！";
