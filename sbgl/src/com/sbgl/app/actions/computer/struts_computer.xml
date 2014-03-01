@@ -3,7 +3,7 @@
 <struts>
 	 <package name="computer" extends="admin">
 
-
+		
 <!-- default entity manage action -->
     	<action name="manageComputer" class="ManageComputerAction" method="manageComputer">
         	<result name="success">/computer/computerManage.vm</result>
