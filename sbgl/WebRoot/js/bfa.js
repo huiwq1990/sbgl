@@ -1,5 +1,20 @@
 // JavaScript Document
 
+
+function getSelectedCheckboxList() {
+	var idsForDel = "";
+		
+	$("input[name='chk-list']").each(function() {
+		if($(this).prop("checked") === true) {
+			//num++;
+			idsForDel += $(this).prop("value") + ";";
+		}
+	});
+	
+	return idsForDel;
+
+}
+			
 	(function($){
 		
 					/* 全选 */
@@ -30,10 +45,10 @@
 
 			$(".select2").select2({
 				minimumResultsForSearch: 8,
-				formatResult: format,
+				formatResult: formatSelect2,
 				escapeMarkup: function(markup) { return markup; }
 			});
-			function format(state) {
+			function formatSelect2(state) {
 				var originalOption = state.element;
 				
 				if ($(originalOption).data('foo') === 'sub') {
@@ -44,8 +59,10 @@
 			
 			}
 
-							
-		$(window).load(function(){
+		
+		$(document).ready(function(){
+
+
 
 			var lastScrollTop = 0;
 			

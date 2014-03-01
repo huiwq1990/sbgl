@@ -84,6 +84,33 @@ public class ComputerAction extends BaseAction implements ModelDriven<Computer>{
 	//删除
 	String computerIdsForDel;
 	
+	
+	public boolean checkAddForm(){
+		if(computer.getSerialnumber()==null || computer.getSerialnumber().trim().length() == 0){
+			this.returnInfo = "请输入设备/资源编号。";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return false;
+		}
+		
+		if(computer.getComputermodelid()==null || computer.getComputermodelid()== 0){
+			this.returnInfo = "请选择设备/资源对应的型号。";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return false;
+		}
+		
+		if(computer.getComputerstatusid()==null || computer.getComputerstatusid()== 0){
+			this.returnInfo = "请选择设备/资源对应的状态。";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return false;
+		}
+		
+		
+		return true;
+		
+	}
 
 //  ajax add	
 	public String addComputerAjax(){	
@@ -98,6 +125,10 @@ public class ComputerAction extends BaseAction implements ModelDriven<Computer>{
 			return SUCCESS;
 		}
 		
+		
+		if(!checkAddForm()){
+			return SUCCESS;
+		}
 
 			
 			computer.setCreatetime(DateUtil.currentDate());
@@ -127,13 +158,14 @@ public class ComputerAction extends BaseAction implements ModelDriven<Computer>{
 				return SUCCESS;
 			}
 			
-			Computermodel cm = computermodelService.selectComputermodelByCondition(" where computermodeltype = " + ch.getComputermodelid() ).get(0);			
-			if(cm==null){
+			List<Computermodel> cmList = computermodelService.selectComputermodelByCondition(" where computermodeltype = " + ch.getComputermodelid() );			
+			if(cmList==null || cmList.size() == 0){
 				this.returnInfo = "无法获取机房模型";
 				log.info(returnInfo);
 				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 				return SUCCESS;
 			}
+			Computermodel cm = cmList.get(0);
 			
 //			如果模型的数量为null,设置为0
 			if(cm.getComputercount()== null){

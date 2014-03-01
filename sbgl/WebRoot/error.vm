@@ -3,5 +3,6 @@
 		<h1 >错误处理页面</h1>
 		<br/>
 		提示：$!errorMsg
+		<br/>
     </body>
 </html>

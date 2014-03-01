@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>管理</title>
+<title>课程管理</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -40,7 +40,7 @@
               </div>
               <div class="operate-item pull-left">
                 <a href="${webbaseurl}/toCourseAddPage.${strutsaction}" class="btn btn-primary">添加课程</a>
-                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+                <a href="#" class="btn btn-white s-h" action-type="deleteCourseButton"><i class="icon-trash"></i> 删除</a>
               </div>
 			  <!--
               <div class="page pull-right clearfix">
@@ -86,13 +86,14 @@
 			#set($en = $courseFullListEn.get($tempKey))					
 	
                   <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="$!ch.courseid"></td>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!ch.coursecoursetype"></td>
 					<!--修改属性-->
                     <td>$!ch.coursename<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="editCourseFillIn" 
 						data-id="$!ch.courseid"                           
 												data-name="$!ch.coursename"                           
 												data-description="$!ch.coursedescription"                           
-												data-type="$!ch.coursetype"                           
+												data-coursetype="$!ch.coursecoursetype"   
+												data-type = "$!ch.coursetype"
 												data-adduserid="$!ch.courseadduserid"                           
 												data-teacherid="$!ch.courseteacherid"                           
 												data-addtime="$!ch.courseaddtime"      
@@ -144,7 +145,7 @@
       <p>修改信息。</p>
       <form class="form-horizontal" role="form">
 		
-					<input type="hidden" class="form-control" id="inputEditCourseid" placeholder="" value="">		
+					<input type="hidden" class="form-control" id="inputEditCoursecoursetype" placeholder="" value="">		
 		
 				
 			<div class="form-group">
@@ -166,14 +167,22 @@
 			<div class="form-group">
           <label for="teacherid" class="col-xs-3 control-label">任课老师</label>
           <div class="col-xs-7">
-            <input type="text" class="form-control" id="inputEditCourseteacherid" placeholder="" value="">
+                         <select class="select2 select-white form-control" id="input_add_course_teacherid">
+						#foreach($temp in $teacherList)
+                        <option value="$temp.id">$temp.name</option>
+                       #end
+                      </select>
           </div>
         </div>
 						
 			<div class="form-group">
           <label for="type" class="col-xs-3 control-label">课程类别</label>
           <div class="col-xs-7">
-            <input type="text" class="form-control" id="inputEditCoursetype" placeholder="" value="">
+									#foreach($temp in $userGroupList)
+                      <label class="radio-inline">
+                        <input type="radio" name="course_type" id="courseType${temp.id}" value="${temp.id}" checked="">$temp.name
+                      </label>
+					#end
           </div>
         </div>
 				
@@ -221,17 +230,23 @@ var usergroupid = 0;
 	$("body").on("click", "a[action-type|=editCourseFillIn]", function() {
 		var data = $(this).data();
 		
-		$("#inputEditCourseid").val(data.id);       
+		
+		//alert(data.coursetype);
+		
+		$("#inputEditCoursecoursetype").val(data.coursetype);       
 
 		$("#inputEditCoursename").val(data.name);       
 
-		$("#inputEditCoursetype").val(data.type);       
+		//$("course_type").val(data.type);       
 
-		$("#inputEditCourseteacherid").val(data.teacherid);       
+		$("#input_add_course_teacherid").select2('val',data.teacherid);       
 	
 		$("#inputEditCourseidEn").val(data.iden);    
 
-		$("#inputEditCoursenameEn").val(data.nameen);    
+		$("#inputEditCoursenameEn").val(data.nameen);   
+		
+		$("input[id='course_type'+data.type]").prop("checked",$(this).prop("checked"));
+		//$("[name = course_type ]:checkbox").attr("checked", true);
 		
 			})
 //end 	editCourseFillIn
@@ -242,15 +257,16 @@ var usergroupid = 0;
 		var _this = $(this);
 		var actionUrl = "${webbaseurl}/updateCourseAjax.action";
 		//获取修改的值	
-							var id = $("#inputEditCourseid").val();      
+							var coursetype = $("#inputEditCoursecoursetype").val();      
 					var name = $("#inputEditCoursename").val();       
 					var type = $("#inputEditCoursetype").val();      
 				
 					var teacherid = $("#inputEditCourseteacherid").val();      
-					
+
+		
 		var postData = {
 										
-								id: id,
+								coursetype: coursetype,
 								name: name,							
 								type: type,
 							
@@ -280,26 +296,37 @@ var usergroupid = 0;
 	
 	
 	
-	var idsForDel;	
-	/* 处理CheckBox选中事件用于删除处理 */
-	$("input[type='checkbox']").click(function() {
-		//var num = 0;
-		idsForDel = "";
-		
+// checkbox
+	$("body").on("click", "input[type='checkbox']", function() {
+		var num = 0;
 		if($(this).attr("id") === "chk-all") {
 			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
 		}
 		$("input[name='chk-list']").each(function() {
-			if($(this).prop("checked") === true) {
-				//num++;
-				idsForDel += $(this).prop("value") + ";";
+			if($(this).prop("checked") === true){
+				num++;  
 			}
 		});
+		if(num > 0){
+			$(".s-h").css({
+				"visibility": "visible",
+				"opacity": "1",
+				"filter": "alpha(opacity=100)"
+			});
+		} else {
+			$(".s-h").css({
+				"visibility": "hidden",
+				"opacity": "0",
+				"filter": "alpha(opacity=0)"
+			});
+		}
+
 	});
-	//end box
+	//end checkbox
 	
 //	delete
 	$("body").on("click", "a[action-type|=deleteCourseButton]", function() {
+		var idsForDel = getSelectedCheckboxList();		
 		idsForDel = idsForDel.substring(0,idsForDel.length-1);
 		var postData = {
 			courseIdsForDel: idsForDel
@@ -318,7 +345,8 @@ var usergroupid = 0;
 					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框	
 					refreshTable();
 				}else{
-					var n = noty({text: failedStr, timeout: 2500, type: 'error'});
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
+							
 				}
 
 			}		  	  
@@ -385,13 +413,19 @@ var usergroupid = 0;
 	
 	
 	//换页时调用方法
-	$('.pagination').jqPagination({
-    	paged: function(page) {
-     	   // do something with the page variable
-			currentpagenum = page;
-			refreshTable();		
+	
+$(function() {
+    $('.page-bar').jqPagination({
+    	link_string	: '/?page={page_number}',
+    	max_page	: totalpage,
+    	current_page:currentpagenum,
+    	paged: function(page) {     	  
+    		currentpagenum = page;
+    		refreshComputercategoryTable();
+    
     	}
-	});
+    });
+});	
 	
 	
 	
@@ -411,7 +445,7 @@ var usergroupid = 0;
             success: function(data){
             	$('#refreshCourseTableDiv').html(data);
                 //设置分页绑定事件
-                $('.pagination').jqPagination({
+                $('.page-bar').jqPagination({
                 	link_string : '/?page={page_number}',
                     max_page : totalpage,
                     current_page:currentpagenum,

@@ -12,7 +12,7 @@
 
 <!-- default entity manage action -->
     	<action name="manageCourse" class="CourseAction" method="manageCourse">
-        	<result name="success1">/teach/courseManage.vm</result>
+        	<result name="success1">/teach/courseFullManage.vm</result>
 			<result name="success2">/teach/courseFullManageContent.vm</result>
         	<result name="error">/error.vm</result> 
         </action>

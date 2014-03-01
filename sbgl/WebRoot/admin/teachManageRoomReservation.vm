@@ -122,7 +122,7 @@
                 <div class="clearfix"></div>
                 <div class="rent-time form-group row">
                   <label for="inputDataRange" class="col-md-1 control-label">使用时间</label>
-                  <div class="col-lg-6">
+                  <div class="col-lg-6">showStuInClass
                     <div class="input-daterange row">
                       <div class="col-lg-5">
                         <input type="text" class="form-control" id="inputDataRange" name="start" placeholder="起始日期">
@@ -206,7 +206,7 @@
       </div>
       <div id="user-list" class="row">
         <ul class="media-list">
-          <li data-id="1" data-name="用户1" class="media">
+<!--           <li data-id="1" data-name="用户1" class="media">
             <div class="pull-left">
               <img src="${imageDomain}/photo.jpg" width="46" height="46">
             </div>
@@ -215,24 +215,7 @@
               <div class="text-muted">班级信息</div>
             </div>
           </li>
-          <li data-id="2" data-name="用户2" class="media">
-            <div class="pull-left">
-              <img src="${imageDomain}/photo.jpg" width="46" height="46">
-            </div>
-            <div class="media-body">
-              <div class="media-heading">用户2</div>
-              <div class="text-muted">班级信息</div>
-            </div>
-          </li>
-          <li data-id="3" data--name="用户3" class="media">
-            <div class="pull-left">
-              <img src="${imageDomain}/photo.jpg" width="46" height="46">
-            </div>
-            <div class="media-body">
-              <div class="media-heading">用户3</div>
-              <div class="text-muted">班级信息</div>
-            </div>
-          </li>
+ -->
         </ul>
       </div>
   </div>
@@ -284,29 +267,6 @@
 		});
 	});
 	
-	$('body').on('click', ('#createEquipRule .model-list > .list-item'), function () {
-		if ($(this).children('i').hasClass('icon-check-empty')) {
-			$(this).children('i').removeClass('icon-check-empty').addClass('icon-check');
-			$(this).data('isSelect', 'true');
-		} else if ($(this).children('i').hasClass('icon-check')) {
-			$(this).children('i').removeClass('icon-check').addClass('icon-check-empty');
-			$(this).data('isSelect', 'false');
-		}
-	});
-	$('body').on('click', ('#createEquipRule #submit'), function () {
-		var courseId = $('#inputCourseName').select2('val');
-		if (courseId == '') {
-			courseId = -1;	
-		}
-		var ruleName = $('#inputRuleName').val();
-		alert(courseId + ',' + ruleName);
-		$('.model-list > .list-item').each(function(index, elem) {
-			if($(elem).data('isSelect')) {
-            	var myData = $(elem).data();
-				alert(myData.modelId);
-			}
-        });
-	});
 	$('#user-list').on('click', ('.media-list li.media'), function () {
 		$(this).toggleClass("selected");
 	});
@@ -351,7 +311,23 @@
 			url: "${webbaseurl}/getStuInClass.do",  
 			type: "post",
 			success: function(data,textStatus,jq) {
-				console.log(data);
+				//console.log(data);
+				$("#user-list .media-list").empty();
+				$(".select2 select-white").empty();
+				$(data.allSC).each(function(index, el) {
+					var user = el;
+                    var html = 
+                              '<li data-id="' + user.id + '" data-name="' + user.name + '" class="media">' +
+                                '<div class="pull-left">' +
+                                  '<img src="' + "${imageDomain}/photo.jpg" +'" width="46" height="46">'+
+                                '</div>' +
+                                '<div class="media-body">' +
+                                  '<div class="media-heading">' + user.name + '</div>' +
+                                  '<div class="text-muted">' + user.className + '</div>' +
+                                '</div>' +
+                              '</li>';
+                	$("#user-list .media-list").append(html);
+				});
 
 			},
 			error: function(data,textStatus,jq) {

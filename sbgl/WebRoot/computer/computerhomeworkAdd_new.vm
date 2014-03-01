@@ -41,7 +41,7 @@
                     </div>
                   </div>
                   <div class="form-group user-group">
-                    <a href="#userGroup" role="button" class="btn btn-white btn-large btn-block" data-toggle="modal"><i class="icon-group"> +</i></a>
+                    <a href="#exploreUser" action-type="showStuInClass" role="button" class="btn btn-white btn-large btn-block" data-toggle="modal"><i class="icon-group"> +</i></a>
                   </div>
                 </div>
 				<div class="form-group send-title">
@@ -138,79 +138,49 @@
 </section>
 
 <!-- Modal -->
-<div id="userGroup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="exploreUser" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">浏览用户</h3>
   </div>
   <div class="modal-body">
-    <p>用户列表</p>
+      <div class="row control-bar">
+        <div class="select-user-group col-md-5">
+            <select class="select2 select-white"  style="width: 100%;">
+              <option value="0">班级1</option>
+              <option value="1">班级2</option>
+              <option value="2">班级3</option>
+            </select>
+        </div>
+        <div class="search-user col-md-7">
+          <form class="form-group inner-search-icon">
+            <input type="text" class="form-control" placeholder="按姓名搜索">
+            <span class="icon-search"></span>
+          </form>
+        </div>
+      </div>
+      <div class="control-bar">
+        <button class="btn btn-white" action-type="selectAllUser">全 选</button>
+        <button class="btn btn-primary" action-type="cancelSelectAllUser" style="display: none">取消全选</button>
+      </div>
+      <div id="user-list" class="row">
+        <ul class="media-list">
+<!--           <li data-id="1" data-name="用户1" class="media">
+            <div class="pull-left">
+              <img src="${imageDomain}/photo.jpg" width="46" height="46">
+            </div>
+            <div class="media-body">
+              <div class="media-heading">用户1</div>
+              <div class="text-muted">班级信息</div>
+            </div>
+          </li>
+ -->
+        </ul>
+      </div>
   </div>
   <div class="modal-footer">
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary">完 成</button>
-  </div>
-</div>
-
-<div id="createEquipRule" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="createEquipRuleLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="createEquipRuleLabel">创建规则</h3>
-  </div>
-  <div class="modal-body">
-    <p>根据课程教学要求确定器材使用范围。选择课程名称后为新的规则起一个名称，并在器材列表中选取该规则下能使用的器材范围。规则创建后可多次重复使用。</p>
-    <div class="row">
-      <div class="col-md-4">
-        <select id="inputCourseName" class="select2 form-control select-white" data-placeholder="请选择课程" style="width: 100%;">
-          <option></option>
-          <option value="11111">MV、广告创作</option>
-          <option value="22222">故事片创作</option>
-          <option value="33333">其它</option>
-        </select>
-      </div>
-      <div class="col-md-8">
-        <div class="form-group rule-name">
-        <label class="sr-only" for="inputSendTo">收件人</label>
-        <input type="text" id="inputRuleName" class="form-control" placeholder="规则名称">
-        </div>
-      </div>
-    </div>
-    <div class="tabbable tabs-left">
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#lA" data-toggle="tab">摄影机</a></li>
-        <li><a href="#lB" data-toggle="tab">镜头</a></li>
-        <li><a href="#lC" data-toggle="tab">灯具</a></li>
-        <li><a href="#lD" data-toggle="tab">器材一级分类</a></li>
-      </ul>
-      <div class="tab-content">
-        <div class="tab-pane active" id="lA">
-          <div class="row model-list">
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="111" data-is-select="false"><i class="icon-check-empty icon-large"></i>ARRI ALEXA</div>
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="222" data-is-select="false"><i class="icon-check-empty icon-large"></i>RED EPIC</div>
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="333" data-is-select="false"><i class="icon-check-empty icon-large"></i>RED SCARLET</div>
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="2" data-model-id="444" data-is-select="false"><i class="icon-check-empty icon-large"></i>EOS 5D MARK II</div>
-          </div>
-        </div>
-        <div class="tab-pane" id="lB">
-          <div class="row model-list">
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="7777" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 18mm/T3.6</div>
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="8888" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 21mm/T2.9</div>
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="9999" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 25mm/T2.9</div>
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="2" data-model-id="0000" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 28mm/T2.1</div>
-          </div>
-        </div>
-        <div class="tab-pane" id="lC">
-          <p>列表3</p>
-        </div>
-        <div class="tab-pane" id="lD">
-          <p>列表4</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary" id="submit">完 成</button>
+    <button class="btn btn-primary" action-type="getUserSendList">完 成</button>
   </div>
 </div>
 
@@ -228,62 +198,137 @@
 <script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
 
 <script>
-	$('.input-daterange').datepicker({
-		language: 'zh-CN',
-		format: 'yyyy-mm-dd',
-		todayHighlight: true,
-		autoclose: true
-	});
+  $('.input-daterange').datepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd',
+    todayHighlight: true,
+    autoclose: true
+  });
 
-	$("#inputSendTo").select2({
-		createSearchChoice:function(term, data) { 
-			if ($(data).filter(function() { return this.text.localeCompare(term)===0; }).length===0) {
-				return {id:term, text:term};} 
-			},
-		multiple: true,
-		data: [{id: 0, text: '用户名1'},{id: 1, text: '用户名2'},{id: 2, text: '用户名3'}]
-	});
-			
-	var editor;
-	KindEditor.ready(function(K) {
-		editor = K.create('textarea[name="content"]', {
-			resizeType : 1,
-			allowPreviewEmoticons : false,
-			allowImageUpload : false,
-			items : [
-				'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
-				'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-				'insertunorderedlist', '|', 'emoticons', 'image', 'link']
-		});
-	});
-	
-	$('body').on('click', ('#createEquipRule .model-list > .list-item'), function () {
-		if ($(this).children('i').hasClass('icon-check-empty')) {
-			$(this).children('i').removeClass('icon-check-empty').addClass('icon-check');
-			$(this).data('isSelect', 'true');
-		} else if ($(this).children('i').hasClass('icon-check')) {
-			$(this).children('i').removeClass('icon-check').addClass('icon-check-empty');
-			$(this).data('isSelect', 'false');
-		}
-	});
-	$('body').on('click', ('#createEquipRule #submit'), function () {
-		var courseId = $('#inputCourseName').select2('val');
-		if (courseId == '') {
-			courseId = -1;	
-		}
-		var ruleName = $('#inputRuleName').val();
-		alert(courseId + ',' + ruleName);
-		$('.model-list > .list-item').each(function(index, elem) {
-			if($(elem).data('isSelect')) {
-            	var myData = $(elem).data();
-				alert(myData.modelId);
-			}
+var preload_data = [];
+function formatText2NameForSelect2(item) { return item.name; }
+$('#inputSendTo').select2({
+      multiple: true,
+      preload_data:{ results: preload_data, text: 'name' },
+      formatSelection: formatText2NameForSelect2,
+      formatResult: formatText2NameForSelect2,
+      query: function (query){
+          var data = {results: []}; 
+          $.each(preload_data, function(){
+              if(query.term.length == 0 || this.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0 ){
+                  data.results.push({id: this.id, text: this.name });
+              }
+          }); 
+          query.callback(data);
+      }
+  });
+$('#inputSendTo').select2('data', preload_data );
+
+
+
+  var editor;
+  KindEditor.ready(function(K) {
+    editor = K.create('textarea[name="content"]', {
+      resizeType : 1,
+      allowPreviewEmoticons : false,
+      allowImageUpload : false,
+      items : [
+        'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+        'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+        'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+    });
+  });
+  
+  $('#user-list').on('click', ('.media-list li.media'), function () {
+    $(this).toggleClass("selected");
+  });
+  
+  // 全选当前列表下的用户
+  $('body').on('click', ('button[action-type|=selectAllUser]'), function () {
+    $("#user-list .media-list li").each(function(index, el) {   // 遍历用户列表
+      if (!$(this).hasClass('selected')) {    // 新课程安排
+        $(this).addClass('selected');
+      }
+    });
+    $(this).hide();
+    $('button[action-type|=cancelSelectAllUser]').show();
+  });
+  // 取消全选当前列表下的用户
+  $('body').on('click', ('button[action-type|=cancelSelectAllUser]'), function () {
+    $("#user-list .media-list li").each(function(index, el) {   // 遍历用户列表
+      if ($(this).hasClass('selected')) {   // 新课程安排
+        $(this).removeClass('selected');
+      }
+    });
+    $(this).hide();
+    $('button[action-type|=selectAllUser]').show();
+  });
+
+  var userList = new Array();
+
+  // 浏览用户完成按钮，获取所需发送用户的列表
+  $("body").on('click', 'button[action-type|=getUserSendList]', function(event) {
+    var userList = new Array();
+    $("#user-list .media-list li").each(function(index, el) {   // 遍历用户列表
+      var thisData = $(this).data();
+      if ($(this).hasClass('selected')) {   // 新课程安排
+        userList.push(thisData);
+      }
+    });
+console.log("....."); console.log(userList);
+
+    $('#inputSendTo').select2({
+          multiple: true,
+          userList:{ results: userList, text: 'name' },
+          formatSelection: formatText2NameForSelect2,
+          formatResult: formatText2NameForSelect2,
+          query: function (query){
+              var data = {results: []}; 
+              $.each(userList, function(){
+                  if(query.term.length == 0 || this.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0 ){
+                      data.results.push({id: this.id, text: this.name });
+                      alert(data.results.id);
+                  }
+              }); 
+              query.callback(data);
+          }
+      });
+
+    $('#inputSendTo').select2('data', userList );
+
+    $(this).parents(".modal").modal('hide');
+  });
+  
+  // 获取全部班级和学生信息
+  $("body").on('click', 'a[action-type|=showStuInClass]', function(event) {
+    jQuery.ajax({
+      url: "${webbaseurl}/getStuInClass.do",  
+      type: "post",
+      success: function(data,textStatus,jq) {
+        //console.log(data);
+        $("#user-list .media-list").empty();
+        $(".select2 select-white").empty();
+        $(data.allSC).each(function(index, el) {
+          var user = el;
+                    var html = 
+                              '<li data-id="' + user.id + '" data-name="' + user.name + '" class="media">' +
+                                '<div class="pull-left">' +
+                                  '<img src="' + "${imageDomain}/photo.jpg" +'" width="46" height="46">'+
+                                '</div>' +
+                                '<div class="media-body">' +
+                                  '<div class="media-heading">' + user.name + '</div>' +
+                                  '<div class="text-muted">' + user.className + '</div>' +
+                                '</div>' +
+                              '</li>';
+                  $("#user-list .media-list").append(html);
         });
-	});
-	
-	
-	
-	
+
+      },
+      error: function(data,textStatus,jq) {
+        alert("加载数据失败!");
+      }
+    });
+  });
 	
 	
 		
@@ -297,19 +342,25 @@
 				}
 			});
 			allowborrowpcids = allowborrowpcids.substring(0,allowborrowpcids.length-1);
-			
+			var uIdList = $('#inputSendTo').val();
+      var uIdListArray = new Array();
+      uidListArray = uIdList.split(",");
+      uidListArray.pop();
+      var receiverids = uidListArray.join(";")
+	 // alert(receiverids);
+	 // return;
 			var postData = {
-				"receiverids": $('#inputSendTo').val(),
+				"receiverids": receiverids,
 				"classid":$('#input_computerorderclassrule_classname').val(),
 				"name": $('#inputMsgTitle').val(),
 				"content": editor.html(),
 				"orderstarttime": $('#inputDataRange').val(),
 				"orderendtime": $('#inputDataRange2').val(),
 				"availableordertime": $('#inputTotaltime').val(),
-				"allowborrowpcids": allowborrowpcids,
-				"receiverids": $('#inputSendTo').val()				
+				"allowborrowpcids": allowborrowpcids			
 			};
-			
+
+			console.log(postData);
 			jQuery.ajax({  
 			    url:"${webbaseurl}/addComputerhomeworkAjaxNew.${strutsaction}",  
 			    type:"post",

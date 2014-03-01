@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>管理</title>
+<title>北京电影学院摄影系 - 预约管理</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -29,10 +29,7 @@
      <!-- Navi -->
 		#set($currentPageType="computerInfoManage")
 		#parse("computer/includeComputerManageNavi.vm")
-	  
-	  
-	  
-	  
+	 <!-- /Navi -->
 	  
       <!--admin-wrap start-->
       <div id="admin-wrap">
@@ -40,7 +37,7 @@
             <!--control-bar start-->
             <div class="control-bar clearfix">
               <div class="title pull-left">型号管理</div>
-			  <div class="tips">在此页面下管理设备型号。设备型号包含每种设备的基本信息，如设备名、设备图片、设备资料介绍等等。</div>
+			  <div class="tips">在此页面下管理机房设备/资源型号。设备/资源型号包含每种设备或资源的基本信息，如名称、图片、资料介绍等等。</div>
               <div class="filter category-filter">
                 <select id="select-categories" name="computercategoryid" style="width:130px" class="select2" onchange="getComputermodelById(this[selectedIndex].value);">
 					<option value="0" data-foo="fa">全部分类</option>
@@ -55,24 +52,16 @@
 #end
 #end         
                 </select>
-				
-				
-				
               </div>
               <div class="operate-item pull-left">
                 <a href="#add-equip-model" class="btn btn-primary" data-toggle="modal" role="button">添加型号</a>
                 <a href="#" class="btn btn-white s-h" action-type="deleteComputermodelButton"><i class="icon-trash"></i> 删除</a>
               </div>
-
 			  <!--page bar
 			  #parse("include/includePagebar.vm")
 			  -->
 			  
             </div><!--control-bar end-->
-			
-			
-		
-		
 			<div id ="refreshComputermodelTable">
 				<div class="panel panel-default">
                   <table class="table table-hover">
@@ -81,9 +70,9 @@
                         <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
                         <th class="name">设备名称(型号)</th>
                         <th class="categories">分类</th>
-    					    <th class="categories">总共数量</th>
-                        <th class="categories">可借数量</th>
                         <th class="describe">描述</th>
+    					<th class="num">总数量</th>
+                        <th class="num">可借数量</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -103,16 +92,17 @@
     						data-id="$!ch.computermodelid" 
     						data-name="$!ch.computermodelname" 
     						data-computercategoryid = "$!ch.computermodelcomputercategoryid" 
-    						data-description="$!ch.computermodeldescription" 
-    						
+    						data-description="$!ch.computermodeldescription"
     						data-iden="$!en.computermodelid" 
     						data-nameen="$!en.computermodelname" 
     						data-computercategoryiden="$!en.computermodelcomputercategoryid" 
-    						data-descriptionen="$!en.computermodeldescription">修改</a></td>
-                         <td>$!ch.computercategoryname</td>
-    					 <td>$!ch.computermodelcomputercount</td>
-                         <td>$!ch.computermodelavailableborrowcountnumber</td>
-                        <td>$!ch.computermodeldescription</td>
+    						data-descriptionen="$!en.computermodeldescription">修改</a>
+    						<br><small>$!en.computermodelname</small>
+    					</td>
+                        <td>$!ch.computercategoryname<br><small>$!en.computercategoryname</small></td>
+                        <td>$!ch.computermodeldescription<br><small>$!en.computermodeldescription</small></td>
+    					<td>$!ch.computermodelcomputercount</td>
+                        <td>$!ch.computermodelavailableborrowcountnumber</td>                        
                       </tr>
     #end
     #end
@@ -155,26 +145,25 @@
     <h3 id="myModalLabel">修改</h3>
   </div>
   <div class="modal-body">
-    <p>这里是修改设备型号相关说明。</p>
     <form class="form-horizontal" role="form">
        <input id="editComputermodelIdCh" type="hidden" val=""></input>
 	   <input id="editComputermodelIdEn" type="hidden" val=""></input>
       <div class="form-group">
-        <label for="modifyEModelName" class="col-xs-3 control-label">型号名</label>
+        <label for="modifyModelName" class="col-xs-3 control-label">名称</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="inputEditComputermodelName" placeholder="Arri Alexa Plus">
+          <input type="text" class="form-control" id="modifyModelName" placeholder="设备或资源的中文名称">
         </div>
       </div>
 	  <div class="form-group">
-        <label for="modifyEModelName" class="col-xs-3 control-label">型号英文名</label>
+        <label for="modifyModelNameEn" class="col-xs-3 control-label">英文名称</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="editComputermodelNameEn" placeholder="Arri Alexa Plus">
+          <input type="text" class="form-control" id="modifyModelNameEn" placeholder="设备或资源的英文名称">
         </div>
       </div>
       <div class="form-group">
-        <label for="modifyEquipCategory" class="col-xs-3 control-label">分类</label>
+        <label for="modifyModelCategoryId" class="col-xs-3 control-label">分类</label>
         <div class="col-xs-7">
-         <select class="select2 select-white form-control" id="inputEditComputermodelComputercategoryid">
+         <select class="select2 select-white form-control" id="modifyModelCategoryId">
 #set($computercategoryListSize = $computercategoryList.size() - 1)
 ##判断数据是否为空
 #if($computercategoryListSize>=0)
@@ -189,24 +178,28 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="modifyEDescribe" class="col-xs-3 control-label">描述</label>
+        <label for="modifyDescribe" class="col-xs-3 control-label">描述</label>
         <div class="col-xs-7">
-          <textarea class="form-control" id="editComputermodelDescriptionCh" rows="3"></textarea>
+          <textarea class="form-control" id="modifyDescribe" rows="3"></textarea>
         </div>
       </div>
     <div class="form-group">
-        <label for="modifyEDescribe" class="col-xs-3 control-label">英文描述</label>
+        <label for="modifyDescribeEn" class="col-xs-3 control-label">英文描述</label>
         <div class="col-xs-7">
-          <textarea class="form-control" id="editComputermodelDescriptionEn" rows="3"></textarea>
+          <textarea class="form-control" id="modifyDescribeEn" rows="3"></textarea>
         </div>
       </div>
       <div class="form-group">
-        <label for="modifyEPic" class="col-xs-3 control-label">图片</label>
+        <label for="modifyPic" class="col-xs-3 control-label">图片</label>
         <div class="col-xs-7">
           <span class="btn btn-white file-input-button">
-              <i class="icon-plus"></i>
+                     <i class="icon-plus"></i>
               <span>添加图片</span>
-              <input id="modifyEPic" type="file" name="files[]" multiple>
+              <input id="inputModelPicEdit" type="file" name="file" action-type="showFileNameForAdd" multiple>
+				
+          </span>
+		  <span id="imgFileForAddEdit"></span>
+		  <span id="inputModelPicSpanEdit"></span>
           </span>
         </div>
       </div>
@@ -226,24 +219,23 @@
     <h3 id="myModalLabel">添加设备型号</h3>
   </div>
   <div class="modal-body">
-    <p>这里是添加设备型号相关说明。</p>
     <form class="form-horizontal" role="form">
       <div class="form-group">
-        <label for="addComputermodelName" class="col-xs-3 control-label">型号</label>
+        <label for="inputModelName" class="col-xs-3 control-label">名称</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="addComputermodelName" placeholder="设备型号（如：Dell">
+          <input type="text" class="form-control" id="inputModelName" placeholder="设备或资源的中文名称">
         </div>
       </div>
 	  <div class="form-group">
-        <label for="addComputermodelName" class="col-xs-3 control-label">型号英文名称</label>
+        <label for="inputModelNameEn" class="col-xs-3 control-label">英文名称</label>
         <div class="col-xs-7">
-          <input type="text" class="form-control" id="addComputermodelNameEn" placeholder="Model（Like：Dell">
+          <input type="text" class="form-control" id="inputModelNameEn" placeholder="设备或资源的英文名称">
         </div>
       </div>
       <div class="form-group">
-        <label for="inputECategory" class="col-xs-3 control-label">分类</label>
+        <label for="inputCategoryId" class="col-xs-3 control-label">分类</label>
         <div class="col-xs-7">
-          <select class="select2 select-white form-control" id="addComputermodelComputercategoryid">
+          <select class="select2 select-white form-control" id="inputCategoryId">
 			 
 #set($computercategoryListSize = $computercategoryList.size() - 1)
 ##判断数据是否为空
@@ -259,28 +251,28 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="inputEDescribe" class="col-xs-3 control-label">描述</label>
+        <label for="inputDescribe" class="col-xs-3 control-label">描述</label>
         <div class="col-xs-7">
-          <textarea class="form-control" id="addComputermodelDescription" rows="3"></textarea>
+          <textarea class="form-control" id="inputDescribe" rows="3"></textarea>
         </div>
       </div>
 	  <div class="form-group">
-        <label for="inputEDescribe" class="col-xs-3 control-label">英文描述</label>
+        <label for="inputDescribeEn" class="col-xs-3 control-label">英文描述</label>
         <div class="col-xs-7">
-          <textarea class="form-control" id="addComputermodelDescriptionEn" rows="3"></textarea>
+          <textarea class="form-control" id="inputDescribeEn" rows="3"></textarea>
         </div>
       </div>
       <div class="form-group">
-        <label for="inputEPic" class="col-xs-3 control-label">图片</label>
+        <label for="inputModelPic" class="col-xs-3 control-label">图片</label>
         <div class="col-xs-7">
           <span class="btn btn-white file-input-button">
               <i class="icon-plus"></i>
               <span>添加图片</span>
-              <input id="inputAddModelPic" type="file" name="file" action-type="showFileNameForAdd" multiple>
+              <input id="inputModelPic" type="file" name="file" action-type="showFileNameForAdd" multiple>
 				
           </span>
 		  <span id="imgFileForAdd"></span>
-		  <span id="inputAddModelPicSpan"></span>
+		  <span id="inputModelPicSpan"></span>
         </div>
       </div>
     </form>
@@ -311,19 +303,12 @@
 
 <script>
 
-
-
-	
 	//当前页
 	var currentpagenum=1;
 	var totalpage=$page.totalpagenum;
 	var computercategorytype = 0;
-	var idsForDel;	
-	
 	var uploadPicPath;
 	
-
-
 	//add 分类
 	$("body").on("click", "button[action-type|=addComputermodelButton]", function() {
 		var _this = $(this);
@@ -331,23 +316,23 @@
 		var actionUrl = "${webbaseurl}/addComputermodelAjax.${strutsaction}";
 			
 		//公共属性
-		var addComputermodelComputercategoryid = $('#addComputermodelComputercategoryid').val();
+		var inputCategoryId = $('#inputCategoryId').val();
 			
 		//私有属性
-		var addComputermodelName = $('#addComputermodelName').val();			
-		var addComputermodelDescription = $('#addComputermodelDescription').val();
+		var inputModelName = $('#inputModelName').val();			
+		var inputDescribe = $('#inputDescribe').val();
 			
-		var addComputermodelNameEn = $('#addComputermodelNameEn').val();
-		var addComputermodelDescriptionEn = $('#addComputermodelDescriptionEn').val();
-	//	var	inputAddModelPic = $('#inputAddModelPic').val();
-	//	alert(inputAddModelPic);
+		var inputModelNameEn = $('#inputModelNameEn').val();
+		var inputDescribeEn = $('#inputDescribeEn').val();
+	//	var	inputModelPic = $('#inputModelPic').val();
+	//	alert(inputModelPic);
 	//	return;
 		var postData = {
-				"computercategoryid":addComputermodelComputercategoryid,				
-				"name": addComputermodelName,				
-				"computermodelNameEn": addComputermodelNameEn,
-				"description": addComputermodelDescription,
-				"computermodelDescriptionEn":addComputermodelDescriptionEn,
+				"computercategoryid":inputCategoryId,				
+				"name": inputModelName,				
+				"computermodelNameEn": inputModelNameEn,
+				"description": inputDescribe,
+				"computermodelDescriptionEn":inputDescribeEn,
 				"picpath":uploadPicPath
 		}
 		
@@ -369,8 +354,7 @@
 			}//end success		  	  
 		});
 	})
-	//end add 分类
-	
+	//end add 分类	
 	
 	
 	//选择修改按钮，填充修改弹出框
@@ -378,15 +362,11 @@
 		var myData = $(this).data();
 	//	console.log(data);
 	//	alert(myData.computercategoryid);
-		$('#inputEditComputermodelComputercategoryid').select2("val",myData.computercategoryid);
-		
-		$("#inputEditComputermodelName").val(myData.name);		
-		$('#editComputermodelDescriptionCh').val(myData.description);
-		
-		$("#editComputermodelNameEn").val(myData.nameen);
-		
-		$('#editComputermodelDescriptionEn').val(myData.descriptionen);
-		
+		$('#modifyModelCategoryId').select2("val",myData.computercategoryid);
+		$("#modifyModelName").val(myData.name);
+		$('#modifyDescribe').val(myData.description);
+		$("#modifyModelNameEn").val(myData.nameen);
+		$('#modifyDescribeEn').val(myData.descriptionen);		
 		$('#editComputermodelIdCh').val(myData.id);
 		$('#editComputermodelIdEn').val(myData.iden);
 	//	alert(myData.descriptionen);
@@ -398,25 +378,23 @@
 		var _this = $(this);
 		
 		var actionUrl = "${webbaseurl}/updateComputermodelAjax.${strutsaction}";
-		var editComputermodelName = $('#inputEditComputermodelName').val();
-		var editComputermodelComputercategoryid = $('#inputEditComputermodelComputercategoryid').val();
-		var editComputermodelDescription = $('#editComputermodelDescriptionCh').val();			
-			
-		var editComputermodelNameEn = $('#editComputermodelNameEn').val();			
-		var editComputermodelDescriptionEnVal = $('#editComputermodelDescriptionEn').val();			
-			
-		var editComputermodelIdChVal = $('#editComputermodelIdCh').val();
-		var editComputermodelIdEnVal = $('#editComputermodelIdEn').val();
+		var editComputermodelName = $('#modifyModelName').val();
+		var editComputermodelComputercategoryid = $('#modifyModelCategoryId').val();
+		var editComputermodelDescription = $('#modifyDescribe').val();			
+		var modifyModelNameEn = $('#modifyModelNameEn').val();
+		var modifyDescribeEn = $('#modifyDescribeEn').val();
+		var editComputermodelIdCh = $('#editComputermodelIdCh').val();
+		var editComputermodelIdEn = $('#editComputermodelIdEn').val();
 			
 		var postData = {
-				"id": editComputermodelIdChVal,
+				"id": editComputermodelIdCh,
 				"name": editComputermodelName,				
 				"computercategoryid":editComputermodelComputercategoryid,
 				"description": editComputermodelDescription,
-				
-				"computermodelIdEn": editComputermodelIdEnVal,
-				"computermodelNameEn":editComputermodelNameEn,
-				"computermodelDescriptionEn":editComputermodelDescriptionEnVal
+				"picpath" : uploadPicPath,
+				"computermodelIdEn": editComputermodelIdEn,
+				"computermodelNameEn":modifyModelNameEn,
+				"computermodelDescriptionEn":modifyDescribeEn
 		}
 		jQuery.ajax({  
 		    url : actionUrl,  
@@ -463,15 +441,7 @@
 				"filter": "alpha(opacity=0)"
 			});
 		}
-		
-		idsForDel = "";
-		
-		$("input[name='chk-list']").each(function() {
-			if($(this).prop("checked") === true) {
-				//num++;
-				idsForDel += $(this).prop("value") + ";";
-			}
-		});
+
 	});
 	//end checkbox
 	
@@ -479,7 +449,9 @@
 
 	//delete分类
 	$("body").on("click", "a[action-type|=deleteComputermodelButton]", function() {
+		var idsForDel = getSelectedCheckboxList();
 		idsForDel = idsForDel.substring(0,idsForDel.length-1);
+		
 		var postData = {
 			computermodelIdsForDel: idsForDel
 		}
@@ -508,67 +480,66 @@
 	
 
 	//换页时调用方法
-$(function() {
-    $('.page-bar').jqPagination({
-    	link_string	: '/?page={page_number}',
-    	max_page	: totalpage,
-    	current_page:currentpagenum,
-    	paged: function(page) {     	  
-    		currentpagenum = page;
-    		refreshComputermodelTable();
-    
-    	}
-    });
-});	
+	$(function() {
+	    $('.page-bar').jqPagination({
+	    	link_string	: '/?page={page_number}',
+	    	max_page	: totalpage,
+	    	current_page:currentpagenum,
+	    	paged: function(page) {     	  
+	    		currentpagenum = page;
+	    		refreshComputermodelTable();
+	    
+	    	}
+	    });
+	});	
 	
 	//刷新数据
 	function refreshComputermodelTable(){
 			jQuery.ajax({  
-		    url: '${webbaseurl}/manageComputermodelFull.action',  
-		    type: "post",
-		    data:{	
-					pageNo:currentpagenum,
-					callType:'ajaxType',
-					computercategorytype : computercategorytype
-					},
-		    dataType: 'html',
-			success: function(data){
-				$("#refreshComputermodelTable").html(data);
-				
-				    $('.page-bar').jqPagination({
-    	link_string	: '/?page={page_number}',
-    	max_page	: totalpage,
-    	current_page:currentpagenum,
-    	paged: function(page) {     	  
-    		currentpagenum = page;
-    		refreshComputermodelTable();
-    
-    	}
-    });
-				
-				$(".s-h").css({
-					"visibility": "hidden",
-					"opacity": "0",
-					"filter": "alpha(opacity=0)"
-				});
-			}		  	  
+			    url: '${webbaseurl}/manageComputermodelFull.action',  
+			    type: "post",
+			    data:{	
+						pageNo:currentpagenum,
+						callType:'ajaxType',
+						computercategorytype : computercategorytype
+						},
+			    dataType: 'html',
+				success: function(data){
+					$("#refreshComputermodelTable").html(data);
+					
+					    $('.page-bar').jqPagination({
+					    	link_string	: '/?page={page_number}',
+					    	max_page	: totalpage,
+					    	current_page:currentpagenum,
+					    	paged: function(page) {     	  
+					    		currentpagenum = page;
+					    		refreshComputermodelTable();
+					    
+					    	}
+					    });
+					
+					$(".s-h").css({
+						"visibility": "hidden",
+						"opacity": "0",
+						"filter": "alpha(opacity=0)"
+					});
+				}		  	  
 			});		
 	}//end refresh
 
 	
-//更改model的分类	
-function getComputermodelById(tcomputercategoryid){
-	//alert(tcomputercategoryid);
-	computercategorytype = tcomputercategoryid;
-	currentpagenum = 1;
-	refreshComputermodelTable();
-}
+	//更改model的分类	
+	function getComputermodelById(tcomputercategoryid){
+		//alert(tcomputercategoryid);
+		computercategorytype = tcomputercategoryid;
+		currentpagenum = 1;
+		refreshComputermodelTable();
+	}
 
  
 
 	//上传图片
-	$("#inputAddModelPic").fileupload({
-
+	$("#inputModelPic").fileupload({
     	url: "${webbaseurl}/uploadImageFile.${strutsaction}",
         dataType: 'json',
 		formData :{	
@@ -582,7 +553,35 @@ function getComputermodelById(tcomputercategoryid){
 			var returnJson = jQuery.parseJSON(data.result.returnStr); 
 			if(returnJson.flag == 1){
 				//var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});	
-				$("#inputAddModelPicSpan").html("图片上传成功");
+				$("#inputModelPicSpan").html("图片上传成功");
+				uploadPicPath = returnJson.reason;
+				
+				//$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+			}else{
+				//alert(returnJson.reason);
+				var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});					
+				$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框
+				
+			}
+        }
+    });
+	
+		//上传图片
+	$("#inputModelPicEdit").fileupload({
+    	url: "${webbaseurl}/uploadImageFile.${strutsaction}",
+        dataType: 'json',
+		formData :{	
+			'imgType':'computermodelimg'
+		},		
+        done: function (e, data) {
+			//localFileName = data.files[0].name;
+			//savedFileName = data.result.savedFileName;
+			
+			
+			var returnJson = jQuery.parseJSON(data.result.returnStr); 
+			if(returnJson.flag == 1){
+				//var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});	
+				$("#inputModelPicSpanEdit").html("图片上传成功");
 				uploadPicPath = returnJson.reason;
 				
 				//$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		

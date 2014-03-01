@@ -1,6 +1,7 @@
 package com.sbgl.app.actions.computer;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
@@ -313,8 +314,18 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 			temp.setCreateuserid(this.getCurrentUserId());
 			
 			List<Computerhomeworkreceiver> chrList = new ArrayList<Computerhomeworkreceiver>();
-			String[] userIds = receiverids.split(",");
+			
+			String[] userIds = receiverids.split(";");
+			Map<Integer,Integer> receiverMap = new HashMap<Integer,Integer>();
+			log.info("作业发送对象"+ receiverids);
 			for (int i = 0; i < userIds.length; i++) {
+				
+				if(receiverMap.containsKey(Integer.valueOf(userIds[i]))){
+					continue;
+				}
+				
+				receiverMap.put(Integer.valueOf(userIds[i]), Integer.valueOf(userIds[i]));
+				
 				Computerhomeworkreceiver chr = new Computerhomeworkreceiver();			
 				chr.setComputerhomeworkid(temp.getId());
 				chr.setUserid(Integer.valueOf(userIds[i]));

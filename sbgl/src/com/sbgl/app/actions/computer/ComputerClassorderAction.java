@@ -226,18 +226,21 @@ public class ComputerClassorderAction  extends BaseAction  {
 //		检查是否已经预约
 		String checkHaveOrderSql = " where computerhomeworkid = "+computerhomeworkid + " and userid = "+this.getCurrentUserId();
 		computerhomeworkreceiverList = computerhomeworkreceiverService.selectComputerhomeworkreceiverByCondition(checkHaveOrderSql);
-		if(computerhomeworkreceiverList!= null && computerhomeworkreceiverList.size() > 1){
+//		取出用户的关于这个作业的预约接收信息
+		if(computerhomeworkreceiverList!= null && computerhomeworkreceiverList.size() == 1){
+		
+		}else{
 			actionMsg = "作业预约状态获取出错";
 			log.error(actionMsg);
 			return ComputerConfig.pagenotfound;
 		}
 		
-		if(computerhomeworkreceiverList == null){
-			orderstatus = 0;
-			computerorderid = 0;
-		}else{
+//		if(computerhomeworkreceiverList == null){
+//			orderstatus = 0;
+//			computerorderid = 0;
+//		}else{
 			orderstatus = computerhomeworkreceiverList.get(0).getHasorder();
-		}
+//		}
 		
 		
 		if(orderstatus == 1 && reorder !=1){
@@ -360,6 +363,8 @@ public class ComputerClassorderAction  extends BaseAction  {
 		showComputeroderadvanceorderday = 0;
 		if(computeroderadvanceorderday%computerodertablercolumn !=0){
 			showComputeroderadvanceorderday = (computeroderadvanceorderday/computerodertablercolumn + 1) * computerodertablercolumn ;			
+		}else{
+			showComputeroderadvanceorderday = computeroderadvanceorderday;
 		}		
 		System.out.println("showComputeroderadvanceorderday "+showComputeroderadvanceorderday);
 		
@@ -1215,6 +1220,16 @@ public class ComputerClassorderAction  extends BaseAction  {
 	public void setShowComputeroderadvanceorderday(
 			int showComputeroderadvanceorderday) {
 		this.showComputeroderadvanceorderday = showComputeroderadvanceorderday;
+	}
+
+
+	public HashMap<Integer, ArrayList<String>> getShowWeekdayMap() {
+		return showWeekdayMap;
+	}
+
+
+	public void setShowWeekdayMap(HashMap<Integer, ArrayList<String>> showWeekdayMap) {
+		this.showWeekdayMap = showWeekdayMap;
 	}
 	
 	

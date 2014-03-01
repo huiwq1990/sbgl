@@ -10,7 +10,6 @@
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 <link href="${jsDomain}/editor/themes/default/default.css" rel="stylesheet" type="text/css" />
-<link href="${cssDomain}/jqpagination.css" rel="stylesheet" type="text/css" />
 
 #parse("include/includePageCompatibility.vm")
 
@@ -46,7 +45,7 @@
               </div>
               -->
               <div class="operate-item pull-left">
-                <a href="${webbaseurl}/toAddComputerorderclassrulePage.${strutsaction}" class="btn btn-primary">添加</a>
+                <a href="${webbaseurl}/toAddComputerhomework.${strutsaction}" class="btn btn-primary">添加</a>
                 <a href="#" class="btn btn-white s-h" action-type="deleteComputerhomeworkButton"><i class="icon-trash"></i> 删除</a>
               </div>
 
@@ -421,19 +420,12 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 			});
 		}
 		
-		idsForDel = "";
-		
-		$("input[name='chk-list']").each(function() {
-			if($(this).prop("checked") === true) {
-				//num++;
-				idsForDel += $(this).prop("value") + ";";
-			}
-		});
 	});
 	//end checkbox
 	
 	//delete分类
 	$("body").on("click", "a[action-type|=deleteComputerhomeworkButton]", function() {
+		var idsForDel = getSelectedCheckboxList();		
 		idsForDel = idsForDel.substring(0,idsForDel.length-1);
 		var postData = {
 			computerhomeworkIdsForDel:idsForDel
