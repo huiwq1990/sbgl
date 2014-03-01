@@ -624,7 +624,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			hqlOptionList.add( new HQLOption<Integer>("classificationid", Integer.valueOf(classificationId), SBGLConsistent.HQL_OPTION_EQ, SBGLConsistent.HQL_VALUE_INT, SBGLConsistent.HQL_OPTION_AD) );
 		}
 		//筛选出英文名称的型号
-		hqlOptionList.add( new HQLOption<String>("lanType", "EN", SBGLConsistent.HQL_OPTION_EQ, SBGLConsistent.HQL_VALUE_STR, SBGLConsistent.HQL_OPTION_AD) );
+		hqlOptionList.add( new HQLOption<String>("lanType", "1", SBGLConsistent.HQL_OPTION_EQ, SBGLConsistent.HQL_VALUE_STR, SBGLConsistent.HQL_OPTION_AD) );
 		
 		Page pageEN = new Page( 0, 10000 );
 		QueryResult resultEN = equipService.getEquipmentByPageWithOptions(hqlOptionList, pageEN);
