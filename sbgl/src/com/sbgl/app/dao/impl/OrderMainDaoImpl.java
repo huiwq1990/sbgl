@@ -11,6 +11,7 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.actions.orderadmin.OrderCountFull;
@@ -70,10 +71,10 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		
 	}
 
-	public List<Equipmentclassification> findSecondEquipmentclass() {
+	public List<Equipmentclassification> findSecondEquipmentclass(String lantype) {
 		// TODO Auto-generated method stub
 		final String sql = " select * from Equipmentclassification a where a.parentid in ( "
-			+ " select min(classificationid) from Equipmentclassification where parentid=0) ";
+			+ " select min(classificationid) from Equipmentclassification where parentid=0) and a.lantype='"+lantype+"' ";
 		List<Equipmentclassification> equipmentnumList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(sql).addEntity(Equipmentclassification.class);
@@ -367,4 +368,41 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 			
 		return null;
 	}
+
+
+	@Override
+	public List<EquipmentFull> findEquipmentByClss(Integer classificationid) {
+		// TODO Auto-generated method stub
+		final String sql = " select a.* from Equipment a where a.lanType = '"+CommonConfig.languagech+"' and (a.classificationid = '"+classificationid+"'" +
+				" or a.classificationid in (select classificationid from EquipmentClassification where parentid='"+classificationid+"') )";
+		try {
+			Query query =  this.getCurrentSession().createSQLQuery(sql);
+			query.setResultTransformer(new EscColumnToBean(OrderCountFull.class));
+			List<EquipmentFull> list =query.list();
+			if(list!=null&&!list.isEmpty()){
+				return list;  
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
+	@Override
+	public List<Equipmentclassification> findTopEquipmentclass(String lantype) {
+		// TODO Auto-generated method stub
+		final String sql = " select * from Equipmentclassification a where a.parentid = 0 and a.lantype='"+lantype+"' ";
+		List<Equipmentclassification> equipmentnumList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql).addEntity(Equipmentclassification.class);
+				return query.list();
+			}
+		});	
+		if(equipmentnumList!=null&&!equipmentnumList.isEmpty()){
+			return equipmentnumList;
+		}	
+		return null;
+	}
+
 }

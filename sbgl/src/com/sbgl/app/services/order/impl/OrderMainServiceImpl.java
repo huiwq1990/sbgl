@@ -70,9 +70,9 @@ public class OrderMainServiceImpl implements OrderMainService {
 	}
 
 
-	public List<Equipmentclassification> findTopEquipmentclass() {
+	public List<Equipmentclassification> findTopEquipmentclass(String lantype) {
 		// TODO Auto-generated method stub
-		List<Equipmentclassification> equipmentclassList = baseDao.getEntityByProperty("Equipmentclassification", "parentid", "0");
+		List<Equipmentclassification> equipmentclassList = orderMainDao.findTopEquipmentclass(lantype); 
 		return equipmentclassList;
 	}
 
@@ -158,9 +158,9 @@ public class OrderMainServiceImpl implements OrderMainService {
 		return equipmenborrow.getBorrowid();
 	}	
 
-	public List<Equipmentclassification> findSecondEquipmentclass() {
+	public List<Equipmentclassification> findSecondEquipmentclass(String lantype) {
 		// TODO Auto-generated method stub
-		List<Equipmentclassification> equipmentclassList = orderMainDao.findSecondEquipmentclass();
+		List<Equipmentclassification> equipmentclassList = orderMainDao.findSecondEquipmentclass(lantype);
 		return equipmentclassList;
 	} 
 	

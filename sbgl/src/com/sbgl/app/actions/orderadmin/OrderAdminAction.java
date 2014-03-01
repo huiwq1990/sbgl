@@ -14,8 +14,10 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.order.EquipmenborrowFull;
+import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.actions.order.OrderMainAction;
 import com.sbgl.app.entity.CourseFull;
+import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Ordercourserule;
 import com.sbgl.app.services.order.OrderMainService;
 import com.sbgl.app.services.orderadmin.OrderAdminService;
@@ -41,6 +43,9 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 	private Page page;
 	private Integer borrowId;
 	private Integer courseId;
+	private List<Equipmentclassification> classification1List;
+	
+	private Map<Integer,List<EquipmentFull>> classequipmap;
 	
 	private List<EquipmenborrowFull> equipmenborrowFullList;
 	
@@ -145,6 +150,12 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 			lantype = "0";
 		}
 		courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+lantype);
+		return SUCCESS;
+	}
+	
+	public String orderclassrule3(){
+		classification1List = orderAdminService.findTopEquipmentclass();
+		classequipmap = orderAdminService.fingclassequipMap(classification1List);
 		return SUCCESS;
 	}
 
@@ -252,6 +263,27 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 
 	public void setCourseFullList(List<CourseFull> courseFullList) {
 		this.courseFullList = courseFullList;
+	}
+
+
+	public List<Equipmentclassification> getClassification1List() {
+		return classification1List;
+	}
+
+
+	public void setClassification1List(
+			List<Equipmentclassification> classification1List) {
+		this.classification1List = classification1List;
+	}
+
+
+	public Map<Integer, List<EquipmentFull>> getClassequipmap() {
+		return classequipmap;
+	}
+
+
+	public void setClassequipmap(Map<Integer, List<EquipmentFull>> classequipmap) {
+		this.classequipmap = classequipmap;
 	}
 	
 }
