@@ -121,6 +121,7 @@ public class OrderComputerAction  extends BaseAction {
 	int currentPeriod ;
 //	int computerorderTotalOrderDay ;
 	int computeroderadvanceorderday;
+	private int showComputeroderadvanceorderday = 0;
 	int computerodertablercolumn;
 	List<Borrowperiod> borrowperiodList   = new ArrayList<Borrowperiod>();
 	HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> availableBorrowModelMap = new HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> ();
@@ -128,6 +129,7 @@ public class OrderComputerAction  extends BaseAction {
 	List<Borrowperiod> showtimeList   = new ArrayList<Borrowperiod>();
 	
 	HashMap<Integer,ArrayList<String>> showDateMap = new HashMap<Integer,ArrayList<String>>();
+	HashMap<Integer,ArrayList<String>> showWeekdayMap = new HashMap<Integer,ArrayList<String>>();
 	HashMap<Integer,ArrayList<String>> dateMap = new HashMap<Integer,ArrayList<String>>();
 
 	
@@ -188,21 +190,24 @@ public class OrderComputerAction  extends BaseAction {
 	}
 
 	
-	public void buildShowDate(Date curDate){
+	public void buildShowDate(Date orderStartDate,int computeroderadvanceorderday,int computerodertablercolumn){
 		int weeknum = computeroderadvanceorderday/computerodertablercolumn;
 		for(int i=0; i< weeknum;i++){
-			
+			ArrayList<String> weekday = new ArrayList<String>();
 			ArrayList<String> time = new ArrayList<String>();
 			ArrayList<String> weekStr = new ArrayList<String>();
 			for(int col =0; col <computerodertablercolumn; col++ ){
-				Date date = DateUtil.addDay(curDate, i*computerodertablercolumn + col);
+				Date date = DateUtil.addDay(orderStartDate, i*computerodertablercolumn + col);
 				String dayStr = DateUtil.dateFormat( date , "MM/dd");
 				String timeStr = DateUtil.dateFormat( date , "yyyy-MM-dd");
 				weekStr.add(dayStr);
 				time.add(timeStr);
+				weekday.add(DateUtil.getWeekOfDate(date));
+				
 			}
 			showDateMap.put(i, weekStr);
 			dateMap.put(i, time);
+			showWeekdayMap.put(i, weekday);
 		}
 	}
 	
@@ -215,29 +220,37 @@ public class OrderComputerAction  extends BaseAction {
 
 //		调整预约时间，使时间是7的倍数
 		if(computeroderadvanceorderday%computerodertablercolumn !=0){
-			computeroderadvanceorderday = (computeroderadvanceorderday/computerodertablercolumn + 1) * computerodertablercolumn ;			
+			showComputeroderadvanceorderday = (computeroderadvanceorderday/computerodertablercolumn + 1) * computerodertablercolumn ;			
 		}
 		
-		System.out.println("computeroderadvanceorderday "+computeroderadvanceorderday);
+		System.out.println("showComputeroderadvanceorderday "+computeroderadvanceorderday +"showComputeroderadvanceorderday "+showComputeroderadvanceorderday);
 //		int computerorderTotalOrderPeriod = ComputerConfig.computerorderTotalOrderPeriod;
 		
 //			设置当前时间
-			String currentDay = DateUtil.dateFormat(currentDate, DateUtil.dateformatstr1);//"2013-10-01 18:00:00";
-			 currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(currentDate);
-			 System.out.println("currentDay:"+currentDay+"   currentPeriod: "+currentPeriod);
+		String currentDay = DateUtil.dateFormat(currentDate, DateUtil.dateformatstr1);//"2013-10-01 18:00:00";
+		currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(currentDate);
+		System.out.println("currentDay:"+currentDay+"   currentPeriod: "+currentPeriod);
 		 
 			 
-			 buildShowDate(DateUtil.parseDate(currentDay));	 
+		buildShowDate(currentDate,showComputeroderadvanceorderday,computerodertablercolumn);	 
 			 
 
 		borrowperiodList =  BorrowperiodUtil.getBorrowperiodList();
 		
 		
-		
-		
 //		根据模型构建 模型、时间段、日期的map
 		availableBorrowModelMap = ComputerorderActionUtil.computermodelPeriodDayInfo(computermodelList, currentPeriod, borrowperiodList, computeroderadvanceorderday);
 		
+//		配合显示，将多出来的那些天数的数量设置为0
+		if(showComputeroderadvanceorderday > computeroderadvanceorderday){
+			for(Computermodel tempmodel : computermodelList){
+				for(Borrowperiod tempBorrowperiod : borrowperiodList){
+					for(int tempday=computeroderadvanceorderday; tempday < showComputeroderadvanceorderday; tempday++){
+						availableBorrowModelMap.get(tempmodel.getComputermodeltype()).get(tempBorrowperiod.getPeriodnum()).add(0);
+					}	
+				}
+			}
+		}
 		
 		
 		System.out.println(availableBorrowModelMap.size());
@@ -259,15 +272,6 @@ public class OrderComputerAction  extends BaseAction {
 //			availableBorrowModelMap.put(modelList.get(tempmodel).getComputermodeltype(), periodDayAvailInfo);
 		}*/
 		
-		//pc模型1的可借数量
-//		Integer[][] pcnumberArray = availableBorrowModelMap.get(1);
-//		for(int tempperiod=0; tempperiod < computerorderTotalOrderPeriod; tempperiod++){
-//			for(int tempday=0; tempday < computerorderTotalOrderDay; tempday++){				
-//				System.out.print(pcnumberArray[tempperiod][tempday] + " ");
-//			}	
-//			System.out.println();
-//		}
-	
 			
 
 //		查询当前时间之后，预约的清单
@@ -292,20 +296,20 @@ public class OrderComputerAction  extends BaseAction {
 		}
 
 	
-		for(int tempmodelindex=0;tempmodelindex < computermodelList.size();tempmodelindex++){
-			Computermodel tempmodel =  computermodelList.get(tempmodelindex);
-			for(int tempperiod=0; tempperiod < borrowperiodList.size(); tempperiod++){
-				Borrowperiod tempBorrowperiod = borrowperiodList.get(tempperiod);
-				for(int tempday=0; tempday < computeroderadvanceorderday; tempday++){				
-					
-					System.out.print(availableBorrowModelMap.get(tempmodel.getComputermodeltype()).get(tempBorrowperiod.getPeriodnum()).get(tempday)+"  ");
-				}	
-				System.out.println();
-//				periodDayAvailInfo.put(periodList.get(tempperiod).getId(), dayInfo);
-			}
-			System.out.println();
-//			availableBorrowModelMap.put(modelList.get(tempmodel).getComputermodeltype(), periodDayAvailInfo);
-		}
+//		for(int tempmodelindex=0;tempmodelindex < computermodelList.size();tempmodelindex++){
+//			Computermodel tempmodel =  computermodelList.get(tempmodelindex);
+//			for(int tempperiod=0; tempperiod < borrowperiodList.size(); tempperiod++){
+//				Borrowperiod tempBorrowperiod = borrowperiodList.get(tempperiod);
+//				for(int tempday=0; tempday < computeroderadvanceorderday; tempday++){				
+//					
+//					System.out.print(availableBorrowModelMap.get(tempmodel.getComputermodeltype()).get(tempBorrowperiod.getPeriodnum()).get(tempday)+"  ");
+//				}	
+//				System.out.println();
+////				periodDayAvailInfo.put(periodList.get(tempperiod).getId(), dayInfo);
+//			}
+//			System.out.println();
+////			availableBorrowModelMap.put(modelList.get(tempmodel).getComputermodeltype(), periodDayAvailInfo);
+//		}
 	
 		
 	}
@@ -746,6 +750,27 @@ public class OrderComputerAction  extends BaseAction {
 
 	public void setComputerhomeworkid(int computerhomeworkid) {
 		this.computerhomeworkid = computerhomeworkid;
+	}
+
+
+	public int getShowComputeroderadvanceorderday() {
+		return showComputeroderadvanceorderday;
+	}
+
+
+	public void setShowComputeroderadvanceorderday(
+			int showComputeroderadvanceorderday) {
+		this.showComputeroderadvanceorderday = showComputeroderadvanceorderday;
+	}
+
+
+	public HashMap<Integer, ArrayList<String>> getShowWeekdayMap() {
+		return showWeekdayMap;
+	}
+
+
+	public void setShowWeekdayMap(HashMap<Integer, ArrayList<String>> showWeekdayMap) {
+		this.showWeekdayMap = showWeekdayMap;
 	}
 	
 	

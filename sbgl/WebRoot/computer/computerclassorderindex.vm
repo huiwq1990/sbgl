@@ -70,7 +70,7 @@
                             <div class="carousel-inner">
       
 						<!--构建所有的Table -->
-		#set($weektablenum = $computeroderadvanceorderday /$computerodertablercolumn - 1 )		##一共有几个周的Table 用可以预约的天数除以7				
+		#set($weektablenum = $showComputeroderadvanceorderday /$computerodertablercolumn - 1 )		##一共有几个周的Table 用可以预约的天数除以7				
 		#set($weektableregion = [0..$weektablenum])
 		#foreach($tempweektableindex in $weektableregion)
 			

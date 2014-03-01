@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.sbgl.app.entity.Computerhomework;
 import com.sbgl.app.entity.ComputerhomeworkFull;
+import com.sbgl.app.entity.Computerhomeworkreceiver;
+import com.sbgl.app.entity.Computerorderclassrule;
+import com.sbgl.app.entity.Computerorderclassruledetail;
 import com.sbgl.util.*;
 
 public interface ComputerhomeworkService{
@@ -58,6 +61,14 @@ public interface ComputerhomeworkService{
 	public List<ComputerhomeworkFull> selectComputerhomeworkFullByComputerorderclassruleId(Integer computerorderclassruleid );
 
 	boolean deleteComputerhomework(Integer[] delIdArray);
+
+	void sendComputerhomework(Computerhomework computerhomework,
+			List<Computerhomeworkreceiver> chrList) throws RuntimeException;
+
+	void sendComputerhomeworkNew(Computerorderclassrule rule,
+			List<Computerorderclassruledetail> codList,
+			Computerhomework computerhomework,
+			List<Computerhomeworkreceiver> chrList) throws RuntimeException;
 
 		
 	

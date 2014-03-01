@@ -72,7 +72,7 @@
                             <div class="carousel-inner">
       
 						<!--构建所有的Table -->
-		#set($weektablenum = $computeroderadvanceorderday /$computerodertablercolumn - 1 )		##一共有几个周的Table 用可以预约的天数除以7				
+		#set($weektablenum = $showComputeroderadvanceorderday /$computerodertablercolumn - 1 )		##一共有几个周的Table 用可以预约的天数除以7				
 		#set($weektableregion = [0..$weektablenum])
 		#foreach($tempweektableindex in $weektableregion)
 			
@@ -97,9 +97,9 @@
 										#set($weekdayRegion = [0..$computerodertablercolumn-1])
 										#set($weekDateList = $showDateMap.get($tempweektableindex))
 										#set($trueDateList = $dateMap.get($tempweektableindex))
-										
+										#set($weekday = $showWeekdayMap.get($tempweektableindex))
 										#foreach($tempday in $weekdayRegion)
-                                        <th><br>$weekDateList.get($tempday)</th>
+                                        <th>$!weekday.get($tempday)<br>$weekDateList.get($tempday)</th>
                                         #end                
                                       </tr>
                                     </thead>

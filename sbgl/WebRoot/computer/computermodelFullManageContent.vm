@@ -1,63 +1,57 @@
-            	<div id ="refreshComputermodelTable">
-					
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-                    <th class="name">设备名称(型号)</th>
-                    <th class="categories">分类</th>
-					    <th class="categories">总共数量</th>
-                    <th class="categories">可借数量</th>
-                    <th class="describe">描述</th>
-                  </tr>
-                </thead>
-                <tbody>
-				<!--数据开始 -->
-#set($listSize = $computermodelFullListCh.size() - 1)
-##判断数据是否为空
-#if($listSize>=0)
-#set($listRegion = [0..$listSize])
-##取出所有的属性名称
-#foreach($tempKey in $listRegion)
-			#set($ch = $computermodelFullListCh.get($tempKey))
-			#set($en = $computermodelFullListEn.get($tempKey))
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="$!ch.computermodelcomputermodeltype"></td>
-                    <td>$!ch.computermodelname<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" 
-						action-type="editComputermodelFillIn" 
-						data-id="$!ch.computermodelid" 
-						data-name="$!ch.computermodelname" 
-						data-computercategoryid = "$!ch.computermodelcomputercategoryid" 
-						data-description="$!ch.computermodeldescription" 
-						
-						data-iden="$!en.computermodelid" 
-						data-nameen="$!en.computermodelname" 
-						data-computercategoryiden="$!en.computermodelcomputercategoryid" 
-						data-descriptionen="$!en.computermodeldescription">修改</a></td>
-                     <td>$!ch.computercategoryname</td>
-					 <td>$!ch.computermodelcomputercount</td>
-                     <td>$!ch.computermodelavailableborrowcountnumber</td>
-                    <td>$!ch.computermodeldescription</td>
-                  </tr>
-#end
-#end
-                
-                </tbody>
-              </table>
+		
+				<div class="panel panel-default">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                        <th class="name">设备名称(型号)</th>
+                        <th class="categories">分类</th>
+    					    <th class="categories">总共数量</th>
+                        <th class="categories">可借数量</th>
+                        <th class="describe">描述</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+    				<!--数据开始 -->
+    #set($listSize = $computermodelFullListCh.size() - 1)
+    ##判断数据是否为空
+    #if($listSize>=0)
+    #set($listRegion = [0..$listSize])
+    ##取出所有的属性名称
+    #foreach($tempKey in $listRegion)
+    			#set($ch = $computermodelFullListCh.get($tempKey))
+    			#set($en = $computermodelFullListEn.get($tempKey))
+                      <tr>
+                        <td><input class="chk" type="checkbox" name="chk-list" value="$!ch.computermodelcomputermodeltype"></td>
+                        <td>$!ch.computermodelname<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" 
+    						action-type="editComputermodelFillIn" 
+    						data-id="$!ch.computermodelid" 
+    						data-name="$!ch.computermodelname" 
+    						data-computercategoryid = "$!ch.computermodelcomputercategoryid" 
+    						data-description="$!ch.computermodeldescription" 
+    						
+    						data-iden="$!en.computermodelid" 
+    						data-nameen="$!en.computermodelname" 
+    						data-computercategoryiden="$!en.computermodelcomputercategoryid" 
+    						data-descriptionen="$!en.computermodeldescription">修改</a></td>
+                         <td>$!ch.computercategoryname</td>
+    					 <td>$!ch.computermodelcomputercount</td>
+                         <td>$!ch.computermodelavailableborrowcountnumber</td>
+                        <td>$!ch.computermodeldescription</td>
+                      </tr>
+    #end
+    #end
+                    
+                    </tbody>
+                  </table>
+            	</div><!--panel-->
 			  
-			  			<!--page -->
-			  <div class="pagination">
-				<a href="#" class="first" data-action="first">&laquo;</a>
-				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
-				<input type="text" readonly="readonly" data-max-page="$!page.totalpage" />
-				<a href="#" class="next" data-action="next">&rsaquo;</a>
-				<a href="#" class="last" data-action="last">&raquo;</a>
-			  </div>
-			  <!-- end page -->
-				</div>
-
-	  
-	  <script>
+			  <!--page bar-->
+			  #parse("include/includePagebar.vm")
+		
+					
+ <script>
 totalpage = $page.totalpage;
+totalcount=$page.totalCount;
 currentpagenum = $page.pageNo;
-</script>
+</script>			

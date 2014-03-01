@@ -1,0 +1,18 @@
+              <div class="page-bar pull-right clearfix">				
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="record"><strong>$!page.totalCount</strong>条记录</li>
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第n/n页  <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li class="first"><a href="#" data-action="first">首页</a></li>
+                      <li class="last"><a href="#" data-action="last">尾页</a></li>
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+                  <ul>
+                    <li class="previous"><a href="#" rel="tooltip" data-action="previous" data-placement="bottom" data-original-title="上一页"><i class="icon-chevron-left"></i></a></li>
+                    <li class="next"><a href="#" rel="tooltip" data-action="next" data-placement="bottom" data-original-title="下一页"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>

@@ -14,6 +14,7 @@ public class PageActionUtil {
 		
 		//设置总数量
 		page.setTotalCount(totalcount);
+		page.calTotalpagenum();
 		
 		//如果页码大于总页数，重新设置
 		if(pageNo>page.getTotalpage()){
@@ -21,38 +22,19 @@ public class PageActionUtil {
 		}
 		
 		page.setPageNo(pageNo);
-		if(page.getTotalCount()==0){
-			page.setPageNo(0);
-			page.setTotalpage(0);
-			pageNo = 0;
+		if(totalcount==0){
+			page.setTotalpagenum(1);
+			page.setPageNo(1);			
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//      分页查询		
-		if(pageNo ==0){
-			pageNo =1;
-		}		
-
-			
-		//设置总数量
-		page.setTotalCount( totalcount );
-		//如果页码大于总页数，重新设置
-		if(pageNo>page.getTotalpage()){
-			pageNo = page.getTotalpage();
-		}
-		page.setPageNo(pageNo);
-		
-		
 		
 		
 		return page;
 	}
 
+	public static void main(String[] args) {
+		Page p = getPage(0,0);
+		System.out.println(p.getPageNo());
+		System.out.println(p.getTotalCount());
+		System.out.println(p.getTotalpagenum());
+	}
 }
