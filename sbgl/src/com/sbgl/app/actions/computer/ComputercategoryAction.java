@@ -22,6 +22,8 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.actions.common.BaseAction;
+import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputercategoryService;
@@ -32,11 +34,10 @@ import com.sbgl.util.*;
 
 @Scope("prototype") 
 @Controller("ComputercategoryAction")
-public class ComputercategoryAction extends ActionSupport implements SessionAware,ModelDriven<Computercategory>{
+public class ComputercategoryAction extends BaseAction implements ModelDriven<Computercategory>{
 	
 	private static final Log log = LogFactory.getLog(ComputercategoryAction.class);
 
-	private Map<String, Object> session;
 	
 	//Service	
 	@Resource
@@ -57,10 +58,7 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	
 	
 	private String logprefix = "exec action method:";		
-	Page page = new Page();
-	Integer pageNo=1;	
 
-	ReturnJson returnJson = new ReturnJson();
 	
 	
 	//添加信息
@@ -76,26 +74,18 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 	//删除
 	String computercategoryIdsForDel;
 	
-	public static int checkUserLogin(){
-		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
-		if(uidStr==null || uidStr.trim().equals("0") || uidStr.trim().equals("")){
-			return -1;
-		}
-		return Integer.valueOf(uidStr);
-	}
+
 	
 //  ajax add	
 	public String addComputercategoryAjax(){	
 		log.info("Add Entity Ajax Manner");
-		
 
-		Integer uid = checkUserLogin();
+		
+		Integer uid = this.getCurrentUserId();
 		if(uid < 0){
-			returnJson.setFlag(0);
-			returnJson.setReason("用户未登录");
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();			
+			this.returnInfo = "用户为登录";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 			return SUCCESS;
 		}
 		
@@ -121,11 +111,10 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 			tempEn.setStatus(0);
 			
 			computercategoryService.addComputercategory(tempCh,tempEn);
-			
-			returnJson.setFlag(1);
-			returnJson.setReason("添加分类成功");
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();			
+
+			this.returnInfo = "添加分类成功";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
 			return SUCCESS;
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
@@ -135,30 +124,28 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 			e.printStackTrace();
 			log.error("类ComputercategoryAction的方法：addBbstagfavourite错误"+e);
 		}
-		
-		returnJson.setFlag(0);		
-		returnJson.setReason("内部错误，添加分类失败");
-		JSONObject jo = JSONObject.fromObject(returnJson);
-		this.returnStr = jo.toString();
+
+		this.returnInfo = "内部错误，添加分类失败";
+		log.info(returnInfo);
+		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 		return SUCCESS;
 	}
 	
 	private boolean checkComputercategoryName(){
 		if(inputAddCategoryNameEn==null || inputAddCategoryNameEn.trim().equals("") || inputAddCategoryNameCh==null || inputAddCategoryNameCh.trim().equals("")){
-			returnJson.setFlag(0);	
-			returnJson.setReason("分类名称不能为空");
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();				
+			this.returnInfo = "分类名称不能为空";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);			
 			return false;
 		}
 		
 		
 		
 		if(computercategoryService.isComputercategoryNameExist(inputAddCategoryNameCh.trim())){
-			returnJson.setFlag(0);	
-			returnJson.setReason("分类名称重复");
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();				
+			
+			this.returnInfo = "分类名称重复";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);	
 			return false;
 		}
 		
@@ -297,11 +284,9 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
   				tempComputercategory.setName(computercategoryNameEn);
   				computercategoryService.updateComputercategory(tempComputercategory);	
   				
-				returnJson.setFlag(1);		
-				returnJson.setReason("修改成功!");
-				JSONObject jo = JSONObject.fromObject(returnJson);				
-				this.returnStr = jo.toString();
-				//actionMsg = getText("viewComputercategorySuccess");
+				this.returnInfo = "修改成功!";
+				log.info(returnInfo);
+				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
 				return SUCCESS;
 				
 			
@@ -311,11 +296,11 @@ public class ComputercategoryAction extends ActionSupport implements SessionAwar
 			log.error("类ComputercategoryAction的方法：viewComputercategory错误"+e);
 		}
 
-			returnJson.setFlag(0);		
-			returnJson.setReason("修改失败");
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
-			return SUCCESS;
+			
+		this.returnInfo = "修改失败";
+		log.info(returnInfo);
+		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+		return SUCCESS;
 	}
 	
 	

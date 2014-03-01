@@ -24,6 +24,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.actions.common.BaseAction;
 import com.sbgl.app.actions.util.JsonActionUtil;
+import com.sbgl.app.actions.util.PageActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.common.computer.ComputerorderdetailInfo;
@@ -92,12 +93,7 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 
 	//管理 PC预约
 	public String manageComputerorderFull(){
-		log.info("exec action method:manageComputerorderFull");
-		
-//      分页查询		
-		if(pageNo ==0){
-			pageNo =1;
-		}		
+		log.info("exec action method:manageComputerorderFull");	
 		
 		
 //		装载数据
@@ -111,15 +107,9 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 		sql += " order by a.createtime desc";
 			
 		//设置总数量
-		page.setTotalCount(computerorderService.selectComputerorderFullByCondition(sql).size());
-		//如果页码大于总页数，重新设置
-		if(pageNo>page.getTotalpage()){
-			pageNo = page.getTotalpage();
-		}
-		page.setPageNo(pageNo);
-		
-		log.info("pageNo "+pageNo);
-		log.info(page.getTotalCount());
+		this.totalcount = computerorderService.selectComputerorderFullByCondition(sql).size();
+		page = PageActionUtil.getPage(totalcount, pageNo);
+		pageNo = page.getPageNo();
 		
 		computerorderFullList  = computerorderService.selectComputerorderFullByConditionAndPage(sql, page);
 

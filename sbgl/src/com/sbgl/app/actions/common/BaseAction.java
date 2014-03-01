@@ -56,21 +56,25 @@ public class BaseAction extends ActionSupport implements SessionAware,CookiesAwa
 		}
 	}
 	
-	public int checkUserLogin(){
-		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
-		if(uidStr==null || uidStr.trim().equals("0") || uidStr.trim().equals("")){
-			return -1;
+	public boolean checkUserLogin(){
+//		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
+//		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
+//		if(uidStr==null || uidStr.trim().equals("0") || uidStr.trim().equals("")){
+//			return -1;
+//		}
+//		return Integer.valueOf(uidStr);
+		if(getCurrentUserId() < 0 ){
+			return false;
 		}
-		return Integer.valueOf(uidStr);
+		return true;		
 	}
 	
 	public int getCurrentUserId(){
 		if(session.containsKey(CommonConfig.sessionuser)){
 			Loginuser lu =  (Loginuser) session.get(CommonConfig.sessionuser);
-//			return lu.get
+			return lu.getId();
 		}
-		return 1;
+		return -100;
 	}
 	
 	public Loginuser getCurrentUser(){		

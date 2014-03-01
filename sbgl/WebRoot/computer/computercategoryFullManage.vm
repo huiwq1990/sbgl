@@ -37,16 +37,14 @@
                 <a href="#add-equip-category" class="btn btn-primary" data-toggle="modal" role="button">添加分类</a>
                 <a href="#" class="btn btn-white s-h" action-type="deleteComputercategory"><i class="icon-trash"></i>删除</a>
               </div>
-			  
-			  <!--page bar-->
-			  #parse("include/includePagebar.vm")
-			  
-			  
-			  
+	
             </div><!--control-bar end-->				 
-            <div class="panel panel-default">
-
+           
 				<div id="formComputerorderdetailManage">
+					
+			<div class="panel panel-default">
+
+			
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -93,7 +91,10 @@
 
             </div>
 			
-				</div>
+			 <!--page bar-->
+			  #parse("include/includePagebar.vm")
+			
+				</div><!--end refresh-->
 			
           </div>
 
@@ -226,7 +227,7 @@
 
 //当前页
 var currentpagenum=$pageNo;
-var totalpage=$page.totalpage;
+var totalpage=$page.totalpagenum;
 
 //换页时调用方法
 $(function() {

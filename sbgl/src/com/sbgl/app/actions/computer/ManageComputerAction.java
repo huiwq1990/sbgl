@@ -225,28 +225,17 @@ public class ManageComputerAction extends BaseAction{
 		log.info("exec action method:manageComputercategoryFull");
 		
 //      分页查询		
-		if(pageNo ==0){
-			pageNo =1;
-		}
-		
-		
 		//设置总数量，由于是双语 除2
-		page.setTotalCount(computercategoryService.countComputercategoryRow()/2);
-		
-		//如果页码大于总页数，重新设置
-		if(pageNo>page.getTotalpage()){
-			pageNo = page.getTotalpage();
-		}
-		page.setPageNo(pageNo);
-		if(page.getTotalCount()==0){
-			page.setPageNo(0);
-			page.setTotalpage(0);
-			pageNo = 0;
-		}
+		this.totalcount = computercategoryService.countComputercategoryRow()/2;
+		page = PageActionUtil.getPage(totalcount, pageNo);
+		pageNo = page.getPageNo();
 		
 //		查询中文的分类
 		String sqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";	
 		computercategoryFullListCh  = computercategoryService.selectComputercategoryFullByConditionAndPage(sqlch , page);
+		if(computercategoryFullListCh == null){
+			computercategoryFullListCh = new ArrayList<ComputercategoryFull>();
+		}
 		
 //		查询英文的分类
 		String sqlen = " where a.languagetype=1 order by a.computercategorytype,a.languagetype";
@@ -280,9 +269,7 @@ public class ManageComputerAction extends BaseAction{
 		if(computercategoryFullList == null){
 			computercategoryFullList = new ArrayList<ComputercategoryFull>();
 		}
-		if(computercategoryFullListCh == null){
-			computercategoryFullListCh = new ArrayList<ComputercategoryFull>();
-		}
+		
 		if(computercategoryFullListEn == null){
 			computercategoryFullListEn = new ArrayList<ComputercategoryFull>();
 		}	

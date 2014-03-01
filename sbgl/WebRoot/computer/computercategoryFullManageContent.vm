@@ -38,4 +38,8 @@
 #end
                 </tbody>
               </table>
-			
+			  
+			  				<script>
+totalpage = $page.totalpagenum;
+currentpagenum = $page.pageNo;
+</script>			

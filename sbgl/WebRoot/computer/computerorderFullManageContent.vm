@@ -1,4 +1,6 @@
-			<div id="computerordermanagetable" >
+            <div class="panel panel-default table-responsive">
+				
+
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -21,9 +23,10 @@
 #foreach($tempKey in $computerorderFullListRegion)
 			#set($temp = $computerorderFullList.get($tempKey))
 			  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!temp.computerorderid"></td>
                     <td>$!temp.computerorderserialnumber<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
-                    <td>$!temp.loginusername</td>
+                    <td>$!temp.createusername</td>
+					
                     <td><a href="${webbaseurl}/toAuditComputerorderPage.${strutsaction}?computerorderId=$!temp.computerorderid">$!temp.computerordertitle</a></td>
                      #if($!temp.computerorderstatus == $ComputerorderStatusAduitPass)
 						<td>审核通过</td>
@@ -35,29 +38,40 @@
 						<td>待审核</td>
 						#else 
 							<td>错误</td>
-							#end
-                    <td>个人</td>                    
-                    <td>$!page.totalpage $!temp.computerorderremark</td>
+					 #end
+					 
+					 #if($!temp.computerorderordertype == $ClassOrder)
+                    <td>课程</td>   
+					#else 
+							<td>个人</td>
+					 #end
+                    <td>$!temp.computerorderremark</td>
                   </tr>
 #end
 #end					
-                
+	<!--
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
+                    <td>2145322<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
+                    <td>姓名</td>
+                    <td><a href="机房预约审核.html">XXX的机房预约（XX月XX日、XX日……）机房预约标题</a></td>
+                    <td>待审核</td>
+                    <td>个人</td>                    
+                    <td>预约申请人的备注信息</td>
+                  </tr>
+              -->
                 </tbody>
               </table>
 				
-			   <!--page -->
-			  <div class="pagination">
-				<a href="#" class="first" data-action="first">&laquo;</a>
-				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
-				<input type="text" readonly="readonly" data-max-page="$!page.totalpage" />
-				<a href="#" class="next" data-action="next">&rsaquo;</a>
-				<a href="#" class="last" data-action="last">&raquo;</a>
-			  </div>
-			  <!-- end page -->
-			  </div> <!--end table-->
+	
+			 </div> <!--end computerordermanagetable-->
+			  
+			 		 <!--page bar-->
+			  #parse("include/includePagebar.vm")
+			
 			  
 			  				<script>
-totalpage = $page.totalpage;
+totalpage = $page.totalpagenum;
 currentpagenum = $page.pageNo;
 computerorderStatus : $computerorderStatus;
 </script>

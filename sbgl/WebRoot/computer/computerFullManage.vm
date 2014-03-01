@@ -293,45 +293,7 @@
                 $(this).addClass("active"); 
   });
 
-/*
-$("#inputEditComputerComputercategoryid").on("change", function(e) {
-	var html;
-	$("#s2id_inputEditComputerComputermodelid > a > span").empty();
-	
-	
-	
-	#foreach($categoryfull in ${computercategoryFullList})	
-   		#set($modelList = $computermodelByComputercategoryId.get($categoryfull.computercategorycomputercategorytype))
-		
-		if (e.val == $!categoryfull.computercategorycomputercategorytype) {
-		html = '';
-			#foreach($model in ${modelList})
-               html +=   '<option value="$!model.computermodeltype">$!model.name</option> ';
-			#end
-		
-		$("#inputEditComputerComputermodelid").empty();
-		$("#inputEditComputerComputermodelid").append(html);
-		
-		#if($modelList.size() > 0)
-			$("#s2id_inputEditComputerComputermodelid > a > span").append("$!modelList.get(0).name");
-		#end
-		
-		}
-		
-	#end
-	
-	//log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed}));
-})
-*/
 
-var cookie = { 
-  		//读取COOKIES,n为COOKIE名 
-   		Get:function(n){ 
-       		var re=new RegExp(n+'=([^;]*);?','gi');
-       	    var r=re.exec(document.cookie)||[];
-       	    return (r.length>1?r[1]:null)
-   		}
-	};
 //删除的id str
 var idsForDel;	
 //当前页
@@ -343,13 +305,16 @@ var computerstatusid = 0;
 
 	
 //换页时调用方法
-$('.pagination').jqPagination({
+$(function() {
+$('.page-bar').jqPagination({
     	paged: function(page) {
      	   // do something with the page variable
 			currentpagenum = page;
 			refreshComputerTable();
     	}
 	});
+});	
+	
 	
 //刷新数据
 function refreshComputerTable(){
