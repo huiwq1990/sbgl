@@ -95,7 +95,7 @@
 			resource="com/sbgl/app/entity/Computerhomeworkreceiver.hbm.xml" />
 
 
-<!-- wm -->
+		<!-- wm -->
 		<mapping resource="com/sbgl/app/entity/Listdetail.hbm.xml" />
 		<mapping resource="com/sbgl/app/entity/Equipmenborrow.hbm.xml" />
 

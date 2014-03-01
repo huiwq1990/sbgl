@@ -10,10 +10,10 @@ public class Usergrouprelation extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer id;
-	private Integer groupId;
-	private Integer userId;
+	private Integer groupid;
+	private Integer userid;
 	private Integer status;
-	private Integer groupType;
+	private Integer grouptype;
 
 	// Constructors
 
@@ -27,13 +27,13 @@ public class Usergrouprelation extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Usergrouprelation(Integer id, Integer groupId, Integer userId,
-			Integer status, Integer groupType) {
+	public Usergrouprelation(Integer id, Integer groupid, Integer userid,
+			Integer status, Integer grouptype) {
 		this.id = id;
-		this.groupId = groupId;
-		this.userId = userId;
+		this.groupid = groupid;
+		this.userid = userid;
 		this.status = status;
-		this.groupType = groupType;
+		this.grouptype = grouptype;
 	}
 
 	// Property accessors
@@ -46,20 +46,20 @@ public class Usergrouprelation extends com.sbgl.app.dao.DaoAbs implements
 		this.id = id;
 	}
 
-	public Integer getGroupId() {
-		return this.groupId;
+	public Integer getGroupid() {
+		return this.groupid;
 	}
 
-	public void setGroupId(Integer groupId) {
-		this.groupId = groupId;
+	public void setGroupid(Integer groupid) {
+		this.groupid = groupid;
 	}
 
-	public Integer getUserId() {
-		return this.userId;
+	public Integer getUserid() {
+		return this.userid;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setUserid(Integer userid) {
+		this.userid = userid;
 	}
 
 	public Integer getStatus() {
@@ -70,12 +70,12 @@ public class Usergrouprelation extends com.sbgl.app.dao.DaoAbs implements
 		this.status = status;
 	}
 
-	public Integer getGroupType() {
-		return this.groupType;
+	public Integer getGrouptype() {
+		return this.grouptype;
 	}
 
-	public void setGroupType(Integer groupType) {
-		this.groupType = groupType;
+	public void setGrouptype(Integer grouptype) {
+		this.grouptype = grouptype;
 	}
 
 }

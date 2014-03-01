@@ -1,7 +1,6 @@
 package com.sbgl.app.entity;
 
 import java.util.Date;
-import java.util.Date;
 
 /**
  * Usergroup entity. @author MyEclipse Persistence Tools
@@ -14,8 +13,8 @@ public class Usergroup extends com.sbgl.app.dao.DaoAbs implements
 
 	private Integer id;
 	private String name;
-	private String ownerId;
-	private Date createTime;
+	private String ownerid;
+	private Date createtime;
 	private Integer status;
 	private Integer type;
 
@@ -31,12 +30,12 @@ public class Usergroup extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public Usergroup(Integer id, String name, String ownerId,
-			Date createTime, Integer status, Integer type) {
+	public Usergroup(Integer id, String name, String ownerid,
+			Date createtime, Integer status, Integer type) {
 		this.id = id;
 		this.name = name;
-		this.ownerId = ownerId;
-		this.createTime = createTime;
+		this.ownerid = ownerid;
+		this.createtime = createtime;
 		this.status = status;
 		this.type = type;
 	}
@@ -59,20 +58,20 @@ public class Usergroup extends com.sbgl.app.dao.DaoAbs implements
 		this.name = name;
 	}
 
-	public String getOwnerId() {
-		return this.ownerId;
+	public String getOwnerid() {
+		return this.ownerid;
 	}
 
-	public void setOwnerId(String ownerId) {
-		this.ownerId = ownerId;
+	public void setOwnerid(String ownerid) {
+		this.ownerid = ownerid;
 	}
 
-	public Date getCreateTime() {
-		return this.createTime;
+	public Date getCreatetime() {
+		return this.createtime;
 	}
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
 	}
 
 	public Integer getStatus() {
