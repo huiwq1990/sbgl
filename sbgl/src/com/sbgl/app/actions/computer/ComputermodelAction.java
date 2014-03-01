@@ -207,8 +207,7 @@ public class ComputermodelAction extends BaseAction implements ModelDriven<Compu
 
 			
 			
-			String typeStrArray[] = computermodelIdsForDel.split(";");
-			
+			String typeStrArray[] = computermodelIdsForDel.split(";");			
 			List<Integer> delTypeList = new ArrayList<Integer>();
 			
 //			判断参数是否正确

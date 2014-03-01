@@ -19,11 +19,11 @@ public interface OrderMainService {
 	//维护设备剩余量
 	public void addEquipmentnum()  throws Exception ;
 	//获得一级器材分类
-	public List<Equipmentclassification> findTopEquipmentclass();
+	public List<Equipmentclassification> findTopEquipmentclass(String lantype);
 	//获得二级器材分类
 	public List<Equipmentclassification> findSecondEquipmentclass(Integer parentid);
 	//获得二级器材分类(根据最小的分类id)
-	public List<Equipmentclassification> findSecondEquipmentclass();
+	public List<Equipmentclassification> findSecondEquipmentclass(String lantype);
 	//根据器材分类获得设备
 	public List<EquipmentFull> findEquipmentByClss(Integer classificationid,String fromDate,String endDate,String lantype);
 	//根据器材分类获得设备(根据设备名称)

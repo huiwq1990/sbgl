@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="createEquipRuleLabel">创建规则</h3>
+  </div>
+  <div class="modal-body">
+    <p>根据课程教学要求确定器材使用范围。选择课程名称后为新的规则起一个名称，并在器材列表中选取该规则下能使用的器材范围。规则创建后可多次重复使用。</p>
+    <div class="row">
+      <div class="col-md-4">
+        <select id="inputCourseName" class="select2 form-control select-white" data-placeholder="请选择课程" style="width: 100%;">
+          <option></option>
+		  #foreach($row in $!courseFullList)	
+          <option value="$row.courseid" data-id="$!row.courseid" data-foo="fa">$row.coursename</option>
+    	  #end
+        </select>
+      </div>
+      <div class="col-md-8">
+        <div class="form-group rule-name">
+        <label class="sr-only" for="inputSendTo">收件人</label>
+        <input type="text" id="inputRuleName" class="form-control" placeholder="规则名称">
+        </div>
+      </div>
+    </div>
+    <div class="tabbable tabs-left">
+      <ul class="nav nav-tabs">
+		#foreach($row in $classification1List)	
+        <li #if($velocityCount=='1') class="active" #end><a href="#$!row.classificationid" data-toggle="tab">$!row.name</a></li>
+		#end
+      </ul>
+      <div class="tab-content">
+		#foreach($row2 in $classification1List)	
+        <div #if($velocityCount=='1') class="tab-pane active" #else class="tab-pane"  #end id="$!row2.classificationid">
+          <div class="row model-list">
+			#foreach($row3 in $classequipmap.get($!row2.classificationid))
+            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="$!row3.equipmentid" data-is-select="false"><i class="icon-check-empty icon-large"></i>$!row3.equipmentname</div>
+			#end
+		  </div>
+        </div>
+		#end
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary" id="submit">完 成</button>
+  </div>
+	
+<script src="${jsDomain}/bfa.js"></script>

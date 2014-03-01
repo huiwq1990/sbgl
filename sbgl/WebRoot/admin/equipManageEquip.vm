@@ -276,13 +276,13 @@
 			"equipmentdetail.manufacturer": manufacturer,
 			"equipmentdetail.supplyer": supplyer,
 			"equipmentdetail.worth": worth,
-			"equipmentdetail.useManageDept": useManageDept,
+			"equipmentdetail.usemanagedept": useManageDept,
 			"equipmentdetail.manager": manager,
-			"equipmentdetail.storagePlace": storagePlace,
-			"equipmentdetail.storagePosition": storagePosition,
+			"equipmentdetail.storageplace": storagePlace,
+			"equipmentdetail.storageposition": storagePosition,
 			"equipmentdetail.storenumber": storenumber,
 			"equipmentdetail.classificationid": ci,
-			"equipmentdetail.assetNumber": assetNumber
+			"equipmentdetail.assetnumber": assetNumber
 		}
 	
 		jQuery.ajax({  

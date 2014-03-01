@@ -1,5 +1,9 @@
 #MyEclipse Hibernate Properties
-#Sat Mar 01 16:25:47 CST 2014
+<<<<<<< HEAD
+#Sat Mar 01 20:44:48 CST 2014
+=======
+#Sat Mar 01 20:49:36 CST 2014
+>>>>>>> refs/remotes/re/master
 sessionFactoryName=com.sinosoft.HibernateSessionFactory
 genBasicCompId=false
 profile=

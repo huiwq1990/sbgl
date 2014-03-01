@@ -15,6 +15,10 @@
 	 	<action name="orderclassrule2" class="OrderAdminAction" method="orderclassrule">
         	<result name="success">/order/orderclassrule2.vm</result>
         </action>
+        <!-- 进入课程预约规则创建规则 -->
+	 	<action name="orderclassrule3" class="OrderAdminAction" method="orderclassrule3">
+        	<result name="success">/order/orderclassrule3.vm</result>
+        </action>
     </package>
     <package name="OrderAdminAjax" extends="json-default">	
     </package>

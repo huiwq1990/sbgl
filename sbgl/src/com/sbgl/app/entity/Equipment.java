@@ -1,7 +1,6 @@
 package com.sbgl.app.entity;
 
 import java.util.Date;
-import java.util.Date;
 
 /**
  * Equipment entity. @author MyEclipse Persistence Tools
@@ -28,10 +27,10 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 	private String equipmentdetail;
 	private Integer category;
 	private String remark;
-	private String lanType;
-	private Integer comId;
-	private String imgNameSaved;
-	private String imgName;
+	private String lantype;
+	private Integer comid;
+	private String imgnamesaved;
+	private String imgname;
 
 	// Constructors
 
@@ -51,7 +50,7 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 			Integer equipmentnum, Integer activenum, Integer maintainnum,
 			Integer repairnum, Integer losednum, Integer recyclingnum,
 			String equipmentdetail, Integer category, String remark,
-			String lanType, Integer comId, String imgNameSaved, String imgName) {
+			String lantype, Integer comid, String imgnamesaved, String imgname) {
 		this.equipmentid = equipmentid;
 		this.equipmentname = equipmentname;
 		this.brandid = brandid;
@@ -68,10 +67,10 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 		this.equipmentdetail = equipmentdetail;
 		this.category = category;
 		this.remark = remark;
-		this.lanType = lanType;
-		this.comId = comId;
-		this.imgNameSaved = imgNameSaved;
-		this.imgName = imgName;
+		this.lantype = lantype;
+		this.comid = comid;
+		this.imgnamesaved = imgnamesaved;
+		this.imgname = imgname;
 	}
 
 	// Property accessors
@@ -204,36 +203,36 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 		this.remark = remark;
 	}
 
-	public String getLanType() {
-		return this.lanType;
+	public String getLantype() {
+		return this.lantype;
 	}
 
-	public void setLanType(String lanType) {
-		this.lanType = lanType;
+	public void setLantype(String lantype) {
+		this.lantype = lantype;
 	}
 
-	public Integer getComId() {
-		return this.comId;
+	public Integer getComid() {
+		return this.comid;
 	}
 
-	public void setComId(Integer comId) {
-		this.comId = comId;
+	public void setComid(Integer comid) {
+		this.comid = comid;
 	}
 
-	public String getImgNameSaved() {
-		return this.imgNameSaved;
+	public String getImgnamesaved() {
+		return this.imgnamesaved;
 	}
 
-	public void setImgNameSaved(String imgNameSaved) {
-		this.imgNameSaved = imgNameSaved;
+	public void setImgnamesaved(String imgnamesaved) {
+		this.imgnamesaved = imgnamesaved;
 	}
 
-	public String getImgName() {
-		return this.imgName;
+	public String getImgname() {
+		return this.imgname;
 	}
 
-	public void setImgName(String imgName) {
-		this.imgName = imgName;
+	public void setImgname(String imgname) {
+		this.imgname = imgname;
 	}
 
 }

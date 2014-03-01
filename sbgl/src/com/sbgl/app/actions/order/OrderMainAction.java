@@ -68,16 +68,16 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 				endDate = DateUtil.addDay2(fromDate, 1);
 			}
 		}
-		classification1List = orderMainService.findTopEquipmentclass();
-		if(classification1List!=null){
-			class1Id = classification1List.get(0).getClassificationid();
-			class1Name = classification1List.get(0).getName();
-		}
-		classification2List = orderMainService.findSecondEquipmentclass();
 		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
 		if(lantype==null||lantype.equals("")){
 			lantype = "0";
 		}
+		classification1List = orderMainService.findTopEquipmentclass(lantype);
+		if(classification1List!=null){
+			class1Id = classification1List.get(0).getClassificationid();
+			class1Name = classification1List.get(0).getName();
+		}
+		classification2List = orderMainService.findSecondEquipmentclass(lantype);	
 		equipmentList = orderMainService.findEquipmentByClss(fromDate,endDate,lantype);
 		if(borrowId!=null&&!borrowId.equals("")){
 			listequips = orderMainService.findEquipmentByBorrowId(borrowId,fromDate,endDate); 

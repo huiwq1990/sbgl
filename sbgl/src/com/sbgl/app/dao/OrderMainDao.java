@@ -18,8 +18,10 @@ public interface OrderMainDao {
 	public boolean updateEquipmentnum(Integer equipmentid,String startDate,String endDate,Integer num);
 	//维护设备剩余量
 	public void addEquipmentnum()  throws Exception ;
+	//获得一级器材分类
+	public List<Equipmentclassification> findTopEquipmentclass(String lantype);
 	//获得二级器材分类(根据最小的分类id)
-	public List<Equipmentclassification> findSecondEquipmentclass();
+	public List<Equipmentclassification> findSecondEquipmentclass(String lantype);
 	//根据器材分类获得设备(根据设备名称)
 	public List<EquipmentFull> findEquipmentByClss(Integer classificationid,String fromDate,String endDate,String lantype,String serach);
 	//根据器材分类获得设备(根据最小的分类id)
@@ -40,4 +42,6 @@ public interface OrderMainDao {
 	public List<EquipmenborrowFull> findEquipmenborrow(String dealtype,String ordertype,Page page);
 	//查找后台订单统计数据
 	public OrderCountFull findOrderCount(String ordertype);
+	//根据器材一级分类获得设备
+	public List<EquipmentFull> findEquipmentByClss(Integer classificationid);
 }

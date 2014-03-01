@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.sbgl.app.actions.order.EquipmenborrowFull;
+import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.actions.orderadmin.OrderCountFull;
 import com.sbgl.app.actions.orderadmin.OrdercourseruleFull;
+import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Equipmentnum;
 import com.sbgl.util.Page;
 
@@ -18,5 +20,8 @@ public interface OrderAdminService {
 	public List<OrdercourseruleFull> findOrderClassRule(Integer courseId,Page page);
 	//查找后台课程规则统计数据
 	public OrderCountFull findOrderCountRule(Integer courseId);
-	
+	//获得一级器材分类
+	public List<Equipmentclassification> findTopEquipmentclass();
+	//获得一级分类下的器材
+	public Map<Integer,List<EquipmentFull>> fingclassequipMap(List<Equipmentclassification> eclist);
 }

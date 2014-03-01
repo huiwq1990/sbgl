@@ -249,7 +249,7 @@ public class FileUploadAction  extends ActionSupport {
 		return SUCCESS;
 	}
 	
-	public String uploadExcelFile() throws Exception {
+	/*public String uploadExcelFile() throws Exception {
 		String fileType = fileFileName.substring( fileFileName.indexOf('.') );
 		if(!fileType.toLowerCase().equals(".xls") && !fileType.toLowerCase().equals(".xlsx")) {
 			tag = "1";
@@ -455,7 +455,7 @@ public class FileUploadAction  extends ActionSupport {
         
 		return SUCCESS;
 	}
-	
+	*/
 	public File getFile() {
 		return file;
 	}

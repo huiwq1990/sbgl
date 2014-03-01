@@ -1,7 +1,6 @@
 package com.sbgl.app.entity;
 
 import java.util.Date;
-import java.util.Date;
 
 /**
  * Equipmentclassification entity. @author MyEclipse Persistence Tools
@@ -18,8 +17,8 @@ public class Equipmentclassification extends com.sbgl.app.dao.DaoAbs implements
 	private Date maketime;
 	private Date modifytime;
 	private Integer userid;
-	private String lanType;
-	private Integer comId;
+	private String lantype;
+	private Integer comid;
 
 	// Constructors
 
@@ -35,15 +34,15 @@ public class Equipmentclassification extends com.sbgl.app.dao.DaoAbs implements
 	/** full constructor */
 	public Equipmentclassification(Integer classificationid, Integer parentid,
 			String name, Date maketime, Date modifytime,
-			Integer userid, String lanType, Integer comId) {
+			Integer userid, String lantype, Integer comid) {
 		this.classificationid = classificationid;
 		this.parentid = parentid;
 		this.name = name;
 		this.maketime = maketime;
 		this.modifytime = modifytime;
 		this.userid = userid;
-		this.lanType = lanType;
-		this.comId = comId;
+		this.lantype = lantype;
+		this.comid = comid;
 	}
 
 	// Property accessors
@@ -96,20 +95,20 @@ public class Equipmentclassification extends com.sbgl.app.dao.DaoAbs implements
 		this.userid = userid;
 	}
 
-	public String getLanType() {
-		return this.lanType;
+	public String getLantype() {
+		return this.lantype;
 	}
 
-	public void setLanType(String lanType) {
-		this.lanType = lanType;
+	public void setLantype(String lantype) {
+		this.lantype = lantype;
 	}
 
-	public Integer getComId() {
-		return this.comId;
+	public Integer getComid() {
+		return this.comid;
 	}
 
-	public void setComId(Integer comId) {
-		this.comId = comId;
+	public void setComid(Integer comid) {
+		this.comid = comid;
 	}
 
 }

@@ -1,7 +1,6 @@
 package com.sbgl.app.entity;
 
 import java.util.Date;
-import java.util.Date;
 
 /**
  * Equipmentdetail entity. @author MyEclipse Persistence Tools
@@ -12,7 +11,7 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 
 	// Fields
 
-	private Integer equipDetailid;
+	private Integer equipdetailid;
 	private Integer equipmentid;
 	private String status;
 	private Integer administrationid;
@@ -20,20 +19,20 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 	private Date modifydate;
 	private String sysremark;
 	private String usermark;
-	private Date manufactureDate;
-	private Date acquireDate;
+	private Date manufacturedate;
+	private Date acquiredate;
 	private String manufacturer;
 	private String supplyer;
 	private Float worth;
-	private String useManageDept;
+	private String usemanagedept;
 	private String manager;
-	private String storagePlace;
-	private String storagePosition;
-	private String lanType;
-	private Integer comId;
+	private String storageplace;
+	private String storageposition;
+	private String lantype;
+	private Integer comid;
 	private Integer storenumber;
 	private String equipserial;
-	private Integer assetNumber;
+	private Integer assetnumber;
 	private Integer classificationid;
 
 	// Constructors
@@ -43,20 +42,20 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** minimal constructor */
-	public Equipmentdetail(Integer equipDetailid) {
-		this.equipDetailid = equipDetailid;
+	public Equipmentdetail(Integer equipdetailid) {
+		this.equipdetailid = equipdetailid;
 	}
 
 	/** full constructor */
-	public Equipmentdetail(Integer equipDetailid, Integer equipmentid,
+	public Equipmentdetail(Integer equipdetailid, Integer equipmentid,
 			String status, Integer administrationid, Date makedate,
 			Date modifydate, String sysremark, String usermark,
-			Date manufactureDate, Date acquireDate, String manufacturer,
-			String supplyer, Float worth, String useManageDept, String manager,
-			String storagePlace, String storagePosition, String lanType,
-			Integer comId, Integer storenumber, String equipserial,
-			Integer assetNumber, Integer classificationid) {
-		this.equipDetailid = equipDetailid;
+			Date manufacturedate, Date acquiredate, String manufacturer,
+			String supplyer, Float worth, String usemanagedept, String manager,
+			String storageplace, String storageposition, String lantype,
+			Integer comid, Integer storenumber, String equipserial,
+			Integer assetnumber, Integer classificationid) {
+		this.equipdetailid = equipdetailid;
 		this.equipmentid = equipmentid;
 		this.status = status;
 		this.administrationid = administrationid;
@@ -64,31 +63,31 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.modifydate = modifydate;
 		this.sysremark = sysremark;
 		this.usermark = usermark;
-		this.manufactureDate = manufactureDate;
-		this.acquireDate = acquireDate;
+		this.manufacturedate = manufacturedate;
+		this.acquiredate = acquiredate;
 		this.manufacturer = manufacturer;
 		this.supplyer = supplyer;
 		this.worth = worth;
-		this.useManageDept = useManageDept;
+		this.usemanagedept = usemanagedept;
 		this.manager = manager;
-		this.storagePlace = storagePlace;
-		this.storagePosition = storagePosition;
-		this.lanType = lanType;
-		this.comId = comId;
+		this.storageplace = storageplace;
+		this.storageposition = storageposition;
+		this.lantype = lantype;
+		this.comid = comid;
 		this.storenumber = storenumber;
 		this.equipserial = equipserial;
-		this.assetNumber = assetNumber;
+		this.assetnumber = assetnumber;
 		this.classificationid = classificationid;
 	}
 
 	// Property accessors
 
-	public Integer getEquipDetailid() {
-		return this.equipDetailid;
+	public Integer getEquipdetailid() {
+		return this.equipdetailid;
 	}
 
-	public void setEquipDetailid(Integer equipDetailid) {
-		this.equipDetailid = equipDetailid;
+	public void setEquipdetailid(Integer equipdetailid) {
+		this.equipdetailid = equipdetailid;
 	}
 
 	public Integer getEquipmentid() {
@@ -147,20 +146,20 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.usermark = usermark;
 	}
 
-	public Date getManufactureDate() {
-		return this.manufactureDate;
+	public Date getManufacturedate() {
+		return this.manufacturedate;
 	}
 
-	public void setManufactureDate(Date manufactureDate) {
-		this.manufactureDate = manufactureDate;
+	public void setManufacturedate(Date manufacturedate) {
+		this.manufacturedate = manufacturedate;
 	}
 
-	public Date getAcquireDate() {
-		return this.acquireDate;
+	public Date getAcquiredate() {
+		return this.acquiredate;
 	}
 
-	public void setAcquireDate(Date acquireDate) {
-		this.acquireDate = acquireDate;
+	public void setAcquiredate(Date acquiredate) {
+		this.acquiredate = acquiredate;
 	}
 
 	public String getManufacturer() {
@@ -187,12 +186,12 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.worth = worth;
 	}
 
-	public String getUseManageDept() {
-		return this.useManageDept;
+	public String getUsemanagedept() {
+		return this.usemanagedept;
 	}
 
-	public void setUseManageDept(String useManageDept) {
-		this.useManageDept = useManageDept;
+	public void setUsemanagedept(String usemanagedept) {
+		this.usemanagedept = usemanagedept;
 	}
 
 	public String getManager() {
@@ -203,36 +202,36 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.manager = manager;
 	}
 
-	public String getStoragePlace() {
-		return this.storagePlace;
+	public String getStorageplace() {
+		return this.storageplace;
 	}
 
-	public void setStoragePlace(String storagePlace) {
-		this.storagePlace = storagePlace;
+	public void setStorageplace(String storageplace) {
+		this.storageplace = storageplace;
 	}
 
-	public String getStoragePosition() {
-		return this.storagePosition;
+	public String getStorageposition() {
+		return this.storageposition;
 	}
 
-	public void setStoragePosition(String storagePosition) {
-		this.storagePosition = storagePosition;
+	public void setStorageposition(String storageposition) {
+		this.storageposition = storageposition;
 	}
 
-	public String getLanType() {
-		return this.lanType;
+	public String getLantype() {
+		return this.lantype;
 	}
 
-	public void setLanType(String lanType) {
-		this.lanType = lanType;
+	public void setLantype(String lantype) {
+		this.lantype = lantype;
 	}
 
-	public Integer getComId() {
-		return this.comId;
+	public Integer getComid() {
+		return this.comid;
 	}
 
-	public void setComId(Integer comId) {
-		this.comId = comId;
+	public void setComid(Integer comid) {
+		this.comid = comid;
 	}
 
 	public Integer getStorenumber() {
@@ -251,12 +250,12 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.equipserial = equipserial;
 	}
 
-	public Integer getAssetNumber() {
-		return this.assetNumber;
+	public Integer getAssetnumber() {
+		return this.assetnumber;
 	}
 
-	public void setAssetNumber(Integer assetNumber) {
-		this.assetNumber = assetNumber;
+	public void setAssetnumber(Integer assetnumber) {
+		this.assetnumber = assetnumber;
 	}
 
 	public Integer getClassificationid() {

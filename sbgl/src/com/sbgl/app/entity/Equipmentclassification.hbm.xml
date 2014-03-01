@@ -17,19 +17,19 @@
             <column name="name" length="200" />
         </property>
         <property name="maketime" type="java.util.Date">
-            <column name="maketime"  />
+            <column name="maketime" length="19" />
         </property>
         <property name="modifytime" type="java.util.Date">
-            <column name="modifytime"  />
+            <column name="modifytime" length="19" />
         </property>
         <property name="userid" type="java.lang.Integer">
             <column name="userid" />
         </property>
-        <property name="lanType" type="java.lang.String">
-            <column name="lanType" length="2" />
+        <property name="lantype" type="java.lang.String">
+            <column name="lantype" length="2" />
         </property>
-        <property name="comId" type="java.lang.Integer">
-            <column name="comId" />
+        <property name="comid" type="java.lang.Integer">
+            <column name="comid" />
         </property>
     </class>
 </hibernate-mapping>
