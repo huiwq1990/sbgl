@@ -10,17 +10,17 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <property name="groupId" type="java.lang.Integer">
-            <column name="groupId" />
+        <property name="groupid" type="java.lang.Integer">
+            <column name="groupid" />
         </property>
-        <property name="userId" type="java.lang.Integer">
-            <column name="userId" />
+        <property name="userid" type="java.lang.Integer">
+            <column name="userid" />
         </property>
         <property name="status" type="java.lang.Integer">
             <column name="status" />
         </property>
-        <property name="groupType" type="java.lang.Integer">
-            <column name="groupType" />
+        <property name="grouptype" type="java.lang.Integer">
+            <column name="grouptype" />
         </property>
     </class>
 </hibernate-mapping>

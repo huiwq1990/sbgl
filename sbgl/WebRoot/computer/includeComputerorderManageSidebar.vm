@@ -1,22 +1,22 @@
 
 <div id="lside">
-	<form class="form-group">
+	<!--<form class="form-group">
 		<input type="text" class="form-control" placeholder="搜索">
 			<i class="icon-search"></i>
-	</form>
+	</form>-->
 	<div class="list-group">
 		
 		<a href="${webbaseurl}/manageComputerorderFull.action" class="list-group-item
 		#if($currentWebpage == "computerorderFullManage.vm" )
 			 active        
 		#end		
-		">订单管理</a> 
+		">预约管理</a> 
 		
 		<a href="${webbaseurl}/toSetComputerorderconfig.action" class="list-group-item
 		#if($currentWebpage == "computerorderConfig.vm" )
 			 active        
 		#end		
-		">预约设置</a> 	
+		">设置</a> 	
 	
 
 		

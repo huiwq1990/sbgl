@@ -101,9 +101,9 @@ public class StudentAction extends ActionSupport implements SessionAware {
 				this.message = "添加学生信息失败！";
 			} else {
 				Usergrouprelation ugr = new Usergrouprelation();
-				ugr.setGroupId( group.getId() );
-				ugr.setUserId( returnCode );
-				ugr.setGroupType( group.getType() );
+				ugr.setGroupid( group.getId() );
+				ugr.setUserid( returnCode );
+				ugr.setGrouptype( group.getType() );
 				userGroupRelationService.addUserGroupRelation( ugr );
 				this.tag = "0";
 				this.message = "添加学生信息成功！";
@@ -133,7 +133,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 			this.message = "修改学生信息失败！";
 		} else {
 			Usergrouprelation ugr = userGroupRelationService.getRelationByType( student.getId(), 1 );
-			ugr.setGroupId( group.getId() );
+			ugr.setGroupid( group.getId() );
 			userGroupRelationService.alterUserGroupRelation( ugr );
 			this.tag = "0";
 			this.message = "修改学生信息成功！";
@@ -267,7 +267,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 				Usergroup ug = null;
 				Clazz clazz = null;
 				if(ugr != null) {
-					ug = groupService.getUserGroupByid( ugr.getGroupId() );
+					ug = groupService.getUserGroupByid( ugr.getGroupid() );
 				}
 				if(s.getClassid() != -1) {
 					clazz = clazzService.getClazzById( s.getClassid() );
@@ -298,7 +298,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 				Usergrouprelation ugr = userGroupRelationService.getRelationByType( t.getId(), 2 );
 				Usergroup ug = null;
 				if(ugr != null) {
-					ug = groupService.getUserGroupByid( ugr.getGroupId() );
+					ug = groupService.getUserGroupByid( ugr.getGroupid() );
 				}
 				
 				UserCourse uc = new UserCourse(String.valueOf( t.getId() ),
@@ -325,7 +325,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 				Usergrouprelation ugr = userGroupRelationService.getRelationByType( w.getId(), 4 );
 				Usergroup ug = null;
 				if(ugr != null) {
-					ug = groupService.getUserGroupByid( ugr.getGroupId() );
+					ug = groupService.getUserGroupByid( ugr.getGroupid() );
 				}
 				
 				UserCourse uc = new UserCourse(String.valueOf( w.getId() ),

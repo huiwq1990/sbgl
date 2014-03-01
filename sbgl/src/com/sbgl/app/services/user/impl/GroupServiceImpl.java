@@ -22,7 +22,7 @@ public class GroupServiceImpl implements GroupService {
 	public int addUserGroup(Usergroup usergroup) {
 		int id = baseDao.getCode("usergroupId");
 		usergroup.setId( id );
-		usergroup.setCreateTime(new Date());
+		usergroup.setCreatetime(new Date());
 		
 		try {
 			baseDao.saveEntity( usergroup );
@@ -38,7 +38,7 @@ public class GroupServiceImpl implements GroupService {
 		Usergroup storeUsergroup = baseDao.getEntityById(Usergroup.class, id);
 		
 		storeUsergroup.setName( usergroup.getName() );
-		storeUsergroup.setOwnerId( usergroup.getOwnerId() );
+		storeUsergroup.setOwnerid( usergroup.getOwnerid() );
 		storeUsergroup.setStatus( usergroup.getStatus() );
 		storeUsergroup.setType( usergroup.getType() );
 		

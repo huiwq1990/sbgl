@@ -1,9 +1,9 @@
 
 <div id="lside">
-	<form class="form-group">
+	<!--<form class="form-group">
 		<input type="text" class="form-control" placeholder="搜索">
 			<i class="icon-search"></i>
-	</form>
+	</form>-->
 	<div class="list-group">
 		
 		

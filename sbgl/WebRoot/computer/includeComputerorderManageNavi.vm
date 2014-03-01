@@ -5,10 +5,10 @@
 		#if($currentPageType == "computerOrderManage" )
 			 class="active"      
 		#end		
-			><a href="机器预约管理首页.html">机器预约管理</a></li>
+			><a href="机器预约管理首页.html">机房预约管理</a></li>
         <li 
 		#if($currentPageType == "computerInfoManage" )
 			 class="active"      
 		#end
-			><a href="机器信息管理首页.html">机器信息管理</a></li>
+			><a href="机器信息管理首页.html">机房信息管理</a></li>
       </ul>

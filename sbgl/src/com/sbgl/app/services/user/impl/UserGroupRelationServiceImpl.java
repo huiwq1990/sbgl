@@ -35,9 +35,9 @@ public class UserGroupRelationServiceImpl implements UserGroupRelationService {
 		int id = userGroupRelation.getId();
 		Usergrouprelation storeRelation = baseDao.getEntityById(Usergrouprelation.class, id);
 		
-		storeRelation.setGroupId( userGroupRelation.getGroupId() );
+		storeRelation.setGroupid( userGroupRelation.getGroupid() );
 		storeRelation.setStatus( userGroupRelation.getStatus() );
-		storeRelation.setUserId( userGroupRelation.getUserId() );
+		storeRelation.setUserid( userGroupRelation.getUserid() );
 		
 		try {
 			baseDao.updateEntity( storeRelation );
@@ -67,9 +67,15 @@ public class UserGroupRelationServiceImpl implements UserGroupRelationService {
 
 	@Override
 	public Usergrouprelation getRelationByType(int userId, int groupType) {
-		String hql = "from Usergrouprelation as m where m.userId = " + userId + "and m.groupType = " + groupType;
+		String hql = "from Usergrouprelation as m where m.userid = " + userId + "and m.grouptype = " + groupType;
 		List<Usergrouprelation> resultList = baseDao.executeHQL( hql );
-		return resultList != null && resultList.size() > 0 ? resultList.get(0) : null;
+		if( resultList != null ) {
+			Integer gid = ((Usergrouprelation)resultList.get(0)).getGroupid();
+			if( gid != null && gid != -1) {
+				return resultList.get(0);
+			}
+		}
+		return null;
 	}
 
 
