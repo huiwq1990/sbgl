@@ -17,6 +17,8 @@ import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.dao.OrderFinishDao;
 import com.sbgl.app.entity.Equipmentclassification;
+import com.sbgl.app.entity.Listdetail;
+import com.sbgl.app.entity.Listequipdetail;
 import com.sbgl.util.DateUtil;
 import com.sbgl.util.EscColumnToBean;
 
@@ -62,7 +64,7 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 	
 	public EquipmentFull findEquipmentById(Integer equipmentId) {
 		// TODO Auto-generated method stub
-		final String sql = " select a.Equipmentid,a.Equipmentname,c.name as categoryName from Equipment a  "
+		final String sql = " select a.Equipmentid,a.Equipmentname,c.name as categoryName,a.imgNameSaved from Equipment a  "
 	    	+ " left outer join EquipmentClassification c on a.classificationid = c.classificationid "
 			+ " where a.equipmentid ='"+equipmentId+"' ";
 		List<EquipmentFull> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
@@ -109,7 +111,7 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 		});	
 		if(equipmentList!=null&&!equipmentList.isEmpty()){
 			for(Equipmentclassification equipmentclassification:equipmentList){
-				String sql1 = " select a.*,b.applynumber,c.name as categoryName,b.equipDetailids,b.listdetailid from Equipment a left outer join ListDetail b on a.equipmentid = b.equipmentid "
+				String sql1 = " select a.*,b.applynumber,c.name as categoryName,b.listdetailid from Equipment a left outer join ListDetail b on a.equipmentid = b.equipmentid "
 					+ " left outer join EquipmentClassification c on c.classificationid=a.classificationid "
 					+ " where b.borrowlistid='"+borrowId+"' and c.classificationid='"+equipmentclassification.getClassificationid()+"' ";
 				final String sql2 = sql1;
@@ -123,15 +125,56 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 				if(list!=null&&!list.isEmpty()){
 					for(int i =0;i<list.size();i++){
 						EquipmentFull equipmentFull = list.get(i);
-						if(equipmentFull.getEquipDetailids()!=null&&!equipmentFull.getEquipDetailidlist().equals("")){
-							equipmentFull.setEquipDetailidlist(Arrays.asList(equipmentFull.getEquipDetailids().split(",")));
+						final String sql3 = " select a.equipDetailid from EquipmentDetail a where a.equipmentid = '"+equipmentFull.getComId()+"' ";
+						List<String> list2 = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+							public Object doInHibernate(Session session) throws HibernateException{
+								Query query = session.createSQLQuery(sql3); 
+								return query.list();
+							}
+						});	
+						if(list2!=null&&!list2.isEmpty()){
+							equipmentFull.setEquipDetailidlist(list2);
 							list.set(i, equipmentFull);
-						}
+						}	
 					}
 					map.put(equipmentclassification.getClassificationid(), list);
 				}
 			}
 			return map;
+		}
+		return null;
+	}
+
+	@Override
+	public Listdetail findListDetail(Integer borrowId, Integer equipDetailid) {
+		// TODO Auto-generated method stub
+		String sql1 = " select a.* from ListDetail a left outer join EquipmentDetail b on a.comId = b.equipmentid where a.borrowlistid = '"+borrowId+"' and b.equipDetailid='"+equipDetailid+"' ";
+		final String sql2 = sql1;
+		List<Listdetail> list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql2).addEntity(Listdetail.class); 
+				return query.list();
+			}
+		});	
+		if(list!=null&&!list.isEmpty()){
+			return list.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public Listequipdetail findlistequipdetail(Integer borrowId, Integer equipDetailid) {
+		// TODO Auto-generated method stub
+		String sql1 = " select a.* from listequipdetail a where a.borrowlistid = '"+borrowId+"' and a.equipDetailid='"+equipDetailid+"' ";
+		final String sql2 = sql1;
+		List<Listequipdetail> list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql2).addEntity(Listequipdetail.class); 
+				return query.list();
+			}
+		});	
+		if(list!=null&&!list.isEmpty()){
+			return list.get(0);
 		}
 		return null;
 	}

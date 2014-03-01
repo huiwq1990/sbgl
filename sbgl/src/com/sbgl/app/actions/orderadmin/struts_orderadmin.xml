@@ -21,5 +21,9 @@
         </action>
     </package>
     <package name="OrderAdminAjax" extends="json-default">	
+    	<!-- 创建规则 -->
+	 	<action name="addorderclassrule" class="OrderAdminAction" method="addorderclassrule">
+        	<result type="json"></result>
+        </action>
     </package>
 </struts>

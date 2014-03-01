@@ -77,9 +77,9 @@ public class OrderMainServiceImpl implements OrderMainService {
 	}
 
 
-	public List<Equipmentclassification> findSecondEquipmentclass(Integer parentid) {
+	public List<Equipmentclassification> findSecondEquipmentclass(Integer parentid,String lantype) {
 		// TODO Auto-generated method stub
-		List<Equipmentclassification> equipmentclassList = baseDao.getEntityByProperty("Equipmentclassification", "parentid", parentid.toString());
+		List<Equipmentclassification> equipmentclassList = orderMainDao.findSecondEquipmentclass(parentid,lantype);
 		return equipmentclassList;
 	}
 
@@ -164,11 +164,11 @@ public class OrderMainServiceImpl implements OrderMainService {
 		return equipmentclassList;
 	} 
 	
-	public String findDayNum(Integer equipmentId,String fromDate,String endDate){
-		return orderMainDao.findDayNum(equipmentId,fromDate,endDate);
+	public String findDayNum(Integer equipmentId,String fromDate,String endDate,String lantype){
+		return orderMainDao.findDayNum(equipmentId,fromDate,endDate,lantype);
 	}
 	
-	public Equipmentclassification findEquipmentclassification(Integer classificationid){
+	public Equipmentclassification findEquipmentclassification(Integer classificationid,String lantype){
 		return baseDao.getEntityById(Equipmentclassification.class, classificationid);
 	}
 
