@@ -290,8 +290,8 @@
   });
 
 
-//删除的id str
-var idsForDel;	
+
+
 //当前页
 var currentpagenum=1;
 var totalpage=$page.totalpagenum;
@@ -400,14 +400,7 @@ function getComputerByComputermodelId(computermodel){
 			});
 		}
 		
-		idsForDel = "";
-		
-		$("input[name='chk-list']").each(function() {
-			if($(this).prop("checked") === true) {
-				//num++;
-				idsForDel += $(this).prop("value") + ";";
-			}
-		});
+	
 	});
 	//end checkbox
 	
@@ -415,6 +408,7 @@ function getComputerByComputermodelId(computermodel){
 
 	//delete
 	$("body").on("click", "a[action-type|=deleteComputerButton]", function() {
+		var idsForDel = getSelectedCheckboxList();		
 		idsForDel = idsForDel.substring(0,idsForDel.length-1);
 		var postData = {
 			computerIdsForDel: idsForDel

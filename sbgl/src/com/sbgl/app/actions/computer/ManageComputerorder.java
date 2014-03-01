@@ -555,10 +555,15 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			
 		}
 //		设置默认标题
-		if(computerorder.getTitle()==null || computerorder.getTitle().length()==0){
-			computerorder.setTitle(DateUtil.dateFormat(DateUtil.currentDate(), "MM-dd")+"机房预约");
+		if(computerorder.getTitle()==null || computerorder.getTitle().trim().length()==0){
+//			computerorder.setTitle(DateUtil.dateFormat(DateUtil.currentDate(), "MM-dd")+"机房预约");
+			returnInfo = "请输入标题";
+			log.error(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return SUCCESS;
 		}
 	
+		System.out.println(computerorder.getTitle());
 		
 		computerorderService.addComputerorder(computerorder, computerordertype, reorder, uid, computerorderdetailList);
 		

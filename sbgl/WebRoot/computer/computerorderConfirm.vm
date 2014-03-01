@@ -124,7 +124,7 @@
 				if(returnJson.flag == 1){					
 					location.href = "${webbaseurl}/toComputerorderSuccessPage.${strutsaction}?computerordertype=$computerordertype&orderInfoStr=$orderInfoStr&computerorderid=$!computerorderid&computerhomeworkid=$!computerhomeworkid&reorder=$!reorder";
 				}else{
-					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});					
 					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
 				}
 			}		  	  
