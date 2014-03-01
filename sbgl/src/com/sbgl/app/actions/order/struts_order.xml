@@ -19,6 +19,10 @@
 	 	<action name="equipOrdDetail" class="OrderMainAction" method="equipOrdDetail">
         	<result name="success">/order/equipOrderDetail.vm</result>
         </action>
+        <!-- 进入设备预约详情页面 -->
+	 	<action name="equipOrdIndex" class="OrderMainAction" method="equipOrdIndex">
+        	<result name="success">/order/equipOrdIndex.vm</result>
+        </action>
     </package>
     <package name="orderAjax" extends="json-default">	
         <!-- 根据商品id刷新页面详情 -->

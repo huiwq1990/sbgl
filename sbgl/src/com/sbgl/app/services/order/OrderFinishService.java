@@ -16,4 +16,6 @@ public interface OrderFinishService {
     public boolean finishorder(Integer borrowId,String equtitle,String equremark) throws Exception;
     //获得设备详情
 	public EquipmentFull findEquipmentById(Integer equipmentId);
+	//删除订单
+	public boolean deleteorder(Integer borrowId);
 }

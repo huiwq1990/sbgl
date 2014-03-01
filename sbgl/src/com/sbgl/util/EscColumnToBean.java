@@ -2,6 +2,7 @@ package com.sbgl.util;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -92,6 +93,9 @@ public class EscColumnToBean implements ResultTransformer {
                     }  else if (tuple[i] instanceof Character) {
                     	String s = ((Character) tuple[i]).toString(); 
                         setters[i].set(result, s, null);
+                    } else if (tuple[i] instanceof BigInteger) {
+                    	long l = Long.parseLong(tuple[i].toString());  
+                        setters[i].set(result, l, null);
                     } else {
                         setters[i].set(result, tuple[i], null);
                     }

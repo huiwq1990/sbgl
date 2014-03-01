@@ -101,7 +101,7 @@
             <h1> 预约成功</h1>
             <p>您的预约申请已成功提交，出单号为<code>$!{borrowId}</code>，请耐心等待审核。</p>
             <p>审核通过后系统将会通知您，请在规定时间内到XXXX领取器材，并按时归还。</p>
-            <p><a class="btn btn-primary btn-large" href="预约首页.html">我的预约</a></p>
+            <p><a class="btn btn-primary btn-large" href="${webbaseurl}/equipOrdIndex.do">我的预约</a></p>
           </div>
         </div>                                    
       </div>

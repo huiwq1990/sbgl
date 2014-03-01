@@ -1,0 +1,17 @@
+package com.sbgl.app.services.orderadmin;
+
+import java.util.List;
+import java.util.Map;
+
+import com.sbgl.app.actions.order.EquipmenborrowFull;
+import com.sbgl.app.actions.orderadmin.OrderCountFull;
+import com.sbgl.app.entity.Equipmentnum;
+import com.sbgl.util.Page;
+
+public interface OrderAdminService {
+	//查找后台预约信息
+	public List<EquipmenborrowFull> findEquipmenborrow(String dealtype,String ordertype,Page page);
+	//查找后台订单统计数据
+	public OrderCountFull findOrderCount(String ordertype);
+	
+}

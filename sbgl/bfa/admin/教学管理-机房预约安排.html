@@ -339,10 +339,14 @@
 			var thisData = $(this).data();
 			if ($(this).hasClass('selected')) {		// 新课程安排
 				userList.push(thisData);
+
 			}
 		});
+		var json = {"name":"John"};
+		alert(json)
 		console.log(userList);
 		$(this).parent(".modal").hide();
+		
 	});
 </script>
 </body>

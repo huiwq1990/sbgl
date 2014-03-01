@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
@@ -18,6 +19,7 @@ import com.sbgl.util.DateUtil;
 
 @Scope("prototype") 
 @Service("orderFinishService")
+@Transactional
 public class OrderFinishServiceImpl  implements OrderFinishService  {
 
 	@Resource
@@ -48,6 +50,7 @@ public class OrderFinishServiceImpl  implements OrderFinishService  {
 			equipmenborrow.setTitle(equtitle);
 		}
 		equipmenborrow.setRemark(equremark);
+		equipmenborrow.setStatus(2);
 		baseDao.updateEntity(equipmenborrow);
 		return true;
 	}
@@ -55,6 +58,15 @@ public class OrderFinishServiceImpl  implements OrderFinishService  {
 	public EquipmentFull findEquipmentById(Integer equipmentId) {
 		// TODO Auto-generated method stub
 		return orderFinishDao.findEquipmentById(equipmentId);
+	}
+
+
+	@Override
+	public boolean deleteorder(Integer borrowId) {
+		// TODO Auto-generated method stub
+		baseDao.deleteByProperty("EquipmenBorrow", "borrowId", borrowId);
+		baseDao.deleteByProperty("ListDetail", "borrowlistid", borrowId);
+		return true;
 	}
 
 }
