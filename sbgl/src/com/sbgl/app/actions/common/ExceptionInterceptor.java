@@ -64,6 +64,8 @@ public class ExceptionInterceptor extends AbstractInterceptor {
 			
 			if(e instanceof ClassNotFoundException) {
 				errorMsg = "请求的页面不存在，检查后重试！";
+			} else {
+				errorMsg = "系统出错！请联系管理员";
 			}
 			return "exception-error";
 		}

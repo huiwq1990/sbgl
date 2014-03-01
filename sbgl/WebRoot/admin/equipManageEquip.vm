@@ -30,7 +30,7 @@
             <div class="control-bar clearfix">
               <div class="title pull-left">添加设备</div>
               <div class="tips">在此页面下添加新的设备。</div>
-			  <div class="operate-item pull-left">
+			  <!--<div class="operate-item pull-left">
 			  <div class="col-xs-7">
                 <span class="btn btn-white file-input-button">
                   <i class="icon-plus"></i>
@@ -39,7 +39,7 @@
                 </span>
     		    <span id="imgFileForAlter"></span>
               </div>	
-              </div>
+              </div> -->
             </div><!--control-bar end-->
             <div class="panel panel-default">
               <div class="panel-body">
