@@ -360,6 +360,8 @@ public class ComputerClassorderAction  extends BaseAction  {
 		showComputeroderadvanceorderday = 0;
 		if(computeroderadvanceorderday%computerodertablercolumn !=0){
 			showComputeroderadvanceorderday = (computeroderadvanceorderday/computerodertablercolumn + 1) * computerodertablercolumn ;			
+		}else{
+			showComputeroderadvanceorderday = computeroderadvanceorderday;
 		}		
 		System.out.println("showComputeroderadvanceorderday "+showComputeroderadvanceorderday);
 		

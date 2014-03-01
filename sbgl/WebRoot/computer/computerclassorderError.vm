@@ -32,11 +32,8 @@
   
   <div id="main-content" class="clearfix"><!--main-content start--> 
           <div class="container" id="post-equip">
-            
             <div class="row">
-
-             $actionMsg
-
+				<div class="alert alert-danger">$actionMsg</div>
           </div>
   </div>
   <!---main-content end-->

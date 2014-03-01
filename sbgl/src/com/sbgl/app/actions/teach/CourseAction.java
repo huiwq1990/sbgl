@@ -29,9 +29,11 @@ import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.actions.util.PageActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.*;
+import com.sbgl.app.services.orderadmin.OrderAdminService;
 import com.sbgl.app.services.teach.CourseService;
 import com.sbgl.app.services.user.GroupService;
 import com.sbgl.app.services.user.TeacherService;
+import com.sbgl.common.DataError;
 import com.sbgl.util.*;
 
 
@@ -113,6 +115,8 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>{
 			usergroupid = 0;
 		}
 		
+		teacherList = teacherService.getAllTeacher();
+		
 //		获取学生分组信息
 		userGroupList = groupService.getUserGroupByType(CommonConfig.usergroupstudentid);
 		if(userGroupList == null){
@@ -164,7 +168,24 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>{
         }	
 	}			
 
-			
+	public boolean checkAddForm(){
+		if(course.getTeacherid()==null || course.getTeacherid() ==0 ){
+			this.returnInfo = "请选择教师";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return false;
+		}
+		
+		if(course.getType() == null || course.getType() == 0 ){
+			this.returnInfo = "请选择课程类型";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return false;
+		}
+		
+		return true;
+		
+	}
 	
 //  ajax add	
 	public String addCourseAjax(){	
@@ -181,6 +202,9 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>{
 				return SUCCESS;
 			}
 		
+			if(!checkAddForm()){
+				return SUCCESS;
+			}
 			
 			course.setAdduserid(uid);
 			course.setAddtime(DateUtil.currentDate());
@@ -234,47 +258,41 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>{
 				return SUCCESS;
 			}
 			
+			
 			String typeStrArray[] = courseIdsForDel.split(";");		
 			List<Integer> delTypeList = new ArrayList<Integer>();
 			
 //			判断参数是否正确
 			for(String typeStr : typeStrArray){
 				if(!NumberUtils.isNumber(typeStr)){
-					this.returnInfo = "课程删除参数不正确";
+					this.returnInfo = "删除参数不正确";
 					log.info(returnInfo);
 					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 					return SUCCESS;
 				}
 				delTypeList.add(Integer.valueOf(typeStr));
 			}
+		
 			
-			for(Integer cid : delCourseIdList){
-				
-				List<Computerorderclassrule> corList = computerorderclassruleDao.selectComputerorderclassruleByCondition(" where classid = "+cid);
-				
-				List<Courseschedule> csList = coursescheduleDao.selectCoursescheduleByCondition(" where classid = "+cid);
-				
-				
-				if( (corList == null || corList.size() ==0) && (csList == null || csList.size() ==0) ){
-					
-				}else{
-					throw 
-				}
+			courseService.deleteCourse(delTypeList);
 			
-
-				return deleteCourse(course.getId());
-				
-			}
-			
-			
-			courseService.deleteCourse(course)
+			 this.returnInfo = "删除成功";
+				log.info(returnInfo);
+				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
+				return SUCCESS;
 			
                         
-         } catch (Exception e) {
+         } catch (DataError de) {
+             de.printStackTrace();
+             this.returnInfo = de.getMessage();
+     		log.info(returnInfo);
+     		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+     		return SUCCESS;
+         }catch (Exception e) {
                         e.printStackTrace();
            }
  
-                this.returnInfo = "系统发生内部错误，删除失败";
+        this.returnInfo = "系统发生内部错误，删除失败";
 		log.info(returnInfo);
 		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 		return SUCCESS;
@@ -287,13 +305,25 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>{
 		log.info(logprefix + "updateCourseAjax");
 
 		try {				
-				Course ch = courseService.selectCourseById(course.getId());
-				Course en = courseService.selectCourseById(courseiden);
-				if(ch == null || en == null){
-					this.returnInfo = "获取修改信息出错";					
+				Course ch = new Course();
+				Course en = new Course();
+				int coursetype = course.getCoursetype();
+				
+				courseList = courseService.selectCourseByCondition(" where coursetype = "+coursetype);
+				if(courseList == null || courseList.size() !=2){
+					log.info(coursetype);
+					this.returnInfo = "获取修改课程信息出错";					
 					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 					return SUCCESS;
 				}
+				if(courseList.get(0).getLanguagetype() == CommonConfig.languagech){
+					ch = courseList.get(0);
+					en = courseList.get(1);
+				}else{
+					ch = courseList.get(1);
+					en = courseList.get(0);
+				}
+		
 //              选择能更改的属性，与界面一致	
   				ch.setName(course.getName());
   				ch.setType(course.getType());

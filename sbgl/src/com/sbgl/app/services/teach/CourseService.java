@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sbgl.app.entity.Course;
 import com.sbgl.app.entity.CourseFull;
+import com.sbgl.common.DataError;
 import com.sbgl.util.*;
 
 public interface CourseService{
@@ -52,6 +53,8 @@ public interface CourseService{
     public List<CourseFull>  selectCourseFullByConditionAndPage(String condition,final Page page);
 
 	boolean updateCourse(Course ch, Course en);
+
+	int deleteCourse(List<Integer> delCourseIdList) throws DataError;
 		
 	
 	

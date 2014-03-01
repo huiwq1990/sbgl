@@ -10,7 +10,6 @@
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 <link href="${jsDomain}/editor/themes/default/default.css" rel="stylesheet" type="text/css" />
-<link href="${cssDomain}/jqpagination.css" rel="stylesheet" type="text/css" />
 
 #parse("include/includePageCompatibility.vm")
 
@@ -46,7 +45,7 @@
               </div>
               -->
               <div class="operate-item pull-left">
-                <a href="${webbaseurl}/toAddComputerorderclassrulePage.${strutsaction}" class="btn btn-primary">添加</a>
+                <a href="${webbaseurl}/toAddComputerhomework.${strutsaction}" class="btn btn-primary">添加</a>
                 <a href="#" class="btn btn-white s-h" action-type="deleteComputerhomeworkButton"><i class="icon-trash"></i> 删除</a>
               </div>
 

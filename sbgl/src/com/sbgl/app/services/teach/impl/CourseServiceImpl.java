@@ -9,13 +9,18 @@ import com.sbgl.app.entity.Course;
 import com.sbgl.app.entity.CourseFull;
 import com.sbgl.app.entity.Courseschedule;
 import com.sbgl.app.services.teach.CourseService;
+import com.sbgl.app.actions.orderadmin.OrderCountFull;
 import com.sbgl.app.dao.ComputerorderclassruleDao;
 import com.sbgl.app.dao.CourseDao;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.CoursescheduleDao;
+import com.sbgl.app.dao.OrderAdminDao;
+import com.sbgl.common.DataError;
 import com.sbgl.util.*;
 
 import javax.annotation.Resource;
+
+import org.jfree.util.Log;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +39,9 @@ public class CourseServiceImpl implements CourseService{
 	
 	@Resource
 	private CoursescheduleDao coursescheduleDao;
+	
+	@Resource
+	private  OrderAdminDao orderAdminDao;
 	
 	
 //	@Resource
@@ -85,24 +93,31 @@ public class CourseServiceImpl implements CourseService{
 	
 	
 	@Override
-	public int deleteCourse(List<Integer> delCourseIdList) {
-		for(Integer cid : delCourseIdList){
+	public int deleteCourse(List<Integer> delCourseTypeList) throws DataError {
+		
+		for(Integer cType : delCourseTypeList){
 			
-			List<Computerorderclassrule> corList = computerorderclassruleDao.selectComputerorderclassruleByCondition(" where classid = "+cid);
+			List<Computerorderclassrule> corList = computerorderclassruleDao.selectComputerorderclassruleByCondition(" where classid = "+cType);
 			
-			List<Courseschedule> csList = coursescheduleDao.selectCoursescheduleByCondition(" where classid = "+cid);
+			List<Courseschedule> csList = coursescheduleDao.selectCoursescheduleByCondition(" where courseid = "+cType);
 			
+			OrderCountFull ocf = orderAdminDao.findOrderCountRule(cType);
 			
-			if( (corList == null || corList.size() ==0) && (csList == null || csList.size() ==0) ){
-				
+			if( (corList == null || corList.size() ==0) && (csList == null || csList.size() ==0) &&  (ocf.getOrderCount1()== 0 ) ){
+//				System.out.println("课程没有被使用");
 			}else{
-				throw 
+				throw new DataError("课程已经被使用");
 			}
 		
-
-			return deleteCourse(course.getId());
+			 baseDao.deleteByProperty("Course","coursetype", cType);
+//			baseDao.createSQL("delete from course where coursetype = "+cid);
 			
 		}
+		
+		return 1;
+		
+		
+		
 	}
 
 
