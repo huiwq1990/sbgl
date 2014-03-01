@@ -122,5 +122,8 @@ public class ComputerActionUtil {
 	}
 	
 	
+	public static void main(String[] args) {
+		System.out.println(ComputerActionUtil.getDefaultComputerorderconfig().getMaxorderday());
+	}
 	
 }
