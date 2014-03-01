@@ -185,15 +185,17 @@
             <div class="thumbnail">
               <div class="hd clearfix">
                 <h3 class="pull-left">进行中的机房预约</h3>
-                <a href="预约首页.html" class="more lk pull-right">查看全部</a>
+                <a href="${webbaseurl}/viewMineComputerorderList.${strutsaction}" class="more lk pull-right">查看全部</a>
               </div>
               <ul class="media-list">
+				#foreach($order in $computerorderFullUnderwayList)
                 <li class="media">
                   <div class="media-body">
-                    <div class="media-heading"><h5><a href="设备预约详细内容页.html">数字摄影技术第11周设备申请通知</a></h5><span>等待你提交预约申请</span></div>
+                    <div class="media-heading"><h5><a href="">$order.computerordertitle</a></h5><span>等待你提交预约申请</span></div>
                     <span class="tag label label-important">课程预约</span>                  
                   </div>
                 </li>
+				#end
                 <li class="media">
                   <div class="media-body">
                     <div class="media-heading"><h5><a href="设备预约详细内容页.html">2013年6月18日设备申请</a></h5><span>等待审核</span></div>

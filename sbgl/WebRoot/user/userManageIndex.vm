@@ -494,7 +494,32 @@
 		    success:function(data,textStatus,jq) {  
 			    var n = noty({text: tip, timeout: 2500, type: 'success'});
 			    _this.parents('.modal').modal('toggle');
-				$("#admin-wrap").html(data);
+				//$("#admin-wrap").html(data);
+				var postData = {
+        			"type": selectedType,
+        			"curPage": curPage
+        		};
+        		
+        		
+        		jQuery.ajax({
+        			url: "${webbaseurl}/flushIndex.do",  
+        			type: "post",
+        			data: postData,
+        			success: function(data,textStatus,jq) {
+        				$("#admin-wrap").html(data);
+        				
+        				$(".active").removeClass("active");
+        				$("#"+selectedType).addClass("active");
+        				
+        				totalPage = $("#tp").html();
+        				curPage = $("#cp").html();
+                		
+        				//console.log("****" + curPage);
+        			},
+        			error: function(data,textStatus,jq) {
+        				alert("刷新界面失败!");
+        			}
+        		});
 	        },  
 		    error:function(data,textStatus,jq){
 		        var n = noty({text: "系统错误，操作失败，请联系管理员！", timeout: 2500, type: 'error'});

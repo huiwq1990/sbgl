@@ -372,6 +372,8 @@ public class DateUtil {
 		System.out.println(DateUtil.getDateDay(DateUtil.currentDate()));
 		System.out.println(DateUtil.getDateMinute(DateUtil.currentDate()));
 		
+		
+		System.out.println(DateUtil.daysBetween(DateUtil.currentDate(), DateUtil.addDay(DateUtil.currentDate(), 2)));
 		test();
 	}
 }
