@@ -94,6 +94,9 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 		computerorder.setOrdertype(computerordertype);
 		computerorder.setCreatetime(DateUtil.currentDate());
 		computerorder.setStatus(ComputerorderInfo.ComputerorderStatusAduitWait);
+		
+		computerorder.setTitle(tempcomputerorder.getTitle());
+		computerorder.setRemark(tempcomputerorder.getRemark());
 //		保存订单信息 如果是驳回预约，则是更新
 		if(reorder == 1){
 //			temp.setId(computerorderid);

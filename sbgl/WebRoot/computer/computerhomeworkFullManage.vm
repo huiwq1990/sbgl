@@ -420,19 +420,12 @@ $('.modal').on('click', ('button.btn-primary'), function () {
 			});
 		}
 		
-		idsForDel = "";
-		
-		$("input[name='chk-list']").each(function() {
-			if($(this).prop("checked") === true) {
-				//num++;
-				idsForDel += $(this).prop("value") + ";";
-			}
-		});
 	});
 	//end checkbox
 	
 	//delete分类
 	$("body").on("click", "a[action-type|=deleteComputerhomeworkButton]", function() {
+		var idsForDel = getSelectedCheckboxList();		
 		idsForDel = idsForDel.substring(0,idsForDel.length-1);
 		var postData = {
 			computerhomeworkIdsForDel:idsForDel

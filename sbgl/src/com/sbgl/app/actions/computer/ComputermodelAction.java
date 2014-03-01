@@ -337,7 +337,7 @@ public class ComputermodelAction extends BaseAction implements ModelDriven<Compu
 		}
 		
 		try {
-					
+				
 			computermodel.setCreateuserid(uid);
 			
 				Computermodel tempCh = computermodelService.selectComputermodelById(computermodel.getId());
