@@ -169,7 +169,7 @@ public class FileUploadAction  extends ActionSupport {
 		}
 		
 		destinationFileName = destinationFileName+fileType;
-		
+		savedFileName = destinationFileName;
 		
 		if(imagePath.equals("") || destinationFileName.equals("")){
 			returnInfo = "无法获取保存的路径及文件名";

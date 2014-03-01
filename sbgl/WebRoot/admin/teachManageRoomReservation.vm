@@ -352,27 +352,7 @@
 			type: "post",
 			success: function(data,textStatus,jq) {
 				console.log(data);
-				$.each(data.allClass, function(index, elem) {
-					var m = "media";
-					var p = "pull-left";
-					var url = "${imageDomain}/photo.jpg";
-					var w = "46";
-					var h = "46";
-					var mb = "media-body";
-					var c1 = "media-heading";
-					var c2 = "text-muted";
-        			$("#user-list .media-list").append(
-						"<li data-id=" + elem.stuId + " data--name=" + elem.stuName + " class=" + m + ">" +
-                    		"<div class=" + p + ">" + 
-                      			"<img src=" + url + " width=" + w + " height=" + h + ">" +
-                    		"</div>" +
-                    		"<div class=" + mb + ">" +
-                      			"<div class=" + c1 + ">" + elem.stuName + "</div>" +
-                      			"<div class=" + c2 + ">" + elem.className + "</div>" +
-                    		"</div>" +
-                  		"</li>");
-                });
-				//console.log();
+
 			},
 			error: function(data,textStatus,jq) {
 				alert("加载数据失败!");

@@ -396,7 +396,7 @@
         			"equipment.imgname": localFileName,
         			"equipmentEN.imgname": localFileName,
         			"equipment.imgnamesaved": savedFileName,
-        			"equipmentEN.imgNamesaved": savedFileName,
+        			"equipmentEN.imgnamesaved": savedFileName,
         			"equipment.equipmentdetail": memo,
         			"equipmentEN.equipmentdetail": memoEN,
         			"equipment.lantype": "0",
@@ -432,7 +432,7 @@
     				"equipment.classificationid": cidInput,
 					"equipment.imgname": localFileName,
 					"equipment.brandid": brandId,
-        			"equipment.imgnameSaved": savedFileName,
+        			"equipment.imgnamesaved": savedFileName,
     				"equipment.equipmentdetail": memo,
     				"equipmentEN.equipmentid": modelIdForAlterEN,
     				"equipmentEN.equipmentname": enameEN,
@@ -775,7 +775,7 @@
 	*************************************************************************************/
 	//上传图片
 	$("#inputEPic").fileupload({
-    	url: "${webbaseurl}/uploadFile.do",
+    	url: "${webbaseurl}/uploadImageFile.do",
         dataType: 'json',
 		change: function (e, data) {
         	$("#submitBtnForAdd").attr("disabled", "disabled");

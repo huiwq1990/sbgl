@@ -54,7 +54,7 @@ public class EquipServiceImpl implements EquipService {
 	}
 
 	@Override
-	public Integer alterEquipInfo(Equipment equip) {
+	public Integer alterEquipInfo(Equipment equip, String flag) {
 		// TODO Auto-generated method stub
 		Integer id = equip.getEquipmentid();
 		Equipment storeEquip = baseDao.getEntityById(Equipment.class, id);
@@ -66,12 +66,15 @@ public class EquipServiceImpl implements EquipService {
 		storeEquip.setClassificationid( equip.getClassificationid() );
 		storeEquip.setAdministrationid( equip.getAdministrationid() );
 		storeEquip.setModifydate( new Date() );
-		storeEquip.setEquipmentnum( equip.getEquipmentnum() );
-		storeEquip.setActivenum( equip.getActivenum() );
-		storeEquip.setMaintainnum( equip.getMaintainnum() );
-		storeEquip.setRepairnum( equip.getRepairnum() );
-		storeEquip.setLosednum( equip.getLosednum() );
-		storeEquip.setRecyclingnum( equip.getRecyclingnum() );
+		if( "0".equals(flag) ) { //前台修改不动统计数字
+			storeEquip.setEquipmentnum( equip.getEquipmentnum() );
+			storeEquip.setActivenum( equip.getActivenum() );
+			storeEquip.setMaintainnum( equip.getMaintainnum() );
+			storeEquip.setRepairnum( equip.getRepairnum() );
+			storeEquip.setLosednum( equip.getLosednum() );
+			storeEquip.setRecyclingnum( equip.getRecyclingnum() );
+		}
+		
 		//storeEquip.setProductnum( equip.getProductnum() );
 		storeEquip.setEquipmentdetail( equip.getEquipmentdetail() );
 		storeEquip.setCategory( equip.getCategory() );
@@ -236,8 +239,8 @@ public class EquipServiceImpl implements EquipService {
 					e.setRecyclingnum( e.getRecyclingnum()==null ? 1 : e.getRecyclingnum() + 1 );
 					ee.setRecyclingnum( ee.getRecyclingnum()==null ? 1 : ee.getRecyclingnum() + 1 );
 				}
-				this.alterEquipInfo( e );
-				this.alterEquipInfo( ee );
+				this.alterEquipInfo( e, "0" );
+				this.alterEquipInfo( ee, "0" );
 			}
 			
 		}
@@ -304,8 +307,8 @@ public class EquipServiceImpl implements EquipService {
 						e.setRecyclingnum( e.getRecyclingnum()==null ? 1 : e.getRecyclingnum() + 1 );
 						ee.setRecyclingnum( ee.getRecyclingnum()==null ? 1 : ee.getRecyclingnum() + 1 );
 					}
-					this.alterEquipInfo( e );
-					this.alterEquipInfo( ee );
+					this.alterEquipInfo( e, "0" );
+					this.alterEquipInfo( ee, "0" );
 				}
 				
 			} else if( oldEquipid != -1 && equipmentdetail.getEquipmentid() == -1 ) { //从有型号变为没有型号
@@ -332,8 +335,8 @@ public class EquipServiceImpl implements EquipService {
 						e.setRecyclingnum( e.getRecyclingnum() - 1 );
 						ee.setRecyclingnum( ee.getRecyclingnum() - 1 );
 					}
-					this.alterEquipInfo( e );
-					this.alterEquipInfo( ee );
+					this.alterEquipInfo( e, "0" );
+					this.alterEquipInfo( ee, "0" );
 				}
 				
 			} else if( !oldEquipid.equals(equipmentdetail.getEquipmentid()) && oldEquipid != null && equipmentdetail.getEquipmentid() != null ) {  //型号不相同
@@ -360,8 +363,8 @@ public class EquipServiceImpl implements EquipService {
 						e.setRecyclingnum( e.getRecyclingnum()==null ? 1 : e.getRecyclingnum() + 1 );
 						ee.setRecyclingnum( ee.getRecyclingnum()==null ? 1 : ee.getRecyclingnum() + 1 );
 					}
-					this.alterEquipInfo( e );
-					this.alterEquipInfo( ee );
+					this.alterEquipInfo( e, "0" );
+					this.alterEquipInfo( ee, "0" );
 				}
 				
 				e = this.getEquipmentById( oldEquipid );
@@ -387,8 +390,8 @@ public class EquipServiceImpl implements EquipService {
 						e.setRecyclingnum( e.getRecyclingnum() - 1 );
 						ee.setRecyclingnum( ee.getRecyclingnum() - 1 );
 					}
-					this.alterEquipInfo( e );
-					this.alterEquipInfo( ee );
+					this.alterEquipInfo( e, "0" );
+					this.alterEquipInfo( ee, "0" );
 				}
 				
 			} else if( oldEquipid != -1 && equipmentdetail.getEquipmentid() != -1 && 
@@ -433,8 +436,8 @@ public class EquipServiceImpl implements EquipService {
 						ee.setRecyclingnum( ee.getRecyclingnum() - 1 );
 					}
 					
-					this.alterEquipInfo( e );
-					this.alterEquipInfo( ee );
+					this.alterEquipInfo( e, "0" );
+					this.alterEquipInfo( ee, "0" );
 				}
 			}
 		}
@@ -481,8 +484,8 @@ public class EquipServiceImpl implements EquipService {
 					e.setRecyclingnum( e.getRecyclingnum() - 1 );
 					ee.setRecyclingnum( ee.getRecyclingnum() - 1 );
 				}
-				this.alterEquipInfo( e );
-				this.alterEquipInfo( ee );
+				this.alterEquipInfo( e, "0" );
+				this.alterEquipInfo( ee, "0" );
 			}
 			
 		}

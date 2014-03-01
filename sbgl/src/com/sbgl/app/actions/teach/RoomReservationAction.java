@@ -1,6 +1,7 @@
 package com.sbgl.app.actions.teach;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ public class RoomReservationAction extends ActionSupport {
 	}
 	
 	public String getStuInClass() {
+		dtoMap = new HashMap<String, Object>();
 		List<Clazz> cList = new ArrayList<Clazz>();
 		List<StuInClassDto> dtoList = new ArrayList<StuInClassDto>();
 		
@@ -57,6 +59,7 @@ public class RoomReservationAction extends ActionSupport {
 						dto.setId( stu.getId() );
 						dto.setName( stu.getName() );
 						dto.setPhoto( stu.getPhoto() );
+						dtoList.add( dto );
 					}
 				}
 			}
