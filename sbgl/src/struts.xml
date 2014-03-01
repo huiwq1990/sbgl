@@ -44,13 +44,6 @@
             <result name="exception-error">/error.vm</result>
         </global-results>
         
-       
-        
-        <action name="indexInfo">
-        	<result>
-        		/index-info.vm
-        	</result>
-        </action>
     </package>
     
     

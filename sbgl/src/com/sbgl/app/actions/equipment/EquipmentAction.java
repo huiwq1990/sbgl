@@ -662,7 +662,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		for (Equipment equipment : allModel) {
 			if("0".equals( equipment.getLantype() )) {
 				EquipModelCourse emc = new EquipModelCourse();
-				emc.setId( String.valueOf( equipment.getEquipmentid() ) );
+				emc.setId( String.valueOf( equipment.getComid() ) );		//根据需求改为联合主键，不再使用单个中文主键
 				emc.setName( String.valueOf( equipment.getEquipmentname() ) );
 				
 				Equipmentclassification cf = equipService.getEquipmentclassificationById( equipment.getClassificationid() );
@@ -1175,7 +1175,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				Equipment e = equipService.getEquipmentById( equipdetail.getEquipmentid() );
 			
 				if(e != null) {
-					ec.setModelId( String.valueOf( e.getEquipmentid() ) );
+					ec.setModelId( String.valueOf( e.getComid() ) );	//根据需求改为联合主键，不再是中文型号的id
 					ec.setModelName( e.getEquipmentname() );
 //					ec.setCode( String.valueOf( equipdetail.getEquipserial() ) );
 					if( e.getClassificationid() != null && e.getClassificationid() != -1 ) {

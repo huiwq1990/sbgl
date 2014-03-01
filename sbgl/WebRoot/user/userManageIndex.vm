@@ -494,7 +494,7 @@
 		    success:function(data,textStatus,jq) {  
 			    var n = noty({text: tip, timeout: 2500, type: 'success'});
 			    _this.parents('.modal').modal('toggle');
-				//$("#admin-wrap").html(data);
+				$("#admin-wrap").html(data);
 	        },  
 		    error:function(data,textStatus,jq){
 		        var n = noty({text: "系统错误，操作失败，请联系管理员！", timeout: 2500, type: 'error'});
