@@ -17,7 +17,7 @@ public interface EquipService {
 	//添加器材类型信息
 	public Integer addEquipInfo(Equipment equip);
 	//修改器材类型信息
-	public Integer alterEquipInfo(Equipment equip);
+	public Integer alterEquipInfo(Equipment equip, String flag);
 	//删除器材类型信息 
 	public boolean deleteEquipInfo(Integer equipId);
 	//查询器材类型信息-id

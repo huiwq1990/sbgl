@@ -386,20 +386,21 @@
 				//console.log("**********" + modelName);
     			postData = {
         			"equipment.administrationid": cookie.Get("uid"),
+        			"equipmentEN.administrationid": cookie.Get("uid"),
         			"equipment.equipmentname": modelName,
         			"equipmentEN.equipmentname": modelNameEN,
         			"equipment.classificationid": clazzId,
         			"equipmentEN.classificationid": clazzId,
         			"equipment.brandid": brandId,
         			"equipmentEN.brandid": brandId,
-        			"equipment.imgName": localFileName,
-        			"equipmentEN.imgName": localFileName,
-        			"equipment.imgNameSaved": savedFileName,
-        			"equipmentEN.imgNameSaved": savedFileName,
+        			"equipment.imgname": localFileName,
+        			"equipmentEN.imgname": localFileName,
+        			"equipment.imgnamesaved": savedFileName,
+        			"equipmentEN.imgnamesaved": savedFileName,
         			"equipment.equipmentdetail": memo,
         			"equipmentEN.equipmentdetail": memoEN,
-        			"equipment.lanType": "0",
-        			"equipmentEN.lanType": "1",
+        			"equipment.lantype": "0",
+        			"equipmentEN.lantype": "1",
 					"crtModelPage": currentPageNo
         		}
     			
@@ -429,16 +430,16 @@
     				"equipment.equipmentid": modelIdForAlter,
     				"equipment.equipmentname": ename,
     				"equipment.classificationid": cidInput,
-					"equipment.imgName": localFileName,
+					"equipment.imgname": localFileName,
 					"equipment.brandid": brandId,
-        			"equipment.imgNameSaved": savedFileName,
+        			"equipment.imgnamesaved": savedFileName,
     				"equipment.equipmentdetail": memo,
     				"equipmentEN.equipmentid": modelIdForAlterEN,
     				"equipmentEN.equipmentname": enameEN,
     				"equipmentEN.classificationid": cidInput,
-					"equipmentEN.imgName": localFileName,
+					"equipmentEN.imgname": localFileName,
 					"equipmentEN.brandid": brandId,
-        			"equipmentEN.imgNameSaved": savedFileName,
+        			"equipmentEN.imgnamesaved": savedFileName,
     				"equipmentEN.equipmentdetail": memoEN,
 					"crtModelPage": currentPageNo
     			}
@@ -774,7 +775,7 @@
 	*************************************************************************************/
 	//上传图片
 	$("#inputEPic").fileupload({
-    	url: "${webbaseurl}/uploadFile.do",
+    	url: "${webbaseurl}/uploadImageFile.do",
         dataType: 'json',
 		change: function (e, data) {
         	$("#submitBtnForAdd").attr("disabled", "disabled");

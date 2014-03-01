@@ -89,16 +89,15 @@
 			  <div class="tips">在此页面下管理课程预约规则，如规则的添加、修改、删除及维护等。</div>
               <div class="filter category-filter">
                 <select id="select-categories" style="width:130px" class="select2">
-                  <option value="0" data-foo="fa">全部课程</option>
+                  <option value="0" data-foo="fa" data-type="classrule" data-id="0" >全部课程</option>
 				  #foreach($row in $!courseFullList)	
-                  <option value="$row.courseid" data-type="orderclassrule2" data-id="$!row.courseid" data-foo="fa">$row.coursename</option>
+                  <option value="$row.courseid" data-type="classrule" data-id="$!row.courseid" data-foo="fa">$row.coursename</option>
 				  #end
                 </select>
               </div>
               
               <div class="operate-item pull-left">
-                <a href="#createEquipRule" class="btn btn-primary" data-toggle="modal" role="button">创建规则</a>
-                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+                <a href="#createEquipRule" class="btn btn-primary"  data-type="equipclassrule" data-toggle="modal" role="button">创建规则</a>
               </div>
 
               <div class="page pull-right clearfix">
@@ -107,15 +106,15 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!page.pageNo/$!page.totalpage页 <b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu">
                       #foreach($i in [1 .. $!page.totalpage])	
-						<li><a data-type="orderclassrule2" data-pageno="$i" data-maxpage="$!page.totalpage" href="#">$i</a></li>
+						<li><a data-type="classrule" data-pageno="$i" data-maxpage="$!page.totalpage" href="#">$i</a></li>
 					  #end
                     </ul>
                   </li>              
                 </ul>
                 <div class="pagination pull-right">
                   <ul>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-type="orderclassrule2" data-pageno="$!page.pageNo-1"  data-maxpage="$!page.totalpage" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-type="orderclassrule2" data-pageno="$!page.pageNo+1"  data-maxpage="$!page.totalpage" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-type="classrule" data-pageno="$!page.pageNo-1"  data-maxpage="$!page.totalpage" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-type="classrule" data-pageno="$!page.pageNo+1"  data-maxpage="$!page.totalpage" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
                   </ul>
                 </div>              
               </div>
@@ -137,7 +136,7 @@
 				#foreach($row2 in $!ordercourseruleFullList)	
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="${velocityCount}"></td>
-                    <td>${velocityCount}<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
+                    <td>${velocityCount}</td>
                     <td>$row2.courseName</td>
                     <td>$row2.courserulename</td>
                     <td>$row2.teacherName</td>
@@ -158,9 +157,10 @@
         </form>
         <div class="list-group">
           <a href="设备预约首页.html" class="list-group-item">预约管理</a>
-          <a href="设备预约-新建预约.html" class="list-group-item">新建预约</a>
           <a href="设备预约-课程预约规则.html" class="list-group-item active">课程预约规则</a>
-          <a href="设备预约-设置.html" class="list-group-item">设置</a>
+		  
+          <!--<a href="设备预约-新建预约.html" class="list-group-item">新建预约</a>
+          <a href="设备预约-设置.html" class="list-group-item">设置</a>-->
         </div>
       </div>
       <!--sidebar end-->
@@ -170,65 +170,7 @@
 
 <!-- Modal -->
 <div id="createEquipRule" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="createEquipRuleLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="createEquipRuleLabel">创建规则</h3>
-  </div>
-  <div class="modal-body">
-    <p>根据课程教学要求确定器材使用范围。选择课程名称后为新的规则起一个名称，并在器材列表中选取该规则下能使用的器材范围。规则创建后可多次重复使用。</p>
-    <div class="row">
-      <div class="col-md-4">
-        <select id="inputCourseName" class="select2 form-control select-white" data-placeholder="请选择课程" style="width: 100%;">
-          <option></option>
-          <option value="11111">MV、广告创作</option>
-          <option value="22222">故事片创作</option>
-          <option value="33333">其它</option>
-        </select>
-      </div>
-      <div class="col-md-8">
-        <div class="form-group rule-name">
-        <label class="sr-only" for="inputSendTo">收件人</label>
-        <input type="text" id="inputRuleName" class="form-control" placeholder="规则名称">
-        </div>
-      </div>
-    </div>
-    <div class="tabbable tabs-left">
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#lA" data-toggle="tab">摄影机</a></li>
-        <li><a href="#lB" data-toggle="tab">镜头</a></li>
-        <li><a href="#lC" data-toggle="tab">灯具</a></li>
-        <li><a href="#lD" data-toggle="tab">其他一级分类</a></li>
-      </ul>
-      <div class="tab-content">
-        <div class="tab-pane active" id="lA">
-          <div class="row model-list">
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="111" data-is-select="false"><i class="icon-check-empty icon-large"></i>ARRI ALEXA</div>
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="222" data-is-select="false"><i class="icon-check-empty icon-large"></i>RED EPIC</div>
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="333" data-is-select="false"><i class="icon-check-empty icon-large"></i>RED SCARLET</div>
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="2" data-model-id="444" data-is-select="false"><i class="icon-check-empty icon-large"></i>EOS 5D MARK II</div>
-          </div>
-        </div>
-        <div class="tab-pane" id="lB">
-          <div class="row model-list">
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="7777" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 18mm/T3.6</div>
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="8888" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 21mm/T2.9</div>
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="9999" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 25mm/T2.9</div>
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="2" data-model-id="0000" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 28mm/T2.1</div>
-          </div>
-        </div>
-        <div class="tab-pane" id="lC">
-          <p>灯具列表……</p>
-        </div>
-        <div class="tab-pane" id="lD">
-          <p>其他器材列表……</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary" id="submit">完 成</button>
-  </div>
+  
 </div>
 
 
@@ -274,7 +216,7 @@
         });
 	});
 	
-	$("body").on("click", "a[data-type|=orderclassrule2]", function() {
+	$("body").on("click", "a[data-type|=classrule]", function() {
 	    var courseid = $(this).data("id");	
 		var pageno = $(this).data("pageno");	
 		var maxpage = $(this).data("maxpage");
@@ -299,7 +241,9 @@
 		});
 	});
 	
-	$("body").on("click", "a[data-type|=orderclassrule2]", function() {
+
+	$("body").on("click", "option[data-type|=classrule]", function() {
+		alert(1111)
 	    var courseid = $(this).data("id");	
 		var pageno = $(this).data("pageno");	
 		var maxpage = $(this).data("maxpage");
@@ -323,6 +267,21 @@
 			}	  
 		});
 	});
+	
+	
+	$("body").on("click", "a[data-type|=equipclassrule]", function() {
+		$.ajax({
+			url: "orderclassrule3.do",
+			type: 'POST',
+			data: {},
+			dataType: 'html',
+			success: function(data){
+				//刷新数据
+			   $("#createEquipRule").html(data);
+			}	  
+		});
+	});
+	
 </script>
 
 

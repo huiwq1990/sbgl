@@ -6,8 +6,8 @@
 -->
 <hibernate-mapping>
     <class name="com.sbgl.app.entity.Equipmentdetail" table="equipmentdetail" catalog="sbgl">
-        <id name="equipDetailid" type="java.lang.Integer">
-            <column name="equipDetailid" />
+        <id name="equipdetailid" type="java.lang.Integer">
+            <column name="equipdetailid" />
             <generator class="assigned" />
         </id>
         <property name="equipmentid" type="java.lang.Integer">
@@ -20,10 +20,10 @@
             <column name="administrationid" />
         </property>
         <property name="makedate" type="java.util.Date">
-            <column name="makedate"  />
+            <column name="makedate" length="19" />
         </property>
         <property name="modifydate" type="java.util.Date">
-            <column name="modifydate"  />
+            <column name="modifydate" length="19" />
         </property>
         <property name="sysremark" type="java.lang.String">
             <column name="sysremark" length="2000" />
@@ -31,11 +31,11 @@
         <property name="usermark" type="java.lang.String">
             <column name="usermark" length="2000" />
         </property>
-        <property name="manufactureDate" type="java.util.Date">
-            <column name="manufactureDate" length="10" />
+        <property name="manufacturedate" type="java.util.Date">
+            <column name="manufacturedate" length="10" />
         </property>
-        <property name="acquireDate" type="java.util.Date">
-            <column name="acquireDate" length="10" />
+        <property name="acquiredate" type="java.util.Date">
+            <column name="acquiredate" length="10" />
         </property>
         <property name="manufacturer" type="java.lang.String">
             <column name="manufacturer" length="200" />
@@ -46,23 +46,23 @@
         <property name="worth" type="java.lang.Float">
             <column name="worth" precision="12" scale="0" />
         </property>
-        <property name="useManageDept" type="java.lang.String">
-            <column name="useManageDept" length="100" />
+        <property name="usemanagedept" type="java.lang.String">
+            <column name="usemanagedept" length="100" />
         </property>
         <property name="manager" type="java.lang.String">
             <column name="manager" length="20" />
         </property>
-        <property name="storagePlace" type="java.lang.String">
-            <column name="storagePlace" length="200" />
+        <property name="storageplace" type="java.lang.String">
+            <column name="storageplace" length="200" />
         </property>
-        <property name="storagePosition" type="java.lang.String">
-            <column name="storagePosition" length="200" />
+        <property name="storageposition" type="java.lang.String">
+            <column name="storageposition" length="200" />
         </property>
-        <property name="lanType" type="java.lang.String">
-            <column name="lanType" length="2" />
+        <property name="lantype" type="java.lang.String">
+            <column name="lantype" length="2" />
         </property>
-        <property name="comId" type="java.lang.Integer">
-            <column name="comId" />
+        <property name="comid" type="java.lang.Integer">
+            <column name="comid" />
         </property>
         <property name="storenumber" type="java.lang.Integer">
             <column name="storenumber" />
@@ -70,8 +70,8 @@
         <property name="equipserial" type="java.lang.String">
             <column name="equipserial" length="50" />
         </property>
-        <property name="assetNumber" type="java.lang.Integer">
-            <column name="assetNumber" />
+        <property name="assetnumber" type="java.lang.Integer">
+            <column name="assetnumber" />
         </property>
         <property name="classificationid" type="java.lang.Integer">
             <column name="classificationid" />

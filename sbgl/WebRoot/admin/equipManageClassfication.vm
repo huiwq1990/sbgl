@@ -284,11 +284,11 @@
     				"equipClassforAdd.parentid": pId,
     				"equipClassforAdd.name": className,
     				"equipClassforAdd.userid": userId,
-    				"equipClassforAdd.lanType": "0",
+    				"equipClassforAdd.lantype": "0",
     				"equipClassforAddEN.parentid": pId,
     				"equipClassforAddEN.name": classNameEN,
     				"equipClassforAddEN.userid": userId,
-    				"equipClassforAddEN.lanType": "1",
+    				"equipClassforAddEN.lantype": "1",
 					"currentPage": currentPageNo
     			}
     			actionUrl = "${webbaseurl}/addClassification.do";
