@@ -11,7 +11,7 @@
             <generator class="assigned" />
         </id>
         <property name="category" type="java.lang.Integer">
-            <column name="category" />
+            <column name="category" not-null="true" />
         </property>
         <property name="userid" type="java.lang.Integer">
             <column name="userid" />
@@ -20,16 +20,16 @@
             <column name="teacherid" />
         </property>
         <property name="applytime" type="java.util.Date">
-            <column name="applytime" length="19" />
+            <column name="applytime"/>
         </property>
         <property name="status" type="java.lang.Integer">
             <column name="status" />
         </property>
         <property name="borrowtime" type="java.util.Date">
-            <column name="borrowtime" length="19" />
+            <column name="borrowtime" />
         </property>
         <property name="returntime" type="java.util.Date">
-            <column name="returntime" length="19" />
+            <column name="returntime"/>
         </property>
         <property name="reason" type="java.lang.String">
             <column name="reason" length="2000" />
@@ -51,6 +51,15 @@
         </property>
         <property name="remark" type="java.lang.String">
             <column name="remark" length="4000" />
+        </property>
+        <property name="examuser" type="java.lang.Integer">
+            <column name="examuser" />
+        </property>
+        <property name="homeworkid" type="java.lang.Integer">
+            <column name="homeworkid" />
+        </property>
+        <property name="examdate" type="java.util.Date">
+            <column name="examdate" />
         </property>
     </class>
 </hibernate-mapping>

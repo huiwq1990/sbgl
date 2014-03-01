@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.f1j.paint.en;
+import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.OrderMainDao;
@@ -20,6 +21,7 @@ import com.sbgl.app.entity.Equipment;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Equipmentnum;
 import com.sbgl.app.entity.Listdetail;
+import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.services.order.OrderMainService;
 import com.sbgl.common.DataError;
 import com.sbgl.util.DateUtil;
@@ -114,7 +116,7 @@ public class OrderMainServiceImpl implements OrderMainService {
 			baseDao.saveEntity(equipmenBorrow);
 	}
 	
-	public Integer subOrder(String equIds,String equNums,String fromDate,String endDate,Integer borrowId) throws Exception{ 
+	public Integer subOrder(String equIds,String equNums,String fromDate,String endDate,Integer borrowId,Loginuser user) throws Exception{ 
 		Equipmenborrow equipmenborrow = new Equipmenborrow();
 		String temp1[] = equIds.split(",");
 		String temp2[] = equNums.split(",");
@@ -147,6 +149,8 @@ public class OrderMainServiceImpl implements OrderMainService {
 				}
 			}
 		}
+		equipmenborrow.setStatus(1);
+		equipmenborrow.setUserid(user.getId());
 		equipmenborrow.setCategory(1);
 		baseDao.saveEntity(equipmenborrow);	
 		return equipmenborrow.getBorrowid();
@@ -183,6 +187,20 @@ public class OrderMainServiceImpl implements OrderMainService {
 		// TODO Auto-generated method stub
 		return orderMainDao.findEquipmentByBorrowId(borrowId,fromDate,endDate);
 	}
+
+
+	@Override
+	public List<EquipmenborrowFull> findUnderWayOrder(Integer userId) {
+		// TODO Auto-generated method stub
+		return orderMainDao.findUnderWayOrder(userId);
+	}
+
+
+	@Override
+	public List<EquipmenborrowFull> findFinishOrder(Integer userId) {
+		// TODO Auto-generated method stub
+		return orderMainDao.findFinishOrder(userId);
+	} 
 
 	
 	

@@ -3,10 +3,13 @@ package com.sbgl.app.dao;
 import java.util.Date;
 import java.util.List;
 
+import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
+import com.sbgl.app.actions.orderadmin.OrderCountFull;
 import com.sbgl.app.entity.Equipment;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Equipmentnum;
+import com.sbgl.util.Page;
 
 public interface OrderMainDao {
 	//查找设备是否可借
@@ -29,4 +32,12 @@ public interface OrderMainDao {
 	public String findDayNum(Integer equipmentId,String fromDate,String endDate);
 	//根据订单查找选择的商品
 	public String findEquipmentByBorrowId(Integer borrowId,String fromDate,String endDate);
+	//找未完成的账单
+	public List<EquipmenborrowFull> findUnderWayOrder(Integer userId);
+	//找完成的账单
+	public List<EquipmenborrowFull> findFinishOrder(Integer userId);
+	//后台根据类型分页获取订单
+	public List<EquipmenborrowFull> findEquipmenborrow(String dealtype,String ordertype,Page page);
+	//查找后台订单统计数据
+	public OrderCountFull findOrderCount(String ordertype);
 }

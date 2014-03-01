@@ -1,10 +1,12 @@
 package com.sbgl.app.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.entity.Equipmenborrow;
+import com.sbgl.app.entity.Equipmentclassification;
 
 public interface OrderFinishDao {
 	//根据id查找订单，获得订单设备详情
@@ -13,4 +15,8 @@ public interface OrderFinishDao {
 	public EquipmenborrowFull findEquipmenborrow(Integer borrowId);
 	//获得设备详情
 	public EquipmentFull findEquipmentById(Integer equipmentId);
+	//获得订单设备的分类
+	public List<Equipmentclassification> findclassList(Integer borrowId);
+	//获得商品详情信息，根据分类获得
+	public Map<Integer,List<EquipmentFull>> findMapBorrow(Integer borrowId);
 }

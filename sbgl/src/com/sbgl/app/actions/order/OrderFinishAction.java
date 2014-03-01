@@ -66,9 +66,33 @@ public class OrderFinishAction  extends ActionSupport {
 		}
 		return SUCCESS;
 	}
+	
+	public String deleteorder(){
+		try{
+			boolean flag = false;
+			flag = orderFinishService.deleteorder(borrowId);
+			if(flag){
+				tag = "1";
+			}else{
+				tag = "2";
+				message = "订单删除失败";
+			}
+		}catch(Exception e){
+			tag = "2";
+			message = "订单删除失败";
+			log.error(e);
+		}
+		return SUCCESS;
+	}
 
 	public String equipConfirmContent(){
 		equipmentFull = orderFinishService.findEquipmentById(equipmentId);
+		return SUCCESS;
+	}
+	
+	public String equipOrderContent(){
+		equipmentList = orderFinishService.findListBorrow(borrowId);
+		equipmenborrowFull = orderFinishService.findEquipmenborrow(borrowId);
 		return SUCCESS;
 	}
 	

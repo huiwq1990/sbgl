@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	
+	 <package name="OrderExam" extends="admin">
+        <!-- 订单审核页面 -->
+	 	<action name="equipmentExaming" class="OrderExamAction" method="equipmentExaming">
+        	<result name="success">/order/equipmentExaming.vm</result>
+        </action>
+        <!-- 订单出库页面 -->
+	 	<action name="orderalibrary" class="OrderExamAction" method="orderalibrary">
+        	<result name="success">/order/orderalibrary.vm</result>
+        </action>
+    </package>
+    <package name="OrderExamAjax" extends="json-default">	
+    	<!-- 提交订单备注 -->
+	 	<action name="examorder" class="OrderExamAction" method="examorder">
+        	<result type="json"></result>
+        </action>
+    </package>
+</struts>

@@ -1,5 +1,6 @@
 package com.sbgl.app.entity;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -26,6 +27,9 @@ public class Equipmenborrow extends com.sbgl.app.dao.DaoAbs implements
 	private String examstate;
 	private String title;
 	private String remark;
+	private Integer examuser;
+	private Integer homeworkid;
+	private Date examdate;
 
 	// Constructors
 
@@ -34,16 +38,19 @@ public class Equipmenborrow extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** minimal constructor */
-	public Equipmenborrow(Integer borrowid) {
+	public Equipmenborrow(Integer borrowid, Integer category) {
 		this.borrowid = borrowid;
+		this.category = category;
 	}
 
 	/** full constructor */
 	public Equipmenborrow(Integer borrowid, Integer category, Integer userid,
-			Integer teacherid, Date applytime, Integer status,
-			Date borrowtime, Date returntime, String reason,
+			Integer teacherid, Timestamp applytime, Integer status,
+			Timestamp borrowtime, Timestamp returntime, String reason,
 			Integer borrowaudituser, Integer returnaudituser,
-			String teachersuggest, String examstate, String title, String remark) {
+			String teachersuggest, String examstate, String title,
+			String remark, Integer examuser, Integer homeworkid,
+			Timestamp examdate) {
 		this.borrowid = borrowid;
 		this.category = category;
 		this.userid = userid;
@@ -59,6 +66,9 @@ public class Equipmenborrow extends com.sbgl.app.dao.DaoAbs implements
 		this.examstate = examstate;
 		this.title = title;
 		this.remark = remark;
+		this.examuser = examuser;
+		this.homeworkid = homeworkid;
+		this.examdate = examdate;
 	}
 
 	// Property accessors
@@ -181,6 +191,30 @@ public class Equipmenborrow extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public Integer getExamuser() {
+		return this.examuser;
+	}
+
+	public void setExamuser(Integer examuser) {
+		this.examuser = examuser;
+	}
+
+	public Integer getHomeworkid() {
+		return this.homeworkid;
+	}
+
+	public void setHomeworkid(Integer homeworkid) {
+		this.homeworkid = homeworkid;
+	}
+
+	public Date getExamdate() {
+		return this.examdate;
+	}
+
+	public void setExamdate(Date examdate) {
+		this.examdate = examdate;
 	}
 
 }
