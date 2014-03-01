@@ -1,11 +1,13 @@
       <!--sidebar start-->
       <div id="lside">
         <div class="list-group">
+			
           <a href="${webbaseurl}/manageCourseFull.${strutsaction}" class="list-group-item
 			#if($currentWebpage == "manageCourse" )
 			active      
 			#end	
 			">课程管理</a>
+			
           <a href="${webbaseurl}/toCourseAddPage.${strutsaction}" class="list-group-item
 			#if($currentWebpage == "courseAdd" )
 			active      
