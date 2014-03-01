@@ -1,0 +1,55 @@
+  <!--sidebar start-->
+      <div id="lside">
+        <!-- <form class="form-group">
+          <input type="text" class="form-control" placeholder="搜索设备">
+          <i class="icon-search"></i>
+        </form> -->
+        <div class="list-group">
+			
+			<a href="${webbaseurl}/userManageUser.${strutsaction}" class="list-group-item
+			#if($currentWebpage == "userManageUser" )
+			active      
+			#end	
+			">用户管理</a>
+			
+			<a href="${webbaseurl}/userManageUserAdd.${strutsaction}" class="list-group-item
+			#if($currentWebpage == "userManageUserAdd" )
+			active      
+			#end	
+			">添加用户</a>
+			
+			<a href="${webbaseurl}/userManageUserGroup.${strutsaction}" class="list-group-item
+			#if($currentWebpage == "userManageUserGroup" )
+			active      
+			#end	
+			">用户组</a>
+			
+			<a href="${webbaseurl}/userManageClass.${strutsaction}" class="list-group-item
+			#if($currentWebpage == "userManageClass" )
+			active      
+			#end	
+			">班级管理</a>
+			
+			<a href="${webbaseurl}/userManageAdmin.${strutsaction}" class="list-group-item
+			#if($currentWebpage == "userManageAdmin" )
+			active      
+			#end	
+			">管理员管理</a>
+			
+			<a href="${webbaseurl}/userManageAdminAdd.${strutsaction}" class="list-group-item
+			#if($currentWebpage == "userManageAdminAdd" )
+			active      
+			#end	
+			">添加管理员</a>
+			
+			<a href="${webbaseurl}/userManageAdminGroup.${strutsaction}" class="list-group-item
+			#if($currentWebpage == "userManageAdminGroup" )
+			active      
+			#end	
+			">管理组</a>
+          
+          <!-- <a href="用户管理-发送通知.html" class="list-group-item">发送通知</a> -->
+          <!-- <a href="用户管理-用户认证.html" class="list-group-item">用户认证</a> -->
+        </div>
+      </div>
+      <!--sidebar end-->

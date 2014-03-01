@@ -28,10 +28,20 @@
 		><a href="${webbaseurl}/manageCourseFull.${strutsaction}">教学</a></li>
 		
 	
-        <li><a href="用户管理首页.html">用户</a></li>
+		<li 
+		#if($currentPageModule == "user" )
+			 class="active"      
+		#end		
+		><a href="${webbaseurl}/userManageUser.${strutsaction}">用户</a></li>
+	
+	
+		<li 
+		#if($currentPageModule == "equip" )
+			 class="active"      
+		#end		
+		><a href="${webbaseurl}/equipManageAdmin.${strutsaction}">器材</a></li>
 		
-		
-		
+	
         <li 
 		#if($currentPageModule == "computer" )
 			 class="active"      

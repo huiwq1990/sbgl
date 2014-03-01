@@ -93,7 +93,7 @@ public class ClazzServiceImpl implements ClazzService {
 			
 		}
 		
-		return resultList.size() > 0 ? resultList : null;
+		return resultList;
 	}
 
 }

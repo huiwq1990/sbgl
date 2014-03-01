@@ -1,0 +1,28 @@
+<div id="lside"><!--sidebar start-->
+<div class="list-group">
+	<a href="${webbaseurl}/equipManageAdmin.${strutsaction}" class="list-group-item
+	#if($currentWebpage == "equipManageAdmin" )
+	active      
+	#end	
+	">设备管理</a>
+	
+	<a href="${webbaseurl}/equipManageEquip.${strutsaction}" class="list-group-item
+	#if($currentWebpage == "equipManageEquip" )
+	active      
+	#end	
+	">添加设备</a>
+	
+	<a href="${webbaseurl}/equipManageModel.${strutsaction}" class="list-group-item
+	#if($currentWebpage == "equipManageModel" )
+	active      
+	#end	
+	">型号管理</a>
+	
+	<a href="${webbaseurl}/equipManageClassfication.${strutsaction}" class="list-group-item
+	#if($currentWebpage == "equipManageClassfication" )
+	active      
+	#end	
+	">分类管理</a>
+</div>
+  </div>
+  <!--sidebar end-->

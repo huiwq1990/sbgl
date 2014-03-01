@@ -10,66 +10,13 @@
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
-<!--[if lt IE 9]>
-  <script src="../js/html5shiv.js"></script>
-  <script src="../js/respond.min.js"></script>
-<![endif]-->
-<!--[if IE 7]>
-<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
-<![endif]-->
+#parse("include/includePageCompatibility.vm")
 </head>
 
 <body id="admin">
 <header id="header-wrap"><!--header-wrap-->
-  <div class="nav-wrap clearfix">
-    <div class="site-nav">
-      <div class="dropdown">
-        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-          <li><a href="http://google.com"><i class="icon-home"></i> 首页</a></li>
-          <li class="divider"></li>
-          <li><a href="#anotherAction">个人主页</a></li>
-          <li><a href="#">人脉</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="sub-nav">
-      <ul class="nav nav-tabs nav-tabs-google">
-        <li><a href="#">首页</a></li>
-        <li><a href="#">设置</a></li>
-        <li><a href="用户管理首页.html">用户</a></li>
-        <li class="active"><a href="${webbaseurl}/equipManageAdmin.do">器材</a></li>
-        <li><a href="#">内容</a></li>
-      </ul>
-    </div>    
-    <ul class="account-wrap nav nav-pills pull-right">
-          <li class="notice dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">消息1</a></li>
-              <li><a href="#">消息2</a></li>
-            </ul>
-          </li>     
-          <li class="social dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="./img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
-            <div class="dropdown-menu">
-              <div class="media">
-                <a class="pull-left" href="#">
-                  <img src="./img/photo.jpg" width="96" height="96" class="img-rounded">
-                </a>
-                <div class="media-body">
-                  <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
-                  <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
-                  <div class="setting"><a href="#">账户设置</a></div>
-                  <button class="btn btn-primary" type="button">查看个人主页</button>
-                </div>
-              </div>
-            </div>      
-          </li>
-        </ul>
-  </div>
+  #set($currentPageModule="equip")
+  #parse("include/includeAdminHeader.vm")
 </header><!--/#header-wrap-->
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
       <ul class="nav nav-tabs">
@@ -153,20 +100,8 @@
       </div>
       <!--equip-wrap end-->
 
-      <!--sidebar start-->
-      <div id="lside">
-        <form class="form-group">
-          <input type="text" class="form-control" placeholder="搜索设备">
-          <i class="icon-search"></i>
-        </form>
-        <div class="list-group">
-          <a href="${webbaseurl}/equipManageAdmin.do" class="list-group-item">设备管理</a>
-          <a href="${webbaseurl}/equipManageEquip.do" class="list-group-item">添加设备</a>
-          <a href="${webbaseurl}/equipManageModel.do" class="list-group-item active">型号管理</a>
-          <a href="${webbaseurl}/equipManageClassfication.do" class="list-group-item">分类管理</a>
-        </div>
-        </div>
-      <!--sidebar end-->
+      #set($currentWebpage="equipManageModel")
+	  #parse("include/includeEquipManageSidebar.vm")
 
 </section>
 
