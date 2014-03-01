@@ -118,11 +118,15 @@
 	//add computer
 	$("body").on("click", "button[action-type|=addCourseButton]", function() {
 		var _this = $(this);
+		
+		//alert($("input[name=course_type]:checked").val());
+		//return;
+		
         var postData = {
 			name:$('#input_add_course_name').val(),
 			coursenameen :   $('#input_add_course_nameen').val(),
 			//description: $('#input_add_course_description').val(),
-			type: $("input[name=course_type]:checked").val(),
+			type : $("input[name=course_type]:checked").val(),
 			teacherid: $('#input_add_course_teacherid').val()
 		};
 		

@@ -780,15 +780,24 @@ border-bottom: 2px solid #427FED !important;
 #rent-bar > .rent-time, #rent-bar #rent-list { display: none; }
 #rent-bar > .rent-time .row { margin-bottom: 0; }
 #rent-bar > .rent-time.panel { margin-bottom: 10px; }
-#rent-bar #rent-list .item-name { float:left; padding-left:15px; width: 215px; height: 30px; line-height: 30px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-#rent-bar #rent-list .item-ctrl { float:right; padding-right:15px; width: 115px; }
+#rent-bar #rent-list .item-name,
+#post-sidebar .item-name { float:left; padding-left:15px; width: 215px; height: 30px; line-height: 30px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#rent-bar #rent-list .item-ctrl,
+#post-sidebar .item-ctrl { float:right; padding-right:15px; width: 115px; }
 #rent-bar #rent-list .item-need-more { padding: 4px 55px 0 15px; text-align: right; clear: both; }
-#rent-bar #rent-list .input-group .btn, #rent-bar .input-group .form-control { padding: 4px 6px; }
-#rent-bar #rent-list .spinner .form-control { width: 36px; }
-#rent-bar #rent-list .spinner-input { text-align: center; }
-#rent-bar #rent-list .close { float: none; margin-left: 6px;  }
+#post-sidebar .input-group .btn,
+#rent-bar #rent-list .input-group .btn,
+#rent-bar .input-group .form-control,
+#post-sidebar .input-group .form-control { padding: 4px 6px; }
+#rent-bar #rent-list .spinner .form-control,
+#post-sidebar .spinner .form-control { width: 36px; }
+#rent-bar #rent-list .spinner-input,
+#post-sidebar .spinner-input { text-align: center; }
+#rent-bar #rent-list .close,
+#post-sidebar .close { float: none; margin-left: 6px;  }
 #rent-bar #rent-list .is-add { height: 40px; margin: 0; }
-#rent-bar .btn-link { 
+#rent-bar .btn-link,
+#post-sidebar .btn-link { 
 	color: #000;
 	opacity: 0.2;
 	filter: alpha(opacity=20);
@@ -797,7 +806,8 @@ border-bottom: 2px solid #427FED !important;
 	-o-transition: opacity .2s;
 	transition: opacity .2s;
 }
-#rent-bar .btn-link:hover, .wizard .btn-link:focus {
+#rent-bar .btn-link:hover, #rent-bar .btn-link:focus,
+#post-sidebar .btn-link:hover, #post-sidebar .btn-link:focus {
 	text-decoration: none;
  	opacity: 1;
 	filter: alpha(opacity=100);
