@@ -31,25 +31,16 @@
 	  <!--main-content start-->
   <div id="main-content" class="clearfix">
 	
-      <div class="control-bar clearfix"><!--control-bar start-->
-        <div class="title pull-left">作业查看</div>     
-        <div class="pagination pull-right">
-          <ul>
-            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="上一个"><i class="icon-chevron-left"></i></a></li>
-            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="下一个"><i class="icon-chevron-right"></i></a></li>
-          </ul>
-        </div>       
-      </div><!--control-bar end-->
-              
+    <div class="container">
       <div class="row">
             <div class="control-bar col-md-12">
               <div class="title">$!computerorderFull.computerordertitle  </div>
             </div>        
-            <div class="col-md-5">                  
+            <div class="col-md-7">                  
                 <div class="thumbnail">
                   <div class="hd clearfix">
-                    <h3 class="pull-left">允许借的PC</h3>
-                    <div class="pull-right">共XX种，XX个器材</div>
+                    <h3 class="pull-left">预约单</h3>
+<!--                     <div class="pull-right">共XX种，XX个器材</div> -->
                   </div>
                   <div class="media-list">
 
@@ -60,7 +51,7 @@
 ##取出所有的属性名称
 #foreach($tempKey in $computerorderclassruledetailFullListRegion)
 			#set($temp = $computerorderclassruledetailFullList.get($tempKey))
-                  <div class="media">                        
+                    <div class="media">                        
                       <div class="group-hd">
                         <div class="group-name pull-left">$temp.computermodelname</div>
                         <div class="group-line">
@@ -76,13 +67,13 @@
 
 
                 
-					  </div>
-                </div>                  
+					       </div>
+                </div>
             </div>
            
 
 			
-			<div class="col-md-7">
+            <div class="col-md-5">
                
                 <div class="thumbnail">
                   <div class="hd">
@@ -90,15 +81,15 @@
                   </div>
                   <div class="caption">
                     <div class="rent-detail">
-						<div class="name">作业名称：$computerhomeworkFull.computerhomeworkname</div>
-					 
-						<div class="name">预约时间：$date.format("yyyy年MM月dd日",$computerhomeworkFull.computerorderclassruleorderstarttime) 至 $date.format("yyyy年MM月dd日",$computerhomeworkFull.computerorderclassruleorderendtime)</div>
-					
-						<div class="name">总共学时：$computerhomeworkFull.computerorderclassruleavailableordertime</div>
-						
-						<div class="name">课程名称：$courseFull.coursename</div>
-						
-						<div class="name">教师名称：$courseFull.teacherloginusername</div>
+          						<div class="name">作业名称：$computerhomeworkFull.computerhomeworkname</div>
+          					 
+          						<div class="name">预约时间：$date.format("yyyy年MM月dd日",$computerhomeworkFull.computerorderclassruleorderstarttime) 至 $date.format("yyyy年MM月dd日",$computerhomeworkFull.computerorderclassruleorderendtime)</div>
+          					
+          						<div class="name">总共学时：$computerhomeworkFull.computerorderclassruleavailableordertime</div>
+          						
+          						<div class="name">课程名称：$courseFull.coursename</div>
+          						
+          						<div class="name">教师名称：$courseFull.teacherloginusername</div>
 						
 						
 	
@@ -122,9 +113,9 @@
                    -->                         
                 </div>               
             </div> 	
+      </div>
+    </div>
 	</div>
-
-				</div>
 
 
 </section>

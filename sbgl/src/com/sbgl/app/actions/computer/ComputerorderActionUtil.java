@@ -91,7 +91,7 @@ public class ComputerorderActionUtil {
 //		}
 		
 		for(Computerorderdetail od : haveOrderedValidComputerorderdetailList){
-			int between = DateUtil.daysBetween(currentDate,od.getBorrowday());
+			int between = DateUtil.daysBetween(od.getBorrowday(),currentDate);
 			System.out.println("model: "+od.getComputermodelid()+"; day: "+od.getBorrowday()+"; period: "+od.getBorrowperiod());
 			int newcount = availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).get(between) - od.getBorrownumber();
 			availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).set(between, newcount);
