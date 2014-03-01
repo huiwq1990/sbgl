@@ -469,17 +469,17 @@
     			alert("并未做修改！");
     		} else {
     			var postData = {
-    				"equipmentdetail.equipDetailid": detailIdForAlter,
-    				"equipmentdetail.assetNumber": an,
+    				"equipmentdetail.equipdetailid": detailIdForAlter,
+    				"equipmentdetail.assetnumber": an,
     				"manufactureDateStr": md,
     				"acquireDateStr": ad,
     				"equipmentdetail.manufacturer": mf,
     				"equipmentdetail.supplyer": sp,
     				"equipmentdetail.worth": wt,
-    				"equipmentdetail.useManageDept": ud,
+    				"equipmentdetail.usemanagedept": ud,
     				"equipmentdetail.manager": mg,
-    				"equipmentdetail.storagePlace": st,
-    				"equipmentdetail.storagePosition": ss,
+    				"equipmentdetail.storageplace": st,
+    				"equipmentdetail.storageposition": ss,
     				"equipmentdetail.storenumber": sn,
     				"equipmentdetail.equipserial": es,
     				"equipmentdetail.equipmentid": dMid,

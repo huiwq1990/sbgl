@@ -33,6 +33,8 @@ public class EquipServiceImpl implements EquipService {
 	@Resource
 	private BaseDao baseDao;
 	
+	private boolean deleteFlag = true; //用于标注型号删除时调用更新器材详情时不进行型号数量统计
+	
 	@Override
 	public int getCountOfEquipInfo() {
 		return baseDao.getAllEntity(Equipment.class).size();
@@ -59,8 +61,8 @@ public class EquipServiceImpl implements EquipService {
 		
 		storeEquip.setEquipmentname( equip.getEquipmentname() );
 		storeEquip.setBrandid( equip.getBrandid() );
-		storeEquip.setImgName(equip.getImgName() );
-		storeEquip.setImgNameSaved( equip.getImgNameSaved() );
+		storeEquip.setImgname(equip.getImgname() );
+		storeEquip.setImgnamesaved( equip.getImgnamesaved() );
 		storeEquip.setClassificationid( equip.getClassificationid() );
 		storeEquip.setAdministrationid( equip.getAdministrationid() );
 		storeEquip.setModifydate( new Date() );
@@ -88,9 +90,19 @@ public class EquipServiceImpl implements EquipService {
 		// TODO Auto-generated method stub
 		boolean flag = false;
 		Equipment storeEquip = baseDao.getEntityById(Equipment.class, equipId);
-		List<Equipment> needToDeleteList =  baseDao.getEntityByProperty(Equipment.class.getName(), "comId", String.valueOf( storeEquip.getComId() ));
+		List<Equipment> needToDeleteList =  baseDao.getEntityByProperty(Equipment.class.getName(), "comid", String.valueOf( storeEquip.getComid() ));
 		try {
 			for (Equipment e : needToDeleteList) {
+				if("0".equals(e.getLantype())) {
+					List<Equipmentdetail> edList = this.getAllEquipmentdetailByEquipInfo( e.getEquipmentid() );
+					if(edList != null && edList.size() > 0) {
+						for (Equipmentdetail ed : edList) {
+							deleteFlag = false;
+							ed.setEquipmentid(-1);
+							this.alterEquipmentdetail( ed );
+						}
+					}
+				}
 				baseDao.deleteEntity( e );
 			}
 			flag = true;
@@ -190,29 +202,44 @@ public class EquipServiceImpl implements EquipService {
 	public Integer addEquipmentdetail(Equipmentdetail equipmentdetail) {
 		// TODO Auto-generated method stub
 		Integer id = baseDao.getCode("equipDetailId");
-		equipmentdetail.setEquipDetailid( id );
+		equipmentdetail.setEquipdetailid( id );
 		equipmentdetail.setMakedate( new Date() );
 		//判断当前添加器材的型号，更新型号表相关统计字段
 		Equipment e = null;
+		Equipment ee = null;
 		if( equipmentdetail.getEquipmentid() != -1 && equipmentdetail.getEquipmentid() != null ) {
 			e = this.getEquipmentById( equipmentdetail.getEquipmentid() );
-			if( e.getEquipmentnum() == null ) {  //总的器材数量
-				e.setEquipmentnum( 1 );
-			} else {
-				e.setEquipmentnum( e.getEquipmentnum() + 1 );
+			List<Equipment> equipList =  baseDao.getEntityByProperty(Equipment.class.getName(), "comid", String.valueOf( e.getComid() ));
+			if(equipList != null && equipList.size() > 0) {
+				e = equipList.get(0);
+				ee = equipList.get(1);
+				if( e.getEquipmentnum() == null ) {  //总的器材数量
+					e.setEquipmentnum( 1 );
+					ee.setEquipmentnum( 1 );
+				} else {
+					e.setEquipmentnum( e.getEquipmentnum() + 1 );
+					ee.setEquipmentnum( ee.getEquipmentnum() + 1 );
+				}
+				if( "0".equals( equipmentdetail.getStatus() ) || "1".equals( equipmentdetail.getStatus() ) ) {  //细分器材状态数量
+					e.setActivenum( e.getActivenum()==null ? 1 : e.getActivenum() + 1 );
+					ee.setActivenum( ee.getActivenum()==null ? 1 : ee.getActivenum() + 1 );
+				} else if( "2".equals( equipmentdetail.getStatus() ) ) {
+					e.setMaintainnum( e.getMaintainnum()==null ? 1 : e.getMaintainnum() + 1 );
+					ee.setMaintainnum( ee.getMaintainnum()==null ? 1 : ee.getMaintainnum() + 1 );
+				} else if( "3".equals( equipmentdetail.getStatus() ) ) {
+					e.setRepairnum( e.getRepairnum()==null ? 1 : e.getRepairnum() + 1 );
+					ee.setRepairnum( ee.getRepairnum()==null ? 1 : ee.getRepairnum() + 1 );
+				} else if( "4".equals( equipmentdetail.getStatus() ) ) {
+					e.setLosednum( e.getLosednum()==null ? 1 : e.getLosednum() + 1 );
+					ee.setLosednum( ee.getLosednum()==null ? 1 : ee.getLosednum() + 1 );
+				} else if( "5".equals( equipmentdetail.getStatus() ) ) {
+					e.setRecyclingnum( e.getRecyclingnum()==null ? 1 : e.getRecyclingnum() + 1 );
+					ee.setRecyclingnum( ee.getRecyclingnum()==null ? 1 : ee.getRecyclingnum() + 1 );
+				}
+				this.alterEquipInfo( e );
+				this.alterEquipInfo( ee );
 			}
-			if( "0".equals( equipmentdetail.getStatus() ) || "1".equals( equipmentdetail.getStatus() ) ) {  //细分器材状态数量
-				e.setActivenum( e.getActivenum()==null ? 0 : e.getActivenum() + 1 );
-			} else if( "2".equals( equipmentdetail.getStatus() ) ) {
-				e.setMaintainnum( e.getMaintainnum()==null ? 0 : e.getMaintainnum() + 1 );
-			} else if( "3".equals( equipmentdetail.getStatus() ) ) {
-				e.setRepairnum( e.getRepairnum()==null ? 0 : e.getRepairnum() + 1 );
-			} else if( "4".equals( equipmentdetail.getStatus() ) ) {
-				e.setLosednum( e.getLosednum()==null ? 0 : e.getLosednum() + 1 );
-			} else if( "5".equals( equipmentdetail.getStatus() ) ) {
-				e.setRecyclingnum( e.getRecyclingnum()==null ? 0 : e.getRecyclingnum() + 1 );
-			}
-			this.alterEquipInfo( e );
+			
 		}
 		try {
 			baseDao.saveEntity( equipmentdetail );
@@ -224,21 +251,21 @@ public class EquipServiceImpl implements EquipService {
 
 	@Override
 	public Integer alterEquipmentdetail(Equipmentdetail equipmentdetail) {
-		Integer id = equipmentdetail.getEquipDetailid();
+		Integer id = equipmentdetail.getEquipdetailid();
 		Equipmentdetail storeEquipmentdetail = baseDao.getEntityById(Equipmentdetail.class, id);
-		Integer oldEquipStatus = new Integer( storeEquipmentdetail.getStatus() );
+		String oldEquipStatus = storeEquipmentdetail.getStatus();
 		Integer oldEquipid = new Integer( storeEquipmentdetail.getEquipmentid() );
 		
 		storeEquipmentdetail.setEquipserial( equipmentdetail.getEquipserial() );
-		storeEquipmentdetail.setAcquireDate( equipmentdetail.getAcquireDate() );
+		storeEquipmentdetail.setAcquiredate( equipmentdetail.getAcquiredate() );
 		storeEquipmentdetail.setWorth( equipmentdetail.getWorth() );
-		storeEquipmentdetail.setAssetNumber( equipmentdetail.getAssetNumber() );
-		storeEquipmentdetail.setUseManageDept( equipmentdetail.getUseManageDept() );
+		storeEquipmentdetail.setAssetnumber( equipmentdetail.getAssetnumber() );
+		storeEquipmentdetail.setUsemanagedept( equipmentdetail.getUsemanagedept() );
 		storeEquipmentdetail.setManager( equipmentdetail.getManager() );
-		storeEquipmentdetail.setManufactureDate( equipmentdetail.getManufactureDate() );
+		storeEquipmentdetail.setManufacturedate( equipmentdetail.getManufacturedate() );
 		storeEquipmentdetail.setManufacturer( equipmentdetail.getManufacturer() );
-		storeEquipmentdetail.setStoragePlace( equipmentdetail.getStoragePlace() );
-		storeEquipmentdetail.setStoragePosition( equipmentdetail.getStoragePosition() );
+		storeEquipmentdetail.setStorageplace( equipmentdetail.getStorageplace() );
+		storeEquipmentdetail.setStorageposition( equipmentdetail.getStorageposition() );
 		storeEquipmentdetail.setStorenumber( equipmentdetail.getStorenumber() );
 		storeEquipmentdetail.setSupplyer( equipmentdetail.getSupplyer() );
 		storeEquipmentdetail.setEquipmentid( equipmentdetail.getEquipmentid() );
@@ -250,68 +277,168 @@ public class EquipServiceImpl implements EquipService {
 		storeEquipmentdetail.setUsermark( equipmentdetail.getUsermark() );
 		storeEquipmentdetail.setClassificationid( equipmentdetail.getClassificationid() );
 		//判断当前添加器材的型号，更新型号表相关统计字段
-		Equipment e = null;
-		if( oldEquipid == -1 && equipmentdetail.getEquipmentid() != -1 ) {  //从没有型号变为有型号
-			e = this.getEquipmentById( equipmentdetail.getEquipmentid() );
-			e.setEquipmentnum( e.getEquipmentnum()==null ? 0 : e.getEquipmentnum() + 1 );
-			if( "0".equals( equipmentdetail.getStatus() ) || "1".equals( equipmentdetail.getStatus() ) ) {  //细分器材状态数量
-				e.setActivenum( e.getActivenum()==null ? 0 : e.getActivenum() + 1 );
-			} else if( "2".equals( equipmentdetail.getStatus() ) ) {
-				e.setMaintainnum( e.getMaintainnum()==null ? 0 : e.getMaintainnum() + 1 );
-			} else if( "3".equals( equipmentdetail.getStatus() ) ) {
-				e.setRepairnum( e.getRepairnum()==null ? 0 : e.getRepairnum() + 1 );
-			} else if( "4".equals( equipmentdetail.getStatus() ) ) {
-				e.setLosednum( e.getLosednum()==null ? 0 : e.getLosednum() + 1 );
-			} else if( "5".equals( equipmentdetail.getStatus() ) ) {
-				e.setRecyclingnum( e.getRecyclingnum()==null ? 0 : e.getRecyclingnum() + 1 );
+		if(deleteFlag) {
+			Equipment e = null;
+			Equipment ee = null;
+			if( oldEquipid == -1 && equipmentdetail.getEquipmentid() != -1 ) {  //从没有型号变为有型号
+				e = this.getEquipmentById( equipmentdetail.getEquipmentid() );
+				List<Equipment> equipList =  baseDao.getEntityByProperty(Equipment.class.getName(), "comid", String.valueOf( e.getComid() ));
+				if(equipList != null && equipList.size() > 0) {
+					e = equipList.get(0);
+					ee = equipList.get(1);
+					e.setEquipmentnum( e.getEquipmentnum()==null ? 1 : e.getEquipmentnum() + 1 );
+					ee.setEquipmentnum( ee.getEquipmentnum()==null ? 1 : ee.getEquipmentnum() + 1 );
+					if( "0".equals( equipmentdetail.getStatus() ) || "1".equals( equipmentdetail.getStatus() ) ) {  //细分器材状态数量
+						e.setActivenum( e.getActivenum()==null ? 1 : e.getActivenum() + 1 );
+						ee.setActivenum( ee.getActivenum()==null ? 1 : ee.getActivenum() + 1 );
+					} else if( "2".equals( equipmentdetail.getStatus() ) ) {
+						e.setMaintainnum( e.getMaintainnum()==null ? 1 : e.getMaintainnum() + 1 );
+						ee.setMaintainnum( ee.getMaintainnum()==null ? 1 : ee.getMaintainnum() + 1 );
+					} else if( "3".equals( equipmentdetail.getStatus() ) ) {
+						e.setRepairnum( e.getRepairnum()==null ? 1 : e.getRepairnum() + 1 );
+						ee.setRepairnum( ee.getRepairnum()==null ? 1 : ee.getRepairnum() + 1 );
+					} else if( "4".equals( equipmentdetail.getStatus() ) ) {
+						e.setLosednum( e.getLosednum()==null ? 1 : e.getLosednum() + 1 );
+						ee.setLosednum( ee.getLosednum()==null ? 1 : ee.getLosednum() + 1 );
+					} else if( "5".equals( equipmentdetail.getStatus() ) ) {
+						e.setRecyclingnum( e.getRecyclingnum()==null ? 1 : e.getRecyclingnum() + 1 );
+						ee.setRecyclingnum( ee.getRecyclingnum()==null ? 1 : ee.getRecyclingnum() + 1 );
+					}
+					this.alterEquipInfo( e );
+					this.alterEquipInfo( ee );
+				}
+				
+			} else if( oldEquipid != -1 && equipmentdetail.getEquipmentid() == -1 ) { //从有型号变为没有型号
+				e = this.getEquipmentById( oldEquipid );
+				List<Equipment> equipList =  baseDao.getEntityByProperty(Equipment.class.getName(), "comid", String.valueOf( e.getComid() ));
+				if(equipList != null && equipList.size() > 0) {
+					e = equipList.get(0);
+					ee = equipList.get(1);
+					e.setEquipmentnum( e.getEquipmentnum() - 1 );
+					ee.setEquipmentnum( ee.getEquipmentnum() - 1 );
+					if( "0".equals( oldEquipStatus ) || "1".equals( oldEquipStatus ) ) {  //细分器材状态数量
+						e.setActivenum( e.getActivenum() - 1 );
+						ee.setActivenum( ee.getActivenum() - 1 );
+					} else if( "2".equals( oldEquipStatus ) ) {
+						e.setMaintainnum( e.getMaintainnum() - 1 );
+						ee.setMaintainnum( ee.getMaintainnum() - 1 );
+					} else if( "3".equals( oldEquipStatus ) ) {
+						e.setRepairnum( e.getRepairnum() - 1 );
+						ee.setRepairnum( ee.getRepairnum() - 1 );
+					} else if( "4".equals( oldEquipStatus ) ) {
+						e.setLosednum( e.getLosednum() - 1 );
+						ee.setLosednum( ee.getLosednum() - 1 );
+					} else if( "5".equals( oldEquipStatus ) ) {
+						e.setRecyclingnum( e.getRecyclingnum() - 1 );
+						ee.setRecyclingnum( ee.getRecyclingnum() - 1 );
+					}
+					this.alterEquipInfo( e );
+					this.alterEquipInfo( ee );
+				}
+				
+			} else if( !oldEquipid.equals(equipmentdetail.getEquipmentid()) && oldEquipid != null && equipmentdetail.getEquipmentid() != null ) {  //型号不相同
+				e = this.getEquipmentById( equipmentdetail.getEquipmentid() );
+				List<Equipment> equipList =  baseDao.getEntityByProperty(Equipment.class.getName(), "comid", String.valueOf( e.getComid() ));
+				if(equipList != null && equipList.size() > 0) {
+					e = equipList.get(0);
+					ee = equipList.get(1);
+					e.setEquipmentnum( e.getEquipmentnum() == null ? 1 : e.getEquipmentnum() + 1 );
+					ee.setEquipmentnum( ee.getEquipmentnum() == null ? 1 : ee.getEquipmentnum() + 1 );
+					if( "0".equals( equipmentdetail.getStatus() ) || "1".equals( equipmentdetail.getStatus() ) ) {  //细分器材状态数量
+						e.setActivenum( e.getActivenum()==null ? 1 : e.getActivenum() + 1 );
+						ee.setActivenum( ee.getActivenum()==null ? 1 : ee.getActivenum() + 1 );
+					} else if( "2".equals( equipmentdetail.getStatus() ) ) {
+						e.setMaintainnum( e.getMaintainnum()==null ? 1 : e.getMaintainnum() + 1 );
+						ee.setMaintainnum( ee.getMaintainnum()==null ? 1 : ee.getMaintainnum() + 1 );
+					} else if( "3".equals( equipmentdetail.getStatus() ) ) {
+						e.setRepairnum( e.getRepairnum()==null ? 1 : e.getRepairnum() + 1 );
+						ee.setRepairnum( ee.getRepairnum()==null ? 1 : ee.getRepairnum() + 1 );
+					} else if( "4".equals( equipmentdetail.getStatus() ) ) {
+						e.setLosednum( e.getLosednum()==null ? 1 : e.getLosednum() + 1 );
+						ee.setLosednum( ee.getLosednum()==null ? 1 : ee.getLosednum() + 1 );
+					} else if( "5".equals( equipmentdetail.getStatus() ) ) {
+						e.setRecyclingnum( e.getRecyclingnum()==null ? 1 : e.getRecyclingnum() + 1 );
+						ee.setRecyclingnum( ee.getRecyclingnum()==null ? 1 : ee.getRecyclingnum() + 1 );
+					}
+					this.alterEquipInfo( e );
+					this.alterEquipInfo( ee );
+				}
+				
+				e = this.getEquipmentById( oldEquipid );
+				equipList =  baseDao.getEntityByProperty(Equipment.class.getName(), "comid", String.valueOf( e.getComid() ));
+				if(equipList != null && equipList.size() > 0) {
+					e = equipList.get(0);
+					ee = equipList.get(1);
+					e.setEquipmentnum( e.getEquipmentnum() - 1 );
+					ee.setEquipmentnum( ee.getEquipmentnum() - 1 );
+					if( "0".equals( oldEquipStatus ) || "1".equals( oldEquipStatus ) ) {  //细分器材状态数量
+						e.setActivenum( e.getActivenum() - 1 );
+						ee.setActivenum( ee.getActivenum() - 1 );
+					} else if( "2".equals( oldEquipStatus ) ) {
+						e.setMaintainnum( e.getMaintainnum() - 1 );
+						ee.setMaintainnum( ee.getMaintainnum() - 1 );
+					} else if( "3".equals( oldEquipStatus ) ) {
+						e.setRepairnum( e.getRepairnum() - 1 );
+						ee.setRepairnum( ee.getRepairnum() - 1 );
+					} else if( "4".equals( oldEquipStatus ) ) {
+						e.setLosednum( e.getLosednum() - 1 );
+						ee.setLosednum( ee.getLosednum() - 1 );
+					} else if( "5".equals( oldEquipStatus ) ) {
+						e.setRecyclingnum( e.getRecyclingnum() - 1 );
+						ee.setRecyclingnum( ee.getRecyclingnum() - 1 );
+					}
+					this.alterEquipInfo( e );
+					this.alterEquipInfo( ee );
+				}
+				
+			} else if( oldEquipid != -1 && equipmentdetail.getEquipmentid() != -1 && 
+					   oldEquipid.equals(equipmentdetail.getEquipmentid()) && !oldEquipStatus.equals(equipmentdetail.getStatus()) &&
+					   !(("0".equals(oldEquipStatus) || "1".equals(oldEquipStatus)) && ("0".equals(equipmentdetail.getStatus()) || "1".equals(equipmentdetail.getStatus()))) ) {  //同一型号内状态变化
+				e = this.getEquipmentById( oldEquipid );
+				List<Equipment> equipList =  baseDao.getEntityByProperty(Equipment.class.getName(), "comid", String.valueOf( e.getComid() ));
+				if(equipList != null && equipList.size() > 0) {
+					e = equipList.get(0);
+					ee = equipList.get(1);
+					if( "0".equals( equipmentdetail.getStatus() ) || "1".equals( equipmentdetail.getStatus() ) ) {  //细分器材状态数量
+						e.setActivenum( e.getActivenum()==null ? 1 : e.getActivenum() + 1 );
+						ee.setActivenum( ee.getActivenum()==null ? 1 : ee.getActivenum() + 1 );
+					} else if( "2".equals( equipmentdetail.getStatus() ) ) {
+						e.setMaintainnum( e.getMaintainnum()==null ? 1 : e.getMaintainnum() + 1 );
+						ee.setMaintainnum( ee.getMaintainnum()==null ? 1 : ee.getMaintainnum() + 1 );
+					} else if( "3".equals( equipmentdetail.getStatus() ) ) {
+						e.setRepairnum( e.getRepairnum()==null ? 1 : e.getRepairnum() + 1 );
+						ee.setRepairnum( ee.getRepairnum()==null ? 1 : ee.getRepairnum() + 1 );
+					} else if( "4".equals( equipmentdetail.getStatus() ) ) {
+						e.setLosednum( e.getLosednum()==null ? 1 : e.getLosednum() + 1 );
+						ee.setLosednum( ee.getLosednum()==null ? 1 : ee.getLosednum() + 1 );
+					} else if( "5".equals( equipmentdetail.getStatus() ) ) {
+						e.setRecyclingnum( e.getRecyclingnum()==null ? 1 : e.getRecyclingnum() + 1 );
+						ee.setRecyclingnum( ee.getRecyclingnum()==null ? 1 : ee.getRecyclingnum() + 1 );
+					}
+					
+					if( "0".equals( oldEquipStatus ) || "1".equals( oldEquipStatus ) ) {  //细分器材状态数量
+						e.setActivenum( e.getActivenum() - 1 );
+						ee.setActivenum( ee.getActivenum() - 1 );
+					} else if( "2".equals( oldEquipStatus ) ) {
+						e.setMaintainnum( e.getMaintainnum() - 1 );
+						ee.setMaintainnum( ee.getMaintainnum() - 1 );
+					} else if( "3".equals( oldEquipStatus ) ) {
+						e.setRepairnum( e.getRepairnum() - 1 );
+						ee.setRepairnum( ee.getRepairnum() - 1 );
+					} else if( "4".equals( oldEquipStatus ) ) {
+						e.setLosednum( e.getLosednum() - 1 );
+						ee.setLosednum( ee.getLosednum() - 1 );
+					} else if( "5".equals( oldEquipStatus ) ) {
+						e.setRecyclingnum( e.getRecyclingnum() - 1 );
+						ee.setRecyclingnum( ee.getRecyclingnum() - 1 );
+					}
+					
+					this.alterEquipInfo( e );
+					this.alterEquipInfo( ee );
+				}
 			}
-			this.alterEquipInfo( e );
-		} else if( oldEquipid != -1 && equipmentdetail.getEquipmentid() == -1 ) { //从有型号变为没有型号
-			e = this.getEquipmentById( oldEquipid );
-			e.setEquipmentnum( e.getEquipmentnum() - 1 );
-			if( "0".equals( oldEquipStatus ) || "1".equals( oldEquipStatus ) ) {  //细分器材状态数量
-				e.setActivenum( e.getActivenum() - 1 );
-			} else if( "2".equals( oldEquipStatus ) ) {
-				e.setMaintainnum( e.getMaintainnum() - 1 );
-			} else if( "3".equals( oldEquipStatus ) ) {
-				e.setRepairnum( e.getRepairnum() - 1 );
-			} else if( "4".equals( oldEquipStatus ) ) {
-				e.setLosednum( e.getLosednum() - 1 );
-			} else if( "5".equals( oldEquipStatus ) ) {
-				e.setRecyclingnum( e.getRecyclingnum() - 1 );
-			}
-			this.alterEquipInfo( e );
-		} else if( oldEquipid != -1 && equipmentdetail.getEquipmentid() != -1 && 
-				   oldEquipid != equipmentdetail.getEquipmentid() ) {  //型号不相同
-			e = this.getEquipmentById( equipmentdetail.getEquipmentid() );
-			e.setEquipmentnum( e.getEquipmentnum()==null ? 0 : e.getEquipmentnum() + 1 );
-			if( "0".equals( equipmentdetail.getStatus() ) || "1".equals( equipmentdetail.getStatus() ) ) {  //细分器材状态数量
-				e.setActivenum( e.getActivenum()==null ? 0 : e.getActivenum() + 1 );
-			} else if( "2".equals( equipmentdetail.getStatus() ) ) {
-				e.setMaintainnum( e.getMaintainnum()==null ? 0 : e.getMaintainnum() + 1 );
-			} else if( "3".equals( equipmentdetail.getStatus() ) ) {
-				e.setRepairnum( e.getRepairnum()==null ? 0 : e.getRepairnum() + 1 );
-			} else if( "4".equals( equipmentdetail.getStatus() ) ) {
-				e.setLosednum( e.getLosednum()==null ? 0 : e.getLosednum() + 1 );
-			} else if( "5".equals( equipmentdetail.getStatus() ) ) {
-				e.setRecyclingnum( e.getRecyclingnum()==null ? 0 : e.getRecyclingnum() + 1 );
-			}
-			this.alterEquipInfo( e );
-			e = this.getEquipmentById( oldEquipid );
-			e.setEquipmentnum( e.getEquipmentnum() - 1 );
-			if( "0".equals( oldEquipStatus ) || "1".equals( oldEquipStatus ) ) {  //细分器材状态数量
-				e.setActivenum( e.getActivenum() - 1 );
-			} else if( "2".equals( oldEquipStatus ) ) {
-				e.setMaintainnum( e.getMaintainnum() - 1 );
-			} else if( "3".equals( oldEquipStatus ) ) {
-				e.setRepairnum( e.getRepairnum() - 1 );
-			} else if( "4".equals( oldEquipStatus ) ) {
-				e.setLosednum( e.getLosednum() - 1 );
-			} else if( "5".equals( oldEquipStatus ) ) {
-				e.setRecyclingnum( e.getRecyclingnum() - 1 );
-			}
-			this.alterEquipInfo( e );
 		}
+		
 		
 		try {
 			baseDao.updateEntity( storeEquipmentdetail );
@@ -326,24 +453,38 @@ public class EquipServiceImpl implements EquipService {
 		//判断当前添加器材的型号，更新型号表相关统计字段
 		Equipmentdetail d = this.getEquipmentdetail( equipmentdetailId );
 		Equipment e = null;
+		Equipment ee = null;
 		if( d.getEquipmentid() != -1 && d.getEquipmentid() != null ) {
 			e = this.getEquipmentById( d.getEquipmentid() );
-			if( e.getEquipmentnum() != null ) {  //总的器材数量
-				e.setEquipmentnum( e.getEquipmentnum() - 1 );
+			List<Equipment> equipList =  baseDao.getEntityByProperty(Equipment.class.getName(), "comid", String.valueOf( e.getComid() ));
+			if(equipList != null && equipList.size() > 0) {
+				e = equipList.get(0);
+				ee = equipList.get(1);
+				if( e.getEquipmentnum() != null ) {  //总的器材数量
+					e.setEquipmentnum( e.getEquipmentnum() - 1 );
+					e.setEquipmentnum( e.getEquipmentnum() - 1 );
+				}
+				
+				if( "0".equals( d.getStatus() ) || "1".equals( d.getStatus() ) ) {  //细分器材状态数量
+					e.setActivenum( e.getActivenum() - 1 );
+					ee.setActivenum( ee.getActivenum() - 1 );
+				} else if( "2".equals( d.getStatus() ) ) {
+					e.setMaintainnum( e.getMaintainnum() - 1 );
+					ee.setMaintainnum( ee.getMaintainnum() - 1 );
+				} else if( "3".equals( d.getStatus() ) ) {
+					e.setRepairnum( e.getRepairnum() - 1 );
+					ee.setRepairnum( ee.getRepairnum() - 1 );
+				} else if( "4".equals( d.getStatus() ) ) {
+					e.setLosednum( e.getLosednum() - 1 );
+					ee.setLosednum( ee.getLosednum() - 1 );
+				} else if( "5".equals( d.getStatus() ) ) {
+					e.setRecyclingnum( e.getRecyclingnum() - 1 );
+					ee.setRecyclingnum( ee.getRecyclingnum() - 1 );
+				}
+				this.alterEquipInfo( e );
+				this.alterEquipInfo( ee );
 			}
 			
-			if( "0".equals( d.getStatus() ) || "1".equals( d.getStatus() ) ) {  //细分器材状态数量
-				e.setActivenum( e.getActivenum() - 1 );
-			} else if( "2".equals( d.getStatus() ) ) {
-				e.setMaintainnum( e.getMaintainnum() - 1 );
-			} else if( "3".equals( d.getStatus() ) ) {
-				e.setRepairnum( e.getRepairnum() - 1 );
-			} else if( "4".equals( d.getStatus() ) ) {
-				e.setLosednum( e.getLosednum() - 1 );
-			} else if( "5".equals( d.getStatus() ) ) {
-				e.setRecyclingnum( e.getRecyclingnum() - 1 );
-			}
-			this.alterEquipInfo( e );
 		}
 		boolean flag = false;
 		Equipmentdetail storeEquipmentdetail = baseDao.getEntityById(Equipmentdetail.class, equipmentdetailId);
@@ -447,7 +588,7 @@ public class EquipServiceImpl implements EquipService {
 			List<Equipmentclassification> childrenList = this.getAllChildEquipmentclassificationsByParentId( classificationId );
 			if( childrenList != null && childrenList.size() > 0 ) {
 				for (Equipmentclassification c : childrenList) {
-					final String modelCountSQL = "select count(1) from Equipment where lanType = '0' and classificationid = " + c.getClassificationid();
+					final String modelCountSQL = "select count(1) from Equipment where lantype = '0' and classificationid = " + c.getClassificationid();
 					BigInteger EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
 						public Object doInHibernate(Session session) throws HibernateException{
 							Query query = session.createSQLQuery(modelCountSQL);
@@ -461,7 +602,7 @@ public class EquipServiceImpl implements EquipService {
 			}
 			return totalSum;
 		} else {
-			final String modelCountSQL = "select count(1) from Equipment where lanType = '0' and classificationid = " + classificationId;
+			final String modelCountSQL = "select count(1) from Equipment where lantype = '0' and classificationid = " + classificationId;
 			BigInteger EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
 				public Object doInHibernate(Session session) throws HibernateException{
 					Query query = session.createSQLQuery(modelCountSQL);
@@ -483,7 +624,7 @@ public class EquipServiceImpl implements EquipService {
 			List<Equipmentclassification> childrenList = this.getAllChildEquipmentclassificationsByParentId( classificationId );
 			if( childrenList != null && childrenList.size() > 0 ) {
 				for (Equipmentclassification c : childrenList) {
-					if( "0".equals( c.getLanType() ) ) {
+					if( "0".equals( c.getLantype() ) ) {
 						final String modelCountSQL = "select count(1) from Equipmentdetail where classificationid = " + c.getClassificationid();
 						BigInteger EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
 							public Object doInHibernate(Session session) throws HibernateException{
@@ -696,7 +837,7 @@ public class EquipServiceImpl implements EquipService {
 
 	@Override
 	public List<Equipmentclassification> getAllCHEquipmentclassifications() {
-		return baseDao.getEntityByProperty(Equipmentclassification.class.getName(), "lanType", "0");
+		return baseDao.getEntityByProperty(Equipmentclassification.class.getName(), "lantype", "0");
 	}
 
 	@Override
@@ -711,7 +852,7 @@ public class EquipServiceImpl implements EquipService {
 
 	@Override
 	public boolean isExistEquipDetial(int assetNumber) {
-		return baseDao.isExist(Equipmentdetail.class, "assetNumber", String.valueOf(assetNumber));
+		return baseDao.isExist(Equipmentdetail.class, "assetnumber", String.valueOf(assetNumber));
 	}
 
 	@Override
