@@ -128,7 +128,7 @@
                 <dd>$!userName</dd>
                 <dt>性别</dt>
                 <dd>$!gender</dd>
-				 #if($!classBelongTo != "")
+				 #if($!classBelongTo != "-1")
                     <dt>所在班级</dt>
                     <dd>$!classBelongTo</dd>
 				 #end

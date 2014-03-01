@@ -64,8 +64,12 @@ public class LoginAction extends ActionSupport {
 			email = user.getEmail();
 			if( "1".equals( user.getRoletype() ) ) {
 				Student stu = studentService.getStudentById( user.getId() );
-				Clazz clazz = clazzService.getClazzById( stu.getClassid() );
-				classBelongTo = clazz.getClassname();
+				if( stu.getClassid() != null && stu.getClassid() != -1) {
+					Clazz clazz = clazzService.getClazzById( stu.getClassid() );
+					classBelongTo = clazz.getClassname();
+				} else {
+					classBelongTo = "-1";
+				}
 			}
 			
 		}
