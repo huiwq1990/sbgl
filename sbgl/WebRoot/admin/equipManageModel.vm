@@ -797,7 +797,7 @@
     });
 	
     $('#modifyEPic').fileupload({
-    	url: "${webbaseurl}/uploadFile.do",
+    	url: "${webbaseurl}/uploadImageFile.do",
         dataType: 'json',
 		change: function (e, data) {
         	$("#submitBtnForAlter").attr("disabled", "disabled");

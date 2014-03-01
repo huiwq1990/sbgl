@@ -47,7 +47,7 @@ public class FileUploadAction  extends ActionSupport {
 	private String fileContentType;
 	private String savedFileName;
 	private String imgType = "equip";		//不同的上传类型,默认器材
-	private String tag;
+	private String tag = "0";
 	private String msg;
 //	private String equipmentid;
 	
@@ -147,6 +147,8 @@ public class FileUploadAction  extends ActionSupport {
 		if(!fileType.toLowerCase().equals(".jpg") && !fileType.toLowerCase().equals(".png") &&!fileType.toLowerCase().equals(".gif")) {
 			returnInfo = "上传的文件格式不允许";
 			log.error(returnInfo);
+			this.tag = "1";
+			this.msg = "请上传图片格式的文件！";
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 			return SUCCESS;
 		}
@@ -154,11 +156,15 @@ public class FileUploadAction  extends ActionSupport {
 		String imagePath = "";
 		String destinationFileName = "";
 //		保存机器模型图片
+		String root = ServletActionContext.getServletContext().getRealPath("/");
 		if( "computermodelimg".equals(imgType) ) {
 			log.info("保存机器模型的图片");
-			String root = ServletActionContext.getServletContext().getRealPath("/");
+			
 			imagePath = root + "/" + PropertyUtil.readValue("/system.properties", "computerImagePath");
 			
+			destinationFileName = String.valueOf(Calendar.getInstance().getTimeInMillis()) ;
+		} else if("equip".equals(imgType)) { //保存型号图片
+			imagePath = root + "/" + PropertyUtil.readValue("/system.properties", "equipmentImagePath");
 			destinationFileName = String.valueOf(Calendar.getInstance().getTimeInMillis()) ;
 		}
 		
