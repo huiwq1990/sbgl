@@ -47,9 +47,6 @@
 			active      
 			#end	
 			">管理组</a>
-          
-          <!-- <a href="用户管理-发送通知.html" class="list-group-item">发送通知</a> -->
-          <!-- <a href="用户管理-用户认证.html" class="list-group-item">用户认证</a> -->
         </div>
       </div>
       <!--sidebar end-->

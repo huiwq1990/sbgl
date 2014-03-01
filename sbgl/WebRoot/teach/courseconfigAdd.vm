@@ -81,10 +81,10 @@
                   </div>
 				  
 				 <div class="form-group">
-                    <label for="weeknum" class="col-lg-2 control-label">星期数</label>
+                    <label for="inputSemesterWeekNum" class="col-lg-2 control-label">本学期周数</label>
                     <div class="col-lg-2">
                   
-                          <input type="text" class="form-control" id="weeknum" placeholder="学期星期数">
+                          <input type="text" class="form-control" id="inputSemesterWeekNum" placeholder="本学期共有几周">
                       
                     </div>
                   </div>
@@ -145,7 +145,7 @@
 					firstday: $('#inputDataRange').val(),
 					lastday: $('#inputDataRange2').val(),
 					firstweekfirstday: $('#inputFirstDay').val(),
-					weeknum:$('#weeknum').val()
+					weeknum:$('#inputSemesterWeekNum').val()
 				}
 				
                 //alert("add computer");
