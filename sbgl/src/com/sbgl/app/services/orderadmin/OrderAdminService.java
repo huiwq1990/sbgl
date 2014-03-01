@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.orderadmin.OrderCountFull;
+import com.sbgl.app.actions.orderadmin.OrdercourseruleFull;
 import com.sbgl.app.entity.Equipmentnum;
 import com.sbgl.util.Page;
 
@@ -13,5 +14,9 @@ public interface OrderAdminService {
 	public List<EquipmenborrowFull> findEquipmenborrow(String dealtype,String ordertype,Page page);
 	//查找后台订单统计数据
 	public OrderCountFull findOrderCount(String ordertype);
+	//查找后台课程规则信息
+	public List<OrdercourseruleFull> findOrderClassRule(Integer courseId,Page page);
+	//查找后台课程规则统计数据
+	public OrderCountFull findOrderCountRule(Integer courseId);
 	
 }
