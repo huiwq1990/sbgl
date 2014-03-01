@@ -80,6 +80,7 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 	
 	@Override	
 	public int deleteComputercategoryByType(List<Integer> computercategoryTypeList){
+		
 		for(Integer type : computercategoryTypeList){
 			String sql = "delete from Computercategory where computercategorytype="+type;
 			baseDao.createSQL(sql);
@@ -102,11 +103,31 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 		//tempComputercategory = baseDao.getEntityById(Computercategory.class, computercategory.getId());
 		tempComputercategory = computercategory;
 		//add your code here
-		
-		
+			
 		baseDao.updateEntity(tempComputercategory);
 
 	}
+	
+	
+	@Override
+	public void updateComputercategory(Computercategory ch,Computercategory en){
+		
+		Computercategory tempch = new Computercategory();
+		Computercategory tempen = new Computercategory();
+		//tempComputercategory = baseDao.getEntityById(Computercategory.class, computercategory.getId());
+		tempch = ch;
+		tempen = en;
+		//add your code here
+			
+		baseDao.updateEntity(tempch);
+		
+		baseDao.updateEntity(tempen);
+		
+		
+
+	}
+	
+	
 
 //	根据id查询实体类			
 	@Override

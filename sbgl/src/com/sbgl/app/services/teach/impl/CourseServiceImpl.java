@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import com.sbgl.app.entity.Computerorderclassrule;
 import com.sbgl.app.entity.Course;
 import com.sbgl.app.entity.CourseFull;
+import com.sbgl.app.entity.Courseschedule;
 import com.sbgl.app.services.teach.CourseService;
+import com.sbgl.app.dao.ComputerorderclassruleDao;
 import com.sbgl.app.dao.CourseDao;
 import com.sbgl.app.dao.BaseDao;
+import com.sbgl.app.dao.CoursescheduleDao;
 import com.sbgl.util.*;
 
 import javax.annotation.Resource;
@@ -24,6 +28,16 @@ public class CourseServiceImpl implements CourseService{
 	private BaseDao baseDao;
 	@Resource
 	private CourseDao courseDao;
+	
+	@Resource
+	private ComputerorderclassruleDao computerorderclassruleDao;
+	
+	@Resource
+	private CoursescheduleDao coursescheduleDao;
+	
+	
+//	@Resource
+//	private CourseDao courseDao;
 	
 	//http://blog.csdn.net/softimes/article/details/7008875 实体添加时需要配置hibernate
 	@Override
@@ -68,6 +82,29 @@ public class CourseServiceImpl implements CourseService{
 	public int deleteCourse(Course course) {
 		return deleteCourse(course.getId());
 	}
+	
+	
+	@Override
+	public int deleteCourse(List<Integer> delCourseIdList) {
+		for(Integer cid : delCourseIdList){
+			
+			List<Computerorderclassrule> corList = computerorderclassruleDao.selectComputerorderclassruleByCondition(" where classid = "+cid);
+			
+			List<Courseschedule> csList = coursescheduleDao.selectCoursescheduleByCondition(" where classid = "+cid);
+			
+			
+			if( (corList == null || corList.size() ==0) && (csList == null || csList.size() ==0) ){
+				
+			}else{
+				throw 
+			}
+		
+
+			return deleteCourse(course.getId());
+			
+		}
+	}
+
 
 	
 	@Override

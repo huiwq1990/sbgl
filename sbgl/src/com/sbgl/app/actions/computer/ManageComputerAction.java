@@ -385,9 +385,9 @@ public class ManageComputerAction extends BaseAction{
 	public String manageComputerFull(){
 		log.info("exec action method:manageComputerFull");	
 		
-		String countsql = " where a.languagetype="+ComputerConfig.languagech;
-		String sqlch =" where a.languagetype="+ComputerConfig.languagech+" and b.languagetype="+ComputerConfig.languagech;
-		String sqlen= " where a.languagetype="+ComputerConfig.languageen+" and b.languagetype="+ComputerConfig.languageen;
+		String countsql = " where a.languagetype="+CommonConfig.languagech;
+		String sqlch =" where a.languagetype="+CommonConfig.languagech+" and b.languagetype="+CommonConfig.languagech;
+		String sqlen= " where a.languagetype="+CommonConfig.languageen+" and b.languagetype="+CommonConfig.languageen;
 		
 		//查询全部中文的
 		
@@ -405,7 +405,7 @@ public class ManageComputerAction extends BaseAction{
 		
 //		查询某一分类下的PC 先获取分类下面的模型
 		if(computercategorytype!=0 && computermodeltype==0){
-			List<Computermodel> tempComputermodelList = computermodelService.selectComputermodelByCondition(" where a.computercategoryid="+computercategorytype +" and a.languagetype="+ComputerConfig.languagech);
+			List<Computermodel> tempComputermodelList = computermodelService.selectComputermodelByCondition(" where a.computercategoryid="+computercategorytype +" and a.languagetype="+CommonConfig.languagech);
 			
 			String inStr = " (";
 			
@@ -555,11 +555,8 @@ public class ManageComputerAction extends BaseAction{
 		List<Computermodel> countlist = computermodelService.selectComputermodelByCondition(countsql);
 		
 		
-		if(countlist==null){
-			this.totalcount = 0;
-		}else{
-			this.totalcount = countlist.size()/2;
-		}
+
+		this.totalcount = countlist.size()/2;
 		page = PageActionUtil.getPage(totalcount, pageNo);
 		pageNo = page.getPageNo();
 		

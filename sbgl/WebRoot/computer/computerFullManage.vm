@@ -88,7 +88,8 @@
                     <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
                     <th class="id">编号</th>
                     <th class="name">设备名称(型号)</th>
-                    <th class="categories">分类</th>
+					<!--
+                    <th class="categories">分类</th>-->
                     <th class="status">状态</th>
                     <th class="remark">备注</th>
                   </tr>
@@ -121,9 +122,10 @@
 						
 						>修改</a></td>
                     <td>$ch.computermodelname</td>
-                    <td>工作站</td>
+					<!--
+                    <td>$ch.computermodelname</td>-->
                     <td>$!ch.computerstatusname</td>
-                    <td></td>
+                    <td>$!ch.computermodeldescription</td>
                   </tr>				  
 #end
 #end
@@ -238,13 +240,7 @@
                       <textarea class="form-control" id="inputEditComputerRemarkEn" rows="3"></textarea>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <div class="col-lg-offset-2 col-xs-7">
-                      <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-                      <button class="btn btn-primary"  action-type="addComputerButton">添 加</button>
-					
-                    </div>
-                  </div>
+                
 		
 		
       </form>
@@ -304,16 +300,19 @@ var computermodeltype = 0;
 var computerstatusid = 0;
 
 	
-//换页时调用方法
+	//换页时调用方法
 $(function() {
-$('.page-bar').jqPagination({
-    	paged: function(page) {
-     	   // do something with the page variable
-			currentpagenum = page;
-			refreshComputerTable();
+    $('.page-bar').jqPagination({
+    	link_string	: '/?page={page_number}',
+    	max_page	: totalpage,
+    	current_page:currentpagenum,
+    	paged: function(page) {     	  
+    		currentpagenum = page;
+    		refreshComputerTable();
+    
     	}
-	});
-});	
+    });
+});		
 	
 	
 //刷新数据
@@ -332,7 +331,7 @@ function refreshComputerTable(){
 				$("#refreshComputerTableDiv").html(data);
 				
 				//设置分页绑定事件
-				$('.pagination').jqPagination({
+				$('.page-bar').jqPagination({
 					link_string	: '/?page={page_number}',
 					max_page	: totalpage,
 					current_page:currentpagenum,
@@ -467,6 +466,9 @@ function getComputerByComputermodelId(computermodel){
 	$("body").on("click", "button[action-type|=updateComputerButton]", function() {
 		var _this = $(this);
 //alert( $("inputEditComputerSerialnumber").val());
+/*
+alert( $('#inputEditComputerStatus').val());
+return;*/
 			var postData = {
 			
 				computermodelid : $("#inputEditComputerComputermodelid").val(),

@@ -28,6 +28,7 @@ import com.sbgl.app.dao.ComputermodelDao;
 import com.sbgl.app.dao.ComputerorderDao;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.ComputerorderdetailDao;
+import com.sbgl.common.DataError;
 import com.sbgl.util.*;
 
 import javax.annotation.Resource;
@@ -196,6 +197,25 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 		return deleteComputerorder(computerorder.getId());
 	}
 
+	
+	@Override
+	public int deleteComputerorder(List<Integer> orderidList) throws DataError {
+		
+		for(Integer orderid : orderidList){
+			
+			Computerorder tempCo = baseDao.getEntityById(Computerorder.class,orderid);
+			if(tempCo == null){
+				throw new DataError("获取删除表单出错");
+			}
+			
+			tempCo.setStatus(ComputerorderInfo.ComputerorderStatusAduitDel);
+			baseDao.updateEntity(tempCo);
+			
+			baseDao.createSQL(" update Computerorderdetail set status="+ComputerorderInfo.ComputerorderStatusAduitDel+" where computerorderid = "+orderid);
+			
+		}
+		return 1;
+	}
 	
 	@Override
 	public void updateComputerorder(Computerorder computerorder){

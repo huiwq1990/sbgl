@@ -7,6 +7,7 @@ import com.sbgl.app.entity.Borrowperiod;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
 import com.sbgl.app.entity.Computerorderdetail;
+import com.sbgl.common.DataError;
 import com.sbgl.util.*;
 
 public interface ComputerorderService{
@@ -68,6 +69,8 @@ public interface ComputerorderService{
 				int endPeriod, int currentLanguage,
 				List<Borrowperiod> borrowperiodList,
 				int computeroderadvanceorderday);
+
+		int deleteComputerorder(List<Integer> orderidList) throws DataError;
 		
 	
 //根据关联查询实体	
