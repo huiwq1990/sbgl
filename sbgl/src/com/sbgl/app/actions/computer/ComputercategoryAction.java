@@ -11,6 +11,7 @@ import net.sf.json.JSONObject;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
@@ -23,6 +24,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.actions.common.BaseAction;
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.*;
@@ -45,6 +47,7 @@ public class ComputercategoryAction extends BaseAction implements ModelDriven<Co
 	
 	@Resource
 	private ComputermodelService computermodelService;
+	List<Computermodel> computermodelList = new ArrayList<Computermodel>();
 	
 	private Computercategory computercategory = new Computercategory();//实例化一个模型
 	private Computercategory computercategoryModel = new Computercategory();//实例化一个模型
@@ -83,7 +86,7 @@ public class ComputercategoryAction extends BaseAction implements ModelDriven<Co
 		
 		Integer uid = this.getCurrentUserId();
 		if(uid < 0){
-			this.returnInfo = "用户为登录";
+			this.returnInfo = "用户未登录";
 			log.info(returnInfo);
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 			return SUCCESS;
@@ -152,117 +155,70 @@ public class ComputercategoryAction extends BaseAction implements ModelDriven<Co
 		return true;
 	}
 
-//删除
-	public String deleteComputercategory( ){
-		try{
-			String ids[] = computercategoryIdsForDel.split(";");
-			for(int i=0; i < ids.length-1;i++){
-				int tempDelId = Integer.valueOf(ids[i]);
-				if(tempDelId > 0){
-					computercategoryService.deleteComputercategory(tempDelId);
-					actionMsg = getText("deleteComputercategorySuccess");
-				}else{
-					System.out.println("删除的id不存在");
-					actionMsg = getText("deleteComputercategoryFail");
-					return "Error";
-				}
-			}
-			
-			
-			return SUCCESS;
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputercategoryAction的方法：deleteComputercategory错误"+e);
-		}
-		return "Error";
-	}
 	
-//删除Ajax
-	public String deleteComputercategoryAjax( ){
-		try{
-			if(computercategory.getId() != null && computercategory.getId() >= 0){
-				computercategoryService.deleteComputercategory(computercategory.getId());				
-			}
-			
-			return "IdNotExist";
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputercategoryAction的方法：deleteComputercategory错误"+e);
-		}
-		return "Error";
-	}
 
-	
-//	del entityfull
-	public String deleteComputercategoryFull(){
-		
-		try{
-			String ids[] = computercategoryIdsForDel.split(";");
-			for(int i=0; i < ids.length-1;i++){
-				
-				
-				Integer tempDelId = Integer.valueOf(ids[i]);			
-				if(tempDelId != null || tempDelId < 0){
-					log.info("删除的id不规范");
-					return "Error";
-				}	
-				Computercategory temp = computercategoryService.selectComputercategoryById(tempDelId);			
-				if (temp != null) {				
-					computercategoryService.deleteComputercategory(tempDelId);			
-				} else {
-					log.info("删除的id不存在");			
-					return "Error";	
-				}
-			}
-			
-			return SUCCESS;
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "Error";
-	}
-	
 	//del entityfull Ajax
 	/**
 	 * 删除分类，将相应分类下面的型号设置为-1
 	 */
 	public String deleteComputercategoryFullAjax( ){
 		log.info(logprefix + "deleteComputercategoryFullAjax");
-		ReturnJson returnJson = new ReturnJson();
-		
+	
 		try{
-			String ids[] = computercategoryIdsForDel.split(";");
+		
+			String typeStrArray[] = computercategoryIdsForDel.split(";");
 			
-//			for(int i=0; i < ids.length;i++){
-//				
-//			}
+			List<Integer> delTypeList = new ArrayList<Integer>();
 			
-			for(int i=0; i < ids.length;i++){
-				
-				Integer typeId = Integer.valueOf(ids[i]);			
-				log.info(typeId);
-				
-				computermodelService.updateCategoryComputermodel(typeId);
-				computercategoryService.deleteComputercategoryByType(typeId);
-				
-				
+			for(String typeStr : typeStrArray){
+				if(!NumberUtils.isNumber(typeStr)){
+					this.returnInfo = "删除参数不正确";
+					log.info(returnInfo);
+					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+					return SUCCESS;
+				}
+				delTypeList.add(Integer.valueOf(typeStr));
+			}
+			
+			
+			for(Integer type : delTypeList){
+				String modelSql = " where computercategoryid = "+type;
+				computermodelList = computermodelService.selectComputermodelByCondition(modelSql);
+//				判断允许删除
+				if(computermodelList == null || computermodelList.size() == 0){
+					
+				}else{
+					
+					computercategoryList = computercategoryService.selectComputercategoryByCondition(" where languagetype="+CommonConfig.languagech+" and computercategorytype = "+type);
+					if(computercategoryList == null || computercategoryList.size() == 0){
+						this.returnInfo = "删除的机房分类类型为"+type+"不存在";
+						log.info(returnInfo);
+						this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+						return SUCCESS;
+					}
+					
+					this.returnInfo = "机房分类"+computercategoryList.get(0).getName()+"不存在";
+					log.info(returnInfo);
+					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+					return SUCCESS;
+				}
 				
 			}
-			returnJson.setFlag(1);
-			returnJson.setReason("删除成功!");
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
+			
+			computercategoryService.deleteComputercategoryByType(delTypeList);
+			
+			this.returnInfo = "删除成功";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
 			return SUCCESS;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		returnJson.setFlag(0);
-		returnJson.setReason("删除的内部错误");
-		JSONObject jo = JSONObject.fromObject(returnJson);
-		this.returnStr = jo.toString();
+		this.returnInfo = "发生系统内部错误，删除失败";
+		log.info(returnInfo);
+		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 		return SUCCESS;
 	}
 
@@ -297,316 +253,18 @@ public class ComputercategoryAction extends BaseAction implements ModelDriven<Co
 		}
 
 			
-		this.returnInfo = "修改失败";
+		this.returnInfo = "系统内部错误，修改失败";
 		log.info(returnInfo);
 		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 		return SUCCESS;
 	}
 	
 	
-	/**
-	
-	编辑实体 action的方法，首先获取entity的信息，返回到编辑页面
-	
-	*/
-	public String editComputercategory(){
-		log.info(logprefix + "editComputercategory");
-			
-		try {
-			//实体的id可以为0
-			if(computercategory.getId() != null && computercategory.getId() >= 0){				
-				Computercategory temComputercategory = computercategoryService.selectComputercategoryById(computercategory.getId());
-				if(temComputercategory != null){
-					BeanUtils.copyProperties(computercategoryModel,temComputercategory);	
-					//actionMsg = getText("selectComputercategoryByIdSuccess");
-					return SUCCESS;
-				}				
-			}		
-			return "PageNotExist";
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputercategoryAction的方法：selectComputercategoryById错误"+e);
-		}
-
-
-		return "error";
-	}
-	
-
-	/**
-	编辑实体Full action的方法，首先获取entityfull的信息，返回到编辑页面
-	
-	*/
-	public String editComputercategoryFull(){
-		
-		log.info(logprefix + "viewComputercategory");
-		
-		try {
-			if(computercategory.getId() != null && computercategory.getId() > 0){				
-				ComputercategoryFull temComputercategoryFull = computercategoryService.selectComputercategoryFullById(computercategory.getId());
-				BeanUtils.copyProperties(computercategoryFull,temComputercategoryFull);	
-				actionMsg = getText("selectComputercategoryByIdSuccess");
-			}else{
-				actionMsg = getText("selectComputercategoryByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputercategoryAction的方法：selectComputercategoryFullById错误"+e);
-		}
-		
-		return "error";
-	}
-
-	
-	// 查看实体 根据对象Id查询
-	public String viewComputercategory(){
-		log.info("viewComputercategory");
-		try {
-			if(computercategory.getId() != null && computercategory.getId() > 0){				
-				Computercategory temComputercategory = computercategoryService.selectComputercategoryById(computercategory.getId());
-				BeanUtils.copyProperties(computercategoryModel,temComputercategory);	
-				actionMsg = getText("selectComputercategoryByIdSuccess");
-			}else{
-				actionMsg = getText("selectComputercategoryByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputercategoryAction的方法：selectComputercategoryById错误"+e);
-		}
-
-
-		return "error";
-
-	}	
-
-/**
- * view ComputercategoryFull
- * need give parmeter id
- * get id from modle,
- * @return
- */
-	public String viewComputercategoryFull() {
-				
-		try {
-			int getId = computercategory.getId();
-			log.info(this.logprefix + ";id=" + getId);
-			
-			if (getId < 0) {
-				log.error("error,id小于0不规范");
-				return "error";
-			}	
-			
-			ComputercategoryFull temComputercategoryFull = computercategoryService.selectComputercategoryFullById(getId);				
-			if(temComputercategoryFull!=null){				
-				BeanUtils.copyProperties(computercategoryFull,temComputercategoryFull);
-				return SUCCESS;				
-			}else{
-				log.error("error,查询实体不存在。");
-				return "Error";
-			}			
-
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();			
-		}
-		return "Error";
-	}
-
-	
-	//根据对象Id查询
-	public String selectComputercategoryById(){
-		log.info("selectComputercategoryById");
-		try {
-			if(computercategory.getId() != null && computercategory.getId() > 0){				
-				Computercategory temComputercategory = computercategoryService.selectComputercategoryById(computercategory.getId());
-				BeanUtils.copyProperties(computercategoryModel,temComputercategory);	
-				actionMsg = getText("selectComputercategoryByIdSuccess");
-			}else{
-				actionMsg = getText("selectComputercategoryByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputercategoryAction的方法：selectComputercategoryById错误"+e);
-		}
-
-
-		return "error";
-
-	}	
-	
-
-	
-
-	//查询全部
-	public String selectComputercategoryAll(){
-		
-		computercategoryList  = computercategoryService.selectComputercategoryAll();
-		for(int i = 0; i < computercategoryList.size(); i++){
-			System.out.println("id="+computercategoryList.get(i).getId());
-		}
-		return SUCCESS;
-	}
-
-
-
-	
-	//根据对象Id查询Full
-	public String selectComputercategoryFullById(){
-		System.out.println("selectComputercategoryFullById");
-			try {
-				if(computercategory.getId() != null && computercategory.getId() >= 0){				
-				ComputercategoryFull temComputercategoryFull = computercategoryService.selectComputercategoryFullById(computercategory.getId());
-				BeanUtils.copyProperties(computercategoryFull,temComputercategoryFull);	
-				actionMsg = getText("selectComputercategoryByIdSuccess");
-			}else{
-				actionMsg = getText("selectComputercategoryByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputercategoryAction的方法：selectComputercategoryFullById错误"+e);
-		}
-		
-		return "error";
-
-	}	
-
-	
-	//查询全部Full
-	public String selectComputercategoryFullAll(){
-		log.info("exec selectComputercategoryFullAll");
-		computercategoryFullList  = computercategoryService.selectComputercategoryFullAll();
-		for(int i = 0; i < computercategoryFullList.size(); i++){
-		//	System.out.println("id="+computercategoryFullList.get(i).getLoginusername());
-		}
-		return SUCCESS;
-	}
-
-
-	//get set
-	public void setSession(Map<String, Object> session) {
-		// TODO Auto-generated method stub
-	    this.session = session;
-	}
 	
 	@Override
 	public Computercategory getModel() {
 		// TODO Auto-generated method stub
 		return computercategory;
-	}
-
-//  
-	public Computercategory getComputercategory() {
-		return computercategory;
-	}
-	
-	public void setComputercategory(Computercategory computercategory) {
-		this.computercategory = computercategory;
-	}
-//  entityModel
-	public Computercategory getComputercategoryModel() {
-		return computercategoryModel;
-	}
-	
-	public void setComputercategoryModel(Computercategory computercategoryModel) {
-		this.computercategoryModel = computercategoryModel;
-	}
-	
-	public ComputercategoryFull getComputercategoryFull() {
-		return computercategoryFull;
-	}
-	
-	public void setComputercategoryFull(ComputercategoryFull computercategoryFull) {
-		this.computercategoryFull = computercategoryFull;
-	}
-	
-	public List<Computercategory> getComputercategoryList() {
-		return computercategoryList;
-	}
-
-
-	public void setComputercategoryList(List<Computercategory> computercategoryList) {
-		this.computercategoryList = computercategoryList;
-	}
-
-	public List<ComputercategoryFull> getComputercategoryFullList() {
-		return computercategoryFullList;
-	}
-
-
-	public void setComputercategoryFullList(List<ComputercategoryFull> computercategoryFullList) {
-		this.computercategoryFullList = computercategoryFullList;
-	}
-
-	public String getReturnStr() {
-		return returnStr;
-	}
-
-
-	public void setReturnStr(String returnStr) {
-		this.returnStr = returnStr;
-	}
-	
-	public Page getPage() {
-		return page;
-	}
-
-
-	public void setPage(Page page) {
-		this.page = page;
-	}
-	
-	public int getComputercategoryid() {
-		return computercategoryid;
-	}
-
-	public void setComputercategoryid(int computercategoryid) {
-		this.computercategoryid = computercategoryid;
-	}
-		public Integer getPageNo() {
-		return pageNo;
-	}
-
-	public void setPageNo(Integer pageNo) {
-		this.pageNo = pageNo;
-	}
-
-	public String getComputercategoryIdsForDel() {
-		return computercategoryIdsForDel;
-	}
-
-	public void setComputercategoryIdsForDel(String computercategoryIdsForDel) {
-		this.computercategoryIdsForDel = computercategoryIdsForDel;
 	}
 
 	public ComputercategoryService getComputercategoryService() {
@@ -626,6 +284,30 @@ public class ComputercategoryAction extends BaseAction implements ModelDriven<Co
 		this.computermodelService = computermodelService;
 	}
 
+	public Computercategory getComputercategory() {
+		return computercategory;
+	}
+
+	public void setComputercategory(Computercategory computercategory) {
+		this.computercategory = computercategory;
+	}
+
+	public Computercategory getComputercategoryModel() {
+		return computercategoryModel;
+	}
+
+	public void setComputercategoryModel(Computercategory computercategoryModel) {
+		this.computercategoryModel = computercategoryModel;
+	}
+
+	public ComputercategoryFull getComputercategoryFull() {
+		return computercategoryFull;
+	}
+
+	public void setComputercategoryFull(ComputercategoryFull computercategoryFull) {
+		this.computercategoryFull = computercategoryFull;
+	}
+
 	public String getActionMsg() {
 		return actionMsg;
 	}
@@ -634,20 +316,45 @@ public class ComputercategoryAction extends BaseAction implements ModelDriven<Co
 		this.actionMsg = actionMsg;
 	}
 
+	public String getReturnStr() {
+		return returnStr;
+	}
+
+	public void setReturnStr(String returnStr) {
+		this.returnStr = returnStr;
+	}
+
+	public List<Computercategory> getComputercategoryList() {
+		return computercategoryList;
+	}
+
+	public void setComputercategoryList(List<Computercategory> computercategoryList) {
+		this.computercategoryList = computercategoryList;
+	}
+
+	public List<ComputercategoryFull> getComputercategoryFullList() {
+		return computercategoryFullList;
+	}
+
+	public void setComputercategoryFullList(
+			List<ComputercategoryFull> computercategoryFullList) {
+		this.computercategoryFullList = computercategoryFullList;
+	}
+
+	public Integer getComputercategoryid() {
+		return computercategoryid;
+	}
+
+	public void setComputercategoryid(Integer computercategoryid) {
+		this.computercategoryid = computercategoryid;
+	}
+
 	public String getLogprefix() {
 		return logprefix;
 	}
 
 	public void setLogprefix(String logprefix) {
 		this.logprefix = logprefix;
-	}
-
-	public ReturnJson getReturnJson() {
-		return returnJson;
-	}
-
-	public void setReturnJson(ReturnJson returnJson) {
-		this.returnJson = returnJson;
 	}
 
 	public String getInputAddCategoryNameEn() {
@@ -664,18 +371,6 @@ public class ComputercategoryAction extends BaseAction implements ModelDriven<Co
 
 	public void setInputAddCategoryNameCh(String inputAddCategoryNameCh) {
 		this.inputAddCategoryNameCh = inputAddCategoryNameCh;
-	}
-
-	public static Log getLog() {
-		return log;
-	}
-
-	public Map<String, Object> getSession() {
-		return session;
-	}
-
-	public void setComputercategoryid(Integer computercategoryid) {
-		this.computercategoryid = computercategoryid;
 	}
 
 	public int getComputercategoryIdCh() {
@@ -709,6 +404,30 @@ public class ComputercategoryAction extends BaseAction implements ModelDriven<Co
 	public void setComputercategoryNameEn(String computercategoryNameEn) {
 		this.computercategoryNameEn = computercategoryNameEn;
 	}
+
+	public String getComputercategoryIdsForDel() {
+		return computercategoryIdsForDel;
+	}
+
+	public void setComputercategoryIdsForDel(String computercategoryIdsForDel) {
+		this.computercategoryIdsForDel = computercategoryIdsForDel;
+	}
+
+	public static Log getLog() {
+		return log;
+	}
+
+	public List<Computermodel> getComputermodelList() {
+		return computermodelList;
+	}
+
+	public void setComputermodelList(List<Computermodel> computermodelList) {
+		this.computermodelList = computermodelList;
+	}
 	
 	
+	
+	
+	
+
 }

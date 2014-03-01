@@ -76,14 +76,15 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 		baseDao.createSQL(sql);
 		return 1;
 	}
+
 	
 	@Override	
 	public int deleteComputercategoryByType(List<Integer> computercategoryTypeList){
-//		Computercategory computercategory = new Computercategory();
-//		computercategory.setId(computercategoryId);
-//		//return computercategoryDao.deleteEntity(computercategoryId);	
-//		//baseDao.deleteEntityById(Computercategory.class,computercategoryId);
-//		baseDao.deleteEntity(computercategory);
+		for(Integer type : computercategoryTypeList){
+			String sql = "delete from Computercategory where computercategorytype="+type;
+			baseDao.createSQL(sql);
+		}
+		
 		return 1;
 	}
 
