@@ -89,7 +89,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 
 	public String addEquipmentclassification() {
 		
-		System.out.println(((Loginuser)session.get("loginUser")).getName());
+//		System.out.println(((Loginuser)session.get("loginUser")).getName());
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		Boolean isExist = equipService.isExistThisClassification( equipClassforAdd.getName() );
@@ -1178,19 +1178,32 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					ec.setModelId( String.valueOf( e.getEquipmentid() ) );
 					ec.setModelName( e.getEquipmentname() );
 //					ec.setCode( String.valueOf( equipdetail.getEquipserial() ) );
+					if( e.getClassificationid() != null && e.getClassificationid() != -1 ) {
+						Equipmentclassification ecf = equipService.getEquipmentclassificationByEquipmentModel( e.getEquipmentid() );
+						if(ecf != null) {
+							ec.setClassId(  String.valueOf( ecf.getClassificationid() ) );
+							ec.setClassName( ecf.getName() );
+						} else {
+							ec.setClassId(  String.valueOf( -1 ) );
+							ec.setClassName( "未分类" );
+						}
+					} else {
+						ec.setClassId(  String.valueOf( -1 ) );
+						ec.setClassName( "未分类" );
+					}
 					
 				}
 			}
-			if(equipdetail.getClassificationid() != -1) { //该设备有分类
-				Equipmentclassification ecf = equipService.getEquipmentclassificationById( equipdetail.getClassificationid() );
-				if(ecf != null) {
-					ec.setClassId(  String.valueOf( ecf.getClassificationid() ) );
-					ec.setClassName( ecf.getName() );
-				}
-			} else {
-				ec.setClassId(  String.valueOf( -1 ) );
-				ec.setClassName( "未分类" );
-			}
+//			if(equipdetail.getClassificationid() != -1) { //该设备有分类
+//				Equipmentclassification ecf = equipService.getEquipmentclassificationById( equipdetail.getClassificationid() );
+//				if(ecf != null) {
+//					ec.setClassId(  String.valueOf( ecf.getClassificationid() ) );
+//					ec.setClassName( ecf.getName() );
+//				}
+//			} else {
+//				ec.setClassId(  String.valueOf( -1 ) );
+//				ec.setClassName( "未分类" );
+//			}
 			ec.setState( String.valueOf( equipdetail.getStatus() ) );
 			if(equipdetail.getSysremark() != null && equipdetail.getUsermark() != null) {
 				ec.setMemo( equipdetail.getSysremark() + " " + equipdetail.getUsermark());
