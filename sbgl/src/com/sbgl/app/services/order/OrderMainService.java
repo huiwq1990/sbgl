@@ -3,11 +3,13 @@ package com.sbgl.app.services.order;
 import java.util.List;
 import java.util.Map;
 
+import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.entity.Equipmenborrow;
 import com.sbgl.app.entity.Equipment;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Equipmentnum;
+import com.sbgl.app.entity.Loginuser;
 
 public interface OrderMainService {
 	//查找设备是否可借
@@ -37,7 +39,12 @@ public interface OrderMainService {
 	//获得每天剩余数量（根据设备号）
 	public String findDayNum(Integer equipmentId,String fromDate,String endDate);
 	//提交订单
-	public Integer subOrder(String equIds,String equNums,String fromDate,String endDate,Integer borrowId) throws Exception;
+	public Integer subOrder(String equIds,String equNums,String fromDate,String endDate,Integer borrowId,Loginuser user) throws Exception;
 	//根据订单查找选择的商品
 	public String findEquipmentByBorrowId(Integer borrowId,String fromDate,String endDate);
+	//找未完成的账单
+	public List<EquipmenborrowFull> findUnderWayOrder(Integer userId);
+	//找完成的账单
+	public List<EquipmenborrowFull> findFinishOrder(Integer userId);
+	
 }

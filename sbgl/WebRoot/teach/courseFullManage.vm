@@ -9,7 +9,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="${cssDomain}/jqpagination.css" type="text/css" />
 
 #parse("include/includePageCompatibility.vm")
 
@@ -43,6 +42,7 @@
                 <a href="教学管理-添加课程.html" class="btn btn-primary">添加课程</a>
                 <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
               </div>
+			  <!--
               <div class="page pull-right clearfix">
                 <ul class="page-index nav nav-pills pull-left">
                   <li class="dropdown">
@@ -60,6 +60,7 @@
                   </ul>
                 </div>              
               </div>
+			  -->
             </div><!--control-bar end-->
            
 			<div id="refreshCourseTableDiv">
@@ -110,19 +111,12 @@
               </table>
             
 			</div><!--end panel -->
-			
-				</div><!--refreshCourseTableDiv-->
-							 
-							 
-							 <!--page -->
-                          <div class="pagination">
-                                <a href="#" class="first" data-action="first">&laquo;</a>
-                                <a href="#" class="previous" data-action="previous">&lsaquo;</a>
-                                <input type="text" readonly="readonly" data-max-page="$page.totalpage" />
-                                <a href="#" class="next" data-action="next">&rsaquo;</a>
-                                <a href="#" class="last" data-action="last">&raquo;</a>
-                          </div>
-                          <!-- end page -->
+						  
+			<!--page bar-->
+			  #parse("include/includePagebar.vm")
+				
+			</div><!--refreshCourseTableDiv-->
+						
 		</div>
       </div>
       <!--admin-wrap end-->
@@ -207,16 +201,12 @@
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 <script src="${jsDomain}/jquery.jqpagination.js"></script>
-<script>
-	$("#modifyFaCategoryId").select2("val","2");
-</script>
-
 
 
 <script>
 //当前页
 var currentpagenum=$pageNo;
-var totalpage=$page.totalpage;
+var totalpage=$page.totalpagenum;
 var totalcount=$page.totalCount;
 var usergroupid = 0;
 

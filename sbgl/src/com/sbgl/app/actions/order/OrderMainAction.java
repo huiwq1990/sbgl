@@ -2,31 +2,38 @@ package com.sbgl.app.actions.order;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.mail.Session;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.entity.Equipment;
 import com.sbgl.app.entity.Equipmentclassification;
+import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.services.order.OrderMainService;
 import com.sbgl.common.DataError;
 import com.sbgl.util.DateUtil;
 
 @Scope("prototype") 
 @Controller("OrderMainAction")
-public class OrderMainAction  extends ActionSupport  {
+public class OrderMainAction  extends ActionSupport  implements SessionAware {
 	private static final Log log = LogFactory.getLog(OrderMainAction.class);
+	private Map<String, Object> session;
 	
 	@Resource
 	private OrderMainService orderMainService;
 	
 	private List<Equipmentclassification> classification1List;
 	private List<Equipmentclassification> classification2List;
+	private List<EquipmenborrowFull> equipmenborrowFullList;
+	private List<EquipmenborrowFull> equipmenborrowFull2List;
 	private List<EquipmentFull> equipmentList;
 	private Integer equipmentId;
 	private EquipmentFull equipmentFull;
@@ -46,6 +53,7 @@ public class OrderMainAction  extends ActionSupport  {
 	private Integer borrowId;
 	private Integer[] daynums;
 	private String listequips;
+	private String orderCate;
 	
 	//进入设备管理页面
 	public String equipmentBooking(){
@@ -128,6 +136,15 @@ public class OrderMainAction  extends ActionSupport  {
 		return SUCCESS;
 	}
 	
+	
+	public String equipOrdIndex(){
+		Loginuser Loginuser = (com.sbgl.app.entity.Loginuser) session.get("loginUser");
+		
+		equipmenborrowFullList = orderMainService.findUnderWayOrder(Loginuser.getId());
+		equipmenborrowFull2List = orderMainService.findFinishOrder(Loginuser.getId());
+		return SUCCESS;
+	}
+	
 	//根据商品id刷新页面详情
 	public String equipOrdDetail(){		
 		if(fromDate==null||fromDate.equals("")){
@@ -157,8 +174,9 @@ public class OrderMainAction  extends ActionSupport  {
 				endDate = fromDate;
 			}
 		}
-		try{	
-			borrowId = orderMainService.subOrder(equIds, equNums, fromDate, endDate,borrowId);
+		try{
+			Loginuser loginuser = (Loginuser) session.get("loginUser");
+			borrowId = orderMainService.subOrder(equIds, equNums, fromDate, endDate,borrowId,loginuser);
 			tag = "1";
 		}catch(DataError e){		
 			tag = "2";
@@ -173,6 +191,8 @@ public class OrderMainAction  extends ActionSupport  {
 	
 	//进入设备管理中心
 	public String equipmentBookingMain(){
+		
+		
 		return SUCCESS;
 	}
 	
@@ -346,7 +366,37 @@ public class OrderMainAction  extends ActionSupport  {
 		this.listequips = listequips;
 	}
 
-	
+	public List<EquipmenborrowFull> getEquipmenborrowFullList() {
+		return equipmenborrowFullList;
+	}
+
+	public void setEquipmenborrowFullList(
+			List<EquipmenborrowFull> equipmenborrowFullList) {
+		this.equipmenborrowFullList = equipmenborrowFullList;
+	}
+
+	public List<EquipmenborrowFull> getEquipmenborrowFull2List() {
+		return equipmenborrowFull2List;
+	}
+
+	public void setEquipmenborrowFull2List(
+			List<EquipmenborrowFull> equipmenborrowFull2List) {
+		this.equipmenborrowFull2List = equipmenborrowFull2List;
+	}
+
+	public void setSession(Map<String, Object> session) {
+		// TODO Auto-generated method stub
+	    this.session = session;
+	}
+
+	public String getOrderCate() {
+		return orderCate;
+	}
+
+	public void setOrderCate(String orderCate) {
+		this.orderCate = orderCate;
+	}
+
 
 	
 }

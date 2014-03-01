@@ -1,17 +1,25 @@
 package com.sbgl.app.services.computer.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 
 import com.sbgl.app.entity.Computerhomework;
 import com.sbgl.app.entity.ComputerhomeworkFull;
+import com.sbgl.app.entity.Computerhomeworkreceiver;
+import com.sbgl.app.entity.Computerorderclassrule;
+import com.sbgl.app.entity.Computerorderclassruledetail;
 import com.sbgl.app.services.computer.ComputerhomeworkService;
 import com.sbgl.app.dao.ComputerhomeworkDao;
 import com.sbgl.app.dao.BaseDao;
+import com.sbgl.app.dao.ComputerorderclassruleDao;
+import com.sbgl.app.dao.ComputerorderclassruledetailDao;
 import com.sbgl.util.*;
 
 import javax.annotation.Resource;
+
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +33,11 @@ public class ComputerhomeworkServiceImpl implements ComputerhomeworkService{
 	@Resource
 	private ComputerhomeworkDao computerhomeworkDao;
 	
+	@Resource
+	private ComputerorderclassruleDao computerorderclassruleDao;
+	
+	@Resource
+	private ComputerorderclassruledetailDao computerorderclassruledetailDao;
 	
 	
 	//http://blog.csdn.net/softimes/article/details/7008875 实体添加时需要配置hibernate
@@ -48,6 +61,86 @@ public class ComputerhomeworkServiceImpl implements ComputerhomeworkService{
 	*/
 	}
 
+	@Override
+	public void sendComputerhomework(Computerhomework computerhomework,List<Computerhomeworkreceiver> chrList ) throws RuntimeException{
+		
+//		保存Homework
+		Computerhomework temp = new Computerhomework();
+		// 将model里的属性值赋给temp
+		try {
+			BeanUtils.copyProperties(temp, computerhomework);
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException("复制对象出错");  
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException("复制对象出错");  
+		}	
+		temp.setId(baseDao.getCode("Computerhomework"));
+		temp.setCreatetime(DateUtil.currentDate());		
+//		先添加homework，再添加接收者
+		baseDao.saveEntity(temp);
+		
+		
+		
+		for (Computerhomeworkreceiver chr : chrList ) {
+			chr.setId(baseDao.getCode("Computerhomeworkreceiver"));
+			chr.setComputerhomeworkid(temp.getId());
+			
+			baseDao.saveEntity(chr);
+		}
+		
+	}
+	
+	
+	@Override
+	public void sendComputerhomeworkNew(Computerorderclassrule rule,List<Computerorderclassruledetail> codList ,Computerhomework computerhomework,List<Computerhomeworkreceiver> chrList ) throws RuntimeException{
+		
+		rule.setId(baseDao.getCode("Computerorderclassrule"));
+		baseDao.saveEntity(rule);
+		
+		for(Computerorderclassruledetail cod : codList){
+			cod.setId(baseDao.getCode("Computerorderclassruledetail"));
+			cod.setComputerorderclassruleid(rule.getId());
+			baseDao.saveEntity(cod);
+		}
+		
+//		保存Homework
+		Computerhomework temp = new Computerhomework();
+		// 将model里的属性值赋给temp
+		try {
+			BeanUtils.copyProperties(temp, computerhomework);
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException("复制对象出错");  
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException("复制对象出错");  
+		}	
+		temp.setId(baseDao.getCode("Computerhomework"));
+		temp.setCreatetime(DateUtil.currentDate());		
+//		先保存规则
+		temp.setComputerorderclassruleid(rule.getId());
+//		先添加homework，再添加接收者
+		baseDao.saveEntity(temp);
+		
+		
+		
+		for (Computerhomeworkreceiver chr : chrList ) {
+			chr.setId(baseDao.getCode("Computerhomeworkreceiver"));
+			chr.setComputerhomeworkid(temp.getId());
+			
+			baseDao.saveEntity(chr);
+		}
+		
+	}
+	
+	
+	
 	@Override
 	public void addComputerhomeworkWithId(Computerhomework computerhomework){
 	

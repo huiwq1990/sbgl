@@ -24,6 +24,7 @@ public class DateUtil {
 			"yyyy-MM-dd");
 	public static final SimpleDateFormat year = new SimpleDateFormat("yyyy");
 	public static final SimpleDateFormat month = new SimpleDateFormat("MM");
+	public static final SimpleDateFormat day = new SimpleDateFormat("dd");
 	public static final SimpleDateFormat yeatMonth = new SimpleDateFormat(
 			"yyyyMM");
 	public static final SimpleDateFormat datetime = new SimpleDateFormat(
@@ -336,6 +337,35 @@ public class DateUtil {
          int days = daysBetween(earlydate,latedate);   
          System.out.println(days);   
    }
+   
+   
+   
+   /**
+    * 获取当前日期是星期几<br>
+    * 
+    * @param dt
+    * @return 当前日期是星期几
+    */
+   public static String getWeekOfDate(Date dt) {
+       String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+       Calendar cal = Calendar.getInstance();
+       cal.setTime(dt);
+       int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+       if (w < 0)
+           w = 0;
+       return weekDays[w];
+   }
+   
+   public static String getChineseTime(Date date) {
+		try {
+			String a = "";
+			a = year.format(date)+"年"+month.format(date)+"月"+day.format(date)+"日";
+			return a;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+		}
+		return null;
+	}
 	
 	public static void main(String[] args) {
 		System.out.println(DateUtil.currentDate());

@@ -40,14 +40,15 @@ public class ComputerorderActionUtil {
 	
 	
 //	构建某一个型号，某一时段 某一天的可借数量         天的长度是可提前预约的天数（预约n天内的PC）
+//	computeroderadvanceorderday为真实的computeroderadvanceorderday，不是展示的
 	public static 	HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> computermodelPeriodDayInfo(List<Computermodel> computermodelList,int currentPeriod , List<Borrowperiod> borrowperiodList,int computeroderadvanceorderday){
 
 		HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> availableBorrowModelMap = new HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> ();
 
 		
 //		初始化每个型号每个时段每天可借数量	
-		for(int tempmodelindex=0;tempmodelindex<computermodelList.size();tempmodelindex++){
-			Computermodel tempmodel =  computermodelList.get(tempmodelindex);//full list已经赋值
+		for(Computermodel tempmodel : computermodelList){
+//			Computermodel tempmodel =  computermodelList.get(tempmodelindex);//full list已经赋值
 			HashMap<Integer,ArrayList<Integer>> periodDayAvailInfo = new HashMap<Integer,ArrayList<Integer>>();
 			
 			for(Borrowperiod tempBorrowperiod : borrowperiodList){

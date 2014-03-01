@@ -7,7 +7,7 @@ import com.sbgl.app.dao.DaoAbs;
 
 public class EquipmenborrowFull extends DaoAbs {
 	private Integer borrowid;
-	private Integer category;
+	private Integer category;  //1：个人预约，2：课程预约
 	private Integer userid;
 	private Integer teacherid;
 	private Date applytime;
@@ -21,10 +21,15 @@ public class EquipmenborrowFull extends DaoAbs {
 	private String examstate;
 	private String title;
 	private String remark;
+	private Integer examuser;
+	private Integer homeworkid;
+	private Date examdate;
 	
 	private String userName;
 	private String cateName;
+	private String statusName;
 	private String teacherName;
+	private String examuserName;
 	public Integer getBorrowid() {
 		return borrowid;
 	}
@@ -132,6 +137,36 @@ public class EquipmenborrowFull extends DaoAbs {
 	}
 	public void setTeacherName(String teacherName) {
 		this.teacherName = teacherName;
+	}
+	public String getStatusName() {
+		return statusName;
+	}
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+	public Integer getExamuser() {
+		return examuser;
+	}
+	public void setExamuser(Integer examuser) {
+		this.examuser = examuser;
+	}
+	public Integer getHomeworkid() {
+		return homeworkid;
+	}
+	public void setHomeworkid(Integer homeworkid) {
+		this.homeworkid = homeworkid;
+	}
+	public Date getExamdate() {
+		return examdate;
+	}
+	public void setExamdate(Date examdate) {
+		this.examdate = examdate;
+	}
+	public String getExamuserName() {
+		return examuserName;
+	}
+	public void setExamuserName(String examuserName) {
+		this.examuserName = examuserName;
 	}
 	
 }

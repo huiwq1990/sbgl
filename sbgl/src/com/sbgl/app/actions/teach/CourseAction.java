@@ -23,6 +23,7 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.actions.common.BaseAction;
 import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.util.JsonActionUtil;
+import com.sbgl.app.actions.util.PageActionUtil;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.teach.CourseService;
 import com.sbgl.app.services.user.GroupService;
@@ -147,9 +148,9 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>{
 			System.out.println(c.getCoursename());
 		}
 		 
-        int count = courseFullListCh.size();
-        setPageInfo(count);
-        System.out.println(count);
+        this.totalcount = courseFullListCh.size();
+        page = PageActionUtil.getPage(totalcount, pageNo);
+        pageNo = page.getPageNo();
         
     	courseFullListCh  = courseService.selectCourseFullByConditionAndPage( courseSqlCh,page);        
         courseFullListEn  = courseService.selectCourseFullByConditionAndPage(courseSqlEn, page);

@@ -25,18 +25,7 @@
    		</result-types>
    		
    		-->
-        <!-- 定义一个拦截器 -->  
-        <interceptors>  
-           <interceptor name="myException"  class="com.sbgl.app.actions.common.ExceptionInterceptor"/>
-           	<!-- 拦截器栈  --> 
-           <interceptor-stack name="mydefault">
-           	   <interceptor-ref name="myException" />
-               <interceptor-ref name="defaultStack" />  
-           </interceptor-stack>
-           <interceptor name="myinterceptor" class="com.sbgl.common.common.MyIntercepor">
-            </interceptor> 
-	    </interceptors>  
-	    <default-interceptor-ref name="mydefault" />
+    
 	    <!-- 定义全局Result -->  
         <global-results>  
             <!-- 当返回login视图名时，转入/login.jsp页面 -->  

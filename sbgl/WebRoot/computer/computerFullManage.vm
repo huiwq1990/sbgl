@@ -9,7 +9,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="${cssDomain}/jqpagination.css" type="text/css" />
 
 #parse("include/includePageCompatibility.vm")
 
@@ -81,7 +80,8 @@
             </div><!--control-bar end-->
 			
 			<div id="refreshComputerTableDiv">
-            <div class="panel panel-default table-responsive">                          
+            
+				<div class="panel panel-default table-responsive">                          
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -139,18 +139,11 @@
 				  -->
                 </tbody>
               </table>              
-            </div>
+           		 </div>
 			
-			<!--page -->
-			  <div class="pagination">
-				<a href="#" class="first" data-action="first">&laquo;</a>
-				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
-				<input type="text" readonly="readonly" data-max-page="$!page.totalpage" />
-				<a href="#" class="next" data-action="next">&rsaquo;</a>
-				<a href="#" class="last" data-action="last">&raquo;</a>
-			  </div>
-			  <!-- end page -->
-				</div> <!-- end refreshComputerTableDiv-->
+				 <!--page bar-->
+				 #parse("include/includePagebar.vm")
+			</div> <!-- end refreshComputerTableDiv-->
 			
         </div>
 
@@ -288,15 +281,6 @@
 <script src="${jsDomain}/jquery.noty.js"></script>
 <script src="${jsDomain}/jquery.jqpagination.js"></script>
 
-<!--[if lt IE 10]>
-  <script src="../js/jquery.placeholder.js"></script>
-  <script>
-  $('input, textarea').placeholder();
-  </script>
-<![endif]-->
-
-
-
 
 
 
@@ -352,7 +336,7 @@ var cookie = {
 var idsForDel;	
 //当前页
 var currentpagenum=1;
-var totalpage=$page.totalpage;
+var totalpage=$page.totalpagenum;
 var computercategorytype = 0;
 var computermodeltype = 0;
 var computerstatusid = 0;

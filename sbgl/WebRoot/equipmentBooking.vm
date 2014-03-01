@@ -122,7 +122,7 @@
       			#foreach($row3 in $!equipmentList)	
                   <div class="w-200">                  
                       <div class="thumbnail">
-                        <img width="168px" height="128px" class="e-pic" src="img/170x140.jpg">
+                        <img width="168px" height="128px" class="e-pic" src="$!{equipmentImagePath}/$!row3.imgNameSaved">
                         <div class="caption">
                           <div class="title"><a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.equipmentid" role="button">$!row3.equipmentname</a></div>
                           <p class="detail">最多可借：$!row3.borrownum</p>
@@ -159,7 +159,9 @@
 <div class="step-content">
 	<div class="step-pane active" id="step1">
       <p>欢迎使用北京电影学院摄影系在线设备预约系统！</p>
+	  #if($!orderCate==1)
       <p>您正在进行的是<strong>个人预约</strong>。</p>
+	  #elseif($!orderCate==2)
       <p>您正在进行的是<strong>课程预约</strong>，以下是<strong>XXX 老师</strong>的相关要求：</p>
       <div class="media">
         <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
@@ -179,8 +181,7 @@
           </div>
         </div>
       </div>
-
-      
+	  #end      
     </div>
 	<div class="step-pane" id="step2">
         <div class="rent-time">

@@ -1,5 +1,4 @@
-			<div id="refreshComputerTableDiv">
-            <div class="panel panel-default table-responsive">                          
+	<div class="panel panel-default table-responsive">                          
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -57,21 +56,14 @@
 				  -->
                 </tbody>
               </table>              
-            </div>
+           		 </div>
 			
-			<!--page -->
-			  <div class="pagination">
-				<a href="#" class="first" data-action="first">&laquo;</a>
-				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
-				<input type="text" readonly="readonly" data-max-page="$!page.totalpage" />
-				<a href="#" class="next" data-action="next">&rsaquo;</a>
-				<a href="#" class="last" data-action="last">&raquo;</a>
-			  </div>
-			  <!-- end page -->
-				</div> <!-- end refreshComputerTableDiv-->
-				
+				 <!--page bar-->
+				 #parse("include/includePagebar.vm") 
+
+
  <script>
-totalpage = $page.totalpage;
+totalpage = $page.totalpagenum;
  totalcount=$page.totalCount;
 currentpagenum = $page.pageNo;
 </script>				

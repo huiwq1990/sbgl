@@ -220,35 +220,34 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 	public String addComputerhomeworkAjax(){	
 		log.info("Add Entity Ajax Manner");
 		
-		ReturnJson returnJson = new ReturnJson();
-		
+	
 		try {
+		
 			Computerhomework temp = new Computerhomework();
 			// 将model里的属性值赋给temp
-			BeanUtils.copyProperties(temp, computerhomework);			
-			temp.setCreatetime(DateUtil.currentDate());
+			BeanUtils.copyProperties(temp, computerhomework);
+			temp.setCreateuserid(this.getCurrentUserId());
 			
-//			先添加homework，再添加接收者
-			computerhomeworkService.addComputerhomework(temp);
-			
+			List<Computerhomeworkreceiver> chrList = new ArrayList<Computerhomeworkreceiver>();
 			String[] userIds = receiverids.split(";");
 			for (int i = 0; i < userIds.length; i++) {
 				Computerhomeworkreceiver chr = new Computerhomeworkreceiver();
+			
 				chr.setComputerhomeworkid(temp.getId());
 				chr.setUserid(Integer.valueOf(userIds[i]));
 				chr.setHasorder(0);
 				chr.setStatus(0);
 				chr.setHasview(0);
-				computerhomeworkreceiverService.addComputerhomeworkreceiver(chr);
+				
+				chrList.add(chr);
 			}
 			
+			computerhomeworkService.sendComputerhomework(computerhomework, chrList);
 			
-			returnJson.setFlag(1);
-			returnJson.setReason("添加成功");
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
-			
+			returnInfo = "添加成功";
+			this.returnStr = JsonActionUtil.buildReturnStr(ComputerConfig.ajaxsuccessreturn,returnInfo);
 			return SUCCESS;
+			
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
@@ -258,13 +257,25 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 			log.error("类ComputerhomeworkAction的方法：addBbstagfavourite错误"+e);
 		}
 		
-		returnJson.setFlag(0);
-		returnJson.setReason("添加失败");
-		JSONObject jo = JSONObject.fromObject(returnJson);
-		this.returnStr = jo.toString();
+		returnInfo = "添加失败";
+		this.returnStr = JsonActionUtil.buildReturnStr(ComputerConfig.ajaxsuccessreturn,returnInfo);
 		return SUCCESS;
 	}
 
+	
+	public boolean checkAddForm(){
+		if(receiverids == null || receiverids.length() == 0){
+			returnInfo = "接收人不能为空";
+			return false;
+		}
+		
+		if(allowborrowpcids == null || allowborrowpcids.length() == 0){
+			returnInfo = "预约器材不能为空";
+			return false;
+		}
+		
+		return true;
+	}
 
 //  ajax add	
 	public String addComputerhomeworkAjaxNew(){	
@@ -274,47 +285,47 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 		
 		try {
 			
+			if(!checkAddForm()){
+				this.returnStr = JsonActionUtil.buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+				return SUCCESS;
+			}
+			
 //			添加规则
 			Computerorderclassrule tempRule = new Computerorderclassrule();
 			tempRule.setClassid(classid);
 			tempRule.setAvailableordertime(availableordertime);
 			tempRule.setOrderstarttime(orderstarttime);
 			tempRule.setOrderendtime(orderendtime);
-			computerorderclassruleService.addComputerorderclassrule(tempRule);
 			
 //			规则详情
+			List<Computerorderclassruledetail> codList = new ArrayList<Computerorderclassruledetail>();
 			String[] pcid = allowborrowpcids.split(";");			
 			for (int i = 0; i < pcid.length; i++) {
 				Computerorderclassruledetail c = new Computerorderclassruledetail();
 				c.setAllowedcomputermodelid(Integer.valueOf(pcid[i]));
-				c.setComputerorderclassruleid(tempRule.getId());
-				computerorderclassruledetailService.addComputerorderclassruledetail(c);
+				codList.add(c);
 			}
 			
 			
-			
 			Computerhomework temp = new Computerhomework();
-//			设置规则id
-			
 			// 将model里的属性值赋给temp
-			BeanUtils.copyProperties(temp, computerhomework);			
-			temp.setCreatetime(DateUtil.currentDate());
-			temp.setComputerorderclassruleid(tempRule.getId());
-//			先添加homework，再添加接收者
-			computerhomeworkService.addComputerhomework(temp);
+			BeanUtils.copyProperties(temp, computerhomework);
+			temp.setCreateuserid(this.getCurrentUserId());
 			
+			List<Computerhomeworkreceiver> chrList = new ArrayList<Computerhomeworkreceiver>();
 			String[] userIds = receiverids.split(",");
 			for (int i = 0; i < userIds.length; i++) {
-				Computerhomeworkreceiver chr = new Computerhomeworkreceiver();
+				Computerhomeworkreceiver chr = new Computerhomeworkreceiver();			
 				chr.setComputerhomeworkid(temp.getId());
 				chr.setUserid(Integer.valueOf(userIds[i]));
 				chr.setHasorder(0);
 				chr.setStatus(0);
 				chr.setHasview(0);
-				computerhomeworkreceiverService.addComputerhomeworkreceiver(chr);
+				
+				chrList.add(chr);
 			}
 			
-			
+			computerhomeworkService.sendComputerhomeworkNew(tempRule,codList,computerhomework, chrList);
 
 			
 			

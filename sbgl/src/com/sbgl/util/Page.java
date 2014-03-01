@@ -31,6 +31,8 @@ public class Page {
 	/** 页码数量 **/
 	private int pageviewcount = 10;
 	
+	private int totalpagenum;
+	
 	public Page() {
 
 	}
@@ -202,4 +204,25 @@ public class Page {
 	public int getTotalPageDecreasing1(){
 	    return this.totalpage-1;
 	}
+
+	
+	public void calTotalpagenum(){
+		int count = totalCount / pageSize;
+		if (totalCount % pageSize > 0) {
+			count++;
+		}
+		
+		totalpagenum = count;
+	}
+	public int getTotalpagenum() {
+		return totalpagenum;
+	}
+
+	public void setTotalpagenum(int totalpagenum) {
+		this.totalpagenum = totalpagenum;
+	}
+	
+	
+	
+	
 }

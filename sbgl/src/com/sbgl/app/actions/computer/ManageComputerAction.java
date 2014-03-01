@@ -21,6 +21,7 @@ import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sbgl.app.actions.common.BaseAction;
 import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.teach.TeachActionUtil;
 import com.sbgl.app.actions.util.PageActionUtil;
@@ -73,13 +74,11 @@ import com.sbgl.util.SpringUtil;
 
 @Scope("prototype") 
 @Controller("ManageComputerAction")
-public class ManageComputerAction extends ActionSupport implements SessionAware{
+public class ManageComputerAction extends BaseAction{
 
 	private static final Log log = LogFactory.getLog(ManageComputerAction.class);
 
-	private Map<String, Object> session;
-	private int pageNo;
-	private String callType;
+
 
 	// Service
 	
@@ -213,7 +212,7 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	
 	
 	private String logprefix = "exec method";
-	Page page = new Page();
+
 
 	
 	
@@ -397,13 +396,7 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	 * 需要获取PC的所有可能状态
 	 */
 	public String manageComputerFull(){
-		log.info("exec action method:manageComputerFull");
-
-		
-//      分页查询		
-		if(pageNo ==0){
-			pageNo =1;
-		}		
+		log.info("exec action method:manageComputerFull");	
 		
 		String countsql = " where a.languagetype="+ComputerConfig.languagech;
 		String sqlch =" where a.languagetype="+ComputerConfig.languagech+" and b.languagetype="+ComputerConfig.languagech;
@@ -479,13 +472,9 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		System.out.println(sqlen);
 		
 		//设置总数量，查询中文的
-		page.setTotalCount(computerService.selectComputerByCondition(countsql).size());
-		//如果页码大于总页数，重新设置
-		if(pageNo>page.getTotalpage()){
-			pageNo = page.getTotalpage();
-		}
-		page.setPageNo(pageNo);
-		System.out.println("page count:"+page.getTotalCount());
+		this.totalcount = computerService.selectComputerByCondition(countsql).size();
+		page = PageActionUtil.getPage(totalcount, pageNo);
+		pageNo = page.getPageNo();
 		
 		computerFullListCh = computerService.selectComputerFullByConditionAndPage(sqlch, page);
 		computerFullListEn = computerService.selectComputerFullByConditionAndPage(sqlen, page);
@@ -559,12 +548,6 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		log.info("exec action method:manageComputermodelFull"+computercategorytype );
 
 		
-//      分页查询		
-		if(pageNo ==0){
-			pageNo =1;
-		}		
-		
-		
 		String countsql = "";
 		String sqlch = "";
 		String sqlen = "";
@@ -583,18 +566,18 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 		
 		//设置总数量，直接查询Computermodel表，由于是双语 除2
 		List<Computermodel> countlist = computermodelService.selectComputermodelByCondition(countsql);
-		if(countlist==null){
-			page.setTotalCount(0);
-		}else{
-			page.setTotalCount(countlist.size()/2);
-		}
 		
-		//如果页码大于总页数，重新设置
-		if(pageNo>page.getTotalpage()){
-			pageNo = page.getTotalpage();
+		
+		if(countlist==null){
+			this.totalcount = 0;
+		}else{
+			this.totalcount = countlist.size()/2;
 		}
-		page.setPageNo(pageNo);
-//		System.out.println(page.getTotalCount());
+		page = PageActionUtil.getPage(totalcount, pageNo);
+		pageNo = page.getPageNo();
+		
+		log.info("sdfsa"+page.getPageNo()+" "+page.getTotalpage()+"  "+pageNo);
+		
 		
 		//查询中文的Model		
 		log.info("computermodelFullListCh: " + sqlch);
@@ -908,17 +891,6 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	}			
 			
 	
-	
-	
-	
-	
-	
-	
-	@Override
-	public void setSession(Map<String, Object> arg0) {
-		// TODO Auto-generated method stub
-
-	}
 
 	public ComputerService getComputerService() {
 		return computerService;
@@ -1661,6 +1633,26 @@ public class ManageComputerAction extends ActionSupport implements SessionAware{
 	public void setCourseFullByGroupId(
 			HashMap<Integer, ArrayList<CourseFull>> courseFullByGroupId) {
 		this.courseFullByGroupId = courseFullByGroupId;
+	}
+
+
+	public ClazzService getClazzService() {
+		return clazzService;
+	}
+
+
+	public void setClazzService(ClazzService clazzService) {
+		this.clazzService = clazzService;
+	}
+
+
+	public List<Map<Clazz, List<Student>>> getClassStuListMap() {
+		return classStuListMap;
+	}
+
+
+	public void setClassStuListMap(List<Map<Clazz, List<Student>>> classStuListMap) {
+		this.classStuListMap = classStuListMap;
 	}
 
 

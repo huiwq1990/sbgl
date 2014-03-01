@@ -11,7 +11,9 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
+import com.sbgl.app.actions.orderadmin.OrderCountFull;
 import com.sbgl.app.dao.OrderMainDao;
 import com.sbgl.app.entity.Equipment;
 import com.sbgl.app.entity.Equipmentclassification;
@@ -19,6 +21,7 @@ import com.sbgl.app.entity.Equipmentnum;
 import com.sbgl.app.entity.Loginuser;
 import com.sbgl.util.DateUtil;
 import com.sbgl.util.EscColumnToBean;
+import com.sbgl.util.Page;
 
 @Repository("orderMainDao")
 public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDao {
@@ -265,6 +268,103 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 			}
 			return a;
 		}	
+		return null;
+	}
+
+
+	public List<EquipmenborrowFull> findFinishOrder(Integer userId) {
+		// TODO Auto-generated method stub
+		final String sql = " select a.* from EquipmenBorrow a where a.status in ('8')  ";
+		List<EquipmenborrowFull> equipmenborrowtList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql);
+				query.setResultTransformer(new EscColumnToBean(EquipmenborrowFull.class));
+				return query.list();
+			}
+		});	
+		if(equipmenborrowtList!=null&&!equipmenborrowtList.isEmpty()){
+			return equipmenborrowtList; 
+		}	
+		return null;
+	}
+
+
+	public List<EquipmenborrowFull> findUnderWayOrder(Integer userId) {
+		// TODO Auto-generated method stub
+		final String sql = " select a.* from EquipmenBorrow a where a.status not in ('8')  ";
+		List<EquipmenborrowFull> equipmenborrowtList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql);
+				query.setResultTransformer(new EscColumnToBean(EquipmenborrowFull.class));
+				return query.list();
+			}
+		});	
+		if(equipmenborrowtList!=null&&!equipmenborrowtList.isEmpty()){
+			return equipmenborrowtList; 
+		}	
+		return null;
+	}
+
+
+	@Override
+	public List<EquipmenborrowFull> findEquipmenborrow(String dealtype,
+			String ordertype, Page page) {
+		// TODO Auto-generated method stub
+		if(ordertype.equals("0")){
+			ordertype="1','2";
+		}
+		if(dealtype.equals("0")){
+			dealtype="'1','2','3','4','5','6','7','8'";
+		}else if(dealtype.equals("1")){
+			dealtype="'2'";
+		}else if(dealtype.equals("2")){
+			dealtype="'4'";
+		}else if(dealtype.equals("3")){
+			dealtype="'5','6'";
+		}
+		final String sql = " select a.*,b.name as userName from EquipmenBorrow a left outer join LoginUser b on a.userid=b.id " +
+				" where a.category in ('"+ordertype+"') and a.status in ("+dealtype+") limit "+(((page.getPageNo()-1)*page.getPageSize()))+","+page.getPageSize();
+		try {
+			Query query =  this.getCurrentSession().createSQLQuery(sql);
+			query.setResultTransformer(new EscColumnToBean(EquipmenborrowFull.class));
+			List<EquipmenborrowFull> equipmenborrowtList =query.list();
+			if(equipmenborrowtList!=null&&!equipmenborrowtList.isEmpty()){
+				return equipmenborrowtList; 
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+			
+		return null;
+	}
+	
+	public  Session getCurrentSession(){
+        //TODO Auto-generated method stub
+		return this.getHibernateTemplate().getSessionFactory().getCurrentSession();
+		
+	}
+
+
+	@Override
+	public OrderCountFull findOrderCount(String ordertype) {
+		// TODO Auto-generated method stub
+		if(ordertype.equals("0")){
+			ordertype="1','2";
+		}
+		final String sql = " select (select count(*) from EquipmenBorrow a where a.status='2' and  a.category in ('"+ordertype+"')) as orderCount1, " +
+				" (select count(*) from EquipmenBorrow a where  a.status='4' and  a.category in ('"+ordertype+"')) as orderCount2,(select count(*) from EquipmenBorrow a where  a.status in ('6','5') and  a.category in ('"+ordertype+"')) as orderCount3, " +
+				" (select count(*) from EquipmenBorrow a where  a.status='8' and  a.category in ('"+ordertype+"')) as orderCount4,(select count(*) from EquipmenBorrow a where  a.category in ('"+ordertype+"')) as orderCount5 from dual  ";
+		try {
+			Query query =  this.getCurrentSession().createSQLQuery(sql);
+			query.setResultTransformer(new EscColumnToBean(OrderCountFull.class));
+			List<OrderCountFull> list =query.list();
+			if(list!=null&&!list.isEmpty()){
+				return list.get(0);  
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+			
 		return null;
 	}
 }

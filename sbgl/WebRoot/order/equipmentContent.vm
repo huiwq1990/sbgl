@@ -21,7 +21,7 @@
       			#foreach($row3 in $!equipmentList)	
                   <div class="w-200">                  
                       <div class="thumbnail">
-                        <img width="168px" height="128px" class="e-pic" src="img/170x140.jpg">
+                        <img width="168px" height="128px" class="e-pic" src="$!{equipmentImagePath}/$!row3.imgNameSaved">
                         <div class="caption">
                           <div class="title"><a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.equipmentid" role="button">$!row3.equipmentname</a></div>
                           <p class="detail">最多可借：$!row3.borrownum</p>

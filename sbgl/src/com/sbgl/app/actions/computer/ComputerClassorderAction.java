@@ -155,11 +155,13 @@ public class ComputerClassorderAction  extends BaseAction  {
 	private List<Borrowperiod> borrowperiodList   = new ArrayList<Borrowperiod>();
 	private HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> availableBorrowModelMap = new HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> ();
 	
+	
+	private int showComputeroderadvanceorderday = 0;
 	private List<Borrowperiod> showtimeList   = new ArrayList<Borrowperiod>();
 	
 	private HashMap<Integer,ArrayList<String>> showDateMap = new HashMap<Integer,ArrayList<String>>();
 	private HashMap<Integer,ArrayList<String>> dateMap = new HashMap<Integer,ArrayList<String>>();
-
+	HashMap<Integer,ArrayList<String>> showWeekdayMap = new HashMap<Integer,ArrayList<String>>();
 	
 //	提交预约表单的参数
 	private String orderInfoStr;
@@ -267,7 +269,12 @@ public class ComputerClassorderAction  extends BaseAction  {
 		}
 		computerorderclassrule = computerorderclassruleList.get(0);
 	
+		
 		Date orderstartDate = computerorderclassrule.getOrderstarttime();
+		if(currentDate.after(orderstartDate)){
+			orderstartDate = currentDate;
+			log.info("orderstartDate" + DateUtil.dateFormat(orderstartDate, DateUtil.dateformatstr1));
+		}
 		Date orderEndDate = computerorderclassrule.getOrderendtime();
 //		检查规则日期
 		if(orderstartDate == null || orderEndDate == null ){
@@ -318,10 +325,10 @@ public class ComputerClassorderAction  extends BaseAction  {
 	}
 
 	
-	public void buildShowDate(Date orderStartDate){
+	public void buildShowDate(Date orderStartDate,int computeroderadvanceorderday,int computerodertablercolumn){
 		int weeknum = computeroderadvanceorderday/computerodertablercolumn;
 		for(int i=0; i< weeknum;i++){
-			
+			ArrayList<String> weekday = new ArrayList<String>();
 			ArrayList<String> time = new ArrayList<String>();
 			ArrayList<String> weekStr = new ArrayList<String>();
 			for(int col =0; col <computerodertablercolumn; col++ ){
@@ -330,9 +337,12 @@ public class ComputerClassorderAction  extends BaseAction  {
 				String timeStr = DateUtil.dateFormat( date , "yyyy-MM-dd");
 				weekStr.add(dayStr);
 				time.add(timeStr);
+				weekday.add(DateUtil.getWeekOfDate(date));
+				
 			}
 			showDateMap.put(i, weekStr);
 			dateMap.put(i, time);
+			showWeekdayMap.put(i, weekday);
 		}
 	}
 	
@@ -342,24 +352,26 @@ public class ComputerClassorderAction  extends BaseAction  {
 		String orderEndDateStr = DateUtil.dateFormat(orderEndDate, DateUtil.dateformatstr1);
 		
 		//设置提前预约的天数
-		computeroderadvanceorderday = DateUtil.daysBetween(orderStartDate, orderEndDate);
+		computeroderadvanceorderday = DateUtil.daysBetween(orderStartDate, orderEndDate)+1;
 		int trueadvanceday = computeroderadvanceorderday;
 //		设备预约表格显示的列数，默认是7
 		computerodertablercolumn = ComputerConfig.computerodertablercolumn;
 //		调整预约时间，使时间是7的倍数
+		showComputeroderadvanceorderday = 0;
 		if(computeroderadvanceorderday%computerodertablercolumn !=0){
-			computeroderadvanceorderday = (computeroderadvanceorderday/computerodertablercolumn + 1) * computerodertablercolumn ;			
-		}
+			showComputeroderadvanceorderday = (computeroderadvanceorderday/computerodertablercolumn + 1) * computerodertablercolumn ;			
+		}		
+		System.out.println("showComputeroderadvanceorderday "+showComputeroderadvanceorderday);
 		
-		System.out.println("computeroderadvanceorderday "+computeroderadvanceorderday);
 //		int computerorderTotalOrderPeriod = ComputerConfig.computerorderTotalOrderPeriod;
 		
 
 		currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(orderStartDate);			 
 		System.out.println("currentPeriod: "+currentPeriod);
 			
-		buildShowDate(orderStartDate);	 
+		buildShowDate(orderStartDate,showComputeroderadvanceorderday,computerodertablercolumn);	 
 			 
+		
 		//取得所有PC类型的当前库存数量
 //		String currentlanguagetype = "0";
 //		String getAllComputermodelTypeSql = " where a.languagetype="+currentlanguagetype+" ";
@@ -371,12 +383,21 @@ public class ComputerClassorderAction  extends BaseAction  {
 		}
 		
 		//所有可借时间段信息
-//		Map<Integer,Borrowperiod> periodMap = BorrowperiodUtil.getBorrowperiodMap();
 		borrowperiodList =  BorrowperiodUtil.getBorrowperiodList();
 		
 //		根据模型构建 模型、时间段、日期的map
 		availableBorrowModelMap = ComputerorderActionUtil.computermodelPeriodDayInfo(computermodelList, currentPeriod, borrowperiodList, computeroderadvanceorderday);
 		
+//		配合显示，将多出来的那些天数的数量设置为0
+		if(showComputeroderadvanceorderday > computeroderadvanceorderday){
+			for(Computermodel tempmodel : computermodelList){
+				for(Borrowperiod tempBorrowperiod : borrowperiodList){
+					for(int tempday=computeroderadvanceorderday; tempday < showComputeroderadvanceorderday; tempday++){
+						availableBorrowModelMap.get(tempmodel.getComputermodeltype()).get(tempBorrowperiod.getPeriodnum()).add(0);
+					}	
+				}
+			}
+		}
 		
 		/*
 		//初始化每个型号每个时段可借数量数组，		
@@ -1183,6 +1204,17 @@ public class ComputerClassorderAction  extends BaseAction  {
 
 	public static Log getLog() {
 		return log;
+	}
+
+
+	public int getShowComputeroderadvanceorderday() {
+		return showComputeroderadvanceorderday;
+	}
+
+
+	public void setShowComputeroderadvanceorderday(
+			int showComputeroderadvanceorderday) {
+		this.showComputeroderadvanceorderday = showComputeroderadvanceorderday;
 	}
 	
 	

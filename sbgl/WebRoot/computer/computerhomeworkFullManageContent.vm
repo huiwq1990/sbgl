@@ -1,7 +1,6 @@
-				<!--刷新数据-->
-			<div id="refreshComputerhomeworkTableDiv">
-				
-			<div id="tableDiv">
+            <div class="panel panel-default table-responsive"><!--管理内容从这里开始 -->
+
+				<div id="tableDiv">
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -63,20 +62,15 @@
                 </tbody>
               </table>
 				  </div><!--end table div-->
-			      <!--page -->
-			  <div class="pagination">
-				<a href="#" class="first" data-action="first">&laquo;</a>
-				<a href="#" class="previous" data-action="previous">&lsaquo;</a>
-				<input type="text" readonly="readonly" data-max-page="$!page.totalpage" />
-				<a href="#" class="next" data-action="next">&rsaquo;</a>
-				<a href="#" class="last" data-action="last">&raquo;</a>
-			  </div><!-- end page -->
 			  
-            </div><!--end refreshComputerhomeworkTableDiv 刷新数据-->
-			
+			  </div> 
+			  
+			  	 <!--page bar-->
+			  #parse("include/includePagebar.vm")  
+			  
 			  
 			  				<script>
-totalpage = $page.totalpage;
+totalpage = $page.totalpagenum;
 currentpagenum = $page.pageNo;
 computerorderStatus : $computerorderStatus;
 </script>
