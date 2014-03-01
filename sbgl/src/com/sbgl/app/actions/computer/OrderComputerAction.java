@@ -146,7 +146,7 @@ public class OrderComputerAction  extends BaseAction {
 	
 	
 	public String toComputerIndividualorderPage(){
-		
+		try{
 		computerordertype = ComputerorderInfo.IndividualOrder;
 //		如果是个人预约，默认作业id
 		if(computerordertype == ComputerorderInfo.IndividualOrder){
@@ -187,6 +187,15 @@ public class OrderComputerAction  extends BaseAction {
 		
 		System.out.println(borrowperiodList.size());
 		return SUCCESS;
+		
+		
+		}catch(Exception e){
+			e.printStackTrace();
+//			log.error("addComputerorderAjax错误"+e);
+		
+		}
+		
+		return "innererror";
 	}
 
 	
@@ -240,6 +249,9 @@ public class OrderComputerAction  extends BaseAction {
 		
 //		根据模型构建 模型、时间段、日期的map
 		availableBorrowModelMap = ComputerorderActionUtil.computermodelPeriodDayInfo(computermodelList, currentPeriod, borrowperiodList, computeroderadvanceorderday);
+		if(availableBorrowModelMap == null){
+			 availableBorrowModelMap = new HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> ();			
+		}
 		
 //		配合显示，将多出来的那些天数的数量设置为0
 		if(showComputeroderadvanceorderday > computeroderadvanceorderday){

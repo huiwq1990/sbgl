@@ -21,18 +21,16 @@
 <![endif]-->
 </head>
 
-<body class="ab">
+<body class="pos-absolute">
 <div class="fullscreen-post-bg">
   <img src="img/original_eD7F_053100003d1c1191.jpg">
 </div>
-<div class="center">
+<div class="center form-signin">
   <h1 class="center-logo">北京电影学院摄影系</h1>
   <form action="./doLogin.do" method="post" name="fm" target="submit" role="form">
     <div class="form-group">
-        <input type="text" id="inputUsername" class="form-control" name="loginuser.userid" placeholder="用户名">
-    </div>
-    <div class="form-group">
-        <input type="password" id="inputPassword" class="form-control" name="loginuser.password" placeholder="密码">
+        <input type="text" id="inputUsername" class="form-control input-lg" name="loginuser.userid" placeholder="学号/教工号/邮箱">
+        <input type="password" id="inputPassword" class="form-control input-lg" name="loginuser.password" placeholder="密码">
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary input-block-level">登 录</button>

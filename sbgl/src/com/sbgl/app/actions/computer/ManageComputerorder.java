@@ -554,6 +554,11 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			computerorder.setId(computerorderid);
 			
 		}
+//		设置默认标题
+		if(computerorder.getTitle()==null || computerorder.getTitle().length()==0){
+			computerorder.setTitle(DateUtil.dateFormat(DateUtil.currentDate(), "MM-dd")+"机房预约");
+		}
+	
 		
 		computerorderService.addComputerorder(computerorder, computerordertype, reorder, uid, computerorderdetailList);
 		

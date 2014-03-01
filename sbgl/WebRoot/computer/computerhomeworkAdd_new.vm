@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 教学管理</title>
+<title>北京电影学院摄影系 - 机房课程添加</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -44,52 +44,33 @@
                     <a href="#userGroup" role="button" class="btn btn-white btn-large btn-block" data-toggle="modal"><i class="icon-group"> +</i></a>
                   </div>
                 </div>
-				
-				
-							  <div class="form-group">
-                    <label for="label_computerorderclassrule_name" class="col-lg-2 control-label">课程名称</label>
-                    <div class="col-lg-4">
-
-						  <select class="select2 select-white form-control" id="input_computerorderclassrule_classname" data-placeholder="请选择课程名称">
-						 <option></option>
-						 
+				<div class="form-group send-title">
+                    <label for="input_computerorderclassrule_classname" class="sr-only">课程名称</label>
+						<select class="select2 select-white form-control input-lg" id="input_computerorderclassrule_classname" data-placeholder="请选择课程名称">
+						<option></option>						 
 						 #foreach($gp in $usergroupList)
 							<optgroup label="$gp.name">
 							#set( $tcfl = $courseFullByGroupId.get($gp.id) )
 							#foreach($tempCourseFull in  $tcfl )					
 								<option value="$!tempCourseFull.courseid" >$tempCourseFull.coursename - $!tempCourseFull.teacherloginusername</option>                                           
 							#end		
-							</optgroup>
-							
+							</optgroup>							
 						#end
                       </select>
-					  
-                    </div>
-                  </div>
+                </div>
 				
                 <div class="form-group send-title">
                   <label class="sr-only" for="inputMsgTitle">标题</label>
                   <input type="text" class="form-control input-lg" id="inputMsgTitle" placeholder="添加标题">
                 </div>
-				
-				
-				
-                <div class="msg-content-warp">
-                  <div class="msg-content">
+
+                <div class="form-group row">
+                  <div class="col-lg-12">
                     <textarea name="content" id="inputContent" style="width:100%;height:300px;visibility:hidden;"></textarea>                
                   </div>
                 </div>
-                <div class="form-group attach-file-warp">
-                  <div class="btn btn-white btn-block file-input-button">
-                      <i class="icon-paper-clip"></i>
-                      <span>添加附件</span>
-                      <input id="inputFilePath" type="file" name="files[]" multiple>
-                  </div>
-                  <p>附件上传说明</p>
-                </div>
-                <div class="clearfix"></div>
                 <div class="rent-time form-group row">
-                  <label for="inputDataRange" class="col-md-1 control-label">使用时间</label>
+                  <label for="inputDataRange" class="col-lg-1 control-label">使用时间</label>
                   <div class="col-lg-6">
                     <div class="input-daterange row">
                       <div class="col-lg-5">
@@ -106,40 +87,21 @@
                 </div>
 				
 				
-				<div class="form-group send-title">
-                  <label class="sr-only" for="inputTotaltime">总共允许时间</label>
-                  <input type="text" class="form-control input-lg" id="inputTotaltime" placeholder="总共允许借用时间">
+				<div class="form-group row">
+                  <label class="col-lg-1 control-label" for="inputTotaltime">时段次数</label>
+                  <div class="col-lg-2">
+					<input type="text" class="form-control" id="inputTotaltime" placeholder="允许预约几段时间的次数">
+				  </div>
                 </div>
-				
-                <div class="rent-time form-group row">
-                  <label for="inputResource" class="col-md-1 control-label">指定设备/资源</label>
-                  <div class="col-lg-6">
-                    <label class="checkbox-inline">
-                      <input type="checkbox" name="inputResource" id="inputResource1" value="1" checked="">MAC Pro工作站
-                    </label>
-                    <label class="checkbox-inline">
-                      <input type="checkbox" name="inputResource" id="inputResource2" value="2" checked="">DELL工作站
-                    </label>
-                    <label class="checkbox-inline">
-                      <input type="checkbox" name="inputResource" id="inputResource3" value="3" checked="">剪辑机房
-                    </label>
-                    <label class="checkbox-inline">
-                      <input type="checkbox" name="inputResource" id="inputResource4" value="4" checked="">调色机房
-                    </label>
-                  </div>
-                </div>
-				
-								<div class="form-group">
-					
-                    <label for="inputRentableGroup" class="col-lg-2 control-label">允许借的机器类型</label>
-                    <div class="col-lg-4">
-						
+
+				<div class="form-group row">					
+                    <label for="inputCourseNeed" class="col-lg-1 control-label">指定设备/资源</label>
+                    <div class="col-lg-6">						
 					#foreach($categoryfull in ${computercategoryList})
 						<div class="group-hd">
 							<div class="group-name pull-left">$!categoryfull.name</div>
 							<div class="group-line"><hr></div>
-						</div>
-						
+						</div>						
 						#set($categorytype = $categoryfull.computercategorytype)		
 						#set($modelList = $computermodelByComputercategoryId.get($categorytype))
 						#if($modelList=='null' || $modelList.size() ==0)
@@ -151,13 +113,12 @@
 							<label class="checkbox-inline">
 								<input type="checkbox" name="inputAviBorrowModelGroup" id="rentGroup_$model.computermodeltype" value="$model.computermodeltype" >$model.name
                      		</label>						
-						#end                    
-						
+						#end
 					#end
-                    
                     </div>
-                  </div>
-				
+                </div>
+
+
 				
                 <a class="btn btn-white" href="">取 消</a>
                 <button type="submit" class="btn btn-primary" action-type="addComputerhomeworkButton" >发 送</button>
