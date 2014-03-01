@@ -204,10 +204,6 @@ var currentpagenum=1;
 var totalpage=$page.totalpagenum;
 var computerorderStatus = $computerorderStatus;
 
-//删除信息
-var idsForDel;   
-
-        
   
 //更改状态的高亮显示
   $(".status-filter li").click(function () {
@@ -241,25 +237,19 @@ var idsForDel;
                         });
                 }
                 
-                idsForDel = "";
-                
-                $("input[name='chk-list']").each(function() {
-                        if($(this).prop("checked") === true) {
-                                //num++;
-                                idsForDel += $(this).prop("value") + ";";
-                        }
-                });
+             
         });//end checkbox
 		
 		
 		
         //delete分类
         $("body").on("click", "a[action-type|=deleteComputerorderButton]", function() {
+		var idsForDel = getSelectedCheckboxList();
                 idsForDel = idsForDel.substring(0,idsForDel.length-1);
                 var postData = {
                         computerorderIdsForDel: idsForDel
                 }
-                alert(idsForDel);
+                //alert(idsForDel);
                 jQuery.ajax({  
                     url:"${webbaseurl}/deleteComputerorderFullAjax.${strutsaction}",  
                     type:"post",
@@ -292,7 +282,7 @@ $(function() {
     	current_page:currentpagenum,
     	paged: function(page) {     	  
     		currentpagenum = page;
-    		refreshComputercategoryTable();
+    		refreshComputerorderTable();
     
     	}
     });
@@ -319,9 +309,17 @@ function refreshComputerorderTable(){
             		current_page:currentpagenum,
             		paged: function(page) {     	  
             			currentpagenum = page;
-            			refreshComputercategoryTable();            
+            			refreshComputerorderTable();            
             		}
            		});
+				
+				
+				 $(".s-h").css({
+                                "visibility": "hidden",
+                                "opacity": "0",
+                                "filter": "alpha(opacity=0)"
+                        });
+						
 
 			}		  	  
 		});		
