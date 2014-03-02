@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html>
 <head>
 <meta charset="utf-8">
 <title>北京电影学院摄影系 - 用户管理</title>
@@ -25,7 +25,7 @@
 <![endif]-->
 </head>
 
-<body id="admin" ng-controller="Ctrl">
+<body id="admin">
 <header id="header-wrap"><!--header-wrap-->
   <div class="nav-wrap clearfix">
     <div class="site-nav">
@@ -91,7 +91,7 @@
             <div class="panel panel-default">
               <div class="panel-body">
                 
-                <form class="form-horizontal" role="form" name="form" novalidate>
+                <form class="form-horizontal" role="form">
                   <div class="form-group">
                     <label for="inputTrueName" class="col-lg-2 control-label">真实姓名</label>
                     <div class="col-lg-4">
@@ -147,16 +147,21 @@
                     </div>
                     <div id="user-other-info" style="display: none; ">
                       <div class="form-group">
-                        <label type="email" for="inputEmail" class="col-lg-2 control-label">电子邮箱</label>
+                        <label for="inputEmail" class="col-lg-2 control-label">电子邮箱</label>
                         <div class="col-lg-4">
                           <input type="email" class="form-control" id="inputEmail" placeholder="默认系统登录用户名">
                         </div>
-                        <small class="error" ng-show="signup_form.email.$error.email">That is not a valid email. Please input a valid email.</small>
                       </div> 
                       <div class="form-group">
                         <label for="inputPhone" class="col-lg-2 control-label">手机号码</label>
                         <div class="col-lg-4">
                           <input type="text" class="form-control" id="inputPhone" placeholder="手机号码">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputIDNumber" class="col-lg-2 control-label">身份证号</label>
+                        <div class="col-lg-4">
+                          <input type="text" class="form-control" id="inputIDNumber" placeholder="身份证号">
                         </div>
                       </div>
                     </div>
@@ -212,9 +217,7 @@
     <!-- javascript
     ================================================== -->
 <script src="../js/jquery.js"></script>
-<script src="../js/lib/angular.min.js"></script>
 <script src="../js/loader.min.js"></script>
-
 <script src="../js/select2.js"></script>
 <script src="../js/bootstrap-hover-dropdown.min.js"></script>
 <script src="../js/bfa.js"></script>

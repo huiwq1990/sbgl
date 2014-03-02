@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 后台管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+#parse("include/includePageCompatibility.vm")	
+	
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+
+	#set($currentPageModule="index")
+	#parse("include/includeAdminHeader.vm")
+	
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">
+            <div class="control-bar clearfix">
+              <div class="title">欢迎使用!</div>
+              <div class="tips">北京电影学院摄影系设备预约管理系统</div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">概况</div>
+                <table class="table stat">
+                  <tbody>
+                    <tr>
+                      <th>器材预约</th>
+                      <td>进行中的预约共计<br/><strong>8</strong>个</td>
+                      <td>待审核<br/><strong>5</strong>个</td>
+                      <td>待出库<br/><strong>2</strong>个</td>
+                      <td>待入库<br/><strong>1</strong>个</td>
+                    </tr>
+                    <tr>
+                      <th>机房预约</th>
+                      <td colspan="4">待审核<br/><strong>$!computerorderWaitAuditNum</strong>个</td>
+                    </tr>
+                    <tr>
+                      <th>用户</th>
+                      <td>用户总数<br/><strong>20</strong>人</td>
+                      <td>学生<br/><strong>12</strong>人</td>
+                      <td>教师<br/><strong>6</strong>人</td>
+                      <td>其他<br/><strong>2</strong>人</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">系统信息</div>
+              <div class="panel-body">
+                <dl class="dl-horizontal">
+                  <dt>服务器系统</dt>
+                  <dd>Windows 2008 Server</dd>
+                  <dt>服务器软件</dt>
+                  <dd>Apache/2.4.4 (Win32)</dd>
+                  <dt>服务器MySQL版本</dt>
+                  <dd>5.5.32</dd>
+                  <dt>当前数据库尺寸</dt>
+                  <dd>3.91 MB</dd>
+                  <dt>...</dt>
+                  <dd>...</dd>
+                </dl>
+              </div>
+            </div>
+        </div>
+
+      </div>
+      <!--equip-wrap end-->
+
+	  
+      <!--sidebar start-->
+      <div id="lside">
+        <ul class="list-group">
+          <a href="#" class="list-group-item active">管理中心首页</a>
+          <a href="#" class="list-group-item">便捷操作链接1</a>
+          <a href="#" class="list-group-item">便捷操作链接2</a>
+          <a href="#" class="list-group-item">便捷操作链接3</a>
+        </ul>
+      </div>
+      <!--sidebar end-->
+
+</section>
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/bootstrap-datepicker.js"></script>
+<script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="${jsDomain}/xdate.js"></script>
+<script src="${jsDomain}/computer/computerorder.js"></script>
+
+</body>
+</html>
