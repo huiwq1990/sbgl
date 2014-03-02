@@ -11,6 +11,7 @@ import net.sf.json.JSONObject;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
@@ -31,6 +32,7 @@ import com.sbgl.app.common.computer.ComputerorderdetailInfo;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
+import com.sbgl.common.DataError;
 import com.sbgl.util.*;
 
 
@@ -131,59 +133,54 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 	public String deleteComputerorderFullAjax( ){
 		
 		log.info(logprefix + "deleteComputerorderFullAjax");
-		ReturnJson returnJson = new ReturnJson();
+
 		try{
-			String ids[] = computerorderIdsForDel.split(";");
-			for(int i=0; i < ids.length;i++){				
-				Integer delId = Integer.valueOf(ids[i]);
-//				computerorderService.deleteComputerorder(delId);
-//				computerorderdetailService.deleteComputerorderdetailByCondition(" where computerorderid = "+delId);
-				Computerorder tempCo = computerorderService.selectComputerorderById(delId);
-				tempCo.setStatus(ComputerorderInfo.ComputerorderStatusAduitDel);
-				computerorderService.updateComputerorder(tempCo);
-				computerorderdetailService.execSql(" update Computerorderdetail set status="+ComputerorderInfo.ComputerorderStatusAduitDel+" where computerorderid = "+delId);
-//				log.info(delId);				
+			
+			Integer uid = this.getCurrentUserId();
+			if(uid < 0){
+				this.returnInfo = "用户未登录";
+				log.info(returnInfo);
+				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+				return SUCCESS;
 			}
-			returnJson.setFlag(1);
-			returnJson.setReason("删除成功!");
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
+			
+			String typeStrArray[] = computerorderIdsForDel.split(";");			
+			List<Integer> delTypeList = new ArrayList<Integer>();
+//			判断参数是否正确
+			for(String typeStr : typeStrArray){
+				if(!NumberUtils.isNumber(typeStr)){
+					this.returnInfo = "删除参数不正确";
+					log.info(returnInfo);
+					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+					return SUCCESS;
+				}
+				delTypeList.add(Integer.valueOf(typeStr));
+			}
+			
+			computerorderService.deleteComputerorder(delTypeList);
+
+			this.returnInfo = "删除成功";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
 			return SUCCESS;
 			
+		}catch (DataError wq) {
+			wq.printStackTrace();
+			this.returnInfo = wq.getMessage();
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		returnJson.setFlag(0);
-		returnJson.setReason("删除的内部错误");
-		JSONObject jo = JSONObject.fromObject(returnJson);
-		this.returnStr = jo.toString();
+		this.returnInfo = "删除的内部错误";
+		log.info(returnInfo);
+		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 		return SUCCESS;
 	}
 
-//修改
-	public String updateComputerorder(){
-		try {
-			if(computerorder.getId() != null && computerorder.getId() > 0){				
-				Computerorder tempComputerorder = computerorderService.selectComputerorderById(computerorder.getId());
-																				  								
-												  								
-												  								
-												  								
-								actionMsg = getText("viewComputerorderSuccess");
-			}else{
-				actionMsg = getText("viewComputerorderFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerorderAction的方法：viewComputerorder错误"+e);
-		}
 
-		return "error";
-	}
-	
 	
 	//ajax 修改
 	public String updateComputerorderAjax(){
@@ -254,7 +251,7 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 			log.error("类ComputerorderAction的方法：viewComputerorder错误"+e);
 		}
 
-			returnInfo = "审核失败,发生内部错误";
+			returnInfo = "发生内部错误,审核失败";
 			this.returnStr= JsonActionUtil.buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
 			return SUCCESS;
 	}

@@ -9,6 +9,8 @@ import net.sf.json.JSONObject;
 
 
 import javax.annotation.Resource;
+
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
@@ -22,8 +24,10 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.actions.common.BaseAction;
 import com.sbgl.app.actions.common.CommonConfig;
+import com.sbgl.app.actions.computer.ComputerActionUtil;
 import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.actions.util.PageActionUtil;
+import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.teach.CourseService;
 import com.sbgl.app.services.user.GroupService;
@@ -52,7 +56,7 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>{
 	private List<CourseFull> courseFullListCh = new ArrayList<CourseFull>();
 	private List<CourseFull> courseFullListEn = new ArrayList<CourseFull>();
 	
-	
+	OrderAdminService orderAdminService ;
 	
 	@Resource
 	private GroupService groupService;
@@ -76,20 +80,6 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>{
 	
 //	管理参数
 	private Integer usergroupid;
-	
-	
-
-	
-	public int getAdminId(){
-		
-		Object obj = ServletActionContext.getRequest().getSession().getAttribute(CommonConfig.sessionadminid);
-		if(obj!=null){
-			return (Integer) obj;
-		}
-		
-		return -1;
-	}
-	
 	
 	
 	/**
@@ -180,17 +170,19 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>{
 	public String addCourseAjax(){	
 		log.info("Add Entity Ajax Manner");
 	
-		int aid = this.getAdminId();
-		if(aid == -1){
-			returnInfo = "管理员未登录";
-			log.info(returnInfo);
-			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxadminnotloginreturn, returnInfo);
-			return SUCCESS;
-		}
 
 		try {
 			
-			course.setAdduserid(aid);
+			Integer uid = this.getCurrentUserId();
+			if(uid < 0){
+				this.returnInfo = "用户未登录";
+				log.info(returnInfo);
+				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+				return SUCCESS;
+			}
+		
+			
+			course.setAdduserid(uid);
 			course.setAddtime(DateUtil.currentDate());
 			
 			Course ch = new Course();	
@@ -219,7 +211,7 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>{
 		
 		
 		
-		returnInfo = "添加失败";
+		returnInfo = "系统内部错误，添加失败";
 		log.info(returnInfo);
 		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 		return SUCCESS;
@@ -230,53 +222,63 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>{
 	//del entityfull Ajax
 	public String deleteCourseFullAjax( ){
 		
-	/*	log.info(logprefix + "deleteComputercategoryFullAjax");
+		log.info(logprefix + "deleteComputercategoryFullAjax");
              
 		try{
-			String ids[] = courseIdsForDel.split(";");
-			for(int i=0; i < ids.length;i++){
-                                
-				Integer tempDelId = Integer.valueOf(ids[i]);                        
-				log.info(tempDelId);
-                                //检查id
-                                if(tempDelId == null || tempDelId < 0){
-                                        returnJson.setFlag(0);
-                                        returnJson.setReason("删除的id不规范");
-                                        log.info("删除的id不规范");
-                                        JSONObject jo = JSONObject.fromObject(returnJson);
-                                        this.returnStr = jo.toString();
-                                        return SUCCESS;
-                                }        
-                                //del
-                                Course temp = courseService.selectCourseById(tempDelId);                        
-                                if (temp != null) {                        
-                                        //其他操作                                        
-                                        courseService.deleteCourse(tempDelId);                                        
-                                } else {
-                                        log.info("删除的id不存在");                
-                                        returnJson.setFlag(0);
-                                        returnJson.setReason("删除的id不存在");
-                                        JSONObject jo = JSONObject.fromObject(returnJson);
-                                        this.returnStr = jo.toString();
-                                        return SUCCESS;
-                                }
-                        }
-                        returnJson.setFlag(1);
-                        returnJson.setReason("删除成功");
-                        JSONObject jo = JSONObject.fromObject(returnJson);
-                        this.returnStr = jo.toString();
-                        return SUCCESS;
+			
+//			检查要删除的id是否为空
+			if(courseIdsForDel == null || courseIdsForDel.trim().length()==0){
+				returnInfo = "请选择要删除的课程";
+				log.error(returnInfo);
+				returnStr = ComputerActionUtil.buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+				return SUCCESS;
+			}
+			
+			String typeStrArray[] = courseIdsForDel.split(";");		
+			List<Integer> delTypeList = new ArrayList<Integer>();
+			
+//			判断参数是否正确
+			for(String typeStr : typeStrArray){
+				if(!NumberUtils.isNumber(typeStr)){
+					this.returnInfo = "课程删除参数不正确";
+					log.info(returnInfo);
+					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+					return SUCCESS;
+				}
+				delTypeList.add(Integer.valueOf(typeStr));
+			}
+			
+			for(Integer cid : delCourseIdList){
+				
+				List<Computerorderclassrule> corList = computerorderclassruleDao.selectComputerorderclassruleByCondition(" where classid = "+cid);
+				
+				List<Courseschedule> csList = coursescheduleDao.selectCoursescheduleByCondition(" where classid = "+cid);
+				
+				
+				if( (corList == null || corList.size() ==0) && (csList == null || csList.size() ==0) ){
+					
+				}else{
+					throw 
+				}
+			
+
+				return deleteCourse(course.getId());
+				
+			}
+			
+			
+			courseService.deleteCourse(course)
+			
                         
-                } catch (Exception e) {
+         } catch (Exception e) {
                         e.printStackTrace();
-                }
-                
-                returnJson.setFlag(0);
-                returnJson.setReason("删除的内部错误");
-                JSONObject jo = JSONObject.fromObject(returnJson);
-                this.returnStr = jo.toString();*/
-                return SUCCESS;
-        }
+           }
+ 
+                this.returnInfo = "系统发生内部错误，删除失败";
+		log.info(returnInfo);
+		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+		return SUCCESS;
+	}
 
 
 	
