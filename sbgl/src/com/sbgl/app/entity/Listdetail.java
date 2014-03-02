@@ -19,6 +19,9 @@ public class Listdetail extends com.sbgl.app.dao.DaoAbs implements
 	private Date borrowtime;
 	private Date returntime;
 	private String ifdelay;
+	private Integer comid;
+	private String lantype;
+	private String equipdetailids;
 
 	// Constructors
 
@@ -34,7 +37,7 @@ public class Listdetail extends com.sbgl.app.dao.DaoAbs implements
 	/** full constructor */
 	public Listdetail(Integer listdetailid, Integer borrowlistid,
 			Integer equipmentid, Integer applynumber, Integer borrownumber,
-			Date borrowtime, Date returntime,String ifdelay) {
+			Date borrowtime, Date returntime,String ifdelay,Integer comid,String lantype,String equipdetailids) {
 		this.listdetailid = listdetailid;
 		this.borrowlistid = borrowlistid;
 		this.equipmentid = equipmentid;
@@ -43,6 +46,9 @@ public class Listdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.borrowtime = borrowtime;
 		this.returntime = returntime;
 		this.ifdelay = ifdelay;
+		this.comid = comid;
+		this.lantype = lantype;
+		this.equipdetailids = equipdetailids;
 	}
 
 	// Property accessors
@@ -109,6 +115,30 @@ public class Listdetail extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setIfdelay(String ifdelay) {
 		this.ifdelay = ifdelay;
+	}
+
+	public Integer getComid() {
+		return comid;
+	}
+
+	public void setComid(Integer comid) {
+		this.comid = comid;
+	}
+
+	public String getLantype() {
+		return lantype;
+	}
+
+	public void setLantype(String lantype) {
+		this.lantype = lantype;
+	}
+
+	public String getEquipdetailids() {
+		return equipdetailids;
+	}
+
+	public void setEquipdetailids(String equipdetailids) {
+		this.equipdetailids = equipdetailids;
 	}
 
 }

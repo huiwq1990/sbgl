@@ -295,7 +295,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		
 		try {
 			Equipmentclassification ec = equipService.getEquipmentclassificationById( this.classficationId );
-			if(ec.getParentid() == 0) {
+			if(ec != null && ec.getParentid() == 0) {
 				List<Equipmentclassification> childList = equipService.getAllChildEquipmentclassificationsByParentId( ec.getClassificationid() );
 				if(childList != null) {
 					for (Equipmentclassification e : childList) {
@@ -309,7 +309,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 						equipService.deleteEquipmentclassification( e.getClassificationid() );
 					}
 				}
-			} else {
+			} else if(ec != null) {
 				List<Equipment> equipList = equipService.getEquipsByClassification( this.classficationId );
 				if(equipList != null) {
 					for (Equipment equipment : equipList) {
@@ -550,7 +550,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			hqlOptionList.add( new HQLOption<Integer>("classificationid", Integer.valueOf(classificationId), SBGLConsistent.HQL_OPTION_EQ, SBGLConsistent.HQL_VALUE_INT, SBGLConsistent.HQL_OPTION_AD) );
 		}
 		//筛选出中文型号名称
-		hqlOptionList.add( new HQLOption<String>("lanType", "CH", SBGLConsistent.HQL_OPTION_EQ, SBGLConsistent.HQL_VALUE_STR, SBGLConsistent.HQL_OPTION_AD) );
+		hqlOptionList.add( new HQLOption<String>("lanType", "0", SBGLConsistent.HQL_OPTION_EQ, SBGLConsistent.HQL_VALUE_STR, SBGLConsistent.HQL_OPTION_AD) );
 		
 		if( crtModelPage != null && !crtModelPage.equals("0") && crtModelPage != "" ) {
 			
@@ -624,7 +624,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			hqlOptionList.add( new HQLOption<Integer>("classificationid", Integer.valueOf(classificationId), SBGLConsistent.HQL_OPTION_EQ, SBGLConsistent.HQL_VALUE_INT, SBGLConsistent.HQL_OPTION_AD) );
 		}
 		//筛选出英文名称的型号
-		hqlOptionList.add( new HQLOption<String>("lanType", "EN", SBGLConsistent.HQL_OPTION_EQ, SBGLConsistent.HQL_VALUE_STR, SBGLConsistent.HQL_OPTION_AD) );
+		hqlOptionList.add( new HQLOption<String>("lanType", "1", SBGLConsistent.HQL_OPTION_EQ, SBGLConsistent.HQL_VALUE_STR, SBGLConsistent.HQL_OPTION_AD) );
 		
 		Page pageEN = new Page( 0, 10000 );
 		QueryResult resultEN = equipService.getEquipmentByPageWithOptions(hqlOptionList, pageEN);
@@ -660,7 +660,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		}
 		
 		for (Equipment equipment : allModel) {
-			if("CH".equals( equipment.getLanType() )) {
+			if("0".equals( equipment.getLanType() )) {
 				EquipModelCourse emc = new EquipModelCourse();
 				emc.setId( String.valueOf( equipment.getEquipmentid() ) );
 				emc.setName( String.valueOf( equipment.getEquipmentname() ) );
@@ -1292,7 +1292,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	private void doGetClassForEquipAdd() {
 		List<Equipmentclassification> ecList = equipService.getAllCHEquipmentclassifications();  //获取全部中文名称的分类
 		for (Equipmentclassification ec : ecList) {
-			if("CH".equals( ec.getLanType() )) {
+			if("0".equals( ec.getLanType() )) {
 				if(ec.getParentid() == 0) {
 					ClassficationCourse cc = new ClassficationCourse();
 					cc.setId( String.valueOf( ec.getClassificationid() ) );
@@ -1304,7 +1304,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					List<Equipmentclassification> tempList = equipService.getAllChildEquipmentclassificationsByParentId( ec.getClassificationid() );
 					if(tempList != null) {
 						for (Equipmentclassification ec2 : tempList) {
-							if("CH".equals( ec2.getLanType() )) {
+							if("0".equals( ec2.getLanType() )) {
 								ClassficationCourse cc2 = new ClassficationCourse();
 								cc2.setId( String.valueOf( ec2.getClassificationid() ) );
 								cc2.setName( ec2.getName() );
@@ -1376,7 +1376,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				currentPage = "1";
 			}
 			for (Equipmentclassification equipmentclassification : equipList) {
-				if( "CH".equals( equipmentclassification.getLanType() ) ) {
+				if( "0".equals( equipmentclassification.getLanType() ) ) {
 					String name = equipmentclassification.getName();
 					Integer parentId = equipmentclassification.getParentid();
 					if( parentId == 0 ) {
@@ -1386,7 +1386,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			}
 			List<ClassficationCourse> tempCourse = new ArrayList<ClassficationCourse>();
 			for (Equipmentclassification classfication : equipList) {
-				if( "CH".equals( classfication.getLanType() ) ) {
+				if( "0".equals( classfication.getLanType() ) ) {
 					ClassficationCourse cc = new ClassficationCourse();
 					cc.setId( String.valueOf( classfication.getClassificationid() ) );
 					cc.setName( classfication.getName() );
@@ -1409,7 +1409,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			}
 			List<ClassficationCourse> tempCourseEN = new ArrayList<ClassficationCourse>();
 			for (Equipmentclassification classfication : equipList) {
-				if( "EN".equals( classfication.getLanType() ) ) {
+				if( "1".equals( classfication.getLanType() ) ) {
 					ClassficationCourse cc = new ClassficationCourse();
 					cc.setIdEN( String.valueOf( classfication.getClassificationid() ) );
 					cc.setNameEN( classfication.getName() );

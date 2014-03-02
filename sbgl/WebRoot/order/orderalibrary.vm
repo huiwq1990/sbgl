@@ -114,16 +114,18 @@
                       <div class="group-line"><hr></div>                      
                     </div>
                     <ul class="group-body media-list collapse in" id="grp-1">
-					  #foreach($row2 in $!equipmentMap.get($row.classificationid))	
-                      <li class="media" data-model-id="1" data-id="$!row2.equipmentid" data-is-select="false">
-                        <div class="is-select pull-right"><i class="icon-check-empty icon-large"></i></div>
-                        <div class="media-body">
-                          <div class="media-heading">
-                            <h5>$!row2.equipmentname</h5>
-                            <span class="equip-id"></span>
-                          </div>
-                        </div>
-                      </li>
+					  #foreach($row2 in $!equipmentMap.get($row.classificationid))					
+						#foreach($i in [1 .. $!row2.applynumber])
+                          <li class="media" data-model-id="1" data-id="$!row2.equipmentid" data-is-select="false">
+                            <div class="is-select pull-right"><i class="icon-check-empty icon-large"></i></div>
+                            <div class="media-body">
+                              <div class="media-heading">
+                                <h5>$!row2.equipmentname</h5>
+                                <span class="equip-id"></span>
+                              </div>
+                            </div>
+                          </li>
+						#end
 					  #end
                     </ul>
                   </div>
@@ -172,7 +174,7 @@
                           <img src="img/photo.jpg" width="28" height="28" class="img-rounded">
                         </a>
                         <div class="media-body">
-                          <div class="media-heading"><h5><a rel="popover" href="#">教师名</a></h5><span class="post-time" title="详细时间">下午4:53</span></div>
+                          <div class="media-heading"><h5><a rel="popover" href="#">$!equipmenborrowFull.teacherName</a></h5><span class="post-time" title="详细时间">下午4:53</span></div>
                           <a href="#" class="lk" title="查看详细说明" rel="tooltip">数字摄影技术第11周设备申请(只显示关联教师发的要求标题)</a>
                         </div>
                       </li>

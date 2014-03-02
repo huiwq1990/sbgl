@@ -7,6 +7,10 @@
 	 	<action name="orderAdmin" class="OrderAdminAction" method="orderAdmin">
         	<result name="success">/order/orderAdmin.vm</result>
         </action>
+        <!-- 进入课程预约规则页面 -->
+	 	<action name="orderclassrule" class="OrderAdminAction" method="orderclassrule">
+        	<result name="success">/order/orderclassrule.vm</result>
+        </action>
     </package>
     <package name="OrderAdminAjax" extends="json-default">	
     </package>

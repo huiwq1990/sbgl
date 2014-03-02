@@ -86,9 +86,9 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 				this.message = "添加管理员信息失败！";
 			} else {
 				Usergrouprelation ugr = new Usergrouprelation();
-				ugr.setGroupId( group.getId() );
-				ugr.setUserId( returnCode );
-				ugr.setGroupType( group.getType() );
+				ugr.setGroupid( group.getId() );
+				ugr.setUserid( returnCode );
+				ugr.setGrouptype( group.getType() );
 				userGroupRelationService.addUserGroupRelation( ugr );
 				this.tag = "0";
 				this.message = "添加管理员信息成功！";
@@ -118,7 +118,7 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 			this.message = "修改管理员信息失败！";
 		} else {
 			Usergrouprelation ugr = userGroupRelationService.getRelationByType(manager.getId(), 3);
-			ugr.setGroupId( group.getId() );
+			ugr.setGroupid( group.getId() );
 			userGroupRelationService.alterUserGroupRelation( ugr );
 			this.tag = "0";
 			this.message = "修改管理员信息成功！";
@@ -207,7 +207,7 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 			uc.setMail( admin.getEmail() );
 			uc.setPrivilege( String.valueOf( admin.getPrivilege() ) );
 			if(ugr != null) {
-				ug = groupService.getUserGroupByid( ugr.getGroupId() );
+				ug = groupService.getUserGroupByid( ugr.getGroupid() );
 				if(ug != null) {
 					uc.setUserGroupId( String.valueOf(ugr.getId()) );
 					uc.setUserGroupName( ug.getName() );

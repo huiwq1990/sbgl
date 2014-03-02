@@ -31,5 +31,14 @@
         <property name="ifdelay" type="java.lang.String">
             <column name="ifdelay"  length="1" />
         </property>
+        <property name="comid" type="java.lang.Integer">
+            <column name="comid" />
+        </property>
+        <property name="lantype" type="java.lang.String">
+            <column name="lantype" length="2" />
+        </property>
+        <property name="equipdetailids" type="java.lang.String">
+            <column name="equipdetailids" length="1000" />
+        </property>
     </class>
 </hibernate-mapping>

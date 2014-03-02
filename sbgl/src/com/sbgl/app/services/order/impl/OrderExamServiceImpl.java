@@ -15,6 +15,7 @@ import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.OrderFinishDao;
 import com.sbgl.app.entity.Equipmenborrow;
 import com.sbgl.app.entity.Equipmentclassification;
+import com.sbgl.app.entity.Listdetail;
 import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.services.order.OrderExamService;
 
@@ -57,6 +58,18 @@ public class OrderExamServiceImpl implements OrderExamService {
 	public Map<Integer, List<EquipmentFull>> findMapBorrow(Integer borrowId) {
 		// TODO Auto-generated method stub
 		return orderFinishDao.findMapBorrow(borrowId);
+	}
+
+	@Override
+	public boolean doorderalibrary(Integer borrowId,
+			List<EquipmentFull> equipmentList, Loginuser user) {
+		// TODO Auto-generated method stub
+		for(EquipmentFull equipmentFull:equipmentList){
+			Listdetail listdetail =  new Listdetail();
+			listdetail = baseDao.getEntityById(Listdetail.class, equipmentFull.getListdetailid());
+		}
+		
+		return true;
 	}
 
 

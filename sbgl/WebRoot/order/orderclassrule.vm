@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 器材管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="../css/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 9]>
+  <script src="../js/html5shiv.js"></script>
+  <script src="../js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a><!-- #BeginLibraryItem "/Library/siteNav.lbi" --><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="../index.html"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="../预约首页.html">我的预约</a></li>
+          <li><a href="../消息中心-站内信.html">站内信</a></li>
+          <li class="divider"></li>
+          <li><a href="../设置页面-账户设置.html">设置与帮助</a></li>
+          <li><a href="管理中心首页.html">管理中心</a></li>
+        </ul>
+          <!-- #EndLibraryItem --></div>
+    </div><!-- #BeginLibraryItem "/Library/器材subnav.lbi" -->    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="管理中心首页.html">首页</a></li>
+        <li><a href="教学管理首页.html">教学</a></li>
+        <li><a href="用户管理首页.html">用户</a></li>
+        <li class="active"><a href="设备预约首页.html">器材</a></li>
+        <li><a href="机房预约管理首页.html">机房</a></li>
+        <li><a href="#">内容</a></li>
+      </ul>
+    </div>    
+    <!-- #EndLibraryItem --><ul class="account-wrap nav nav-pills pull-right">
+          <li class="notice dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">消息1</a></li>
+              <li><a href="#">消息2</a></li>
+            </ul>
+          </li>     
+          <li class="social dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="../img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+            <div class="dropdown-menu">
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img src="../img/photo.jpg" width="96" height="96" class="img-rounded">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+                  <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+                  <div class="setting"><a href="#">账户设置</a></div>
+                  <button class="btn btn-primary" type="button">查看个人主页</button>
+                </div>
+              </div>
+            </div>      
+          </li>
+        </ul>
+  </div>
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="设备预约首页.html">器材预约</a></li>
+        <li><a href="设备管理首页.html">器材管理</a></li>
+      </ul>
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">            
+            <div class="control-bar clearfix"><!--control-bar start-->
+              <div class="title pull-left">课程预约规则</div>
+			  <div class="tips">在此页面下管理课程预约规则，如规则的添加、修改、删除及维护等。</div>
+              <div class="filter category-filter">
+                <select id="select-categories" style="width:130px" class="select2">
+                  <option value="0" data-foo="fa">全部课程</option>
+                  <option value="1" data-foo="fa">故事片创作</option>
+                  <option value="2" data-foo="sub">广告、MV创作</option>
+                  <option value="3" data-foo="sub">造型艺术构思</option>
+                  <option value="4" data-foo="sub">数字摄影技术</option>
+                </select>
+              </div>
+              
+              <div class="operate-item pull-left">
+                <a href="#createEquipRule" class="btn btn-primary" data-toggle="modal" role="button">创建规则</a>
+                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+              </div>
+
+              <div class="page pull-right clearfix">
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">最新</a></li>
+                      <li><a href="#">最旧</a></li>
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+                  <ul>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+            </div><!--control-bar end-->
+            <div class="panel panel-default table-responsive">
+                          
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="id">编号</th>
+                    <th class="course-name">课程名</th>
+                    <th class="name">规则名称</th>
+                    <th class="teacher">教师</th>
+                    <th class="operate">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
+                    <td>1<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
+                    <td>故事片创作</td>
+                    <td>故事片创作规则1</td>
+                    <td>教师名</td>
+                    <td><a href="">修改</a> <a href="">删除</a></td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="2"></td>
+                    <td>2<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
+                    <td>故事片创作</td>
+                    <td>故事片创作第6周器材使用规则</td>
+                    <td>教师名</td>
+                    <td><a href="">修改</a> <a href="">删除</a></td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>3<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
+                    <td>课程名</td>
+                    <td>数字摄影机</td>
+                    <td>教师名</td>
+                    <td><a href="">修改</a> <a href="">删除</a></td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>4<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
+                    <td>课程名</td>
+                    <td>规则名称</td>
+                    <td>教师名</td>
+                    <td><a href="">修改</a> <a href="">删除</a></td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>5<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
+                    <td>课程名</td>
+                    <td>规则名称</td>
+                    <td>教师名</td>
+                    <td><a href="">修改</a> <a href="">删除</a></td>
+                  </tr>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
+                    <td>6<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
+                    <td>课程名</td>
+                    <td>规则名称</td>
+                    <td>教师名</td>
+                    <td><a href="">修改</a> <a href="">删除</a></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+            </div>
+          </div>
+
+      </div><!--equip-wrap end-->
+      <div id="lside"><!--sidebar start-->
+        <form class="form-group">
+          <input type="text" class="form-control" placeholder="搜索预约(订单号、姓名)">
+          <i class="icon-search"></i>
+        </form>
+        <div class="list-group">
+          <a href="设备预约首页.html" class="list-group-item">预约管理</a>
+          <a href="设备预约-新建预约.html" class="list-group-item">新建预约</a>
+          <a href="设备预约-课程预约规则.html" class="list-group-item active">课程预约规则</a>
+          <a href="设备预约-设置.html" class="list-group-item">设置</a>
+        </div>
+      </div>
+      <!--sidebar end-->
+
+</section>
+
+
+<!-- Modal -->
+<div id="createEquipRule" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="createEquipRuleLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="createEquipRuleLabel">创建规则</h3>
+  </div>
+  <div class="modal-body">
+    <p>根据课程教学要求确定器材使用范围。选择课程名称后为新的规则起一个名称，并在器材列表中选取该规则下能使用的器材范围。规则创建后可多次重复使用。</p>
+    <div class="row">
+      <div class="col-md-4">
+        <select id="inputCourseName" class="select2 form-control select-white" data-placeholder="请选择课程" style="width: 100%;">
+          <option></option>
+          <option value="11111">MV、广告创作</option>
+          <option value="22222">故事片创作</option>
+          <option value="33333">其它</option>
+        </select>
+      </div>
+      <div class="col-md-8">
+        <div class="form-group rule-name">
+        <label class="sr-only" for="inputSendTo">收件人</label>
+        <input type="text" id="inputRuleName" class="form-control" placeholder="规则名称">
+        </div>
+      </div>
+    </div>
+    <div class="tabbable tabs-left">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#lA" data-toggle="tab">摄影机</a></li>
+        <li><a href="#lB" data-toggle="tab">镜头</a></li>
+        <li><a href="#lC" data-toggle="tab">灯具</a></li>
+        <li><a href="#lD" data-toggle="tab">其他一级分类</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="lA">
+          <div class="row model-list">
+            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="111" data-is-select="false"><i class="icon-check-empty icon-large"></i>ARRI ALEXA</div>
+            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="222" data-is-select="false"><i class="icon-check-empty icon-large"></i>RED EPIC</div>
+            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="333" data-is-select="false"><i class="icon-check-empty icon-large"></i>RED SCARLET</div>
+            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="2" data-model-id="444" data-is-select="false"><i class="icon-check-empty icon-large"></i>EOS 5D MARK II</div>
+          </div>
+        </div>
+        <div class="tab-pane" id="lB">
+          <div class="row model-list">
+            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="7777" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 18mm/T3.6</div>
+            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="8888" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 21mm/T2.9</div>
+            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="9999" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 25mm/T2.9</div>
+            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="2" data-model-id="0000" data-is-select="false"><i class="icon-check-empty icon-large"></i>Ziess CP.2 28mm/T2.1</div>
+          </div>
+        </div>
+        <div class="tab-pane" id="lC">
+          <p>灯具列表……</p>
+        </div>
+        <div class="tab-pane" id="lD">
+          <p>其他器材列表……</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary" id="submit">完 成</button>
+  </div>
+</div>
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="../js/jquery.js"></script>
+<script src="../js/loader.min.js"></script>
+<script src="../js/select2.js"></script>
+<script src="../js/bootstrap-hover-dropdown.min.js"></script>
+<script src="../js/bfa.js"></script>
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+
+<script>	
+	$('body').on('click', ('#createEquipRule .model-list > .list-item'), function () {
+		if ($(this).children('i').hasClass('icon-check-empty')) {
+			$(this).children('i').removeClass('icon-check-empty').addClass('icon-check');
+			$(this).data('isSelect', 'true');
+			//alert($(this).data('isSelect'))
+		} else if ($(this).children('i').hasClass('icon-check')) {
+			$(this).children('i').removeClass('icon-check').addClass('icon-check-empty');
+			$(this).data('isSelect', 'false');
+			//alert($(this).data('isSelect'))
+		}
+	});
+	$('body').on('click', ('#createEquipRule #submit'), function () {
+		var courseId = $('#inputCourseName').select2('val');
+		if (courseId == '') {
+			courseId = -1;	
+		}
+		var ruleName = $('#inputRuleName').val();
+		//alert(courseId + ',' + ruleName);
+		$('.model-list > .list-item').each(function(index, elem) {
+			if($(elem).data('isSelect') == 'true') {
+            	var myData = $(elem).data();
+				//alert(myData.modelId);
+			}
+        });
+	});
+</script>
+
+
+
+</body>
+</html>

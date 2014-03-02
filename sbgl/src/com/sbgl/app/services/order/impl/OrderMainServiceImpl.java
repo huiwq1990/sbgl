@@ -84,17 +84,17 @@ public class OrderMainServiceImpl implements OrderMainService {
 	}
 
 
-	public List<EquipmentFull> findEquipmentByClss(Integer classificationid,String fromDate,String endDate) {
+	public List<EquipmentFull> findEquipmentByClss(Integer classificationid,String fromDate,String endDate,String lantype) {
 		// TODO Auto-generated method stub
 		List<EquipmentFull> equipmentList = new ArrayList<EquipmentFull>(); 
-		equipmentList = orderMainDao.findEquipmentByClss(classificationid,fromDate,endDate);
+		equipmentList = orderMainDao.findEquipmentByClss(classificationid,fromDate,endDate,lantype);
 		return equipmentList;
 	}
 	
-	public List<EquipmentFull> findEquipmentByClss(Integer classificationid,String fromDate,String endDate,String serach) {
+	public List<EquipmentFull> findEquipmentByClss(Integer classificationid,String fromDate,String endDate,String lantype,String serach) {
 		// TODO Auto-generated method stub
 		List<EquipmentFull> equipmentList = new ArrayList<EquipmentFull>(); 
-		equipmentList = orderMainDao.findEquipmentByClss(classificationid,fromDate,endDate,serach);
+		equipmentList = orderMainDao.findEquipmentByClss(classificationid,fromDate,endDate,lantype,serach);
 		return equipmentList;
 	}
 
@@ -140,6 +140,8 @@ public class OrderMainServiceImpl implements OrderMainService {
 					listdetail.setListdetailid(baseDao.getCode("ListDetail"));
 					listdetail.setEquipmentid(Integer.parseInt(temp1[i]));
 					listdetail.setApplynumber(Integer.parseInt(temp2[i]));
+					listdetail.setLantype(equipmentFull.getLanType());
+					listdetail.setComid(equipmentFull.getComId());
 					listdetail.setBorrowtime(DateUtil.parseDate(fromDate));
 					listdetail.setReturntime(DateUtil.parseDate(endDate)); 
 					listdetail.setIfdelay("N");
@@ -171,9 +173,9 @@ public class OrderMainServiceImpl implements OrderMainService {
 	}
 
 
-	public List<EquipmentFull> findEquipmentByClss(String fromDate,String endDate) {
+	public List<EquipmentFull> findEquipmentByClss(String fromDate,String endDate,String lantype) {
 		// TODO Auto-generated method stub
-		return orderMainDao.findEquipmentByClss(fromDate,endDate);
+		return orderMainDao.findEquipmentByClss(fromDate,endDate,lantype);
 	}
 
 

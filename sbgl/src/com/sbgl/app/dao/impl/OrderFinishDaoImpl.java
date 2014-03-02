@@ -1,5 +1,7 @@
 package com.sbgl.app.dao.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,7 +109,7 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 		});	
 		if(equipmentList!=null&&!equipmentList.isEmpty()){
 			for(Equipmentclassification equipmentclassification:equipmentList){
-				String sql1 = " select a.*,b.applynumber,c.name as categoryName from Equipment a left outer join ListDetail b on a.equipmentid = b.equipmentid "
+				String sql1 = " select a.*,b.applynumber,c.name as categoryName,b.equipDetailids,b.listdetailid from Equipment a left outer join ListDetail b on a.equipmentid = b.equipmentid "
 					+ " left outer join EquipmentClassification c on c.classificationid=a.classificationid "
 					+ " where b.borrowlistid='"+borrowId+"' and c.classificationid='"+equipmentclassification.getClassificationid()+"' ";
 				final String sql2 = sql1;
@@ -119,6 +121,13 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 					}
 				});	
 				if(list!=null&&!list.isEmpty()){
+					for(int i =0;i<list.size();i++){
+						EquipmentFull equipmentFull = list.get(i);
+						if(equipmentFull.getEquipDetailids()!=null&&!equipmentFull.getEquipDetailidlist().equals("")){
+							equipmentFull.setEquipDetailidlist(Arrays.asList(equipmentFull.getEquipDetailids().split(",")));
+							list.set(i, equipmentFull);
+						}
+					}
 					map.put(equipmentclassification.getClassificationid(), list);
 				}
 			}

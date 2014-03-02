@@ -11,10 +11,18 @@
 	 	<action name="orderalibrary" class="OrderExamAction" method="orderalibrary">
         	<result name="success">/order/orderalibrary.vm</result>
         </action>
+        <!-- 订单入库页面 -->
+	 	<action name="orderstorage" class="OrderExamAction" method="orderstorage">
+        	<result name="success">/order/orderstorage.vm</result>
+        </action>
     </package>
     <package name="OrderExamAjax" extends="json-default">	
     	<!-- 提交订单备注 -->
 	 	<action name="examorder" class="OrderExamAction" method="examorder">
+        	<result type="json"></result>
+        </action>
+        <!-- 设备出库 -->
+	 	<action name="doorderalibrary" class="OrderExamAction" method="doorderalibrary">
         	<result type="json"></result>
         </action>
     </package>

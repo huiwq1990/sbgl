@@ -15,5 +15,7 @@ public interface OrderExamService {
 	public List<Equipmentclassification> findclassList(Integer borrowId);
 	//获得商品详情信息，根据分类获得
 	public Map<Integer,List<EquipmentFull>> findMapBorrow(Integer borrowId);
+	//入库
+	public boolean doorderalibrary(Integer borrowId,List<EquipmentFull> equipmentList,Loginuser user);
 	
 }

@@ -55,8 +55,16 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 		return SUCCESS;
 	}
 	
-	//进入查看订单审核页面
+	//进入设备出库页面
 	public String orderalibrary(){
+		equipmentclassificationList = orderExamService.findclassList(borrowId);
+		equipmentMap = orderExamService.findMapBorrow(borrowId);
+		equipmenborrowFull = orderFinishService.findEquipmenborrow(borrowId);
+		return SUCCESS;
+	}
+	
+	//进入设备入库页面
+	public String orderstorage(){
 		equipmentclassificationList = orderExamService.findclassList(borrowId);
 		equipmentMap = orderExamService.findMapBorrow(borrowId);
 		equipmenborrowFull = orderFinishService.findEquipmenborrow(borrowId);
@@ -71,6 +79,27 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 			boolean flag = false;
 			Loginuser loginuser = (Loginuser) session.get("loginUser");
 			flag = orderExamService.examorder(borrowId,examstate,examcontent,loginuser);
+			if(flag){
+				tag = "1";
+			}else{
+				tag = "2";
+				message = "审核订单失败";
+			}
+		}catch(Exception e){
+			tag = "2";
+			message = "审核订单失败";
+			e.printStackTrace();
+			log.error(e);
+		}
+		return SUCCESS;
+	}
+	
+	//设备出库
+	public String doorderalibrary(){
+		try{
+			boolean flag = false;
+			Loginuser loginuser = (Loginuser) session.get("loginUser");
+			flag = orderExamService.doorderalibrary(borrowId,equipmentList,loginuser);
 			if(flag){
 				tag = "1";
 			}else{

@@ -521,15 +521,18 @@ $(window).load(function(){
 		});
 	});
 	
-	$("body").on("click", "button[data-type|=suborderpre]", function() {
-		if(ordertype==1){
-			ordertype--;
-		}
-	});
+	$(".wizard").on('change', function(e, data) {
+			if(data.step===2) {
+				ordertype--;
+			}
+		});
 	
 	$("body").on("click", "button[data-type|=suborder]", function() {
 		var fromDate = $("#fromDate").val();
 		var endDate = $("#endDate").val();
+		
+		
+
 		if(ordertype==0){
 			ordertype++;
 			return;
