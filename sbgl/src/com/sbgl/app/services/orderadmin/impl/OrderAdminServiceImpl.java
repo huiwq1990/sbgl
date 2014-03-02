@@ -69,9 +69,9 @@ public class OrderAdminServiceImpl implements  OrderAdminService{
 
 
 	@Override
-	public List<Equipmentclassification> findTopEquipmentclass() {
+	public List<Equipmentclassification> findTopEquipmentclass(String lantype) {
 		// TODO Auto-generated method stub
-		List<Equipmentclassification> equipmentclassList = baseDao.getEntityByProperty("Equipmentclassification", "parentid", "0");
+		List<Equipmentclassification> equipmentclassList =orderMainDao.findTopEquipmentclass(lantype);
 		return equipmentclassList;
 	}
 

@@ -268,7 +268,7 @@
 			success: function(data){
 				if(data.tag==1){
 					alert("审核成功");
-					location.href="equipOrdIndex.do";
+					location.href="orderAdmin.do";
 				}else{
 					alert(data.message);
 					return;

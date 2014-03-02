@@ -69,7 +69,7 @@ public class UserGroupRelationServiceImpl implements UserGroupRelationService {
 	public Usergrouprelation getRelationByType(int userId, int groupType) {
 		String hql = "from Usergrouprelation as m where m.userid = " + userId + "and m.grouptype = " + groupType;
 		List<Usergrouprelation> resultList = baseDao.executeHQL( hql );
-		if( resultList != null ) {
+		if( resultList != null && resultList.size() > 0) {
 			Integer gid = ((Usergrouprelation)resultList.get(0)).getGroupid();
 			if( gid != null && gid != -1) {
 				return resultList.get(0);

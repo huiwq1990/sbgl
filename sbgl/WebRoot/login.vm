@@ -8,10 +8,12 @@
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 <script >
 	function afterSubmit(flag,content){
-		if(flag){
+		console.log(flag);
+		console.log(content);
+		if(flag != "fail"){
 			location.href="./index.vm";
 		}else{
-			alert("登陆失败"+content);
+			alert("登陆失败："+content);
 		}
 	}
 </script>

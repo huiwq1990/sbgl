@@ -105,9 +105,9 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 			lantype = "0";
 		}
 		Equipmentclassification equipmentclassification = new Equipmentclassification();
-		equipmentclassification = orderMainService.findEquipmentclassification(parentClassId);
+		equipmentclassification = orderMainService.findEquipmentclassification(parentClassId,lantype);
 		class1Name = equipmentclassification.getName();
-		classification2List = orderMainService.findSecondEquipmentclass(parentClassId);
+		classification2List = orderMainService.findSecondEquipmentclass(parentClassId,lantype);
 		if(serach!=null&&!serach.equals("")){
 			if(classificationId==0){
 				equipmentList = orderMainService.findEquipmentByClss(parentClassId,fromDate,endDate,lantype,serach);
@@ -135,7 +135,11 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 				endDate = fromDate;
 			}
 		}
-		String daynum = orderMainService.findDayNum(equipmentId,fromDate,endDate);
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
+		String daynum = orderMainService.findDayNum(equipmentId,fromDate,endDate,lantype);
 		String[] a =  daynum.split(",");
 		if(a!=null&&a.length>0){
 			daynums = new Integer[a.length];

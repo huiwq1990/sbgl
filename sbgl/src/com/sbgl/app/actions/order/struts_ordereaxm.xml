@@ -22,7 +22,11 @@
         	<result type="json"></result>
         </action>
         <!-- 设备出库 -->
-	 	<action name="doorderalibrary" class="OrderExamAction" method="doorderalibrary">
+	 	<action name="alibraryorder" class="OrderExamAction" method="alibraryorder">
+        	<result type="json"></result>
+        </action>
+        <!-- 设备入库 -->
+	 	<action name="storageorder" class="OrderExamAction" method="storageorder">
         	<result type="json"></result>
         </action>
     </package>

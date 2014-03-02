@@ -21,7 +21,7 @@ public interface OrderAdminService {
 	//查找后台课程规则统计数据
 	public OrderCountFull findOrderCountRule(Integer courseId);
 	//获得一级器材分类
-	public List<Equipmentclassification> findTopEquipmentclass();
+	public List<Equipmentclassification> findTopEquipmentclass(String lantype);
 	//获得一级分类下的器材
 	public Map<Integer,List<EquipmentFull>> fingclassequipMap(List<Equipmentclassification> eclist);
 }
