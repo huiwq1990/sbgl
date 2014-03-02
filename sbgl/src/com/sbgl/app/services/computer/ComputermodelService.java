@@ -69,6 +69,10 @@ public interface ComputermodelService{
 
 	int execSql(String sql);
 
+	int deleteComputermodelByType(List<Integer> typeList);
+
+	void updateComputermodel(Computermodel ch, Computermodel en);
+
 	
 		
 	

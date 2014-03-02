@@ -11,6 +11,7 @@ import net.sf.json.JSONObject;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
@@ -22,6 +23,8 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.actions.common.BaseAction;
+import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputerService;
@@ -33,11 +36,10 @@ import com.sbgl.util.*;
 
 @Scope("prototype") 
 @Controller("ComputerAction")
-public class ComputerAction extends ActionSupport implements SessionAware,ModelDriven<Computer>{
+public class ComputerAction extends BaseAction implements ModelDriven<Computer>{
 	
 	private static final Log log = LogFactory.getLog(ComputerAction.class);
 
-	private Map<String, Object> session;
 	
 	//Service	
 	@Resource
@@ -73,49 +75,30 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	private String logprefix = "exec action method:";	
 	
 	
-	private Page page = new Page();
-	private Integer pageNo=1;	
-	
-	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
-	private String returnInfo;
-	private String actionMsg; // Action间传递的消息参数
 	
 	private int  computerIdEn;
 	private String  computerSerialnumberEn;
 	private String  computerRemarkEn;
 
-	ReturnJson returnJson = new ReturnJson();
+	
 	//删除
 	String computerIdsForDel;
 	
 
-	public static int checkUserLogin(){
-		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
-		if(uidStr==null || uidStr.trim().equals("0") || uidStr.trim().equals("")){
-			return -1;
-		}
-		return Integer.valueOf(uidStr);
-	}
-			
-
 //  ajax add	
 	public String addComputerAjax(){	
 		log.info("Add Entity Ajax Manner");
+		try {
 		
-		Integer uid = checkUserLogin();
-		log.info("login user id "+ uid);
+		Integer uid = this.getCurrentUserId();
 		if(uid < 0){
-			returnJson.setFlag(0);
-			returnJson.setReason("用户未登录");
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();			
+			this.returnInfo = "用户未登录";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 			return SUCCESS;
 		}
 		
-		ReturnJson returnJson = new ReturnJson();
-		
-		try {
+
 			
 			computer.setCreatetime(DateUtil.currentDate());
 			computer.setCreateuserid(uid);
@@ -137,34 +120,31 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 			
 //			修改数量
 			List<Computerstatus> computerstatusList = computerstatusService.selectComputerstatusByCondition( " where id = " + ch.getComputerstatusid() );
-			if(computerstatusList==null || computerstatusList.size() !=0){
-				returnJson.setFlag(0);		
-				returnJson.setReason("获取可借状态失败!");
-				JSONObject jo = JSONObject.fromObject(returnJson);
-				this.returnStr = jo.toString();
+			if(computerstatusList==null || computerstatusList.size() ==0){
+				this.returnInfo = "获取可借状态失败";
+				log.info(returnInfo);
+				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+				return SUCCESS;
 			}
 			
 			Computermodel cm = computermodelService.selectComputermodelByCondition(" where computermodeltype = " + ch.getComputermodelid() ).get(0);			
+			if(cm==null){
+				this.returnInfo = "无法获取机房模型";
+				log.info(returnInfo);
+				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+				return SUCCESS;
+			}
+			
+//			如果模型的数量为null,设置为0
 			if(cm.getComputercount()== null){
 				cm.setComputercount(0);
 			}
-			computermodelService.execSql(" update Computermodel set computercount="+(cm.getComputercount()+1)+"  where computermodeltype = "+ch.getComputermodelid());
-
-			if(computerstatusList.get(0).getAvailableborrow()== ComputerConfig.computeravailableborrowstatusid){
-				if(cm.getAvailableborrowcountnumber() == 0){
-					cm.setAvailableborrowcountnumber(0);
-				}				
-				computermodelService.execSql(" update Computermodel set availableborrowcountnumber="+(cm.getAvailableborrowcountnumber()+1)+"  where computermodeltype = "+ch.getComputermodelid());
-			}
+						
+			computerService.addComputerAndSetNum(ch, en, computerstatusList.get(0).getAvailableborrow(), cm.getComputercount(), cm.getAvailableborrowcountnumber());
 			
-			
-			computerService.addComputer(ch,en);
-			
-			returnJson.setFlag(1);		
-			returnJson.setReason("添加机器成功!");
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
-			
+			this.returnInfo = "添加机器成功";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
 			return SUCCESS;
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
@@ -174,11 +154,10 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 			e.printStackTrace();
 			log.error("类ComputerAction的方法：addBbstagfavourite错误"+e);
 		}
-		
-		returnJson.setFlag(0);	
-		returnJson.setReason("添加机器失败!");
-		JSONObject jo = JSONObject.fromObject(returnJson);
-		this.returnStr = jo.toString();
+
+		this.returnInfo = "系统内部错误，添加机器失败";
+		log.info(returnInfo);
+		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 		return SUCCESS;
 	}
 
@@ -186,6 +165,16 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	//del entityfull Ajax
 	public String deleteComputerFullAjax( ){
 		log.info(logprefix + "deleteComputercategoryFullAjax");
+		try{
+			
+			Integer uid = this.getCurrentUserId();
+			if(uid < 0){
+				this.returnInfo = "用户未登录";
+				log.info(returnInfo);
+				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+				return SUCCESS;
+			}
+			
 		
 //		检查要删除的id是否为空
 		if(computerIdsForDel == null || computerIdsForDel.trim().length()==0){
@@ -195,39 +184,35 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 			return SUCCESS;
 		}
 		
-		try{
-//			删除的是Computer的type,不是id
-			String computertypes[] = computerIdsForDel.split(";");
-			for(int i=0; i < computertypes.length;i++){
-				String computertypeStr = computertypes[i];
-				Integer computertype = Integer.valueOf(computertypes[i]);			
-
-				computerList = computerService.selectComputerByCondition(" where computertype="+computertypeStr+" and languagetype = "+ComputerConfig.languagech);	
-				if(computerList== null || computerList.size() == 0){
-					returnInfo = "删除id为"+computertypeStr+"的设备不存在";
-					log.error(returnInfo);
-					returnStr = ComputerActionUtil.buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
-					return SUCCESS;
-				}	
-				
-//				要删除的Computer
-				Computer delComputer = computerList.get(0);
-				
-//				修改数量
-				computermodelList = computermodelService.selectComputermodelByCondition(" where computermodeltype = " + delComputer.getComputermodelid() );
-				if(computermodelList== null || computermodelList.size() !=2){					
-					returnInfo = "获取设备"+delComputer.getSerialnumber()+"的模型信息出错!";
-					log.error(returnInfo);
-					returnStr = ComputerActionUtil.buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
-					return SUCCESS;
-				}			
-				Computermodel cm = computermodelList.get(0);
-				computermodelService.execSql(" update Computermodel set availableborrowcountnumber="+(cm.getAvailableborrowcountnumber()-1)+", computercount="+(cm.getComputercount()-1)+"  where computermodeltype = "+cm.getComputermodeltype());
-					
-//				del
-				computerService.deleteComputerByType(computertype);
-				
+		String typeStrArray[] = computerIdsForDel.split(";");		
+		List<Integer> delTypeList = new ArrayList<Integer>();
+		
+//		判断参数是否正确
+		for(String typeStr : typeStrArray){
+			if(!NumberUtils.isNumber(typeStr)){
+				this.returnInfo = "删除参数不正确";
+				log.info(returnInfo);
+				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+				return SUCCESS;
 			}
+			delTypeList.add(Integer.valueOf(typeStr));
+		}
+		
+//		判断机器是否存在
+		for(Integer type : delTypeList){
+			computerList = computerService.selectComputerByCondition(" where computertype="+type+" and languagetype = "+ComputerConfig.languagech);	
+			if(computerList== null || computerList.size() == 0){
+				returnInfo = "删除id为"+type+"的机器不存在";
+				log.error(returnInfo);
+				returnStr = ComputerActionUtil.buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
+				return SUCCESS;
+			}	
+			
+		}
+		
+		
+		computerService.deleteComputerByType(delTypeList);
+
 			
 			returnInfo = "删除成功!";
 			returnStr = ComputerActionUtil.buildReturnStr(ComputerConfig.ajaxsuccessreturn,returnInfo);
@@ -264,75 +249,62 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	public String updateComputerAjax(){
 		log.info(logprefix + "updateComputerAjax,id="+computer.getId()+"  " + computerIdEn+"  end");
 		
+		try {
+			
 		if(!passCheckUpdate()){
-			returnJson.setFlag(0);	
-			returnJson.setReason("数据不完整");
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
+			this.returnInfo = "数据不完整";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 			return SUCCESS;
 		}
 		
 		
 
-		try {
+		
 			
 			System.out.println("computer.getSerialnumber()"+computer.getSerialnumber());
 //			ch
-			Computer tempComputer = computerService.selectComputerById(computer.getId());
-			int originalComputerStatus = tempComputer.getComputerstatusid();
-			tempComputer.setSerialnumber(computer.getSerialnumber());
-			tempComputer.setComputermodelid(computer.getComputermodelid());			
-			tempComputer.setComputerstatusid(computer.getComputerstatusid());
-			tempComputer.setRemark(computer.getRemark());
-		
-			Computer ch = tempComputer;
+			Computer tempch = computerService.selectComputerById(computer.getId());
+			int originalComputerStatus = tempch.getComputerstatusid();
+			int orignialComputerModelType = tempch.getComputermodelid();
+			tempch.setSerialnumber(computer.getSerialnumber());
+			tempch.setComputermodelid(computer.getComputermodelid());			
+			tempch.setComputerstatusid(computer.getComputerstatusid());
+			tempch.setRemark(computer.getRemark());
 			
-			computerService.updateComputer(tempComputer);
+			log.info("tempch.getComputerstatusid()"+tempch.getComputerstatusid());
+		
+			
 //			en
-			tempComputer = computerService.selectComputerById(computerIdEn);
-			tempComputer.setSerialnumber(computerSerialnumberEn);
-			tempComputer.setComputermodelid(computer.getComputermodelid());			
-			tempComputer.setComputerstatusid(computer.getComputerstatusid());
-			tempComputer.setRemark(computerRemarkEn);
-			computerService.updateComputer(tempComputer);
+			Computer tempen = computerService.selectComputerById(computerIdEn);
+			tempen.setSerialnumber(computerSerialnumberEn);
+			tempen.setComputermodelid(computer.getComputermodelid());			
+			tempen.setComputerstatusid(computer.getComputerstatusid());
+			tempen.setRemark(computerRemarkEn);
+			
+			
 			
 //			修改可借数量
-			List<Computerstatus> computerstatusList = computerstatusService.selectComputerstatusByCondition( " where id = " + ch.getComputerstatusid() );
+			List<Computerstatus> computerstatusList = computerstatusService.selectComputerstatusByCondition( " where id = " + tempch.getComputerstatusid() );
 			List<Computerstatus> orgComputerstatusList = computerstatusService.selectComputerstatusByCondition( " where id = " + originalComputerStatus );
 			
 			
-			if(computerstatusList==null || computerstatusList.size() !=0 || orgComputerstatusList==null || orgComputerstatusList.size() !=0){
-				returnJson.setFlag(0);		
-				returnJson.setReason("获取可借状态失败!");
-				JSONObject jo = JSONObject.fromObject(returnJson);
-				this.returnStr = jo.toString();
+			if(computerstatusList==null || computerstatusList.size() ==0 || orgComputerstatusList==null || orgComputerstatusList.size() ==0){
+				this.returnInfo = "获取机房状态失败";
+				log.info(returnInfo);
+				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+				return SUCCESS;
 			}
+			
+//			获取状态下机房是否可借
 			int nowAviBow = computerstatusList.get(0).getAvailableborrow();
 			int orgAviBow = orgComputerstatusList.get(0).getAvailableborrow();
 			
-//			原先可借现在不可借
-			if( (nowAviBow != orgAviBow) && (orgAviBow == ComputerConfig.computeravailableborrowstatusid) ){
-				Computermodel cm = computermodelService.selectComputermodelByCondition(" where computermodeltype = " + ch.getComputermodelid() ).get(0);
-				if(cm.getAvailableborrowcountnumber() == 0){
-					cm.setAvailableborrowcountnumber(0);
-				}				
-				computermodelService.execSql(" update Computermodel set availableborrowcountnumber="+(cm.getAvailableborrowcountnumber()-1)+"  where computermodeltype = "+ch.getComputermodelid());
-			}
-			
-//			原先不可借现在可借
-			if( (nowAviBow != orgAviBow) && (orgAviBow != ComputerConfig.computeravailableborrowstatusid) ){
-				Computermodel cm = computermodelService.selectComputermodelByCondition(" where computermodeltype = " + ch.getComputermodelid() ).get(0);
-				if(cm.getAvailableborrowcountnumber() == 0){
-					cm.setAvailableborrowcountnumber(0);
-				}				
-				computermodelService.execSql(" update Computermodel set availableborrowcountnumber="+(cm.getAvailableborrowcountnumber()+1)+"  where computermodeltype = "+ch.getComputermodelid());
-			}
+			computerService.updateComputer(tempch, tempen,orignialComputerModelType, nowAviBow, orgAviBow);
 						
-			returnJson.setFlag(1);		
-			returnJson.setReason("修改成功!");
-			JSONObject jo = JSONObject.fromObject(returnJson);				
-			this.returnStr = jo.toString();
-			//actionMsg = getText("viewComputercategorySuccess");
+			this.returnInfo = "修改成功";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
 			return SUCCESS;
 			
 		}catch(Exception e){
@@ -340,220 +312,15 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 			log.error("类ComputerAction的方法：viewComputer错误"+e);
 		}
 
-			returnJson.setFlag(0);	
-			returnJson.setReason("修改失败");
-			JSONObject jo = JSONObject.fromObject(returnJson);
-			this.returnStr = jo.toString();
+
+			this.returnInfo = "系统内部错误，修改失败";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 			return SUCCESS;
 	}
 	
 	
-	/**
 	
-	编辑实体 action的方法，首先获取entity的信息，返回到编辑页面
-	
-	*/
-	public String editComputer(){
-		log.info(logprefix + "editComputer");
-			
-		try {
-			//实体的id可以为0
-			if(computer.getId() != null && computer.getId() >= 0){				
-				Computer temComputer = computerService.selectComputerById(computer.getId());
-				if(temComputer != null){
-					BeanUtils.copyProperties(computerModel,temComputer);	
-					//actionMsg = getText("selectComputerByIdSuccess");
-					return SUCCESS;
-				}				
-			}		
-			return "PageNotExist";
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerAction的方法：selectComputerById错误"+e);
-		}
-
-
-		return "error";
-	}
-	
-
-	/**
-	编辑实体Full action的方法，首先获取entityfull的信息，返回到编辑页面
-	
-	*/
-	public String editComputerFull(){
-		
-		log.info(logprefix + "viewComputer");
-		
-		try {
-			if(computer.getId() != null && computer.getId() > 0){				
-				ComputerFull temComputerFull = computerService.selectComputerFullById(computer.getId());
-				BeanUtils.copyProperties(computerFull,temComputerFull);	
-				actionMsg = getText("selectComputerByIdSuccess");
-			}else{
-				actionMsg = getText("selectComputerByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerAction的方法：selectComputerFullById错误"+e);
-		}
-		
-		return "error";
-	}
-
-	
-	// 查看实体 根据对象Id查询
-	public String viewComputer(){
-		log.info("viewComputer");
-		try {
-			if(computer.getId() != null && computer.getId() > 0){				
-				Computer temComputer = computerService.selectComputerById(computer.getId());
-				BeanUtils.copyProperties(computerModel,temComputer);	
-				actionMsg = getText("selectComputerByIdSuccess");
-			}else{
-				actionMsg = getText("selectComputerByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerAction的方法：selectComputerById错误"+e);
-		}
-
-
-		return "error";
-
-	}	
-
-/**
- * view ComputerFull
- * need give parmeter id
- * get id from modle,
- * @return
- */
-	public String viewComputerFull() {
-				
-		try {
-			int getId = computer.getId();
-			log.info(this.logprefix + ";id=" + getId);
-			
-			if (getId < 0) {
-				log.error("error,id小于0不规范");
-				return "error";
-			}	
-			
-			ComputerFull temComputerFull = computerService.selectComputerFullById(getId);				
-			if(temComputerFull!=null){				
-				BeanUtils.copyProperties(computerFull,temComputerFull);
-				return SUCCESS;				
-			}else{
-				log.error("error,查询实体不存在。");
-				return "Error";
-			}			
-
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();			
-		}
-		return "Error";
-	}
-
-	
-	//根据对象Id查询
-	public String selectComputerById(){
-		log.info("selectComputerById");
-		try {
-			if(computer.getId() != null && computer.getId() > 0){				
-				Computer temComputer = computerService.selectComputerById(computer.getId());
-				BeanUtils.copyProperties(computerModel,temComputer);	
-				actionMsg = getText("selectComputerByIdSuccess");
-			}else{
-				actionMsg = getText("selectComputerByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerAction的方法：selectComputerById错误"+e);
-		}
-
-
-		return "error";
-
-	}	
-	
-
-	
-
-	//查询全部
-	public String selectComputerAll(){
-		
-		computerList  = computerService.selectComputerAll();
-		for(int i = 0; i < computerList.size(); i++){
-			System.out.println("id="+computerList.get(i).getId());
-		}
-		return SUCCESS;
-	}
-
-
-
-	
-	//根据对象Id查询Full
-	public String selectComputerFullById(){
-		System.out.println("selectComputerFullById");
-			try {
-				if(computer.getId() != null && computer.getId() >= 0){				
-				ComputerFull temComputerFull = computerService.selectComputerFullById(computer.getId());
-				BeanUtils.copyProperties(computerFull,temComputerFull);	
-				actionMsg = getText("selectComputerByIdSuccess");
-			}else{
-				actionMsg = getText("selectComputerByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerAction的方法：selectComputerFullById错误"+e);
-		}
-		
-		return "error";
-
-	}	
-
-	
-
-
-
-	//get set
-	public void setSession(Map<String, Object> session) {
-		// TODO Auto-generated method stub
-	    this.session = session;
-	}
 	
 	@Override
 	public Computer getModel() {
@@ -561,31 +328,57 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 		return computer;
 	}
 
-//  
+
+	public ComputerService getComputerService() {
+		return computerService;
+	}
+
+
+	public void setComputerService(ComputerService computerService) {
+		this.computerService = computerService;
+	}
+
+
+	public Integer getComputerid() {
+		return computerid;
+	}
+
+
+	public void setComputerid(Integer computerid) {
+		this.computerid = computerid;
+	}
+
+
 	public Computer getComputer() {
 		return computer;
 	}
-	
+
+
 	public void setComputer(Computer computer) {
 		this.computer = computer;
 	}
-//  entityModel
+
+
 	public Computer getComputerModel() {
 		return computerModel;
 	}
-	
+
+
 	public void setComputerModel(Computer computerModel) {
 		this.computerModel = computerModel;
 	}
-	
+
+
 	public ComputerFull getComputerFull() {
 		return computerFull;
 	}
-	
+
+
 	public void setComputerFull(ComputerFull computerFull) {
 		this.computerFull = computerFull;
 	}
-	
+
+
 	public List<Computer> getComputerList() {
 		return computerList;
 	}
@@ -594,6 +387,7 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 	public void setComputerList(List<Computer> computerList) {
 		this.computerList = computerList;
 	}
+
 
 	public List<ComputerFull> getComputerFullList() {
 		return computerFullList;
@@ -604,114 +398,168 @@ public class ComputerAction extends ActionSupport implements SessionAware,ModelD
 		this.computerFullList = computerFullList;
 	}
 
-	public String getReturnStr() {
-		return returnStr;
+
+	public ComputermodelService getComputermodelService() {
+		return computermodelService;
 	}
 
 
-	public void setReturnStr(String returnStr) {
-		this.returnStr = returnStr;
-	}
-	
-	public Page getPage() {
-		return page;
+	public void setComputermodelService(ComputermodelService computermodelService) {
+		this.computermodelService = computermodelService;
 	}
 
 
-	public void setPage(Page page) {
-		this.page = page;
-	}
-	
-	public int getComputerid() {
-		return computerid;
+	public int getComputermodeltype() {
+		return computermodeltype;
 	}
 
-	public void setComputerid(int computerid) {
-		this.computerid = computerid;
-	}
-		public Integer getPageNo() {
-		return pageNo;
+
+	public void setComputermodeltype(int computermodeltype) {
+		this.computermodeltype = computermodeltype;
 	}
 
-	public void setPageNo(Integer pageNo) {
-		this.pageNo = pageNo;
+
+	public List<Computermodel> getComputermodelList() {
+		return computermodelList;
 	}
 
-	public ComputerService getComputerService() {
-		return computerService;
+
+	public void setComputermodelList(List<Computermodel> computermodelList) {
+		this.computermodelList = computermodelList;
 	}
 
-	public void setComputerService(ComputerService computerService) {
-		this.computerService = computerService;
+
+	public List<ComputermodelFull> getComputermodelFullList() {
+		return computermodelFullList;
 	}
 
-	public String getActionMsg() {
-		return actionMsg;
+
+	public void setComputermodelFullList(
+			List<ComputermodelFull> computermodelFullList) {
+		this.computermodelFullList = computermodelFullList;
 	}
 
-	public void setActionMsg(String actionMsg) {
-		this.actionMsg = actionMsg;
+
+	public List<ComputermodelFull> getComputermodelFullListCh() {
+		return computermodelFullListCh;
 	}
+
+
+	public void setComputermodelFullListCh(
+			List<ComputermodelFull> computermodelFullListCh) {
+		this.computermodelFullListCh = computermodelFullListCh;
+	}
+
+
+	public List<ComputermodelFull> getComputermodelFullListEn() {
+		return computermodelFullListEn;
+	}
+
+
+	public void setComputermodelFullListEn(
+			List<ComputermodelFull> computermodelFullListEn) {
+		this.computermodelFullListEn = computermodelFullListEn;
+	}
+
+
+	public ComputerstatusService getComputerstatusService() {
+		return computerstatusService;
+	}
+
+
+	public void setComputerstatusService(ComputerstatusService computerstatusService) {
+		this.computerstatusService = computerstatusService;
+	}
+
+
+	public int getComputerstatusid() {
+		return computerstatusid;
+	}
+
+
+	public void setComputerstatusid(int computerstatusid) {
+		this.computerstatusid = computerstatusid;
+	}
+
+
+	public List<Computerstatus> getComputerstatusList() {
+		return computerstatusList;
+	}
+
+
+	public void setComputerstatusList(List<Computerstatus> computerstatusList) {
+		this.computerstatusList = computerstatusList;
+	}
+
+
+	public List<ComputerstatusFull> getComputerstatusFullList() {
+		return computerstatusFullList;
+	}
+
+
+	public void setComputerstatusFullList(
+			List<ComputerstatusFull> computerstatusFullList) {
+		this.computerstatusFullList = computerstatusFullList;
+	}
+
 
 	public String getLogprefix() {
 		return logprefix;
 	}
 
+
 	public void setLogprefix(String logprefix) {
 		this.logprefix = logprefix;
 	}
 
-	public String getComputerSerialnumberEn() {
-		return computerSerialnumberEn;
-	}
-
-	public void setComputerSerialnumberEn(String computerSerialnumberEn) {
-		this.computerSerialnumberEn = computerSerialnumberEn;
-	}
-
-	public static Log getLog() {
-		return log;
-	}
-
-	public Map<String, Object> getSession() {
-		return session;
-	}
-
-	public void setComputerid(Integer computerid) {
-		this.computerid = computerid;
-	}
-
-	public String getComputerRemarkEn() {
-		return computerRemarkEn;
-	}
-
-	public void setComputerRemarkEn(String computerRemarkEn) {
-		this.computerRemarkEn = computerRemarkEn;
-	}
-
-	public ReturnJson getReturnJson() {
-		return returnJson;
-	}
-
-	public void setReturnJson(ReturnJson returnJson) {
-		this.returnJson = returnJson;
-	}
-
-	public String getComputerIdsForDel() {
-		return computerIdsForDel;
-	}
-
-	public void setComputerIdsForDel(String computerIdsForDel) {
-		this.computerIdsForDel = computerIdsForDel;
-	}
 
 	public int getComputerIdEn() {
 		return computerIdEn;
 	}
 
+
 	public void setComputerIdEn(int computerIdEn) {
 		this.computerIdEn = computerIdEn;
 	}
+
+
+	public String getComputerSerialnumberEn() {
+		return computerSerialnumberEn;
+	}
+
+
+	public void setComputerSerialnumberEn(String computerSerialnumberEn) {
+		this.computerSerialnumberEn = computerSerialnumberEn;
+	}
+
+
+	public String getComputerRemarkEn() {
+		return computerRemarkEn;
+	}
+
+
+	public void setComputerRemarkEn(String computerRemarkEn) {
+		this.computerRemarkEn = computerRemarkEn;
+	}
+
+
+	public String getComputerIdsForDel() {
+		return computerIdsForDel;
+	}
+
+
+	public void setComputerIdsForDel(String computerIdsForDel) {
+		this.computerIdsForDel = computerIdsForDel;
+	}
+
+
+	public static Log getLog() {
+		return log;
+	}
+
+	
+	
+	
 	
 	
 }

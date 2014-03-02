@@ -165,6 +165,15 @@ public class ComputercategoryAction extends BaseAction implements ModelDriven<Co
 		log.info(logprefix + "deleteComputercategoryFullAjax");
 	
 		try{
+			
+			//检查要删除的id是否为空
+			if(computercategoryIdsForDel == null || computercategoryIdsForDel.trim().length()==0){
+				returnInfo = "没有选择删除的选项";
+				log.info(returnInfo);
+				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+				return SUCCESS;
+			}
+			
 		
 			String typeStrArray[] = computercategoryIdsForDel.split(";");
 			
@@ -182,22 +191,30 @@ public class ComputercategoryAction extends BaseAction implements ModelDriven<Co
 			
 			
 			for(Integer type : delTypeList){
-				String modelSql = " where computercategoryid = "+type;
+				
+				computercategoryList = computercategoryService.selectComputercategoryByCondition(" where languagetype="+CommonConfig.languagech+" and computercategorytype = "+type);
+				if(computercategoryList == null || computercategoryList.size() == 0){
+					this.returnInfo = "删除的机房分类"+type+"不存在";
+					log.info(returnInfo);
+					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+					return SUCCESS;
+				}
+				
+				
+				String modelSql = " where computercategoryid = "+type + " and languagetype="+CommonConfig.languagech;
 				computermodelList = computermodelService.selectComputermodelByCondition(modelSql);
 //				判断允许删除
 				if(computermodelList == null || computermodelList.size() == 0){
-					
+					//允许删除
 				}else{
 					
-					computercategoryList = computercategoryService.selectComputercategoryByCondition(" where languagetype="+CommonConfig.languagech+" and computercategorytype = "+type);
-					if(computercategoryList == null || computercategoryList.size() == 0){
-						this.returnInfo = "删除的机房分类类型为"+type+"不存在";
-						log.info(returnInfo);
-						this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
-						return SUCCESS;
+					String temp = "";
+					for(Computermodel cm : computermodelList){
+						temp += cm.getName() +",";
 					}
+					temp = temp.substring(0,temp.length()-1);
 					
-					this.returnInfo = "机房分类"+computercategoryList.get(0).getName()+"不存在";
+					this.returnInfo = "机房分类被模型"+temp+"使用";
 					log.info(returnInfo);
 					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 					return SUCCESS;
@@ -230,23 +247,19 @@ public class ComputercategoryAction extends BaseAction implements ModelDriven<Co
 		try {
 			
 //			ch
-				Computercategory tempComputercategory = computercategoryService.selectComputercategoryById(computercategoryIdCh);
-
-  				tempComputercategory.setName(computercategoryNameCh);
-				computercategoryService.updateComputercategory(tempComputercategory);			
+				Computercategory tempch = computercategoryService.selectComputercategoryById(computercategoryIdCh);
+				tempch.setName(computercategoryNameCh);		
 				
 //				en
-				tempComputercategory = computercategoryService.selectComputercategoryById(computercategoryIdEn);
-  				tempComputercategory.setName(computercategoryNameEn);
-  				computercategoryService.updateComputercategory(tempComputercategory);	
+				Computercategory tempen = computercategoryService.selectComputercategoryById(computercategoryIdEn);
+				tempen.setName(computercategoryNameEn);
+  				computercategoryService.updateComputercategory(tempch,tempen);	
   				
 				this.returnInfo = "修改成功!";
 				log.info(returnInfo);
 				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
 				return SUCCESS;
 				
-			
-			
 		}catch(Exception e){
 			e.printStackTrace();
 			log.error("类ComputercategoryAction的方法：viewComputercategory错误"+e);

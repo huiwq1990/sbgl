@@ -316,7 +316,7 @@
 	
 	//当前页
 	var currentpagenum=1;
-	var totalpage=$page.totalpage;
+	var totalpage=$page.totalpagenum;
 	var computercategorytype = 0;
 	var idsForDel;	
 	

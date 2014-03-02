@@ -193,19 +193,12 @@ $("#inputAddComputerComputercategoryid").on("change", function(e) {
 	//log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed}));
 })
 	
-var cookie = { 
-  		//读取COOKIES,n为COOKIE名 
-   		Get:function(n){ 
-       		var re=new RegExp(n+'=([^;]*);?','gi');
-       	    var r=re.exec(document.cookie)||[];
-       	    return (r.length>1?r[1]:null)
-   		}
-	};
+
 	
 	//add computer
 	$("body").on("click", "button[action-type|=addComputerButton]", function() {
 	
-		var createuserid = cookie.Get("id");
+
 		var postData = {
 			"serialnumber":$('#inputAddComputerSerialnumber').val(),	
 			"computerSerialnumberEn":$('#inputAddComputerSerialnumberEn').val(),

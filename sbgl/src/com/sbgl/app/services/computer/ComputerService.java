@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sbgl.app.entity.Computer;
 import com.sbgl.app.entity.ComputerFull;
+import com.sbgl.common.DataError;
 import com.sbgl.util.*;
 
 public interface ComputerService{
@@ -60,6 +61,20 @@ public interface ComputerService{
 
 
 	int deleteComputerByType(Integer type);
+
+
+
+
+	
+
+	int deleteComputerByType(List<Integer> delTypeList) throws DataError;
+
+
+	void updateComputer(Computer ch, Computer en,
+			int orignialComputerModelType, int nowAviBow, int orgAviBow) throws DataError;
+
+	void addComputerAndSetNum(Computer ch, Computer en, int availBorrow,
+			int originalTotalNum, int originalAvailBorrowNum);
 
 
 	

@@ -184,8 +184,8 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	 */
 	public String viewMineComputerorderList(){
 		
-		Integer userid = checkUserLogin();
-//		log.info("login user id "+ uid);
+		Integer userid = this.getCurrentUserId();
+
 		if(userid < 0){		
 			actionMsg = "用户未登录";
 			return ComputerConfig.usernotloginreturnstr;
