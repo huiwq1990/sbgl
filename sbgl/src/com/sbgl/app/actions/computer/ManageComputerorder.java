@@ -511,6 +511,25 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		return pass;
 	}
 	
+//	验证表单数据是否满足
+	public boolean validClassOrderForm(Computerorderconfig config){
+		
+		computerorderclassruleList = computerorderclassruleService.selectComputerorderclassruleByCondition( " where a.id = "+computerorderclassruleid+" " );
+		
+		Date currentDate = DateUtil.currentDate();
+		int currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(currentDate);
+//		可以预约 n天之内的PC,结束日期是最大预约天数减一
+		log.info("验证数量能否满足");
+		Date endDate = DateUtil.addDay(currentDate, config.getMaxorderday()-1);
+		int endPeriod = BorrowperiodUtil.getMaxPeriod();
+		int currentLanguage = this.getCurrentLanguage();
+		List<Borrowperiod> borrowperiodList = BorrowperiodUtil.getBorrowperiodList();
+		int computeroderadvanceorderday = config.getMaxorderday();
+		boolean pass = computerorderService.vaildComputerorderForm(computerorderdetailList, currentDate , currentPeriod, endDate, endPeriod, currentLanguage , borrowperiodList, computeroderadvanceorderday);
+//		
+		return pass;
+	}
+	
 	
 //  提交预约表单	
 	public String addComputerorderAjax(){	

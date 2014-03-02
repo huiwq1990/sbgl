@@ -7,6 +7,8 @@ import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.entity.Equipmenborrow;
 import com.sbgl.app.entity.Equipmentclassification;
+import com.sbgl.app.entity.Listdetail;
+import com.sbgl.app.entity.Listequipdetail;
 
 public interface OrderFinishDao {
 	//根据id查找订单，获得订单设备详情
@@ -19,4 +21,8 @@ public interface OrderFinishDao {
 	public List<Equipmentclassification> findclassList(Integer borrowId);
 	//获得商品详情信息，根据分类获得
 	public Map<Integer,List<EquipmentFull>> findMapBorrow(Integer borrowId);
+	//根据联合主键和订单主键获得
+	public  Listdetail findListDetail(Integer borrowId,Integer comId);
+	//根据联合主键和订单主键获得
+	public  Listequipdetail findlistequipdetail(Integer borrowId,Integer comId);
 }

@@ -95,9 +95,9 @@
 										#set($weekdayRegion = [0..$computerodertablercolumn-1])
 										#set($weekDateList = $showDateMap.get($tempweektableindex))
 										#set($trueDateList = $dateMap.get($tempweektableindex))
-										
+										#set($weekdayList = $showWeekdayMap.get($tempweektableindex))
 										#foreach($tempday in $weekdayRegion)
-                                        <th><br>$weekDateList.get($tempday)</th>
+                                        <th>$weekDateList.get($tempday)<br>$!weekdayList.get($tempday)</th>
                                         #end                
                                       </tr>
                                     </thead>

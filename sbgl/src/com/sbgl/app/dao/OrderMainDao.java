@@ -31,7 +31,7 @@ public interface OrderMainDao {
 	//获得设备详情
 	public EquipmentFull findEquipmentById(Integer equipmentId,String fromDate,String endDate);
 	//获得每天剩余数量（根据设备号）
-	public String findDayNum(Integer equipmentId,String fromDate,String endDate);
+	public String findDayNum(Integer equipmentId,String fromDate,String endDate,String lantype);
 	//根据订单查找选择的商品
 	public String findEquipmentByBorrowId(Integer borrowId,String fromDate,String endDate);
 	//找未完成的账单
@@ -44,4 +44,6 @@ public interface OrderMainDao {
 	public OrderCountFull findOrderCount(String ordertype);
 	//根据器材一级分类获得设备
 	public List<EquipmentFull> findEquipmentByClss(Integer classificationid);
+	//获得二级器材分类
+	public List<Equipmentclassification> findSecondEquipmentclass(Integer parentid,String lantype);
 }

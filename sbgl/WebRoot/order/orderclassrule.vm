@@ -203,17 +203,32 @@
 	});
 	$('body').on('click', ('#createEquipRule #submit'), function () {
 		var courseId = $('#inputCourseName').select2('val');
-		if (courseId == '') {
-			courseId = -1;	
+		if (courseId == ''||courseId == null) {	
+			alert("课程不能为空!");
+			return;
 		}
 		var ruleName = $('#inputRuleName').val();
 		//alert(courseId + ',' + ruleName);
+		var ids = "";
 		$('.model-list > .list-item').each(function(index, elem) {
 			if($(elem).data('isSelect') == 'true') {
             	var myData = $(elem).data();
+				ids+=myData.modelId+",";
+				alert(myData.modelId);
 				//alert(myData.modelId);
 			}
         });
+		ids = ids.substring(0,lds.length-1);
+		$.ajax({
+			url: "addorderclassrule.do",
+			type: 'POST',
+			data: {ruleName:ruleName,courseId:courseId,ids:ids},
+			dataType: 'json',
+			success: function(data){
+				//刷新数据
+			   $("#equip-wrap").html(data);
+			}	  
+		});
 	});
 	
 	$("body").on("click", "a[data-type|=classrule]", function() {

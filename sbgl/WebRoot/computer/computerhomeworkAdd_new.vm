@@ -347,6 +347,8 @@ console.log("....."); console.log(userList);
       uidListArray = uIdList.split(",");
       uidListArray.pop();
       var receiverids = uidListArray.join(";")
+	 // alert(receiverids);
+	 // return;
 			var postData = {
 				"receiverids": receiverids,
 				"classid":$('#input_computerorderclassrule_classname').val(),
@@ -355,8 +357,7 @@ console.log("....."); console.log(userList);
 				"orderstarttime": $('#inputDataRange').val(),
 				"orderendtime": $('#inputDataRange2').val(),
 				"availableordertime": $('#inputTotaltime').val(),
-				"allowborrowpcids": allowborrowpcids,
-				"receiverids": $('#inputSendTo').val()				
+				"allowborrowpcids": allowborrowpcids			
 			};
 
 			console.log(postData);

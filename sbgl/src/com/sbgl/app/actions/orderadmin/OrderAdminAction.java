@@ -43,6 +43,8 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 	private Page page;
 	private Integer borrowId;
 	private Integer courseId;
+	private String ruleName;
+	private String ids;
 	private List<Equipmentclassification> classification1List;
 	
 	private Map<Integer,List<EquipmentFull>> classequipmap;
@@ -154,8 +156,13 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 	}
 	
 	public String orderclassrule3(){
-		classification1List = orderAdminService.findTopEquipmentclass();
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
+		classification1List = orderAdminService.findTopEquipmentclass(lantype);
 		classequipmap = orderAdminService.fingclassequipMap(classification1List);
+		courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+lantype);
 		return SUCCESS;
 	}
 
@@ -284,6 +291,26 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 
 	public void setClassequipmap(Map<Integer, List<EquipmentFull>> classequipmap) {
 		this.classequipmap = classequipmap;
+	}
+
+
+	public String getRuleName() {
+		return ruleName;
+	}
+
+
+	public void setRuleName(String ruleName) {
+		this.ruleName = ruleName;
+	}
+
+
+	public String getIds() {
+		return ids;
+	}
+
+
+	public void setIds(String ids) {
+		this.ids = ids;
 	}
 	
 }
