@@ -3,10 +3,7 @@
 <struts>
 	
 	 <package name="login" extends="admin">
-	 	<!-- 进入登陆页面 -->
-	 	<action name="login" class="LoginAction" method="login">
-        	<result name="success">/login.vm</result>
-        </action>
+	 	
     	<!-- 处理登陆 -->
     	<action name="doLogin" class="LoginAction" method="doLogin">
         	<result name="success"></result>
@@ -27,18 +24,7 @@
         <action name="doManagerLogout" class="LoginAction" method="doManagerLogout">
         	<result name="success">/login2.vm</result>
         </action>
-        
-        <action name="index">
-        	<result>
-        		/index.vm
-        	</result>
-        </action>
-        
-        <action name="indexInfo" class="LoginAction" method="showUserInfo">
-        	<result name="success">
-        		/index-info.vm
-        	</result>
-        </action>
+    
     </package>
     <package name="loginAjax" extends="json-default">
 	 	<!-- 进入登陆页面 -->

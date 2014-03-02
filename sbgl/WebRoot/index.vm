@@ -10,82 +10,23 @@
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
-<!--[if lt IE 10]>
-  <script src="js/jquery.placeholder.js"></script>
-  <script>
-  $('input, textarea').placeholder();
-  </script>
-<![endif]-->
-<!--[if lt IE 9]>
-  <script src="js/html5shiv.js"></script>
-  <script src="js/respond.min.js"></script>
-<![endif]-->
-<!--[if IE 7]>
-<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
-<![endif]-->
+
+#parse("include/includePageCompatibility.vm")
+
+
 </head>
 
 <body>
 <header id="header-wrap"><!--header-wrap-->
-  <div id="global-header">
-    <div id="logo"><a class="brand" href="#"><img src="img/logo.png" alt="北京电影学院摄影系"></a></div>
-    <div id="hdc-wrap">
-      <div class="search-wrap">
-        <form class="form-search">
-          <div class="ipt-wrap form-group"><input type="text" class="form-control"></div>
-          <button type="submit" class="btn btn-primary"><i class="icon-search"></i></button>
-        </form>
-      </div>
-    </div>
-    <ul class="account-wrap nav nav-pills pull-right">
-      <li class="notice dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">消息1</a></li>
-          <li><a href="#">消息2</a></li>
-        </ul>
-      </li>     
-      <li class="social dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="img/photo.jpg" width="48" height="48" class="img-circle"> <b class="caret"></b></a>
-        <div class="dropdown-menu">
-          <div class="media">
-            <a class="pull-left" href="#">
-              <img src="img/photo.jpg" width="96" height="96" class="img-rounded">
-            </a>
-            <div class="media-body">
-              <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
-              <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
-              <div class="setting"><a href="#">账户设置</a></div>
-              <button class="btn btn-primary" type="button">查看个人主页</button>
-            </div>
-          </div>
-        </div>      
-      </li>
-    </ul>
-  </div>
+
+		#parse("include/includeGlobalHeader.vm")
   
-  <div class="nav-wrap">
-    <div class="site-nav">
-      <div class="dropdown">
-        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 首页</a><!-- #BeginLibraryItem "/Library/siteNav.lbi" --><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-          <li><a href="index.html"><i class="icon-home"></i> 首页</a></li>
-          <li class="divider"></li>
-          <li><a href="预约首页.html">我的预约</a></li>
-          <li><a href="消息中心-站内信.html">站内信</a></li>
-          <li class="divider"></li>
-          <li><a href="设置页面-账户设置.html">设置与帮助</a></li>
-          <li><a href="admin/管理中心首页.html">管理中心</a></li>
-        </ul>
-          <!-- #EndLibraryItem --></div>
-    </div>
-    <div class="sub-nav">
-      <ul class="nav nav-tabs nav-tabs-google">
-        <li><a href="${webbaseurl}/indexInfo.do">简介</a></li>
-        <li class="active"><a href="index.html">信息</a></li>
-      </ul>
-    </div>
+  <div class="nav-wrap clearfix">	
+	#parse("include/includeSiteNavi.vm")	
+	##set($currentPageType="createorder")
+	##parse("include/includeOrderspaceSubNavi.vm") 
   </div>
-  
+	
 </header><!--/#header-wrap-->
 <section id="user-header"><!-- user-header -->
 <div class="container">
@@ -185,21 +126,17 @@
             <div class="thumbnail">
               <div class="hd clearfix">
                 <h3 class="pull-left">进行中的机房预约</h3>
-                <a href="预约首页.html" class="more lk pull-right">查看全部</a>
+                <a href="${webbaseurl}/viewMineComputerorderList.${strutsaction}" class="more lk pull-right">查看全部</a>
               </div>
               <ul class="media-list">
+				#foreach($order in $computerorderFullUnderwayList)
                 <li class="media">
                   <div class="media-body">
-                    <div class="media-heading"><h5><a href="设备预约详细内容页.html">数字摄影技术第11周设备申请通知</a></h5><span>等待你提交预约申请</span></div>
-                    <span class="tag label label-important">课程预约</span>                  
+                    <div class="media-heading"><h5><a href="">$order.computerordertitle</a></h5><span>等待你提交预约申请</span></div>
+                    <span class="tag label label-important">#if($order.computerorderordertype==2)课程预约 #else 个人预约 #end</span>                  
                   </div>
                 </li>
-                <li class="media">
-                  <div class="media-body">
-                    <div class="media-heading"><h5><a href="设备预约详细内容页.html">2013年6月18日设备申请</a></h5><span>等待审核</span></div>
-                    <span class="tag label label-important">个人预约</span>                  
-                  </div>
-                </li>
+				#end
               </ul>
             </div>
           </div>
@@ -214,11 +151,15 @@
 
     <!-- javascript
     ================================================== -->
-<script src="js/jquery.js"></script>
-<script src="js/loader.min.js"></script>
-<script src="js/bootstrap-hover-dropdown.min.js"></script>
-<script src="js/select2.js"></script>
-<script src="js/bfa.js"></script>
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/bootstrap-datepicker.js"></script>
+<script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="${jsDomain}/xdate.js"></script>
+<script src="${jsDomain}/computer/computerorder.js"></script>
 
 
 <div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">

@@ -1,7 +1,10 @@
 package com.sbgl.app.actions.common;
 
+import java.io.PrintWriter;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
@@ -11,6 +14,9 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.services.login.LoginService;
 import com.sbgl.util.CookiesUtil;
+import com.sbgl.util.JavascriptWriter;
+import com.sbgl.util.MD5Util;
+import com.sbgl.util.WebUtils;
 
 public class ExceptionInterceptor extends AbstractInterceptor {
 	/**
@@ -44,15 +50,16 @@ public class ExceptionInterceptor extends AbstractInterceptor {
 		if( uid == null && loginuser == null && url.indexOf("doLogin") == -1) {
 			return "login";
 		} else if(uid != null && loginuser == null) {
-			Loginuser l = new Loginuser();
-			l.setUserid( CookiesUtil.getCookie("userid") );
-			l.setPassword( CookiesUtil.getCookie("userpass") );
-			loginuser = loginService.findUser(l);
+			loginuser = loginService.checkUser( Integer.valueOf( CookiesUtil.getCookie("uid") ) );
 			//如果还是未找到cookie中存储的用户，删除之
 			if( loginuser == null ) {
-				CookiesUtil.removeCookie("udi");
+				CookiesUtil.removeCookie("uid");
 				CookiesUtil.removeCookie("userpass");
 				CookiesUtil.removeCookie("userid");
+				
+				return "login";
+			} else if( !CookiesUtil.getCookie("userpass").equals( MD5Util.MD5( loginuser.getPassword() + loginuser.getId().toString() ) ) ) {
+				return "login";
 			}
 			session.setAttribute("loginUser", loginuser);
 		}

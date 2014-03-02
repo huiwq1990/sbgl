@@ -34,9 +34,10 @@
 		// Access to jQuery and DOM versions of element
 		base.$el = $(el);
 		base.el = el;
-		
+		base.text;
+
 		// get input jQuery object
-		base.$input = base.$el.find('input');
+		base.$input = base.$el;
 
 		// Add a reverse reference to the DOM object
 		base.$el.data("jqPagination", base);
@@ -65,8 +66,6 @@
 				base.options.current_page = base.$input.data('current-page');
 			}
 			
-			// remove the readonly attribute as JavaScript must be working by now ;-)
-			base.$input.removeAttr('readonly');
 			
 			// set the initial input value
 			// pass true to prevent paged callback form being fired
@@ -76,47 +75,6 @@
 			
 			 //***************
 			// BIND EVENTS
-			
-			base.$input.on('focus.jqPagination mouseup.jqPagination', function (event) {
-
-				// if event === focus, select all text...
-				if (event.type === 'focus') {
-
-					var current_page	= parseInt(base.options.current_page, 10);
-
-					$(this).val(current_page).select();
-
-				}
-			
-				// if event === mouse up, return false. Fixes Chrome bug
-				if (event.type === 'mouseup') {
-					return false;
-				}
-				
-			});
-			
-			base.$input.on('blur.jqPagination keydown.jqPagination', function (event) {
-				
-				var $self			= $(this),
-					current_page	= parseInt(base.options.current_page, 10);
-				
-				// if the user hits escape revert the input back to the original value
-				if (event.keyCode === 27) {
-					$self.val(current_page);
-					$self.blur();
-				}
-				
-				// if the user hits enter, trigger blur event but DO NOT set the page value
-				if (event.keyCode === 13) {
-					$self.blur();
-				}
-
-				// only set the page is the event is focusout.. aka blur
-				if (event.type === 'blur') {
-					base.setPage($self.val());
-				}
-				
-			});
 			
 			base.$el.on('click.jqPagination', 'a', function (event) {
 			
@@ -255,6 +213,7 @@
 				.replace("{max_page}", max_page);
 			
 			base.$input.val(page_string);
+			base.text = page_string;
 		
 		};
 		
@@ -287,7 +246,7 @@
 				base.$el.find('a.prev, a.previous, li.previous a').attr('href', link_string.replace('{page_number}', previous));
 				base.$el.find('a.next, li.next a').attr('href', link_string.replace('{page_number}', next));
 				base.$el.find('a.last, li.last a').attr('href', link_string.replace('{page_number}', max_page));
-				
+				base.$el.find('a.dropdown-toggle').html(base.text + "<b class='caret'></b>");
 			}
 
 			// set disable class on appropriate links
@@ -367,7 +326,7 @@
 		current_page	: 1,
 		link_string		: '',
 		max_page		: null,
-		page_string		: 'Page {current_page} of {max_page}',
+		page_string		: '第{current_page}/{max_page}页',
 		paged			: function () {}
 	};
 

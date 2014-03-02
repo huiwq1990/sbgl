@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 机房管理</title>
+<title>北京电影学院摄影系 - 机房订单管理</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -114,7 +114,7 @@
                      #if($!temp.computerorderstatus == $ComputerorderStatusAduitPass)
 						<td>审核通过</td>
 					#elseif($!temp.computerorderstatus ==$ComputerorderStatusAduitReject)
-						<td>驳回</td>
+						<td>当前预约申请已被驳回。</td>
 						#elseif($!temp.computerorderstatus ==$ComputerorderStatusAduitDel)
 						<td>删除</td>
 						#elseif($!temp.computerorderstatus ==$ComputerorderStatusAduitWait)
