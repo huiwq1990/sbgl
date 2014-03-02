@@ -9,6 +9,7 @@ import com.sbgl.app.actions.orderadmin.OrderCountFull;
 import com.sbgl.app.actions.orderadmin.OrdercourseruleFull;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Equipmentnum;
+import com.sbgl.app.entity.Loginuser;
 import com.sbgl.util.Page;
 
 public interface OrderAdminService {
@@ -24,4 +25,6 @@ public interface OrderAdminService {
 	public List<Equipmentclassification> findTopEquipmentclass(String lantype);
 	//获得一级分类下的器材
 	public Map<Integer,List<EquipmentFull>> fingclassequipMap(List<Equipmentclassification> eclist);
+	//创建规则
+	public boolean addorderclassrule(Integer courseId,String ruleName,String ids,Loginuser loginuser);
 }

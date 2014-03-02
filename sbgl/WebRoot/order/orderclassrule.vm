@@ -214,11 +214,10 @@
 			if($(elem).data('isSelect') == 'true') {
             	var myData = $(elem).data();
 				ids+=myData.modelId+",";
-				alert(myData.modelId);
 				//alert(myData.modelId);
 			}
         });
-		ids = ids.substring(0,lds.length-1);
+		ids = ids.substring(0,ids.length-1);
 		$.ajax({
 			url: "addorderclassrule.do",
 			type: 'POST',
@@ -226,7 +225,11 @@
 			dataType: 'json',
 			success: function(data){
 				//刷新数据
-			   $("#equip-wrap").html(data);
+			   if(tag=='1'){
+			   		alert("创建规则成功！")				
+			   }else{
+			   		alert(data.message);
+			   }
 			}	  
 		});
 	});
