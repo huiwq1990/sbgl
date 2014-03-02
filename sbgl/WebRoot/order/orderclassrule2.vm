@@ -1,0 +1,66 @@
+ <div id="admin-content" class="clearfix">            
+        <div class="control-bar clearfix"><!--control-bar start-->
+          <div class="title pull-left">课程预约规则</div>
+		  <div class="tips">在此页面下管理课程预约规则，如规则的添加、修改、删除及维护等。</div>
+          <div class="filter category-filter">
+            <select id="select-categories" style="width:130px" class="select2">
+              <option value="0" data-foo="fa">全部课程</option>
+			  #foreach($row in $!courseFullList)	
+              <option value="$row.courseid" data-foo="fa">$row.coursename</option>
+			  #end
+            </select>
+          </div>
+          
+          <div class="operate-item pull-left">
+            <a href="#createEquipRule" class="btn btn-primary" data-toggle="modal" role="button">创建规则</a>
+            <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+          </div>
+
+          <div class="page pull-right clearfix">
+            <ul class="page-index nav nav-pills pull-left">
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!page.pageNo/$!page.totalpage页 <b class="caret"></b></a>
+                <ul class="dropdown-menu" role="menu">
+                  #foreach($i in [1 .. $!page.totalpage])	
+					<li><a href="#">$i</a></li>
+				  #end
+                </ul>
+              </li>              
+            </ul>
+            <div class="pagination pull-right">
+              <ul>
+                <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+              </ul>
+            </div>              
+          </div>
+        </div><!--control-bar end-->
+        <div class="panel panel-default table-responsive">
+                      
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                <th class="id">编号</th>
+                <th class="course-name">课程名</th>
+                <th class="name">规则名称</th>
+                <th class="teacher">教师</th>
+                <th class="operate">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+			#foreach($row2 in $!ordercourseruleFullList)	
+              <tr>
+                <td><input class="chk" type="checkbox" name="chk-list" value="${velocityCount}"></td>
+                <td>${velocityCount}<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
+                <td>$row2.courseName</td>
+                <td>$row2.courserulename</td>
+                <td>$row2.teacherName</td>
+                <td><a href="">修改</a> <a href="">删除</a></td>
+              </tr>
+			#end
+            </tbody>
+          </table>
+          
+        </div>
+      </div>

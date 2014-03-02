@@ -7,8 +7,8 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="../css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="../css/global.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
 <!--[if lt IE 9]>
   <script src="../js/html5shiv.js"></script>
@@ -17,6 +17,10 @@
 <!--[if IE 7]>
 <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
 <![endif]-->
+<script>
+	var cid="$!courseId";
+	var pno="$!page.pageNo";
+</script>
 </head>
 
 <body id="admin">
@@ -86,10 +90,9 @@
               <div class="filter category-filter">
                 <select id="select-categories" style="width:130px" class="select2">
                   <option value="0" data-foo="fa">全部课程</option>
-                  <option value="1" data-foo="fa">故事片创作</option>
-                  <option value="2" data-foo="sub">广告、MV创作</option>
-                  <option value="3" data-foo="sub">造型艺术构思</option>
-                  <option value="4" data-foo="sub">数字摄影技术</option>
+				  #foreach($row in $!courseFullList)	
+                  <option value="$row.courseid" data-type="orderclassrule2" data-id="$!row.courseid" data-foo="fa">$row.coursename</option>
+				  #end
                 </select>
               </div>
               
@@ -101,17 +104,18 @@
               <div class="page pull-right clearfix">
                 <ul class="page-index nav nav-pills pull-left">
                   <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!page.pageNo/$!page.totalpage页 <b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">最新</a></li>
-                      <li><a href="#">最旧</a></li>
+                      #foreach($i in [1 .. $!page.totalpage])	
+						<li><a data-type="orderclassrule2" data-pageno="$i" data-maxpage="$!page.totalpage" href="#">$i</a></li>
+					  #end
                     </ul>
                   </li>              
                 </ul>
                 <div class="pagination pull-right">
                   <ul>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-type="orderclassrule2" data-pageno="$!page.pageNo-1"  data-maxpage="$!page.totalpage" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-type="orderclassrule2" data-pageno="$!page.pageNo+1"  data-maxpage="$!page.totalpage" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
                   </ul>
                 </div>              
               </div>
@@ -130,54 +134,16 @@
                   </tr>
                 </thead>
                 <tbody>
+				#foreach($row2 in $!ordercourseruleFullList)	
                   <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
-                    <td>1<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
-                    <td>故事片创作</td>
-                    <td>故事片创作规则1</td>
-                    <td>教师名</td>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="${velocityCount}"></td>
+                    <td>${velocityCount}<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
+                    <td>$row2.courseName</td>
+                    <td>$row2.courserulename</td>
+                    <td>$row2.teacherName</td>
                     <td><a href="">修改</a> <a href="">删除</a></td>
                   </tr>
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="2"></td>
-                    <td>2<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
-                    <td>故事片创作</td>
-                    <td>故事片创作第6周器材使用规则</td>
-                    <td>教师名</td>
-                    <td><a href="">修改</a> <a href="">删除</a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>3<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
-                    <td>课程名</td>
-                    <td>数字摄影机</td>
-                    <td>教师名</td>
-                    <td><a href="">修改</a> <a href="">删除</a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>4<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
-                    <td>课程名</td>
-                    <td>规则名称</td>
-                    <td>教师名</td>
-                    <td><a href="">修改</a> <a href="">删除</a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>5<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
-                    <td>课程名</td>
-                    <td>规则名称</td>
-                    <td>教师名</td>
-                    <td><a href="">修改</a> <a href="">删除</a></td>
-                  </tr>
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="3"></td>
-                    <td>6<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
-                    <td>课程名</td>
-                    <td>规则名称</td>
-                    <td>教师名</td>
-                    <td><a href="">修改</a> <a href="">删除</a></td>
-                  </tr>
+				#end
                 </tbody>
               </table>
               
@@ -269,11 +235,11 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-<script src="../js/jquery.js"></script>
-<script src="../js/loader.min.js"></script>
-<script src="../js/select2.js"></script>
-<script src="../js/bootstrap-hover-dropdown.min.js"></script>
-<script src="../js/bfa.js"></script>
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
 <!--[if lt IE 10]>
   <script src="../js/jquery.placeholder.js"></script>
   <script>
@@ -306,6 +272,56 @@
 				//alert(myData.modelId);
 			}
         });
+	});
+	
+	$("body").on("click", "a[data-type|=orderclassrule2]", function() {
+	    var courseid = $(this).data("id");	
+		var pageno = $(this).data("pageno");	
+		var maxpage = $(this).data("maxpage");
+		if(pageno>maxpage||pageno<1){
+			return;
+		}
+		if(courseid!=null&&courseid!=""){
+			cid=courseid;
+		}
+		if(pageno!=null&&pageno!=""){
+			pno=pageno;
+		}
+		$.ajax({
+			url: "orderclassrule2.do",
+			type: 'POST',
+			data: {pageNo:pno,courseId:cid},
+			dataType: 'html',
+			success: function(data){
+				//刷新数据
+			   $("#equip-wrap").html(data);
+			}	  
+		});
+	});
+	
+	$("body").on("click", "a[data-type|=orderclassrule2]", function() {
+	    var courseid = $(this).data("id");	
+		var pageno = $(this).data("pageno");	
+		var maxpage = $(this).data("maxpage");
+		if(pageno>maxpage||pageno<1){
+			return;
+		}
+		if(courseid!=null&&courseid!=""){
+			cid=courseid;
+		}
+		if(pageno!=null&&pageno!=""){
+			pno=pageno;
+		}
+		$.ajax({
+			url: "orderclassrule2.do",
+			type: 'POST',
+			data: {pageNo:pno,courseId:cid},
+			dataType: 'html',
+			success: function(data){
+				//刷新数据
+			   $("#equip-wrap").html(data);
+			}	  
+		});
 	});
 </script>
 
