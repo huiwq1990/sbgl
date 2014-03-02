@@ -9,8 +9,8 @@
         </action>
         
         
-         	<action name="adminIndex" class="AdminIndexAction" method="adminIndex">
-			<result name="success">/admin/index.vm</result>
+        <action name="adminIndex" class="AdminIndexAction" method="adminIndex">
+			<result name="success">/admin/adminindex.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
         

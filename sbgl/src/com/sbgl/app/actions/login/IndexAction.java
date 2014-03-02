@@ -6,10 +6,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.sbgl.app.actions.common.BaseAction;
+import com.sbgl.app.actions.computer.ComputerAction;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.entity.Computerorder;
@@ -23,6 +27,9 @@ import com.sbgl.app.services.computer.ComputerorderdetailService;
 @Scope("prototype") 
 @Controller("IndexAction")
 public class IndexAction extends BaseAction{
+	
+	private static final Log log = LogFactory.getLog(IndexAction.class);
+
 	
 	@Resource
 	private ComputerorderService computerorderService;	
@@ -50,6 +57,7 @@ public class IndexAction extends BaseAction{
 
 	public String index(){
 		
+		System.out.println("sss");
 		Integer userid = this.getCurrentUserId();
 
 		if(userid < 0){		
@@ -62,7 +70,7 @@ public class IndexAction extends BaseAction{
 		String selunderwayordersql = "  where a.createuserid="+userid + " and a.status in("+ComputerorderInfo.ComputerorderStatusAduitWait+","+ComputerorderInfo.ComputerorderStatusAduitReject+") order by a.createtime desc";
 		computerorderFullUnderwayList = computerorderService.selectComputerorderFullByCondition(selunderwayordersql);
 		
-		
+		log.info(computerorderFullUnderwayList.size());
 		return SUCCESS;
 	}
 

@@ -18,7 +18,7 @@
 <body id="admin">
 <header id="header-wrap"><!--header-wrap-->
 
-	#set($currentPageModule="teach")
+	#set($currentPageModule="index")
 	#parse("include/includeAdminHeader.vm")
 	
 </header><!--/#header-wrap-->
@@ -44,7 +44,7 @@
                     </tr>
                     <tr>
                       <th>机房预约</th>
-                      <td colspan="4">待审核<br/><strong>4</strong>个</td>
+                      <td colspan="4">待审核<br/><strong>$!computerorderWaitAuditNum</strong>个</td>
                     </tr>
                     <tr>
                       <th>用户</th>
@@ -78,6 +78,7 @@
       </div>
       <!--equip-wrap end-->
 
+	  
       <!--sidebar start-->
       <div id="lside">
         <ul class="list-group">
@@ -95,10 +96,15 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-<script src="../js/jquery.js"></script>
-<script src="../js/loader.min.js"></script>
-<script src="../js/bootstrap-hover-dropdown.min.js"></script>
-<script src="../js/bfa.js"></script>
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/bootstrap-datepicker.js"></script>
+<script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="${jsDomain}/xdate.js"></script>
+<script src="${jsDomain}/computer/computerorder.js"></script>
 
 </body>
 </html>
