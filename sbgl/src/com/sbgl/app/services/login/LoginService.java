@@ -8,4 +8,5 @@ import com.sbgl.app.entity.Loginuser;
 
 public interface LoginService {
 	public Loginuser findUser(Loginuser loginuser);
+	public Loginuser checkUser(int uid);
 }

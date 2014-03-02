@@ -15,7 +15,9 @@ import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.OrderFinishDao;
 import com.sbgl.app.entity.Equipmenborrow;
 import com.sbgl.app.entity.Equipmentclassification;
+import com.sbgl.app.entity.Equipmentdetail;
 import com.sbgl.app.entity.Listdetail;
+import com.sbgl.app.entity.Listequipdetail;
 import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.services.order.OrderExamService;
 
@@ -61,14 +63,61 @@ public class OrderExamServiceImpl implements OrderExamService {
 	}
 
 	@Override
-	public boolean doorderalibrary(Integer borrowId,
-			List<EquipmentFull> equipmentList, Loginuser user) {
+	public boolean alibraryorder(Integer borrowId,
+			String ids, Loginuser user) {
 		// TODO Auto-generated method stub
-		for(EquipmentFull equipmentFull:equipmentList){
-			Listdetail listdetail =  new Listdetail();
-			listdetail = baseDao.getEntityById(Listdetail.class, equipmentFull.getListdetailid());
+		String[] strs =  ids.split(",");
+		Equipmenborrow equipmenborrow = baseDao.getEntityById(Equipmenborrow.class, borrowId);
+		equipmenborrow.setStatus(5);
+		equipmenborrow.setBorrowaudituser(user.getId());
+		equipmenborrow.setBorrowtime(new Date());
+		baseDao.updateEntity(equipmenborrow);		
+		for(int i=0;i<strs.length;i++){
+			Equipmentdetail equipmentdetail = baseDao.getEntityById(Equipmentdetail.class, Integer.parseInt(strs[i]));
+			Listdetail listdetail = new Listdetail();
+			listdetail =  orderFinishDao.findListDetail(borrowId,Integer.parseInt(strs[i]));
+			if(listdetail.getBorrownumber()==null||listdetail.getBorrownumber()==0){
+				listdetail.setBorrownumber(1);
+			}else{
+				listdetail.setBorrownumber(listdetail.getBorrownumber()+1);
+			}
+			listdetail.setBorrowtime(equipmenborrow.getBorrowtime());
+			baseDao.updateEntity(listdetail);
+			Listequipdetail listequipdetail =  new Listequipdetail();
+			listequipdetail.setBorrowlistid(borrowId);
+			listequipdetail.setListequipdetailid(baseDao.getCode("Listequipdetail")); 
+			listequipdetail.setEquipdetailid(Integer.parseInt(strs[i]));
+			listequipdetail.setEquipmentid(equipmentdetail.getComid());
+			listequipdetail.setEquipstatus("0");
+			listequipdetail.setListdetailid(listdetail.getListdetailid());	
+			baseDao.saveEntity(listequipdetail);
+		}	
+		return true;
+	}
+
+	@Override
+	public boolean storageorder(Integer borrowId, String ids, Loginuser user) {
+		// TODO Auto-generated method stub
+		String[] strs1 =  ids.split(",");
+		Equipmenborrow equipmenborrow = baseDao.getEntityById(Equipmenborrow.class, borrowId);
+		equipmenborrow.setReturnaudituser(user.getId());	
+		equipmenborrow.setReturntime(new Date());
+		if(strs1!=null&&strs1.length>0){
+			for(int i=0;i<strs1.length;i++){
+				String[] strs2 = strs1[i].split("、");			
+				Listdetail listdetail = new Listdetail();
+				listdetail =  orderFinishDao.findListDetail(borrowId,Integer.parseInt(strs2[0]));
+				listdetail.setBorrownumber(listdetail.getBorrownumber()-1);
+				listdetail.setReturntime(equipmenborrow.getReturntime());
+				baseDao.updateEntity(listdetail);
+				Listequipdetail listequipdetail =  new Listequipdetail();
+				listequipdetail = orderFinishDao.findlistequipdetail(borrowId,Integer.parseInt(strs2[0]));
+				listequipdetail.setEquipstatus(strs2[1]);	
+				baseDao.updateEntity(listequipdetail);
+			}
 		}
-		
+		equipmenborrow.setStatus(8);
+		baseDao.updateEntity(equipmenborrow);
 		return true;
 	}
 

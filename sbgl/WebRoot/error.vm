@@ -1,8 +1,8 @@
 <html >
 	<body >
-		<h1 >错误处理页面</h1>
+		<h1 >后台程序异常！</h1>
 		<br/>
-		提示：$!errorMsg
+		$!errorMsg
 		<br/>
     </body>
 </html>

@@ -24,4 +24,10 @@ public class LoginServiceImpl implements LoginService{
 		return loginDao.findUser(loginuser);
 	}
 
+	@Override
+	public Loginuser checkUser(int uid) {
+		// TODO Auto-generated method stub
+		return loginDao.checkUser(uid);
+	}
+
 }

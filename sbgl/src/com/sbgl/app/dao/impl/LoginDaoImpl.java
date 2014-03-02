@@ -34,6 +34,23 @@ public class LoginDaoImpl extends HibernateDaoSupport implements LoginDao {
 		}
 		return null;
 	}
+
+	@Override
+	public Loginuser checkUser(int uid) {
+		// TODO Auto-generated method stub
+		final String sql = "select * from loginuser where id="+ uid;
+		List<Loginuser> loginUserList = getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql);
+				query.setResultTransformer(new EscColumnToBean(Loginuser.class));
+				return query.list();
+			}
+		});	
+		if(loginUserList!=null&&!loginUserList.isEmpty()){
+			return loginUserList.get(0);
+		}
+		return null;
+	}
 	
 	
 

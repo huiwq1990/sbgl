@@ -33,6 +33,7 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 	private String message;
 	private String examcontent;
 	private String inputEquipContent;
+	private String ids;
 
 	
 	@Resource
@@ -95,20 +96,41 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 	}
 	
 	//设备出库
-	public String doorderalibrary(){
+	public String alibraryorder(){
 		try{
 			boolean flag = false;
 			Loginuser loginuser = (Loginuser) session.get("loginUser");
-			flag = orderExamService.doorderalibrary(borrowId,equipmentList,loginuser);
+			flag = orderExamService.alibraryorder(borrowId,ids,loginuser);
 			if(flag){
 				tag = "1";
 			}else{
 				tag = "2";
-				message = "审核订单失败";
+				message = "订单出库失败";
 			}
 		}catch(Exception e){
 			tag = "2";
-			message = "审核订单失败";
+			message = "订单出库失败";
+			e.printStackTrace();
+			log.error(e);
+		}
+		return SUCCESS;
+	}
+	
+	//设备出库
+	public String storageorder(){
+		try{
+			boolean flag = false;
+			Loginuser loginuser = (Loginuser) session.get("loginUser");
+			flag = orderExamService.storageorder(borrowId,ids,loginuser);
+			if(flag){
+				tag = "1";
+			}else{
+				tag = "2";
+				message = "订单入库失败";
+			}
+		}catch(Exception e){
+			tag = "2";
+			message = "订单入库失败";
 			e.printStackTrace();
 			log.error(e);
 		}
@@ -200,6 +222,14 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 
 	public void setInputEquipContent(String inputEquipContent) {
 		this.inputEquipContent = inputEquipContent;
+	}
+
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
 	}
 
 }

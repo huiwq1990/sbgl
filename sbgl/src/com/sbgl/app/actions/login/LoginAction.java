@@ -22,6 +22,7 @@ import com.sbgl.app.services.user.ClazzService;
 import com.sbgl.app.services.user.StudentService;
 import com.sbgl.util.CookiesUtil;
 import com.sbgl.util.JavascriptWriter;
+import com.sbgl.util.MD5Util;
 import com.sbgl.util.WebUtils;
 
 @Scope("prototype") 
@@ -86,7 +87,7 @@ public class LoginAction extends ActionSupport {
 			loginUser2 = loginService.findUser(loginuser);
 			if(loginUser2 != null){
 				CookiesUtil.addLoginCookie("uid", String.valueOf(loginUser2.getId()));
-				CookiesUtil.addLoginCookie("userpass", loginUser2.getPassword());
+				CookiesUtil.addLoginCookie("userpass", MD5Util.MD5( loginUser2.getPassword() + loginUser2.getId().toString() ));
 				CookiesUtil.addLoginCookie("userid", String.valueOf(loginUser2.getUserid()));
 				flag = true;
 				session.setAttribute("loginUser", loginUser2);
@@ -134,13 +135,16 @@ public class LoginAction extends ActionSupport {
 	public void Javascript(boolean flag){
 		try{
 			HttpServletResponse response = WebUtils.getHttpServletResponse();
+			response.setContentType("text/html");
+			response.setHeader("Cache-Control","no-cache");
+			response.setCharacterEncoding("UTF-8");
 			PrintWriter write =response.getWriter();
 			if(flag){
 				JavascriptWriter tjavascriptWriter = new JavascriptWriter(write);
 				tjavascriptWriter.wirteToParent("succ","21321");
 			}else{
 				JavascriptWriter tjavascriptWriter = new JavascriptWriter(write);
-				tjavascriptWriter.wirteToParent("fail","没有找到此人！");
+				tjavascriptWriter.wirteToParent("fail","用户名错误或密码错误！");
 			}
 		}catch (Exception e) {
 			// TODO: handle exception

@@ -17,6 +17,9 @@
 <!--[if IE 7]>
 <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
 <![endif]-->
+<script>
+	
+</script>
 </head>
 
 <body id="admin">
@@ -97,9 +100,11 @@
                     <h3 class="pull-left">器材清单</h3>
                     #set($anum = 0)
         			  #set($bnum = 0)
-        			  #foreach($row in $!equipmentList)	
+        			  #foreach($row in $!equipmentclassificationList)
+						#foreach($row4 in $!equipmentMap.get($row.classificationid))	
+							 #set($bnum = $bnum+1)
+						#end
         				 #set($anum = $anum+1)
-        				 #set($bnum = $bnum+$!row.applynumber)
         			  #end
                       <div class="pull-right">共$!anum 种设备， $!bnum 个设备</div>
                   </div>
@@ -116,7 +121,7 @@
                     <ul class="group-body media-list collapse in" id="grp-1">
 					  #foreach($row2 in $!equipmentMap.get($row.classificationid))					
 						#foreach($i in [1 .. $!row2.applynumber])
-                          <li class="media" data-model-id="1" data-id="$!row2.equipmentid" data-is-select="false">
+                          <li class="media" data-model-id="$!row2.equipmentid" data-id="" data-is-select="false">
                             <div class="is-select pull-right"><i class="icon-check-empty icon-large"></i></div>
                             <div class="media-body">
                               <div class="media-heading">
@@ -142,13 +147,13 @@
                       <form id="input-stock-out" role="form" class="form-inline" action="javascript:void(0);">
                         <div class="form-group">
                           <label class="sr-only" for="inputEquipId">器材编号</label>
-                          <input type="text" class="form-control" id="inputEquipId" typeahead([{ name: '摄影机',local: ["333213", "13432", "4324325", "87543"],header: '<strong>摄影机</strong>'} >
+                          <input type="text" class="form-control" id="inputEquipId"  >
                         </div>
                         <button type="submit" class="btn btn-white">提 交</button>
                       </form>
                       <hr>
-                      <a class="btn btn-primary" href="#">出 库</a>
-                      <a class="btn btn-white" data-toggle="modal" href="#reject" role="button">删 除</a>
+                      <a class="btn btn-primary" data-type="alibraryorder" data-id="$!equipmenborrowFull.borrowid" href="#">出 库</a>
+                      <a class="btn btn-white" data-toggle="modal" data-type="deleteorder" data-id="$!equipmenborrowFull.borrowid" href="#reject" role="button">删 除</a>
                   </div>
                 </div>
                 <div class="thumbnail">
@@ -215,58 +220,26 @@
 $(window).load(function(){
 	$("#inputEquipId").typeahead([
   {
-    name: '摄影机',
-    local: ["333213", "13432", "4324325", "87543"],
-    header: '<strong>摄影机</strong>'
-  },
-  {
-    name: '照明器材',
-    local: ["2233", "66666", "334", "88"],
-    header: '<strong>照明器材</strong>'
+#foreach($row in $!equipmentclassificationList)
+#if($velocityCount!='1'), #end	
+	 name: '$!row.name',
+	 local: [
+		#foreach($row4 in $!equipmentMap.get($row.classificationid))	
+			#foreach($row5 in $row4.equipDetailidlist)
+				#if($velocityCount!='1'), #end	
+				"$!row5"
+			#end
+        #end],
+    header: '<strong>$!row.name</strong>'
   }
+ #end	
 	]);	
-
 	$('body#admin .collapse').on('hide', function () {
   		$(this).prev().children('.group-name').find('i').removeClass().addClass('icon-caret-right');
 	}).on('show', function () {
   		$(this).prev().children('.group-name').find('i').removeClass().addClass('icon-caret-down');
 	});
-	
-	/*
-	$('body#admin').on('click', ('.group li.media'), function () {
-  		if ($(this).children('.is-select').children('i').hasClass('icon-check-empty')) {			// 选中处理
-			$(this).toggleClass('selected');
-			$(this).data('isSelect', 'true');
-			$(this).children('.is-select').children('i').removeClass('icon-check-empty').addClass('icon-check');
-		} else if ($(this).children('.is-select').children('i').hasClass('icon-check')) {			// 取消选中处理
-			$(this).toggleClass('selected');
-			$(this).data('isSelect', 'false');
-			$(this).children('.is-select').children('i').removeClass('icon-check').addClass('icon-check-empty');
-		}
-	});
-	$('body#admin').on('click', ('.group .group-select-all'), function () {
-  		if ($(this).children('i').hasClass('icon-check-empty')) {			// 选中处理
-			$(this).children('i').removeClass('icon-check-empty').addClass('icon-check');
-			$(this).parents('.group').children('ul.group-body').find('li').each(function(index, element) {
-				if(!$(this).hasClass('selected')) {
-					//$(this).removeClass('selected');
-					$(this).addClass('selected');
-				}
-				$(this).data('isSelect', 'true');
-				$(this).children('.is-select').children('i').removeClass('icon-check-empty').addClass('icon-check');
-            });
-		} else if ($(this).children('i').hasClass('icon-check')) {			// 取消选中处理
-			$(this).children('i').removeClass('icon-check').addClass('icon-check-empty');
-			$(this).parents('.group').children('ul.group-body').find('li').each(function(index, element) {
-				if($(this).hasClass('selected')) {
-					$(this).removeClass('selected');
-				}
-				$(this).data('isSelect', 'false');
-				$(this).children('.is-select').children('i').removeClass('icon-check').addClass('icon-check-empty');
-            });
-		}
-	});
-	*/
+
 	$("#input-stock-out").submit(function() {		// 提交器材编号处理
 		var inputId = $(this).find("#inputEquipId").val();
 		var length = jsonData.equips.length;
@@ -289,6 +262,7 @@ $(window).load(function(){
 					dataParentCategoryId = $(_this).children(".group-hd").data("parentCategoryId");
 					//console.log("dataParentCategoryId=" + dataParentCategoryId)
 					if (parentCategoryId == dataParentCategoryId) {		// 找到对应器材组
+						
 						//console.log($(_this));
 						$(_this).children("ul.group-body").find("li").each(function(index, elem) {
                             //console.log($(elem));
@@ -296,10 +270,10 @@ $(window).load(function(){
 							dataIsSeleted = $(elem).data("isSelect");
 							dataId = $(elem).data("id");
 							if (inputId == dataId) {
-								//alert("已标记！");
+								alert("已标记！");
 								findFlag = true;
 							}
-							else if(!dataIsSeleted && !findFlag && dataModelId == modelId) {	// 找到对应器材类型且没选中的器材
+							else if(!dataIsSeleted && !findFlag && dataModelId == modelId) {	// 找到对应器材类型且没选中的器材	
 								$(elem).addClass("selected-success");
 								$(elem).data("isSelect", "true");
 								$(elem).data("id", inputId);
@@ -359,37 +333,77 @@ $(window).load(function(){
 });
 
 var jsonData = {
-    	"equips": [
-    		{
-				"equipName":"器材名1",
-				"equipId":"333213",
-				"modelId":"1",
-				"parentCategoryId":"12345",
-				"parentCategoryName":"父类名1",
+    	"equips": [  	
+#foreach($row in $!equipmentclassificationList)
+	#foreach($row4 in $!equipmentMap.get($row.classificationid))	
+		#foreach($row5 in $row4.equipDetailidlist)
+			#if($velocityCount!='1') ,  #end	
+				{
+				"equipName":"$!row4.equipmentname",
+				"equipId":"$!row5",
+				"modelId":"$!row4.equipmentid",
+				"parentCategoryId":"$!row4.classificationid",
+				"parentCategoryName":"$row.name",
 				"categoryId":"子类Id1",
 				"categoryName":"子类名1",
-			},
-    		{
-				"equipName":"Arri Alexa",
-				"equipId":"13432",
-				"modelId":"1",
-				"parentCategoryId":"12345",
-				"parentCategoryName":"父类名2",
-				"categoryId":"子类Id2",
-				"categoryName":"子类名2",
-			},
-    		{
-				"equipName":"LED",
-				"equipId":"2233",
-				"modelId":"2",
-				"parentCategoryId":"1234",
-				"parentCategoryName":"父类名2",
-				"categoryId":"子类Id2",
-				"categoryName":"子类名2",
-			},
+				}
+			#end
+        #end
+ #end			
     	]
 };
 
+$("body").on("click", "a[data-type|=deleteorder]", function() {
+		var myData = $(this).data();
+		cId = myData.id;
+		$.ajax({
+			url: "deleteorder.do",
+			type: 'POST',
+			data: {borrowId:cId},
+			dataType: 'json',
+			success: function(data){
+				if(data.tag==1){
+					alert("删除成功");
+					location.href="equipOrdIndex.do";
+				}else{
+					alert(data.message);
+					return;
+				}
+			}	  
+		});
+	});
+	
+	$("body").on("click", "a[data-type|=alibraryorder]", function() {
+		var myData = $(this).data();
+		cId = myData.id;
+		var ids = ""
+		$("#equip-list .group").each(function(index, _this) {
+			$(_this).find("li").each(function(index, _this) {			
+				dataId = $(_this).data("id");
+				ids +=dataId+",";
+			});		
+		});
+		if(ids==","){
+			alert("最少出库一个设备！");
+			return ;
+		}
+		ids = ids.substring(0,ids.length);
+		$.ajax({
+			url: "alibraryorder.do",
+			type: 'POST',
+			data: {borrowId:cId,ids:ids},
+			dataType: 'json',
+			success: function(data){
+				if(data.tag==1){
+					alert("出库成功");
+					location.href="orderAdmin.do";
+				}else{
+					alert(data.message);
+					return;
+				}
+			}	  
+		});
+	});
 </script>
 
 <!--[if lt IE 10]>
