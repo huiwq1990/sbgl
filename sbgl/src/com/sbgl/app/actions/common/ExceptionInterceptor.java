@@ -53,9 +53,9 @@ public class ExceptionInterceptor extends AbstractInterceptor {
 			loginuser = loginService.checkUser( Integer.valueOf( CookiesUtil.getCookie("uid") ) );
 			//如果还是未找到cookie中存储的用户，删除之
 			if( loginuser == null ) {
-//				CookiesUtil.removeCookie("uid");
-//				CookiesUtil.removeCookie("userpass");
-//				CookiesUtil.removeCookie("userid");
+				CookiesUtil.removeCookie("uid");
+				CookiesUtil.removeCookie("userpass");
+				CookiesUtil.removeCookie("userid");
 				
 				return "login";
 			} else if( !CookiesUtil.getCookie("userpass").equals( MD5Util.MD5( loginuser.getPassword() + loginuser.getId().toString() ) ) ) {
