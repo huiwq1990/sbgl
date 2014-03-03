@@ -109,9 +109,9 @@
             <div class="col-sm-12 col-md-9 col-lg-8">
               <div class="control-bar clearfix">
                 <div class="title pull-left">添加课程安排</div>
-                <div class="tips">选择课程的上课时间、周次、课程名称以及上课所需的教学设备。</div>
+                <div class="tips">选择课程的上课时间、周次、课程名称以及上课所需的教学设施或资源。</div>
                 <div class="operate-item pull-left">
-                  <button type="button" class="btn btn-primary">保存</button>
+                  <button type="button" class="btn btn-primary" action-type="addNewCourse">保存</button>
                   <a herf="#" class="btn btn-white">取消</a>
                 </div>
               </div>
@@ -163,68 +163,68 @@
                   </tbody>
                 </table>
                 <div class="panel-footer">
-                  <dl class="course-week form-group dl-horizontal">
+                  <dl id="course-week" class="form-group dl-horizontal">
                     <dt><label for="inputWeek" class="control-label">课程周次</label></dt>
                     <dd>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek1" value="1" checked="">第1周
+                        <input type="checkbox" name="inputWeek" id="inputWeek1" value="1">第1周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek2" value="2" checked="">第2周
+                        <input type="checkbox" name="inputWeek" id="inputWeek2" value="2">第2周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek3" value="3" checked="">第3周
+                        <input type="checkbox" name="inputWeek" id="inputWeek3" value="3">第3周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="4" checked="">第4周
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="4">第4周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="5" checked="">第5周
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="5">第5周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="6" checked="">第6周
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="6">第6周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="7" checked="">第7周
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="7">第7周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="8" checked="">第8周
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="8">第8周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="9" checked="">第9周
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="9">第9周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="10" checked="">第10周
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="10">第10周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="11" checked="">第11周
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="11">第11周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="12" checked="">第12周
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="12">第12周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="13" checked="">第13周
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="13">第13周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="14" checked="">第14周
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="14">第14周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="15" checked="">第15周
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="15">第15周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="16" checked="">第16周
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="16">第16周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="17" checked="">第17周
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="17">第17周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="18" checked="">第18周
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="18">第18周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="19" checked="">第19周
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="19">第19周
                       </label>
                       <label class="checkbox-inline">
-                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="20" checked="">第20周
+                        <input type="checkbox" name="inputWeek" id="inputWeek4" value="20">第20周
                       </label>
                     </dd>
                   </dl>
@@ -253,7 +253,7 @@
                       </select>
                     </dd>
                   </dl>
-                  <dl class="form-group dl-horizontal">
+                  <dl id="course-needed" class="form-group dl-horizontal">
                     <dt><label for="inputCourseNeed" class="control-label">所需课程资源</label></dt>
                     <dd>
                       <div class="group-hd">
@@ -340,7 +340,32 @@ $("#course-week-table").on("click", ".selectable", function() {
 	} else {					
 		$(this).find("code").remove();		// 移除选中标识		
 	}
-});	
+});
+
+// 保存按钮，添加新的课程
+$("button[action-type|=addNewCourse]").on('click', function(event) {
+  var selectedWeek            = new Array();   // 选中的周次
+  var selectedFacilityModelId = new Array();  // 选中的课程设施的ID
+  var courseId;   // 选中的课程ID
+  
+  // 上课周次
+  $("#course-week input[type='checkbox']").each(function(index, el) {    
+    if ($(this).prop("checked")) {
+      selectedWeek.push($(this).val());
+    }    
+  });
+  // 上课资源
+  $("#course-needed input[type='checkbox']").each(function(index, el) {    
+    if ($(this).prop("checked")) {
+      selectedFacilityModelId.push($(this).val());
+    }    
+  });
+  courseId = $("#inputCourseName").select2("val");
+
+  // ajax处理
+  //
+
+});
 				
 </script>
 </body>

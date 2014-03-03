@@ -376,9 +376,11 @@ $("button[action-type|=cancelArrangedCourse]").on("click", function() {
 	// 取消成功后显示无课程信息
 	$("#is-arranged-no").show();
 	$("#is-arranged-yes").hide();
-	var n = noty({text: "成功", timeout: 1500, type: 'success'});
+	// 设置本时段课程为未安排
 	thisCourseData.isArranged = "no";
-	$(thisCourse).attr("data-is-arranged", "no");	
+	$(thisCourse).attr("data-is-arranged", "no");
+
+	var n = noty({text: "成功", timeout: 1500, type: 'success'});	
 });	
 
 // 添加新课程安排按钮
