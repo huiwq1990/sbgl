@@ -86,21 +86,21 @@
 					<!--control-bar start-->
 					<div class="control-bar clearfix">
 						<div class="title pull-left">机房课程安排</div>
-						<div class="tips">布置教学任务后，指定的收件人将会收到教学预约通知，收件人在相关说明的指导下完成机房预约。</div>
+						<div class="tips">设置、修改和查看本学期各门课程的机房使用安排。</div>
 					</div><!--control-bar end-->
 					<div class="row">
 						<div class="col-sm-12 col-md-3 col-lg-3">
-							<div class="control-bar"><a href="#" class="btn btn-primary">添加</a></div>
+							<div class="control-bar"><a href="教学管理-机房课程安排（添加课程）.html" class="btn btn-primary">添加</a></div>
 							<div class="list-group">
-								<a href="#" class="list-group-item">
+								<a href="教学管理-机房课程安排.html" class="list-group-item">
 									<h4 class="list-group-item-heading">全部课程</h4>
 									<p class="list-group-item-text">浏览本学期全部课程</p>
 								</a>
-								<a href="#" class="list-group-item active">
+								<a href="教学管理-机房课程安排（查看和修改）.html" class="list-group-item active">
 									<h4 class="list-group-item-heading">课程名称</h4>
 									<p class="list-group-item-text">任课教师：</p>
 								</a>
-								<a href="#" class="list-group-item">
+								<a href="教学管理-机房课程安排（查看和修改）.html" class="list-group-item">
 									<h4 class="list-group-item-heading">课程名称</h4>
 									<p class="list-group-item-text">任课教师：</p>
 								</a>
@@ -135,102 +135,71 @@
 									</ul>
 								</div>
 							</div>
-							<div class="panel panel-default">
-								<table class="table table-btn-hover" id="course-week-table">
+							<div class="panel panel-default table-responsive">
+								<table id="course-week-table" class="table">
 									<thead>
 										<tr>
-											<th class="time-slot" colspan="2">时间</th>
-											<th>周一</th>
-											<th>周二</th>
-											<th>周三</th>
-											<th>周四</th>
-											<th>周五</th>
-											<th>周六</th>
-											<th>周日</th>                      
+											<th class="time-slot">时间</th>
+											<th>星期一</th>
+											<th>星期二</th>
+											<th>星期三</th>
+											<th>星期四</th>
+											<th>星期五</th>
+											<th>星期六</th>
+											<th>星期日</th>                      
 										</tr>
 									</thead>
 									<tbody>
 										<tr id="tr-slot-1">
-											<td class="time-slot" rowspan="2">上午</td>
-											<td class="time-num">1</td>
-											<td data-week="1" data-slot="1" data-is-planned="yes" class="selectable">
+											<td class="time-slot">上午</td>
+											<td data-week="1" data-slot="1" data-is-arranged="yes" class="selectable">
 												<code><i class="icon-ok"></i></code>
 											</td>
-											<td data-week="2" data-slot="1" data-is-planned="no" class="selectable"></td>
-											<td data-week="3" data-slot="1" data-is-planned="no" class="selectable">
+											<td data-week="2" data-slot="1" data-is-arranged="no" class="selectable"></td>
+											<td data-week="3" data-slot="1" data-is-arranged="no" class="selectable">
 												<code><i class="icon-warning-sign"></i></code>
 											</td>
-											<td data-week="4" data-slot="1" data-is-planned="no" class="selectable"></td>
-											<td data-week="5" data-slot="1" data-is-planned="no" class="selectable"></td>
-											<td data-week="6" data-slot="1" data-is-planned="no" class="selectable"></td>
-											<td data-week="7" data-slot="1" data-is-planned="no" class="selectable"></td>
+											<td data-week="4" data-slot="1" data-is-arranged="no" class="selectable"></td>
+											<td data-week="5" data-slot="1" data-is-arranged="no" class="selectable"></td>
+											<td data-week="6" data-slot="1" data-is-arranged="no" class="selectable"></td>
+											<td data-week="7" data-slot="1" data-is-arranged="no" class="selectable"></td>
 										</tr>
 										<tr id="tr-slot-2">
-											<td class="time-num">2</td>
-											<td data-week="1" data-slot="2" data-is-planned="yes" class="selectable">
+											<td class="time-slot">下午</td>
+											<td data-week="1" data-slot="2" data-is-arranged="no" class="selectable"></td>
+											<td data-week="2" data-slot="2" data-is-arranged="no" class="selectable"></td>
+											<td data-week="3" data-slot="2" data-is-arranged="no" class="selectable"></td>
+											<td data-week="4" data-slot="2" data-is-arranged="yes" class="selectable">
 												<code><i class="icon-ok"></i></code>
 											</td>
-											<td data-week="2" data-slot="2" data-is-planned="no" class="selectable"></td>
-											<td data-week="3" data-slot="2" data-is-planned="no" class="selectable">
-												<code><i class="icon-warning-sign"></i></code>
-											</td>
-											<td data-week="4" data-slot="2" data-is-planned="no" class="selectable"></td>
-											<td data-week="5" data-slot="2" data-is-planned="no" class="selectable"></td>
-											<td data-week="6" data-slot="2" data-is-planned="no" class="selectable"></td>
-											<td data-week="7" data-slot="2" data-is-planned="no" class="selectable"></td>
+											<td data-week="5" data-slot="2" data-is-arranged="no" class="selectable"></td>
+											<td data-week="6" data-slot="2" data-is-arranged="no" class="selectable"></td>
+											<td data-week="7" data-slot="2" data-is-arranged="no" class="selectable"></td>
 										</tr>
-										<tr  id="tr-slot-3">
-											<td rowspan="2" class="time-slot">下午</td>
-											<td class="time-num">3</td>
-											<td data-week="1" data-slot="3" data-is-planned="no" class="selectable"></td>
-											<td data-week="2" data-slot="3" data-is-planned="no" class="selectable"></td>
-											<td data-week="3" data-slot="3" data-is-planned="no" class="selectable"></td>
-											<td data-week="4" data-slot="3" data-is-planned="yes" class="selectable">
-												<code><i class="icon-ok"></i></code>
-											</td>
-											<td data-week="5" data-slot="3" data-is-planned="no" class="selectable"></td>
-											<td data-week="6" data-slot="3" data-is-planned="no" class="selectable"></td>
-											<td data-week="7" data-slot="3" data-is-planned="no" class="selectable"></td>
-										</tr>
-										<tr id="tr-slot-4">
-											<td class="time-num">4</td>
-											<td data-week="1" data-slot="4" data-is-planned="no" class="selectable"></td>
-											<td data-week="2" data-slot="4" data-is-planned="no" class="selectable">
-												<button class="btn btn-white btn-mini" type="button" rel="tooltip" data-title="您要在该时段添加本门课程的上课安排吗？" action-type="addNewArrange">添 加</button>
-											</td>
-											<td data-week="3" data-slot="4" data-is-planned="no" class="selectable"></td>
-											<td data-week="4" data-slot="4" data-is-planned="yes" class="selectable">
-												<code><i class="icon-ok"></i></code>
-											</td>
-											<td data-week="5" data-slot="4" data-is-planned="no" class="selectable"></td>
-											<td data-week="6" data-slot="4" data-is-planned="no" class="selectable"></td>
-											<td data-week="7" data-slot="4" data-is-planned="no" class="selectable"></td>
-										</tr>
-										<tr id="tr-slot-5">
+										<tr id="tr-slot-3">
 											<td class="time-slot">晚上</td>
-											<td class="time-num">5</td>
-											<td data-week="1" data-slot="5" data-is-planned="no" class="selectable"></td>
-											<td data-week="2" data-slot="5" data-is-planned="no" class="selectable"></td>
-											<td data-week="3" data-slot="5" data-is-planned="no" class="selectable"></td>
-											<td data-week="4" data-slot="5" data-is-planned="no" class="selectable"></td>
-											<td data-week="5" data-slot="5" data-is-planned="no" class="selectable"></td>
-											<td data-week="6" data-slot="5" data-is-planned="no" class="selectable"></td>
-											<td data-week="7" data-slot="5" data-is-planned="no" class="selectable"></td>
+											<td data-week="1" data-slot="3" data-is-arranged="no" class="selectable"></td>
+											<td data-week="2" data-slot="3" data-is-arranged="no" class="selectable"></td>
+											<td data-week="3" data-slot="3" data-is-arranged="no" class="selectable"></td>
+											<td data-week="4" data-slot="3" data-is-arranged="no" class="selectable"></td>
+											<td data-week="5" data-slot="3" data-is-arranged="no" class="selectable"></td>
+											<td data-week="6" data-slot="3" data-is-arranged="no" class="selectable"></td>
+											<td data-week="7" data-slot="3" data-is-arranged="no" class="selectable"></td>
 										</tr>
 									</tbody>
 								</table><!-- /#course-week-table -->
 								<div class="panel-footer" style="display: none;"><!-- panel-footer -->
 									<h4>第XX周 星期X第X节课</h4>
 									<div id="course-arrange-info" style="display: none;"><!-- #course-arrange-info -->
-										<div id="is-planned-no" class="control-bar"  style="display: none;">
-											<div class="tips">当前时段没有课程安排！您要在此时段添加本课程的上课安排吗？</div>
+										<div id="is-arranged-no" class="control-bar"  style="display: none;">
+											<div class="tips">当前时段没有本门课程的相关上课安排！您要在此时段添加本课程的上课安排吗？</div>
 											<div class="btn-bar"><button class="btn btn-primary" type="button" action-type="addNewArrange">添 加</button></div>
 										</div>
-										<div id="is-planned-yes" class="control-bar"  style="display: none;">
+										<div id="is-arranged-yes" class="control-bar"  style="display: none;">
 											<div class="tips">以下是本门课程在所选时段所需的课程资源。</div>
 											<div class="btn-bar">
 												<button type="button" action-type="modifyCourseArrangement" class="btn btn-primary">修 改</button>
-												<button class="btn btn-danger" type="button" action-type="cancelPlannedCourse">取消本节课</button>
+												<button class="btn btn-danger" type="button" action-type="cancelArrangedCourse">取消本节课</button>
 											</div>                                  	
 											<dl class="form-group dl-horizontal">
 											    <dd>
@@ -309,7 +278,7 @@
 										<dl class="form-group dl-horizontal">
 											<dd>
 												<button type="button" action-type="saveModify" class="btn btn-primary">保 存</button>
-												<button class="btn btn-danger" type="button" action-type="cancelPlannedCourse">取消本节课</button>
+												<button class="btn btn-white" type="button" action-type="cancel">取 消</button>
 											</dd>
 										</dl>
 									</div><!-- /#course-arrange-form -->
@@ -345,93 +314,38 @@
 <script src="../js/bootstrap-hover-dropdown.min.js"></script>
 <script src="../js/bfa.js"></script>
 <script src="../js/bootstrap-tabdrop.js"></script>
-
+<script src="../js/jquery.noty.js"></script>
 <script>
 $('.tab-drop.nav-pills').tabdrop();
 
 /* ============ 课程安排 ============= */
+var semesterWeek = 1;	// 学期第X周
+var thisCourse;			// 当前选中课表的dom对象
+var thisCourseData;		// thisCourseData为当前选中课程对应的数据（星期：week；时段：slot（0/1/2）；是否已安排isArranged（“yes/no”））
 
-/*$("body").on("click", "button[action-type|=modifyCourseArrangement]", function() {
-	$(this).hide();
-	$("button[action-type|=cancel]").show();
-	$(".panel-footer").show();
-	$("#course-week-table tbody td").each(function(index, element) {
-		if ($(this).data("week") > 0) {
-			$(this).addClass("selectable");
-		}
-	});
-});*/
+// Update 提交课程变动。遍历课程表，获取课程变动情况（新增、取消和不变）
+$("button[action-type|=saveModify]").on('click', function(event) {
+	console.log("button[action-type|=saveModify]");
+	console.log(thisCourseData);
 
-$("body").on("click", "button[action-type|=cancel]", function() {
-	$(this).hide();
-	$("button[action-type|=modifyCourseArrangement]").show();
-	$(".panel-footer").hide();
-	$("#course-week-table tbody td").each(function(index, element) {
-		if ($(this).hasClass("selectable")) {
-			$(this).removeClass("selectable");
-		}
-	});
-});
-// 提交课程变动。遍历课程表，获取课程变动情况（新增、取消和不变）
-$("body").on('click', 'button[action-type|=saveModify]', function(event) {
-	event.preventDefault();
-	var hasNew       = false;
-	var hasCanceled  = false;
-	var newPlan      = new Array();
-	var canceledPlan = new Array();
-	var stillPlan = new Array();
-	$("#course-week-table tbody td").each(function(index, el) {		// 遍历课程表
-		var thisData = $(this).data();
-		if ($(this).hasClass('selected') && thisData.isPlanned === "no") {		// 新课程安排
-			newPlan.push(thisData);
-			hasNew = true;
-		} else if (!$(this).hasClass('selected') && thisData.isPlanned === "yes") {		// 取消原课程安排
-			canceledPlan.push(thisData);
-			hasCanceled = true;
-		} else if ($(this).hasClass('selected') && thisData.isPlanned === "yes") {		// 不变的课程安排
-			stillPlan.push(thisData);
-		}
-	});
-	if (hasNew || hasCanceled) {
-		if (hasNew) {
-			alert("有新加的临时课程");
-			alert(newPlan.join(";"));
-			console.log(newPlan);
-		}
-		if (hasCanceled) {
-			alert("有取消的课程");
-			alert(canceledPlan.join(";"));
-		}		
-	} else {
-		alert("无变化！");
-	}
+	// 提交数据处理
+
 });
 
-/*$("#course-week-table").on("click", ".selectable", function() {
-	$(this).toggleClass("selected");
-	if ($(this).hasClass("selected")) { // 如果选中
-		$(this).append('<code><i class="icon-ok"></i></code>');
-	} else {
-		$(this).find("code").remove(); // 移除选中标识    
-	}
-});*/
-
-var thisCourse;
-var thisCourseData;
+// 课程表单元格单击事件，选中某节课后的处理
 $("#course-week-table").on("click", "td.selectable", function() {
-	alert("td.selectable")
+	console.log("#course-week-table click td.selectable");
 	thisCourse = this;
 	thisCourseData = $(this).data();
-	$("#course-arrange-form button[action-type|=cancelPlannedCourse]").data(thisCourseData);
-	console.log($("#course-arrange-form button[action-type|=cancelPlannedCourse]").data());
+	$("#course-arrange-form button[action-type|=cancelArrangedCourse]").data(thisCourseData);
 	$("#course-week-table td").removeClass("selected");
 	$(this).addClass('selected');
-	if (thisCourseData.isPlanned === "yes") {
-		$("#is-planned-yes").show();
-		$("#is-planned-no").hide();
-	} else if (thisCourseData.isPlanned === "no") {
-		$("#is-planned-no").show();
-		$("#is-planned-yes").hide();
+	if (thisCourseData.isArranged === "yes") {
+		$("#is-arranged-yes").show();
+		$("#is-arranged-no").hide();
+	} else if (thisCourseData.isArranged === "no") {
+		$("#is-arranged-no").show();
+		$("#is-arranged-yes").hide();
 	}
 	$(".panel-footer").show();
 	$("#course-arrange-form").slideUp();
@@ -441,48 +355,48 @@ $("#course-week-table").on("click", "td.selectable", function() {
 
 	// 这里加载当前选中的上课安排信息
 	var weekStr = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"];
-	var titleStr = "第X周 " + weekStr[thisCourseData.week] + " 第" + thisCourseData.slot + "节";	
+	var titleStr = "第" + semesterWeek + "周 " + weekStr[thisCourseData.week] + " 第" + thisCourseData.slot + "节";	
 	$(".panel-footer h4").html(titleStr);
 	// 。。。。。。	
 });
 
 // 修改课程安排按钮
 $("button[action-type|=modifyCourseArrangement]").on("click", function() {
-	alert("modifyCourseArrangement")
+	console.log("[action-type|=modifyCourseArrangement]");
+	console.log(thisCourseData);
 	$("#course-arrange-info").slideUp();
 	$("#course-arrange-form").slideDown();
-	$("button[action-type|=cancelPlannedCourse]").show();
 });
 // 取消课程安排按钮
-$("button[action-type|=cancelPlannedCourse]").on("click", function() {
-	alert("cancelSelectedCourse")
-	var thisCourse = $(this).parent("td");
-	var thisCourseData = $(thisCourse).data();
+$("button[action-type|=cancelArrangedCourse]").on("click", function() {
+	console.log("[action-type|=cancelArrangedCourse]");
 	console.log(thisCourseData);
-	$(thisCourse).removeClass("selected");
 	$(thisCourse).find("code").remove(); // 移除选中标识
-	$(thisCourse).find("button[action-type|=cancelPlannedCourse]").hide(); // 移除选中标识
 
-	// 这里是取消当前选中的课程处理
-	// 。。。。。。。。。
-	// 
-	// 重新加载课程表
-	// 
-	
-});
+	// 取消成功后显示无课程信息
+	$("#is-arranged-no").show();
+	$("#is-arranged-yes").hide();
+	var n = noty({text: "成功", timeout: 1500, type: 'success'});
+	thisCourseData.isArranged = "no";
+	$(thisCourse).attr("data-is-arranged", "no");	
+});	
+
 // 添加新课程安排按钮
 $("button[action-type|=addNewArrange]").on("click", function() {
-	alert("addNewArrange")
-	$("#course-week-table td").removeClass("selected");
-	$(this).parent("td").addClass('selected');
+	console.log("[action-type|=addNewArrange]");
+	console.log(thisCourseData);
 	$(".panel-footer").show();
 	$("#course-arrange-info").hide();
 	$("#course-arrange-form").slideDown();
-	$("#course-arrange-form button[action-type|=cancelPlannedCourse]").hide();
-	// 清空处理表单
-	// 
-	// 
+	$("#course-arrange-form button[action-type|=cancelArrangedCourse]").hide();
+	// 清空表单处理
+	$("input[type='checkbox']").prop('checked', false);
 
+});
+// 取消按钮
+$("button[action-type|=cancel]").on("click", function() {
+	$("#course-arrange-form").slideUp();
+	$("#course-arrange-info").slideDown();
 });
 </script>
 </body>

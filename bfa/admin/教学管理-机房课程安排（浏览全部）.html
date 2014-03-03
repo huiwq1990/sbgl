@@ -115,7 +115,7 @@
                 </div>
               </div>
               <div class="panel panel-default">
-                <table class="table course-week-table">
+                <table id="course-week-table" class="table">
                   <thead>
                     <tr>
                       <th class="time-slot" colspan="2">时间</th>
@@ -215,18 +215,5 @@
 <script src="../js/bootstrap-hover-dropdown.min.js"></script>
 <script src="../js/bfa.js"></script>
 
-<script>
-/* ============ 课程安排 ============= */
-$("body").on("click", ".selectable", function() {
-	$(this).toggleClass("selected");
-	if($(this).hasClass("selected")) {		// 如果选中
-		$(this).append('<i class="icon-ok"></i>');
-	} else {					
-		$(this).find(".icon-ok").remove();		// 移除选中标识		
-	}
-
-});	
-				
-</script>
 </body>
 </html>

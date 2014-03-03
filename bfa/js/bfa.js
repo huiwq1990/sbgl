@@ -54,42 +54,41 @@
 			
 		$(window).load(function(){
 
-
 			
-			var lastScrollTop = 0;
 			
-			$(window).scroll(function () {
-				var st = $(this).scrollTop();
-				if (st > lastScrollTop){
-				   // downscroll code
-				   
-				} else {
-				  // upscroll code
-				  
-				}
-				lastScrollTop = st;
-				
-                if ($(window).scrollTop() > 0) {
-					$("#global-header").css("top", 0 - $(window).scrollTop());
-					$(".nav-wrap").css("top", 80 - $(window).scrollTop());
-					$("#rent-bar").css("top", 145 - $(window).scrollTop());
-					$(".site-nav .dropdown-menu").css("top","-2px");
-					if ($(window).scrollTop() >= 80) {
-						$(".nav-wrap").css("top", 0);
-						$("#rent-bar").css("top", 65);
-					}
-                }
-                else {
-					$(".site-nav .dropdown-menu").css("top","80px");
-					$("#global-header").css("top", 0);
-					$(".nav-wrap").css("top", 80);
-					$("#rent").css("top", 145);
-                }
-				
-            });
+//			var lastScrollTop = 0;
+			
+//			$(window).scroll(function () {
+//				var st = $(this).scrollTop();
+//				if (st > lastScrollTop){
+//				   // downscroll code
+//				   
+//				} else {
+//				  // upscroll code
+//				  
+//				}
+//				lastScrollTop = st;
+//				
+//                if ($(window).scrollTop() > 0) {
+//					$("#global-header").css("top", 0 - $(window).scrollTop());
+//					$(".nav-wrap").css("top", 80 - $(window).scrollTop());
+//					$("#rent-bar").css("top", 145 - $(window).scrollTop());
+//					$(".site-nav .dropdown-menu").css("top","-2px");
+//					if ($(window).scrollTop() >= 80) {
+//						$(".nav-wrap").css("top", 0);
+//						$("#rent-bar").css("top", 65);
+//					}
+//                }
+//                else {
+//					$(".site-nav .dropdown-menu").css("top","80px");
+//					$("#global-header").css("top", 0);
+//					$(".nav-wrap").css("top", 80);
+//					$("#rent").css("top", 145);
+//                }				
+//            });
 			
 			$('body').tooltip({
-				selector: 'a[rel=tooltip],input[rel=tooltip],abbr[rel=tooltip],strong[rel=tooltip],code[rel=tooltip]',
+				selector: 'a[rel=tooltip],input[rel=tooltip],abbr[rel=tooltip],strong[rel=tooltip],code[rel=tooltip],button[rel=tooltip]'
 			});
 			$('a[rel=popover]').popover({
 				trigger: "manual",
@@ -401,7 +400,7 @@
 
             function reWizardHeight() {
 				$("#rent-list").animate({
-					height: $("#rent-list .panel-body").height() + 100
+					height: $("#rent-list .panel-body").height() + 130
 				});
 			}
 
