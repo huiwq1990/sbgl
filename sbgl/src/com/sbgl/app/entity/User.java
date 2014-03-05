@@ -12,7 +12,7 @@ public class User extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer id;
-	private Double usernumber;
+	private String usernumber;
 	private String username;
 	private String gender;
 	private Date birthday;
@@ -26,6 +26,7 @@ public class User extends com.sbgl.app.dao.DaoAbs implements
 	private Integer privilege;
 	private Integer roletype;
 	private Integer createrid;
+	private Integer initpagelan;
 
 	// Constructors
 
@@ -39,11 +40,11 @@ public class User extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public User(Integer id, Double usernumber, String username, String gender,
+	public User(Integer id, String usernumber, String username, String gender,
 			Date birthday, String userpass, String phonenum, String email,
 			Integer classbelong, String photo, Date createtime,
 			Date modifytime, Integer privilege, Integer roletype,
-			Integer createrid) {
+			Integer createrid, Integer initpagelan) {
 		this.id = id;
 		this.usernumber = usernumber;
 		this.username = username;
@@ -59,6 +60,7 @@ public class User extends com.sbgl.app.dao.DaoAbs implements
 		this.privilege = privilege;
 		this.roletype = roletype;
 		this.createrid = createrid;
+		this.initpagelan = initpagelan;
 	}
 
 	// Property accessors
@@ -71,11 +73,11 @@ public class User extends com.sbgl.app.dao.DaoAbs implements
 		this.id = id;
 	}
 
-	public Double getUsernumber() {
+	public String getUsernumber() {
 		return this.usernumber;
 	}
 
-	public void setUsernumber(Double usernumber) {
+	public void setUsernumber(String usernumber) {
 		this.usernumber = usernumber;
 	}
 
@@ -181,6 +183,14 @@ public class User extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setCreaterid(Integer createrid) {
 		this.createrid = createrid;
+	}
+
+	public Integer getInitpagelan() {
+		return this.initpagelan;
+	}
+
+	public void setInitpagelan(Integer initpagelan) {
+		this.initpagelan = initpagelan;
 	}
 
 }

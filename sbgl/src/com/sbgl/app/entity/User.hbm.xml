@@ -10,14 +10,14 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <property name="usernumber" type="java.lang.Double">
-            <column name="usernumber" precision="22" scale="0" />
+        <property name="usernumber" type="java.lang.String">
+            <column name="usernumber" length="30" />
         </property>
         <property name="username" type="java.lang.String">
-            <column name="username" length="15" />
+            <column name="username" length="50" />
         </property>
         <property name="gender" type="java.lang.String">
-            <column name="gender" length="50" />
+            <column name="gender" length="1" />
         </property>
         <property name="birthday" type="java.util.Date">
             <column name="birthday" length="10" />
@@ -51,6 +51,9 @@
         </property>
         <property name="createrid" type="java.lang.Integer">
             <column name="createrid" />
+        </property>
+        <property name="initpagelan" type="java.lang.Integer">
+            <column name="initpagelan" />
         </property>
     </class>
 </hibernate-mapping>

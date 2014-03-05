@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService {
 		storeUser.setUsername( user.getUsername() );
 		storeUser.setUsernumber( user.getUsernumber() );
 		storeUser.setUserpass( user.getUsername() );
+		storeUser.setInitpagelan( user.getInitpagelan() );
 		
 		try {
 			baseDao.updateEntity( storeUser );
@@ -76,14 +77,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> getAllStudent() {
+	public List<User> getAllUsers() {
 		List<User> resultList = baseDao.getAllEntity( User.class );
 		return resultList;
 	}
 
 	@Override
 	public boolean isExistUserInfo(String userNum, String email) {
-		final String hql = "from User as u where u.usernumber=" + userNum + " or u.email=" + email;
+		final String hql = "from User as u where u.usernumber='" + userNum + "' or u.email='" + email + "'";
 		List<User> userList = baseDao.executeHQL( hql );
 		
 		return userList == null;
@@ -91,7 +92,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserByNumberAndPass(String number, String userpass) {
-		final String hql = "from User as u where u.usernumber=" + number + " or u.userpass=" + userpass;
+		final String hql = "from User as u where u.usernumber='" + number + "' or u.userpass='" + userpass + "'";
 		List<User> userList = baseDao.executeHQL( hql );
 		
 		if(userList != null) {
@@ -102,7 +103,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserByEmailAndPass(String email, String userpass) {
-		final String hql = "from User as u where u.email=" + email + " or u.userpass=" + userpass;
+		final String hql = "from User as u where u.email='" + email + "' or u.userpass='" + userpass + "'";
 		List<User> userList = baseDao.executeHQL( hql );
 		
 		if(userList != null) {

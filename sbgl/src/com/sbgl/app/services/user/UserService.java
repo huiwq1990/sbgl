@@ -16,7 +16,7 @@ public interface UserService {
 	//删除用户信息
 	public int deleteUser(int userId);
 	//获取全部用户信息
-	public List<User> getAllStudent();
+	public List<User> getAllUsers();
 	//判断用户编号与邮箱是否存在
 	public boolean isExistUserInfo(String userNum, String email);
 	//根据用户编号和密码获取用户
