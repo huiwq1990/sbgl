@@ -5,7 +5,7 @@
 	<package name="user"  extends="admin">
 	 	<action name="userManageUser" class="StudentAction" method="gotoUserManageUser">
         	<result name="success">
-        		/user/userManageIndex.vm
+        		/user/userManageIndex2.vm
         	</result>
         </action>
         

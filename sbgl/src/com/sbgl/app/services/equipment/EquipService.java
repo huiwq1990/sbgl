@@ -1,5 +1,6 @@
 package com.sbgl.app.services.equipment;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.sbgl.app.dao.QueryResult;
