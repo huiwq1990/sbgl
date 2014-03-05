@@ -24,6 +24,7 @@ public class User extends com.sbgl.app.dao.DaoAbs implements
 	private Date createtime;
 	private Date modifytime;
 	private Integer privilege;
+	private Integer roletype;
 
 	// Constructors
 
@@ -40,7 +41,7 @@ public class User extends com.sbgl.app.dao.DaoAbs implements
 	public User(Integer id, Double usernumber, String username, String gender,
 			Date birthday, String userpass, String phonenum, String email,
 			Integer classbelong, String photo, Date createtime,
-			Date modifytime, Integer privilege) {
+			Date modifytime, Integer privilege, Integer roletype) {
 		this.id = id;
 		this.usernumber = usernumber;
 		this.username = username;
@@ -54,6 +55,7 @@ public class User extends com.sbgl.app.dao.DaoAbs implements
 		this.createtime = createtime;
 		this.modifytime = modifytime;
 		this.privilege = privilege;
+		this.roletype = roletype;
 	}
 
 	// Property accessors
@@ -160,6 +162,14 @@ public class User extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setPrivilege(Integer privilege) {
 		this.privilege = privilege;
+	}
+
+	public Integer getRoletype() {
+		return this.roletype;
+	}
+
+	public void setRoletype(Integer roletype) {
+		this.roletype = roletype;
 	}
 
 }
