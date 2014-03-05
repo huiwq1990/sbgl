@@ -25,5 +25,7 @@ public List<Coursecomputer> selectCoursecomputerByCondition(String condition);
 //  分页查询 实体full
 	public List<CoursecomputerFull> selectCoursecomputerFullByPage(Page page);
 
+	void delCoursecomputerByCourseschedule(int csId);
+
  
 }

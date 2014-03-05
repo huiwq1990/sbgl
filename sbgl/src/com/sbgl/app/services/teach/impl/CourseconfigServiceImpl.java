@@ -7,8 +7,10 @@ import java.util.List;
 import com.sbgl.app.entity.Courseconfig;
 import com.sbgl.app.entity.CourseconfigFull;
 import com.sbgl.app.services.teach.CourseconfigService;
+import com.sbgl.app.actions.teach.TeachConstant;
 import com.sbgl.app.dao.CourseconfigDao;
 import com.sbgl.app.dao.BaseDao;
+import com.sbgl.common.DataError;
 import com.sbgl.util.*;
 
 import javax.annotation.Resource;
@@ -28,7 +30,16 @@ public class CourseconfigServiceImpl implements CourseconfigService{
 	//http://blog.csdn.net/softimes/article/details/7008875 实体添加时需要配置hibernate
 	@Override
 	public void addCourseconfig(Courseconfig courseconfig){
+		
+//		将所有当前学期设置不是当前学期
+		baseDao.createSQL(" update Courseconfig set currentsemester = "+TeachConstant.coursesconfigcurrentsemester+" where currentsemester = "+TeachConstant.coursesconfignotcurrentsemester);
+		
 		courseconfig.setId(baseDao.getCode("Courseconfig"));
+//		courseconfig.set
+		courseconfig.setStatus(TeachConstant.coursesconfigvalidstatus);
+//		将添加的设置为当前学期
+		courseconfig.setCurrentsemester(TeachConstant.coursesconfigcurrentsemester);
+		courseconfig.setStatus(TeachConstant.coursesconfigvalidstatus);
 		baseDao.saveEntity(courseconfig);		
 	}
 	
@@ -83,6 +94,23 @@ public class CourseconfigServiceImpl implements CourseconfigService{
 
 	}
 
+	
+	
+	
+	@Override
+	public Courseconfig getCurrentCourseconfig( ) throws DataError{		
+		List<Courseconfig> list =  courseconfigDao.selectCourseconfigByCondition(" where currentsemester =" +TeachConstant.coursesconfigcurrentsemester);
+		if(list == null){
+			return null;
+		}
+		
+		if(list!=null && list.size()!=1){
+			throw new DataError("学期信息不唯一，获取学期信息出错");
+		}
+		
+		return list.get(0);
+	}
+	
 //	根据id查询实体类			
 	@Override
 	public Courseconfig selectCourseconfigById(Integer courseconfigId){		

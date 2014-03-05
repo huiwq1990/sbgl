@@ -19,6 +19,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.actions.common.BaseAction;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.teach.CoursecomputerService;
 import com.sbgl.util.*;
@@ -27,11 +28,10 @@ import com.sbgl.util.*;
 
 @Scope("prototype") 
 @Controller("CoursecomputerAction")
-public class CoursecomputerAction extends ActionSupport implements SessionAware,ModelDriven<Coursecomputer>{
+public class CoursecomputerAction extends BaseAction implements ModelDriven<Coursecomputer>{
 	
 	private static final Log log = LogFactory.getLog(CoursecomputerAction.class);
 
-	private Map<String, Object> session;
 	
 	//Service	
 	@Resource
@@ -45,14 +45,9 @@ public class CoursecomputerAction extends ActionSupport implements SessionAware,
 
 	private String logprefix = "exec action method:";
 	
-	private int pageNo=1;
-	private String callType;
-	private Page page = new Page();
-	private ReturnJson returnJson = new ReturnJson();
+
 	private String coursecomputerIdsForDel;
 	
-	private String actionMsg; // Action间传递的消息参数
-	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
 	
 //  manage Coursecomputer
 	public String manageCoursecomputer(){
@@ -107,31 +102,7 @@ public class CoursecomputerAction extends ActionSupport implements SessionAware,
 	}			
 
 			
-	public String addCoursecomputer(){	
-		log.info("Add Entity");
 
-		try {
-			Coursecomputer temp = new Coursecomputer();
-			// 将model里的属性值赋给temp
-			BeanUtils.copyProperties(temp, coursecomputer);			
-			//add your code here.
-			
-			//temp.setCreatetime(DateUtil.currentDate());
-			
-			coursecomputerService.addCoursecomputer(temp);
-			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CoursecomputerAction的方法：addBbstagfavourite错误"+e);
-		}
-		return "Error";
-	}
-	
 //  ajax add	
 	public String addCoursecomputerAjax(){	
 		log.info("Add Entity Ajax Manner");
@@ -232,7 +203,7 @@ public class CoursecomputerAction extends ActionSupport implements SessionAware,
 		return "Error";
 	}
 	
-	//del entityfull Ajax
+/*	//del entityfull Ajax
 	public String deleteCoursecomputerFullAjax( ){
 		
 		log.info(logprefix + "deleteComputercategoryFullAjax");
@@ -282,7 +253,7 @@ public class CoursecomputerAction extends ActionSupport implements SessionAware,
                 this.returnStr = jo.toString();
                 return SUCCESS;
         }
-
+*/
 //修改
 	public String updateCoursecomputer(){
 		try {
@@ -467,102 +438,14 @@ public class CoursecomputerAction extends ActionSupport implements SessionAware,
 		}
 		return "Error";
 	}
-/*
-*/
-	//get set
-	public void setSession(Map<String, Object> session) {
-		// TODO Auto-generated method stub
-	    this.session = session;
-	}
-	
+
 	@Override
 	public Coursecomputer getModel() {
 		// TODO Auto-generated method stub
 		return coursecomputer;
 	}
 
-//  
-	public Coursecomputer getCoursecomputer() {
-		return coursecomputer;
-	}
-	
-	public void setCoursecomputer(Coursecomputer coursecomputer) {
-		this.coursecomputer = coursecomputer;
-	}
-//  entityModel
-	public Coursecomputer getCoursecomputerModel() {
-		return coursecomputerModel;
-	}
-	
-	public void setCoursecomputerModel(Coursecomputer coursecomputerModel) {
-		this.coursecomputerModel = coursecomputerModel;
-	}
-	
-	public CoursecomputerFull getCoursecomputerFull() {
-		return coursecomputerFull;
-	}
-	
-	public void setCoursecomputerFull(CoursecomputerFull coursecomputerFull) {
-		this.coursecomputerFull = coursecomputerFull;
-	}
-	
-	public List<Coursecomputer> getCoursecomputerList() {
-		return coursecomputerList;
-	}
-
-
-	public void setCoursecomputerList(List<Coursecomputer> coursecomputerList) {
-		this.coursecomputerList = coursecomputerList;
-	}
-
-	public List<CoursecomputerFull> getCoursecomputerFullList() {
-		return coursecomputerFullList;
-	}
-
-
-	public void setCoursecomputerFullList(List<CoursecomputerFull> coursecomputerFullList) {
-		this.coursecomputerFullList = coursecomputerFullList;
-	}
-
-	public String getReturnStr() {
-		return returnStr;
-	}
-
-
-	public void setReturnStr(String returnStr) {
-		this.returnStr = returnStr;
-	}
-	
-	public Page getPage() {
-		return page;
-	}
-
-
-	public void setPage(Page page) {
-		this.page = page;
-	}
-	
-	public int getCoursecomputerid() {
-		return coursecomputerid;
-	}
-
-	public void setCoursecomputerid(int coursecomputerid) {
-		this.coursecomputerid = coursecomputerid;
-	}
-		public int getPageNo() {
-		return pageNo;
-	}
-
-	public void setPageNo(int pageNo) {
-		this.pageNo = pageNo;
-	}
 	
 	
-	public String getCoursecomputerIdsForDel() {
-                return coursecomputerIdsForDel;
-        }
-
-        public void setCoursecomputerIdsForDel(String coursecomputerIdsForDel) {
-                this.coursecomputerIdsForDel = coursecomputerIdsForDel;
-        }
+	
 }

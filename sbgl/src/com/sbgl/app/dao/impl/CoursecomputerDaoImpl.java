@@ -13,12 +13,14 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.sbgl.app.actions.teach.TeachConstant;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.DaoAbs;
 
 import com.sbgl.app.dao.CoursecomputerDao;
 import com.sbgl.app.entity.Coursecomputer;
 import com.sbgl.app.entity.CoursecomputerFull;
+import com.sbgl.app.entity.Courseschedule;
 import com.sbgl.util.*;
 
 @Repository("coursecomputerDao")
@@ -28,6 +30,15 @@ public class CoursecomputerDaoImpl extends HibernateDaoSupport implements Course
 	private final String basicCoursecomputerFullSql = "select a.id as coursecomputerid from Coursecomputer a  ";
 	
 	private final String basicCoursecomputerSql = "From Coursecomputer as a ";
+	
+
+	@Override
+	public void delCoursecomputerByCourseschedule(int csId) {
+		
+		String sql = " update Coursecomputer set status = "+TeachConstant.coursescheduledelstatus+" where lessionid = "+csId;
+		 getHibernateTemplate().find(sql);
+	}
+	
 	
 	// 根据条件查询查询实体
 	@Override

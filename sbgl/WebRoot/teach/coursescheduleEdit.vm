@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 教学管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+#parse("include/includePageCompatibility.vm")
+	
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+#set($currentPageModule="teach")
+	#parse("include/includeAdminHeader.vm")
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+			<!--admin-wrap start-->
+			<div id="admin-wrap">
+				<div id="admin-content" class="clearfix">    
+					<!--control-bar start-->
+					<div class="control-bar clearfix">
+						<div class="title pull-left">机房课程安排</div>
+						<div class="tips">设置、修改和查看本学期各门课程的机房使用安排。</div>
+					</div><!--control-bar end-->
+					<div class="row">
+						<div class="col-sm-12 col-md-3 col-lg-3">
+							<div class="control-bar"><a href="教学管理-机房课程安排（添加课程）.html" class="btn btn-primary">添加</a></div>
+							<div class="list-group">
+								<a href="教学管理-机房课程安排.html" class="list-group-item">
+									<h4 class="list-group-item-heading">全部课程</h4>
+									<p class="list-group-item-text">浏览本学期全部课程</p>
+								</a>
+								<a href="教学管理-机房课程安排（查看和修改）.html" class="list-group-item active">
+									<h4 class="list-group-item-heading">课程名称</h4>
+									<p class="list-group-item-text">任课教师：</p>
+								</a>
+								<a href="教学管理-机房课程安排（查看和修改）.html" class="list-group-item">
+									<h4 class="list-group-item-heading">课程名称</h4>
+									<p class="list-group-item-text">任课教师：</p>
+								</a>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-9 col-lg-8">
+							<div class="control-bar clearfix">
+								<div class="title pull-left">课程名称</div>
+								<div class="tips"><p>查看本门课程的行课安排或对行课安排进行调整。如果课程计划发生变更，请选中某个需要调整的时段，点击修改按钮完成课程安排的修改。如需添加新的行课安排，请选择某个时段后点击添加按钮。</p>
+									<p><i class="icon-ok"></i> 表明该时段为本门课程的行课安排。</p>
+									<p><i class="icon-warning-sign"></i> 表明该时段有其他课程正在使用机房资源，可能会发生冲突。</p>
+								</div>
+								<div class="row">
+									<ul class="tab-drop nav nav-pills col-md-12">										
+										<li class="active"><a href="#ptab1" data-toggle="tab" data-week="1">第1周</a></li>
+										<li><a href="#ptab2" data-toggle="tab" data-week="2">第2周</a></li>
+										<li><a href="#ptab3" data-toggle="tab" data-week="3">第3周</a></li>
+										<li><a href="#ptab4" data-toggle="tab" data-week="4">第4周</a></li>
+										<li><a href="#ptab5" data-toggle="tab" data-week="5">第5周</a></li>
+										<li><a href="#ptab6" data-toggle="tab" data-week="6">第6周</a></li>
+										<li><a href="#ptab7" data-toggle="tab" data-week="7">第7周</a></li>
+										<li><a href="#ptab8" data-toggle="tab" data-week="8">第8周</a></li>
+										<li><a href="#ptab9" data-toggle="tab" data-week="9">第9周</a></li>
+										<li><a href="#ptab10" data-toggle="tab" data-week="10">第10周</a></li>
+										<li><a href="#ptab11" data-toggle="tab" data-week="11">第11周</a></li>
+										<li><a href="#ptab12" data-toggle="tab" data-week="12">第12周</a></li>
+										<li><a href="#ptab13" data-toggle="tab" data-week="13">第13周</a></li>
+										<li><a href="#ptab14" data-toggle="tab" data-week="14">第14周</a></li>
+										<li><a href="#ptab15" data-toggle="tab" data-week="15">第15周</a></li>
+										<li><a href="#ptab16" data-toggle="tab" data-week="16">第16周</a></li>
+										<li><a href="#ptab17" data-toggle="tab" data-week="17">第17周</a></li>                    
+									</ul>
+								</div>
+							</div>
+							<div class="panel panel-default table-responsive">
+								<table id="course-week-table" class="table">
+									<thead>
+										<tr>
+											<th class="time-slot">时间</th>
+											<th>星期一</th>
+											<th>星期二</th>
+											<th>星期三</th>
+											<th>星期四</th>
+											<th>星期五</th>
+											<th>星期六</th>
+											<th>星期日</th>                      
+										</tr>
+									</thead>
+									<tbody>
+									#set($index = 0)
+									#foreach($period in $periodList)
+										#set($index = $index+ 1)
+										
+										<tr id="tr-slot-$period.periodnum">
+											<td class="time-slot">$period.peroidname</td>
+											#foreach($day in $dayList)
+												
+												#if($courseschedulePeriodDayMap.containsKey($period.periodnum) && $courseschedulePeriodDayMap.get($period.periodnum).containsKey($day))
+											<td data-week="$day" data-slot="$!index" data-period="$period.periodnum" data-is-arranged="yes" class="selectable">
+												<code><i class="icon-ok"></i></code>
+											</td>
+											#else
+												<td data-week="$day" data-slot="$!index" data-period="$period.periodnum" data-is-arranged="no" class="selectable">
+												
+											</td>
+												
+												#end
+											
+											#end
+										</tr>
+										#end
+		
+									</tbody>
+								</table><!-- /#course-week-table -->
+								<div class="panel-footer" style="display: none;"><!-- panel-footer -->
+									<h4>第XX周 星期X第X节课</h4>
+									<div id="course-arrange-info" style="display: none;"><!-- #course-arrange-info -->
+										<div id="is-arranged-no" class="control-bar"  style="display: none;">
+											<div class="tips">当前时段没有本门课程的相关上课安排！您要在此时段添加本课程的上课安排吗？</div>
+											<div class="btn-bar"><button class="btn btn-primary" type="button" action-type="addNewArrange">添 加</button></div>
+										</div>
+										<div id="is-arranged-yes" class="control-bar"  style="display: none;">
+											<div class="tips">以下是本门课程在所选时段所需的课程资源。</div>
+											<div class="btn-bar">
+												<button type="button" action-type="modifyCourseArrangement" class="btn btn-primary">修 改</button>
+												<button class="btn btn-danger" type="button" action-type="cancelArrangedCourse">取消本节课</button>
+											</div>                                  	
+											<dl class="form-group dl-horizontal">
+											    <dd>
+
+#foreach($category in ${computercategoryList})
+	
+	                  <div class="group-hd">
+                        <div class="group-name pull-left">$!category.name</div>
+                        <div class="group-line"><hr></div>
+                      </div>
+	
+					<ul class="list-inline">
+	#set($modelList = $computermodelByComputercategoryId.get($category.computercategorytype))
+	#foreach($model in ${modelList})						
+													
+														<li>$model.name</li>
+												
+	#end	
+                    	</ul>
+#end		
+								
+											    </dd>
+											</dl>
+										</div>
+									</div><!-- /#course-arrange-info -->
+									<div id="course-arrange-form" style="display: none;"><!-- #course-arrange-form -->
+										<dl class="form-group dl-horizontal">
+											<dt><label for="inputCourseNeed" class="control-label">所需课程资源</label></dt>
+											<dd>
+												
+#foreach($category in ${computercategoryList})
+	
+	                  <div class="group-hd">
+                        <div class="group-name pull-left">$!category.name</div>
+                        <div class="group-line"><hr></div>
+                      </div>
+	
+
+	#set($modelList = $computermodelByComputercategoryId.get($category.computercategorytype))
+	#foreach($model in ${modelList})						
+					<label class="checkbox-inline">
+													<input type="checkbox" name="inputCourseNeed" id="CourseNeed$model.id" data-computermodeltype="$!model.computermodeltype"  value="$!model.availableborrowcountnumber" checked="">$model.name
+												</label>
+												
+	#end	
+                    	
+#end														
+									
+											</dd>
+										</dl>
+										<dl class="form-group dl-horizontal">
+											<dd>
+												<button type="button" action-type="saveModify" class="btn btn-primary">保 存</button>
+												<button class="btn btn-white" type="button" action-type="cancel">取 消</button>
+											</dd>
+										</dl>
+									</div><!-- /#course-arrange-form -->
+								</div><!-- /.panel-footer -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--equip-wrap end-->
+
+			<!--sidebar start-->
+			<div id="lside">
+				<div class="list-group">
+					<a href="教学管理首页.html" class="list-group-item">课程管理</a>
+					<a href="教学管理-添加课程.html" class="list-group-item">添加课程</a>
+					<a href="教学管理-设备预约安排.html" class="list-group-item">设备预约安排</a>
+					<a href="教学管理-机房预约安排.html" class="list-group-item">机房预约安排</a>
+					<a href="教学管理-机房课程安排.html" class="list-group-item active">机房课程安排</a>
+			<a href="教学管理-教学设置.html" class="list-group-item">设置</a>
+				</div>
+			</div>
+			<!--sidebar end-->
+
+</section>
+
+
+		<!-- javascript
+		================================================== -->
+
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/bootstrap-tabdrop.js"></script>
+
+<script>
+$('.tab-drop.nav-pills').tabdrop();
+
+/* ============ 课程安排 ============= */
+var semesterWeek = $!week;	// 学期第X周
+var courseid = $!courseid;
+var thisCourse  ;			// 当前选中课表的dom对象
+var thisCourseData;		// thisCourseData为当前选中课程对应的数据（星期：week；时段：slot（0/1/2）；是否已安排isArranged（“yes/no”））
+
+// Update 提交课程变动。遍历课程表，获取课程变动情况（新增、取消和不变）
+$("button[action-type|=saveModify]").on('click', function(event) {
+	console.log("button[action-type|=saveModify]");
+	console.log(thisCourseData);
+
+	// 提交数据处理
+
+
+		
+    //pc	默认预约全部的数量	
+    var computerorderinfo = "";
+    $("input[name='inputCourseNeed']").each(function() {
+		if($(this).prop("checked") === true) {		// 如果选中
+			computerorderinfo += $(this).data("computermodeltype")+","+$(this).prop("value") + ";";
+		}
+    });	
+	computerorderinfo = computerorderinfo.substring(0,computerorderinfo.length-1);
+
+		
+	/*	alert(dayperiod);
+		alert(inputweek);
+				alert(computerorderinfo);*/
+			// return;
+		var	inputdayperiod = thisCourseData.week + ","+thisCourseData.period;
+		//alert(inputdayperiod);
+		//return;
+           
+               	var postData = {
+					intputcourseid: courseid,
+					inputdayperiod : inputdayperiod,
+					inputweek: semesterWeek,
+					inputcomputerorderinfo:computerorderinfo
+				}
+				
+                //alert("add computer");
+                jQuery.ajax({  
+                    url:"${webbaseurl}/addCoursescheduleAjax.${strutsaction}",  
+                    type:"post",
+                    data:postData,
+                        dataType: 'json',
+                        success: function(data){
+                                var returnJson = jQuery.parseJSON(data); 
+                                if(returnJson.flag == 1){
+                                        var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});
+                                        clearAddForm();
+                                        _this.parents('.modal').modal('toggle');                // 提交成功，关闭模态对话框                                        
+                                }else{
+                                        var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});                                        
+                                        _this.parents('.modal').modal('toggle');                // 提交成功，关闭模态对话框                
+                                }
+                        }                            
+                });
+	
+	
+	
+
+});
+
+// 课程表单元格单击事件，选中某节课后的处理
+$("#course-week-table").on("click", "td.selectable", function() {
+	console.log("#course-week-table click td.selectable");
+	thisCourse = this;
+	thisCourseData = $(this).data();
+	$("#course-arrange-form button[action-type|=cancelArrangedCourse]").data(thisCourseData);
+	$("#course-week-table td").removeClass("selected");
+	$(this).addClass('selected');
+	if (thisCourseData.isArranged === "yes") {
+		$("#is-arranged-yes").show();
+		$("#is-arranged-no").hide();
+	} else if (thisCourseData.isArranged === "no") {
+		$("#is-arranged-no").show();
+		$("#is-arranged-yes").hide();
+	}
+	$(".panel-footer").show();
+	$("#course-arrange-form").slideUp();
+	$("#course-arrange-info").slideDown();
+	$("button[action-type|=modifyCourseArrangement]").show();
+	$("button[action-type|=cancelSelectedCourse]").show();
+
+	// 这里加载当前选中的上课安排信息
+	var weekStr = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"];
+	var titleStr = "第" + semesterWeek + "周 " + weekStr[thisCourseData.week] + " 第" + thisCourseData.slot + "节";	
+	$(".panel-footer h4").html(titleStr);
+	// 。。。。。。	
+});
+
+// 修改课程安排按钮
+$("button[action-type|=modifyCourseArrangement]").on("click", function() {
+	console.log("[action-type|=modifyCourseArrangement]");
+	console.log(thisCourseData);
+	$("#course-arrange-info").slideUp();
+	$("#course-arrange-form").slideDown();
+});
+// 取消课程安排按钮
+$("button[action-type|=cancelArrangedCourse]").on("click", function() {
+	console.log("[action-type|=cancelArrangedCourse]");
+	console.log(thisCourseData);
+	$(thisCourse).find("code").remove(); // 移除选中标识
+
+	// 取消成功后显示无课程信息
+	$("#is-arranged-no").show();
+	$("#is-arranged-yes").hide();
+	// 设置本时段课程为未安排
+	thisCourseData.isArranged = "no";
+	$(thisCourse).attr("data-is-arranged", "no");
+
+	var n = noty({text: "成功", timeout: 1500, type: 'success'});	
+});	
+
+// 添加新课程安排按钮
+$("button[action-type|=addNewArrange]").on("click", function() {
+	console.log("[action-type|=addNewArrange]");
+	console.log(thisCourseData);
+	$(".panel-footer").show();
+	$("#course-arrange-info").hide();
+	$("#course-arrange-form").slideDown();
+	$("#course-arrange-form button[action-type|=cancelArrangedCourse]").hide();
+	// 清空表单处理
+	$("input[type='checkbox']").prop('checked', false);
+
+});
+// 取消按钮
+$("button[action-type|=cancel]").on("click", function() {
+	$("#course-arrange-form").slideUp();
+	$("#course-arrange-info").slideDown();
+});
+</script>
+</body>
+</html>

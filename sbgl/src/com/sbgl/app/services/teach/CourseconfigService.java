@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sbgl.app.entity.Courseconfig;
 import com.sbgl.app.entity.CourseconfigFull;
+import com.sbgl.common.DataError;
 import com.sbgl.util.*;
 
 public interface CourseconfigService{
@@ -52,6 +53,8 @@ public interface CourseconfigService{
     public List<CourseconfigFull>  selectCourseconfigFullByConditionAndPage(String condition,final Page page);
 
 	int execSql(String sql);
+
+	Courseconfig getCurrentCourseconfig() throws DataError;
 		
 	
 	

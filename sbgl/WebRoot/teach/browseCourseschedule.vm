@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 教学管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+#parse("include/includePageCompatibility.vm")
+	
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+#set($currentPageModule="teach")
+	#parse("include/includeAdminHeader.vm")
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+          <!--control-bar start-->
+          <div class="control-bar clearfix">
+            <div class="title pull-left">机房课程安排</div>
+            <div class="tips">布置教学任务后，指定的收件人将会收到教学预约通知，收件人在相关说明的指导下完成机房预约。</div>
+          </div><!--control-bar end-->
+          <div class="row">
+            <div class="col-sm-12 col-md-3 col-lg-3">
+              <div class="control-bar"><a href="#" class="btn btn-primary">添加</a></div>
+              <div class="list-group">
+                <a href="#" class="list-group-item active">
+                  <h4 class="list-group-item-heading">全部课程</h4>
+                  <p class="list-group-item-text">浏览本学期全部课程</p>
+                </a>
+                <a href="#" class="list-group-item">
+                  <h4 class="list-group-item-heading">课程名称</h4>
+                  <p class="list-group-item-text">任课教师：</p>
+                </a>
+                <a href="#" class="list-group-item">
+                  <h4 class="list-group-item-heading">课程名称</h4>
+                  <p class="list-group-item-text">任课教师：</p>
+                </a>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-9 col-lg-8">
+              <div class="control-bar clearfix">
+                <div class="title pull-left">全部课程</div>
+                <div class="tips">本页面能够查看本学期在机房上课的课程信息，鼠标移动到指定的课程名上可以。</div>
+                <div class="operate-item pull-left">
+
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <table id="course-week-table" class="table">
+                  <thead>
+                    <tr>
+                      <th class="time-slot" >时间</th>
+                      <th>周一</th>
+                      <th>周二</th>
+                      <th>周三</th>
+                      <th>周四</th>
+                      <th>周五</th>
+                      <th>周六</th>
+                      <th>周日</th>                      
+                    </tr>
+                  </thead>
+                   <tbody>
+					
+									
+#foreach($period in $periodList)
+	<tr>
+		<td class="time-slot">$period.peroidname</td>
+		
+		#foreach($day in $dayList)
+			#if($coursescheduleFullPeriodDayMapList.containsKey($period.periodnum) && $coursescheduleFullPeriodDayMapList.get($period.periodnum).containsKey($day))
+				#set($csList =  $coursescheduleFullPeriodDayMapList.get($period.periodnum).get($day))
+				<td><code rel="tooltip" data-title="第 1、2、3、6 周">
+				#foreach($cs in $csList)
+					$cs.coursename 
+				#end	
+				</code></td>
+			#else
+				<td></td>			
+			#end		
+		#end
+    </tr>	
+#end					
+				
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--equip-wrap end-->
+
+      <!--sidebar start-->
+  #set($currentWebpage="browseCourse")
+	  #parse("include/includeTeachSidebar.vm")
+
+      <!--sidebar end-->
+
+</section>
+
+
+    <!-- javascript
+    ================================================== -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+
+</body>
+</html>

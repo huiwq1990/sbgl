@@ -60,7 +60,7 @@
                 <table class="table course-week-table">
                   <thead>
                     <tr>
-                      <th class="time-slot" colspan="2">时间</th>
+                      <th class="time-slot" >时间</th>
                       <th>周一</th>
                       <th>周二</th>
                       <th>周三</th>
@@ -72,18 +72,7 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td class="time-slot" rowspan="2">上午</td>
-                      <td class="time-num">1</td>
-                      <td data-week="1" data-slot="1" class="selectable"></td>
-                      <td data-week="2" data-slot="1" class="selectable"></td>
-                      <td data-week="3" data-slot="1" class="selectable"></td>
-                      <td data-week="4" data-slot="1" class="selectable"></td>
-                      <td data-week="5" data-slot="1" class="selectable"></td>
-                      <td data-week="6" data-slot="1" class="selectable"></td>
-                      <td data-week="7" data-slot="1" class="selectable"></td>
-                    </tr>
-                    <tr>
-                      <td class="time-num">2</td>
+                      <td class="time-slot">上午</td>
                       <td data-week="1" data-slot="2" class="selectable"></td>
                       <td data-week="2" data-slot="2" class="selectable"></td>
                       <td data-week="3" data-slot="2" class="selectable"></td>
@@ -93,18 +82,7 @@
                       <td data-week="7" data-slot="2" class="selectable"></td>
                     </tr>
                     <tr>
-                      <td rowspan="2" class="time-slot">下午</td>
-                      <td class="time-num">3</td>
-                      <td data-week="1" data-slot="3" class="selectable"></td>
-                      <td data-week="2" data-slot="3" class="selectable"></td>
-                      <td data-week="3" data-slot="3" class="selectable"></td>
-                      <td data-week="4" data-slot="3" class="selectable"></td>
-                      <td data-week="5" data-slot="3" class="selectable"></td>
-                      <td data-week="6" data-slot="3" class="selectable"></td>
-                      <td data-week="7" data-slot="3" class="selectable"></td>
-                    </tr>
-                    <tr>
-                      <td class="time-num">4</td>
+                      <td class="time-slot">下午</td>
                       <td data-week="1" data-slot="4" class="selectable"></td>
                       <td data-week="2" data-slot="4" class="selectable"></td>
                       <td data-week="3" data-slot="4" class="selectable"></td>
@@ -115,14 +93,13 @@
                     </tr>
                     <tr>
                       <td class="time-slot">晚上</td>
-                      <td class="time-num">5</td>
-                      <td data-week="1" data-slot="5" class="selectable"></td>
-                      <td data-week="2" data-slot="5" class="selectable"></td>
-                      <td data-week="3" data-slot="5" class="selectable"></td>
-                      <td data-week="4" data-slot="5" class="selectable"></td>
-                      <td data-week="5" data-slot="5" class="selectable"></td>
-                      <td data-week="6" data-slot="5" class="selectable"></td>
-                      <td data-week="7" data-slot="5" class="selectable"></td>
+                      <td data-week="1" data-slot="6" class="selectable"></td>
+                      <td data-week="2" data-slot="6" class="selectable"></td>
+                      <td data-week="3" data-slot="6" class="selectable"></td>
+                      <td data-week="4" data-slot="6" class="selectable"></td>
+                      <td data-week="5" data-slot="6" class="selectable"></td>
+                      <td data-week="6" data-slot="6" class="selectable"></td>
+                      <td data-week="7" data-slot="6" class="selectable"></td>
                     </tr>
                   </tbody>
                 </table>

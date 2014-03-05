@@ -2,8 +2,10 @@ package com.sbgl.app.services.teach;
 
 import java.util.List;
 
+import com.sbgl.app.entity.Coursecomputer;
 import com.sbgl.app.entity.Courseschedule;
 import com.sbgl.app.entity.CoursescheduleFull;
+import com.sbgl.common.DataError;
 import com.sbgl.util.*;
 
 public interface CoursescheduleService{
@@ -52,6 +54,20 @@ public interface CoursescheduleService{
     public List<CoursescheduleFull>  selectCoursescheduleFullByConditionAndPage(String condition,final Page page);
 
 	int execSql(String sql);
+
+	
+
+	void addCourseschedule(List<Courseschedule> coursescheduleList,
+			List<Coursecomputer> coursecomputerList) throws DataError;
+
+	List<Courseschedule> selectCoursescheduleByWeek(Integer courseId,
+			Integer semesterId, Integer weeknum);
+
+	List<Courseschedule> selectCoursescheduleByWeek(Integer semesterId,
+			Integer weeknum);
+
+	List<CoursescheduleFull> selectCoursescheduleFullByWeek(Integer semesterId,
+			Integer weeknum);
 		
 	
 	

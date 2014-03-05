@@ -3,6 +3,13 @@
 <struts>
 	 <package name="courseschedule" extends="admin">
 
+    	<action name="browseAllCoursescheduleByWeek" class="CoursescheduleAction" method="browseAllCoursescheduleByWeek">
+        	<result name="success">/teach/browseCourseschedule.vm</result>
+        	
+			<result name="notsetcourseconfig">/teach/coursescheduleAddError.vm</result> 
+        	<result name="error">/error.vm</result> 
+        </action>
+
 <!-- default entity manage action -->
     	<action name="toAddCourseschedulePage" class="CoursescheduleAction" method="toAddCourseschedulePage">
         	<result name="success">/teach/coursescheduleAdd.vm</result>
@@ -12,6 +19,13 @@
         </action>
 
 
+
+    	<action name="viewCoursescheduleByWeek" class="CoursescheduleAction" method="viewCoursescheduleByWeek">
+        	<result name="success">/teach/coursescheduleEdit.vm</result>
+        	
+			<result name="notsetcourseconfig">/teach/coursescheduleAddError.vm</result> 
+        	<result name="error">/error.vm</result> 
+        </action>
 	
 <!-- entity full manage  -->		
 		<!-- default entity full manage action -->
@@ -64,6 +78,14 @@
 				<param name="root">returnStr</param>
 			</result>
         </action>
+      
+      
+          	<action name="viewCoursescheduleByWeekAjax" class="CoursescheduleAction" method="viewCoursescheduleByWeekAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
       
 	</package>
 

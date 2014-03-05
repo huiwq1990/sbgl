@@ -13,6 +13,7 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.sbgl.app.actions.teach.TeachConstant;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.DaoAbs;
 
@@ -25,9 +26,17 @@ import com.sbgl.util.*;
 public class CoursescheduleDaoImpl extends HibernateDaoSupport implements CoursescheduleDao{
 
 	private static final Log log = LogFactory.getLog(CoursescheduleDaoImpl.class);
-	private final String basicCoursescheduleFullSql = "select a.id as coursescheduleid from Courseschedule a  ";
+	
+	private final String basicCoursescheduleFullSql = "select a.id as coursescheduleid, a.courseid as courseschedulecourseid, a.semester as courseschedulesemester, a.week as coursescheduleweek, a.day as coursescheduleday, a.period as coursescheduleperiod, a.adduserid as coursescheduleadduserid, a.status as courseschedulestatus, b.id as courseid, b.name as coursename, b.description as coursedescription, b.type as coursetype, b.coursetype as coursecoursetype, b.languagetype as courselanguagetype, b.adduserid as courseadduserid, b.teacherid as courseteacherid, b.addtime as courseaddtime, b.status as coursestatus, c.id as adduserid, c.userid as adduseruserid, c.name as addusername, c.gender as addusergender, c.telephone as addusertelephone, c.email as adduseremail, c.roletype as adduserroletype, c.privilege as adduserprivilege, c.password as adduserpassword, c.photo as adduserphoto from Courseschedule a  left join Course b on a.courseid=b.id left join Loginuser c on a.adduserid=c.id ";
 	
 	private final String basicCoursescheduleSql = "From Courseschedule as a ";
+	
+	@Override
+	public void delCoursescheduleByCondition(Courseschedule temp) {
+		
+		String sql = " update Courseschedule set status = "+TeachConstant.coursescheduledelstatus+" where courseid = "+temp.getCourseid()+" and semester = "+temp.getSemester()+" and week="+temp.getWeek()+" and day = "+temp.getDay()+"  and period = "+temp.getPeriod();
+		 getHibernateTemplate().find(sql);
+	}
 	
 	// 根据条件查询查询实体
 	@Override
