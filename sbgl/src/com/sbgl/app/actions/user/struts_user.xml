@@ -45,6 +45,14 @@
         	</result>
         </action>
         
+        
+        <!-- 新用户 -->
+        <action name="userManageUserIndex" class="UserAction" method="gotoIndex">
+        	<result name="success">
+        		/user/userManageIndex2.vm
+        	</result>
+        </action>
+        
 	 </package>
 	 
 	 <package name="userajax" extends="json-default">
@@ -112,6 +120,26 @@
         
         <!-- 用于判断用户组所属的类别 -->
         <action name="isStuGroup" class="StudentAction" method="isStuGroup">
+        	<result type="json" name="success">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+        
+        
+        <!-- 新用户管理 -->
+        <action name="addUser" class="UserAction" method="addUser">
+        	<result type="json" name="success">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+        
+        <action name="alterUser" class="UserAction" method="alterUser">
+        	<result type="json" name="success">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+        
+        <action name="delUser" class="UserAction" method="deleteUser">
         	<result type="json" name="success">
         		<param name="root">returnJSON</param>
         	</result>

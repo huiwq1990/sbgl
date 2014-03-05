@@ -132,7 +132,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 			this.tag = "1";
 			this.message = "修改学生信息失败！";
 		} else {
-			Usergrouprelation ugr = userGroupRelationService.getRelationByType( student.getId(), 1 );
+			Usergrouprelation ugr = userGroupRelationService.getRelationByType( student.getId() );
 			if(ugr != null) {
 				ugr.setGroupid( group.getId() );
 				userGroupRelationService.alterUserGroupRelation( ugr );
@@ -167,7 +167,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		for (String id : ids) {
 			Integer oneId = Integer.valueOf( id );
 			Student stu = studentService.getStudentById( oneId );
-			Usergrouprelation temp = userGroupRelationService.getRelationByType( stu.getId(), 1 );
+			Usergrouprelation temp = userGroupRelationService.getRelationByType( stu.getId() );
 			if(studentService.deleteStudent( oneId ) == 0 && userGroupRelationService.deleteUserGroupRelation( temp.getId() ) == 0) {
 				this.message = "删除学生信息成功！";
 				this.tag = "0";
@@ -266,7 +266,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		
 		if(sList != null && ("0".equals(type) || "1".equals(type))) {
 			for(Student s : sList) {
-				Usergrouprelation ugr = userGroupRelationService.getRelationByType( s.getId(), 1 );
+				Usergrouprelation ugr = userGroupRelationService.getRelationByType( s.getId() );
 				Usergroup ug = null;
 				Clazz clazz = null;
 				if(ugr != null) {
@@ -298,7 +298,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		}
 		if(tList != null && ("0".equals(type) || "2".equals(type))) {
 			for(Teacher t : tList) {
-				Usergrouprelation ugr = userGroupRelationService.getRelationByType( t.getId(), 2 );
+				Usergrouprelation ugr = userGroupRelationService.getRelationByType( t.getId() );
 				Usergroup ug = null;
 				if(ugr != null) {
 					ug = groupService.getUserGroupByid( ugr.getGroupid() );
@@ -325,7 +325,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		}
 		if(wList != null && ("0".equals(type) || "4".equals(type))) {
 			for(Worker w : wList) {
-				Usergrouprelation ugr = userGroupRelationService.getRelationByType( w.getId(), 4 );
+				Usergrouprelation ugr = userGroupRelationService.getRelationByType( w.getId() );
 				Usergroup ug = null;
 				if(ugr != null) {
 					ug = groupService.getUserGroupByid( ugr.getGroupid() );
