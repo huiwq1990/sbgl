@@ -6,9 +6,11 @@ import java.util.List;
 
 import com.sbgl.app.entity.Coursecomputer;
 import com.sbgl.app.entity.CoursecomputerFull;
+import com.sbgl.app.entity.Courseschedule;
 import com.sbgl.app.services.teach.CoursecomputerService;
 import com.sbgl.app.dao.CoursecomputerDao;
 import com.sbgl.app.dao.BaseDao;
+import com.sbgl.app.dao.CoursescheduleDao;
 import com.sbgl.util.*;
 
 import javax.annotation.Resource;
@@ -24,6 +26,8 @@ public class CoursecomputerServiceImpl implements CoursecomputerService{
 	private BaseDao baseDao;
 	@Resource
 	private CoursecomputerDao coursecomputerDao;
+	@Resource
+	private CoursescheduleDao coursescheduleDao;
 	
 	//http://blog.csdn.net/softimes/article/details/7008875 实体添加时需要配置hibernate
 	@Override
@@ -70,6 +74,13 @@ public class CoursecomputerServiceImpl implements CoursecomputerService{
 	}
 
 	
+//  根据实体删除实体
+	@Override
+	public int deleteCoursecomputerByCoursesscheduleId(int coursesscheduleid) {
+		coursecomputerDao.delCoursecomputerByCourseschedule(coursesscheduleid);
+		return 1;
+	}
+	
 	@Override
 	public void updateCoursecomputer(Coursecomputer coursecomputer){
 		
@@ -82,6 +93,12 @@ public class CoursecomputerServiceImpl implements CoursecomputerService{
 		baseDao.updateEntity(tempCoursecomputer);
 
 	}
+	
+	@Override
+	public List<CoursecomputerFull> selectCoursecomputerFullByPeriod(Integer courseid,Integer semesterid,Integer week,Integer day,Integer period,int language){		
+		return coursecomputerDao.selectCoursecomputerFullByPeriod(courseid, semesterid, week, day, period, language);
+	}
+	
 
 //	根据id查询实体类			
 	@Override

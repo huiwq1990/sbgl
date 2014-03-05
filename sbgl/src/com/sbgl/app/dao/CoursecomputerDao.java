@@ -27,5 +27,9 @@ public List<Coursecomputer> selectCoursecomputerByCondition(String condition);
 
 	void delCoursecomputerByCourseschedule(int csId);
 
+	List<CoursecomputerFull> selectCoursecomputerFullByPeriod(Integer courseid,
+			Integer semesterid, Integer week, Integer day, Integer period,
+			int language);
+
  
 }

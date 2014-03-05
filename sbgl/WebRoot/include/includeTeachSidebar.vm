@@ -47,6 +47,14 @@
 			#end	
 			">查看机房教学</a>
 			
+			<a href="${webbaseurl}/viewCoursescheduleByWeek.${strutsaction}" class="list-group-item
+			#if($currentWebpage == "coursescheduleviewandedit" )
+			active      
+			#end	
+			">查看机房教学及修改</a>
+			
+			
+			
         <a href="${webbaseurl}/toAddCourseschedulePage.${strutsaction}" class="list-group-item 		
 			#if($currentWebpage == "coursescheduleAdd" )
 			active      
@@ -54,8 +62,8 @@
 			">机房课程安排</a>
 			
 			
-			        <a href="${webbaseurl}/browseAllCoursescheduleByWeek.${strutsaction}" class="list-group-item 		
-			#if($currentWebpage == "coursescheduleAdd" )
+			<a href="${webbaseurl}/browseAllCoursescheduleByWeek.${strutsaction}" class="list-group-item 		
+			#if($currentWebpage == "coursescheduleBrowse" )
 			active      
 			#end		
 			">全部课程安排</a>

@@ -87,8 +87,8 @@ public class CoursescheduleServiceImpl implements CoursescheduleService{
 			
 			if(addedCoursescheduleList!=null && addedCoursescheduleList.size() > 0){
 //				删除已经添加
-				coursescheduleDao.delCoursescheduleByCondition(temp);
-				coursecomputerDao.delCoursecomputerByCourseschedule(temp.getId());
+				coursescheduleDao.delCoursescheduleByPeriod(addedCoursescheduleList.get(0));
+				coursecomputerDao.delCoursecomputerByCourseschedule(addedCoursescheduleList.get(0).getId());
 				log.info("课程信息已经添加");
 			}
 
@@ -135,8 +135,10 @@ public class CoursescheduleServiceImpl implements CoursescheduleService{
 //  根据id删除实体	
 	@Override
 	public int deleteCourseschedule(Courseschedule temp){
+		
 //		删除课程
-		coursescheduleDao.delCoursescheduleByCondition(temp);
+		coursescheduleDao.delCoursescheduleByPeriod(temp);
+		
 		
 //		删除课程借用机器
 		coursecomputerDao.delCoursecomputerByCourseschedule(temp.getId());
@@ -144,6 +146,7 @@ public class CoursescheduleServiceImpl implements CoursescheduleService{
 		
 		return 1;
 	}
+
 
 
 
@@ -160,6 +163,17 @@ public class CoursescheduleServiceImpl implements CoursescheduleService{
 		baseDao.updateEntity(tempCourseschedule);
 
 	}
+	
+	/**
+	 * 获取某个课程某学期某周的课程
+	 * @param coursescheduleId
+	 * @return
+	 */
+	@Override
+	public List<Courseschedule> selectCoursescheduleByPeriod(Integer courseId,Integer semesterId,Integer weeknum,Integer day,Integer period){
+		return	coursescheduleDao.selectCoursescheduleByPeriod(courseId, semesterId, weeknum, day, period);	
+	}
+	
 	
 	/**
 	 * 获取某个课程某学期某周的课程

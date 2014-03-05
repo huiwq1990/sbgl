@@ -3,6 +3,7 @@ package com.sbgl.app.dao;
 import java.util.Date;
 import java.util.List;
 
+import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.util.*;
@@ -47,6 +48,10 @@ public List<Computerorderdetail> selectComputerorderdetailByCondition(String con
 	List<Computerorderdetail> selectValidComputerorderdetailFromStartToEndByModel(
 			Date startDate, int startPeriod, Date endDate, int endPeriod,
 			String modeltypeStr);
+
+
+
+	List<Computerorderdetail> selectComputerorderByDate(Date queryDate);
 
  
 }

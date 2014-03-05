@@ -68,6 +68,9 @@ public interface CoursescheduleService{
 
 	List<CoursescheduleFull> selectCoursescheduleFullByWeek(Integer semesterId,
 			Integer weeknum);
+
+	List<Courseschedule> selectCoursescheduleByPeriod(Integer courseId,
+			Integer semesterId, Integer weeknum, Integer day, Integer period);
 		
 	
 	

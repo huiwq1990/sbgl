@@ -38,14 +38,24 @@
 									<h4 class="list-group-item-heading">全部课程</h4>
 									<p class="list-group-item-text">浏览本学期全部课程</p>
 								</a>
-								<a href="教学管理-机房课程安排（查看和修改）.html" class="list-group-item active">
-									<h4 class="list-group-item-heading">课程名称</h4>
-									<p class="list-group-item-text">任课教师：</p>
+								
+						#foreach($gp in $usergroupList)
+							##<optgroup label="$gp.name">
+							#set( $tcfl = $courseFullByGroupId.get($gp.id) )
+							#foreach($tempCourseFull in  $tcfl )					
+								<a href="${webbaseurl}/viewCoursescheduleByWeek.${strutsaction}?selcourseid=$!tempCourseFull.coursecoursetype&selweek=1" class="list-group-item 
+									#if($!tempCourseFull.coursecoursetype == $selcourseid)
+										active
+									#end	
+									">
+									<h4 class="list-group-item-heading">课程名称 $!tempCourseFull.coursename </h4>
+									<p class="list-group-item-text">任课教师：$!tempCourseFull.teacherloginusername</p>
 								</a>
-								<a href="教学管理-机房课程安排（查看和修改）.html" class="list-group-item">
-									<h4 class="list-group-item-heading">课程名称</h4>
-									<p class="list-group-item-text">任课教师：</p>
-								</a>
+							#end		
+							
+							
+						#end
+			
 							</div>
 						</div>
 						<div class="col-sm-12 col-md-9 col-lg-8">
@@ -56,24 +66,17 @@
 									<p><i class="icon-warning-sign"></i> 表明该时段有其他课程正在使用机房资源，可能会发生冲突。</p>
 								</div>
 								<div class="row">
-									<ul class="tab-drop nav nav-pills col-md-12">										
-										<li class="active"><a href="#ptab1" data-toggle="tab" data-week="1">第1周</a></li>
-										<li><a href="#ptab2" data-toggle="tab" data-week="2">第2周</a></li>
-										<li><a href="#ptab3" data-toggle="tab" data-week="3">第3周</a></li>
-										<li><a href="#ptab4" data-toggle="tab" data-week="4">第4周</a></li>
-										<li><a href="#ptab5" data-toggle="tab" data-week="5">第5周</a></li>
-										<li><a href="#ptab6" data-toggle="tab" data-week="6">第6周</a></li>
-										<li><a href="#ptab7" data-toggle="tab" data-week="7">第7周</a></li>
-										<li><a href="#ptab8" data-toggle="tab" data-week="8">第8周</a></li>
-										<li><a href="#ptab9" data-toggle="tab" data-week="9">第9周</a></li>
-										<li><a href="#ptab10" data-toggle="tab" data-week="10">第10周</a></li>
-										<li><a href="#ptab11" data-toggle="tab" data-week="11">第11周</a></li>
-										<li><a href="#ptab12" data-toggle="tab" data-week="12">第12周</a></li>
-										<li><a href="#ptab13" data-toggle="tab" data-week="13">第13周</a></li>
-										<li><a href="#ptab14" data-toggle="tab" data-week="14">第14周</a></li>
-										<li><a href="#ptab15" data-toggle="tab" data-week="15">第15周</a></li>
-										<li><a href="#ptab16" data-toggle="tab" data-week="16">第16周</a></li>
-										<li><a href="#ptab17" data-toggle="tab" data-week="17">第17周</a></li>                    
+									<ul class="tab-drop nav nav-pills col-md-12">
+										
+										#foreach($temp in [1 .. $courseconfig.weeknum])
+											#if($temp == $selweek)
+											<li class="active"><a href="${webbaseurl}/viewCoursescheduleByWeek.${strutsaction}?selcourseid=$!selcourseid&selweek=$temp" data-toggle="tab" data-week="$temp">第$temp周</a></li>
+											#else
+											<li><a href="${webbaseurl}/viewCoursescheduleByWeek.${strutsaction}?selcourseid=$!selcourseid&selweek=$temp" data-toggle="tab" data-week="$temp">第$temp周</a></li>
+										
+											#end
+										#end
+									            
 									</ul>
 								</div>
 							</div>
@@ -101,11 +104,11 @@
 											#foreach($day in $dayList)
 												
 												#if($courseschedulePeriodDayMap.containsKey($period.periodnum) && $courseschedulePeriodDayMap.get($period.periodnum).containsKey($day))
-											<td data-week="$day" data-slot="$!index" data-period="$period.periodnum" data-is-arranged="yes" class="selectable">
+											<td data-week="$day" data-day="$day" data-slot="$!index" data-period="$period.periodnum" data-is-arranged="yes" class="selectable">
 												<code><i class="icon-ok"></i></code>
 											</td>
 											#else
-												<td data-week="$day" data-slot="$!index" data-period="$period.periodnum" data-is-arranged="no" class="selectable">
+												<td data-week="$day" data-day="$day" data-slot="$!index" data-period="$period.periodnum" data-is-arranged="no" class="selectable">
 												
 											</td>
 												
@@ -131,7 +134,7 @@
 												<button class="btn btn-danger" type="button" action-type="cancelArrangedCourse">取消本节课</button>
 											</div>                                  	
 											<dl class="form-group dl-horizontal">
-											    <dd>
+											    <dd id="orderedComputermodel">
 
 #foreach($category in ${computercategoryList})
 	
@@ -195,16 +198,9 @@
 			<!--equip-wrap end-->
 
 			<!--sidebar start-->
-			<div id="lside">
-				<div class="list-group">
-					<a href="教学管理首页.html" class="list-group-item">课程管理</a>
-					<a href="教学管理-添加课程.html" class="list-group-item">添加课程</a>
-					<a href="教学管理-设备预约安排.html" class="list-group-item">设备预约安排</a>
-					<a href="教学管理-机房预约安排.html" class="list-group-item">机房预约安排</a>
-					<a href="教学管理-机房课程安排.html" class="list-group-item active">机房课程安排</a>
-			<a href="教学管理-教学设置.html" class="list-group-item">设置</a>
-				</div>
-			</div>
+			  #set($currentWebpage="coursescheduleviewandedit")
+	  #parse("include/includeTeachSidebar.vm")
+
 			<!--sidebar end-->
 
 </section>
@@ -225,8 +221,8 @@
 $('.tab-drop.nav-pills').tabdrop();
 
 /* ============ 课程安排 ============= */
-var semesterWeek = $!week;	// 学期第X周
-var courseid = $!courseid;
+var semesterWeek = $!selweek;	// 学期第X周
+var courseid = $!selcourseid;
 var thisCourse  ;			// 当前选中课表的dom对象
 var thisCourseData;		// thisCourseData为当前选中课程对应的数据（星期：week；时段：slot（0/1/2）；是否已安排isArranged（“yes/no”））
 
@@ -297,8 +293,40 @@ $("#course-week-table").on("click", "td.selectable", function() {
 	$("#course-week-table td").removeClass("selected");
 	$(this).addClass('selected');
 	if (thisCourseData.isArranged === "yes") {
-		$("#is-arranged-yes").show();
-		$("#is-arranged-no").hide();
+		
+		
+               	var postData = {
+					selcourseid: $selcourseid,
+					selday : thisCourseData.day,
+					selperiod : thisCourseData.period,
+					selweek: $selweek
+				}
+				
+		 jQuery.ajax({  
+            url:"${webbaseurl}/selectCoursecomputerByPeriodAjax.${strutsaction}",  
+            type:"post",
+            data:postData,
+            dataType: 'json',
+            success: function(data){
+			  var comList = eval('(' + data + ')');  
+				
+			  var str="";
+			  str +='<ul class="list-inline">';
+				$.each(comList,function(i, com){    
+					// console.log(com.cmname);
+					
+					 str +='<li>'+com.cmname+'</li>';
+													
+				}); 
+				str+='</ul>';
+				$("#orderedComputermodel").html(str);
+				  $("#is-arranged-yes").show();
+					$("#is-arranged-no").hide();
+	
+            }                            
+        });
+		
+		
 	} else if (thisCourseData.isArranged === "no") {
 		$("#is-arranged-no").show();
 		$("#is-arranged-yes").hide();
@@ -327,16 +355,43 @@ $("button[action-type|=modifyCourseArrangement]").on("click", function() {
 $("button[action-type|=cancelArrangedCourse]").on("click", function() {
 	console.log("[action-type|=cancelArrangedCourse]");
 	console.log(thisCourseData);
-	$(thisCourse).find("code").remove(); // 移除选中标识
+	
+	
+  	var postData = {
+		selcourseid: $selcourseid,
+		selday : thisCourseData.day,
+		selperiod : thisCourseData.period,
+		selweek: $selweek
+	}
+			
+	 jQuery.ajax({  
+        url:"${webbaseurl}/deleteCoursescheduleAjax.${strutsaction}",  
+        type:"post",
+        data:postData,
+        dataType: 'json',
+        success: function(data){
+		  	var returnJson = jQuery.parseJSON(data); 
+            if(returnJson.flag == 1){
+            	$(thisCourse).find("code").remove(); // 移除选中标识
 
-	// 取消成功后显示无课程信息
-	$("#is-arranged-no").show();
-	$("#is-arranged-yes").hide();
-	// 设置本时段课程为未安排
-	thisCourseData.isArranged = "no";
-	$(thisCourse).attr("data-is-arranged", "no");
+				// 取消成功后显示无课程信息
+				$("#is-arranged-no").show();
+				$("#is-arranged-yes").hide();
+				// 设置本时段课程为未安排
+				thisCourseData.isArranged = "no";
+				$(thisCourse).attr("data-is-arranged", "no");
 
-	var n = noty({text: "成功", timeout: 1500, type: 'success'});	
+				var n = noty({text: returnJson.reason, timeout: 1500, type: 'success'});	                         
+            }else{
+                    var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});                                        
+                  
+            }
+        }                            
+    });
+	
+	
+	
+	
 });	
 
 // 添加新课程安排按钮

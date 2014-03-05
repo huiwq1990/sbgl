@@ -152,5 +152,46 @@ public class TeachActionUtil {
 		
 		return courseschedulePeriodDayMapList;
 	}
- 
+
+	
+	
+	public static HashMap<Integer,HashMap<Integer,Courseschedule>> setCourseschedulePeriodDayMap(List<Courseschedule> coursescheduleList){
+		HashMap<Integer,HashMap<Integer,Courseschedule>> courseschedulePeriodDayMap = new HashMap<Integer,HashMap<Integer,Courseschedule>>();
+		
+//		课程，学期，周，天，日，时间段
+//		HashMap<Integer,HashMap<Integer,Courseschedule>> dayPap = new HashMap<Integer,HashMap<Integer,Courseschedule>>();
+		for(Courseschedule cs : coursescheduleList){
+			boolean period = courseschedulePeriodDayMap.containsKey(cs.getPeriod());
+			if(period == true){
+				
+			}else{
+				HashMap<Integer,Courseschedule> peMap = new HashMap<Integer,Courseschedule>();
+				courseschedulePeriodDayMap.put(cs.getPeriod(), peMap);
+			}
+
+			HashMap<Integer,Courseschedule> temp = courseschedulePeriodDayMap.get(cs.getPeriod());
+			Courseschedule copy = new Courseschedule();
+//			HashMap<Integer,Courseschedule> s = coursescheduleDayPeriodMap.get(1);
+			temp.put(cs.getDay(), copy);
+//			temp.put(4, new Courseschedule());
+//			if(temp == null){
+//				System.out.println("sssds");
+//			}
+//			Courseschedule copy = new Courseschedule();
+//			try {
+//				BeanUtils.copyProperties(copy, cs);
+//			} catch (IllegalAccessException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (InvocationTargetException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+
+		}
+		return courseschedulePeriodDayMap;
+
+	}
+	
+
 }

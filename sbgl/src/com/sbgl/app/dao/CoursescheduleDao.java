@@ -25,7 +25,12 @@ public List<Courseschedule> selectCoursescheduleByCondition(String condition);
 //  分页查询 实体full
 	public List<CoursescheduleFull> selectCoursescheduleFullByPage(Page page);
 
-	void delCoursescheduleByCondition(Courseschedule temp);
+	
+
+	List<Courseschedule> selectCoursescheduleByPeriod(Integer courseId,
+			Integer semesterId, Integer weeknum, Integer day, Integer period);
+
+	void delCoursescheduleByPeriod(Courseschedule temp);
 
  
 }

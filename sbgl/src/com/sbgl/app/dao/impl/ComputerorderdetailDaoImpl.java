@@ -20,6 +20,7 @@ import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.DaoAbs;
 
 import com.sbgl.app.dao.ComputerorderdetailDao;
+import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.util.*;
@@ -59,6 +60,25 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 
     }
 	*/
+	
+	/**
+	 * 查询某个天有效的订单详情
+	 */
+	@Override
+	public List<Computerorderdetail> selectComputerorderByDate(Date queryDate) {
+		
+		String dateStr= DateUtil.dateFormat(DateUtil.getDateDayDate(queryDate), DateUtil.dateformatstr1);
+		
+		  String cond = "where ( " ;
+		  cond += " borrowday = '" + dateStr+"' ";//今天当前时段之后的
+           cond +=  "           ) and ";
+           cond +=  "            ( status in ("+ComputerorderdetailInfo.ComputerorderdetailStatusAduitPass+","+ComputerorderdetailInfo.ComputerorderdetailStatusAduitWait+") ) ";
+           
+          log.info(cond);
+          return selectComputerorderdetailByCondition(cond);
+		
+		 
+	}
 	
 	/**
 	 * 查询某个时间段内有效的订单详情

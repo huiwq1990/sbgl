@@ -1,2 +1,4 @@
 //如果有多对一，则配置
 //OneToMany;attrName= ;colName=;class=;
+ManyToOne;attrName=lessonid;colName=lessonid;class=Courseschedule;fullAttrPrefix=cs
+ManyToOne;attrName=computerid;colName=computerid;class=Computermodel;fullAttrPrefix=cm

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.lang.reflect.InvocationTargetException;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 
@@ -20,8 +21,11 @@ import org.apache.commons.beanutils.BeanUtils;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.actions.common.BaseAction;
+import com.sbgl.app.actions.common.CommonConfig;
+import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.teach.CoursecomputerService;
+import com.sbgl.app.services.teach.CourseconfigService;
 import com.sbgl.util.*;
 
 
@@ -43,8 +47,19 @@ public class CoursecomputerAction extends BaseAction implements ModelDriven<Cour
 	private List<Coursecomputer> coursecomputerList = new ArrayList<Coursecomputer>();
 	private List<CoursecomputerFull> coursecomputerFullList = new ArrayList<CoursecomputerFull>();
 
+	
+	@Resource
+	private CourseconfigService courseconfigService;
+	private Courseconfig courseconfig = new Courseconfig();//实例化一个模型
+	
+	
 	private String logprefix = "exec action method:";
 	
+//	选择的课程 选择的星期
+	private int selcourseid;
+	private int selweek;
+	private int selday;
+	private int selperiod;
 
 	private String coursecomputerIdsForDel;
 	
@@ -254,26 +269,7 @@ public class CoursecomputerAction extends BaseAction implements ModelDriven<Cour
                 return SUCCESS;
         }
 */
-//修改
-	public String updateCoursecomputer(){
-		try {
-			if(coursecomputer.getId() != null && coursecomputer.getId() > 0){				
-				Coursecomputer tempCoursecomputer = coursecomputerService.selectCoursecomputerById(coursecomputer.getId());
-																				  								
-												  								
-								actionMsg = getText("viewCoursecomputerSuccess");
-			}else{
-				actionMsg = getText("viewCoursecomputerFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CoursecomputerAction的方法：viewCoursecomputer错误"+e);
-		}
 
-		return "error";
-	}
 	
 	
 	//ajax 修改
@@ -312,137 +308,201 @@ public class CoursecomputerAction extends BaseAction implements ModelDriven<Cour
 	}
 	
 	
-	/**
-	
-	编辑实体 action的方法，首先获取entity的信息，返回到编辑页面
-	
-	*/
-	public String editCoursecomputer(){
-		log.info(logprefix + "editCoursecomputer");
-			
-		try {
-			//实体的id可以为0
-			if(coursecomputer.getId() != null && coursecomputer.getId() >= 0){				
-				Coursecomputer temCoursecomputer = coursecomputerService.selectCoursecomputerById(coursecomputer.getId());
-				if(temCoursecomputer != null){
-					BeanUtils.copyProperties(coursecomputerModel,temCoursecomputer);	
-					//actionMsg = getText("selectCoursecomputerByIdSuccess");
-					return SUCCESS;
-				}				
-			}		
-			return "PageNotExist";
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CoursecomputerAction的方法：selectCoursecomputerById错误"+e);
-		}
-
-
-		return "error";
-	}
-	
-
-	/**
-	编辑实体Full action的方法，首先获取entityfull的信息，返回到编辑页面
-	
-	*/
-	public String editCoursecomputerFull(){
-		
-		log.info(logprefix + "viewCoursecomputer");
-		
-		try {
-			if(coursecomputer.getId() != null && coursecomputer.getId() > 0){				
-				CoursecomputerFull temCoursecomputerFull = coursecomputerService.selectCoursecomputerFullById(coursecomputer.getId());
-				BeanUtils.copyProperties(coursecomputerFull,temCoursecomputerFull);	
-				actionMsg = getText("selectCoursecomputerByIdSuccess");
-			}else{
-				actionMsg = getText("selectCoursecomputerByIdFail");
-				System.out.println(actionMsg);
-			}			
+	public  String selectCoursecomputerByPeriod(){
+		try{
+//		选择的课程 选择的星期
+		courseconfig = courseconfigService.getCurrentCourseconfig();
+		if(courseconfig == null){
+			returnInfo = "没有设置学期信息";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
 			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CoursecomputerAction的方法：selectCoursecomputerFullById错误"+e);
 		}
 		
-		return "error";
+		log.info("课程序号："+selcourseid+"；学期信息："+courseconfig.getId()+"；周："+selweek+";日："+selday+";时间段："+selperiod);
+		coursecomputerFullList = coursecomputerService.selectCoursecomputerFullByPeriod(selcourseid, courseconfig.getId(), selweek, selday, selperiod, CommonConfig.languagech);
+		
+		log.info(coursecomputerFullList.size());
+		for(CoursecomputerFull f: coursecomputerFullList){
+			System.out.println(f.getCmname());
+		}
+		
+		returnInfo = "添加成功";
+		log.info(returnInfo);
+		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
+		return SUCCESS;
+		
+		 } catch (Exception e) {
+             e.printStackTrace();
+		 }
+		 
+		returnInfo = "获取信息失败";
+		log.info(returnInfo);
+		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
+		return SUCCESS;
 	}
-
 	
-	// 查看实体 根据对象Id查询
-	public String viewCoursecomputer(){
-		log.info("viewCoursecomputer");
-		try {
-			if(coursecomputer.getId() != null && coursecomputer.getId() > 0){				
-				Coursecomputer temCoursecomputer = coursecomputerService.selectCoursecomputerById(coursecomputer.getId());
-				BeanUtils.copyProperties(coursecomputerModel,temCoursecomputer);	
-				actionMsg = getText("selectCoursecomputerByIdSuccess");
-			}else{
-				actionMsg = getText("selectCoursecomputerByIdFail");
-				System.out.println(actionMsg);
-			}			
+	public  String selectCoursecomputerByPeriodAjax(){
+		try{
+//		选择的课程 选择的星期
+		courseconfig = courseconfigService.getCurrentCourseconfig();
+		if(courseconfig == null){
+			returnInfo = "没有设置学期信息";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
 			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类CoursecomputerAction的方法：selectCoursecomputerById错误"+e);
 		}
-
-
-		return "error";
-
-	}	
-
-/**
- * view CoursecomputerFull
- * need give parmeter id
- * get id from modle,
- * @return
- */
-	public String viewCoursecomputerFull() {
-				
-		try {
-			int getId = coursecomputer.getId();
-			log.info(this.logprefix + ";id=" + getId);
-			
-			if (getId < 0) {
-				log.error("error,id小于0不规范");
-				return "error";
-			}	
-			
-			CoursecomputerFull temCoursecomputerFull = coursecomputerService.selectCoursecomputerFullById(getId);				
-			if(temCoursecomputerFull!=null){				
-				BeanUtils.copyProperties(coursecomputerFull,temCoursecomputerFull);
-				return SUCCESS;				
-			}else{
-				log.error("error,查询实体不存在。");
-				return "Error";
-			}			
-
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();			
-		}
-		return "Error";
+		
+		coursecomputerFullList = coursecomputerService.selectCoursecomputerFullByPeriod(selcourseid, courseconfig.getId(), selweek, selday, selperiod, CommonConfig.languagech);
+		JSONArray jo = JSONArray.fromObject(coursecomputerFullList);
+		
+		String j= jo.toString();
+		
+		returnInfo = "添加成功";
+		log.info(returnInfo);
+//		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo,j);
+		this.returnStr = j;
+		return SUCCESS;
+		
+		 } catch (Exception e) {
+             e.printStackTrace();
+		 }
+		 
+		returnInfo = "获取信息失败";
+		log.info(returnInfo);
+		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
+		return SUCCESS;
 	}
-
+	
 	@Override
 	public Coursecomputer getModel() {
 		// TODO Auto-generated method stub
 		return coursecomputer;
+	}
+
+	public CoursecomputerService getCoursecomputerService() {
+		return coursecomputerService;
+	}
+
+	public void setCoursecomputerService(CoursecomputerService coursecomputerService) {
+		this.coursecomputerService = coursecomputerService;
+	}
+
+	public Integer getCoursecomputerid() {
+		return coursecomputerid;
+	}
+
+	public void setCoursecomputerid(Integer coursecomputerid) {
+		this.coursecomputerid = coursecomputerid;
+	}
+
+	public Coursecomputer getCoursecomputer() {
+		return coursecomputer;
+	}
+
+	public void setCoursecomputer(Coursecomputer coursecomputer) {
+		this.coursecomputer = coursecomputer;
+	}
+
+	public Coursecomputer getCoursecomputerModel() {
+		return coursecomputerModel;
+	}
+
+	public void setCoursecomputerModel(Coursecomputer coursecomputerModel) {
+		this.coursecomputerModel = coursecomputerModel;
+	}
+
+	public CoursecomputerFull getCoursecomputerFull() {
+		return coursecomputerFull;
+	}
+
+	public void setCoursecomputerFull(CoursecomputerFull coursecomputerFull) {
+		this.coursecomputerFull = coursecomputerFull;
+	}
+
+	public List<Coursecomputer> getCoursecomputerList() {
+		return coursecomputerList;
+	}
+
+	public void setCoursecomputerList(List<Coursecomputer> coursecomputerList) {
+		this.coursecomputerList = coursecomputerList;
+	}
+
+	public List<CoursecomputerFull> getCoursecomputerFullList() {
+		return coursecomputerFullList;
+	}
+
+	public void setCoursecomputerFullList(
+			List<CoursecomputerFull> coursecomputerFullList) {
+		this.coursecomputerFullList = coursecomputerFullList;
+	}
+
+	public CourseconfigService getCourseconfigService() {
+		return courseconfigService;
+	}
+
+	public void setCourseconfigService(CourseconfigService courseconfigService) {
+		this.courseconfigService = courseconfigService;
+	}
+
+	public Courseconfig getCourseconfig() {
+		return courseconfig;
+	}
+
+	public void setCourseconfig(Courseconfig courseconfig) {
+		this.courseconfig = courseconfig;
+	}
+
+	public String getLogprefix() {
+		return logprefix;
+	}
+
+	public void setLogprefix(String logprefix) {
+		this.logprefix = logprefix;
+	}
+
+	public int getSelcourseid() {
+		return selcourseid;
+	}
+
+	public void setSelcourseid(int selcourseid) {
+		this.selcourseid = selcourseid;
+	}
+
+	public int getSelweek() {
+		return selweek;
+	}
+
+	public void setSelweek(int selweek) {
+		this.selweek = selweek;
+	}
+
+	public int getSelday() {
+		return selday;
+	}
+
+	public void setSelday(int selday) {
+		this.selday = selday;
+	}
+
+	public int getSelperiod() {
+		return selperiod;
+	}
+
+	public void setSelperiod(int selperiod) {
+		this.selperiod = selperiod;
+	}
+
+	public String getCoursecomputerIdsForDel() {
+		return coursecomputerIdsForDel;
+	}
+
+	public void setCoursecomputerIdsForDel(String coursecomputerIdsForDel) {
+		this.coursecomputerIdsForDel = coursecomputerIdsForDel;
+	}
+
+	public static Log getLog() {
+		return log;
 	}
 
 	

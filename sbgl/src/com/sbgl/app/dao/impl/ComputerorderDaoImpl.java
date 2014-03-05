@@ -2,6 +2,7 @@ package com.sbgl.app.dao.impl;
 
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -29,6 +30,10 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 	
 	
 	private final String basicComputerorderSql = "From Computerorder as a ";
+	
+
+	
+	
 	
 	// 根据条件查询查询实体
 	@Override

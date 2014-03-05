@@ -155,17 +155,29 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 //	添加时，课程英文名称
 	private String coursenameen;
 	private int courseiden;
-
+	
+	
+//	选择的课程 选择的星期
+	private int selcourseid;
+	private int selweek;
+	private int selday;
+	private int selperiod;
+	
 //	跳转到课程计划添加
 	public String toAddCourseschedulePage(){
-		
+		try{
 //		获取学期信息
-		courseconfigList = courseconfigService.selectCourseconfigByCondition(" where currentsemester = "+TeachConstant.coursesconfigcurrentsemester);
-		if(courseconfigList == null || courseconfigList.size() != 1){
-			return TeachConstant.notsetcourseconfig;
+		courseconfig = courseconfigService.getCurrentCourseconfig();
+		if(courseconfig == null){
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, "没有设置学期信息");			
+			return SUCCESS;
 		}
-		courseconfig = courseconfigList.get(0);
 		totalweeknum = courseconfig.getWeeknum();
+		
+		
+//		获取时间段信息，及天的信息
+		periodList =  BorrowperiodUtil.getBorrowperiodList();
+		dayList = TeachActionUtil.getDayList();
 		
 
 //		查询computer分类模型信息
@@ -205,7 +217,12 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 		}
 		
 		return SUCCESS;
-		
+	}catch(Exception e){
+		e.printStackTrace();
+		log.error("类CoursescheduleAction的方法：addBbstagfavourite错误"+e);
+	}
+	
+	return "error";
 	}
 	
 	
@@ -532,7 +549,9 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 	*/
 	
 
-	public void periodDayMap(List<Courseschedule> coursescheduleList){
+	
+	
+	public void setCourseschedulePeriodDayMap(List<Courseschedule> coursescheduleList){
 //		课程，学期，周，天，日，时间段
 //		HashMap<Integer,HashMap<Integer,Courseschedule>> dayPap = new HashMap<Integer,HashMap<Integer,Courseschedule>>();
 		for(Courseschedule cs : coursescheduleList){
@@ -543,15 +562,34 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 				HashMap<Integer,Courseschedule> peMap = new HashMap<Integer,Courseschedule>();
 				courseschedulePeriodDayMap.put(cs.getPeriod(), peMap);
 			}
-			
-//			boolean periodExist = dayPap.get(cs.getDay()).containsKey(cs.getPeriod());
-//			
-//			if(periodExist == false){
-//				
+
+			HashMap<Integer,Courseschedule> temp = courseschedulePeriodDayMap.get(cs.getPeriod());
+			Courseschedule copy = new Courseschedule();
+//			HashMap<Integer,Courseschedule> s = coursescheduleDayPeriodMap.get(1);
+			temp.put(cs.getDay(), copy);
+//			temp.put(4, new Courseschedule());
+//			if(temp == null){
+//				System.out.println("sssds");
 //			}
-			courseschedulePeriodDayMap.get(cs.getPeriod()).put(cs.getDay(), cs);
+//			Courseschedule copy = new Courseschedule();
+//			try {
+//				BeanUtils.copyProperties(copy, cs);
+//			} catch (IllegalAccessException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (InvocationTargetException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			
+//			temp.put(cs.getDay(), copy);
+//			System.out.println(temp.size());
+//			courseschedulePeriodDayMap.put(cs.getPeriod(), temp);
+//			courseschedulePeriodDayMap.get(Integer.valueOf(cs.getPeriod())).put(cs.getDay(), copy);
+//			System.out.println(cs.getPeriod() + " "+cs.getDay()+" "+ cs.getId());
+//			System.out.println(courseschedulePeriodDayMap.get(cs.getPeriod()).get(cs.getDay()).getId());
 		}
-		
+//		log.info("test courseschedulePeriodDayMap:"+courseschedulePeriodDayMap.get(2).get(2).getDay());
 	}
 	
 
@@ -574,47 +612,27 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 			}
 			
 
-
-//			查询computer分类模型信息
-			String categorySqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";	
-			computercategoryList  = computercategoryService.selectComputercategoryByCondition(categorySqlch);					
-			String modelSqlch = " where a.languagetype=0  ";	
-			computermodelList  = computermodelService.selectComputermodelByCondition(modelSqlch);	
-			System.out.println(computercategoryList.size());
-//			构建分类模型的map
-			computermodelByComputercategoryId = ComputerActionUtil.categoryModelMap(computercategoryList, computermodelList);
+			setComputermodelByCategoryid();
 			
-//			课程信息
-			courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+CommonConfig.languagech);
+//			构建学生组课程
+			setCourseMapByStudentgroup();
 //			System.out.println(courseFullList.size());
 			 
 //			System.out.println(computermodelByComputercategoryId.get(-1).size());
 			 
-
-		     if(courseFullList == null){
-		        	courseFullList = new ArrayList<CourseFull>();
-		        }
-			if(computercategoryFullList == null){
-				 computercategoryFullList = new ArrayList<ComputercategoryFull>();
-			}
-			
-			if(computermodelByComputercategoryId == null){
-				computermodelByComputercategoryId = new HashMap<Integer,ArrayList<Computermodel>>();
-			}
-			
-
 //			获取时间段信息，及天的信息
 			periodList =  BorrowperiodUtil.getBorrowperiodList();
 			dayList = TeachActionUtil.getDayList();
 
 			
 			log.info(courseconfig.getId() +  " " +courseschedule.getCourseid() + "  "+ courseschedule.getWeek());
-			coursescheduleList = coursescheduleService.selectCoursescheduleByWeek(courseschedule.getCourseid(), courseconfig.getId(), courseschedule.getWeek());
-
-			System.out.println(coursescheduleList.size());
+			coursescheduleList = coursescheduleService.selectCoursescheduleByWeek(selcourseid, courseconfig.getId(),selweek);
+			log.info("这一周课程的数量"+coursescheduleList.size());
 			//			转化成map
-			periodDayMap(coursescheduleList);
+			courseschedulePeriodDayMap = TeachActionUtil.setCourseschedulePeriodDayMap(coursescheduleList);
 			
+		
+			log.info("test courseschedulePeriodDayMap:"+courseschedulePeriodDayMap.get(2).size());
 			returnInfo = "";
 			log.info(returnInfo);
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
@@ -666,29 +684,87 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 		return true;
 	}
 
+//	public void 
+	
+	
+//	构建
+	public void setComputermodelByCategoryid(){
+//		courseconfig.get
+//		查询computer分类模型信息
+		String categorySqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";	
+		computercategoryList  = computercategoryService.selectComputercategoryByCondition(categorySqlch);					
+		String modelSqlch = " where a.languagetype=0  ";	
+		computermodelList  = computermodelService.selectComputermodelByCondition(modelSqlch);	
+		System.out.println(computercategoryList.size());
+//		构建分类模型的map
+		computermodelByComputercategoryId = ComputerActionUtil.categoryModelMap(computercategoryList, computermodelList);
+	}
+	
 
-	//del entityfull Ajax
-	public String deleteCoursescheduleFullAjax( ){
+//	构建学生组与课程的关系
+	public void setCourseMapByStudentgroup(){
+//		课程组信息
+		usergroupList = groupService.getUserGroupByType(CommonConfig.usergroupstudentid);		
+//		课程信息
+		courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+CommonConfig.languagech);
+		courseFullByGroupId = TeachActionUtil.couseFullUsergroupMap(usergroupList, courseFullList);
 		
-		log.info(logprefix + "deleteComputercategoryFullAjax");
-             
-//		try{
-//			String ids[] = coursescheduleIdsForDel.split(";");
-//			for(int i=0; i < ids.length;i++){
-//                                
-//				Integer tempDelId = Integer.valueOf(ids[i]);                        
-//				log.info(tempDelId);
-//              
-//                        
-//                } catch (Exception e) {
-//                        e.printStackTrace();
-//                }
-//                
-//                returnJson.setFlag(0);
-//                returnJson.setReason("删除的内部错误");
-//                JSONObject jo = JSONObject.fromObject(returnJson);
-//                this.returnStr = jo.toString();
-                return SUCCESS;
+	     if(courseFullList == null){
+	        	courseFullList = new ArrayList<CourseFull>();
+	        }
+		if(computercategoryFullList == null){
+			 computercategoryFullList = new ArrayList<ComputercategoryFull>();
+		}
+		
+		if(computermodelByComputercategoryId == null){
+			computermodelByComputercategoryId = new HashMap<Integer,ArrayList<Computermodel>>();
+		}
+		
+	}
+	
+	//del entityfull Ajax
+	public String deleteCoursescheduleAjax( ){
+		try{
+		log.info(logprefix + "deleteCoursescheduleAjax");
+            
+		courseconfig = courseconfigService.getCurrentCourseconfig();
+		if(courseconfig == null){
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, "没有设置学期信息");			
+			return SUCCESS;
+		}
+		
+//		先查询课程信息，主要是获取id,用于删除课程pc
+		coursescheduleList = coursescheduleService.selectCoursescheduleByPeriod(selcourseid, courseconfig.getId(), selweek, selday, selperiod);		
+		if(coursescheduleList==null || coursescheduleList.size()!=1){
+			returnInfo = "删除的课程信息不存在";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return SUCCESS;			
+		}
+
+//		courseschedule.setCourseid(selcourseid);
+//		courseschedule.setSemester(courseconfig.getId());
+//		courseschedule.setWeek(selweek);
+//		
+//		courseschedule.setDay(selday);
+//		courseschedule.setPeriod(selperiod);
+		courseschedule = coursescheduleList.get(0);
+		coursescheduleService.deleteCourseschedule(courseschedule);
+		
+		returnInfo = "删除成功";
+		log.info(returnInfo);
+		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
+		return SUCCESS;
+                
+		}catch(Exception e){
+			e.printStackTrace();
+			log.error("类CoursescheduleAction的方法：addBbstagfavourite错误"+e);
+		}
+		
+		returnInfo = "内部错误";
+		log.info(returnInfo);
+		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+		return SUCCESS;
         }
 
 
@@ -1371,6 +1447,46 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 	public void setCoursescheduleFullPeriodDayMapList(
 			HashMap<Integer, HashMap<Integer, ArrayList<CoursescheduleFull>>> coursescheduleFullPeriodDayMapList) {
 		this.coursescheduleFullPeriodDayMapList = coursescheduleFullPeriodDayMapList;
+	}
+
+
+	public int getSelcourseid() {
+		return selcourseid;
+	}
+
+
+	public void setSelcourseid(int selcourseid) {
+		this.selcourseid = selcourseid;
+	}
+
+
+	public int getSelweek() {
+		return selweek;
+	}
+
+
+	public void setSelweek(int selweek) {
+		this.selweek = selweek;
+	}
+
+
+	public int getSelday() {
+		return selday;
+	}
+
+
+	public void setSelday(int selday) {
+		this.selday = selday;
+	}
+
+
+	public int getSelperiod() {
+		return selperiod;
+	}
+
+
+	public void setSelperiod(int selperiod) {
+		this.selperiod = selperiod;
 	}
 
 	

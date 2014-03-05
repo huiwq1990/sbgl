@@ -39,17 +39,6 @@
 
 
 
-<!--更新实体-->
-        <action name="updateCourseschedule" class="CoursescheduleAction" method="updateCourseschedule">
-        	<result name="success">/teach/coursescheduleUpdate.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		
-<!--update entity full-->
-        <action name="updateCoursescheduleFull" class="CoursescheduleAction" method="updateCourseschedule">
-        	<result name="success">/teach/coursescheduleFullUpdate.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
 	
 
 		
@@ -67,12 +56,7 @@
 				<param name="root">returnStr</param>
 			</result>
         </action>
-<!--del entityfull ajax -->		
-		<action name="deleteCoursescheduleFullAjax" class="CoursescheduleAction" method="deleteCoursescheduleFullAjax">
-        	<result type="json">
-				<param name="root">returnStr</param>
-			</result>
-        </action>
+
     	<action name="updateCoursescheduleAjax" class="CoursescheduleAction" method="updateCoursescheduleAjax">
         	<result type="json">
 				<param name="root">returnStr</param>

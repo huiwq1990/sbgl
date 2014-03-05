@@ -50,6 +50,14 @@ public interface CoursecomputerService{
 	
 	// 查询实体full        
     public List<CoursecomputerFull>  selectCoursecomputerFullByConditionAndPage(String condition,final Page page);
+
+
+
+	List<CoursecomputerFull> selectCoursecomputerFullByPeriod(Integer courseid,
+			Integer semesterid, Integer week, Integer day, Integer period,
+			int language);
+
+	int deleteCoursecomputerByCoursesscheduleId(int coursesscheduleid);
 		
 	
 	

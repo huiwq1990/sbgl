@@ -5,6 +5,8 @@ public class ReturnJson {
 	private int flag;
 	private String reason;
 	private String errortype;
+	private String data;
+	
 	public int getFlag() {
 		return flag;
 	}
@@ -22,6 +24,12 @@ public class ReturnJson {
 	}
 	public void setErrortype(String errortype) {
 		this.errortype = errortype;
+	}
+	public String getData() {
+		return data;
+	}
+	public void setData(String data) {
+		this.data = data;
 	}
 	
 	
