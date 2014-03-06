@@ -3,6 +3,13 @@
 <struts>
     
 	<package name="equip"  extends="admin">
+		<interceptors>  
+           <interceptor name="equipInter"  class="com.sbgl.app.actions.common.EquipIntercepor"/>
+           <interceptor-stack name="equipDefault">
+           	   <interceptor-ref name="equipInter" />
+           </interceptor-stack>
+	    </interceptors>  
+	    <default-interceptor-ref name="equipDefault" />
         <action name="equipManageAdmin" class="EquipmentAction" method="gotoEquipManageAdmin">
         	<result name="success">
         		/admin/equipManageAdmin.vm

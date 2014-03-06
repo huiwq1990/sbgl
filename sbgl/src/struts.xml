@@ -42,6 +42,7 @@
             <!-- 当返回login视图名时，转入/login.jsp页面 -->  
             <result name="login">/login.vm</result>
             <result name="exception-error">/error.vm</result>
+            <result name="noPrivilege">/errorNoPrivilege.vm</result>
         </global-results>
         
         <!-- 进入登陆页面 -->
@@ -65,6 +66,17 @@
             <result name="noPrivilege">/errorNoPrivilege.vm</result>
         </global-results>
     </package>
+    
+    <!-- <package name="equipManage" extends="admin">
+    	<interceptors>  
+           <interceptor name="equipInter"  class="com.sbgl.app.actions.common.EquipIntercepor"/>
+           <interceptor-stack name="equipDefault">
+           	   <interceptor-ref name="equipInter" />
+           </interceptor-stack>
+	    </interceptors>  
+	    <default-interceptor-ref name="equipDefault" />
+	    
+    </package> -->
     
     
     <!-- 根据不同的包引入自己的struts文件 -->
