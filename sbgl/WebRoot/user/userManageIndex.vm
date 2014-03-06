@@ -262,7 +262,7 @@
 	var isWkr = false;		//判读是否是其他
 	
 	var curPage = 1;		//当前页码
-	var totalPage = 1;		//总页码
+	var totalPage = 2;		//总页码
 	var selectedType = 0;	//选中的人员类型，默认是全部人员
 	
 	var cookie = { 
@@ -340,7 +340,7 @@
         alterGroupType = myData.gtype;
         alterClazzId = myData.cid;
         alterClazzName = myData.cname;
-        alterUserPass = myData.tel;
+        alterTel = myData.tel;
         alterMail = myData.mail;
         alterCan = myData.can;
         alterPhoto = myData.pic;
@@ -376,9 +376,9 @@
 		
 		$("#inputStuNum").val(alterUserCode);
 		$("#inputTrueName").val(alterUserName);
-		$("#inputStuSex").val(alterUserGender);
+		$("#inputStuSex").select2("val", alterUserGender);
 		$("#inputPassword1").val(alterUserPass);
-		$("#inputTel").val(alterUserPass);
+		$("#inputTel").val(alterTel);
 		$("#inputMail").val(alterMail);
 		
 		//console.log(alterClazzId);
@@ -773,8 +773,8 @@
 	});
 	//向后一页翻页
 	$("body").on("click", "a[action-type|=nextPage]", function() {
-		alert(curPage);
-		alert(totalPage);
+		//alert(curPage);
+		//alert(totalPage);
 		if(curPage + 1 > totalPage ) {
 			curPage = totalPage;
 			return;

@@ -88,13 +88,15 @@
 					#if($!user.privilege == 0)
 						<td>无</td>
 					#elseif($!user.privilege == 1)
-						<td>查看库存</td>
+						<td>系统管理员</td>
 					#elseif($!user.privilege == 2)
-						<td>录入数据</td>
+						<td>系秘</td>
 					#elseif($!user.privilege == 3)
-						<td>修改订单</td>
+						<td>器材管理员</td>
 					#elseif($!user.privilege == 4)
-						<td>超级管理</td>
+						<td>机房管理员</td>
+					#else
+                        <td>无</td>
 					#end
                     <td>$!user.tel</td>
                   </tr>
@@ -303,7 +305,7 @@
 		
 		$("#inputStuNum").val(alterUserCode);
 		$("#inputTrueName").val(alterUserName);
-		$("#inputStuSex").val(alterUserGender);
+		$("#inputStuSex").select2("val", alterUserGender);
 		$("#inputPassword1").val(alterUserPass);
 		$("#inputTel").val(alterTel);
 		$("#inputMail").val(alterMail);

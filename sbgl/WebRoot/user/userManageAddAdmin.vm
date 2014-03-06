@@ -82,10 +82,10 @@
                     <div class="col-lg-4">
                       <select class="select2 form-control" id="inputPrivilege">
 						<option value=0>无</option>
-						<option value=1>查看库存</option>
-						<option value=2>录入数据</option>
-						<option value=3>修改订单</option>
-						<option value=4>超级管理</option>
+						<option value=1>系统管理员</option>
+						<option value=2>系秘</option>
+						<option value=3>器材管理员</option>
+						<option value=4>机房管理员</option>
                       </select>
                     </div>
                   </div>
@@ -184,6 +184,10 @@
 		}
 		if(userName == "") {
 			alert("姓名不能为空!");
+			return;
+		}
+		if(repeatPass == "") {
+			alert("密码不能为空!");
 			return;
 		}
 		if(repeatPass !== userPass) {
