@@ -39,7 +39,7 @@ public class CoursecomputerDaoImpl extends HibernateDaoSupport implements Course
 	@Override
 	public List<CoursecomputerFull> selectCoursecomputerFullByPeriod(Integer courseid,Integer semesterid,Integer week,Integer day,Integer period,int language) {
 		
-		String condition = " where b.courseid = "+courseid +" and b.semester = "+ semesterid + " and b.week="+week + " and b.day ="+day+" and b.period="+period+" and c.languagetype = "+language;
+		String condition = " where a.status="+TeachConstant.courseschedulevalidstatus+" and b.courseid = "+courseid +" and b.semester = "+ semesterid + " and b.week="+week + " and b.day ="+day+" and b.period="+period+" and c.languagetype = "+language;
 		return this.selectCoursecomputerFullByCondition(condition);
 	} 
 

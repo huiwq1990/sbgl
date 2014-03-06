@@ -55,6 +55,8 @@ public interface CourseService{
 	boolean updateCourse(Course ch, Course en);
 
 	int deleteCourse(List<Integer> delCourseIdList) throws DataError;
+
+	Course selectCourseByCoursetype(Integer coursetype, int language);
 		
 	
 	

@@ -1,6 +1,7 @@
 package com.sbgl.app.actions.teach;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,9 +9,11 @@ import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.entity.Course;
 import com.sbgl.app.entity.CourseFull;
+import com.sbgl.app.entity.Courseconfig;
 import com.sbgl.app.entity.Courseschedule;
 import com.sbgl.app.entity.CoursescheduleFull;
 import com.sbgl.app.entity.Usergroup;
+import com.sbgl.util.DateUtil;
 
 public class TeachActionUtil {
 
@@ -193,5 +196,9 @@ public class TeachActionUtil {
 
 	}
 	
+	public static Date getSemesterDay(Date firstDay,int week,int day){
+		Date newDate = DateUtil.addDay(firstDay, week*7 + day);
+		return DateUtil.getDateDayDate(newDate);
+	}
 
 }

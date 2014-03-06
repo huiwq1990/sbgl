@@ -14,6 +14,7 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.sbgl.app.actions.teach.TeachConstant;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.DaoAbs;
 
@@ -32,7 +33,43 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 	private final String basicComputerorderSql = "From Computerorder as a ";
 	
 
+	/**
+	 * 彻底删除订单信息
+	 * @param computerorderid 
+	 */
+	@Override
+	public void delById(int computerorderid){
+		String sql = " delete Computerorder where id = "+computerorderid;
+		try {
+			Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
+	         Query query = session.createSQLQuery(sql);
+			 query.executeUpdate();
+		} catch (RuntimeException re) {
+	        log.error("查询失败", re);           
+	        throw re;
+	            
+	   }
+	}
 	
+	/**
+	 * 获取订单信息
+	 * @param computerorderid 
+	 */
+	@Override
+	public Computerorder selectById(int computerorderid){
+		final String  sql = basicComputerorderSql +" where id= " + computerorderid;
+		
+		try {
+             List l = this.getHibernateTemplate().find(sql);
+             if(l!=null || l.size()!=0){
+            	 return (Computerorder) l.get(0);
+             }
+			 return null;
+        } catch (RuntimeException re) {
+            log.error("失败", re);
+            throw re;
+        }
+	}
 	
 	
 	// 根据条件查询查询实体

@@ -62,6 +62,44 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	*/
 	
 	/**
+	 * 彻底删除某一时间段的课程预约
+	 * @param computerorderid
+	 */
+	@Override
+	public void delByPeriod(int computerorderid,String borrowday,int period){
+		String sql = " delete from Computerorderdetail where computerorderid = "+computerorderid + "  and borrowday='"+borrowday+"' and borrowperiod="+period;
+		try {
+			Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
+	         Query query = session.createSQLQuery(sql);
+			 query.executeUpdate();
+		} catch (RuntimeException re) {
+	        log.error("查询失败", re);           
+	        throw re;
+	            
+	   }
+	}
+	
+	
+
+	/**
+	 * 彻底删除订单详情信息
+	 * @param computerorderid
+	 */
+	@Override
+	public void delByComputerorderid(int computerorderid){
+		String sql = " delete Computerorderdetail where computerorderid = "+computerorderid;
+		try {
+			Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
+	         Query query = session.createSQLQuery(sql);
+			 query.executeUpdate();
+		} catch (RuntimeException re) {
+	        log.error("查询失败", re);           
+	        throw re;
+	            
+	   }
+	}
+	
+	/**
 	 * 查询某个天有效的订单详情
 	 */
 	@Override

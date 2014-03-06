@@ -2,18 +2,31 @@ package com.sbgl.app.services.teach.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
+import com.sbgl.app.entity.Computerorder;
+import com.sbgl.app.entity.Computerorderdetail;
+import com.sbgl.app.entity.Course;
 import com.sbgl.app.entity.Coursecomputer;
+import com.sbgl.app.entity.Coursecomputerorder;
+import com.sbgl.app.entity.Courseconfig;
 import com.sbgl.app.entity.Courseschedule;
 import com.sbgl.app.entity.CoursescheduleFull;
+import com.sbgl.app.entity.Courseschedulecomputerorder;
 import com.sbgl.app.services.teach.CoursescheduleService;
 import com.sbgl.app.actions.teach.CoursescheduleAction;
+import com.sbgl.app.actions.teach.TeachActionUtil;
 import com.sbgl.app.actions.teach.TeachConstant;
+import com.sbgl.app.common.computer.ComputerorderInfo;
+import com.sbgl.app.dao.ComputerorderDao;
+import com.sbgl.app.dao.ComputerorderdetailDao;
 import com.sbgl.app.dao.CoursecomputerDao;
+import com.sbgl.app.dao.CoursecomputerorderDao;
 import com.sbgl.app.dao.CoursescheduleDao;
 import com.sbgl.app.dao.BaseDao;
+import com.sbgl.app.dao.CourseschedulecomputerorderDao;
 import com.sbgl.common.DataError;
 import com.sbgl.util.*;
 
@@ -40,7 +53,19 @@ public class CoursescheduleServiceImpl implements CoursescheduleService{
 	private CoursescheduleDao coursescheduleDao;
 	
 	@Resource
+	private CourseschedulecomputerorderDao courseschedulecomputerorderDao;
+	
+	@Resource
 	private CoursecomputerDao coursecomputerDao;
+	
+	@Resource
+	private ComputerorderDao computerorderDao;
+	
+	@Resource
+	private ComputerorderdetailDao computerorderdetailDao;
+	
+	@Resource
+	private CoursecomputerorderDao coursecomputerorderDao;
 	
 	//http://blog.csdn.net/softimes/article/details/7008875 实体添加时需要配置hibernate
 	@Override
@@ -71,24 +96,84 @@ public class CoursescheduleServiceImpl implements CoursescheduleService{
 		baseDao.saveEntity(courseschedule);		
 	}
 	
-	
+	/**
+	 * 在课程安排添加界面，批量添加
+	 */	
 	@Override
-	public void addCourseschedule(List<Courseschedule> coursescheduleList,List<Coursecomputer> coursecomputerList) throws DataError{
+	public void addCourseschedule(Courseconfig currentCourseconfig, int courseid,Computerorder computerorder,List<Courseschedule> coursescheduleList,List<Coursecomputer> coursecomputerList,List<Computerorderdetail> computerorderdetailList) throws DataError{
 	
+		
+//		创建信息的订单,如果本学期这个课程已经创建预约，则仍用这个预约，如果没有则新建一个
+		int computerorderid =0;
+		Coursecomputerorder coursecomputerorder = coursecomputerorderDao.selectBySemesterCourse(currentCourseconfig.getId(), courseid);
+		Computerorder tempcomputerorder = new Computerorder();
+		if(coursecomputerorder == null){
+			try {
+				BeanUtils.copyProperties(tempcomputerorder, computerorder);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				throw new DataError("");
+			}	
+			tempcomputerorder.setId(baseDao.getCode("Computerorder"));
+			baseDao.saveEntity(tempcomputerorder);
+			
+			computerorderid = tempcomputerorder.getId();
+			
+			
+//			保存订单课程关系
+			Coursecomputerorder newcoursecomputerorder = new Coursecomputerorder();
+			newcoursecomputerorder.setComputerorderid(computerorderid);
+			newcoursecomputerorder.setCourseid(courseid);
+			newcoursecomputerorder.setSemesterid(currentCourseconfig.getId());
+			
+			newcoursecomputerorder.setId(baseDao.getCode("Coursecomputerorder"));
+			baseDao.saveEntity(newcoursecomputerorder);
+			
+		}else{
+			computerorderid = coursecomputerorder.getComputerorderid();
+		}
+		
+		
+		
 		for(Courseschedule temp : coursescheduleList){
 
-//			String sql = " update Courseschedule set status = "+TeachConstant.coursescheduledel+" where courseid = "+temp.getCourseid()+" and semester = "+temp.getSemester()+" and week="+temp.getWeek()+" and day = "+temp.getDay()+"  and period = "+temp.getPeriod();
-//			coursescheduleService.execSql(sql);
-//			查询已经添加过的记录
-			List<Courseschedule> addedCoursescheduleList = new ArrayList<Courseschedule>();
+//			查询已经添加过的记录，结果做多只有一条
+//			addedCoursescheduleList = new ArrayList<Courseschedule>();
 			String addedsql = "   where status = "+TeachConstant.courseschedulevalidstatus+" and courseid = "+temp.getCourseid()+" and semester = "+temp.getSemester()+" and week="+temp.getWeek()+" and day = "+temp.getDay()+"  and period = "+temp.getPeriod();
-			addedCoursescheduleList = coursescheduleDao.selectCoursescheduleByCondition(addedsql);
+			List<Courseschedule> addedCoursescheduleList = coursescheduleDao.selectCoursescheduleByCondition(addedsql);
 			
-			
+			log.info("是否已经预约："+addedCoursescheduleList.size());
+//			如果这节课已经添加 即已经预约，需要删除预约
 			if(addedCoursescheduleList!=null && addedCoursescheduleList.size() > 0){
+				Courseschedule added = addedCoursescheduleList.get(0);
+				int csid = addedCoursescheduleList.get(0).getId();
 //				删除已经添加
 				coursescheduleDao.delCoursescheduleByPeriod(addedCoursescheduleList.get(0));
-				coursecomputerDao.delCoursecomputerByCourseschedule(addedCoursescheduleList.get(0).getId());
+				coursecomputerDao.delCoursecomputerByCourseschedule(csid);
+				
+				
+				log.info("coursescheduleList.get(0).getId()"+csid);
+//				查询课程的机房
+//				List<Courseschedulecomputerorder> cscoList = courseschedulecomputerorderDao.selectByCoursescheduleid(csid);
+//		         if(cscoList !=null && cscoList.size()==1){	            	 
+//		         }else{
+//		        	 throw new DataError("获取课程安排订单序号出错");
+//		         }
+		         /*
+//		      	根据订单号删除订单
+				computerorderDao.delById(cscoList.get(0).getComputercoursescheduleid());
+//				根据订单号删除订单详情
+				computerorderdetailDao.delByComputerorderid(cscoList.get(0).getComputercoursescheduleid());
+				*/
+		         
+//		         如果课程安排的机房已经添加，则它的预约详情需要删除
+//		         要删除的课程安排信息
+//				int courseid = added.getCourseid();
+				
+				Date borrowday = TeachActionUtil.getSemesterDay(currentCourseconfig.getFirstday(),added.getWeek(),added.getDay());
+				String bow = DateUtil.dateFormat(DateUtil.parseDate(DateUtil.getDateDay(borrowday)), DateUtil.dateformatstr1);
+				computerorderdetailDao.delByPeriod(computerorderid,bow, added.getPeriod());
+				
 				log.info("课程信息已经添加");
 			}
 
@@ -96,19 +181,18 @@ public class CoursescheduleServiceImpl implements CoursescheduleService{
 
 			
 //			新添加课程表
-			Courseschedule en = new Courseschedule();
-			
+			Courseschedule newcs = new Courseschedule();			
 			try {
-				BeanUtils.copyProperties(en, temp);
+				BeanUtils.copyProperties(newcs, temp);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				throw new DataError("");
 			}	
-			en.setId(baseDao.getCode("Courseschedule"));
-			en.setStatus(TeachConstant.courseschedulevalidstatus);
-			baseDao.saveEntity(en);		
+			newcs.setId(baseDao.getCode("Courseschedule"));
+			newcs.setStatus(TeachConstant.courseschedulevalidstatus);
+			baseDao.saveEntity(newcs);		
 			
-//			添加课程机房使用信息
+//			添加课程安排的机房使用信息
 			for(Coursecomputer cc : coursecomputerList){
 				int c = baseDao.getCode("Coursecomputer");
 				Coursecomputer ccnew = new Coursecomputer();
@@ -120,12 +204,27 @@ public class CoursescheduleServiceImpl implements CoursescheduleService{
 					throw new DataError("");
 				}	
 				ccnew.setId(c);
-				ccnew.setLessonid(en.getId());
+				ccnew.setLessonid(newcs.getId());
 				ccnew.setStatus(TeachConstant.courseschedulevalidstatus);
 				baseDao.saveEntity(ccnew);
 			}
 			
+			
+
 		}
+	
+
+
+
+
+	
+		
+		for(Computerorderdetail cod : computerorderdetailList){
+			cod.setComputerorderid(computerorderid);
+			cod.setId(baseDao.getCode("Computerorderdetail"));
+			baseDao.saveEntity(cod);
+		}
+
 		
 	}
 	
@@ -148,6 +247,26 @@ public class CoursescheduleServiceImpl implements CoursescheduleService{
 	}
 
 
+//  删除课程安排小节，删除借用机器，删除预约
+	@Override
+	public int deleteCourseschedule(Courseconfig currentCourseconfig,int computerorderid,Courseschedule temp){
+//		Coursecomputerorder coursecomputerorder = coursecomputerorderDao.selectBySemesterCourse(currentCourseconfig.getId(), temp.getCourseid());
+//		
+//		if()
+		
+//		删除课程安排
+		coursescheduleDao.delCoursescheduleByPeriod(temp);
+		
+		
+//		删除课程借用机器
+		coursecomputerDao.delCoursecomputerByCourseschedule(temp.getId());
+		
+		Date borrowday = TeachActionUtil.getSemesterDay(currentCourseconfig.getFirstday(),temp.getWeek(),temp.getDay());
+		String bow = DateUtil.dateFormat(DateUtil.parseDate(DateUtil.getDateDay(borrowday)), DateUtil.dateformatstr1);
+		computerorderdetailDao.delByPeriod(computerorderid,bow, temp.getPeriod());
+		
+		return 1;
+	}
 
 
 	

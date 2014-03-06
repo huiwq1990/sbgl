@@ -72,7 +72,7 @@
 											#if($temp == $selweek)
 											<li class="active"><a href="${webbaseurl}/viewCoursescheduleByWeek.${strutsaction}?selcourseid=$!selcourseid&selweek=$temp" data-toggle="tab" data-week="$temp">第$temp周</a></li>
 											#else
-											<li><a href="${webbaseurl}/viewCoursescheduleByWeek.${strutsaction}?selcourseid=$!selcourseid&selweek=$temp" data-toggle="tab" data-week="$temp">第$temp周</a></li>
+											<li><a href="${webbaseurl}/viewCoursescheduleByWeek.${strutsaction}?selcourseid=$!selcourseid&selweek=$temp"  data-week="$temp">第$temp周</a></li>
 										
 											#end
 										#end
@@ -312,7 +312,7 @@ $("#course-week-table").on("click", "td.selectable", function() {
 				
 			  var str="";
 			  str +='<ul class="list-inline">';
-				$.each(comList,function(i, com){    
+				jQuery.each(comList,function(i, com){    
 					// console.log(com.cmname);
 					
 					 str +='<li>'+com.cmname+'</li>';
