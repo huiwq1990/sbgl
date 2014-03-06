@@ -149,10 +149,24 @@ public class CourseServiceImpl implements CourseService{
 
 	}
 
+//	根据类型查询实体类			
+	@Override
+	public Course selectCourseByCoursetype(Integer coursetype,int language){
+		List<Course> l = courseDao.selectCourseByCondition("where languagetype="+language+" and coursetype ="+coursetype);
+		if(l != null && l.size() ==1){
+			return l.get(0);
+		}
+		return null;
+	}
+	
 //	根据id查询实体类			
 	@Override
-	public Course selectCourseById(Integer courseId){		
-		return baseDao.getEntityById(Course.class, courseId);
+	public Course selectCourseById(Integer courseId){
+		List<Course> l = courseDao.selectCourseByCondition("where id ="+courseId);
+		if(l != null && l.size() ==1){
+			return l.get(0);
+		}
+		return null;
 	}
 	
 //	@Override

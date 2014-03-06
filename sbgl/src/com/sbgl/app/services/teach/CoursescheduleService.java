@@ -2,7 +2,11 @@ package com.sbgl.app.services.teach;
 
 import java.util.List;
 
+import com.sbgl.app.entity.Computerorder;
+import com.sbgl.app.entity.Computerorderdetail;
+import com.sbgl.app.entity.Course;
 import com.sbgl.app.entity.Coursecomputer;
+import com.sbgl.app.entity.Courseconfig;
 import com.sbgl.app.entity.Courseschedule;
 import com.sbgl.app.entity.CoursescheduleFull;
 import com.sbgl.common.DataError;
@@ -57,8 +61,7 @@ public interface CoursescheduleService{
 
 	
 
-	void addCourseschedule(List<Courseschedule> coursescheduleList,
-			List<Coursecomputer> coursecomputerList) throws DataError;
+
 
 	List<Courseschedule> selectCoursescheduleByWeek(Integer courseId,
 			Integer semesterId, Integer weeknum);
@@ -71,6 +74,18 @@ public interface CoursescheduleService{
 
 	List<Courseschedule> selectCoursescheduleByPeriod(Integer courseId,
 			Integer semesterId, Integer weeknum, Integer day, Integer period);
+
+
+
+
+	void addCourseschedule(Courseconfig currentCourseconfig, int courseid,
+			Computerorder computerorder,
+			List<Courseschedule> coursescheduleList,
+			List<Coursecomputer> coursecomputerList,
+			List<Computerorderdetail> computerorderdetailList) throws DataError;
+
+	int deleteCourseschedule(Courseconfig currentCourseconfig,
+			int computerorderid, Courseschedule temp);
 		
 	
 	

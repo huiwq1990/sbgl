@@ -53,5 +53,10 @@ public List<Computerorderdetail> selectComputerorderdetailByCondition(String con
 
 	List<Computerorderdetail> selectComputerorderByDate(Date queryDate);
 
+	void delByComputerorderid(int computerorderid);
+
+
+	void delByPeriod(int computerorderid, String borrowday, int period);
+
  
 }

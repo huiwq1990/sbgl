@@ -25,5 +25,9 @@ public List<Computerorder> selectComputerorderByCondition(String condition);
 //  分页查询 实体full
 	public List<ComputerorderFull> selectComputerorderFullByPage(Page page);
 
+	void delById(int computerorderid);
+
+	Computerorder selectById(int computerorderid);
+
  
 }

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	 <package name="courseschedulecomputerorder" extends="admin">
+
+
+<!-- default entity manage action -->
+    	<action name="manageCourseschedulecomputerorder" class="ManageTeachAction" method="manageCourseschedulecomputerorder">
+        	<result name="success1">/teach/courseschedulecomputerorderManage.vm</result>
+			<result name="success2">/teach/courseschedulecomputerorderFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!-- entity full manage  -->		
+		<!-- default entity full manage action -->
+    	<action name="manageCourseschedulecomputerorderFull" class="ManageTeachAction" method="manageCourseschedulecomputerorderFull">
+        	<result name="success1">/teach/courseschedulecomputerorderFullManage.vm</result>
+			<result name="success2">/teach/courseschedulecomputerorderFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+		
+		
+<!--添加实体-->
+    	<action name="addCourseschedulecomputerorder" class="CourseschedulecomputerorderAction" method="addCourseschedulecomputerorder">
+        	<result type="redirectAction">
+				<param name="actionName">manageCourseschedulecomputerorder</param>
+			</result>
+        </action>
+		
+<!--edit entity-->
+        <action name="editCourseschedulecomputerorder" class="CourseschedulecomputerorderAction" method="editCourseschedulecomputerorder">
+        	<result name="success">/teach/courseschedulecomputerorderEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--edit entity full-->
+        <action name="editCourseschedulecomputerorderFull" class="CourseschedulecomputerorderAction" method="editCourseschedulecomputerorderFull">
+        	<result name="success">/teach/courseschedulecomputerorderFullEdit.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+<!--del-->
+        <!--del entity-->
+        <action name="deleteCourseschedulecomputerorder" class="CourseschedulecomputerorderAction" method="deleteCourseschedulecomputerorder">
+        	<result type="redirectAction">
+				<param name="actionName">manageCourseschedulecomputerorder</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		<!--del entityfull-->
+        <action name="deleteCourseschedulecomputerorderFull" class="CourseschedulecomputerorderAction" method="deleteCourseschedulecomputerorderFull">
+        	<result type="redirectAction">
+				<param name="actionName">manageCourseschedulecomputerorderFull</param>
+			</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--更新实体-->
+        <action name="updateCourseschedulecomputerorder" class="CourseschedulecomputerorderAction" method="updateCourseschedulecomputerorder">
+        	<result name="success">/teach/courseschedulecomputerorderUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!--update entity full-->
+        <action name="updateCourseschedulecomputerorderFull" class="CourseschedulecomputerorderAction" method="updateCourseschedulecomputerorder">
+        	<result name="success">/teach/courseschedulecomputerorderFullUpdate.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+<!--根据id查询实体-->
+        <action name="selectCourseschedulecomputerorderById" class="CourseschedulecomputerorderAction" method="selectCourseschedulecomputerorderById">
+        	<result name="success">/teach/courseschedulecomputerorderView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity-->		
+        <action name="viewCourseschedulecomputerorder" class="CourseschedulecomputerorderAction" method="viewCourseschedulecomputerorder">
+        	<result name="success">/teach/courseschedulecomputerorderView.jsp</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+<!-- View entity full-->		
+        <action name="viewCourseschedulecomputerorderFull" class="CourseschedulecomputerorderAction" method="viewCourseschedulecomputerorderFull">
+        	<result name="success">/teach/courseschedulecomputerorderFullView.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+	
+		
+    </package>
+    
+    <!-- Ajax方式 -->
+    <package name="courseschedulecomputerorderAjax" extends="json-default">
+    	<action name="addCourseschedulecomputerorderAjax" class="CourseschedulecomputerorderAction" method="addCourseschedulecomputerorderAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+        <action name="deleteCourseschedulecomputerorderAjax" class="CourseschedulecomputerorderAction" method="deleteCourseschedulecomputerorderAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+<!--del entityfull ajax -->		
+		<action name="deleteCourseschedulecomputerorderFullAjax" class="CourseschedulecomputerorderAction" method="deleteCourseschedulecomputerorderFullAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+    	<action name="updateCourseschedulecomputerorderAjax" class="CourseschedulecomputerorderAction" method="updateCourseschedulecomputerorderAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+      
+	</package>
+
+</struts>

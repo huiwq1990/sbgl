@@ -25,13 +25,16 @@ import com.sbgl.app.actions.common.BaseAction;
 import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.computer.ComputerActionUtil;
 import com.sbgl.app.actions.util.JsonActionUtil;
+import com.sbgl.app.actions.util.SnActionUtil;
 import com.sbgl.app.common.computer.BorrowperiodUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
+import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputercategoryService;
 import com.sbgl.app.services.computer.ComputermodelService;
 import com.sbgl.app.services.teach.CourseService;
 import com.sbgl.app.services.teach.CoursecomputerService;
+import com.sbgl.app.services.teach.CoursecomputerorderService;
 import com.sbgl.app.services.teach.CourseconfigService;
 import com.sbgl.app.services.teach.CoursescheduleService;
 import com.sbgl.app.services.user.GroupService;
@@ -113,6 +116,10 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 	private GroupService groupService;
 	private List<Usergroup> usergroupList = new ArrayList<Usergroup>();
 	
+	
+	@Resource
+	private CoursecomputerorderService coursecomputerorderService;
+	
 	private HashMap<Integer, ArrayList<Course>> courseByGroupId = new HashMap<Integer,ArrayList<Course>>();
 	private HashMap<Integer, ArrayList<CourseFull>> courseFullByGroupId = new HashMap<Integer,ArrayList<CourseFull>>();
 
@@ -133,6 +140,7 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 	
 	private List<Integer> dayList = new ArrayList<Integer>();
 	
+	List<Computerorderdetail> computerorderdetailList = new ArrayList<Computerorderdetail>();
 	
 	private String logprefix = "exec action method:";
 	
@@ -385,8 +393,14 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 			return SUCCESS;
 		}
 		
+		log.info("添加的课程名称："+intputcourseid);
+		course = courseService.selectCourseByCoursetype(Integer.valueOf(intputcourseid),CommonConfig.languagech);
+		if(course == null){
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, "添加的课程信息不存在");			
+			return SUCCESS;
+		}
 		
-		
+		int currentCourseid = Integer.valueOf(intputcourseid);
 		String[] dayperiods = inputdayperiod.split(";");
 		String[] weeks = inputweek.split(";");
 		String[] computerorderinfos = inputcomputerorderinfo.split(";");
@@ -420,9 +434,35 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 			 coursecomputerList.add(temp);
 		}
 		
+//		pc订单
+		Computerorder computerorder = new Computerorder();	
+		computerorder.setSerialnumber( SnActionUtil.genComputerorderSn(this.getCurrentAdminId(), 3, DateUtil.currentDate()));
+		computerorder.setCreateuserid(this.getCurrentAdminId());
+		computerorder.setOrdertype(3);
+		String ordertitle = course.getName()+"的课程安排预约";
+		computerorder.setTitle(ordertitle);
+		computerorder.setCreatetime(DateUtil.currentDate());
+		computerorder.setStatus(ComputerorderInfo.ComputerorderStatusAduitPass);
+//		设置pc订单详情信息
+		for(String week : weeks){
+			for(String dayperiod : dayperiods){
+				 String[] dp = dayperiod.split(",");					
+				 for(Coursecomputer cc : coursecomputerList){
+					Computerorderdetail cod = new Computerorderdetail();
+					cod.setBorrowday(TeachActionUtil.getSemesterDay(courseconfig.getFirstday(),Integer.valueOf(week),Integer.valueOf(dp[0])));
+					cod.setBorrownumber(cc.getBorrownum());
+					cod.setBorrowperiod(Integer.valueOf(dp[1]));
+					cod.setCreatetime(DateUtil.currentDate());
+					cod.setComputermodelid(cc.getComputerid());
+					cod.setStatus(ComputerorderInfo.ComputerorderStatusAduitPass);
+					computerorderdetailList.add(cod);					
+				 }
+			}
+		}
+		
 //		log.info(coursescheduleList)
 
-		coursescheduleService.addCourseschedule(coursescheduleList, coursecomputerList);
+		coursescheduleService.addCourseschedule(courseconfig,currentCourseid,computerorder,coursescheduleList, coursecomputerList,computerorderdetailList);
 
 		
 		returnInfo = "添加成功";
@@ -632,7 +672,7 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 			courseschedulePeriodDayMap = TeachActionUtil.setCourseschedulePeriodDayMap(coursescheduleList);
 			
 		
-			log.info("test courseschedulePeriodDayMap:"+courseschedulePeriodDayMap.get(2).size());
+//			log.info("test courseschedulePeriodDayMap:"+courseschedulePeriodDayMap.get(2).size());
 			returnInfo = "";
 			log.info(returnInfo);
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
@@ -741,15 +781,25 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 			return SUCCESS;			
 		}
-
+		courseschedule = coursescheduleList.get(0);
+		
+		
+		Coursecomputerorder coursecomputerorder = coursecomputerorderService.selectBySemesterCourse(courseconfig.getId(), courseschedule.getCourseid());
+		if(coursecomputerorder==null){
+			returnInfo = "删除课程安排的订单无法获取";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return SUCCESS;		
+		}
+		
 //		courseschedule.setCourseid(selcourseid);
 //		courseschedule.setSemester(courseconfig.getId());
 //		courseschedule.setWeek(selweek);
 //		
 //		courseschedule.setDay(selday);
 //		courseschedule.setPeriod(selperiod);
-		courseschedule = coursescheduleList.get(0);
-		coursescheduleService.deleteCourseschedule(courseschedule);
+		
+		coursescheduleService.deleteCourseschedule(courseconfig,coursecomputerorder.getComputerorderid(),courseschedule);
 		
 		returnInfo = "删除成功";
 		log.info(returnInfo);
@@ -1487,6 +1537,28 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 
 	public void setSelperiod(int selperiod) {
 		this.selperiod = selperiod;
+	}
+
+
+	public CoursecomputerorderService getCoursecomputerorderService() {
+		return coursecomputerorderService;
+	}
+
+
+	public void setCoursecomputerorderService(
+			CoursecomputerorderService coursecomputerorderService) {
+		this.coursecomputerorderService = coursecomputerorderService;
+	}
+
+
+	public List<Computerorderdetail> getComputerorderdetailList() {
+		return computerorderdetailList;
+	}
+
+
+	public void setComputerorderdetailList(
+			List<Computerorderdetail> computerorderdetailList) {
+		this.computerorderdetailList = computerorderdetailList;
 	}
 
 	
