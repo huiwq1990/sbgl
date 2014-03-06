@@ -56,7 +56,7 @@
 				  <div class="form-group">
                     <label for="inputPassword1" class="col-lg-2 control-label">密码</label>
                     <div class="col-lg-4">
-                      <input type="password" class="form-control" id="inputPassword1" placeholder="登录密码">
+                      <input type="password" class="form-control" id="inputPassword1" placeholder="登录密码（默认为 000000）">
                     </div>
                   </div>
 				  <div class="form-group">
@@ -210,7 +210,9 @@
 			alert("姓名不能为空!");
 			return;
 		}
-		if(userPass !== repeatPass) {
+		if(userPass == "" && repeatPass == "") {
+			userPass = "000000";
+		} else if(userPass !== repeatPass) {
 			alert("两次密码输入不一致!");
 			return;
 		}
@@ -292,7 +294,8 @@
                     $("#inputTrueName").val("");
                     $("#inputStuSex").select2("val", 0);
                     $("#inputPassword1").val("");
-                    $("#inputUserGroup").select2("val", 0);
+                    $("#inputPassword2").val("");
+                    //$("#inputUserGroup").select2("val", 0);
                     $("#inputStuClass").select2("val", -1);
                     $("#inputTel").val("");
                     $("#inputMail").val("");

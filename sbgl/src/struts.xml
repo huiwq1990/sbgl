@@ -51,6 +51,21 @@
         
     </package>
     
+    <package name="userManage" extends="admin">
+    	<interceptors>  
+           <interceptor name="userInter"  class="com.sbgl.app.actions.common.UserIntercepor"/>
+           	<!-- 拦截器栈  --> 
+           <interceptor-stack name="userDefault">
+           	   <interceptor-ref name="userInter" />
+           </interceptor-stack>
+	    </interceptors>  
+	    <default-interceptor-ref name="userDefault" />
+	    
+	    <global-results>  
+            <result name="noPrivilege">/errorNoPrivilege.vm</result>
+        </global-results>
+    </package>
+    
     
     <!-- 根据不同的包引入自己的struts文件 -->
     <include file="com/sbgl/app/actions/*/struts_*.xml"/>
