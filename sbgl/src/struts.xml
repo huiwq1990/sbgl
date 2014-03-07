@@ -58,6 +58,7 @@
            	<!-- 拦截器栈  --> 
            <interceptor-stack name="userDefault">
            	   <interceptor-ref name="userInter" />
+           	   <interceptor-ref name="defaultStack" />
            </interceptor-stack>
 	    </interceptors>  
 	    <default-interceptor-ref name="userDefault" />

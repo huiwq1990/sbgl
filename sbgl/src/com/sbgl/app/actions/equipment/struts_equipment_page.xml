@@ -7,6 +7,7 @@
            <interceptor name="equipInter"  class="com.sbgl.app.actions.common.EquipIntercepor"/>
            <interceptor-stack name="equipDefault">
            	   <interceptor-ref name="equipInter" />
+           	   <interceptor-ref name="defaultStack" />
            </interceptor-stack>
 	    </interceptors>  
 	    <default-interceptor-ref name="equipDefault" />

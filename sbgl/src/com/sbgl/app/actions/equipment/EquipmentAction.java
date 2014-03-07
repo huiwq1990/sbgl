@@ -743,8 +743,13 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		try {
-			mDate = sdf.parse(manufactureDateStr);
-			aDate = sdf.parse(acquireDateStr);
+			if(manufactureDateStr != null &&  !"".equals(manufactureDateStr) ) {
+				mDate = sdf.parse(manufactureDateStr);
+			}
+			if(acquireDateStr != null && !"".equals(acquireDateStr)) {
+				aDate = sdf.parse(acquireDateStr);
+			}
+			
 		} catch (ParseException e) {
 			this.tag = "200";
 			this.message = "请检查输入日期格式是否正确！";
@@ -848,8 +853,12 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		try {
-			mDate = sdf.parse(manufactureDateStr);
-			aDate = sdf.parse(acquireDateStr);
+			if(manufactureDateStr != null &&  !"".equals(manufactureDateStr) ) {
+				mDate = sdf.parse(manufactureDateStr);
+			}
+			if(acquireDateStr != null && !"".equals(acquireDateStr)) {
+				aDate = sdf.parse(acquireDateStr);
+			}
 		} catch (ParseException e) {
 			this.tag = "200";
 			this.message = "请检查输入日期格式是否正确！";
@@ -1175,7 +1184,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 //				ec.setClassName( "未知分类" );
 //				ec.setCode( String.valueOf( equipdetail.getEquipserial() ) );
 			} else {
-				Equipment e = equipService.getEquipmentById( equipdetail.getEquipmentid() );
+				Equipment e = equipService.getEquipByComidAndLanType( equipdetail.getEquipmentid(), "0" );
 			
 				if(e != null) {
 					ec.setModelId( String.valueOf( e.getComid() ) );	//根据需求改为联合主键，不再是中文型号的id

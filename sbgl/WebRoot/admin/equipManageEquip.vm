@@ -238,7 +238,7 @@
 		
 		var regex = /^[0-9]*$/;
 		var ret = regex.test(storenumber);
-		if(ret == false) {
+		if(ret == false && storenumber != "") {
 			alert("库存条码必须输入数字！");
 			return;
 		}
@@ -249,7 +249,7 @@
 		}
 		var regex2 = /^[0-9]+(.[0-9]+)?$/;
 		var ret3 = regex2.test(worth);
-		if(ret3 == false) {
+		if(ret3 == false && worth != "") {
 			alert("金额输入格式错误！");
 			return;
 		}
@@ -295,10 +295,22 @@
 					n = noty({text: data.msg, timeout: 2500, type: 'success'});
 		    		_this.parents('.modal').modal('toggle');
 					
-					$("#inputEquipId").val("");
+					
             		$("#inputEquipModelId").select2("val", -1);
             		$("#inputEquipStatus").select2("val", 0);
-            		$("#inputEquipRemark").val("");
+					$("#equipserial").val("");
+                    $("inputEquipRemark").val("");
+                    $("#manufactureDate").val("");
+                    $("#acquireDate").val("");
+                    $("#manufacturer").val("");
+                    $("#supplyer").val("");
+                    $("#worth").val("");
+                    $("#useManageDept").val("");
+                    $("#manager").val("");
+                    $("#storagePlace").val("");
+                    $("#storagePosition").val();
+                    $("#storenumber").val("");
+                    $("#assetNumber").val("");
 				} else {
 					n = noty({text: data.msg, timeout: 2500, type: 'error'});
 				}
