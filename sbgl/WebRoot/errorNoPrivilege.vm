@@ -1,0 +1,8 @@
+<html >
+	<body >
+		<h1 >
+			没有权限访问，请更换用户登录！
+        </h1>
+        <!--<a href="${webbaseurl}/index.do">首页</a>-->
+    </body>
+</html>

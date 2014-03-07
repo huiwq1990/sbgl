@@ -20,6 +20,7 @@ import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.DaoAbs;
 
 import com.sbgl.app.dao.ComputerorderdetailDao;
+import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.util.*;
@@ -59,6 +60,63 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 
     }
 	*/
+	
+	/**
+	 * 彻底删除某一时间段的课程预约
+	 * @param computerorderid
+	 */
+	@Override
+	public void delByPeriod(int computerorderid,String borrowday,int period){
+		String sql = " delete from Computerorderdetail where computerorderid = "+computerorderid + "  and borrowday='"+borrowday+"' and borrowperiod="+period;
+		try {
+			Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
+	         Query query = session.createSQLQuery(sql);
+			 query.executeUpdate();
+		} catch (RuntimeException re) {
+	        log.error("查询失败", re);           
+	        throw re;
+	            
+	   }
+	}
+	
+	
+
+	/**
+	 * 彻底删除订单详情信息
+	 * @param computerorderid
+	 */
+	@Override
+	public void delByComputerorderid(int computerorderid){
+		String sql = " delete Computerorderdetail where computerorderid = "+computerorderid;
+		try {
+			Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
+	         Query query = session.createSQLQuery(sql);
+			 query.executeUpdate();
+		} catch (RuntimeException re) {
+	        log.error("查询失败", re);           
+	        throw re;
+	            
+	   }
+	}
+	
+	/**
+	 * 查询某个天有效的订单详情
+	 */
+	@Override
+	public List<Computerorderdetail> selectComputerorderByDate(Date queryDate) {
+		
+		String dateStr= DateUtil.dateFormat(DateUtil.getDateDayDate(queryDate), DateUtil.dateformatstr1);
+		
+		  String cond = "where ( " ;
+		  cond += " borrowday = '" + dateStr+"' ";//今天当前时段之后的
+           cond +=  "           ) and ";
+           cond +=  "            ( status in ("+ComputerorderdetailInfo.ComputerorderdetailStatusAduitPass+","+ComputerorderdetailInfo.ComputerorderdetailStatusAduitWait+") ) ";
+           
+          log.info(cond);
+          return selectComputerorderdetailByCondition(cond);
+		
+		 
+	}
 	
 	/**
 	 * 查询某个时间段内有效的订单详情

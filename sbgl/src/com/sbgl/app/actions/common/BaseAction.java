@@ -77,6 +77,15 @@ public class BaseAction extends ActionSupport implements SessionAware,CookiesAwa
 		return -100;
 	}
 	
+	
+	public int getCurrentAdminId(){
+		if(session.containsKey(CommonConfig.sessionuser)){
+			Loginuser lu =  (Loginuser) session.get(CommonConfig.sessionuser);
+			return lu.getId();
+		}
+		return -100;
+	}
+	
 	public Loginuser getCurrentUser(){
 		if(session.containsKey(CommonConfig.sessionuser)){
 			Loginuser lu =  (Loginuser) session.get(CommonConfig.sessionuser);

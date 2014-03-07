@@ -309,6 +309,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 						equipService.deleteEquipmentclassification( e.getClassificationid() );
 					}
 				}
+				
 			} else if(ec != null) {
 				List<Equipment> equipList = equipService.getEquipsByClassification( this.classficationId );
 				if(equipList != null) {
@@ -319,7 +320,9 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				}
 			}
 			
+			
 			equipService.deleteEquipmentclassification( this.classficationId );
+			
 			this.tag = "0";
 		} catch(RuntimeException re) {
 			re.printStackTrace();

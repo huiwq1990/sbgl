@@ -13,21 +13,51 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.sbgl.app.actions.teach.TeachConstant;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.DaoAbs;
 
 import com.sbgl.app.dao.CoursecomputerDao;
 import com.sbgl.app.entity.Coursecomputer;
 import com.sbgl.app.entity.CoursecomputerFull;
+import com.sbgl.app.entity.Courseschedule;
 import com.sbgl.util.*;
 
 @Repository("coursecomputerDao")
 public class CoursecomputerDaoImpl extends HibernateDaoSupport implements CoursecomputerDao{
 
 	private static final Log log = LogFactory.getLog(CoursecomputerDaoImpl.class);
-	private final String basicCoursecomputerFullSql = "select a.id as coursecomputerid from Coursecomputer a  ";
+	private final String basicCoursecomputerFullSql =
+		"select a.id as coursecomputerid, a.lessonid as coursecomputerlessonid, a.computerid as coursecomputercomputerid, a.borrownum as coursecomputerborrownum, a.status as coursecomputerstatus," +
+		" b.id as csid, b.courseid as cscourseid, b.semester as cssemester, b.week as csweek, b.day as csday, b.period as csperiod, b.adduserid as csadduserid, b.status as csstatus," +
+		" c.id as cmid, c.computermodeltype as cmcomputermodeltype, c.languagetype as cmlanguagetype, c.name as cmname, c.computercategoryid as cmcomputercategoryid, c.picpath as cmpicpath, c.createtime as cmcreatetime, c.createuserid as cmcreateuserid, c.computercount as cmcomputercount, c.availableborrowcountnumber as cmavailableborrowcountnumber, c.description as cmdescription, c.status as cmstatus " +
+		"from Coursecomputer a  left join Courseschedule b on a.lessonid=b.id left join Computermodel c on a.computerid=c.computermodeltype ";
 	
 	private final String basicCoursecomputerSql = "From Coursecomputer as a ";
+	
+	
+	@Override
+	public List<CoursecomputerFull> selectCoursecomputerFullByPeriod(Integer courseid,Integer semesterid,Integer week,Integer day,Integer period,int language) {
+		
+		String condition = " where a.status="+TeachConstant.courseschedulevalidstatus+" and b.courseid = "+courseid +" and b.semester = "+ semesterid + " and b.week="+week + " and b.day ="+day+" and b.period="+period+" and c.languagetype = "+language;
+		return this.selectCoursecomputerFullByCondition(condition);
+	} 
+
+	@Override
+	public void delCoursecomputerByCourseschedule(int csId) {
+		
+		String sql = " update Coursecomputer set status = "+TeachConstant.coursescheduledelstatus+" where lessonid = "+csId;
+		try {
+			Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
+	         Query query = session.createSQLQuery(sql);
+			 query.executeUpdate();
+			} catch (RuntimeException re) {
+	            log.error("查询失败", re);           
+	            throw re;
+	            
+	        }
+	}
+	
 	
 	// 根据条件查询查询实体
 	@Override

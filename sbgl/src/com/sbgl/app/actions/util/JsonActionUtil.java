@@ -27,6 +27,17 @@ public class JsonActionUtil {
 	}
 	
 //	构造返回字符串
+	public static String buildReturnStr(int flag,String errorStr,String data){
+		ReturnJson returnJson = new ReturnJson();
+		returnJson.setFlag(flag);			
+		returnJson.setReason(errorStr);
+		returnJson.setData(data);
+		JSONObject jo = JSONObject.fromObject(returnJson);
+		
+		return jo.toString();
+	}
+	
+//	构造返回字符串
 //	public static String buildReturnStr(int flag,String errorStr){
 //		ReturnJson returnJson = new ReturnJson();
 //		returnJson.setFlag(flag);			

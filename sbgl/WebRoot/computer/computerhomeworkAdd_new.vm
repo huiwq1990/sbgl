@@ -214,7 +214,7 @@ $('#inputSendTo').select2({
       formatResult: formatText2NameForSelect2,
       query: function (query){
           var data = {results: []}; 
-          $.each(preload_data, function(){
+          jQuery.each(preload_data, function(){
               if(query.term.length == 0 || this.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0 ){
                   data.results.push({id: this.id, text: this.name });
               }
@@ -284,7 +284,7 @@ console.log("....."); console.log(userList);
           formatResult: formatText2NameForSelect2,
           query: function (query){
               var data = {results: []}; 
-              $.each(userList, function(){
+              jQuery.each(userList, function(){
                   if(query.term.length == 0 || this.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0 ){
                       data.results.push({id: this.id, text: this.name });
                       alert(data.results.id);
@@ -370,7 +370,7 @@ console.log("....."); console.log(userList);
 				var returnJson = jQuery.parseJSON(data); 
 				if(returnJson.flag == 1){
 					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});
-					//clearInput();
+					clearForm();
 				}else{
 					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
 				}
@@ -378,6 +378,24 @@ console.log("....."); console.log(userList);
 
 	})
 	//end 添加作业
+	
+	function clearForm(){
+	 $('#inputSendTo').val("");
+		$('#input_computerorderclassrule_classname').select2("val","0");
+		$('#inputMsgTitle').val("");
+		$('#inputDataRange').val("");
+		$('#inputDataRange2').val("");
+		
+		 $('#inputTotaltime').val("");
+		 
+		 $("input[name='inputAviBorrowModelGroup']").each(function() {
+				if($(this).prop("checked") === true) {
+					$(this).prop("checked",false);		
+				}
+			});
+		
+			 editor.html("");
+	}
 	
 	
 	

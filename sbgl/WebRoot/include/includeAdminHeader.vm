@@ -67,11 +67,11 @@
             </ul>
           </li>     
           <li class="social dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">$!user.name</span><img src="../img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">$!user.name</span><img src="${imageDomain}/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
             <div class="dropdown-menu">
               <div class="media">
                 <a class="pull-left" href="#">
-                  <img src="../img/photo.jpg" width="96" height="96" class="img-rounded">
+                  <img src="${imageDomain}/photo.jpg" width="96" height="96" class="img-rounded">
                 </a>
                 <div class="media-body">
                   <div class="media-heading"><h5><a href="#">$!user.name</a></h5></div>

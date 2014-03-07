@@ -100,38 +100,6 @@ public class LoginAction extends ActionSupport {
 		Javascript(flag);
 	}
 	
-	public String doManagerLogin() {
-		Loginuser loginUser3 = new Loginuser();
-		try{	
-			loginUser3 = loginService.findUser(loginuser);
-			if(loginUser3 != null) {
-				//id password cookie
-				CookiesUtil.addLoginCookie("userid", loginUser3.getUserid());
-				CookiesUtil.addLoginCookie("username", loginUser3.getName());
-				CookiesUtil.addLoginCookie("roletype", loginUser3.getRoletype());
-				CookiesUtil.addLoginCookie("privilege", loginUser3.getPrivilege());
-				CookiesUtil.addLoginCookie("id", loginUser3.getId().toString());
-				
-//				if( "100".equals(loginUser3.getRoletype()) ) {
-//					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN1);
-//					return "super";
-//				} else if( "200".equals(loginUser3.getRoletype()) ) {
-//					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN2);
-//					return "equip";
-//				} else if( "300".equals(loginUser3.getRoletype()) ) {
-//					session.put("useType", SBGLConsistent.USER_TYPE_ADMIN3);
-//					return "room";
-//				}
-				
-			}
-			
-		}catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();			
-		}
-		return "faild";
-	}
-	
 	public void Javascript(boolean flag){
 		try{
 			HttpServletResponse response = WebUtils.getHttpServletResponse();
@@ -152,15 +120,16 @@ public class LoginAction extends ActionSupport {
 		}
 	}
 	
-	public String doLogout(){
-		session.removeAttribute("Loginuser");
+	public String doLogout() {
+		CookiesUtil.removeCookie("uid");
+		CookiesUtil.removeCookie("userpass");
+		CookiesUtil.removeCookie("userid");
+		
+		session.removeAttribute("loginUser");
+		
 		return SUCCESS;
 	}
 	
-	public String doManagerLogout(){
-		session.removeAttribute("Loginuser");
-		return SUCCESS;
-	}
 	
 
 	public Loginuser getLoginuser() {

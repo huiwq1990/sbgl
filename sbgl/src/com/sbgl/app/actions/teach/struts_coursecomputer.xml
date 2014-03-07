@@ -3,6 +3,14 @@
 <struts>
 	 <package name="coursecomputer" extends="admin">
 
+    	<action name="selectCoursecomputerByPeriod" class="CoursecomputerAction" method="selectCoursecomputerByPeriod">
+        	<result name="success">/teach/coursecomputerPeriodInfo.vm</result>
+			<result name="success2">/teach/coursecomputerFullManageContent.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+		
+
+
 
 <!-- default entity manage action -->
     	<action name="manageCoursecomputer" class="ManageTeachAction" method="manageCoursecomputer">
@@ -113,6 +121,13 @@
 				<param name="root">returnStr</param>
 			</result>
         </action>
+        
+            	<action name="selectCoursecomputerByPeriodAjax" class="CoursecomputerAction" method="selectCoursecomputerByPeriodAjax">
+        	<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+        </action>
+            
       
 	</package>
 

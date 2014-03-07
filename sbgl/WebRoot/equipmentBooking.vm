@@ -7,11 +7,11 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="css/todc-bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="css/global.css" rel="stylesheet" type="text/css" />
-<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-<link href="css/datepicker.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/bootstrap2.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/todc-bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global2.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/datepicker.css" rel="stylesheet" type="text/css" />
 
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -145,90 +145,8 @@
       </div>
       <!--equip-wrap end-->
 
-	  
-	    <!--rent start-->
-      <div id="rent-bar">  
-        <div class="wizard thumbnail">
-          <ul class="steps unstyled">
-            <li data-target="#step1" class="active"><h3>欢迎</h3></li>
-            <li data-target="#step2"><h3>预约时间 <small>打算哪天预约？</small></h3></li>
-          </ul>
-          <div class="step-content">
-            <div class="step-pane active" id="step1">
-              <p>欢迎使用北京电影学院摄影系在线设备预约系统！</p>
-			  #if($!orderCate==1)
-              <p>您正在进行的是<strong>个人预约</strong>。</p>
-			  #elseif($!orderCate==2)
-              <p>您正在进行的是<strong>课程预约</strong>，以下是<strong>XXX</strong>课程作业的相关要求：</p>
-              <div class="media">
-                <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
-                  <img src="img/photo.jpg" width="46" height="46" class="img-rounded">
-                </a>
-                <div class="media-body">
-                  <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">XXX</a></h5><span>XX月XX日</span></div>
-                  <div class="media-content">
-                    <h5>数字摄影技术第11周设备申请</h5>
-                    <p>数字摄影技术第11周设备申请具体要求如下：</p>
-                    <ol>
-                      <li>...</li>
-                    </ol>
-                  </div>
-                </div>
-              </div>
-			  #end      
-            </div>
-            <div class="step-pane" id="step2">              
-              <div class="rent-time">
-                <div class="row">                  
-                  <div class="input-daterange">
-                    <div class="col-xs-5">
-                      <input type="text" class="form-control checkin" id="fromDate" name="start" placeholder="起始日期">
-                    </div>
-                    <div class="col-xs-2">
-                      <span class="add-on">至</span>
-                    </div>
-                    <div class="col-xs-5">
-                      <input type="text" class="form-control checkout" id="endDate" name="end" placeholder="归还日期">
-                    </div>
-                  </div>        
-                </div>
-              </div>          
-            </div>          
-          </div>
-          <div class="form-actions actions">  
-            <button type="button" class="btn btn-white btn-prev" disabled="disabled">上一步</button>
-            <button type="button" class="btn btn-primary btn-next"  data-last="开始预约">下一步</button>
-          </div>
-        </div>
-        <div class="rent-time panel panel-default">
-          <div class="row panel-body input-daterange">  
-            <div class="col-xs-4">
-              <input type="text" class="form-control checkin1" id="fromDate2" name="start" value placeholder="起始日期">
-            </div>
-            <div class="col-xs-1 col-no-padding">
-              <span class="add-on">至</span>
-            </div>
-            <div class="col-xs-4">
-              <input type="text" class="form-control checkout1"  id="endDate2" name="end" value placeholder="归还日期">
-            </div>
-            <div class="col-xs-3 col-no-padding">
-              <button type="button" data-type="classAjax"  class="btn btn-white">重新搜索</button>
-            </div>
-          </div>
-        </div>
-        <div id="rent-list" class="panel panel-default">
-          <div class="panel-heading"><h3>预约单 <small>请选择你所需要的设备。</small></h3></div>
-          <div class="panel-body">
-            <p class="no-add">尚未添加任何设备。</p>
-          </div>
-		  <div class="panel-footer text-right">  
-            <button type="button" class="btn btn-primary"  data-type="suborder" >提交</button>
-          </div>
-        </div>
-      </div>      
-      <!--rent start-->
      
-      <!--rent start
+      <!--rent start-->
       <div id="rent-bar">  
               <div class="wizard thumbnail">
 
@@ -297,7 +215,7 @@
 
 
               </div>
-      </div>      -->
+      </div>      
       <!--rent start-->
   </div>
   <!---main-content end-->
@@ -361,29 +279,18 @@
 <script src="js/bootstrap-hover-dropdown.min.js"></script>
 <script src="js/bootstrap-datepicker.js"></script>
 <script src="js/locales/bootstrap-datepicker.zh-CN.js"></script>
-<script src="js/bfa.js"></script>
+<script src="js/bfa2.js"></script>
 <script src="js/highcharts.js"></script>
-<script src="js/jquery.noty.js"></script>
 <script>
 
+$('.input-daterange').datepicker({
+	language: 'zh-CN',
+	format: 'yyyy-mm-dd',
+	todayHighlight: true,
+});
 
 $(function () {
-
-	var nowTemp = new Date();	
-	var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-	$('.input-daterange').datepicker({
-		language: 'zh-CN',
-		format: 'yyyy-mm-dd',
-		todayHighlight: true,
-		autoclose: true,
-		startDate: now
-	});	 
-	var checkin = $('.checkin .checkin1').datepicker()
-		.on('changeDate', function(ev) {
-	  		$('.checkout')[0].focus();
-	});
-		
-
+	
 	Highcharts.setOptions({
 		lang: {
 			months: ['一月', '二月', '三月', '四月', '五月', '六月', 
@@ -417,7 +324,7 @@ $(window).load(function(){
 							'<span class="input-group-btn">' + 
 								'<button type="button" class="btn btn-link spinner-down"><i class="icon-minus"></i></button>' + 
 							'</span>' + 
-							'<input type="text" name="equNum"  class="spinner-input form-control">' + 
+							'<input type="text" name="equNum" class="spinner-input form-control">' + 
 							'<input type="hidden" name="equId" value="'+eId+'">' + 
 							'<span class="input-group-btn">' + 
 								'<button type="button" class="btn btn-link spinner-up"><i class="icon-plus"></i></button>' +
@@ -431,7 +338,7 @@ $(window).load(function(){
 				if ($("#rent-list #" + eId).length > 0) {
 					alert("设备" + eName + "已添加！");
 				} else {									
-					$("#rent-list .panel-body").append(html);					
+					$("#rent-list").append(html);					
 					var spinner = $("#rent-list #" + eId).children(".spinner").spinner({max: maxNum});		// 设置设备最大可预约数量
 					$("#rent-list #" + eId).children(".spinner").spinner('value', eSelectNum);
 					var overMaxNum = 0;
@@ -442,7 +349,7 @@ $(window).load(function(){
 						var needMore;
 						if(curVal === maxNum) {
 							var str = "已达最大可借数量，继续添加，系统会记录下你所需实际数量，并提供相应建议!";
-							var n = noty({text: str, timeout: 6000,});
+							var n = noty({text: str, timeout: 8000});
 
 							$(_this).on("click", ".spinner-up",function(){
 								if ($(_this).parent().find(".item-need-more").length === 0 ) {								
@@ -452,7 +359,8 @@ $(window).load(function(){
 								overMaxNum++;
 								$("#rent-list #" + eId).children(".spinner").spinner("setMin", maxNum);		// 设置设备最小可预约数量为最大数，使其减少还需数量
 								console.log(".spinner-up, 已达最大可预约数量！,超出： " + overMaxNum);
-								$(_this).next(".item-need-more").find(".need-num").html(overMaxNum);								
+								$(_this).next(".item-need-more").find(".need-num").html(overMaxNum);
+								
 								console.log(".spinner-up, 已达最大可预约数量！,超出： " + overMaxNum);
 							});	
 							$(_this).on("click", ".spinner-down",function(){
@@ -492,10 +400,6 @@ $(window).load(function(){
 						$(_this).find(".spinner-input").focus(function() {
 							overMaxNum = 0;
 						});
-//						if (overMaxNum == 0) {
-//							$("#rent-list #" + eId).children(".spinner").spinner("setMin", 0);		// 设置设备最小可预约数量									
-//							console.log("set min 0, 超出： " + overMaxNum);
-//						}
 
 						event.stopImmediatePropagation();
 					});
@@ -537,14 +441,6 @@ $(window).load(function(){
 	$("body").on("click", "a[data-type|=classAjax]", function() {
 		var fromDate = $("#fromDate").val();
 		var endDate = $("#endDate").val();
-		var fromDate2 = $("#fromDate2").val();
-		var endDate2 = $("#endDate2").val();
-		if(fromDate2!=null&&fromDate2!=""){
-			fromDate = fromDate2;
-		}
-		if(endDate2!=null&&endDate2!=""){
-			endDate = endDate2;
-		}
 		var myData = $(this).data();
 		cId = myData.id;
 		ctype=myData.classtype;
@@ -578,14 +474,6 @@ $(window).load(function(){
 	$("body").on("click", "button[data-type|=classAjax]", function() {
 		var fromDate = $("#fromDate").val();
 		var endDate = $("#endDate").val();
-		var fromDate2 = $("#fromDate2").val();
-		var endDate2 = $("#endDate2").val();
-		if(fromDate2!=null&&fromDate2!=""){
-			fromDate = fromDate2;
-		}
-		if(endDate2!=null&&endDate2!=""){
-			endDate = endDate2;
-		}
 		$.ajax({
 			url: "equipmentByClass.do",
 			type: 'POST',
@@ -610,14 +498,6 @@ $(window).load(function(){
 	$("body").on("click", "i[data-type|=classAjax]", function() {
 		var fromDate = $("#fromDate").val();
 		var endDate = $("#endDate").val();
-		var fromDate2 = $("#fromDate2").val();
-		var endDate2 = $("#endDate2").val();
-		if(fromDate2!=null&&fromDate2!=""){
-			fromDate = fromDate2;
-		}
-		if(endDate2!=null&&endDate2!=""){
-			endDate = endDate2;
-		}
 		var serach = $("#serachtext").val();
 		$.ajax({
 			url: "equipmentByClass.do",
@@ -650,60 +530,51 @@ $(window).load(function(){
 	$("body").on("click", "button[data-type|=suborder]", function() {
 		var fromDate = $("#fromDate").val();
 		var endDate = $("#endDate").val();
-		var fromDate2 = $("#fromDate2").val();
-		var endDate2 = $("#endDate2").val();
-		if(fromDate2!=null&&fromDate2!=""){
-			fromDate = fromDate2;
-		}
-		if(endDate2!=null&&endDate2!=""){
-			endDate = endDate2;
-		}
 		
-		var equNum = "";
-		var equId = "";
-		$("input[name='equNum']").each(function(i){ 
-			var temp1 = $(this).val();
-			if(i==0){ 
-				equNum += temp1;
-			}else{
-				equNum += ","+temp1;
-			}
-		});
-		$("input[name='equId']").each(function(j){ 
-			var temp2 = $(this).val();
-			if(j==0){ 
-				equId += temp2;
-			}else{
-				equId += ","+temp2;
-			}
-		});
-		$.ajax({
-			url: "subOrder.do",
-			type: 'POST',
-			data: {equIds:equId,equNums:equNum,fromDate:fromDate,endDate:endDate,borrowId:borrowId},
-			dataType: 'json',
-			success: function(data){
-				if(data.tag==1){
-					location.href="equipmentConfirm.do?borrowId="+data.borrowId;
-				}else{
-					alert(data.message);
-					return;
-				}
-			}	  
-		});
+		
+
+		if(ordertype==0){
+			ordertype++;
+			return;
+		}else{
+			var equNum = "";
+    		var equId = "";
+    		$("input[name='equNum']").each(function(i){ 
+				var temp1 = $(this).val();
+    			if(i==0){ 
+    				equNum += temp1;
+    			}else{
+    				equNum += ","+temp1;
+    			}
+    		});
+    		$("input[name='equId']").each(function(j){ 
+				var temp2 = $(this).val();
+    			if(j==0){ 
+    				equId += temp2;
+    			}else{
+    				equId += ","+temp2;
+    			}
+    		});
+			$.ajax({
+				url: "subOrder.do",
+				type: 'POST',
+				data: {equIds:equId,equNums:equNum,fromDate:fromDate,endDate:endDate,borrowId:borrowId},
+				dataType: 'json',
+				success: function(data){
+					if(data.tag==1){
+						location.href="equipmentConfirm.do?borrowId="+data.borrowId;
+					}else{
+						alert(data.message);
+						return;
+					}
+				}	  
+			});
+		}
 	});
 	
 	$("body").on("click", "a[data-type|=equipDetail]", function() {
 		var fromDate = $("#fromDate").val();
-		var endDate = $("#endDate").val();		
-		var fromDate2 = $("#fromDate2").val();
-		var endDate2 = $("#endDate2").val();
-		if(fromDate2!=null&&fromDate2!=""){
-			fromDate = fromDate2;
-		}
-		if(endDate2!=null&&endDate2!=""){
-			endDate = endDate2;
-		}
+		var endDate = $("#endDate").val();
 		var equipid = $(this).data("id");	
 		$.ajax({
 			url: "equipOrdDetail.do",

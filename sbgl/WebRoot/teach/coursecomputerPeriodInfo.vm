@@ -1,0 +1,22 @@
+	<div class="tips">以下是本门课程在所选时段所需的课程资源。</div>
+											<div class="btn-bar">
+												<button type="button" action-type="modifyCourseArrangement" class="btn btn-primary">修 改</button>
+												<button class="btn btn-danger" type="button" action-type="cancelArrangedCourse">取消本节课</button>
+											</div>                                  	
+											<dl class="form-group dl-horizontal">
+											    <dd>
+
+
+	
+					<ul class="list-inline">
+	##set($modelList = $computermodelByComputercategoryId.get($category.computercategorytype))
+	#foreach($model in ${coursecomputerFullList})						
+													
+														<li>$model.cmname</li>
+												
+	#end	
+						
+											    </dd>
+											</dl>
+									
+									

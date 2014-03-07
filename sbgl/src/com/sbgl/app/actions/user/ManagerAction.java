@@ -117,7 +117,7 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 			this.tag = "1";
 			this.message = "修改管理员信息失败！";
 		} else {
-			Usergrouprelation ugr = userGroupRelationService.getRelationByType(manager.getId(), 3);
+			Usergrouprelation ugr = userGroupRelationService.getRelationByType(manager.getId());
 			ugr.setGroupid( group.getId() );
 			userGroupRelationService.alterUserGroupRelation( ugr );
 			this.tag = "0";
@@ -150,7 +150,7 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 		for (String id : ids) {
 			Integer oneId = Integer.valueOf( id );
 			Administrator mg = managerService.getManagerById( oneId );
-			Usergrouprelation temp = userGroupRelationService.getRelationByType(mg.getId(), 3);
+			Usergrouprelation temp = userGroupRelationService.getRelationByType(mg.getId());
 			if(managerService.deleteManager( oneId ) == 0 && userGroupRelationService.deleteUserGroupRelation( temp.getId() ) == 0) {
 				this.message = "删除管理员信息成功！";
 				this.tag = "0";
@@ -193,7 +193,7 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 		
 		List<Administrator> allAdminList = managerService.getAllManager();
 		for (Administrator admin : allAdminList) {
-			Usergrouprelation ugr = userGroupRelationService.getRelationByType( admin.getId(), 3 );
+			Usergrouprelation ugr = userGroupRelationService.getRelationByType( admin.getId() );
 			Usergroup ug = null;
 			
 			UserCourse uc = new UserCourse();

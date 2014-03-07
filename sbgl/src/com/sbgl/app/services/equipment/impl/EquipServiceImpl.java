@@ -559,16 +559,22 @@ public class EquipServiceImpl implements EquipService {
 	public boolean deleteEquipmentclassification(Integer equipmentclassificationId) {
 		boolean flag = false;
 		Equipmentclassification storeEquipmentclassification = baseDao.getEntityById(Equipmentclassification.class, equipmentclassificationId);
-//		List<Equipmentclassification> needToDeleteList =  baseDao.getEntityByProperty(Equipmentclassification.class.getName(), "comId", String.valueOf( storeEquipmentclassification.getComId() ));
-		
-		try {
-//			for (Equipmentclassification e : needToDeleteList) {
-				baseDao.deleteEntity( storeEquipmentclassification );
-//			}
-			flag = true;
-		} catch (RuntimeException re) {
-			flag = false;
+		if(storeEquipmentclassification != null) {
+			List<Equipmentclassification> needToDeleteList =  baseDao.getEntityByProperty(Equipmentclassification.class.getName(), "comid", String.valueOf( storeEquipmentclassification.getComid() ));
+			
+			try {
+				if(needToDeleteList != null) {
+					for (Equipmentclassification e : needToDeleteList) {
+						baseDao.deleteEntity( storeEquipmentclassification );
+					}
+				}
+				
+				flag = true;
+			} catch (RuntimeException re) {
+				flag = false;
+			}
 		}
+		
 		return flag;
 	}
 

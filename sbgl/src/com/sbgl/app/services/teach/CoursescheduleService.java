@@ -2,8 +2,14 @@ package com.sbgl.app.services.teach;
 
 import java.util.List;
 
+import com.sbgl.app.entity.Computerorder;
+import com.sbgl.app.entity.Computerorderdetail;
+import com.sbgl.app.entity.Course;
+import com.sbgl.app.entity.Coursecomputer;
+import com.sbgl.app.entity.Courseconfig;
 import com.sbgl.app.entity.Courseschedule;
 import com.sbgl.app.entity.CoursescheduleFull;
+import com.sbgl.common.DataError;
 import com.sbgl.util.*;
 
 public interface CoursescheduleService{
@@ -52,6 +58,34 @@ public interface CoursescheduleService{
     public List<CoursescheduleFull>  selectCoursescheduleFullByConditionAndPage(String condition,final Page page);
 
 	int execSql(String sql);
+
+	
+
+
+
+	List<Courseschedule> selectCoursescheduleByWeek(Integer courseId,
+			Integer semesterId, Integer weeknum);
+
+	List<Courseschedule> selectCoursescheduleByWeek(Integer semesterId,
+			Integer weeknum);
+
+	List<CoursescheduleFull> selectCoursescheduleFullByWeek(Integer semesterId,
+			Integer weeknum);
+
+	List<Courseschedule> selectCoursescheduleByPeriod(Integer courseId,
+			Integer semesterId, Integer weeknum, Integer day, Integer period);
+
+
+
+
+	void addCourseschedule(Courseconfig currentCourseconfig, int courseid,
+			Computerorder computerorder,
+			List<Courseschedule> coursescheduleList,
+			List<Coursecomputer> coursecomputerList,
+			List<Computerorderdetail> computerorderdetailList) throws DataError;
+
+	int deleteCourseschedule(Courseconfig currentCourseconfig,
+			int computerorderid, Courseschedule temp);
 		
 	
 	

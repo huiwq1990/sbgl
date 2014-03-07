@@ -400,7 +400,7 @@
 
             function reWizardHeight() {
 				$("#rent-list").animate({
-					height: $("#rent-list .panel-body").height() + 100
+					height: $("#rent-list .panel-body").height() + 130
 				});
 			}
 

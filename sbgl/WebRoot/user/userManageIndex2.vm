@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 用户管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+#parse("include/includePageCompatibility.vm")
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+  #set($currentPageModule="user")
+  #parse("include/includeAdminHeader.vm")
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">用户管理</div>
+              <div class="tips">在此页面下管理用户信息，如用户的添加、修改、删除及发送通知等。</div>
+              <div class="filter user-group-filter">
+                <ul class="nav nav-tabs nav-tabs-google">
+                  <li><a href="#">其他</a></li>
+                  <li><a href="#">教师</a></li>
+                  <li><a href="#">学生</a></li>
+                  <li class="active"><a href="#">全部</a></li>                  
+                </ul>
+              </div>
+              <div class="operate-item pull-left">
+                <a href="用户管理-添加用户.html" class="btn btn-primary">添加用户</a>
+                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+              </div>
+
+              <div class="page pull-right clearfix">
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">最新</a></li>
+                      <li><a href="#">最旧</a></li>
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+                  <ul>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+              <ul class="status-filter nav nav-pills pull-right">
+                <li class="active"><a href="#">全部(10)</a></li>
+                <li><a href="#">本科(5)</a></li>
+                <li><a href="#">硕士(2)</a></li>
+                <li><a href="#">博士(2)</a></li>
+                <li><a href="#">在职(2)</a></li>
+              </ul>
+            </div><!--control-bar end-->
+            <div class="panel panel-default">              
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="name">姓名</th>
+                    <th class="username">用户名</th>
+                    <th class="user-group">用户组</th>
+                    <th class="admin-group">管理组</th>
+                    <th class="operate">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
+                    <td>姓名</td>
+                    <td>用户名</td>
+                    <td>学生 - 本科</td>
+                    <td>无</td>
+                    <td><a href="">修改</a> <a href="">重置密码</a> <a href="">删除</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+      </div>
+      <!--equip-wrap end-->
+
+      <!--sidebar start-->
+      <div id="lside">
+        <form class="form-group">
+          <input type="text" class="form-control" placeholder="搜索用户">
+          <i class="icon-search"></i>
+        </form>
+        <div class="list-group">
+          <a href="用户管理首页.html" class="list-group-item active">用户管理</a>
+          <a href="用户管理-添加用户.html" class="list-group-item">添加用户</a>
+          <a href="用户管理-用户组.html" class="list-group-item">用户组</a>
+          <a href="用户管理-班级管理.html" class="list-group-item">班级管理</a>
+          <a href="用户管理-发送通知.html" class="list-group-item">发送通知</a>
+          <a href="用户管理-管理员管理.html" class="list-group-item">管理员管理</a>
+          <a href="用户管理-添加管理员.html" class="list-group-item">添加管理员</a>
+          <!--<a href="用户管理-管理组.html" class="list-group-item">管理组</a>-->
+          <!--<a href="用户管理-用户认证.html" class="list-group-item">用户认证</a>-->
+        </div>
+      </div>
+      <!--sidebar end-->
+
+</section>
+
+<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
+  <img src="../img/cover-img.jpg" class="cover" alt="封面照片">
+  <div class="cover-layout"></div>
+  <div class="avatar"><img src="../img/photo.jpg" width="80" height="80" class="img-circle"></div>
+  <div class="user-wrap">
+    <div class="user-name"><a href="#">用户名</a></div>
+    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
+    <div class="user-info">职务等信息</div>
+    <div class="user-info">地点</div>
+  </div>
+  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
+</div>
+
+    <!-- javascript
+    ================================================== -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/fileUpload/vendor/jquery.ui.widget.js"></script>
+<script src="${jsDomain}/fileUpload/jquery.iframe-transport.js"></script>
+<script src="${jsDomain}/jquery.fileupload.js"></script>
+
+</body>
+</html>

@@ -12,7 +12,8 @@ import com.sbgl.util.DateUtil;
 
 public class BorrowperiodUtil {
 	
-	static int[][] workTime ={{8,0},{11,30},{13,30},{18,0},{19,0},{22,30},{24,0}};
+//	static int[][] workTime ={{5,0},{12,30},{13,30},{18,0},{19,0},{22,30},{24,0}};
+	static int[][] workTime ={{12,0},{12,30},{13,30},{18,0},{19,0},{22,30},{24,0}};
 	public static int getTimePeriod(int hour,int min){
 		
 		for(int i=0; i<workTime.length;i++){
@@ -78,6 +79,13 @@ public class BorrowperiodUtil {
 		
 		int currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(DateUtil.parseDate(currentDay));
 		 System.out.println("currentPeriod: "+currentPeriod);
+		 
+		 
+		 currentDay = "2013-10-01 00:00:00";
+		currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(DateUtil.parseDate(currentDay));
+		System.out.println("currentDay 的period: "+currentPeriod);
+			 
+			 
 		 
 		 
 		 System.out.println(getMaxPeriod());

@@ -1,0 +1,585 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="${cssDomain}/jqpagination.css" type="text/css" />
+
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script src="../js/html5shiv.js"></script>
+  <script src="../js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a><!-- #BeginLibraryItem "/Library/siteNav.lbi" -->
+        <!--
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="http://google.com"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="#anotherAction">个人主页</a></li>
+          <li><a href="#">通讯录</a></li>
+          <li class="divider"></li>
+          <li><a href="../预约首页.html">我的预约</a></li>
+          <li><a href="../消息中心-站内信.html">站内信</a></li>
+          <li class="divider"></li>
+          <li><a href="管理中心首页.html">管理中心</a></li>
+        </ul>--><!-- #EndLibraryItem --></div>
+    </div>
+    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">设置</a></li>
+        <li><a href="用户管理首页.html">用户</a></li>
+        <li class="active"><a href="设备管理首页.html">器材</a></li>
+        <li><a href="#">内容</a></li>
+      </ul>
+    </div>    
+    <ul class="account-wrap nav nav-pills pull-right">
+          <li class="notice dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">消息1</a></li>
+              <li><a href="#">消息2</a></li>
+            </ul>
+          </li>     
+          <li class="social dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">admin</span><img src="../img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+            <div class="dropdown-menu">
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img src="../img/photo.jpg" width="96" height="96" class="img-rounded">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><h5><a href="#">admin</a></h5></div>
+                  <div class="info"></div>
+                  <div class="setting"><a href="#">账户设置</a></div>
+                  <button class="btn btn-primary" type="button">查看个人主页</button>
+                </div>
+              </div>
+            </div>      
+          </li>
+        </ul>
+  </div>
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <ul class="nav nav-tabs">
+        <li><a href="">其他管理</a></li>
+        <li class="active"><a href="">管理</a></li>
+      </ul>
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">            
+            <div class="control-bar clearfix"><!--control-bar start-->
+              <div class="title pull-left">管理</div>
+			  <div class="tips">在此页面下管理信息，如设备的添加、修改、删除及维护等。</div>
+			  <!--
+              <div class="filter category-filter">
+                <select id="select-categories" style="width:130px" class="select2">
+                  <option value="0" data-foo="fa">全部分类</option>
+                  <option value="1" data-foo="fa">摄影摄像机</option>
+                  <option value="2" data-foo="sub">数字摄影机</option>
+                  <option value="3" data-foo="sub">数字摄像机</option>
+                  <option value="4" data-foo="sub">单反</option>
+                  <option value="5" data-foo="fa">灯具</option>
+                  <option value="6" data-foo="sub">钨丝灯</option>
+                  <option value="7" data-foo="sub">镝灯</option>
+                </select>
+              </div>
+              -->
+              <div class="operate-item pull-left">
+                <a href="" class="btn btn-primary">添加</a>
+                <a href="#" class="btn btn-white s-h" action-type="deleteCoursecomputerorderButton"><i class="icon-trash"></i> 删除</a>
+              </div>
+				
+			  <!--
+              <div class="page pull-right clearfix">
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">最新</a></li>
+                      <li><a href="#">最旧</a></li>
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+                  <ul>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+              <ul class="status-filter nav nav-pills pull-right">
+                <li class="active"><a href="#">全部(10)（无不显示）</a></li>
+                <li><a href="#">正常(5)</a></li>
+                <li><a href="#">借出(2)</a></li>
+                <li><a href="#">维护(2)</a></li>
+                <li><a href="#">维修(2)</a></li>
+                <li><a href="#">遗失(2)</a></li>
+                <li><a href="#">回收站(1)</a></li>
+              </ul>
+			  -->
+            </div><!--control-bar end-->
+            <div class="panel panel-default table-responsive">
+
+	<div id="refreshCoursecomputerorderTableDiv"> <!-- 刷新-->
+
+<!--管理内容从这里开始 -->
+<div id = "tablecon">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+
+             <th class="coursecomputerorderid">coursecomputerorderid</th>
+             <th class="coursecomputerordersemesterid">coursecomputerordersemesterid</th>
+             <th class="coursecomputerordercourseid">coursecomputerordercourseid</th>
+             <th class="coursecomputerordercomputerorderid">coursecomputerordercomputerorderid</th>
+             <th class="coursecomputerorderstatus">coursecomputerorderstatus</th>
+<!--
+                   <th class="name">View</th>
+				   <th class="name">Del</th>
+				   <th class="name">Edit</th>
+-->				   
+                  </tr>
+                </thead>
+                <tbody>					
+							
+
+#foreach($tempcoursecomputerorder in $coursecomputerorderFullList)
+                  <tr>
+                   <td><input class="chk" type="checkbox" name="chk-list" value="$!tempcoursecomputerorder.coursecomputerorderid"></td>
+					<!--修改属性-->
+                    <td>$!tempcoursecomputerorder.coursecomputerorderid<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="editCoursecomputerorderFillIn" 
+						
+						
+																								data-id="$!tempcoursecomputerorder.coursecomputerorderid"                           
+												data-semesterid="$!tempcoursecomputerorder.coursecomputerordersemesterid"                           
+												data-courseid="$!tempcoursecomputerorder.coursecomputerordercourseid"                           
+												data-computerorderid="$!tempcoursecomputerorder.coursecomputerordercomputerorderid"                           
+												data-status="$!tempcoursecomputerorder.coursecomputerorderstatus"                           
+												>修改</a></td>    
+						
+
+<td>$!tempcoursecomputerorder.coursecomputerordersemesterid</td>
+<td>$!tempcoursecomputerorder.coursecomputerordercourseid</td>
+<td>$!tempcoursecomputerorder.coursecomputerordercomputerorderid</td>
+<td>$!tempcoursecomputerorder.coursecomputerorderstatus</td>
+<!--
+					<td><a href="${webbaseurl}/viewCoursecomputerorderFull.action?id=$!tempcoursecomputerorder.coursecomputerorderid">查看</a></td> 
+					<td><a href="${webbaseurl}/deleteCoursecomputerorderFull.action?id=$!tempcoursecomputerorder.coursecomputerorderid">删除</a></td>			
+					<td><a href="${webbaseurl}/editCoursecomputerorderFull.action?id=$!tempcoursecomputerorder.coursecomputerorderid">修改</a></td>
+-->                 
+                  </tr>
+#end            
+           
+                </tbody>
+              </table>
+ </div> 
+				
+				 <!--page -->
+                          <div class="pagination">
+                                <a href="#" class="first" data-action="first">&laquo;</a>
+                                <a href="#" class="previous" data-action="previous">&lsaquo;</a>
+                                <input type="text" readonly="readonly" data-max-page="$page.totalpage" />
+                                <a href="#" class="next" data-action="next">&rsaquo;</a>
+                                <a href="#" class="last" data-action="last">&raquo;</a>
+                          </div>
+                          <!-- end page -->
+				
+				</div><!-- end refreshTable-->
+
+            </div>
+          </div>
+
+      </div>
+      <!--equip-wrap end-->
+	  
+	  
+       <div id="lside">
+        <form class="form-group">
+          <input type="text" class="form-control" placeholder="搜索">
+          <i class="icon-search"></i>
+        </form>
+        <div class="list-group">
+          <a href="${webbaseurl}/manageCoursecomputerorderFull.action" class="list-group-item">管理</a>
+          <a href="${webbaseurl}/teach/coursecomputerorderAdd.vm" class="list-group-item">添加</a>
+          
+        </div>
+      </div>
+      <!--sidebar end-->
+
+
+
+
+</section>
+
+
+
+
+
+<!-- Modal -->
+<div id="modify-status" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">修改</h3>
+  </div>
+  
+  <div class="modal-body">
+      <p>修改信息。</p>
+      <form class="form-horizontal" role="form">
+		
+							
+			<div class="form-group">
+          <label for="id" class="col-xs-3 control-label">id</label>
+          <div class="col-xs-7">
+            <input type="text" class="form-control" id="inputEditCoursecomputerorderid" placeholder="" value="">
+          </div>
+        </div>
+				
+			<div class="form-group">
+          <label for="semesterid" class="col-xs-3 control-label">semesterid</label>
+          <div class="col-xs-7">
+            <input type="text" class="form-control" id="inputEditCoursecomputerordersemesterid" placeholder="" value="">
+          </div>
+        </div>
+				
+			<div class="form-group">
+          <label for="courseid" class="col-xs-3 control-label">courseid</label>
+          <div class="col-xs-7">
+            <input type="text" class="form-control" id="inputEditCoursecomputerordercourseid" placeholder="" value="">
+          </div>
+        </div>
+				
+			<div class="form-group">
+          <label for="computerorderid" class="col-xs-3 control-label">computerorderid</label>
+          <div class="col-xs-7">
+            <input type="text" class="form-control" id="inputEditCoursecomputerordercomputerorderid" placeholder="" value="">
+          </div>
+        </div>
+				
+			<div class="form-group">
+          <label for="status" class="col-xs-3 control-label">status</label>
+          <div class="col-xs-7">
+            <input type="text" class="form-control" id="inputEditCoursecomputerorderstatus" placeholder="" value="">
+          </div>
+        </div>
+	      </form>
+    </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary" action-type="updateCoursecomputerorderButton">确 定</button>
+  </div>
+</div>
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/jquery.jqpagination.js"></script>
+<script>
+	$("#modifyFaCategoryId").select2("val","2");
+</script>
+
+
+
+<script>
+//	当前页
+	var currentpagenum=1;
+	var totalpage=$page.totalpage;
+
+	var cookie = { 
+  		//读取COOKIES,n为COOKIE名 
+   		Get:function(n){ 
+       		var re=new RegExp(n+'=([^;]*);?','gi');
+       	    var r=re.exec(document.cookie)||[];
+       	    return (r.length>1?r[1]:null)
+   		}
+	};
+
+//	换页时调用方法
+	$('.pagination').jqPagination({
+    	paged: function(page) {
+        	// do something with the page variable
+       		currentpagenum = page;
+        	refreshComputerTable();
+        }
+    });	
+	
+//	选择修改按钮，填充修改弹出框
+	$("body").on("click", "a[action-type|=editCoursecomputerorderFillIn]", function() {
+		var data = $(this).data();
+							$("#inputEditCoursecomputerorderid").val(data.id);       
+			var editid = data.id;
+					$("#inputEditCoursecomputerordersemesterid").val(data.semesterid);       
+			var editsemesterid = data.semesterid;
+					$("#inputEditCoursecomputerordercourseid").val(data.courseid);       
+			var editcourseid = data.courseid;
+					$("#inputEditCoursecomputerordercomputerorderid").val(data.computerorderid);       
+			var editcomputerorderid = data.computerorderid;
+					$("#inputEditCoursecomputerorderstatus").val(data.status);       
+			var editstatus = data.status;
+			})
+//end 	editCoursecomputerorderFillIn
+
+
+//	update
+	$("body").on("click", "button[action-type|=updateCoursecomputerorderButton]", function() {
+		var _this = $(this);
+		var actionUrl = "${webbaseurl}/updateCoursecomputerorderAjax.action";
+		//获取修改的值	
+							var id = $("#inputEditCoursecomputerorderid").val();      
+					var semesterid = $("#inputEditCoursecomputerordersemesterid").val();      
+					var courseid = $("#inputEditCoursecomputerordercourseid").val();      
+					var computerorderid = $("#inputEditCoursecomputerordercomputerorderid").val();      
+					var status = $("#inputEditCoursecomputerorderstatus").val();      
+					
+		var postData = {
+										
+								id: id,
+											
+								semesterid: semesterid,
+											
+								courseid: courseid,
+											
+								computerorderid: computerorderid,
+											
+								status: status
+									}
+			
+			
+		jQuery.ajax({  
+		    url: actionUrl,  
+		    type: "post",
+		    data: postData,
+		    dataType: 'json',
+			success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+				if(returnJson.flag == 1){
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+					refreshTable();
+				}else{
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
+				}
+			}		  	  
+		});//end jquery 
+
+	})
+//end update
+	
+	
+	
+	var idsForDel;	
+	/* 处理CheckBox选中事件用于删除处理 */
+	$("input[type='checkbox']").click(function() {
+		//var num = 0;
+		idsForDel = "";
+		
+		if($(this).attr("id") === "chk-all") {
+			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
+		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true) {
+				//num++;
+				idsForDel += $(this).prop("value") + ";";
+			}
+		});
+	});
+	//end box
+	
+//	delete
+	$("body").on("click", "a[action-type|=deleteCoursecomputerorderButton]", function() {
+		idsForDel = idsForDel.substring(0,idsForDel.length-1);
+		var postData = {
+			coursecomputerorderIdsForDel: idsForDel
+		}
+		//alert(idsForDel);
+		jQuery.ajax({  
+		    url:"${webbaseurl}/deleteCoursecomputerorderFullAjax.${strutsaction}",  
+		    type:"post",
+		    data:postData,
+			dataType: 'json',
+			success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+
+				if(returnJson.flag == 1){
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框	
+					refreshTable();
+				}else{
+					var n = noty({text: failedStr, timeout: 2500, type: 'error'});
+				}
+
+			}		  	  
+		});// end jquery
+	})
+//end delete
+
+
+//	刷新数据
+	function refreshTable(){
+		jQuery.ajax({  
+        	url: '${webbaseurl}/manageCoursecomputerorderFull.action',  
+            type: "post",
+            data:{ 
+				pageNo:currentpagenum,
+                callType:'ajaxType'
+               
+            },
+            dataType: 'html',
+            success: function(data){
+            	$('#refreshCoursecomputerorderTableDiv').html(data);
+                //设置分页绑定事件
+                $('.pagination').jqPagination({
+                	link_string : '/?page={page_number}',
+                    max_page : totalpage,
+                    current_page:currentpagenum,
+                    paged: function(page) {               
+                    	currentpagenum = page;
+                        refreshTable();                
+                    }
+                 });
+            }// end success                       
+       	});// end jquery                
+	}//end refreshTable
+	
+	
+//  刷新后，绑定删除按钮	
+	$("body").on("click", "input[type='checkbox']", function() {
+                var num = 0;
+                if($(this).attr("id") === "chk-all") {
+                        $("input[name='chk-list']").prop("checked",$(this).prop("checked"));
+                }
+                $("input[name='chk-list']").each(function() {
+                        if($(this).prop("checked") === true){
+                                num++;  
+                        }
+                });
+                if(num > 0){
+                        $(".s-h").css({
+                                "visibility": "visible",
+                                "opacity": "1",
+                                "filter": "alpha(opacity=100)"
+                        });
+                } else {
+                        $(".s-h").css({
+                                "visibility": "hidden",
+                                "opacity": "0",
+                                "filter": "alpha(opacity=0)"
+                        });
+                }
+                
+                idsForDel = "";
+                
+                $("input[name='chk-list']").each(function() {
+                        if($(this).prop("checked") === true) {
+                                //num++;
+                                idsForDel += $(this).prop("value") + "_";
+                        }
+                });
+        });
+// end checkbox		
+	
+	
+	
+	
+	
+// 触发提交按钮事件
+$('.modal').on('click', ('button.btn-primary'), function () {		
+		var _this = $(this);
+
+		//处理添加
+		if(_this.attr('action-type') == 'addComputercategoryButton')
+		{
+			//alert('test add');
+			var actionUrl = "${webbaseurl}/addComputercategoryAjax.action";
+			var inputCategoryName = $('#addComputercategoryName').val();			
+			var postData = {
+				"createuserid": cookie.Get("id"),
+				"name": inputCategoryName		
+			}
+			var successStr = "添加分类成功！";
+			var failedStr = "添加分类失败！";				
+		}
+		// ebd add
+		
+		//处理update
+		
+		/*if(_this.attr('action-type') == 'updateCoursecomputerorderButton')
+		{
+			//alert('test add');
+			var actionUrl = "${webbaseurl}/updateCoursecomputerorderAjax.action";
+												var id = $("#inputEditCoursecomputerorderid").val();      
+								var semesterid = $("#inputEditCoursecomputerordersemesterid").val();      
+								var courseid = $("#inputEditCoursecomputerordercourseid").val();      
+								var computerorderid = $("#inputEditCoursecomputerordercomputerorderid").val();      
+								var status = $("#inputEditCoursecomputerorderstatus").val();      
+						var postData = {
+													id: id,
+									semesterid: semesterid,
+									courseid: courseid,
+									computerorderid: computerorderid,
+									status: status,
+							}
+		}*/
+		//end update
+		
+		
+		
+		// 如果是其它的提交操作，对照上一行的if代码处理		
+		
+		// 提交处理
+		jQuery.ajax({  
+		    url: actionUrl,  
+		    type: "post",
+		    data: postData,
+		    dataType: 'json',
+			success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+				if(returnJson.flag == 1){
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+					
+				}else{
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
+				}
+			}		  	  
+		});		
+	})	
+	
+	
+	
+</script>
+
+
+</body>
+</html>

@@ -9,7 +9,9 @@ import com.sbgl.app.entity.Course;
 import com.sbgl.app.entity.CourseFull;
 import com.sbgl.app.entity.Courseschedule;
 import com.sbgl.app.services.teach.CourseService;
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.orderadmin.OrderCountFull;
+import com.sbgl.app.actions.teach.TeachActionUtil;
 import com.sbgl.app.dao.ComputerorderclassruleDao;
 import com.sbgl.app.dao.CourseDao;
 import com.sbgl.app.dao.BaseDao;
@@ -147,10 +149,24 @@ public class CourseServiceImpl implements CourseService{
 
 	}
 
+//	根据类型查询实体类			
+	@Override
+	public Course selectCourseByCoursetype(Integer coursetype,int language){
+		List<Course> l = courseDao.selectCourseByCondition("where languagetype="+language+" and coursetype ="+coursetype);
+		if(l != null && l.size() ==1){
+			return l.get(0);
+		}
+		return null;
+	}
+	
 //	根据id查询实体类			
 	@Override
-	public Course selectCourseById(Integer courseId){		
-		return baseDao.getEntityById(Course.class, courseId);
+	public Course selectCourseById(Integer courseId){
+		List<Course> l = courseDao.selectCourseByCondition("where id ="+courseId);
+		if(l != null && l.size() ==1){
+			return l.get(0);
+		}
+		return null;
 	}
 	
 //	@Override
@@ -172,6 +188,14 @@ public class CourseServiceImpl implements CourseService{
 		}
 	}	
 	
+	
+//	public s(){
+////		课程组信息
+//		usergroupList = groupService.getUserGroupByType(CommonConfig.usergroupstudentid);		
+////		课程信息
+//		courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+CommonConfig.languagech);
+//		courseFullByGroupId = TeachActionUtil.couseFullUsergroupMap(usergroupList, courseFullList);
+//	}
 
 	public int countCourseRow(){
 		return baseDao.getRowCount(Course.class);

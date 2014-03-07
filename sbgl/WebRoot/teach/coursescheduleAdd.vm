@@ -60,7 +60,7 @@
                 <table class="table course-week-table">
                   <thead>
                     <tr>
-                      <th class="time-slot" colspan="2">时间</th>
+                      <th class="time-slot" >时间</th>
                       <th>周一</th>
                       <th>周二</th>
                       <th>周三</th>
@@ -71,59 +71,21 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="time-slot" rowspan="2">上午</td>
-                      <td class="time-num">1</td>
-                      <td data-week="1" data-slot="1" class="selectable"></td>
-                      <td data-week="2" data-slot="1" class="selectable"></td>
-                      <td data-week="3" data-slot="1" class="selectable"></td>
-                      <td data-week="4" data-slot="1" class="selectable"></td>
-                      <td data-week="5" data-slot="1" class="selectable"></td>
-                      <td data-week="6" data-slot="1" class="selectable"></td>
-                      <td data-week="7" data-slot="1" class="selectable"></td>
-                    </tr>
-                    <tr>
-                      <td class="time-num">2</td>
-                      <td data-week="1" data-slot="2" class="selectable"></td>
-                      <td data-week="2" data-slot="2" class="selectable"></td>
-                      <td data-week="3" data-slot="2" class="selectable"></td>
-                      <td data-week="4" data-slot="2" class="selectable"></td>
-                      <td data-week="5" data-slot="2" class="selectable"></td>
-                      <td data-week="6" data-slot="2" class="selectable"></td>
-                      <td data-week="7" data-slot="2" class="selectable"></td>
-                    </tr>
-                    <tr>
-                      <td rowspan="2" class="time-slot">下午</td>
-                      <td class="time-num">3</td>
-                      <td data-week="1" data-slot="3" class="selectable"></td>
-                      <td data-week="2" data-slot="3" class="selectable"></td>
-                      <td data-week="3" data-slot="3" class="selectable"></td>
-                      <td data-week="4" data-slot="3" class="selectable"></td>
-                      <td data-week="5" data-slot="3" class="selectable"></td>
-                      <td data-week="6" data-slot="3" class="selectable"></td>
-                      <td data-week="7" data-slot="3" class="selectable"></td>
-                    </tr>
-                    <tr>
-                      <td class="time-num">4</td>
-                      <td data-week="1" data-slot="4" class="selectable"></td>
-                      <td data-week="2" data-slot="4" class="selectable"></td>
-                      <td data-week="3" data-slot="4" class="selectable"></td>
-                      <td data-week="4" data-slot="4" class="selectable"></td>
-                      <td data-week="5" data-slot="4" class="selectable"></td>
-                      <td data-week="6" data-slot="4" class="selectable"></td>
-                      <td data-week="7" data-slot="4" class="selectable"></td>
-                    </tr>
-                    <tr>
-                      <td class="time-slot">晚上</td>
-                      <td class="time-num">5</td>
-                      <td data-week="1" data-slot="5" class="selectable"></td>
-                      <td data-week="2" data-slot="5" class="selectable"></td>
-                      <td data-week="3" data-slot="5" class="selectable"></td>
-                      <td data-week="4" data-slot="5" class="selectable"></td>
-                      <td data-week="5" data-slot="5" class="selectable"></td>
-                      <td data-week="6" data-slot="5" class="selectable"></td>
-                      <td data-week="7" data-slot="5" class="selectable"></td>
-                    </tr>
+					
+#set($index = 0)
+#foreach($period in $periodList)
+	#set($index = $index+ 1)
+	
+	<tr id="tr-slot-$period.periodnum">
+		<td class="time-slot">$period.peroidname</td>
+		#foreach($day in $dayList)
+		
+			 <td data-week="$day" data-day="$day" data-slot="$!index" data-period="$period.periodnum" data-is-arranged="no" class="selectable"></td>
+		#end
+</tr>
+#end
+
+			
                   </tbody>
                 </table>
                 <div class="panel-footer">
@@ -148,7 +110,7 @@
 							<optgroup label="$gp.name">
 							#set( $tcfl = $courseFullByGroupId.get($gp.id) )
 							#foreach($tempCourseFull in  $tcfl )					
-								<option value="$!tempCourseFull.courseid" >$tempCourseFull.coursename - $!tempCourseFull.teacherloginusername</option>                                           
+								<option value="$!tempCourseFull.coursecoursetype" >$tempCourseFull.coursename - $!tempCourseFull.teacherloginusername</option>                                           
 							#end		
 							</optgroup>
 							
@@ -194,71 +156,18 @@
                         <div class="form-inline form-group col-md-6">
                           <div class="form-group">
                             <label class="checkbox-inline">
-                              <input type="checkbox" name="inputCourseNeed" id="CourseNeed1" value="1" checked="">$model.name
+                              <input type="checkbox" name="inputCourseNeed" id="CourseNeed1" value="$!model.computermodeltype" checked="">$model.name
                             </label>
                           </div>
+						  
                           <div class="form-group">
-                            <input type="text" id="$model.computermodeltype" name="computerorderinfo" value="0" data-computermodeltype="$!model.computermodeltype" class="form-control" placeholder="数量">
+                            <input type="hidden" id="$model.computermodeltype" name="computerorderinfo" value="$!model.availableborrowcountnumber" data-computermodeltype="$!model.computermodeltype" class="form-control" placeholder="数量">
                           </div>
+						 
                         </div>
 	#end	
                       </div><!--end row-->
 #end
-
-<!--
-                      <div class="group-hd">
-                        <div class="group-name pull-left">工作站</div>
-                        <div class="group-line"><hr></div>
-                      </div>
-                      <div class="row">
-                        <div class="form-inline form-group col-md-6">
-                          <div class="form-group">
-                            <label class="checkbox-inline">
-                              <input type="checkbox" name="inputCourseNeed" id="CourseNeed1" value="1" checked="">MAC Pro工作站
-                            </label>
-                          </div>
-                          <div class="form-group">
-                            <input type="text" id="CourseNeed1-Num" class="form-control" placeholder="数量">
-                          </div>
-                        </div>
-                        <div class="form-inline form-group col-md-6">
-                          <div class="form-group">
-                            <label class="checkbox-inline">
-                              <input type="checkbox" name="inputCourseNeed" id="CourseNeed2" value="2" checked="">DELL工作站
-                            </label>
-                          </div>
-                          <div class="form-group">
-                            <input type="text" id="CourseNeed2-Num" class="form-control" placeholder="数量">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="group-hd">
-                        <div class="group-name pull-left">剪辑机房</div>
-                        <div class="group-line"><hr></div>
-                      </div>
-                      <label class="checkbox-inline">
-                        <input type="checkbox" name="inputCourseNeed" id="inputCourseNeedEditor1" value="1" checked="">剪辑机房1
-                      </label>
-                      <label class="checkbox-inline">
-                        <input type="checkbox" name="inputCourseNeed" id="inputCourseNeedEditor2" value="2" checked="">剪辑机房2
-                      </label>
-                      <label class="checkbox-inline">
-                        <input type="checkbox" name="inputCourseNeed" id="inputCourseNeedEditor3" value="3" checked="">剪辑机房3
-                      </label>
-                      <label class="checkbox-inline">
-                        <input type="checkbox" name="inputCourseNeed" id="inputCourseNeedEditor4" value="4" checked="">剪辑机房4
-                      </label>
-                      <div class="group-hd">
-                        <div class="group-name pull-left">调色机房</div>
-                        <div class="group-line"><hr></div>
-                      </div>
-                      <label class="checkbox-inline">
-                        <input type="checkbox" name="inputCourseNeed" id="inputCourseNeedColor1" value="1" checked="">达芬奇
-                      </label>
-                      <label class="checkbox-inline">
-                        <input type="checkbox" name="inputCourseNeed" id="inputCourseNeedColor2" value="2" checked="">宽泰
-                      </label>
-					  -->
 
                     </dd>
                   </dl>
@@ -314,7 +223,7 @@ $("body").on("click", ".selectable", function() {
 		$('.selectable').each(function(){
 			var data = $(this).data();
 			if($(this).hasClass("selected")) {		// 如果选中
-				dayperiod += data.week + ","+data.slot+";";
+				dayperiod += data.day + ","+data.period+";";
 			}
 		});
 		dayperiod = dayperiod.substring(0,dayperiod.length-1);
