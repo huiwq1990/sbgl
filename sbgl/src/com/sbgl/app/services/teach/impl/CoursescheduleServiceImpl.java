@@ -325,6 +325,9 @@ public class CoursescheduleServiceImpl implements CoursescheduleService{
 		
 	}
 	
+	/**
+	 * 查询某个学期某周的全部课程
+	 */
 	@Override
 	public List<CoursescheduleFull> selectCoursescheduleFullByWeek(Integer semesterId,Integer weeknum){
 		List<CoursescheduleFull> coursescheduleList = new ArrayList<CoursescheduleFull>();
