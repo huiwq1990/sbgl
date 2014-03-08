@@ -65,7 +65,7 @@
               </div>
               <div class="row p-20">
                 <div class="col-md-4">
-                  <a class="btn btn-white btn-block" href="设备预约页.html"><h4><i class="icon-camera-retro icon-2x"></i></h4><h4>设备预约</h4></a>
+                  <a class="btn btn-white btn-block" href="${webbaseurl}/equipmentBooking.${strutsaction}"><h4><i class="icon-camera-retro icon-2x"></i></h4><h4>设备预约</h4></a>
                 </div>
                 <div class="col-md-4">
                   <a class="btn btn-white btn-block" href="机房预约页.html"><h4><i class="icon-desktop icon-2x"></i></h4><h4>机房预约</h4></a>
@@ -106,21 +106,37 @@
             <div class="thumbnail">
               <div class="hd clearfix">
                 <h3 class="pull-left">进行中的设备预约</h3>
-                <a href="预约首页.html" class="more lk pull-right">查看全部</a>
+                <a href="${webbaseurl}/equipOrdIndex.${strutsaction}" class="more lk pull-right">查看全部</a>
               </div>
               <ul class="media-list">
+				#foreach($row in $equipmenborrowFullList)		
                 <li class="media">
                   <div class="media-body">
-                    <div class="media-heading"><h5><a href="设备预约详细内容页.html">数字摄影技术第11周设备申请通知</a></h5><span>等待你提交预约申请</span></div>
-                    <span class="tag label label-important">课程预约</span>                  
+                    <div class="media-heading"><h5><a href="${webbaseurl}/equipOrderContent.do?borrowId=$!row.borrowid">$!row.title</a></h5><span>#if($!row.status==1)
+								等待提交预约申请。
+							  #elseif($!row.status==2)
+								等待审核
+							  #elseif($!row.status==3)
+								预约被驳回，需修改后重新提交预约
+							  #elseif($!row.status==4)
+								审核通过，请于规定时间领取相关设备
+							  #elseif($!row.status==5)
+								请于规定时间归还相关设备
+							  #elseif($!row.status==6)
+								已超期，请尽快归还相关设备
+							  #elseif($!row.status==7)
+								部分设备受损，请尽快根据相关规定处理受损设备
+							  #elseif($!row.status==8)
+								已完成
+							  #end</span></div>
+                    <span class="tag label label-important">#if($!row.category==1)
+							个人预约
+						  #elseif($!row.category==2)
+							课程预约
+						  #end</span>                  
                   </div>
                 </li>
-                <li class="media">
-                  <div class="media-body">
-                    <div class="media-heading"><h5><a href="设备预约详细内容页.html">2013年6月18日设备申请</a></h5><span>等待审核</span></div>
-                    <span class="tag label label-important">个人预约</span>                  
-                  </div>
-                </li>
+				#end 
               </ul>
             </div>
             <div class="thumbnail">

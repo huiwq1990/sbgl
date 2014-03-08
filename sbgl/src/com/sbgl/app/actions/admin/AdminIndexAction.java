@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.sbgl.app.actions.common.BaseAction;
+import com.sbgl.app.actions.orderadmin.OrderCountFull;
 import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
@@ -16,6 +17,8 @@ import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
+import com.sbgl.app.services.order.OrderMainService;
+import com.sbgl.app.services.orderadmin.OrderAdminService;
 import com.sbgl.app.services.user.StudentService;
 import com.sbgl.app.services.user.TeacherService;
 import com.sbgl.app.services.user.WorkerService;
@@ -45,6 +48,13 @@ public class AdminIndexAction extends BaseAction{
 	private Computerorderdetail computerorderdetail = new Computerorderdetail();//实例化一个模型
 	private ComputerorderdetailFull computerorderdetailFull = new ComputerorderdetailFull();//实例化一个模型	
 	List<Computerorderdetail> computerorderdetailList = new ArrayList<Computerorderdetail>();
+	
+	
+	@Resource
+	private OrderAdminService orderAdminService;
+	
+
+	private OrderCountFull orderCountFull;
 
 	int computerorderWaitAuditNum;
 	
@@ -64,6 +74,7 @@ public class AdminIndexAction extends BaseAction{
 		}else{
 			computerorderWaitAuditNum = computerorderList.size();
 		}
+		orderCountFull = orderAdminService.findOrderCount("");
 		
 		//用户数量统计
 		studentNum = studentService.getSumOfStudent();
@@ -205,6 +216,16 @@ public class AdminIndexAction extends BaseAction{
 
 	public void setWorkerNum(int workerNum) {
 		this.workerNum = workerNum;
+	}
+
+
+	public OrderCountFull getOrderCountFull() {
+		return orderCountFull;
+	}
+
+
+	public void setOrderCountFull(OrderCountFull orderCountFull) {
+		this.orderCountFull = orderCountFull;
 	}
 
 	

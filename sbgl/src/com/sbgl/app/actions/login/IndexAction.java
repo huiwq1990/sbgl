@@ -14,14 +14,17 @@ import org.springframework.stereotype.Controller;
 
 import com.sbgl.app.actions.common.BaseAction;
 import com.sbgl.app.actions.computer.ComputerAction;
+import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
+import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
+import com.sbgl.app.services.order.OrderMainService;
 
 
 @Scope("prototype") 
@@ -48,6 +51,10 @@ public class IndexAction extends BaseAction{
 	List<ComputerorderdetailFull> computerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
 	private Integer computerorderdetailid; //entity full 的id属性名称		
 	
+	@Resource
+	private OrderMainService orderMainService;
+	
+	private List<EquipmenborrowFull> equipmenborrowFullList;
 	
 	HashMap<Integer, ArrayList<Computerorderdetail>> computerorderdetailMapByComputermodelId = new HashMap<Integer,ArrayList<Computerorderdetail>>();
 	HashMap<Integer, ArrayList<ComputerorderdetailFull>> computerorderdetailFullMapByComputermodelId = new HashMap<Integer,ArrayList<ComputerorderdetailFull>>();
@@ -70,6 +77,7 @@ public class IndexAction extends BaseAction{
 		String selunderwayordersql = "  where a.createuserid="+userid + " and a.status in("+ComputerorderInfo.ComputerorderStatusAduitWait+","+ComputerorderInfo.ComputerorderStatusAduitReject+") order by a.createtime desc";
 		computerorderFullUnderwayList = computerorderService.selectComputerorderFullByCondition(selunderwayordersql);
 		
+		equipmenborrowFullList = orderMainService.findUnderWayOrder(userid);
 		log.info(computerorderFullUnderwayList.size());
 		return SUCCESS;
 	}
@@ -240,6 +248,17 @@ public class IndexAction extends BaseAction{
 	public void setComputerorderFullUnderwayList(
 			List<ComputerorderFull> computerorderFullUnderwayList) {
 		this.computerorderFullUnderwayList = computerorderFullUnderwayList;
+	}
+
+
+	public List<EquipmenborrowFull> getEquipmenborrowFullList() {
+		return equipmenborrowFullList;
+	}
+
+
+	public void setEquipmenborrowFullList(
+			List<EquipmenborrowFull> equipmenborrowFullList) {
+		this.equipmenborrowFullList = equipmenborrowFullList;
 	}
 	
 	
