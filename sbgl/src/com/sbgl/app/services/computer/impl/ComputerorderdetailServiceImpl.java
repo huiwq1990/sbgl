@@ -92,6 +92,18 @@ public class ComputerorderdetailServiceImpl implements ComputerorderdetailServic
 		baseDao.updateEntity(tempComputerorderdetail);
 
 	}
+	
+	
+	
+	/**
+	 * 强制使某一天某个器材不能预约
+	 * @param borrowday
+	 * @param period
+	 * @param computermodeltype
+	 */
+	public void delByPeriodComputermodeltype(String borrowday,int period,int computermodeltype){
+		computerorderdetailDao.delByPeriodComputermodeltype(borrowday, period, computermodeltype);
+	}
 
 //	根据id查询实体类			
 	@Override

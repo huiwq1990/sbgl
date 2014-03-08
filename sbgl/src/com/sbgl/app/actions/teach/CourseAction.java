@@ -1,5 +1,6 @@
 package com.sbgl.app.actions.teach;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
 
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -208,18 +210,20 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>{
 			
 			course.setAdduserid(uid);
 			
-//			System.out.println(DateUtil.currentDate());
-//			course.setAddtime(DateUtil.currentDate());
+
+		
 			
 			Course ch = new Course();	
-			BeanUtils.copyProperties(ch, course);				
+			PropertyUtils.copyProperties(ch, course);	
+			ch.setAddtime(new Date()); 
 			ch.setLanguagetype(CommonConfig.languagech);
 			
 			
 			Course en = new Course();	
-			BeanUtils.copyProperties(en, course);		
+			PropertyUtils.copyProperties(en, course);		
 			en.setName(coursenameen);
 			en.setLanguagetype(CommonConfig.languageen);
+			en.setAddtime(new Date()); 
 			courseService.addCourse(ch,en);
 
 			returnInfo = "添加成功";

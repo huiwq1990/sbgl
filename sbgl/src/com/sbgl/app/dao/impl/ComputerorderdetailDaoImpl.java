@@ -80,6 +80,26 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	}
 	
 	
+	/**
+	 * 强制使某一天某个器材不能预约
+	 * 需要指定器材及时间
+	 * 彻底删除某一时间段的关于某个模型的预约，不管这一事件有多少个预约都要删除
+	 * @param computerorderid
+	 */
+	@Override
+	public void delByPeriodComputermodeltype(String borrowday,int period,int computermodeltype){
+		String sql = " delete from Computerorderdetail where  computermodelid = "+computermodeltype+"borrowday='"+borrowday+"' and borrowperiod="+period;
+		try {
+			Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
+	         Query query = session.createSQLQuery(sql);
+			 query.executeUpdate();
+		} catch (RuntimeException re) {
+	        log.error("查询失败", re);           
+	        throw re;
+	            
+	   }
+	}
+	
 
 	/**
 	 * 彻底删除订单详情信息
