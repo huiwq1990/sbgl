@@ -32,7 +32,7 @@ public class CourseconfigServiceImpl implements CourseconfigService{
 	public void addCourseconfig(Courseconfig courseconfig){
 		
 //		将所有当前学期设置不是当前学期
-		baseDao.createSQL(" update Courseconfig set currentsemester = "+TeachConstant.coursesconfigcurrentsemester+" where currentsemester = "+TeachConstant.coursesconfignotcurrentsemester);
+		baseDao.createSQL(" update Courseconfig set currentsemester = "+TeachConstant.coursesconfignotcurrentsemester+" where currentsemester = "+TeachConstant.coursesconfigcurrentsemester);
 		
 		courseconfig.setId(baseDao.getCode("Courseconfig"));
 //		courseconfig.set

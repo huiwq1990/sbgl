@@ -48,7 +48,7 @@
 										active
 									#end	
 									">
-									<h4 class="list-group-item-heading">课程名称 $!tempCourseFull.coursename </h4>
+									<h4 class="list-group-item-heading">$!tempCourseFull.coursename </h4>
 									<p class="list-group-item-text">任课教师：$!tempCourseFull.teacherloginusername</p>
 								</a>
 							#end		
@@ -104,11 +104,11 @@
 											#foreach($day in $dayList)
 												
 												#if($courseschedulePeriodDayMap.containsKey($period.periodnum) && $courseschedulePeriodDayMap.get($period.periodnum).containsKey($day))
-											<td data-week="$day" data-day="$day" data-slot="$!index" data-period="$period.periodnum" data-is-arranged="yes" class="selectable">
+											<td data-week="$day" data-day="$day" data-slot="$period.periodnum" data-period="$period.periodnum" data-is-arranged="yes" class="selectable">
 												<code><i class="icon-ok"></i></code>
 											</td>
 											#else
-												<td data-week="$day" data-day="$day" data-slot="$!index" data-period="$period.periodnum" data-is-arranged="no" class="selectable">
+												<td data-week="$day" data-day="$day" data-slot="$period.periodnum" data-period="$period.periodnum" data-is-arranged="no" class="selectable">
 												
 											</td>
 												
@@ -267,13 +267,17 @@ $("button[action-type|=saveModify]").on('click', function(event) {
                                 var returnJson = jQuery.parseJSON(data); 
                                 if(returnJson.flag == 1){
                                         var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});
-                                        //clearAddForm();
-                                        _this.parents('.modal').modal('toggle');                // 提交成功，关闭模态对话框
-										$("#course-week-table").find("#tr-slot-" + thisCourse.period )
+										$("#course-week-table").find("#tr-slot-" + thisCourseData.slot + " > td").each(function(index, el) {
+											if ($(el).data("day") === thisCourseData.day) {
+												var html = "<code><i class='icon-ok'></i></code>";
+												$(el).html(html);
+												$(el).attr("data-is-arranged", "yes");
+												thisCourseData.isArranged = "yes";
+											}
+										});
 										
                                 }else{
-                                        var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});                                        
-                                        _this.parents('.modal').modal('toggle');                // 提交成功，关闭模态对话框                
+                                        var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});                                                       
                                 }
                         }                            
                 });
@@ -291,8 +295,7 @@ $("#course-week-table").on("click", "td.selectable", function() {
 	$("#course-arrange-form button[action-type|=cancelArrangedCourse]").data(thisCourseData);
 	$("#course-week-table td").removeClass("selected");
 	$(this).addClass('selected');
-	if (thisCourseData.isArranged === "yes") {
-		
+	if (thisCourseData.isArranged === "yes") {		
 		
                	var postData = {
 					selcourseid: $selcourseid,
@@ -319,8 +322,8 @@ $("#course-week-table").on("click", "td.selectable", function() {
 				}); 
 				str+='</ul>';
 				$("#orderedComputermodel").html(str);
-				  $("#is-arranged-yes").show();
-					$("#is-arranged-no").hide();
+				$("#is-arranged-yes").show();
+				$("#is-arranged-no").hide();
 	
             }                            
         });

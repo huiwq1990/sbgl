@@ -2,6 +2,7 @@ package com.sbgl.app.dao.impl;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.sbgl.app.actions.teach.TeachConstant;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderdetailInfo;
 import com.sbgl.app.dao.BaseDao;
@@ -23,6 +25,7 @@ import com.sbgl.app.dao.ComputerorderdetailDao;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
+import com.sbgl.app.entity.CoursescheduleFull;
 import com.sbgl.util.*;
 
 @Repository("computerorderdetailDao")
@@ -80,6 +83,26 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	}
 	
 	
+	/**
+	 * 强制使某一天某个器材不能预约
+	 * 需要指定器材及时间
+	 * 彻底删除某一时间段的关于某个模型的预约，不管这一事件有多少个预约都要删除
+	 * @param computerorderid
+	 */
+	@Override
+	public void delByPeriodComputermodeltype(String borrowday,int period,int computermodeltype){
+		String sql = " delete from Computerorderdetail where  computermodelid = "+computermodeltype+" and borrowday='"+borrowday+"' and borrowperiod="+period;
+		try {
+			Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
+	         Query query = session.createSQLQuery(sql);
+			 query.executeUpdate();
+		} catch (RuntimeException re) {
+	        log.error("查询失败", re);           
+	        throw re;
+	            
+	   }
+	}
+	
 
 	/**
 	 * 彻底删除订单详情信息
@@ -99,6 +122,10 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	   }
 	}
 	
+	
+	
+	
+
 	/**
 	 * 查询某个天有效的订单详情
 	 */

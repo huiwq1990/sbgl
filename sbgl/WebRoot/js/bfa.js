@@ -15,10 +15,10 @@ function getSelectedCheckboxList() {
 
 }
 
-$("body").on("click", "a[action-type|=adminLogout]", function() {
+/*$("body").on("click", "a[action-type|=adminLogout]", function() {
     // $("button[action-type|=adminLogout]").on("click", function (){
       	alert("adminLogout!");
-});
+});*/
 			
 	(function($){
 		

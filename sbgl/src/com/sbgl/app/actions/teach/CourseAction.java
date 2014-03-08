@@ -207,16 +207,20 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>{
 			}
 			
 			course.setAdduserid(uid);
-			course.setAddtime(DateUtil.currentDate());
+			
+//			System.out.println(DateUtil.currentDate());
+//			course.setAddtime(DateUtil.currentDate());
 			
 			Course ch = new Course();	
-			BeanUtils.copyProperties(ch, course);				
+			BeanUtils.copyProperties(ch, course);		
+			ch.setAddtime(DateUtil.currentDate());
 			ch.setLanguagetype(CommonConfig.languagech);
 			
 			
 			Course en = new Course();	
 			BeanUtils.copyProperties(en, course);		
 			en.setName(coursenameen);
+			en.setAddtime(DateUtil.currentDate());
 			en.setLanguagetype(CommonConfig.languageen);
 			courseService.addCourse(ch,en);
 

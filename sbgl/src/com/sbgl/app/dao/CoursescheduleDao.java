@@ -32,5 +32,8 @@ public List<Courseschedule> selectCoursescheduleByCondition(String condition);
 
 	void delCoursescheduleByPeriod(Courseschedule temp);
 
+	List<CoursescheduleFull> selectCoursescheduleFullByWeek(Integer semesterId,
+			Integer weeknum, int languagetype);
+
  
 }
