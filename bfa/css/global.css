@@ -1491,6 +1491,7 @@ a.list-group-item.active:focus .list-group-item-text {
 #admin #course-week-table .selectable {	cursor: pointer; position: relative; }
 #admin #course-week-table .selectable:hover { background-color: #F5F9FC; }
 #admin #course-week-table .selected { background-color: #F5F9FC; }
+#admin #course-week-table td code {display: inline-block; margin:  5px 5px; }
 .select2-results .sub { padding-left: 12px; }
 
 .form-group .progress { margin: 10px 0; }
