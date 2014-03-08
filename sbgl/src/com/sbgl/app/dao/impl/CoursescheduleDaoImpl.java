@@ -58,6 +58,20 @@ public class CoursescheduleDaoImpl extends HibernateDaoSupport implements Course
 //	}
 	
 	/**
+	 * 查询某个学期某周的全部课程
+	 */
+	@Override
+	public List<CoursescheduleFull> selectCoursescheduleFullByWeek(Integer semesterId,Integer weeknum,int languagetype){
+		List<CoursescheduleFull> coursescheduleList = new ArrayList<CoursescheduleFull>();
+		String addedsql = "   where a.status = "+TeachConstant.courseschedulevalidstatus+" and a.semester = "+semesterId+" and a.week="+weeknum + " and b.languagetype = 0";
+		coursescheduleList = selectCoursescheduleFullByCondition(addedsql);
+		
+		return coursescheduleList;
+		
+	}
+	
+	
+	/**
 	 * 获取某个课程某学期某周的课程
 	 * @param coursescheduleId
 	 * @return

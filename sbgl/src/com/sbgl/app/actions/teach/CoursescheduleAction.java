@@ -203,7 +203,7 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 //		课程信息
 		courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+CommonConfig.languagech);
 		courseFullByGroupId = TeachActionUtil.couseFullUsergroupMap(usergroupList, courseFullList);
-//		System.out.println(courseFullList.size());
+		System.out.println(courseFullList.size());
 		System.out.println("courseFullByGroupId size:"+courseFullByGroupId.size());
 //		 System.out.println("courseFullByIdGroupId"+courseFullByGroupId.get(1).get(0).getCoursename());
 //		System.out.println(computermodelByComputercategoryId.get(-1).size());
@@ -265,7 +265,7 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 
 
 //			查询computer分类模型信息
-			String categorySqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";	
+			String categorySqlch = " where a.languagetype="+CommonConfig.languagech+" order by a.computercategorytype,a.languagetype";	
 			computercategoryList  = computercategoryService.selectComputercategoryByCondition(categorySqlch);					
 			String modelSqlch = " where a.languagetype=0  ";	
 			computermodelList  = computermodelService.selectComputermodelByCondition(modelSqlch);	
@@ -275,7 +275,7 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 			
 //			课程信息
 			courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+CommonConfig.languagech);
-//			System.out.println(courseFullList.size());
+			System.out.println("课程数目："+courseFullList.size());
 			 
 //			System.out.println(computermodelByComputercategoryId.get(-1).size());
 			 
@@ -298,12 +298,12 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 
 			
 			log.info(courseconfig.getId() +  " " +courseschedule.getCourseid() + "  "+ selweek);
-			coursescheduleFullList = coursescheduleService.selectCoursescheduleFullByWeek(courseconfig.getId(),selweek);
+			coursescheduleFullList = coursescheduleService.selectCoursescheduleFullByWeek(courseconfig.getId(),selweek,CommonConfig.languagech);
 
-			System.out.println("第"+courseschedule.getWeek()+"周所有课程预约数目"+coursescheduleFullList.size());
+			System.out.println("第"+selweek+"周所有课程预约数目"+coursescheduleFullList.size());
 			//			转化成map
 			coursescheduleFullPeriodDayMapList = TeachActionUtil.coursescheduleFullPeriodDayMapList(coursescheduleFullList);
-			System.out.println(coursescheduleFullPeriodDayMapList.get(1).get(2).get(0).getCoursename());
+//			System.out.println(coursescheduleFullPeriodDayMapList.get(1).get(2).get(0).getCoursename());
 			
 			returnInfo = "";
 			log.info(returnInfo);

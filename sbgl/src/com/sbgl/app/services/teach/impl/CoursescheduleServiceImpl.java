@@ -166,7 +166,7 @@ public class CoursescheduleServiceImpl implements CoursescheduleService{
 				computerorderdetailDao.delByComputerorderid(cscoList.get(0).getComputercoursescheduleid());
 				*/
 		         
-//		         如果课程安排的机房已经添加，则它的预约详情需要删除
+//		         如果课程安排的机房已经添加，则它已经预约了器材。现在重新预约这个时段的器材，所以它的预约详情需要删除
 //		         要删除的课程安排信息
 //				int courseid = added.getCourseid();
 				
@@ -194,6 +194,10 @@ public class CoursescheduleServiceImpl implements CoursescheduleService{
 			
 //			添加课程安排的机房使用信息
 			for(Coursecomputer cc : coursecomputerList){
+				
+				
+			
+				
 				int c = baseDao.getCode("Coursecomputer");
 				Coursecomputer ccnew = new Coursecomputer();
 				
@@ -217,13 +221,21 @@ public class CoursescheduleServiceImpl implements CoursescheduleService{
 
 
 
-	
+//	添加预约详情
 		
 		for(Computerorderdetail cod : computerorderdetailList){
+			
+//			删除关于某个器材的所有预约
+			computerorderdetailDao.delByPeriodComputermodeltype(DateUtil.dateFormat(cod.getBorrowday(), DateUtil.dateformatstr1), cod.getBorrowperiod(), cod.getComputermodelid());
+			
+			
+			
 			cod.setComputerorderid(computerorderid);
 			cod.setId(baseDao.getCode("Computerorderdetail"));
 			baseDao.saveEntity(cod);
 		}
+		
+//		删除这个时段其他人的预约
 
 		
 	}
@@ -329,12 +341,9 @@ public class CoursescheduleServiceImpl implements CoursescheduleService{
 	 * 查询某个学期某周的全部课程
 	 */
 	@Override
-	public List<CoursescheduleFull> selectCoursescheduleFullByWeek(Integer semesterId,Integer weeknum){
-		List<CoursescheduleFull> coursescheduleList = new ArrayList<CoursescheduleFull>();
-		String addedsql = "   where a.status = "+TeachConstant.courseschedulevalidstatus+" and a.semester = "+semesterId+" and a.week="+weeknum;
-		coursescheduleList = coursescheduleDao.selectCoursescheduleFullByCondition(addedsql);
-		
-		return coursescheduleList;
+	public List<CoursescheduleFull> selectCoursescheduleFullByWeek(Integer semesterId,Integer weeknum,int languagetype){
+	
+		return coursescheduleDao.selectCoursescheduleFullByWeek(semesterId, weeknum, languagetype);
 		
 	}
 	

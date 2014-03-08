@@ -6,6 +6,7 @@ import java.util.List;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
+import com.sbgl.app.entity.CoursescheduleFull;
 import com.sbgl.util.*;
 
 public interface ComputerorderdetailDao{
@@ -57,6 +58,15 @@ public List<Computerorderdetail> selectComputerorderdetailByCondition(String con
 
 
 	void delByPeriod(int computerorderid, String borrowday, int period);
+
+
+
+	
+
+	void delByPeriodComputermodeltype(String borrowday, int period,
+			int computermodeltype);
+
+
 
  
 }
