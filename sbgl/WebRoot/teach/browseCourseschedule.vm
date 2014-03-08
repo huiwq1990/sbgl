@@ -56,7 +56,7 @@
 
                 </div>
               </div>
-              <div class="panel panel-default">
+              <div class="panel panel-default table-responsive">
                 <table id="course-week-table" class="table">
                   <thead>
                     <tr>
@@ -80,11 +80,13 @@
 		#foreach($day in $dayList)
 			#if($coursescheduleFullPeriodDayMapList.containsKey($period.periodnum) && $coursescheduleFullPeriodDayMapList.get($period.periodnum).containsKey($day))
 				#set($csList =  $coursescheduleFullPeriodDayMapList.get($period.periodnum).get($day))
-				<td><code rel="tooltip" data-title="第 1、2、3、6 周">
+				<td>
 				#foreach($cs in $csList)
+					<code rel="tooltip" data-title="第 1、2、3、6 周">
 					$cs.coursename 
+					</code>
 				#end	
-				</code></td>
+				</td>
 			#else
 				<td></td>			
 			#end		
