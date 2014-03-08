@@ -82,4 +82,13 @@ public class TeacherServiceImpl implements TeacherService {
 		Teacher teacher = baseDao.getEntityById(Teacher.class, teacherId);
 		return teacher;
 	}
+
+	@Override
+	public Integer getSumOfTeacher() {
+		List<Teacher> resultList = getAllTeacher();
+		if(resultList != null) {
+			return resultList.size();
+		}
+		return 0;
+	}
 }

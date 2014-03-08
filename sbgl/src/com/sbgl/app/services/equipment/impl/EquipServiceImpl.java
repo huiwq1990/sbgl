@@ -23,6 +23,7 @@ import com.sbgl.app.entity.Equipment;
 import com.sbgl.app.entity.Equipmentcategory;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Equipmentdetail;
+import com.sbgl.app.entity.User;
 import com.sbgl.app.services.equipment.EquipService;
 import com.sbgl.common.HQLOption;
 import com.sbgl.util.Page;
@@ -211,8 +212,8 @@ public class EquipServiceImpl implements EquipService {
 		Equipment e = null;
 		Equipment ee = null;
 		if( equipmentdetail.getEquipmentid() != -1 && equipmentdetail.getEquipmentid() != null ) {
-			e = this.getEquipmentById( equipmentdetail.getEquipmentid() );
-			List<Equipment> equipList =  baseDao.getEntityByProperty(Equipment.class.getName(), "comid", String.valueOf( e.getComid() ));
+//			e = this.getEquipmentById( equipmentdetail.getEquipmentid() );
+			List<Equipment> equipList =  baseDao.getEntityByIntProperty(Equipment.class.getName(), "comid", equipmentdetail.getEquipmentid());
 			if(equipList != null && equipList.size() > 0) {
 				e = equipList.get(0);
 				ee = equipList.get(1);
@@ -284,8 +285,8 @@ public class EquipServiceImpl implements EquipService {
 			Equipment e = null;
 			Equipment ee = null;
 			if( oldEquipid == -1 && equipmentdetail.getEquipmentid() != -1 ) {  //从没有型号变为有型号
-				e = this.getEquipmentById( equipmentdetail.getEquipmentid() );
-				List<Equipment> equipList =  baseDao.getEntityByProperty(Equipment.class.getName(), "comid", String.valueOf( e.getComid() ));
+//				e = this.getEquipmentById( equipmentdetail.getEquipmentid() );
+				List<Equipment> equipList = baseDao.getEntityByIntProperty(Equipment.class.getName(), "comid", equipmentdetail.getEquipmentid());
 				if(equipList != null && equipList.size() > 0) {
 					e = equipList.get(0);
 					ee = equipList.get(1);
@@ -312,8 +313,8 @@ public class EquipServiceImpl implements EquipService {
 				}
 				
 			} else if( oldEquipid != -1 && equipmentdetail.getEquipmentid() == -1 ) { //从有型号变为没有型号
-				e = this.getEquipmentById( oldEquipid );
-				List<Equipment> equipList =  baseDao.getEntityByProperty(Equipment.class.getName(), "comid", String.valueOf( e.getComid() ));
+//				e = this.getEquipmentById( oldEquipid );
+				List<Equipment> equipList =  baseDao.getEntityByIntProperty(Equipment.class.getName(), "comid", oldEquipid);
 				if(equipList != null && equipList.size() > 0) {
 					e = equipList.get(0);
 					ee = equipList.get(1);
@@ -340,8 +341,8 @@ public class EquipServiceImpl implements EquipService {
 				}
 				
 			} else if( !oldEquipid.equals(equipmentdetail.getEquipmentid()) && oldEquipid != null && equipmentdetail.getEquipmentid() != null ) {  //型号不相同
-				e = this.getEquipmentById( equipmentdetail.getEquipmentid() );
-				List<Equipment> equipList =  baseDao.getEntityByProperty(Equipment.class.getName(), "comid", String.valueOf( e.getComid() ));
+//				e = this.getEquipmentById( equipmentdetail.getEquipmentid() );
+				List<Equipment> equipList = baseDao.getEntityByIntProperty(Equipment.class.getName(), "comid", equipmentdetail.getEquipmentid());
 				if(equipList != null && equipList.size() > 0) {
 					e = equipList.get(0);
 					ee = equipList.get(1);
@@ -367,8 +368,8 @@ public class EquipServiceImpl implements EquipService {
 					this.alterEquipInfo( ee, "0" );
 				}
 				
-				e = this.getEquipmentById( oldEquipid );
-				equipList =  baseDao.getEntityByProperty(Equipment.class.getName(), "comid", String.valueOf( e.getComid() ));
+//				e = this.getEquipmentById( oldEquipid );
+				equipList =  baseDao.getEntityByIntProperty(Equipment.class.getName(), "comid", oldEquipid);
 				if(equipList != null && equipList.size() > 0) {
 					e = equipList.get(0);
 					ee = equipList.get(1);
@@ -397,8 +398,8 @@ public class EquipServiceImpl implements EquipService {
 			} else if( oldEquipid != -1 && equipmentdetail.getEquipmentid() != -1 && 
 					   oldEquipid.equals(equipmentdetail.getEquipmentid()) && !oldEquipStatus.equals(equipmentdetail.getStatus()) &&
 					   !(("0".equals(oldEquipStatus) || "1".equals(oldEquipStatus)) && ("0".equals(equipmentdetail.getStatus()) || "1".equals(equipmentdetail.getStatus()))) ) {  //同一型号内状态变化
-				e = this.getEquipmentById( oldEquipid );
-				List<Equipment> equipList =  baseDao.getEntityByProperty(Equipment.class.getName(), "comid", String.valueOf( e.getComid() ));
+//				e = this.getEquipmentById( oldEquipid );
+				List<Equipment> equipList =  baseDao.getEntityByIntProperty(Equipment.class.getName(), "comid", oldEquipid);
 				if(equipList != null && equipList.size() > 0) {
 					e = equipList.get(0);
 					ee = equipList.get(1);
@@ -458,8 +459,8 @@ public class EquipServiceImpl implements EquipService {
 		Equipment e = null;
 		Equipment ee = null;
 		if( d.getEquipmentid() != -1 && d.getEquipmentid() != null ) {
-			e = this.getEquipmentById( d.getEquipmentid() );
-			List<Equipment> equipList =  baseDao.getEntityByProperty(Equipment.class.getName(), "comid", String.valueOf( e.getComid() ));
+//			e = this.getEquipmentById( d.getEquipmentid() );
+			List<Equipment> equipList =  baseDao.getEntityByIntProperty(Equipment.class.getName(), "comid", d.getEquipmentid());
 			if(equipList != null && equipList.size() > 0) {
 				e = equipList.get(0);
 				ee = equipList.get(1);
@@ -879,6 +880,18 @@ public class EquipServiceImpl implements EquipService {
 	public Equipment getEquipmentByName(String name) {
 		List<Equipment> resultList = baseDao.getEntityByProperty(Equipment.class.getName(), "equipmentname", name);
 		return (Equipment) (resultList != null ? resultList.get(0) : null);
+	}
+
+	@Override
+	public Equipment getEquipByComidAndLanType(Integer comid, String lantype) {
+		final String hql = "from Equipment as e where e.comid=" + comid + " and e.lantype='" + lantype +"'";
+
+		List<Equipment> euqipList = baseDao.executeHQL( hql );
+		
+		if(euqipList != null) {
+			return euqipList.get( 0 );
+		}
+		return null;
 	}
 	
 	

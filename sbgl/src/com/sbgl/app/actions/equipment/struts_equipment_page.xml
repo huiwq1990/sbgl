@@ -2,14 +2,15 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
     
-	<package name="equip"  extends="admin">
-		<interceptors>  
+	<package name="equip"  extends="manage">
+		<!-- <interceptors>  
            <interceptor name="equipInter"  class="com.sbgl.app.actions.common.EquipIntercepor"/>
            <interceptor-stack name="equipDefault">
            	   <interceptor-ref name="equipInter" />
+           	   <interceptor-ref name="defaultStack" />
            </interceptor-stack>
 	    </interceptors>  
-	    <default-interceptor-ref name="equipDefault" />
+	    <default-interceptor-ref name="equipDefault" /> -->
         <action name="equipManageAdmin" class="EquipmentAction" method="gotoEquipManageAdmin">
         	<result name="success">
         		/admin/equipManageAdmin.vm

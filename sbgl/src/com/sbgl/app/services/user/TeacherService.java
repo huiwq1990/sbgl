@@ -17,4 +17,6 @@ public interface TeacherService {
 	public boolean isExistTeacherCode(String teacherCode);
 	//根据ID获取教师
 	public Teacher getTeacherById(int teacherId);
+	//获取教师总数
+	public Integer getSumOfTeacher();
 }

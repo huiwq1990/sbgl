@@ -52,12 +52,14 @@
         
     </package>
     
-    <package name="userManage" extends="admin">
+    <!-- 进入后台统一权限拦截 -->
+    <package name="manage" extends="admin">
     	<interceptors>  
-           <interceptor name="userInter"  class="com.sbgl.app.actions.common.UserIntercepor"/>
-           	<!-- 拦截器栈  --> 
+           <interceptor name="userInter"  class="com.sbgl.app.actions.common.PrivilegeInterceptor"/>
+           	<!-- 拦截器栈   -->
            <interceptor-stack name="userDefault">
            	   <interceptor-ref name="userInter" />
+           	   <interceptor-ref name="defaultStack" />
            </interceptor-stack>
 	    </interceptors>  
 	    <default-interceptor-ref name="userDefault" />

@@ -1,61 +1,74 @@
 // JavaScript Document
 
+
+function getSelectedCheckboxList() {
+	var idsForDel = "";
+		
+	$("input[name='chk-list']").each(function() {
+		if($(this).prop("checked") === true) {
+			//num++;
+			idsForDel += $(this).prop("value") + ";";
+		}
+	});
+	
+	return idsForDel;
+
+}
+
+$("body").on("click", "a[action-type|=adminLogout]", function() {
+    // $("button[action-type|=adminLogout]").on("click", function (){
+      	alert("adminLogout!");
+});
+			
 	(function($){
 		
-		/* 全选 */
-		$("input[type='checkbox']").click(function() {
-			var num = 0;
-			if($(this).attr("id") === "chk-all") {
-				$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
-			}
-			$("input[name='chk-list']").each(function() {
-				if($(this).prop("checked") === true){
-					num++;  
-				}
-			});
-			if(num > 0){
-				$(".s-h").css({
-					"visibility": "visible",
-					"opacity": "1",
-					"filter": "alpha(opacity=100)"
-				});
-			} else {
-				$(".s-h").css({
-					"visibility": "hidden",
-					"opacity": "0",
-					"filter": "alpha(opacity=0)"
-				});
-			}
-		});
+					/* 全选 */
+					$("input[type='checkbox']").click(function() {
+						var num = 0;
+						if($(this).attr("id") === "chk-all") {
+							$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
+						}
+						$("input[name='chk-list']").each(function() {
+							if($(this).prop("checked") === true){
+								num++;  
+							}
+        				});
+						if(num > 0){
+							$(".s-h").css({
+								"visibility": "visible",
+								"opacity": "1",
+								"filter": "alpha(opacity=100)"
+							});
+						} else {
+							$(".s-h").css({
+								"visibility": "hidden",
+								"opacity": "0",
+								"filter": "alpha(opacity=0)"
+							});
+						}
+					});
 
-		function format(state) {
-			var originalOption = state.element;
-			
-			if ($(originalOption).data('foo') === 'sub') {
-				return "<span class='sub'>" + state.text + "</span>";
-			} else {
-				return state.text;
-			}
-		
-		}
-
-		function reloadSelect2() {
 			$(".select2").select2({
 				minimumResultsForSearch: 8,
-				formatResult: format,
+				formatResult: formatSelect2,
 				escapeMarkup: function(markup) { return markup; }
 			});
-		}
-		$(".select2").select2({
-			minimumResultsForSearch: 8,
-			formatResult: format,
-			escapeMarkup: function(markup) { return markup; }
-		});
+			function formatSelect2(state) {
+				var originalOption = state.element;
+				
+				if ($(originalOption).data('foo') === 'sub') {
+					return "<span class='sub'>" + state.text + "</span>";
+				} else {
+					return state.text;
+				}
 			
-		$(window).load(function(){
+			}
+
+		
+		$(document).ready(function(){
 
 
-			
+
 			var lastScrollTop = 0;
 			
 			$(window).scroll(function () {
@@ -89,7 +102,7 @@
             });
 			
 			$('body').tooltip({
-				selector: 'a[rel=tooltip],input[rel=tooltip],abbr[rel=tooltip],strong[rel=tooltip],code[rel=tooltip]',
+				selector: 'a[rel=tooltip],input[rel=tooltip],abbr[rel=tooltip],strong[rel=tooltip]',
 			});
 			$('a[rel=popover]').popover({
 				trigger: "manual",
@@ -122,7 +135,17 @@
 				$("#rent-bar .wizard").animate({
 					height: $("#rent-bar .wizard .step-content").height() + 130
 				});
-/*				var item = $('.wizard').wizard('selectedItem');
+				/*
+				$(".step-pane").each(function(index) {
+					console.log( $(this).css() );
+					if ($(this).hasClass("active")) {
+						$(this).show(300);
+					} else {
+						$(this).hide(300);
+					}
+				});
+				*/
+				var item = $('.wizard').wizard('selectedItem');
 				if((item.step > 2)) {
 					$("#rent-bar").animate({
 							"right": "0%",
@@ -131,27 +154,6 @@
 							"margin-right": "20px"
 					});
 					$(".modal-backdrop").remove();					
-				}*/
-			});
-			$('#rent-bar .wizard').on('finished', function(e, data) {
-
-				var dateCheckin = $("#rent-bar .wizard .input-daterange .checkin").datepicker("getDate");
-				var dateCheckout = $("#rent-bar .wizard .input-daterange .checkout").datepicker("getDate");
-				if (dateCheckin == "Invalid Date" || dateCheckout == "Invalid Date" ) {
-					alert("请填写预约时间。");
-				} else {
-					$("#rent-bar").animate({
-						"right": "0%",
-						"top": "145px",
-						"width": "380px",
-						"margin-right": "20px"
-					});
-					$("#rent-bar .input-daterange .checkin1").datepicker("setDate", dateCheckin);
-					$("#rent-bar .input-daterange .checkout1").datepicker("setDate", dateCheckout);
-					$(".modal-backdrop").remove();
-					$("#rent-bar .wizard").remove();
-					$("#rent-bar > .rent-time").show();
-					$("#rent-bar > #rent-list").show();
 				}
 			});
 			/* 添加设备按钮 */
@@ -174,8 +176,7 @@
 							'<span class="input-group-btn">' + 
 								'<button type="button" class="btn btn-link spinner-down"><i class="icon-minus"></i></button>' + 
 							'</span>' + 
-							'<input type="text" name="equNum"  class="spinner-input form-control">' + 
-							'<input type="hidden" name="equId" value="'+eId+'">' + 
+							'<input type="text" class="spinner-input form-control">' + 
 							'<span class="input-group-btn">' + 
 								'<button type="button" class="btn btn-link spinner-up"><i class="icon-plus"></i></button>' +
 							'</span>' + 
@@ -188,7 +189,7 @@
 				if ($("#rent-list #" + eId).length > 0) {
 					alert("设备" + eName + "已添加！");
 				} else {									
-					$("#rent-list .panel-body").append(html);					
+					$("#rent-list").append(html);					
 					var spinner = $("#rent-list #" + eId).children(".spinner").spinner({max: maxNum});		// 设置设备最大可预约数量
 					$("#rent-list #" + eId).children(".spinner").spinner('value', eSelectNum);
 					var overMaxNum = 0;
@@ -199,7 +200,7 @@
 						var needMore;
 						if(curVal === maxNum) {
 							var str = "已达最大可借数量，继续添加，系统会记录下你所需实际数量，并提供相应建议!";
-							var n = noty({text: str, timeout: 6000,});
+							var n = noty({text: str, timeout: 8000,});
 
 							$(_this).on("click", ".spinner-up",function(){
 								if ($(_this).parent().find(".item-need-more").length === 0 ) {								
@@ -209,7 +210,8 @@
 								overMaxNum++;
 								$("#rent-list #" + eId).children(".spinner").spinner("setMin", maxNum);		// 设置设备最小可预约数量为最大数，使其减少还需数量
 								console.log(".spinner-up, 已达最大可预约数量！,超出： " + overMaxNum);
-								$(_this).next(".item-need-more").find(".need-num").html(overMaxNum);								
+								$(_this).next(".item-need-more").find(".need-num").html(overMaxNum);
+								
 								console.log(".spinner-up, 已达最大可预约数量！,超出： " + overMaxNum);
 							});	
 							$(_this).on("click", ".spinner-down",function(){
@@ -281,17 +283,14 @@
 				}
 			});
 
-/*			function reWizardHeight_old() {
+		
+
+			function reWizardHeight() {
 				$("#rent-bar .wizard").animate({
 					height: $("#rent-bar .wizard .step-content").height() + 130
 				});
-			}*/
-
-            function reWizardHeight() {
-				$("#rent-list").animate({
-					height: $("#rent-list .panel-body").height() + 100
-				});
 			}
+
 
 
 			$('.spinner').spinner();

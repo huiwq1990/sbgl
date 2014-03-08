@@ -16,4 +16,6 @@ public interface StudentService {
 	public boolean isExistStudentCode(String stuCode);
 	//根据ID获取学生信息
 	public Student getStudentById(int stuId);
+	//获取学生总数
+	public Integer getSumOfStudent();
 }

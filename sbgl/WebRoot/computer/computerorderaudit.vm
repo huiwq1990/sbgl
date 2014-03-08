@@ -7,6 +7,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
@@ -83,7 +84,7 @@
 							 <div class="rent-contact">联系方式：个人预约</div>
 						#end
                      <!-- <div class="rent-contact">联系方式：XXXXXX</div> -->
-                      <div class="rent-remark"><i class="icon-pencil"></i> $computerorderFull.computerorderremark</div>
+                      <div class="rent-remark"><i class="icon-pencil"></i> $!computerorderFull.computerorderremark</div>
                     </div>
                     <hr>
                   </div>                        
@@ -97,7 +98,7 @@
                       </a>
                       <div class="media-body">
                         <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">教师名</a></h5><span class="post-time" title="详细时间">下午4:53</span></div>
-                        <p>审核老师发的审核驳回说明</p>
+                        <p>驳回原因：$!computerorderFull.computerorderrejectreason</p>
                       </div>
                     </li>
                   </ul>

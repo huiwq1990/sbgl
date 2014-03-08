@@ -246,12 +246,20 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxadminnotloginreturn, returnInfo);
 				return SUCCESS;
 			}
+//			如果没有选择周数，默认为第一周
+			if(selweek==0){
+				selweek = 1;
+			}
 			
 //			获取学期信息
 			courseconfig = courseconfigService.getCurrentCourseconfig();
 			if(courseconfig == null){
 				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, "没有设置学期信息");			
 				return SUCCESS;
+			}
+			
+			if(courseconfig.getWeeknum()<selweek){
+				selweek= courseconfig.getWeeknum();
 			}
 			
 
@@ -289,8 +297,8 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 			dayList = TeachActionUtil.getDayList();
 
 			
-			log.info(courseconfig.getId() +  " " +courseschedule.getCourseid() + "  "+ courseschedule.getWeek());
-			coursescheduleFullList = coursescheduleService.selectCoursescheduleFullByWeek(courseconfig.getId(), courseschedule.getWeek());
+			log.info(courseconfig.getId() +  " " +courseschedule.getCourseid() + "  "+ selweek);
+			coursescheduleFullList = coursescheduleService.selectCoursescheduleFullByWeek(courseconfig.getId(),selweek);
 
 			System.out.println("第"+courseschedule.getWeek()+"周所有课程预约数目"+coursescheduleFullList.size());
 			//			转化成map

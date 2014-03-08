@@ -63,7 +63,7 @@
 			
 			
 			<a href="${webbaseurl}/browseAllCoursescheduleByWeek.${strutsaction}" class="list-group-item 		
-			#if($currentWebpage == "coursescheduleBrowse" )
+			#if($currentWebpage == "browseCourseschedule" )
 			active      
 			#end		
 			">全部课程安排</a>

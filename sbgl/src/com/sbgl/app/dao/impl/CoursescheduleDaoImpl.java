@@ -31,7 +31,7 @@ public class CoursescheduleDaoImpl extends HibernateDaoSupport implements Course
 	private final String basicCoursescheduleFullSql = "select a.id as coursescheduleid, a.courseid as courseschedulecourseid, a.semester as courseschedulesemester, a.week as coursescheduleweek, a.day as coursescheduleday, a.period as coursescheduleperiod, a.adduserid as coursescheduleadduserid, a.status as courseschedulestatus, " +
 			"b.id as courseid, b.name as coursename, b.description as coursedescription, b.type as coursetype, b.coursetype as coursecoursetype, b.languagetype as courselanguagetype, b.adduserid as courseadduserid, b.teacherid as courseteacherid, b.addtime as courseaddtime, b.status as coursestatus," +
 			" c.id as adduserid, c.userid as adduseruserid, c.name as addusername, c.gender as addusergender, c.telephone as addusertelephone, c.email as adduseremail, c.roletype as adduserroletype, c.privilege as adduserprivilege, c.password as adduserpassword, c.photo as adduserphoto " +
-			"from Courseschedule a  left join Course b on a.courseid=b.coursecoursetype left join Loginuser c on a.adduserid=c.id ";
+			"from Courseschedule a  left join Course b on a.courseid=b.coursetype left join Loginuser c on a.adduserid=c.id ";
 	
 	private final String basicCoursescheduleSql = "From Courseschedule as a ";
 	

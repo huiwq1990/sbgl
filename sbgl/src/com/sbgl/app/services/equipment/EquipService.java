@@ -43,6 +43,8 @@ public interface EquipService {
 	public boolean isExistEquipment(String EquipName);
 	//获取联合主键
 	public Integer getEquipmentComId();
+	//根据联合主键和语言类型选择器材类型
+	public Equipment getEquipByComidAndLanType(Integer comid, String lantype);
 	
 	//查询器材详情记录总数
 	public int getCountOfEquipmentdetail();

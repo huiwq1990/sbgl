@@ -8,7 +8,7 @@
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
 #parse("include/includePageCompatibility.vm")
@@ -102,7 +102,7 @@
       <!--equip-wrap end-->
 
       <!--sidebar start-->
-  #set($currentWebpage="browseCourse")
+  #set($currentWebpage="browseCourseschedule")
 	  #parse("include/includeTeachSidebar.vm")
 
       <!--sidebar end-->
@@ -118,6 +118,7 @@
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
+
 
 </body>
 </html>
