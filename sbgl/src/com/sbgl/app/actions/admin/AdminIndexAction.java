@@ -16,12 +16,22 @@ import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
+import com.sbgl.app.services.user.StudentService;
+import com.sbgl.app.services.user.TeacherService;
+import com.sbgl.app.services.user.WorkerService;
 
 
 @Scope("prototype") 
 @Controller("AdminIndexAction")
 public class AdminIndexAction extends BaseAction{
 	
+	
+	@Resource
+	private StudentService studentService;
+	@Resource
+	private TeacherService teacherService;
+	@Resource
+	private WorkerService workerService;
 	
 	@Resource
 	private ComputerorderService computerorderService;	
@@ -38,6 +48,11 @@ public class AdminIndexAction extends BaseAction{
 
 	int computerorderWaitAuditNum;
 	
+	int totalUserNum;
+	int studentNum;
+	int teacherNum;
+	int workerNum;
+	
 	
 	public String adminIndex(){
 		
@@ -50,6 +65,11 @@ public class AdminIndexAction extends BaseAction{
 			computerorderWaitAuditNum = computerorderList.size();
 		}
 		
+		//用户数量统计
+		studentNum = studentService.getSumOfStudent();
+		teacherNum = teacherService.getSumOfTeacher();
+		workerNum = workerService.getSumOfWorker();
+		totalUserNum = studentNum + teacherNum + workerNum;
 		
 		return SUCCESS;
 	}
@@ -145,6 +165,46 @@ public class AdminIndexAction extends BaseAction{
 
 	public void setComputerorderWaitAuditNum(int computerorderWaitAuditNum) {
 		this.computerorderWaitAuditNum = computerorderWaitAuditNum;
+	}
+
+
+	public int getTotalUserNum() {
+		return totalUserNum;
+	}
+
+
+	public void setTotalUserNum(int totalUserNum) {
+		this.totalUserNum = totalUserNum;
+	}
+
+
+	public int getStudentNum() {
+		return studentNum;
+	}
+
+
+	public void setStudentNum(int studentNum) {
+		this.studentNum = studentNum;
+	}
+
+
+	public int getTeacherNum() {
+		return teacherNum;
+	}
+
+
+	public void setTeacherNum(int teacherNum) {
+		this.teacherNum = teacherNum;
+	}
+
+
+	public int getWorkerNum() {
+		return workerNum;
+	}
+
+
+	public void setWorkerNum(int workerNum) {
+		this.workerNum = workerNum;
 	}
 
 	
