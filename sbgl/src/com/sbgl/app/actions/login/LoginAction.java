@@ -127,6 +127,9 @@ public class LoginAction extends ActionSupport {
 	}
 	
 	public String doLogout() {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		session = request.getSession();
+		
 		CookiesUtil.removeCookie("uid");
 		CookiesUtil.removeCookie("userpass");
 		CookiesUtil.removeCookie("userid");
