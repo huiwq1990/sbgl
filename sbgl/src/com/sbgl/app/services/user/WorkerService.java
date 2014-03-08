@@ -16,4 +16,6 @@ public interface WorkerService {
 	public boolean isExistWorkerCode(String workerCode);
 	//根据ID查找其他用户
 	public Worker getWorkerById(int workerId);
+	//获取其他用户总数
+	public Integer getSumOfWorker();
 }

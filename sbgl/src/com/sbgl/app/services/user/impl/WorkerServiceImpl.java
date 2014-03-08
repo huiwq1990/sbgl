@@ -83,4 +83,13 @@ public class WorkerServiceImpl implements WorkerService {
 		return worker;
 	}
 
+	@Override
+	public Integer getSumOfWorker() {
+		List<Worker> resultList = getAllWorker();
+		if(resultList != null) {
+			return resultList.size();
+		}
+		return 0;
+	}
+
 }

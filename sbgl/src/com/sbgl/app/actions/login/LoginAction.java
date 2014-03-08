@@ -83,6 +83,7 @@ public class LoginAction extends ActionSupport {
 		session = request.getSession();
 		Loginuser loginUser2 = new Loginuser();		
 		boolean flag  = false;
+		String loginType = "";
 		try{	
 			loginUser2 = loginService.findUser(loginuser);
 			if(loginUser2 != null){
@@ -91,16 +92,21 @@ public class LoginAction extends ActionSupport {
 				CookiesUtil.addLoginCookie("userid", String.valueOf(loginUser2.getUserid()));
 				flag = true;
 				session.setAttribute("loginUser", loginUser2);
+				if("3".equals(loginUser2.getRoletype())) {
+					loginType = "admin";
+				} else {
+					loginType = "user";
+				}
 			}
 			
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();			
 		}
-		Javascript(flag);
+		Javascript(flag, loginType);
 	}
 	
-	public void Javascript(boolean flag){
+	public void Javascript(boolean flag, String loginType){
 		try{
 			HttpServletResponse response = WebUtils.getHttpServletResponse();
 			response.setContentType("text/html");
@@ -109,7 +115,7 @@ public class LoginAction extends ActionSupport {
 			PrintWriter write =response.getWriter();
 			if(flag){
 				JavascriptWriter tjavascriptWriter = new JavascriptWriter(write);
-				tjavascriptWriter.wirteToParent("succ","21321");
+				tjavascriptWriter.wirteToParent("succ", loginType);
 			}else{
 				JavascriptWriter tjavascriptWriter = new JavascriptWriter(write);
 				tjavascriptWriter.wirteToParent("fail","用户名错误或密码错误！");

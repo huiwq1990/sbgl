@@ -8,10 +8,15 @@
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 <script >
 	function afterSubmit(flag,content){
-		console.log(flag);
-		console.log(content);
+		//console.log(flag);
+		//console.log(content);
 		if(flag != "fail"){
-			location.href="./index.vm";
+			if(content == "admin") {
+				location.href="./adminIndex.action";
+			} else {
+				location.href="./index.action";
+			}
+			
 		}else{
 			alert("登陆失败："+content);
 		}

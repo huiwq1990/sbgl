@@ -85,4 +85,13 @@ public class StudentServiceImpl implements StudentService {
 		return stu;
 	}
 
+	@Override
+	public Integer getSumOfStudent() {
+		List<Student> resultList = getAllStudent();
+		if(resultList != null) {
+			return resultList.size();
+		}
+		return 0;
+	}
+
 }
