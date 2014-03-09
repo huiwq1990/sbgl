@@ -31,29 +31,59 @@
             <div class="tips">布置教学任务后，指定的收件人将会收到教学预约通知，收件人在相关说明的指导下完成机房预约。</div>
           </div><!--control-bar end-->
           <div class="row">
-            <div class="col-sm-12 col-md-3 col-lg-3">
-              <div class="control-bar"><a href="#" class="btn btn-primary">添加</a></div>
-              <div class="list-group">
-                <a href="#" class="list-group-item active">
-                  <h4 class="list-group-item-heading">全部课程</h4>
-                  <p class="list-group-item-text">浏览本学期全部课程</p>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">课程名称</h4>
-                  <p class="list-group-item-text">任课教师：</p>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">课程名称</h4>
-                  <p class="list-group-item-text">任课教师：</p>
-                </a>
-              </div>
-            </div>
+            
+									<!--课程列表-->
+						<div class="col-sm-12 col-md-3 col-lg-3">
+							<div class="control-bar"><a href="${webbaseurl}/toCourseAddPage.${strutsaction}" class="btn btn-primary">添加</a></div>
+							<div class="list-group">
+								<a href="${webbaseurl}/browseAllCoursescheduleByWeek.${strutsaction}" class="list-group-item active">
+									<h4 class="list-group-item-heading">全部课程</h4>
+									<p class="list-group-item-text">浏览本学期全部课程</p>
+								</a>
+								
+						#foreach($gp in $usergroupList)
+							##<optgroup label="$gp.name">
+							#set( $tcfl = $courseFullByGroupId.get($gp.id) )
+							#foreach($tempCourseFull in  $tcfl )					
+								<a href="${webbaseurl}/viewCoursescheduleByWeek.${strutsaction}?selcourseid=$!tempCourseFull.coursecoursetype&selweek=1" class="list-group-item 
+									#if($!tempCourseFull.coursecoursetype == $selcourseid)
+										active
+									#end	
+									">
+									<h4 class="list-group-item-heading">$!tempCourseFull.coursename </h4>
+									<p class="list-group-item-text">任课教师：$!tempCourseFull.teacherloginusername</p>
+								</a>
+							#end
+						#end
+			
+							</div>
+						</div>
+						<!--end课程列表-->
+			
+			
+			
             <div class="col-sm-12 col-md-9 col-lg-8">
               <div class="control-bar clearfix">
                 <div class="title pull-left">全部课程</div>
                 <div class="tips">本页面能够查看本学期在机房上课的课程信息，鼠标移动到指定的课程名上可以。</div>
                 <div class="operate-item pull-left">
 
+								<div class="row">
+									<ul class="tab-drop nav nav-pills col-md-12">
+										
+										#foreach($temp in [1 .. $courseconfig.weeknum])
+											#if($temp == $selweek)
+											<li class="active"><a href="${webbaseurl}/browseAllCoursescheduleByWeek.${strutsaction}?selweek=$temp" data-toggle="tab" data-week="$temp">第$temp周</a></li>
+											#else
+											<li><a href="${webbaseurl}/browseAllCoursescheduleByWeek.${strutsaction}?selweek=$temp"  data-week="$temp">第$temp周</a></li>
+										
+											#end
+										#end
+									            
+									</ul>
+								</div>
+					
+					
                 </div>
               </div>
               <div class="panel panel-default table-responsive">
@@ -104,7 +134,7 @@
       <!--equip-wrap end-->
 
       <!--sidebar start-->
-  #set($currentWebpage="browseCourseschedule")
+  #set($currentWebpage="coursescheduleviewandedit")
 	  #parse("include/includeTeachSidebar.vm")
 
       <!--sidebar end-->

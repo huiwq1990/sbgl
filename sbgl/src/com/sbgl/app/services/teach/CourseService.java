@@ -57,6 +57,8 @@ public interface CourseService{
 	int deleteCourse(List<Integer> delCourseIdList) throws DataError;
 
 	Course selectCourseByCoursetype(Integer coursetype, int language);
+
+	CourseFull selectCourseFullByCoursetype(Integer coursetype, int language);
 		
 	
 	

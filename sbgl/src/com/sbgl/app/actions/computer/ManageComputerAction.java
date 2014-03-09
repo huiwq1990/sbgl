@@ -793,52 +793,7 @@ public class ManageComputerAction extends BaseAction{
 	
 	
 	
-	//管理作业
-	public String manageComputerhomeworkFull(){
-		log.info("exec action method:manageComputerhomeworkFull");
-		/*
-//      分页查询	
-		if(pageNo ==0){
-			pageNo =1;
-		}
-		int totalcount = computerhomeworkService.countComputerhomeworkRow();
 		
-		
-		
-		if(totalcount == 0){
-			page.setTotalCount(1);
-		}else{
-			page.setTotalCount(totalcount);
-		}
-		
-		System.out.println(page.getTotalpage());
-		if(page.getTotalpage() < pageNo){
-			pageNo = page.getTotalpage();
-		}
-		page.setPageNo(pageNo);
-		*/
-		
-		int totalcount = computerhomeworkService.countComputerhomeworkRow();
-		page = PageActionUtil.getPage(totalcount, pageNo);
-		this.pageNo = page.getPageNo();
-		
-		computerhomeworkFullList  = computerhomeworkService.selectComputerhomeworkFullByConditionAndPage("", page);
-		System.out.println("computerhomeworkFullList.size"+computerhomeworkFullList.size());
-//		查询全部
-//		computerhomeworkFullList  = computerhomeworkService.selectComputerhomeworkFullAll();
-
-		if(computerhomeworkFullList == null){
-			computerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
-		}
-//		for(int i = 0; i < computerhomeworkFullList.size(); i++){
-//			System.out.println("id="+computerhomeworkFullList.get(i).getLoginusername());
-//		}
-		if(callType!=null&&callType.equals("ajaxType")){
-			return "success2";
-		}else{
-			return "success1";
-		}
-	}			
 			
 	
 	//管理作业接受人

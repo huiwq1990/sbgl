@@ -52,7 +52,7 @@
 							<optgroup label="$gp.name">
 							#set( $tcfl = $courseFullByGroupId.get($gp.id) )
 							#foreach($tempCourseFull in  $tcfl )					
-								<option value="$!tempCourseFull.courseid" >$tempCourseFull.coursename - $!tempCourseFull.teacherloginusername</option>                                           
+								<option value="$!tempCourseFull.coursecoursetype" >$tempCourseFull.coursename - $!tempCourseFull.teacherloginusername</option>                                           
 							#end		
 							</optgroup>							
 						#end

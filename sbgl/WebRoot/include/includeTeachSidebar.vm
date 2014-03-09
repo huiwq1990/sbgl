@@ -15,12 +15,13 @@
 			">添加课程</a>
 			
 			
-			
+			<!--
 			<a href="${webbaseurl}/browseCourse.${strutsaction}" class="list-group-item
 			#if($currentWebpage == "browseCourse" )
 			active      
 			#end		
 			">浏览课程</a>
+			-->
 
           <!--<a href="教学管理-设备预约安排.html" class="list-group-item">设备预约安排</a>-->
           <!--<a href="${webbaseurl}/toAddComputerorderclassrulePage.${strutsaction}" class="list-group-item
@@ -47,7 +48,8 @@
 			#end	
 			">查看机房教学</a>
 			
-			<a href="${webbaseurl}/viewCoursescheduleByWeek.${strutsaction}" class="list-group-item
+	
+			<a href="${webbaseurl}/browseAllCoursescheduleByWeek.${strutsaction}" class="list-group-item
 			#if($currentWebpage == "coursescheduleviewandedit" )
 			active      
 			#end	
@@ -61,12 +63,13 @@
 			#end		
 			">机房课程安排</a>
 			
-			
+			<!--
 			<a href="${webbaseurl}/browseAllCoursescheduleByWeek.${strutsaction}" class="list-group-item 		
 			#if($currentWebpage == "browseCourseschedule" )
 			active      
 			#end		
 			">全部课程安排</a>
+			-->
 			
 			<!--<a href="${webbaseurl}/manageCoursescheduleFull.${strutsaction}" class="list-group-item 		
 			#if($currentWebpage == "coursescheduleManage" )

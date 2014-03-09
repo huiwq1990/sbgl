@@ -26,7 +26,9 @@ import org.apache.commons.beanutils.BeanUtils;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.actions.common.BaseAction;
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.util.JsonActionUtil;
+import com.sbgl.app.actions.util.PageActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputerhomeworkService;
@@ -190,17 +192,17 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 	}
 	
 	
-		
-	//管理 查询
+	//管理作业
 	public String manageComputerhomeworkFull(){
 		log.info("exec action method:manageComputerhomeworkFull");
 		
-//      分页查询		
-		page.setPageNo(pageNo);
-		//设置总数量，在service中设置
-		//page.setTotalpage(computerhomeworkService.countComputerhomeworkRow());
-		computerhomeworkFullList  = computerhomeworkService.selectComputerhomeworkFullByPage(page);
+		int totalcount = computerhomeworkService.countComputerhomeworkRow();
+		page = PageActionUtil.getPage(totalcount, pageNo);
+		this.pageNo = page.getPageNo();
+		System.out.println(page.getTotalpage());
 		
+		computerhomeworkFullList  = computerhomeworkService.selectComputerhomeworkFullByConditionAndPage("", page);
+		System.out.println("computerhomeworkFullList.size"+computerhomeworkFullList.size());
 //		查询全部
 //		computerhomeworkFullList  = computerhomeworkService.selectComputerhomeworkFullAll();
 
@@ -210,7 +212,11 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 //		for(int i = 0; i < computerhomeworkFullList.size(); i++){
 //			System.out.println("id="+computerhomeworkFullList.get(i).getLoginusername());
 //		}
-		return SUCCESS;
+		if(callType!=null&&callType.equals("ajaxType")){
+			return "success2";
+		}else{
+			return "success1";
+		}
 	}			
 			
 		
@@ -494,9 +500,7 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 				}
 				
 //				查询课程信息
-				
-//				String sql = 
-				courseFull = courseService.selectCourseFullById(computerhomeworkFull.getComputerorderclassruleclassid());
+				courseFull = courseService.selectCourseFullByCoursetype(computerhomeworkFull.getComputerorderclassruleclassid(),this.getCurrentLanguage());
 				
 				System.out.println(courseFull.getCoursename());
 				
@@ -514,6 +518,7 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 
 
 	/**
+	 * 教师查看作业内容
 	 * view ComputerhomeworkFull
 	 * need give parmeter id
 	 * get id from modle,
@@ -522,7 +527,7 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 	public String viewComputerhomeworkFull() {
 				
 		try {
-			String condition = " where a.id = "+computerhomeworkid;
+			String condition = " where a.id = "+computerhomeworkid ;
 			List<ComputerhomeworkFull> tempList = computerhomeworkService.selectComputerhomeworkFullByCondition(condition );
 			
 			if(tempList!=null && tempList.size() >0){
@@ -533,6 +538,9 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 			}
 			
 			computerhomeworkFull = tempList.get(0);
+			
+			courseFull = courseService.selectCourseFullByCoursetype(computerhomeworkFull.getComputerorderclassruleclassid(),this.getCurrentLanguage());
+			
 //			System.out.println(tempList.size() + " "+computerhomeworkFull.getComputerorderclassruleid());
 			
 //			查询作业可以借的PC

@@ -118,8 +118,6 @@ public class CourseServiceImpl implements CourseService{
 		
 		return 1;
 		
-		
-		
 	}
 
 
@@ -148,11 +146,21 @@ public class CourseServiceImpl implements CourseService{
 		return true;		
 
 	}
+//	根据类型查询实体类			
+	@Override
+	public CourseFull selectCourseFullByCoursetype(Integer coursetype,int language){
+		List<CourseFull> l = courseDao.selectCourseFullByCoursetype(coursetype, language);
+		if(l != null && l.size() ==1){
+			return l.get(0);
+		}
+		return null;
+	}
+	
 
 //	根据类型查询实体类			
 	@Override
 	public Course selectCourseByCoursetype(Integer coursetype,int language){
-		List<Course> l = courseDao.selectCourseByCondition("where languagetype="+language+" and coursetype ="+coursetype);
+		List<Course> l = courseDao.selectCourseByCoursetype(coursetype, language);
 		if(l != null && l.size() ==1){
 			return l.get(0);
 		}

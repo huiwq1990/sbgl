@@ -163,10 +163,10 @@
 		
         function clearAddForm(){
 							$('#input_add_course_name').val("");
-							//$('#input_add_course_description').val("");
-							//$('#input_add_course_type').val("");
-							//$('#input_add_course_teacherid').val("");
-
+							$('#input_add_course_nameen').val("");
+							$('#input_add_course_teacherid').select2("val","0");
+						
+ 						$("input[name=course_type]").eq(0).attr("checked",true);
 					
         }
         

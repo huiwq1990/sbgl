@@ -35,6 +35,22 @@ public class CourseDaoImpl extends HibernateDaoSupport implements CourseDao{
 	
 	private final String basicCourseSql = "From Course as a ";
 	
+//	根据课程类型、语言类型查询实体类			
+	@Override
+	public List<CourseFull> selectCourseFullByCoursetype(Integer coursetype,int language){
+		List<CourseFull> l = selectCourseFullByCondition("where a.languagetype="+language+" and a.coursetype ="+coursetype);
+		
+		return l;
+	}
+	
+	@Override
+	public List<Course> selectCourseByCoursetype(Integer coursetype,int language){
+		List<Course> l = selectCourseByCondition("where languagetype="+language+" and coursetype ="+coursetype);
+		
+		return l;
+	}
+	
+	
 	// 根据条件查询查询实体
 	@Override
 	public List<Course> selectCourseByCondition(String condition) {
@@ -48,6 +64,7 @@ public class CourseDaoImpl extends HibernateDaoSupport implements CourseDao{
             throw re;
         }
 	}
+	
 	
 	
 	//  根据条件分页查询实体        
