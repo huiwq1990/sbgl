@@ -41,7 +41,7 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary" id="submit">完 成</button>
+    <button class="btn btn-primary" data-type="" id="submit">完 成</button>
   </div>
 	
 <script src="${jsDomain}/bfa.js"></script>

@@ -6,8 +6,17 @@
 	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
   <display-name></display-name>	
   <welcome-file-list>
-    <welcome-file>login.do</welcome-file>
+    <welcome-file>/index.do</welcome-file>
   </welcome-file-list>
+  
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/errorNotFound.vm</location>
+  </error-page>
+  <error-page>
+  	<error-code>500</error-code>
+  	<location>/error.vm</location>
+  </error-page>
 
   <context-param>
     <param-name>contextConfigLocation</param-name>

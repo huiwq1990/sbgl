@@ -18,6 +18,7 @@ import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.actions.order.OrderMainAction;
 import com.sbgl.app.entity.CourseFull;
 import com.sbgl.app.entity.Equipmentclassification;
+import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.entity.Ordercourserule;
 import com.sbgl.app.services.order.OrderMainService;
 import com.sbgl.app.services.orderadmin.OrderAdminService;
@@ -44,6 +45,8 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 	private Integer borrowId;
 	private Integer courseId;
 	private String ruleName;
+	private String tag;
+	private String message;
 	private String ids;
 	private List<Equipmentclassification> classification1List;
 	
@@ -165,6 +168,29 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 		courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+lantype);
 		return SUCCESS;
 	}
+	
+	//创建规则
+	public String addorderclassrule(){
+		try{
+			boolean flag = false;
+			Loginuser loginuser = (Loginuser) session.get("loginUser");
+			flag = orderAdminService.addorderclassrule(courseId,ruleName,ids,loginuser);
+			if(flag){
+				tag = "1";
+			}else{
+				tag = "2";
+				message = "订单入库失败";
+			}
+		}catch(Exception e){
+			tag = "2";
+			message = "订单入库失败";
+			e.printStackTrace();
+			log.error(e);
+		}
+		return SUCCESS;
+	}
+	
+	
 
 	public List<EquipmenborrowFull> getEquipmenborrowFullList() {
 		return equipmenborrowFullList;
@@ -311,6 +337,26 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 
 	public void setIds(String ids) {
 		this.ids = ids;
+	}
+
+
+	public String getTag() {
+		return tag;
+	}
+
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+
+	public String getMessage() {
+		return message;
+	}
+
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
 }

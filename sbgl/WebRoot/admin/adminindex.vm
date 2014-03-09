@@ -36,11 +36,12 @@
                 <table class="table stat">
                   <tbody>
                     <tr>
+					 #set($sumorderCount = $!orderCountFull.orderCount1+$!orderCountFull.orderCount2+$!orderCountFull.orderCount3)
                       <th>器材预约</th>
-                      <td>进行中的预约共计<br/><strong>8</strong>个</td>
-                      <td>待审核<br/><strong>5</strong>个</td>
-                      <td>待出库<br/><strong>2</strong>个</td>
-                      <td>待入库<br/><strong>1</strong>个</td>
+                      <td>进行中的预约共计<br/><strong>$sumorderCount</strong>个</td>
+                      <td>待审核<br/><strong>$!orderCountFull.orderCount1</strong>个</td>
+                      <td>待出库<br/><strong>$!orderCountFull.orderCount2</strong>个</td>
+                      <td>待入库<br/><strong>$!orderCountFull.orderCount3</strong>个</td>
                     </tr>
                     <tr>
                       <th>机房预约</th>
