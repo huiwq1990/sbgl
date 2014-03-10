@@ -262,7 +262,8 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 				selweek= courseconfig.getWeeknum();
 			}
 			
-
+//			构建学生组课程
+			setCourseMapByStudentgroup();
 
 //			查询computer分类模型信息
 			String categorySqlch = " where a.languagetype="+CommonConfig.languagech+" order by a.computercategorytype,a.languagetype";	

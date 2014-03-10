@@ -39,7 +39,7 @@
             <div class="col-md-7">                  
                 <div class="thumbnail">
                   <div class="hd clearfix">
-                    <h3 class="pull-left">预约单</h3>
+                    <h3 class="pull-left">允许借的机房</h3>
 <!--                     <div class="pull-right">共XX种，XX个器材</div> -->
                   </div>
                   <div class="media-list">

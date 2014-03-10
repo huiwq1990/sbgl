@@ -31,10 +31,12 @@
 						<div class="tips">设置、修改和查看本学期各门课程的机房使用安排。</div>
 					</div><!--control-bar end-->
 					<div class="row">
+						
+						<!--课程列表-->
 						<div class="col-sm-12 col-md-3 col-lg-3">
-							<div class="control-bar"><a href="教学管理-机房课程安排（添加课程）.html" class="btn btn-primary">添加</a></div>
+							<div class="control-bar"><a href="${webbaseurl}/toCourseAddPage.${strutsaction}" class="btn btn-primary">添加</a></div>
 							<div class="list-group">
-								<a href="教学管理-机房课程安排.html" class="list-group-item">
+								<a href="${webbaseurl}/browseAllCoursescheduleByWeek.${strutsaction}" class="list-group-item">
 									<h4 class="list-group-item-heading">全部课程</h4>
 									<p class="list-group-item-text">浏览本学期全部课程</p>
 								</a>
@@ -51,13 +53,12 @@
 									<h4 class="list-group-item-heading">$!tempCourseFull.coursename </h4>
 									<p class="list-group-item-text">任课教师：$!tempCourseFull.teacherloginusername</p>
 								</a>
-							#end		
-							
-							
+							#end
 						#end
 			
 							</div>
 						</div>
+						<!--end课程列表-->
 						<div class="col-sm-12 col-md-9 col-lg-8">
 							<div class="control-bar clearfix">
 								<div class="title pull-left">课程名称</div>

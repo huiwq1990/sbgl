@@ -1,0 +1,7 @@
+#if($!currentcomputerorderordertype == 1)
+课程
+#elseif($!currentcomputerorderordertype ==2)
+个人
+#elseif($!currentcomputerorderordertype ==3)
+课程安排
+#end

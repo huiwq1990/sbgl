@@ -24,17 +24,11 @@
         	<result name="success">/computer/computerhomeworkAdd.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
-        
 
-<!-- default entity manage action -->
-    	<action name="manageComputerhomework" class="ManageComputerAction" method="manageComputerhomework">
-        	<result name="success">/computer/computerhomeworkManage.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
 		
 <!-- entity full manage  -->		
 		<!-- default entity full manage action -->
-    	<action name="manageComputerhomeworkFull" class="ManageComputerAction" method="manageComputerhomeworkFull">
+    	<action name="manageComputerhomeworkFull" class="ComputerhomeworkAction" method="manageComputerhomeworkFull">
         	<result name="success1">/computer/computerhomeworkFullManage.vm</result>
         	<result name="success2">/computer/computerhomeworkFullManageContent.vm</result>
         	<result name="error">/error.vm</result> 

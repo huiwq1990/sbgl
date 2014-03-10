@@ -25,6 +25,10 @@ public List<Course> selectCourseByCondition(String condition);
 //  分页查询 实体full
 	public List<CourseFull> selectCourseFullByPage(Page page);
 
+	List<CourseFull> selectCourseFullByCoursetype(Integer coursetype, int language);
+
+	List<Course> selectCourseByCoursetype(Integer coursetype, int language);
+
 
  
 }

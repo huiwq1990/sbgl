@@ -40,11 +40,8 @@
 							<td>错误</td>
 					 #end
 					 
-					 #if($!temp.computerorderordertype == $ClassOrder)
-                    <td>课程</td>   
-					#else 
-							<td>个人</td>
-					 #end
+						 #set($currentcomputerorderordertype = $temp.computerorderordertype)
+					<td>#parse("computer/includeComputerorderType.vm")</td>
                     <td>$!temp.computerorderremark</td>
                   </tr>
 #end

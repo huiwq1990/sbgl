@@ -169,6 +169,20 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>{
 	}			
 
 	public boolean checkAddForm(){
+		if(course.getName()==null || course.getName().trim().length() ==0 ){
+			this.returnInfo = "请填写课程名称";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return false;
+		}
+		
+		if(coursenameen==null || coursenameen.trim().length() ==0 ){
+			this.returnInfo = "请填写课程英文名称";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return false;
+		}
+		
 		if(course.getTeacherid()==null || course.getTeacherid() ==0 ){
 			this.returnInfo = "请选择教师";
 			log.info(returnInfo);
@@ -194,13 +208,15 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>{
 
 		try {
 			
-			Integer uid = this.getCurrentUserId();
+			Integer uid = this.getCurrentAdminId();
 			if(uid < 0){
 				this.returnInfo = "用户未登录";
 				log.info(returnInfo);
 				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 				return SUCCESS;
 			}
+			
+			
 		
 			if(!checkAddForm()){
 				return SUCCESS;

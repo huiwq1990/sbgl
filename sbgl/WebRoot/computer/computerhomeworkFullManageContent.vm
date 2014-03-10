@@ -1,3 +1,4 @@
+			
             <div class="panel panel-default table-responsive"><!--管理内容从这里开始 -->
 
 				<div id="tableDiv">
@@ -8,8 +9,8 @@
 
 						<th class="id">序号</th>
 						<th class="computerhomeworkname">作业名称</th>
-             
-						<th class="computerorderclassrulename">规则名称</th>
+             <!--
+						<th class="computerorderclassrulename">规则名称</th>-->
 					 </tr>
                 </thead>
                 <tbody>					
@@ -19,6 +20,7 @@
                   <tr>
                    <td><input class="chk" type="checkbox" name="chk-list" value="$!tempcomputerhomework.computerhomeworkid"></td>
 					<!--修改属性-->
+					<!--
                     <td>$!tempcomputerhomework.computerhomeworkid<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="editComputerhomeworkFillIn" 
 						
 						
@@ -30,10 +32,11 @@
 												data-attachment="$!tempcomputerhomework.computerhomeworkattachment"                           
 												data-status="$!tempcomputerhomework.computerhomeworkstatus"                           
 												data-createtime="$!tempcomputerhomework.computerhomeworkcreatetime"                           
-												>修改</a></td>    
-					
+												>修改</a></td>    -->
+					 <td>$!tempcomputerhomework.computerhomeworkid</td>   
 					<td><a href="${webbaseurl}/viewComputerhomeworkFull.action?computerhomeworkid=$tempcomputerhomework.computerhomeworkid">$!tempcomputerhomework.computerhomeworkname</a></td>
-					<td>$!tempcomputerhomework.computerorderclassrulename</td>
+					<!--
+					<td>$!tempcomputerhomework.computerorderclassrulename</td>-->
 <!--						
 <td>$!tempcomputerhomework.computerhomeworkid</td>
 <td>$!tempcomputerhomework.computerhomeworkname</td>
@@ -66,11 +69,10 @@
 			  </div> 
 			  
 			  	 <!--page bar-->
-			  #parse("include/includePagebar.vm")  
+			  #parse("include/includePagebar.vm")
 			  
 			  
 			  				<script>
 totalpage = $page.totalpagenum;
 currentpagenum = $page.pageNo;
-computerorderStatus : $computerorderStatus;
 </script>
