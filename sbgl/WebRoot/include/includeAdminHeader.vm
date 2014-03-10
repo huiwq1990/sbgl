@@ -4,7 +4,7 @@
 	
     <div class="site-nav">
       <div class="dropdown">
-        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a>
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="${webbaseurl}/adminIndex.${strutsaction}"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a>
        <!--
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
           <li><a href="http://google.com"><i class="icon-home"></i> 首页</a></li>
@@ -59,27 +59,29 @@
       </ul>
     </div>    
     <ul class="account-wrap nav nav-pills pull-right">
-          <li class="notice dropdown">
+          <!--
+		  <li class="notice dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
             <ul class="dropdown-menu">
               <li><a href="#">消息1</a></li>
               <li><a href="#">消息2</a></li>
             </ul>
           </li>     
-		  
+		  -->
           <li class="social dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">$!user.name</span><img src="${imageDomain}/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">$!user.name</span><img src="${userImagePath}/$!user.photo" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
 				
             <div class="dropdown-menu">
               <div class="media">
                 <a class="pull-left" href="#">
-                  <img src="${imageDomain}/photo.jpg" width="96" height="96" class="img-rounded">
+                  <img src="${userImagePath}/$!user.photo" width="96" height="96" class="img-rounded">
                 </a>
                 <div class="media-body">
+					<!--
                   <div class="media-heading"><h5><a href="#">$!user.name</a></h5></div>
                   <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
                   <div class="setting"><a href="#">账户设置</a></div>
-                  <button class="btn btn-primary" type="button">查看个人主页</button><a href="${webbaseurl}/doLogout.${strutsaction}" class="admin-logout btn btn-link" action-type="adminLogout" role="button">退出管理</a>
+                  <button class="btn btn-primary" type="button">查看个人主页</button>--><a href="${webbaseurl}/doLogout.${strutsaction}" class="admin-logout btn btn-link" action-type="adminLogout" role="button">退出管理</a>
                 </div>
               </div>
             </div>      
@@ -90,18 +92,4 @@
     </ul>
   </div>
 	
-<script>
-	$("body").on("click", "a[action-type|=adminLogout]", function() {
-          	alert("adminLogout!");
-			jQuery.ajax({
-			url: "${webbaseurl}/doLogout.do",  
-			type: "post",
-			success: function(data,textStatus,jq) {
-				console.log("退出成功！");
-			},
-			error: function(data,textStatus,jq) {
-				alert("后台异常!");
-			}
-		});
-    });
-</script>
+

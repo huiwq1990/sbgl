@@ -623,6 +623,8 @@ public class ManageComputerAction extends BaseAction{
 		//PC状态
 		computerstatusList  = computerstatusService.selectComputerstatusByCondition("");//查询所有的状态
 		
+//		int a = computermodelByComputercategoryId.get(computercategoryFullList.get(0).getComputercategorycomputercategorytype()).size();
+//		log.info("sdfasfa"+a);
 		if(computermodelFullList == null){
 			computermodelFullList = new ArrayList<ComputermodelFull>();
 		}

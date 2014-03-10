@@ -22,7 +22,7 @@
 	   		<value>${jdbc.url}</value>
 	  	</property>
 	  	<property name="username" value="${jdbc.username}"></property>
-	  	<property name="password" value="${jdbc.username}"></property>
+	  	<property name="password" value="${jdbc.password}"></property>
 	</bean>
 
 	<bean id="sessionFactory"

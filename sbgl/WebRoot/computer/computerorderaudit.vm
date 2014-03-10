@@ -26,12 +26,14 @@
            
       <div class="control-bar clearfix"><!--control-bar start-->
         <div class="title pull-left">审核预约</div>     
-        <div class="pagination pull-right">
+		<!--        
+		<div class="pagination pull-right">
           <ul>
             <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="上一个"><i class="icon-chevron-left"></i></a></li>
             <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="下一个"><i class="icon-chevron-right"></i></a></li>
           </ul>
-        </div>       
+        </div>   
+		-->
       </div><!--control-bar end-->
               
       <div class="row">
@@ -78,12 +80,10 @@
                       <span class="rent-user"><strong>申请者：<a rel="popover" class="lk" href="#" data-original-title="" title="">我</a></strong></span>
                       <br>
 					  <span class="rent-num"><strong> 预约号：$!computerorderFull.computerorderserialnumber</strong></span>
-					  #if($computerorderFull.computerorderordertype == $ClassOrder)
-						 <div class="rent-contact">预约方式：课程预约</div>
-						#else
-							 <div class="rent-contact">联系方式：个人预约</div>
-						#end
-                     <!-- <div class="rent-contact">联系方式：XXXXXX</div> -->
+					  #set($currentcomputerorderordertype=$computerorderFull.computerorderordertype)					 
+						 <div class="rent-contact">预约方式：#parse("computer/includeComputerorderType.vm")</div>
+					
+                     <!-- <div class="rent-contact">联系方式：</div> -->
                       <div class="rent-remark"><i class="icon-pencil"></i> $!computerorderFull.computerorderremark</div>
                     </div>
                     <hr>
@@ -97,7 +97,7 @@
                         <img src="../img/photo.jpg" width="28" height="28" class="img-rounded">
                       </a>
                       <div class="media-body">
-                        <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">教师名</a></h5><span class="post-time" title="详细时间">下午4:53</span></div>
+                        <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">教师名</a></h5><span class="post-time" title="详细时间"></span></div>
                         <p>驳回原因：$!computerorderFull.computerorderrejectreason</p>
                       </div>
                     </li>

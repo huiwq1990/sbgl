@@ -76,9 +76,11 @@
 					  </strong><br>      
 						
 						
-						 <hr />
-                <strong>预约人可进行的操作: </strong><br>
+						
+               
 					 #if($curstatus == $ComputerorderStatusAduitReject)
+						 <hr />
+						 <strong>预约人可进行的操作: </strong><br>
 						#if($!computerorderFull.computerorderordertype==2) 
 							<a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}\toComputerClassorder.${strutsaction}?computerorderid=$!computerorderFull.computerorderid&computerhomeworkid=$!computerorderFull.computerordercomputerhomeworkid&reorder=1">重新预约</a>
 						#elseif($!computerorderFull.computerorderordertype==1)  
@@ -99,13 +101,11 @@
                       <span class="rent-user"><strong>申请者：<a rel="popover" class="lk" href="#" data-original-title="" title="">我</a></strong></span>
                       <br>
 					  <span class="rent-num"><strong> 预约号：$!computerorderFull.computerorderserialnumber</strong></span>
-					  #if($computerorderFull.computerorderordertype == $ClassOrder)
-						 <div class="rent-contact">预约方式：课程预约</div>
-						#else
-							 <div class="rent-contact">联系方式：个人预约</div>
-						#end
+					   #set($currentcomputerorderordertype=$computerorderFull.computerorderordertype)					 
+						 <div class="rent-contact">预约方式：#parse("computer/includeComputerorderType.vm")</div>
+					
                      <!-- <div class="rent-contact">联系方式：XXXXXX</div> -->
-                      <div class="rent-remark"><i class="icon-pencil"></i> $computerorderFull.computerorderremark</div>
+                      <div class="rent-remark"><i class="icon-pencil"></i> $!computerorderFull.computerorderremark</div>
                     </div>
                     <hr>
                   </div>

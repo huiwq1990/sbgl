@@ -94,27 +94,44 @@ public class ComputermodelAction extends BaseAction implements ModelDriven<Compu
 
 			return false;
 		}
-		String name = computermodel.getName().trim();
-		
-		if(computermodelService.isComputermodelNameExist(name)){
-
-			this.returnInfo = "模型名称重复";
+		if(computermodelNameEn==null || computermodelNameEn.trim().equals("")){
+			this.returnInfo = "模型英文名称不能为空";
 			log.info(returnInfo);
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 
-			
 			return false;
 		}
 		
-		Computercategory c= computercategoryService.selectComputercategoryById(computermodel.getComputercategoryid());
-		if(c==null || c.getId()==0){
-			
-			this.returnInfo = "模型分类不正确";
+		
+		if(computermodel.getComputercategoryid()<=0){
+			this.returnInfo = "请选择模型分类";
 			log.info(returnInfo);
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
-			
+
 			return false;
 		}
+		
+		
+//		String name = computermodel.getName().trim();		
+//		if(computermodelService.isComputermodelNameExist(name)){
+//
+//			this.returnInfo = "模型名称重复";
+//			log.info(returnInfo);
+//			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+//
+//			
+//			return false;
+//		}
+		
+//		Computercategory c= computercategoryService.selectComputercategoryById(computermodel.getComputercategoryid());
+//		if(c==null || c.getId()==0){
+//			
+//			this.returnInfo = "模型分类不正确";
+//			log.info(returnInfo);
+//			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+//			
+//			return false;
+//		}
 		
 		return true;
 	}
@@ -123,10 +140,10 @@ public class ComputermodelAction extends BaseAction implements ModelDriven<Compu
 	public String addComputermodelAjax(){	
 		log.info("Add Entity Ajax Manner");
 		
-//		boolean pass = checkComputermodel();
-//		if(!pass){
-//			return SUCCESS;
-//		}
+		boolean pass = checkComputermodel();
+		if(!pass){
+			return SUCCESS;
+		}
 
 		
 		

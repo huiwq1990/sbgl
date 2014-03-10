@@ -23,6 +23,7 @@ public class SbglFilterDispatcher extends FilterDispatcher {
 	    private static String equipmentImagePath = PropertyUtil.readValue("/system.properties", "equipmentImagePath");
 	    private static String computerImagePath = PropertyUtil.readValue("/system.properties", "computerImagePath");
 	    private static String strutsaction = PropertyUtil.readValue("/system.properties", "strutsaction");
+	    private static String userImagePath = PropertyUtil.readValue("/system.properties", "userImagePath");
 	    ActionContext cnaplicaction = ActionContext.getContext();
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -49,7 +50,7 @@ public class SbglFilterDispatcher extends FilterDispatcher {
 		
 		request.setAttribute("equipmentImagePath", equipmentImagePath);
 		request.setAttribute("computerImagePath", computerImagePath);
-		
+		request.setAttribute("userImagePath", userImagePath);
 		request.setAttribute("strutsaction", strutsaction);
 		super.doFilter(request, arg1, arg2);
 	}

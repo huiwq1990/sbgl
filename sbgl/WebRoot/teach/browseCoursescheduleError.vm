@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 教学管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+#parse("include/includePageCompatibility.vm")
+	
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+#set($currentPageModule="teach")
+	#parse("include/includeAdminHeader.vm")
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+          <!--control-bar start-->
+          <div class="control-bar clearfix">
+            <div class="title pull-left">机房课程安排</div>
+            <div class="tips">布置教学任务后，指定的收件人将会收到教学预约通知，收件人在相关说明的指导下完成机房预约。</div>
+          </div><!--control-bar end-->
+          <div class="row">
+            
+				请先配置学期信息
+          </div>
+        </div>
+      </div>
+      <!--equip-wrap end-->
+
+      <!--sidebar start-->
+  #set($currentWebpage="coursescheduleviewandedit")
+	  #parse("include/includeTeachSidebar.vm")
+
+      <!--sidebar end-->
+
+</section>
+
+
+    <!-- javascript
+    ================================================== -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+
+
+</body>
+</html>

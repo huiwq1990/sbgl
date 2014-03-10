@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
+
 	 <package name="computerorder" extends="admin">
 
 <!--跳转到个人预约页面 -->
@@ -17,8 +18,9 @@
         	<result name="innererror">/computer/computerindividualorderError.vm</result>    	
         	<result name="error">/error.vm</result> 
 		</action>
-
-<!-- 跳转到课程预约页面 -->
+		
+		
+		<!-- 跳转到课程预约页面 -->
 		<action name="toComputerClassorder" class="ComputerClassorderAction" method="toComputerClassorderPage">
         	<result name="success">/computer/computerclassorderindex.vm</result>
         	<result name="pagenotfound">/computer/computerclassorderError.vm</result>
@@ -32,7 +34,7 @@
 			<result name="innererror">/computer/errorpage.vm</result>
 		</action>
 		
-<!-- 用户点击预约按钮后，跳转到预约确认界面 -->
+		<!-- 用户点击预约按钮后，跳转到预约确认界面 -->
 		<action name="toComputerorderConfirmPage" class="ManageComputerorder" method="toComputerorderConfirmPage">
         	<result name="success">/computer/computerorderConfirm.vm</result>
         	<result name="pagenotfound">/error/pagenotfound.vm</result> 
@@ -43,7 +45,29 @@
 		<action name="toComputerorderSuccessPage" class="ManageComputerorder" method="toComputerorderSuccessPage">
         	<result name="success">/computer/computerorderSuccess.vm</result>
         	<result name="error">/error.vm</result> 
-        </action>        
+        </action>     
+		
+		<!-- 用户查看自己的预约列表-->
+		<action name="viewMineComputerorderList" class="ManageComputerorder" method="viewMineComputerorderList">
+        	<result name="success">/computer/computerorderindex.vm</result>
+       		 <result name="usernotlogin">/computer/errorpage.vm</result> 
+        	<result name="error">/error.vm</result> 
+        </action>
+        
+        
+ <!-- 用户查看自己的预约 详情-->
+		<action name="viewComputerorder" class="ManageComputerorder" method="viewComputerorder">
+        	<result name="success">/computer/computerorderView.vm</result>
+       		<result name="pagenotfound">/common/pagenotfound.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+        
+		
+	</package>
+
+
+
+	 <package name="computerorderManage" extends="manage">
 
 <!-- 审核订单 -->
 		<action name="toAuditComputerorderPage" class="ManageComputerorder" method="toAuditComputerorderPage">
@@ -51,18 +75,9 @@
         	<result name="usernotlogin">/computer/errorpage.vm</result> 
         	<result name="error">/error.vm</result> 
         </action>
-        
 
-
-		<!-- 用户查看自己的预约列表-->
-		<action name="viewMineComputerorderList" class="ManageComputerorder" method="viewMineComputerorderList">
-        	<result name="success">/computer/computerorderindex.vm</result>
-       		 <result name="usernotlogin">/computer/errorpage.vm</result> 
-        	<result name="error">/error.vm</result> 
-        </action>
-       
-<!-- 进行预约 -->
-<action name="orderComputer" class="OrderComputerAction" method="orderComputer">
+		<!-- 进行预约 -->
+		<action name="orderComputer" class="OrderComputerAction" method="orderComputer">
         	<result name="success">/computer/computerorderindex.vm</result>
         
         	<result name="error">/error.vm</result> 
@@ -79,13 +94,6 @@
 		
 
 
-
- <!-- 用户查看自己的预约 详情-->
-		<action name="viewComputerorder" class="ManageComputerorder" method="viewComputerorder">
-        	<result name="success">/computer/computerorderView.vm</result>
-       		<result name="pagenotfound">/common/pagenotfound.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
 
 
 

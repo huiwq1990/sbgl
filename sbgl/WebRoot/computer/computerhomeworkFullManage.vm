@@ -27,8 +27,8 @@
       <div id="admin-wrap">
         <div id="admin-content" class="clearfix">            
             <div class="control-bar clearfix"><!--control-bar start-->
-              <div class="title pull-left">管理</div>
-			  <div class="tips">在此页面下管理信息，如设备的添加、修改、删除及维护等。</div>
+              <div class="title pull-left">管理机房教学</div>
+			  <div class="tips">在此页面下管理机房教学信息，如信息的添加、修改、删除及维护等。</div>
 			  <!--
 				将来用于根据课程查找作业
               <div class="filter category-filter">

@@ -348,7 +348,7 @@
 					refreshComputermodelTable();
 					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框					
 				}else{
-					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});					
 					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
 				}
 			}//end success		  	  

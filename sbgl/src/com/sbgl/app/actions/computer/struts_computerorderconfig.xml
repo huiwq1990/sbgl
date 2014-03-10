@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-	 <package name="computerorderconfig" extends="admin">
+	 <package name="computerorderconfigManage" extends="manage">
 
         <action name="toSetComputerorderconfig" class="ComputerorderconfigAction" method="toSetComputerorderconfig">
         	<result name="success">/computer/computerorderconfig.vm</result>
@@ -22,10 +22,6 @@
 			<result name="success2">/computer/computerorderconfigFullManageContent.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
-		
-		
-
-
 		
     </package>
     

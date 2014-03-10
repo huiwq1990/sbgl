@@ -5,9 +5,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
   <display-name></display-name>	
-  <welcome-file-list>
-    <welcome-file>/index.do</welcome-file>
-  </welcome-file-list>
+
   
   <error-page>
   	<error-code>404</error-code>
@@ -89,4 +87,8 @@
   <listener>
      <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
   </listener> 
+  
+    <welcome-file-list>
+    <welcome-file>/index.action</welcome-file>
+  </welcome-file-list>
 </web-app>

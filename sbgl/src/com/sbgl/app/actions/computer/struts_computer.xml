@@ -2,7 +2,7 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 
-	 <package name="computer" extends="manage">	 
+	 <package name="computerManage" extends="manage">	 
 		 <!-- default entity manage action -->
     	<action name="manageComputer" class="ManageComputerAction" method="manageComputer">
         	<result name="success">/computer/computerManage.vm</result>

@@ -12,8 +12,8 @@ import com.sbgl.util.DateUtil;
 
 public class BorrowperiodUtil {
 	
-//	static int[][] workTime ={{5,0},{12,30},{13,30},{18,0},{19,0},{22,30},{24,0}};
-	static int[][] workTime ={{12,0},{12,30},{13,30},{18,0},{19,0},{22,30},{24,0}};
+	static int[][] workTime ={{8,0},{12,00},{13,30},{18,0},{19,0},{22,30},{24,0}};
+//	static int[][] workTime ={{12,0},{12,30},{13,30},{18,0},{19,0},{22,30},{24,0}};
 	public static int getTimePeriod(int hour,int min){
 		
 		for(int i=0; i<workTime.length;i++){

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 设备管理</title>
+<title>北京电影学院摄影系 - 机房添加</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -70,18 +70,12 @@
                     <label for="inputEquipModelId" class="col-lg-2 control-label">名称(型号)</label>
                     <div class="col-lg-4">
                       <select class="select2 select-white form-control" id="inputEquipModelId">
-#if($categorylistSize > 0)						
-#set($categorymodelList = $computermodelByComputercategoryId.get($computercategoryFullList.get(0).computercategorycomputercategorytype))								
-#set($categorymodelListSize = $categorymodelList.size() - 1)
-##判断数据是否为空
-#if($categorymodelListSize>= 0)
-#set($listRegion = [0..$categorymodelListSize])
-##取出所有的属性名称
-#foreach($tempKey in $listRegion)
-			#set($ch = $categorymodelList.get($tempKey))						
-                        <option value="$!ch.computermodeltype" >$!ch.name</option>                      
-                        
-#end
+#if($categorylistSize >= 0)						
+#set($tempcategorymodelList = $computermodelByComputercategoryId.get($computercategoryFullList.get(0).computercategorycomputercategorytype))								
+#foreach($ch in $tempcategorymodelList)
+						
+	<option value="$!ch.computermodeltype" >$!ch.name</option>                      
+
 #end
 #end ## 分类数量
                       </select>
@@ -145,6 +139,7 @@
 
 <script>	
 
+	(function($){
 $("#inputEquipCategory").on("change", function(e) {
 	var html;
 	$("#s2id_inputEquipModelId > a > span").empty();
@@ -155,6 +150,7 @@ $("#inputEquipCategory").on("change", function(e) {
    		#set($modelList = $computermodelByComputercategoryId.get($categoryfull.computercategorycomputercategorytype))
 		
 		if (e.val == $!categoryfull.computercategorycomputercategorytype) {
+		alert("ss");
 		html = '';
 			#foreach($model in ${modelList})
                html +=   '<option value="$!model.computermodeltype">$!model.name</option> ';
@@ -173,7 +169,7 @@ $("#inputEquipCategory").on("change", function(e) {
 	
 	//log("change "+JSON.stringify({val:e.val, added:e.added, removed:e.removed}));
 })
-	
+		})(jQuery);
 
 	//add computer
 	$("body").on("click", "button[action-type|=addComputerButton]", function() {

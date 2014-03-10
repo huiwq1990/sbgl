@@ -84,9 +84,10 @@
       <div id="lside">
         <ul class="list-group">
           <a href="#" class="list-group-item active">管理中心首页</a>
+		  <!--
           <a href="#" class="list-group-item">便捷操作链接1</a>
           <a href="#" class="list-group-item">便捷操作链接2</a>
-          <a href="#" class="list-group-item">便捷操作链接3</a>
+          <a href="#" class="list-group-item">便捷操作链接3</a>-->
         </ul>
       </div>
       <!--sidebar end-->

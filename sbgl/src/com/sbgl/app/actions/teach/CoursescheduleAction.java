@@ -38,6 +38,7 @@ import com.sbgl.app.services.teach.CoursecomputerorderService;
 import com.sbgl.app.services.teach.CourseconfigService;
 import com.sbgl.app.services.teach.CoursescheduleService;
 import com.sbgl.app.services.user.GroupService;
+import com.sbgl.common.DataError;
 import com.sbgl.util.*;
 
 
@@ -225,6 +226,13 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 		}
 		
 		return SUCCESS;
+		
+		
+	}catch(DataError d){
+
+//		d.printStackTrace();
+		log.error("没有配置学期信息");
+		return TeachConstant.notsetcourseconfig;
 	}catch(Exception e){
 		e.printStackTrace();
 		log.error("类CoursescheduleAction的方法：addBbstagfavourite错误"+e);
@@ -311,6 +319,11 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
 			return SUCCESS;
 			
+		}catch(DataError d){
+
+//			d.printStackTrace();
+			log.error("没有配置学期信息");
+			return TeachConstant.notsetcourseconfig;
 		}catch(Exception e){
 			e.printStackTrace();
 			log.error("类CoursescheduleAction的方法：addBbstagfavourite错误"+e);
@@ -458,7 +471,7 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 				 String[] dp = dayperiod.split(",");					
 				 for(Coursecomputer cc : coursecomputerList){
 					Computerorderdetail cod = new Computerorderdetail();
-					cod.setBorrowday(TeachActionUtil.getSemesterDay(courseconfig.getFirstday(),Integer.valueOf(week),Integer.valueOf(dp[0])));
+					cod.setBorrowday(TeachActionUtil.getSemesterDay(courseconfig.getFirstweekfirstday(),Integer.valueOf(week),Integer.valueOf(dp[0])));
 					cod.setBorrownumber(cc.getBorrownum());
 					cod.setBorrowperiod(Integer.valueOf(dp[1]));
 					cod.setCreatetime(DateUtil.currentDate());

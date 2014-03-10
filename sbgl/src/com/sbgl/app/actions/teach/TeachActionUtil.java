@@ -197,7 +197,7 @@ public class TeachActionUtil {
 	}
 	
 	public static Date getSemesterDay(Date firstDay,int week,int day){
-		Date newDate = DateUtil.addDay(firstDay, week*7 + day);
+		Date newDate = DateUtil.addDay(firstDay, (week-1)*7 + day-1);
 		return DateUtil.getDateDayDate(newDate);
 	}
 

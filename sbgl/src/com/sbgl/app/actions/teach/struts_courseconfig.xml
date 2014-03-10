@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-	 <package name="courseconfig" extends="admin">
+	 <package name="courseconfig" extends="manage">
 
 <!-- default entity manage action -->
     	<action name="toAddCourseconfigPage" class="CourseconfigAction" method="toAddCourseconfigPage">
