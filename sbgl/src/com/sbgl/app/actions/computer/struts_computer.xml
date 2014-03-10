@@ -1,192 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-	 <package name="computer" extends="admin">
 
-		
-<!-- default entity manage action -->
+	 <package name="computer" extends="manage">	 
+		 <!-- default entity manage action -->
     	<action name="manageComputer" class="ManageComputerAction" method="manageComputer">
         	<result name="success">/computer/computerManage.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
-		<!-- default entity manage action -->
-    	<action name="manageComputerInfo" class="ManageComputerAction" method="manageComputerInfo">
-        	<result name="success">/computer/computerManage.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-	
-<!-- entity full manage  -->		
+
 		<!-- default entity full manage action -->
     	<action name="manageComputerFull" class="ManageComputerAction" method="manageComputerFull">
         	<result name="success1">/computer/computerFullManage.vm</result>
         	<result name="success2">/computer/computerFullManageContent.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
-		
-		
-		
-<!--添加实体-->
+        
+        <!--添加实体-->
 
     	<action name="toAddComputerPage" class="ManageComputerAction" method="toAddComputerPage">
         	<result name="success">/computer/computerAdd.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
-    	<action name="addComputer" class="ComputerAction" method="addComputer">
-        	<result type="redirectAction">
-				<param name="actionName">manageComputer</param>
-			</result>
-        </action>
-		<!--
-    	<action name="addComputerJsp" class="ComputerAction" method="addComputer">
-        	<result type="redirectAction">
-				<param name="actionName">selectComputerAll</param>
-			</result>
-        </action>		
-    	<action name="addComputerVm" class="ComputerAction" method="addComputer">
-        	<result type="redirectAction">
-				<param name="actionName">selectComputerAll</param>
-			</result>
-        </action>		
-		
-		-->
-<!--edit entity-->
-        <action name="editComputer" class="ComputerAction" method="editComputer">
-        	<result name="success">/computer/computerEdit.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<action name="editComputerJsp" class="ComputerAction" method="editComputer">
-        	<result name="success">/computer/computerEdit.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<action name="editComputerVm" class="ComputerAction" method="editComputer">
-        	<result name="success">/computer/computerEdit.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>		
-<!--edit entity full-->
-        <action name="editComputerFull" class="ComputerAction" method="editComputerFull">
-        	<result name="success">/computer/computerFullEdit.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<action name="editComputerFullJsp" class="ComputerAction" method="editComputerFull">
-        	<result name="success">/computer/computerFullEdit.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<action name="editComputerFullVm" class="ComputerAction" method="editComputerFull">
-        	<result name="success">/computer/computerFullEdit.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		
-		
-<!--del-->
-        <!--del entity-->
-        <action name="deleteComputer" class="ComputerAction" method="deleteComputer">
-        	<result type="redirectAction">
-				<param name="actionName">manageComputer</param>
-			</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<!--del entityfull-->
-        <action name="deleteComputerFull" class="ComputerAction" method="deleteComputerFull">
-        	<result type="redirectAction">
-				<param name="actionName">manageComputerFull</param>
-			</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		
-<!--更新实体-->
-        <action name="updateComputer" class="ComputerAction" method="updateComputer">
-        	<result name="success">/computer/computerUpdate.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<action name="updateComputerJsp" class="ComputerAction" method="updateComputer">
-        	<result name="success">/computer/computerUpdate.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<action name="updateComputerVm" class="ComputerAction" method="updateComputer">
-        	<result name="success">/computer/computerUpdate.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-<!--update entity full-->
-        <action name="updateComputerFull" class="ComputerAction" method="updateComputer">
-        	<result name="success">/computer/computerFullUpdate.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<action name="updateComputerFullJsp" class="ComputerAction" method="updateComputer">
-        	<result name="success">/computer/computerFullUpdate.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<action name="updateComputerFullVm" class="ComputerAction" method="updateComputer">
-        	<result name="success">/computer/computerFullUpdate.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		
-		
-<!--根据id查询实体-->
-        <action name="selectComputerById" class="ComputerAction" method="selectComputerById">
-        	<result name="success">/computer/computerView.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		
-<!-- View entity-->		
-        <action name="viewComputer" class="ComputerAction" method="viewComputer">
-        	<result name="success">/computer/computerView.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<!--go to view jsp-->
-		<action name="viewComputerJsp" class="ComputerAction" method="viewComputer">
-        	<result name="success">/computer/computerView.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<!-- go to view vm-->
-		<action name="viewComputerVm" class="ComputerAction" method="viewComputer">
-        	<result name="success">/computer/computerView.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>		
-<!-- View entity full-->		
-        <action name="viewComputerFull" class="ComputerAction" method="viewComputerFull">
-        	<result name="success">/computer/computerFullView.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<!--go to view jsp-->
-		<action name="viewComputerFullJsp" class="ComputerAction" method="viewComputerFull">
-        	<result name="success">/computer/computerFullView.jsp</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-		<!-- go to view vm-->
-		<action name="viewComputerFullVm" class="ComputerAction" method="viewComputerFull">
-        	<result name="success">/computer/computerFullView.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>		
-		
-        <!--查询全部实体-->
-        <action name="selectComputerAll" class="ComputerAction" method="selectComputerAll">
-			<result name="success">/computer/computer.jsp</result>
-			<result name="error">/error.vm</result>
-		</action>
-	
+	</package>
 
-		
-		
-<!--根据id查询实体full-->
 
-		<action name="selectComputerFullById" class="ComputerAction" method="selectComputerFullById">
-		  	<result name="success">/computer/computerViewFull.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-
-		
-		
-        <!--查询全部实体full-->
-        <action name="selectComputerFullAll" class="ComputerAction" method="selectComputerFullAll">
-			<result name="success">/computer/computerManage.vm</result>
-			<result name="error">/error.vm</result>
-		</action>
-		
-	
-		
-
-		
-    </package>
     
     <!-- Ajax方式 -->
     <package name="computerAjax" extends="json-default">
