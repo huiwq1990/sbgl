@@ -23,7 +23,6 @@ import com.sbgl.app.entity.Equipment;
 import com.sbgl.app.entity.Equipmentcategory;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Equipmentdetail;
-import com.sbgl.app.entity.User;
 import com.sbgl.app.services.equipment.EquipService;
 import com.sbgl.common.HQLOption;
 import com.sbgl.util.Page;
