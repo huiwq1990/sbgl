@@ -82,7 +82,7 @@
             <!--control-bar start-->
             <div class="control-bar clearfix">
               <div class="title pull-left">型号管理</div>
-			  <div class="tips">在此页面下管理器材型号。器材型号包含每种器材的基本信息，如器材名、器材图片、器材资料介绍等等。</div>
+        <div class="tips">在此页面下管理器材型号。器材型号包含每种器材的基本信息，如器材名、器材图片、器材资料介绍等等。</div>
               <div class="filter category-filter">
                 <select id="select-categories" style="width:130px" class="select2">
                   <option value="0" data-foo="fa">全部分类</option>
@@ -97,6 +97,7 @@
               </div>
               <div class="operate-item pull-left">
                 <a href="#add-equip-model" class="btn btn-primary" data-toggle="modal" role="button">添加型号</a>
+                <a href="#add-equip-basic-group" class="btn btn-primary" data-toggle="modal" role="button">添加基本器材组</a>
                 <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
               </div>
 
@@ -368,6 +369,105 @@
   </div>
 </div>
 
+<div id="add-equip-basic-group" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">添加基本器材组</h3>
+  </div>
+  <div class="modal-body">
+    <p>这里是添加器材型号相关说明。</p>
+    <div class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="inputModelName" class="col-xs-3 control-label">型号名</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="inputModelName" placeholder="器材型号（如：Arri Alexa Plus）">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputModelNameEn" class="col-xs-3 control-label">英文名</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="inputModelNameEn" placeholder="器材型号的英文名称">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputECategory" class="col-xs-3 control-label">分类</label>
+        <div class="col-xs-7">
+          <select class="select2 select-white form-control" id="inputECategory">
+            <option value="0" data-foo="fa">全部分类</option>
+            <option value="1" data-foo="fa">摄影摄像机</option>
+            <option value="2" data-foo="sub">数字摄影机</option>
+            <option value="3" data-foo="sub">数字摄像机</option>
+            <option value="4" data-foo="sub">单反</option>
+            <option value="5" data-foo="fa">灯具</option>
+            <option value="6" data-foo="sub">钨丝灯</option>
+            <option value="7" data-foo="sub">镝灯</option>
+          </select>
+        </div>
+      </div>
+      <div id="basic-equip-list">
+        <div class="form-group">
+          <label for="inputBasicEquipId" class="col-xs-3 control-label">添加相关器材</label>
+          <div class="col-xs-4">
+            <select class="select2 select-white form-control" id="inputBasicEquipId">
+              <optgroup label="数字摄影机">
+                <option value="AK">ARRI ALEXA</option>
+                <option value="HI">RED EPIC</option>
+                <option value="HI">RED SCARLET</option>
+              </optgroup>
+              <optgroup label="数字摄像机">
+                <option value="CA">SONY EX1</option>
+                <option value="CA">SONY EX3</option>
+                <option value="CA">SONY FS700</option>
+              </optgroup>
+            </select>
+          </div>
+          <label for="inputBasicEquipNum" class="col-xs-1 col-no-padding control-label">数量</label>
+          <div class="col-xs-2">
+            <input type="text" class="form-control" id="inputBasicEquipNum" value="1">
+          </div>
+          <button class="btn btn-white" action-type="addBasicEquip"><span class="icon icon-plus"></span></button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputDescribe" class="col-xs-3 control-label">描述</label>
+        <div class="col-xs-7">
+          <textarea class="form-control" id="inputDescribe" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputDescribeEn" class="col-xs-3 control-label">英文描述</label>
+        <div class="col-xs-7">
+          <textarea class="form-control" id="inputDescribeEn" rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputPic" class="col-xs-3 control-label">图片</label>
+        <div class="col-xs-7">
+          <span class="btn btn-white file-input-button">
+              <i class="icon-plus"></i>
+              <span>添加图片</span>
+              <input id="inputPic" type="file" name="files[]" multiple>
+          </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputStock" class="col-xs-3 control-label">合作器材公司</label>
+        <div class="col-xs-7">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="inputStock1" value="s1" checked> 双塔影视
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary">确 定</button>
+  </div>
+</div>
+
     <!-- javascript
     ================================================== -->
 <script src="../js/jquery.js"></script>
@@ -387,29 +487,48 @@
 <script>
 $(function () {
     // Change this to the location of your server-side upload handler:
-    var url = 'http://jquery-file-upload.appspot.com/';
-    $('#inputPic').fileupload({
-        url: url,
-        dataType: 'json',
-        done: function (e, data) {
-			$('#progress').hide();
-            $('#files').html('上传成功！');
-        },
-        progressall: function (e, data) {
-            var progress = parseInt(data.loaded / data.total * 100, 10);
-            $('#progress .bar').css(
-                'width',
-                progress + '%'
-            );
-        },
-		submit: function (e, data) {
-			$('#progress .bar').css(
-                'width', '0%'
-            );
-			$('#progress').show();
-		}		
-    }).prop('disabled', !$.support.fileInput)
-        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+  //   var url = 'http://jquery-file-upload.appspot.com/';
+  //   $('#inputPic').fileupload({
+  //       url: url,
+  //       dataType: 'json',
+  //       done: function (e, data) {
+    //  $('#progress').hide();
+  //           $('#files').html('上传成功！');
+  //       },
+  //       progressall: function (e, data) {
+  //           var progress = parseInt(data.loaded / data.total * 100, 10);
+  //           $('#progress .bar').css(
+  //               'width',
+  //               progress + '%'
+  //           );
+  //       },
+    // submit: function (e, data) {
+    //  $('#progress .bar').css(
+  //               'width', '0%'
+  //           );
+    //  $('#progress').show();
+    // }    
+  //   }).prop('disabled', !$.support.fileInput)
+  //       .parent().addClass($.support.fileInput ? undefined : 'disabled');
+  $("#add-equip-basic-group").on('click', 'button[action-type|=addBasicEquip]', function(event) {
+    event.preventDefault();
+    // 改为添加的对应器材的名称、编号和数量
+    var equipModelName = "器材名称";
+    var equipModelId = "112434";
+    var equipModelNum = 2;
+    var html = 
+        '<div class="form-group" data-equip-name="' + equipModelName + '" data-equip-id="' + equipModelId + '" data-equip-num="' + equipModelNum + '">' +
+          '<div class="col-xs-4 col-md-offset-3 control-label-content">' + equipModelName + '</div>' +
+          '<label class="col-xs-1 col-no-padding control-label">数量</label>' +
+          '<div class="col-xs-2 control-label-content">' + equipModelNum + '</div>' +
+          '<button class="btn btn-white" action-type="removeThisBasicEquip"><span class="icon icon-minus"></span></button>' +
+        '</div>'
+    $("#basic-equip-list").append(html);
+  });
+  $("#add-equip-basic-group").on('click', 'button[action-type|=removeThisBasicEquip]', function(event) {
+    event.preventDefault();
+    $(this).parent(".form-group").remove();
+  });
 });
 </script>
 </body>
