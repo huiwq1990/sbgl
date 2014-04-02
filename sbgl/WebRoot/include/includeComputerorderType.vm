@@ -1,0 +1,7 @@
+#if($!currentcomputerorderordertype == 1)
+个人预约
+#elseif($!currentcomputerorderordertype ==2)
+课程预约
+#elseif($!currentcomputerorderordertype ==3)
+课程安排
+#end

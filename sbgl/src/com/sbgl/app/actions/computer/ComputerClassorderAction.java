@@ -309,10 +309,17 @@ int curcomputerhomeworkid;
 		
 //		设置可借出的pc model type
 		borrowPcModelStr = "";
-		for (int i = 0; i < computerorderclassruledetailList.size(); i++) {
-			borrowPcModelStr += computerorderclassruledetailList.get(i).getAllowedcomputermodelid() + ",";
+		if(computerorderclassruledetailList!=null && computerorderclassruledetailList.size()>0){
+			for (int i = 0; i < computerorderclassruledetailList.size(); i++) {
+				borrowPcModelStr += computerorderclassruledetailList.get(i).getAllowedcomputermodelid() + ",";
+			}
+			borrowPcModelStr = borrowPcModelStr.substring(0,borrowPcModelStr.length()-1);
+		}else{
+			log.info("没有可以预约的模型,直接返回！");
+			actionMsg = "没有可以预约的模型!";
+			return SUCCESS;
 		}
-		borrowPcModelStr = borrowPcModelStr.substring(0,borrowPcModelStr.length()-1);
+		
 		
 	
 		

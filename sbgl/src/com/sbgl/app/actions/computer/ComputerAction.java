@@ -157,6 +157,7 @@ public class ComputerAction extends BaseAction implements ModelDriven<Computer>{
 				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 				return SUCCESS;
 			}
+			int availBorrow = computerstatusList.get(0).getAvailableborrow();
 			
 			List<Computermodel> cmList = computermodelService.selectComputermodelByCondition(" where computermodeltype = " + ch.getComputermodelid() );			
 			if(cmList==null || cmList.size() == 0){
@@ -171,8 +172,11 @@ public class ComputerAction extends BaseAction implements ModelDriven<Computer>{
 			if(cm.getComputercount()== null){
 				cm.setComputercount(0);
 			}
+			if(cm.getAvailableborrowcountnumber()==null){
+				cm.setAvailableborrowcountnumber(0);
+			}
 						
-			computerService.addComputerAndSetNum(ch, en, computerstatusList.get(0).getAvailableborrow(), cm.getComputercount(), cm.getAvailableborrowcountnumber());
+			computerService.addComputerAndSetNum(ch, en,availBorrow , cm.getComputercount(), cm.getAvailableborrowcountnumber());
 			
 			this.returnInfo = "添加机器成功";
 			log.info(returnInfo);

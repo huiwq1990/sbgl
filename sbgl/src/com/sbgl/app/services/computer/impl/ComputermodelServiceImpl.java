@@ -137,6 +137,13 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 		
 	}
 	
+	@Override
+	public List<Computermodel> selectComputermodelAll(int language){
+			
+		return computermodelDao.selectComputermodelByCondition("where a.languagetype="+language +" ");
+		
+	}
+	
 //	根据id查询full类
 	@Override
 	public ComputermodelFull selectComputermodelFullById(Integer computermodelId){
@@ -177,11 +184,19 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 		computermodelList = baseDao.getEntityByProperty("Computermodel", "computercategoryid ", id);
 		return computermodelList;
 	}
+	
+	//根据computercategoryid 查询实体
+	@Override
+	public List<Computermodel> selectComputermodelByComputercategoryId(Integer computercategoryid,int language ) {
+		return computermodelDao.selectComputermodelByCondition(" where a.languagetype="+language+" and computercategoryid="+computercategoryid+" ");
+		
+	}
 	//根据computercategoryid 查询实体full
 	@Override
 	public List<ComputermodelFull> selectComputermodelFullByComputercategoryId(Integer computercategoryid ) {
 		return computermodelDao.selectComputermodelFullByComputercategoryId(computercategoryid );
 	}
+	
 	@Override
 	 public boolean isComputermodelNameExist(String name){
 		 List<Computercategory>  l = baseDao.getEntityByProperty("Computermodel", "name", name);

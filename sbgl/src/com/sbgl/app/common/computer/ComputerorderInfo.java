@@ -15,4 +15,7 @@ public class ComputerorderInfo {
 	public static final int IndividualOrder = 1;
 //	课程预约
 	public static final int ClassOrder = 2;
+//	课程安排
+	public static final int ClassScheduleOrder = 2;
+	
 }

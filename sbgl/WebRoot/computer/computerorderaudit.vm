@@ -77,11 +77,11 @@
                   </div>
                   <div class="caption">
                     <div class="rent-detail">
-                      <span class="rent-user"><strong>申请者：<a rel="popover" class="lk" href="#" data-original-title="" title="">我</a></strong></span>
+                      <span class="rent-user"><strong>申请者：<a rel="popover" class="lk" href="#" data-original-title="" title="">$!computerorderFull.createusername</a></strong></span>
                       <br>
 					  <span class="rent-num"><strong> 预约号：$!computerorderFull.computerorderserialnumber</strong></span>
 					  #set($currentcomputerorderordertype=$computerorderFull.computerorderordertype)					 
-						 <div class="rent-contact">预约方式：#parse("computer/includeComputerorderType.vm")</div>
+						 <div class="rent-contact">预约方式：#parse("include/includeComputerorderType.vm")</div>
 					
                      <!-- <div class="rent-contact">联系方式：</div> -->
                       <div class="rent-remark"><i class="icon-pencil"></i> $!computerorderFull.computerorderremark</div>

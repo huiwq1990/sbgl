@@ -1,8 +1,10 @@
 package com.sbgl.app.actions.computer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.Cookie;
@@ -17,11 +19,25 @@ import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.ComputercategoryFull;
 import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.entity.Computerorderconfig;
+import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.util.ReturnJson;
 
 public class ComputerActionUtil {
 	
+
 	
+	public static HashMap<Integer, ArrayList<ComputerorderdetailFull>> sortComputerorderMap(HashMap<Integer, ArrayList<ComputerorderdetailFull>> computerorderdetailFullMapByComputermodelId){
+		HashMap<Integer, ArrayList<ComputerorderdetailFull>> newComputerorderdetailFullMapByComputermodelId = new HashMap<Integer,ArrayList<ComputerorderdetailFull>>();
+		
+		for(Map.Entry<Integer, ArrayList<ComputerorderdetailFull>> entry:computerorderdetailFullMapByComputermodelId.entrySet()){   
+			ComputerorderdetailFullComparator comparator=new ComputerorderdetailFullComparator();
+			Collections.sort(entry.getValue(), comparator);
+			newComputerorderdetailFullMapByComputermodelId.put(entry.getKey(), entry.getValue());
+//		     System.out.println(entry.getKey()+"--->"+entry.getValue());    
+			
+		}   
+		return newComputerorderdetailFullMapByComputermodelId;
+	}
 	
 	
 	public static HashMap<Integer, ArrayList<Computermodel>> categoryModelMap(List<Computercategory> computercategoryList,List<Computermodel>  computermodelList){

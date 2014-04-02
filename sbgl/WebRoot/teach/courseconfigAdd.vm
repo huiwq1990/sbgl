@@ -26,7 +26,13 @@
             <!--control-bar start-->
             <div class="control-bar clearfix">
               <div class="title pull-left">设置教学计划</div>
-              <div class="tips">在此页面下设置本学期的时间安排。</div>
+	
+			  #if($null.isNull($courseconfig))
+			  <div class="tips">当前没有设置学期信息，请设置</div>
+			  #else
+				 <div class="tips">当前学期信息：学年：$courseconfig.schoolyear; 学期：$courseconfig.semester</div>
+				 <div class="tips">如果学期信息正确，请不要再添加，否则系统会出错！</div>
+			  #end
             </div><!--control-bar end-->
             <div class="panel panel-default">
               <div class="panel-body">

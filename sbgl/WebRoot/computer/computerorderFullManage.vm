@@ -125,7 +125,7 @@
 					 
 					 
 					 #set($currentcomputerorderordertype = $temp.computerorderordertype)
-					<td>#parse("computer/includeComputerorderType.vm")</td>
+					<td>#parse("include/includeComputerorderType.vm")</td>
 					 <!--
 					 #if($!temp.computerorderordertype == $ClassOrder)
                     <td>课程</td>   

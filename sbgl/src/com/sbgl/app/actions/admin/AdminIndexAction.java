@@ -15,13 +15,16 @@ import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
+import com.sbgl.app.entity.Courseconfig;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
 import com.sbgl.app.services.order.OrderMainService;
 import com.sbgl.app.services.orderadmin.OrderAdminService;
+import com.sbgl.app.services.teach.CourseconfigService;
 import com.sbgl.app.services.user.StudentService;
 import com.sbgl.app.services.user.TeacherService;
 import com.sbgl.app.services.user.WorkerService;
+import com.sbgl.common.DataError;
 
 
 @Scope("prototype") 
@@ -56,6 +59,10 @@ public class AdminIndexAction extends BaseAction{
 
 	private OrderCountFull orderCountFull;
 
+	@Resource
+	private CourseconfigService courseconfigService;	
+	private Courseconfig courseconfig = new Courseconfig();//实例化一个模型
+	
 	int computerorderWaitAuditNum;
 	
 	int totalUserNum;
@@ -67,7 +74,6 @@ public class AdminIndexAction extends BaseAction{
 	public String adminIndex(){
 		
 //		统计待审核的预约数量
-		
 		computerorderList = computerorderService.selectComputerorderByCondition(" where status = "+ComputerorderInfo.ComputerorderStatusAduitWait);
 		if(computerorderList == null){
 			computerorderWaitAuditNum = 0;
@@ -81,6 +87,15 @@ public class AdminIndexAction extends BaseAction{
 		teacherNum = teacherService.getSumOfTeacher();
 		workerNum = workerService.getSumOfWorker();
 		totalUserNum = studentNum + teacherNum + workerNum;
+		
+		
+//		学期信息设置
+		try {
+			courseconfig = courseconfigService.getCurrentCourseconfig();
+		} catch (DataError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return SUCCESS;
 	}
@@ -226,6 +241,66 @@ public class AdminIndexAction extends BaseAction{
 
 	public void setOrderCountFull(OrderCountFull orderCountFull) {
 		this.orderCountFull = orderCountFull;
+	}
+
+
+	public StudentService getStudentService() {
+		return studentService;
+	}
+
+
+	public void setStudentService(StudentService studentService) {
+		this.studentService = studentService;
+	}
+
+
+	public TeacherService getTeacherService() {
+		return teacherService;
+	}
+
+
+	public void setTeacherService(TeacherService teacherService) {
+		this.teacherService = teacherService;
+	}
+
+
+	public WorkerService getWorkerService() {
+		return workerService;
+	}
+
+
+	public void setWorkerService(WorkerService workerService) {
+		this.workerService = workerService;
+	}
+
+
+	public OrderAdminService getOrderAdminService() {
+		return orderAdminService;
+	}
+
+
+	public void setOrderAdminService(OrderAdminService orderAdminService) {
+		this.orderAdminService = orderAdminService;
+	}
+
+
+	public CourseconfigService getCourseconfigService() {
+		return courseconfigService;
+	}
+
+
+	public void setCourseconfigService(CourseconfigService courseconfigService) {
+		this.courseconfigService = courseconfigService;
+	}
+
+
+	public Courseconfig getCourseconfig() {
+		return courseconfig;
+	}
+
+
+	public void setCourseconfig(Courseconfig courseconfig) {
+		this.courseconfig = courseconfig;
 	}
 
 	

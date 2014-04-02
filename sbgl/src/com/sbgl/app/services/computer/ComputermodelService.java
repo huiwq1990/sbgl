@@ -73,6 +73,11 @@ public interface ComputermodelService{
 
 	void updateComputermodel(Computermodel ch, Computermodel en);
 
+	List<Computermodel> selectComputermodelByComputercategoryId(
+			Integer computercategoryid, int language);
+
+	List<Computermodel> selectComputermodelAll(int language);
+
 	
 		
 	

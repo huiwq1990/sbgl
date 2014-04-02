@@ -85,6 +85,8 @@ int deleteComputercategoryByType(List<Integer> computercategoryTypeList);
 
 void updateComputercategory(Computercategory ch, Computercategory en);
 
+List<Computercategory> selectComputercategoryAll(int language);
+
 
 
 
