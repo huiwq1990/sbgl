@@ -210,6 +210,9 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 //		System.out.println(computermodelByComputercategoryId.get(-1).size());
 		 
 
+//		构建学生组课程
+		setCourseMapByStudentgroup();
+		
 	     if(courseFullList == null){
 	        	courseFullList = new ArrayList<CourseFull>();
 	        }
@@ -714,8 +717,8 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 	
 	
 	public boolean checkParm(){
-		if(inputdayperiod==null ){
-			returnInfo = "请选择时间段";
+		if(inputdayperiod==null  || inputdayperiod.length() ==0){
+			returnInfo = "请选择上课时间";
 			log.info(returnInfo);
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 			return false;
