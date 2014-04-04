@@ -2,15 +2,71 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	 <package name="administration" extends="manage">
-
-        
         
         <action name="adminIndex" class="AdminIndexAction" method="adminIndex">
 			<result name="success">/admin/adminindex.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
         
+        <action name="gotoUGroup" class="GrpAction" method="getGroupByPage">
+        	<result name="success">
+        		/userManage/userManageUserGroup.vm
+        	</result>
+        </action>
         
+        <action name="addUGroup" class="GrpAction" method="addGroup">
+        	<result name="success">
+        		/userManage/userManageUserGroupForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="alterUGroup" class="GrpAction" method="alterGroup">
+        	<result name="success">
+        		/userManage/userManageUserGroupForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="deleteUGroup" class="GrpAction" method="deleteGroup">
+        	<result name="success">
+        		/userManage/userManageUserGroupForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="getGroupByType" class="GrpAction" method="getGroupByPage">
+        	<result name="success">
+        		/userManage/userManageUserGroupForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="gotoClazz" class="ClassAction" method="getClazzByGroup">
+        	<result name="success">
+        		/userManage/userManageClass.vm
+        	</result>
+        </action>
+        
+        <action name="addAClazz" class="ClassAction" method="addClazz">
+        	<result name="success">
+        		/userManage/userManageClassForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="alterAClazz" class="ClassAction" method="alterClazz">
+        	<result name="success">
+        		/userManage/userManageClassForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="deleteClasses" class="ClassAction" method="deleteClazz">
+        	<result name="success">
+        		/userManage/userManageClassForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="flushClasses" class="ClassAction" method="getClazzByGroup">
+        	<result name="success">
+        		/userManage/userManageClassForFlush.vm
+        	</result>
+        </action>
 		
 	</package>
 
