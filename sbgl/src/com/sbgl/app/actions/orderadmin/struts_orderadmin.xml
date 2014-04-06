@@ -7,6 +7,14 @@
 	 	<action name="orderAdmin" class="OrderAdminAction" method="orderAdmin">
         	<result name="success">/order/orderAdmin.vm</result>
         </action>
+        <!-- 刷新设备预约页面 -->
+	 	<action name="orderAdminContent" class="OrderAdminAction" method="orderAdmin">
+        	<result name="success">/order/orderAdminContent.vm</result>
+        </action>
+        <!-- 批量删除预约 -->
+	 	<action name="deleteBorrow" class="OrderAdminAction" method="deleteBorrow">
+        	<result name="success">/order/orderAdminContent.vm</result>
+        </action>
         <!-- 进入课程预约规则页面 -->
 	 	<action name="orderclassrule" class="OrderAdminAction" method="orderclassrule">
         	<result name="success">/order/orderclassrule.vm</result>
@@ -19,11 +27,28 @@
 	 	<action name="orderclassrule3" class="OrderAdminAction" method="orderclassrule3">
         	<result name="success">/order/orderclassrule3.vm</result>
         </action>
+        <!-- 删除规则 -->
+	 	<action name="delequipclassrule" class="OrderAdminAction" method="delequipclassrule">
+        	<result name="success">/order/orderclassrule2.vm</result>
+        </action>
+        <!-- 发送规则详情页 -->
+	 	<action name="equClassSend" class="OrderAdminAction" method="equClassSend">
+        	<result name="success">/order/equClassSend.vm</result>
+        </action>
+        <!-- 获得列表 -->
+	 	<action name="equClassSelContent" class="OrderAdminAction" method="equClassSend">
+        	<result name="success">/order/equClassSelContent.vm</result>
+        </action>
     </package>
     <package name="OrderAdminAjax" extends="json-default">	
     	<!-- 创建规则 -->
 	 	<action name="addorderclassrule" class="OrderAdminAction" method="addorderclassrule">
         	<result type="json"></result>
         </action>
+        <!-- 发送规则 -->
+	 	<action name="sendRule" class="OrderAdminAction" method="sendRule">
+        	<result type="json"></result>
+        </action>
+        
     </package>
 </struts>

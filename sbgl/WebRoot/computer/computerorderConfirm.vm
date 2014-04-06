@@ -56,14 +56,13 @@
                           <h3>详情</h3>
                         </div>
                         <div class="caption">
-                          <div class="rent-user">申请者：<a rel="popover" class="lk" href="#">真实姓名（我）</a></div>
-                          <div class="rent-type">预约类型：
-            							#if($computerordertype == 1)
-            							个人预约
-            							#else
-            							课程预约
-            							#end
-            						  </div>
+						  #set($user =    $request.getSession().getAttribute("loginUser"))
+                          <div class="rent-user">申请者：<a rel="popover" class="lk" href="#">$!user.name</a></div>
+                         
+						  <div class="rent-type">预约类型：
+							#set($currentcomputerorderordertype=$computerordertype)					 
+							#parse("include/includeComputerorderType.vm")
+						  </div><!--end rent type-->
                         </div>
                         <hr />
                         <div class="hd"><h3>标题 <small>（可选，系统根据预约时间生成默认标题）</small></h3></div>

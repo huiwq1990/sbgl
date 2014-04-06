@@ -24,6 +24,7 @@ import com.sbgl.app.actions.common.BaseAction;
 import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.teach.CourseconfigService;
+import com.sbgl.common.DataError;
 import com.sbgl.util.*;
 
 
@@ -58,9 +59,15 @@ public class CourseconfigAction extends BaseAction implements ModelDriven<Course
 	//管理 查询
 	public String toAddCourseconfigPage(){
 		
-		   Calendar cal = Calendar.getInstance();
-		   currentyear= cal.get(Calendar.YEAR);
+		Calendar cal = Calendar.getInstance(); 
+		currentyear= cal.get(Calendar.YEAR);
 		
+		try {
+			courseconfig = courseconfigService.getCurrentCourseconfig();
+		} catch (DataError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return SUCCESS;
 	}			
 

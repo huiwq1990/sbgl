@@ -150,7 +150,7 @@ $("#inputEquipCategory").on("change", function(e) {
    		#set($modelList = $computermodelByComputercategoryId.get($categoryfull.computercategorycomputercategorytype))
 		
 		if (e.val == $!categoryfull.computercategorycomputercategorytype) {
-		alert("ss");
+		//alert("ss");
 		html = '';
 			#foreach($model in ${modelList})
                html +=   '<option value="$!model.computermodeltype">$!model.name</option> ';

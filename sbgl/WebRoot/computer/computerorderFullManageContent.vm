@@ -24,7 +24,7 @@
 			#set($temp = $computerorderFullList.get($tempKey))
 			  <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!temp.computerorderid"></td>
-                    <td>$!temp.computerorderserialnumber<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
+                    <td>$!temp.computerorderserialnumber</td>
                     <td>$!temp.createusername</td>
 					
                     <td><a href="${webbaseurl}/toAuditComputerorderPage.${strutsaction}?computerorderId=$!temp.computerorderid">$!temp.computerordertitle</a></td>
@@ -41,7 +41,7 @@
 					 #end
 					 
 						 #set($currentcomputerorderordertype = $temp.computerorderordertype)
-					<td>#parse("computer/includeComputerorderType.vm")</td>
+					<td>#parse("include/includeComputerorderType.vm")</td>
                     <td>$!temp.computerorderremark</td>
                   </tr>
 #end

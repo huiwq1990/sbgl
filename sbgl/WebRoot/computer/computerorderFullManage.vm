@@ -46,7 +46,7 @@
 			  -->
               
               <div class="operate-item pull-left">
-                <a href="#" class="btn btn-white s-h" action-type= "deleteComputerorderButton"><i class="icon-trash"></i> 删除</a>
+                <a href="#" class="btn btn-white s-h" action-type="deleteComputerorderButton"><i class="icon-trash"></i> 删除</a>
               </div>
 			  <!--
               <div class="page pull-right clearfix">
@@ -125,7 +125,7 @@
 					 
 					 
 					 #set($currentcomputerorderordertype = $temp.computerorderordertype)
-					<td>#parse("computer/includeComputerorderType.vm")</td>
+					<td>#parse("include/includeComputerorderType.vm")</td>
 					 <!--
 					 #if($!temp.computerorderordertype == $ClassOrder)
                     <td>课程</td>   

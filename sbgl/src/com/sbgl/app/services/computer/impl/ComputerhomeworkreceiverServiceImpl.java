@@ -185,6 +185,13 @@ public class ComputerhomeworkreceiverServiceImpl implements Computerhomeworkrece
 	public List<ComputerhomeworkreceiverFull> selectComputerhomeworkreceiverFullByLoginuserId(Integer userid ) {
 		return computerhomeworkreceiverDao.selectComputerhomeworkreceiverFullByLoginuserId(userid );
 	}
+	
+	
+	@Override
+	public List<Computerhomeworkreceiver> selectComputerhomeworkreceiverByUserAndOrder(int uid,int hasorder) {
+		return computerhomeworkreceiverDao.selectComputerhomeworkreceiverByCondition(" where userid ="+uid+" and hasorder="+hasorder+" ");
+	}
+
 
 	public BaseDao getBaseDao() {
 		return baseDao;

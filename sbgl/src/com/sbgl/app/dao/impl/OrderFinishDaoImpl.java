@@ -27,9 +27,10 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 	
 	public EquipmenborrowFull findEquipmenborrow(Integer borrowId){
 		
-		final String sql = " select a.*,b.name as userName,c.name as teacherName,d.name as examuserName from EquipmenBorrow a left outer join loginUser b on a.userid = b.id "
+		final String sql = " select a.*,b.name as userName,c.name as teacherName,d.name as examuserName,e.createtime,e.MsgTitle from EquipmenBorrow a left outer join loginUser b on a.userid = b.id "
 			+ " left outer join loginUser c on c.id=a.teacherid "
 			+ " left outer join loginUser d on d.id=a.examuser "
+			+ " left outer join  sendRuleToUser e on a.sendruleid = e.sendruleid "
 			+ " where a.Borrowid='"+borrowId+"' ";
 		List<EquipmenborrowFull> equipmenborrowFullList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
@@ -64,7 +65,7 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 	
 	public EquipmentFull findEquipmentById(Integer equipmentId) {
 		// TODO Auto-generated method stub
-		final String sql = " select a.Equipmentid,a.Equipmentname,c.name as categoryName,a.imgNameSaved from Equipment a  "
+		final String sql = " select a.Equipmentid,a.Equipmentname,c.name as categoryName,a.imgNameSaved,a.equipmentdetail from Equipment a  "
 	    	+ " left outer join EquipmentClassification c on a.classificationid = c.classificationid "
 			+ " where a.equipmentid ='"+equipmentId+"' ";
 		List<EquipmentFull> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
@@ -125,7 +126,7 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 				if(list!=null&&!list.isEmpty()){
 					for(int i =0;i<list.size();i++){
 						EquipmentFull equipmentFull = list.get(i);
-						final String sql3 = " select a.equipDetailid from EquipmentDetail a where a.equipmentid = '"+equipmentFull.getComId()+"' ";
+						final String sql3 = " select a.equipDetailid from listequipdetail a where a.equipmentid = '"+equipmentFull.getComId()+"' ";
 						List<String> list2 = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 							public Object doInHibernate(Session session) throws HibernateException{
 								Query query = session.createSQLQuery(sql3); 

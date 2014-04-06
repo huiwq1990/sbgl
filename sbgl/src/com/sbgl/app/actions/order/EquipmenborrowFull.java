@@ -24,12 +24,19 @@ public class EquipmenborrowFull extends DaoAbs {
 	private Integer examuser;
 	private Integer homeworkid;
 	private Date examdate;
+	private Integer sendruleid;
+	private Integer courseruleid;
 	
 	private String userName;
 	private String cateName;
 	private String statusName;
 	private String teacherName;
 	private String examuserName;
+	private Date createtime;
+	private Date startdate;
+	private Date enddate;
+	private String msgtitle;
+	private String content;
 	public Integer getBorrowid() {
 		return borrowid;
 	}
@@ -167,6 +174,48 @@ public class EquipmenborrowFull extends DaoAbs {
 	}
 	public void setExamuserName(String examuserName) {
 		this.examuserName = examuserName;
+	}
+	public Integer getSendruleid() {
+		return sendruleid;
+	}
+	public void setSendruleid(Integer sendruleid) {
+		this.sendruleid = sendruleid;
+	}
+	public Integer getCourseruleid() {
+		return courseruleid;
+	}
+	public void setCourseruleid(Integer courseruleid) {
+		this.courseruleid = courseruleid;
+	}
+	public Date getCreatetime() {
+		return createtime;
+	}
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
+	public Date getStartdate() {
+		return startdate;
+	}
+	public void setStartdate(Date startdate) {
+		this.startdate = startdate;
+	}
+	public Date getEnddate() {
+		return enddate;
+	}
+	public void setEnddate(Date enddate) {
+		this.enddate = enddate;
+	}
+	public String getMsgtitle() {
+		return msgtitle;
+	}
+	public void setMsgtitle(String msgtitle) {
+		this.msgtitle = msgtitle;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
 	}
 	
 }

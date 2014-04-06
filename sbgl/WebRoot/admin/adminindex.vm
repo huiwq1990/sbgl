@@ -31,6 +31,28 @@
               <div class="title">欢迎使用!</div>
               <div class="tips">北京电影学院摄影系设备预约管理系统</div>
             </div>
+			
+			
+						
+						  
+						  
+			  <div class="panel panel-default">
+				<div class="panel-heading">学期信息</div>
+                 <div class="panel-body">
+					<dl class="dl-horizontal">
+                      #if($null.isNull($courseconfig))
+						<dt>当前没有设置学期信息，请设置</dt>
+					  #else
+				      <dt>学年</dt>
+					  <dd>$courseconfig.schoolyear</dd>
+					 <dt>学期</dt>
+					 <dd>$courseconfig.semester</dd>
+				     <dd>如果学期信息正确，请不要再添加，否则系统会出错！</dd>
+					  #end
+					</dl>
+                  </div>
+            </div>
+			
             <div class="panel panel-default">
               <div class="panel-heading">概况</div>
                 <table class="table stat">

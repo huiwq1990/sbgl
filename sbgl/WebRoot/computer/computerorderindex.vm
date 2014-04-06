@@ -41,25 +41,25 @@
             </div>
             <div class="row">
       
-#set($computerorderFullListSize = $computerorderFullUnderwayList.size() - 1)
+#set($computerorderFullListSize = $computerorderEntityList.size() - 1)
 ##判断数据是否为空
 #if($computerorderFullListSize>=0)
 #set($computerorderFullListRegion = [0..$computerorderFullListSize])
 ##取出所有的属性名称
 #foreach($tempKey in $computerorderFullListRegion)
-			#set($temp = $computerorderFullUnderwayList.get($tempKey))				
-                  <div class="col-3">                  
+			#set($temp = $computerorderEntityList.get($tempKey))				
+           
+			#if($temp.type==1)      
+			<div class="col-3">                  
                       <div class="thumbnail">
                         <div class="hd clearfix">
                           <h4 class="pull-left"><a class="lk" href="${webbaseurl}/viewComputerorder.action?computerorderId=$temp.computerorderid">$!temp.computerordertitle</a></h4>
                         </div>
                          <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> 
 							机房预约<br>
-							#if($!temp.computerorderordertype==2) 
-								课程预约 
-							#else 
-								个人预约 
-							#end
+							#set($currentcomputerorderordertype = $temp.computerorderordertype)
+							#parse("include/includeComputerorderType.vm")
+						
 						</div>
 						<div class="caption">
                           <div class="rent-info">
@@ -88,6 +88,34 @@
                         </div>
                       </div>                  
                   </div>
+			#else
+				<div class="col-3">                  
+                      <div class="thumbnail">
+                        <div class="hd clearfix">
+                          <h4 class="pull-left"><a class="lk" href="${webbaseurl}/checkComputerhomework.${strutsaction}?computerhomeworkid=$temp.computerhomeworkid">$!temp.computerhomeworkname</a></h4>
+                        </div>
+						<!--
+                        <div class="t-r label label-important"><i class="icon-camera-retro icon-large"></i> <a href="${webbaseurl}/toComputerClassorderPage.${strutsaction}?computerhomeworkid=$temp.computerhomeworkid"">课程预约</a></div>
+                        -->
+						<div class="caption">
+                          <div class="rent-info">
+                           
+                            <div class="rent-time"><i class="icon-time"></i>  </div>
+                            <div class="rent-remark"><i class="icon-pencil"></i> $temp.computerhomeworkcontent</div>
+                          </div>
+                          <hr />
+						  
+						   <div class="rent-status clearfix">
+                            <div class="status pull-left"><span class="label label-info">状态</span> 等待你提交预约申请</div>
+                            <a class="btn btn-white pull-right" action-type="" action-data="" href="${webbaseurl}/toComputerClassorderPage.${strutsaction}?computerhomeworkid=$temp.computerhomeworkid">开始预约</a>
+                          </div>
+              
+                         
+                        </div>
+                      </div>                  
+                  </div>
+			#end
+			
 #end
 #end				  
               
@@ -113,11 +141,8 @@
                         </div>
                         <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> 
 							机房预约<br>
-							#if($!temp.computerorderordertype==2) 
-								课程预约 
-							#else 
-								个人预约 
-							#end
+							#set($currentcomputerorderordertype = $temp.computerorderordertype)
+							#parse("include/includeComputerorderType.vm")
 						</div>
                         <div class="caption">
                           <div class="rent-info">

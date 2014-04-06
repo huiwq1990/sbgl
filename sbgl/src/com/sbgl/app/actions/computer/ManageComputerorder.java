@@ -2,6 +2,7 @@ package com.sbgl.app.actions.computer;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -130,6 +131,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	private ComputerhomeworkFull computerhomeworkFull = new ComputerhomeworkFull();//实例化一个模型
 	private List<Computerhomework> computerhomeworkList = new ArrayList<Computerhomework>();
 	private List<ComputerhomeworkFull> computerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
+	private List<ComputerhomeworkFull> newComputerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
 	
 
 	
@@ -145,6 +147,9 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 //	查看自己的预约
 	List<ComputerorderFull> computerorderFullUnderwayList = new ArrayList<ComputerorderFull>();//进行中的预约
 	List<ComputerorderFull> computerorderFullFinishList = new ArrayList<ComputerorderFull>();//进行中的预约
+	
+	List<ComputerorderEntity> computerorderEntityList = new ArrayList<ComputerorderEntity>();//进行中的预约
+	
 	
 //	全局参数	
 	private String userid;
@@ -206,8 +211,11 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 //		}
 		this.buildOrderInfo(computerorderdetailFullList);
 		
+//		对订单排序
 		if(computerorderdetailFullMapByComputermodelId == null){
 			computerorderdetailFullMapByComputermodelId = new HashMap<Integer,ArrayList<ComputerorderdetailFull>>();
+		}else{
+			computerorderdetailFullMapByComputermodelId = ComputerActionUtil.sortComputerorderMap(computerorderdetailFullMapByComputermodelId);
 		}
 		System.out.println("computerorderdetailFullMapByComputermodelId size:"+computerorderdetailFullMapByComputermodelId.size());
 		
@@ -233,6 +241,23 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		String selunderwayordersql = "  where a.createuserid="+userid + " and a.status in("+ComputerorderInfo.ComputerorderStatusAduitWait+","+ComputerorderInfo.ComputerorderStatusAduitReject+") order by a.createtime desc";
 		computerorderFullUnderwayList = computerorderService.selectComputerorderFullByCondition(selunderwayordersql);
 		
+//		根据作业接收者，查询新的课程预约
+		computerhomeworkreceiverList = computerhomeworkreceiverService.selectComputerhomeworkreceiverByUserAndOrder(userid, ComputerConfig.computerhomeworknotorder);
+		String newhomeworksql="";
+		for(int i=0; i<computerhomeworkreceiverList.size();i++){
+			if( (computerhomeworkreceiverList.get(i).getHasorder()==null) || (computerhomeworkreceiverList.get(i).getHasorder() != ComputerConfig.computerhomeworkhasorder)){
+					newhomeworksql += computerhomeworkreceiverList.get(i).getComputerhomeworkid()+",";
+			}
+		}
+		if(newhomeworksql.length() > 1){
+			newhomeworksql = newhomeworksql.substring(0,newhomeworksql.length()-1);
+			newhomeworksql = " where a.id in (" +newhomeworksql+") "  + " order by computerhomeworkcreatetime desc ";
+			newComputerhomeworkFullList = computerhomeworkService.selectComputerhomeworkFullByCondition(newhomeworksql);
+		}
+		
+		setUnderwayOrder();
+		
+//		预约完成的订单
 		String selfinordersql = "  where a.createuserid="+userid + " and a.status ="+ComputerorderInfo.ComputerorderStatusAduitPass+" order by a.createtime desc";
 		computerorderFullFinishList = computerorderService.selectComputerorderFullByCondition(selfinordersql);
 		
@@ -241,11 +266,60 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		if(computerorderFullUnderwayList==null){
 			computerorderFullUnderwayList = new ArrayList<ComputerorderFull>();
 		}
+		
+//		对预约排序
+		if(computerorderEntityList == null){
+			computerorderEntityList = new ArrayList<ComputerorderEntity>();;
+		}else{
+			ComputerorderEntityComparator comparator=new ComputerorderEntityComparator();
+			Collections.sort(computerorderEntityList, comparator);
+		}
 		if(computerorderFullFinishList==null){
 			computerorderFullFinishList = new ArrayList<ComputerorderFull>();
 		}
 		
 		return SUCCESS;
+	}
+	
+	
+	public void setUnderwayOrder(){
+		if(computerorderFullUnderwayList!=null && computerorderFullUnderwayList.size() > 0){
+			for(ComputerorderFull h : computerorderFullUnderwayList){
+				ComputerorderEntity co = new ComputerorderEntity();
+				co.setType(1);
+				co.setCreatetime(h.getComputerordercreatetime());
+				try {
+					BeanUtils.copyProperties(co, h);
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+				computerorderEntityList.add(co);
+			}
+		}
+		if(newComputerhomeworkFullList!=null && newComputerhomeworkFullList.size() > 0){
+			for(ComputerhomeworkFull h : newComputerhomeworkFullList){
+				ComputerorderEntity co = new ComputerorderEntity();
+				co.setType(2);
+				co.setCreatetime(h.getComputerhomeworkcreatetime());
+				try {
+					BeanUtils.copyProperties(co, h);
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+				computerorderEntityList.add(co);
+			}
+		}
+		
+		
+		
 	}
 	
 	
@@ -289,9 +363,13 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		
 		buildOrderInfo(computerorderdetailFullList);
 		
+//		对订单排序
 		if(computerorderdetailFullMapByComputermodelId == null){
 			computerorderdetailFullMapByComputermodelId = new HashMap<Integer,ArrayList<ComputerorderdetailFull>>();
+		}else{
+			computerorderdetailFullMapByComputermodelId = ComputerActionUtil.sortComputerorderMap(computerorderdetailFullMapByComputermodelId);
 		}
+		
 		System.out.println("computerorderdetailFullMapByComputermodelId size:"+computerorderdetailFullMapByComputermodelId.size());
 		
 		return SUCCESS;
@@ -455,6 +533,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		return true;
 	}
 	
+	
 //	课程预约界面点击提交按钮后，如果computerorderFormConfirm指向成功，跳转到预约确认界面
 	public String toComputerorderConfirmPage(){	
 		log.info("toComputerorderConfirmPage computerordertype:"+computerordertype+"  "+reorder);
@@ -491,8 +570,11 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			computerorder = new Computerorder();
 		}
 		
+//		对订单排序
 		if(computerorderdetailFullMapByComputermodelId == null){
 			computerorderdetailFullMapByComputermodelId = new HashMap<Integer,ArrayList<ComputerorderdetailFull>>();
+		}else{
+			computerorderdetailFullMapByComputermodelId = ComputerActionUtil.sortComputerorderMap(computerorderdetailFullMapByComputermodelId);
 		}
 //		System.out.println("computerorderdetailFullMapByComputermodelId"+computerorderdetailFullMapByComputermodelId.get(1).size());
 		
@@ -1334,6 +1416,28 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 
 	public void setCurcomputerhomeworkid(int curcomputerhomeworkid) {
 		this.curcomputerhomeworkid = curcomputerhomeworkid;
+	}
+
+
+	public List<ComputerhomeworkFull> getNewComputerhomeworkFullList() {
+		return newComputerhomeworkFullList;
+	}
+
+
+	public void setNewComputerhomeworkFullList(
+			List<ComputerhomeworkFull> newComputerhomeworkFullList) {
+		this.newComputerhomeworkFullList = newComputerhomeworkFullList;
+	}
+
+
+	public List<ComputerorderEntity> getComputerorderEntityList() {
+		return computerorderEntityList;
+	}
+
+
+	public void setComputerorderEntityList(
+			List<ComputerorderEntity> computerorderEntityList) {
+		this.computerorderEntityList = computerorderEntityList;
 	}
 
 

@@ -9,14 +9,14 @@
         <select id="inputCourseName" class="select2 form-control select-white" data-placeholder="请选择课程" style="width: 100%;">
           <option></option>
 		  #foreach($row in $!courseFullList)	
-          <option value="$row.courseid" data-id="$!row.courseid" data-foo="fa">$row.coursename</option>
+			<option value="$row.courseid" #if($!ordercourserule.courseid==$row.courseid) selected #end data-id="$!row.courseid" data-foo="fa">$row.coursename</option>
     	  #end
         </select>
       </div>
       <div class="col-md-8">
         <div class="form-group rule-name">
         <label class="sr-only" for="inputSendTo">收件人</label>
-        <input type="text" id="inputRuleName" class="form-control" placeholder="规则名称">
+        <input type="text" id="inputRuleName" class="form-control" placeholder="规则名称" value="$!ordercourserule.courserulename">
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
         <div #if($velocityCount=='1') class="tab-pane active" #else class="tab-pane"  #end id="$!row2.classificationid">
           <div class="row model-list">
 			#foreach($row3 in $classequipmap.get($!row2.classificationid))
-            <div class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="$!row3.equipmentid" data-is-select="false"><i class="icon-check-empty icon-large"></i>$!row3.equipmentname</div>
+            <div id="equdiv$!row3.equipmentid" class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="$!row3.equipmentid"  #if($!row3.applynumber) data-is-select="true"  #else  data-is-select="false" #end><i #if($!row3.applynumber)class="icon-check icon-large"  #else class="icon-check-empty icon-large"  #end></i>$!row3.equipmentname</div><input type="text" id="equ$!row3.equipmentid" value="$!row3.applynumber" class="col-sm-4 list-item" style="width:60px">
 			#end
 		  </div>
         </div>
@@ -39,9 +39,23 @@
       </div>
     </div>
   </div>
+  <input type="hidden" id="courseruleid" name="courseruleid" value="$!ordercourserule.courseruleid">
   <div class="modal-footer">
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
     <button class="btn btn-primary" data-type="" id="submit">完 成</button>
   </div>
 	
-<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/bfa2.js"></script>
+<script >
+$(function(){ 
+	$('.model-list > .list-item').each(function(index, elem) {
+    	if ($(elem).children('i').hasClass('icon-check-empty')) {
+    		$(this).data('isSelect', 'false');
+    			//alert($(this).data('isSelect'))
+    	} else if ($(elem).children('i').hasClass('icon-check')) {
+    		$(this).data('isSelect', 'true');
+    		//alert($(this).data('isSelect'))
+    	}
+	});
+}); 
+</script>

@@ -56,9 +56,10 @@ public class ComputerConfig {
 	
 //	作业已经查看预约
 	public final static int computerhomeworkhasview = 1;
+	public final static int computerhomeworknotview = 0;
 	public final static int computerhomeworkhasorder = 1;
 	
-	
+	public final static int computerhomeworknotorder = 0;
 	
 	
 	

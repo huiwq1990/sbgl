@@ -289,4 +289,9 @@ public class ComputerhomeworkServiceImpl implements ComputerhomeworkService{
 		return computerhomeworkDao.selectComputerhomeworkFullByComputerorderclassruleId(computerorderclassruleid );
 	}
 
+//    @Override
+//    public List<ComputerhomeworkFull>  selectComputerhomeworkFullByUserAndOrder(int uid,int hasorder) {
+//		return computerhomeworkDao.selectComputerhomeworkFullByCondition(" where a.userid ="+userid+" and a.")
+//	}
+	
 }

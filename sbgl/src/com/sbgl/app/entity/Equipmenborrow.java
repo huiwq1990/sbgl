@@ -30,6 +30,8 @@ public class Equipmenborrow extends com.sbgl.app.dao.DaoAbs implements
 	private Integer examuser;
 	private Integer homeworkid;
 	private Date examdate;
+	private Integer sendruleid;
+	private Integer courseruleid;
 
 	// Constructors
 
@@ -50,7 +52,7 @@ public class Equipmenborrow extends com.sbgl.app.dao.DaoAbs implements
 			Integer borrowaudituser, Integer returnaudituser,
 			String teachersuggest, String examstate, String title,
 			String remark, Integer examuser, Integer homeworkid,
-			Timestamp examdate) {
+			Timestamp examdate,Integer sendruleid,Integer courseruleid) {
 		this.borrowid = borrowid;
 		this.category = category;
 		this.userid = userid;
@@ -69,6 +71,8 @@ public class Equipmenborrow extends com.sbgl.app.dao.DaoAbs implements
 		this.examuser = examuser;
 		this.homeworkid = homeworkid;
 		this.examdate = examdate;
+		this.sendruleid = sendruleid;
+		this.courseruleid = courseruleid;
 	}
 
 	// Property accessors
@@ -216,5 +220,23 @@ public class Equipmenborrow extends com.sbgl.app.dao.DaoAbs implements
 	public void setExamdate(Date examdate) {
 		this.examdate = examdate;
 	}
+
+	public Integer getSendruleid() {
+		return sendruleid;
+	}
+
+	public void setSendruleid(Integer sendruleid) {
+		this.sendruleid = sendruleid;
+	}
+
+	public Integer getCourseruleid() {
+		return courseruleid;
+	}
+
+	public void setCourseruleid(Integer courseruleid) {
+		this.courseruleid = courseruleid;
+	}
+
+	
 
 }

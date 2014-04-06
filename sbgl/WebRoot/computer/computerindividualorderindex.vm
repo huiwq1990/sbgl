@@ -41,12 +41,35 @@
                   <div class="control-bar"><!--control-bar start-->
                     <div class="title">机房预约</div>
                     <div class="tips">当前可预约 2 周内的机房设备，选择您所需要的设备、使用日期、时段及数量。</div>
+					
+					<div class="control-bar clearfix">
+						<ul class="nav nav-pills ">
+							<li 	
+								#if($selComputercategory == 0)
+									class="active"
+								#end
+							><a href="#">全部</a>
+							</li>
+							#foreach($tempcc in $computercategoryList)
+							<li
+								#if($selComputercategory == $!tempcc.computercategorytype)
+									class="active"
+								#end
+							><a href="toComputerIndividualorderPage.action?selComputercategory=$!tempcc.computercategorytype">$!tempcc.name</a></li>
+							#end
+						</ul>
+					</div>
+					
                   </div><!--control-bar end-->
     
 				  
              
                
 #set($computermodelListSize = $computermodelList.size() - 1)
+#if($computermodelListSize<0)
+	没有模型可以预约
+#end
+
 #if($computermodelListSize>=0)
 #set($computermodelListRegion = [0..$computermodelListSize])
 ##取出所有的PC Model

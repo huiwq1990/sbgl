@@ -16,6 +16,7 @@ import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.actions.orderadmin.OrderCountFull;
 import com.sbgl.app.dao.OrderMainDao;
+import com.sbgl.app.entity.Equipmenborrow;
 import com.sbgl.app.entity.Equipment;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Equipmentnum;
@@ -91,7 +92,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		// TODO Auto-generated method stub
 		List<String> dateList = DateUtil.dateRegion(fromDate,endDate);
 		final Integer size = dateList.size();
-		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,(select ifnull(a.activenum,0)-ifnull(max(tempaa.aaa),0) from( " ;
+		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,(select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
 		    for(int i=0;i<size;i++){
 	    		String dateTemp = dateList.get(i);
 	    		sql +="(select   sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa,b.comId from ListDetail b " 
@@ -102,7 +103,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	    	}
 	    sql+= ")tempaa where tempaa.comId=a.comId) as borrownum from Equipment a  "
 			+ " where a.lanType = '"+lantype+"' and a.classificationid in (select classificationid from Equipmentclassification where parentid in (select min(classificationid) from Equipmentclassification "
-            + " where parentid = 0) union (select min(classificationid) from Equipmentclassification where parentid = 0))  group by a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved  ";
+            + " where parentid = 0) union (select min(classificationid) from Equipmentclassification where parentid = 0))  group by a.comid  ";
 		
 	    final String sql1 = sql;
 	    List<EquipmentFull> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
@@ -117,12 +118,51 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		}	
 		return null;
 	}
+	
+	public List<EquipmentFull> findEquipmentByClss2(String fromDate,String endDate,String lantype, Integer courseruleid) {
+		// TODO Auto-generated method stub
+		List<String> dateList = DateUtil.dateRegion(fromDate,endDate);
+		final Integer size = dateList.size();
+		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,(select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
+		    for(int i=0;i<size;i++){
+	    		String dateTemp = dateList.get(i);
+	    		sql +="(select sum(ifnull(ifnull(b.borrownumber,b.applynumber),0))  as aaa,b.comId from ListDetail b " 
+	    			+ " where  ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comId )  "  ;  
+	    		if(i!=size-1){
+	    			sql += " union ";
+	    		}
+	    	}
+	    sql+= ")tempaa where tempaa.comId=a.comId) as borrownum,d.applynumber from Equipment a  left outer join orderCourseRuleDetail d on d.courseRuleId= '"+courseruleid+"' and d.comId = a.comId  "
+			+ " where d.comid != '' and a.lanType = '"+lantype+"' and a.classificationid in (select classificationid from Equipmentclassification where parentid in (select min(classificationid) from Equipmentclassification "
+            + " where parentid = 0) union (select min(classificationid) from Equipmentclassification where parentid = 0))  group by a.comid  ";
+		
+	    final String sql1 = sql;
+	    List<EquipmentFull> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql1);
+				query.setResultTransformer(new EscColumnToBean(EquipmentFull.class));
+				return query.list();
+			}
+		});	
+		if(equipmentList!=null&&!equipmentList.isEmpty()){
+			int size2= equipmentList.size();
+			for(int i=0;i<size2;i++){
+				EquipmentFull equipmentFull = equipmentList.get(i);
+				if(equipmentFull.getApplynumber()<equipmentFull.getBorrownum()){
+					equipmentFull.setBorrownum(Long.valueOf(equipmentFull.getApplynumber()));
+					equipmentList.set(i, equipmentFull);
+				}
+			}
+			return equipmentList;
+		}	
+		return null;
+	}
 
 	public List<EquipmentFull> findEquipmentByClss(Integer classificationid,String fromDate,String endDate,String lantype) {
 		// TODO Auto-generated method stub
 		List<String> dateList = DateUtil.dateRegion(fromDate,endDate);
 		final Integer size = dateList.size();
-		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,(select ifnull(a.activenum,0)-ifnull(max(tempaa.aaa),0) from( " ;
+		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,(select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
 		    for(int i=0;i<size;i++){
 		    	String dateTemp = dateList.get(i);
 	    		sql +="(select  sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa,b.comId from ListDetail b " 
@@ -132,7 +172,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	    		}
 	    	}
 	    sql+= ")tempaa where tempaa.comId=a.comId) as borrownum from Equipment a  "
-			+ " where a.lanType = '"+lantype+"' and a.classificationid in (select classificationid from Equipmentclassification where parentid='"+classificationid+"' union select classificationid from Equipmentclassification where classificationid='"+classificationid+"') group by a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved  ";
+			+ " where a.lanType = '"+lantype+"' and a.classificationid in (select classificationid from Equipmentclassification where parentid='"+classificationid+"' union select classificationid from Equipmentclassification where classificationid='"+classificationid+"') group by a.comid  ";
 		final String sql1 = sql;
 		List<EquipmentFull> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
@@ -147,11 +187,65 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		return null;
 	}
 	
+	public List<EquipmentFull> findEquipmentByClss2(Integer classificationid,String fromDate,String endDate,String lantype, Integer courseruleid) {
+		// TODO Auto-generated method stub
+		List<String> dateList = DateUtil.dateRegion(fromDate,endDate);
+		final Integer size = dateList.size();
+		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,(select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
+		    for(int i=0;i<size;i++){
+		    	String dateTemp = dateList.get(i);
+	    		sql +="(select  sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa,b.comId from ListDetail b " 
+	    			+ " where ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comId )  "  ;  
+	    		if(i!=size-1){
+	    			sql += " union ";
+	    		}
+	    	}
+	    sql+= ")tempaa where tempaa.comId=a.comId) as borrownum ,d.applynumber from Equipment a  left outer join orderCourseRuleDetail d on d.courseRuleId= '"+courseruleid+"' and d.comId = a.comId  "
+			+ " where d.comid != '' and a.lanType = '"+lantype+"' and a.classificationid in (select classificationid from Equipmentclassification where parentid='"+classificationid+"' union select classificationid from Equipmentclassification where classificationid='"+classificationid+"') group by a.comid  ";
+		final String sql1 = sql;
+		List<EquipmentFull> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql1);
+				query.setResultTransformer(new EscColumnToBean(EquipmentFull.class));
+				return query.list();
+			}
+		});	
+		if(equipmentList!=null&&!equipmentList.isEmpty()){
+			int size2= equipmentList.size();
+			for(int i=0;i<size2;i++){
+				EquipmentFull equipmentFull = equipmentList.get(i);
+				if(equipmentFull.getApplynumber()<equipmentFull.getBorrownum()){
+					equipmentFull.setBorrownum(Long.valueOf(equipmentFull.getApplynumber()));
+					equipmentList.set(i, equipmentFull);
+				}
+			}
+			return equipmentList;
+		}	
+		return null;
+	}
+	
+	public List<EquipmentFull> findEquipmentByClss2(Integer classificationid,Integer courseruleid) {
+		// TODO Auto-generated method stub
+		final String sql = " select a.*,b.applynumber from Equipment a left outer join orderCourseRuleDetail b on a.Equipmentid = b.Equipmentid and b.courseruleid="+courseruleid+" where a.lanType = '"+CommonConfig.languagech+"' and (a.classificationid = '"+classificationid+"'" +
+			" or a.classificationid in (select classificationid from EquipmentClassification where parentid='"+classificationid+"') )";
+		try {
+			Query query =  this.getCurrentSession().createSQLQuery(sql);
+			query.setResultTransformer(new EscColumnToBean(EquipmentFull.class));
+			List<EquipmentFull> list =query.list();
+			if(list!=null&&!list.isEmpty()){
+				return list;  
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public List<EquipmentFull> findEquipmentByClss(Integer classificationid,String fromDate,String endDate,String lantype,String search) {
 		// TODO Auto-generated method stub
 		List<String> dateList = DateUtil.dateRegion(fromDate,endDate);
 		final Integer size = dateList.size();
-		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,(select ifnull(a.activenum,0)-ifnull(max(tempaa.aaa),0) from( " ;
+		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,(select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
 		    for(int i=0;i<size;i++){
 		    	String dateTemp = dateList.get(i);
 	    		sql +="(select  sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa,b.comId from ListDetail b " 
@@ -161,7 +255,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	    		}
 	    	}
 	    sql+= ")tempaa where tempaa.comId=a.comId) as borrownum from Equipment a  "
-			+ " where a.lanType = '"+lantype+"' and a.Equipmentname like '%"+search+"%' and  a.classificationid in (select classificationid from Equipmentclassification where parentid='"+classificationid+"' union select classificationid from Equipmentclassification where classificationid='"+classificationid+"') group by a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved  ";
+			+ " where a.lanType = '"+lantype+"' and a.Equipmentname like '%"+search+"%' and  a.classificationid in (select classificationid from Equipmentclassification where parentid='"+classificationid+"' union select classificationid from Equipmentclassification where classificationid='"+classificationid+"') group by a.comid ";
 		final String sql1 = sql;
 		List<EquipmentFull> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
@@ -176,11 +270,48 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		return null;
 	}
 
+	public List<EquipmentFull> findEquipmentByClss2(Integer classificationid,String fromDate,String endDate,String lantype,String search,Integer courseruleid) {
+		// TODO Auto-generated method stub
+		List<String> dateList = DateUtil.dateRegion(fromDate,endDate);
+		final Integer size = dateList.size();
+		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,(select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
+		    for(int i=0;i<size;i++){
+		    	String dateTemp = dateList.get(i);
+	    		sql +="(select  sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa,b.comId from ListDetail b " 
+	    			+ " where ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comId )  "  ;  
+	    		if(i!=size-1){
+	    			sql += " union ";
+	    		}
+	    	}
+	    sql+= ")tempaa where tempaa.comId=a.comId) as borrownum ,d.applynumber from Equipment a  left outer join orderCourseRuleDetail d on d.courseRuleId= '"+courseruleid+"' and d.comId = a.comId  "
+			+ " where d.comid != '' and a.lanType = '"+lantype+"' and a.Equipmentname like '%"+search+"%' and  a.classificationid in (select classificationid from Equipmentclassification where parentid='"+classificationid+"' union select classificationid from Equipmentclassification where classificationid='"+classificationid+"') group by a.comid ";
+		final String sql1 = sql;
+		List<EquipmentFull> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql1);
+				query.setResultTransformer(new EscColumnToBean(EquipmentFull.class));
+				return query.list();
+			}
+		});	
+		if(equipmentList!=null&&!equipmentList.isEmpty()){
+			int size2= equipmentList.size();
+			for(int i=0;i<size2;i++){
+				EquipmentFull equipmentFull = equipmentList.get(i);
+				if(equipmentFull.getApplynumber()<equipmentFull.getBorrownum()){
+					equipmentFull.setBorrownum(Long.valueOf(equipmentFull.getApplynumber()));
+					equipmentList.set(i, equipmentFull);
+				}
+			}
+			return equipmentList;
+		}	
+		return null;
+	}
+	
 	public EquipmentFull findEquipmentById(Integer equipmentId,String fromDate,String endDate) {
 		// TODO Auto-generated method stub
 		List<String> dateList = DateUtil.dateRegion(fromDate,endDate);
 		final Integer size = dateList.size();
-	    String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.comid,a.lantype,a.imgNameSaved,(select ifnull(a.activenum,0)-ifnull(max(tempaa.aaa),0) from( " ;
+	    String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.comid,a.lantype,a.imgNameSaved,(select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
 	    	for(int i=0;i<size;i++){
 	    		String dateTemp = dateList.get(i);
 	    		sql +="(select   sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa,b.comId from ListDetail b " 
@@ -191,7 +322,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	    	}
 	    sql+= ")tempaa where tempaa.comId=a.comId) as borrownum,c.name as categoryName from Equipment a  "
 	    	+ " left outer join EquipmentClassification c on a.classificationid = c.classificationid "
-			+ " where a.equipmentid ='"+equipmentId+"' group by a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,c.name,a.comid,a.lantype,a.imgNameSaved ";
+			+ " where a.equipmentid ='"+equipmentId+"' group by a.comid ";
 		final String sql1 = sql;
 		List<EquipmentFull> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
@@ -272,10 +403,27 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		return null;
 	}
 
+	
+	public EquipmenborrowFull findEquipmenborrow(Integer id){
+		final String sql = " select a.*,b.MsgTitle,b.Content,b.startdate,b.enddate,b.createtime,c.name as teacherName from EquipmenBorrow a" +
+				" left outer join sendRuleToUser b on a.sendruleid = b.sendruleid " +
+				" left outer join loginuser c on a.teacherid = c.id where a.borrowid = '"+id+"' ";
+		List<EquipmenborrowFull> equipmenborrowtList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql);
+				query.setResultTransformer(new EscColumnToBean(EquipmenborrowFull.class));
+				return query.list();
+			}
+		});	
+		if(equipmenborrowtList!=null&&!equipmenborrowtList.isEmpty()){
+			return equipmenborrowtList.get(0); 
+		}	
+		return null;
+	}
 
 	public List<EquipmenborrowFull> findFinishOrder(Integer userId) {
 		// TODO Auto-generated method stub
-		final String sql = " select a.* from EquipmenBorrow a where a.status in ('8')  ";
+		final String sql = " select a.* from EquipmenBorrow a where a.status in ('8') and a.userId='"+userId+"' ";
 		List<EquipmenborrowFull> equipmenborrowtList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(sql);
@@ -292,7 +440,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 
 	public List<EquipmenborrowFull> findUnderWayOrder(Integer userId) {
 		// TODO Auto-generated method stub
-		final String sql = " select a.* from EquipmenBorrow a where a.status not in ('8')  ";
+		final String sql = " select case when a.status='9' then b.MsgTitle else a.title end title,a.*  from EquipmenBorrow a left outer join sendruletouser b on a.Sendruleid = b.Sendruleid where a.status not in ('8') and a.userid ='"+userId+"'  ";
 		List<EquipmenborrowFull> equipmenborrowtList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(sql);
@@ -322,6 +470,8 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 			dealtype="'4'";
 		}else if(dealtype.equals("3")){
 			dealtype="'5','6'";
+		}else if(dealtype.equals("4")){
+			dealtype="'8'";
 		}
 		final String sql = " select a.*,b.name as userName from EquipmenBorrow a left outer join LoginUser b on a.userid=b.id " +
 				" where a.category in ('"+ordertype+"') and a.status in ("+dealtype+") limit "+(((page.getPageNo()-1)*page.getPageSize()))+","+page.getPageSize();
@@ -422,5 +572,16 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		}	
 		return null;
 	}
+
+
+	@Override
+	public String findEquipmentByBorrowId(Integer borrowId, String fromDate,
+			String endDate, Integer courseRuleId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 
 }

@@ -38,7 +38,7 @@
         <div class="hero-unit clearfix">
           <i class="icon-ok-sign pull-left"></i>
           <div class="pull-left">
-            <h1>预约成功</h1>
+            <h1>预约已提交，请等待审核</h1>
             <p>您的预约申请已成功提交，预约号为<code>${computerorderSerialnumber}</code>，请耐心等待审核。</p>
             <p>审核通过后系统将会通知您，请在规定时间内使用机房相关设备，并遵守机房使用规定。</p>
             <p><a class="btn btn-primary btn-large" href="${webbaseurl}/viewMineComputerorderList.${strutsaction}">我的预约</a></p>

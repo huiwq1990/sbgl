@@ -34,6 +34,7 @@ public class EquipmentFull extends DaoAbs {
 	private String equipDetailids;
 	private Integer listdetailid;
 	private List<String> equipDetailidlist;
+	private Integer borrownumber;
 	
 	
 	public Integer getActivenum() {
@@ -198,6 +199,12 @@ public class EquipmentFull extends DaoAbs {
 	}
 	public void setListdetailid(Integer listdetailid) {
 		this.listdetailid = listdetailid;
+	}
+	public Integer getBorrownumber() {
+		return borrownumber;
+	}
+	public void setBorrownumber(Integer borrownumber) {
+		this.borrownumber = borrownumber;
 	}
 	
 

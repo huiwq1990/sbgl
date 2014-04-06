@@ -31,21 +31,31 @@
           </div><!--control-bar end-->
           <div class="row">
             <div class="col-sm-12 col-md-3 col-lg-3">
-              <div class="control-bar"><a href="#" class="btn btn-primary">添加</a></div>
-              <div class="list-group">
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">全部课程</h4>
-                  <p class="list-group-item-text">浏览本学期全部课程</p>
-                </a>
-                <a href="#" class="list-group-item active">
-                  <h4 class="list-group-item-heading">课程名称</h4>
-                  <p class="list-group-item-text">任课教师：</p>
-                </a>
-                <a href="#" class="list-group-item">
-                  <h4 class="list-group-item-heading">课程名称</h4>
-                  <p class="list-group-item-text">任课教师：</p>
-                </a>
-              </div>
+              <div class="control-bar"><a href="${webbaseurl}/toAddCourseschedulePage.${strutsaction}" class="btn btn-primary">添加</a></div>
+             				
+				<div class="list-group">
+								
+					<a href="${webbaseurl}/browseAllCoursescheduleByWeek.${strutsaction}" class="list-group-item">
+							<h4 class="list-group-item-heading">全部课程</h4>
+							<p class="list-group-item-text">浏览本学期全部课程</p>
+					</a>
+								
+						#foreach($gp in $usergroupList)
+							##<optgroup label="$gp.name">
+							#set( $tcfl = $courseFullByGroupId.get($gp.id) )
+							#foreach($tempCourseFull in  $tcfl )					
+								<a href="${webbaseurl}/viewCoursescheduleByWeek.${strutsaction}?selcourseid=$!tempCourseFull.coursecoursetype&selweek=1" class="list-group-item 
+									#if($!tempCourseFull.coursecoursetype == $selcourseid)
+										active
+									#end	
+									">
+									<h4 class="list-group-item-heading">$!tempCourseFull.coursename </h4>
+									<p class="list-group-item-text">任课教师：$!tempCourseFull.teacherloginusername</p>
+								</a>
+							#end
+						#end
+			
+				</div>
             </div>
             <div class="col-sm-12 col-md-9 col-lg-8">
               <div class="control-bar clearfix">
@@ -180,7 +190,7 @@
       </div>
       <!--equip-wrap end-->
 
-	  #set($currentWebpage="coursescheduleAdd")
+	  #set($currentWebpage="coursescheduleviewandeditAndAdd")
 	  #parse("include/includeTeachSidebar.vm")
 </section>
 

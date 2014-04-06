@@ -32,14 +32,17 @@
           </div><!--control-bar end-->
           <div class="row">
             
-									<!--课程列表-->
-						<div class="col-sm-12 col-md-3 col-lg-3">
-							<div class="control-bar"><a href="${webbaseurl}/toCourseAddPage.${strutsaction}" class="btn btn-primary">添加</a></div>
-							<div class="list-group">
-								<a href="${webbaseurl}/browseAllCoursescheduleByWeek.${strutsaction}" class="list-group-item active">
-									<h4 class="list-group-item-heading">全部课程</h4>
-									<p class="list-group-item-text">浏览本学期全部课程</p>
-								</a>
+			<!--课程列表-->
+			<div class="col-sm-12 col-md-3 col-lg-3">
+				
+				<div class="control-bar"><a href="${webbaseurl}/toAddCourseschedulePage.${strutsaction}" class="btn btn-primary">添加</a></div>
+				
+				<div class="list-group">
+								
+					<a href="${webbaseurl}/browseAllCoursescheduleByWeek.${strutsaction}" class="list-group-item active">
+							<h4 class="list-group-item-heading">全部课程</h4>
+							<p class="list-group-item-text">浏览本学期全部课程</p>
+					</a>
 								
 						#foreach($gp in $usergroupList)
 							##<optgroup label="$gp.name">
@@ -56,9 +59,9 @@
 							#end
 						#end
 			
-							</div>
-						</div>
-						<!--end课程列表-->
+				</div>
+			</div>
+			<!--end课程列表-->
 			
 			
 			
@@ -134,7 +137,7 @@
       <!--equip-wrap end-->
 
       <!--sidebar start-->
-  #set($currentWebpage="coursescheduleviewandedit")
+  #set($currentWebpage="coursescheduleviewandeditAndAdd")
 	  #parse("include/includeTeachSidebar.vm")
 
       <!--sidebar end-->
@@ -142,15 +145,17 @@
 </section>
 
 
-    <!-- javascript
-    ================================================== -->
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/bootstrap-tabdrop.js"></script>
 
+<script>
+$('.tab-drop.nav-pills').tabdrop();
+</script>
 
 </body>
 </html>

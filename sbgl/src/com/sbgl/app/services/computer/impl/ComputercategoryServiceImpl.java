@@ -7,6 +7,7 @@ import java.util.List;
 import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.ComputercategoryFull;
 import com.sbgl.app.entity.Computercategoryi18n;
+import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.services.computer.ComputercategoryService;
 import com.sbgl.app.dao.ComputercategoryDao;
 import com.sbgl.app.dao.BaseDao;
@@ -141,6 +142,14 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 		return baseDao.getAllEntity(Computercategory.class);
 		
 	}
+	
+	@Override
+	public List<Computercategory> selectComputercategoryAll(int language){
+			
+		return computercategoryDao.selectComputercategoryByCondition("where a.languagetype="+language +" ");
+		
+	}
+
 	
 //	根据id查询full类
 	@Override

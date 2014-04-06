@@ -73,13 +73,10 @@ public class ComputerServiceImpl implements ComputerService{
 //		模型总数量加1
 		baseDao.createSQL(" update Computermodel set computercount="+(originalTotalNum+1)+"  where computermodeltype = "+ch.getComputermodelid());
 
-		if(availBorrow == ComputerConfig.computeravailableborrowstatusid){
-			if(originalAvailBorrowNum == 0){
-				originalAvailBorrowNum = 0;
-			}				
+//		如果设备可以借出，则可借数量加一
+		if(availBorrow == ComputerConfig.computeravailableborrowstatusid){		
 			baseDao.createSQL(" update Computermodel set availableborrowcountnumber="+(originalAvailBorrowNum+1)+"  where computermodeltype = "+ch.getComputermodelid());
 		}
-		
 	}
 	
 	@Override

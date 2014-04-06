@@ -23,7 +23,12 @@
 			">浏览课程</a>
 			-->
 
-          <!--<a href="教学管理-设备预约安排.html" class="list-group-item">设备预约安排</a>-->
+			<a href="${webbaseurl}/equClassSend.${strutsaction}" class="list-group-item
+			#if($currentWebpage == "equclasssend" )
+			active      
+			#end	
+			">设备预约安排</a>
+			
           <!--<a href="${webbaseurl}/toAddComputerorderclassrulePage.${strutsaction}" class="list-group-item
 			#if($currentWebpage == "computerorderclassruleAdd" )
 			active      
@@ -42,13 +47,24 @@
 			#end	
 			">布置机房教学任务</a>
 		   
+			<!--作业管理 
 		   <a href="${webbaseurl}/manageComputerhomeworkFull.${strutsaction}" class="list-group-item
 			#if($currentWebpage == "computerhomeworkManage" )
 			active      
 			#end	
 			">查看机房教学</a>
-			
+			-->
 	
+			
+			
+			<!--教学查看修改添加合并-->
+			<a href="${webbaseurl}/browseAllCoursescheduleByWeek.${strutsaction}" class="list-group-item
+			#if($currentWebpage == "coursescheduleviewandeditAndAdd" )
+			active      
+			#end	
+			">机房课程安排</a>
+			
+			<!--
 			<a href="${webbaseurl}/browseAllCoursescheduleByWeek.${strutsaction}" class="list-group-item
 			#if($currentWebpage == "coursescheduleviewandedit" )
 			active      
@@ -62,7 +78,7 @@
 			active      
 			#end		
 			">机房课程安排</a>
-			
+			-->
 			<!--
 			<a href="${webbaseurl}/browseAllCoursescheduleByWeek.${strutsaction}" class="list-group-item 		
 			#if($currentWebpage == "browseCourseschedule" )

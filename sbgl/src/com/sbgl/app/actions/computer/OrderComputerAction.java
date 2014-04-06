@@ -137,12 +137,18 @@ public class OrderComputerAction  extends BaseAction {
 	int computerordertype;
 	int computerhomeworkid;
 	
+//	选择查看机房的种类
+	int selComputercategory=0;
+	
 //	提交预约表单的参数
 	private String orderInfoStr;
 	
 	
 //	判断是否已经预约
 	int reorder = 0;//默认为0或者没有，如果为1，则为重新预约
+
+	private String borrowPcModelStr;
+
 	
 	
 	public String toComputerIndividualorderPage(){
@@ -182,8 +188,31 @@ public class OrderComputerAction  extends BaseAction {
 //		获取语言
 		int currentlanguagetype = this.getCurrentLanguage();
 		
-		String getAllComputermodelTypeSql = " where a.languagetype="+currentlanguagetype+" ";
-		computermodelList = computermodelService.selectComputermodelByCondition(getAllComputermodelTypeSql);
+		
+		
+		computercategoryList = computercategoryService.selectComputercategoryAll(currentlanguagetype);
+		
+		if(selComputercategory ==0){
+			computermodelList = computermodelService.selectComputermodelAll(currentlanguagetype);
+		}else{
+			computermodelList = computermodelService.selectComputermodelByComputercategoryId(selComputercategory, currentlanguagetype);
+		}
+		
+//		设置可借出的pc model type, 由于需要查询模型对应的订单，
+//		如果没有模型，这直接返回界面
+		borrowPcModelStr = "";
+		if(computermodelList!=null && computermodelList.size()>0){
+			for (int i = 0; i < computermodelList.size(); i++) {
+				borrowPcModelStr += computermodelList.get(i).getComputermodeltype() + ",";
+			}
+			borrowPcModelStr = borrowPcModelStr.substring(0,borrowPcModelStr.length()-1);
+		}else{
+			return SUCCESS;
+		}
+
+		
+		
+//		computermodelList = computermodelService.selectComputermodelByCondition(getAllComputermodelTypeSql);
 		log.info("computermodelList" + computermodelList.size());
 		calculate(currentDate,currentDateStr );
 		
@@ -196,7 +225,7 @@ public class OrderComputerAction  extends BaseAction {
 //			log.error("addComputerorderAjax错误"+e);
 		
 		}
-		
+		actionMsg = "系统内部错误";
 		return "innererror";
 	}
 
@@ -316,7 +345,9 @@ public class OrderComputerAction  extends BaseAction {
 		int endPeriod = BorrowperiodUtil.getMaxPeriod();
 		
 //		查询已经有的预约
-		List<Computerorderdetail> validHaveorderComputerorderdetailList  = computerorderdetailService.selectValidComputerorderdetailFromStartToEnd(startDate, startPeriod, endDate, endPeriod);	
+//		List<Computerorderdetail> validHaveorderComputerorderdetailList  = computerorderdetailService.selectValidComputerorderdetailFromStartToEnd(startDate, startPeriod, endDate, endPeriod);	
+		List<Computerorderdetail> validHaveorderComputerorderdetailList  = computerorderdetailService.selectValidComputerorderdetailFromStartToEndByModel(startDate, startPeriod, endDate, endPeriod, borrowPcModelStr);	
+
 		log.info("已经预约的订单："+validHaveorderComputerorderdetailList.size());
 //		for(int i = 0; i <validHaveorderComputerorderdetailList.size(); i++){
 //			System.out.println("id="+validHaveorderComputerorderdetailList.get(i).getId() + "  " +validHaveorderComputerorderdetailList.get(i).getComputermodelid());
@@ -806,6 +837,16 @@ public class OrderComputerAction  extends BaseAction {
 
 	public void setShowWeekdayMap(HashMap<Integer, ArrayList<String>> showWeekdayMap) {
 		this.showWeekdayMap = showWeekdayMap;
+	}
+
+
+	public int getSelComputercategory() {
+		return selComputercategory;
+	}
+
+
+	public void setSelComputercategory(int selComputercategory) {
+		this.selComputercategory = selComputercategory;
 	}
 	
 	

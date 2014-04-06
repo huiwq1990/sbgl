@@ -28,6 +28,10 @@
 	 	<action name="deleteorder" class="OrderFinishAction" method="deleteorder">
         	<result type="json"></result>
         </action>
+        <!-- 提交订单审核 -->
+	 	<action name="subexamorder" class="OrderFinishAction" method="subexamorder">
+        	<result type="json"></result>
+        </action>
         
     </package>
 </struts>

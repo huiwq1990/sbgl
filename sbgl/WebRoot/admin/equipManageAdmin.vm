@@ -21,7 +21,7 @@
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
 
       <ul class="nav nav-tabs">
-        <li><a href="设备预约首页.html">器材预约</a></li>
+        <li><a href="${webbaseurl}/orderAdmin.do">器材预约</a></li>
         <li class="active"><a href=""${webbaseurl}/equipManageAdmin.do"">器材管理</a></li>
       </ul>
       <!--admin-wrap start-->
