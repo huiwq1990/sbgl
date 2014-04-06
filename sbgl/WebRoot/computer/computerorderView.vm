@@ -80,7 +80,8 @@
                
 					 #if($curstatus == $ComputerorderStatusAduitReject)
 						 <hr />
-						 <strong>预约人可进行的操作: </strong><br>
+						 <!--
+						 <strong>预约人可进行的操作: </strong><br>-->
 						#if($!computerorderFull.computerorderordertype==2) 
 							<a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}\toComputerClassorder.${strutsaction}?computerorderid=$!computerorderFull.computerorderid&computerhomeworkid=$!computerorderFull.computerordercomputerhomeworkid&reorder=1">重新预约</a>
 						#elseif($!computerorderFull.computerorderordertype==1)  
@@ -105,7 +106,9 @@
 						 <div class="rent-contact">预约方式：#parse("computer/includeComputerorderType.vm")</div>
 					
                      <!-- <div class="rent-contact">联系方式：XXXXXX</div> -->
+					 #if($!computerorderFull.computerorderremark)
                       <div class="rent-remark"><i class="icon-pencil"></i> $!computerorderFull.computerorderremark</div>
+					  #end
                     </div>
                     <hr>
                   </div>

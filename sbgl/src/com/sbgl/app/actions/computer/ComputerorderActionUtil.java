@@ -110,4 +110,47 @@ public class ComputerorderActionUtil {
 		return true;
 	}
 	
+	
+//	根据未审核的预约和新作业，生成进行中的预约
+	public static List<ComputerorderEntity>  setUnderwayComputerorder(List<ComputerorderFull> computerorderFullUnderwayList, List<ComputerhomeworkFull> newComputerhomeworkFullList){
+		List<ComputerorderEntity> computerorderEntityList = new ArrayList<ComputerorderEntity>();//进行中的预约
+		if(computerorderFullUnderwayList!=null && computerorderFullUnderwayList.size() > 0){
+			for(ComputerorderFull h : computerorderFullUnderwayList){
+				ComputerorderEntity co = new ComputerorderEntity();
+				co.setType(1);
+				co.setCreatetime(h.getComputerordercreatetime());
+				try {
+					BeanUtils.copyProperties(co, h);
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+				computerorderEntityList.add(co);
+			}
+		}
+		if(newComputerhomeworkFullList!=null && newComputerhomeworkFullList.size() > 0){
+			for(ComputerhomeworkFull h : newComputerhomeworkFullList){
+				ComputerorderEntity co = new ComputerorderEntity();
+				co.setType(2);
+				co.setCreatetime(h.getComputerhomeworkcreatetime());
+				try {
+					BeanUtils.copyProperties(co, h);
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+				computerorderEntityList.add(co);
+			}
+		}
+		
+		return computerorderEntityList;
+	}
+	
+	
 }

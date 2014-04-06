@@ -255,7 +255,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			newComputerhomeworkFullList = computerhomeworkService.selectComputerhomeworkFullByCondition(newhomeworksql);
 		}
 		
-		setUnderwayOrder();
+		ComputerorderActionUtil.setUnderwayComputerorder(computerorderFullUnderwayList, newComputerhomeworkFullList);
 		
 //		预约完成的订单
 		String selfinordersql = "  where a.createuserid="+userid + " and a.status ="+ComputerorderInfo.ComputerorderStatusAduitPass+" order by a.createtime desc";
@@ -282,46 +282,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	}
 	
 	
-	public void setUnderwayOrder(){
-		if(computerorderFullUnderwayList!=null && computerorderFullUnderwayList.size() > 0){
-			for(ComputerorderFull h : computerorderFullUnderwayList){
-				ComputerorderEntity co = new ComputerorderEntity();
-				co.setType(1);
-				co.setCreatetime(h.getComputerordercreatetime());
-				try {
-					BeanUtils.copyProperties(co, h);
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InvocationTargetException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
-				computerorderEntityList.add(co);
-			}
-		}
-		if(newComputerhomeworkFullList!=null && newComputerhomeworkFullList.size() > 0){
-			for(ComputerhomeworkFull h : newComputerhomeworkFullList){
-				ComputerorderEntity co = new ComputerorderEntity();
-				co.setType(2);
-				co.setCreatetime(h.getComputerhomeworkcreatetime());
-				try {
-					BeanUtils.copyProperties(co, h);
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InvocationTargetException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
-				computerorderEntityList.add(co);
-			}
-		}
-		
-		
-		
-	}
-	
+
 	
 	
 	/**
