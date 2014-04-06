@@ -18,4 +18,6 @@ public interface StudentService {
 	public Student getStudentById(int stuId);
 	//获取学生总数
 	public Integer getSumOfStudent();
+	//根据学号获取学生信息
+	public Student getStudentByCode(String stuCode);
 }

@@ -67,7 +67,57 @@
         		/userManage/userManageClassForFlush.vm
         	</result>
         </action>
+        
+        <action name="gotoAddUser" class="UserAction" method="gotoAddUser">
+        	<result name="success">
+        		/userManage/userManageAddUser.vm
+        	</result>
+        </action>
+        
+        <action name="flushUserGroupForAdd" class="UserAction" method="flushUserGroupForAdd">
+        	<result name="success">
+        		/userManage/userManageAddUserGroupForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="flushStuClassForAdd" class="UserAction" method="flushStuClassForAdd">
+        	<result name="success">
+        		/userManage/userManageAddStuClassForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="flushStuClassForIndex" class="UserAction" method="flushStuClassForAdd">
+        	<result name="success">
+        		/userManage/userManageIndexClassForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="flushUserIndex" class="UserAction" method="flushUserIndex">
+        	<result name="success">
+        		/userManage/userManageIndexForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="gotoUserIndex" class="UserAction" method="gotoUserIndex">
+        	<result name="success">
+        		/userManage/userManageIndex.vm
+        	</result>
+        </action>
+        
 		
+	</package>
+	
+	<package name="userInfoajax" extends="json-default">
+		<action name="addAUser" class="UserAction" method="addUser">
+        	<result type="json" name="success">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+        <action name="alterAUser" class="UserAction" method="alterUser">
+        	<result type="json" name="success">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
 	</package>
 
 </struts>

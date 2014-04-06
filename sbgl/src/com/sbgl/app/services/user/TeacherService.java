@@ -19,4 +19,6 @@ public interface TeacherService {
 	public Teacher getTeacherById(int teacherId);
 	//获取教师总数
 	public Integer getSumOfTeacher();
+	//根据教工号获取教师
+	public Teacher getTeacherByCode(String teaCode);
 }

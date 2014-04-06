@@ -67,5 +67,11 @@
         		<param name="root">returnJSON</param>
         	</result>
         </action>
+		
+	 	<action name="addManager2" class="ManagerAction" method="addManager2">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
      </package>
 </struts>

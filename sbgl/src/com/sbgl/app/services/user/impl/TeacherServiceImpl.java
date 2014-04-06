@@ -91,4 +91,10 @@ public class TeacherServiceImpl implements TeacherService {
 		}
 		return 0;
 	}
+
+	@Override
+	public Teacher getTeacherByCode(String teaCode) {
+		List<Teacher> resultList = baseDao.getEntityByProperty(Teacher.class.getName(), "teacherid", teaCode);
+		return resultList != null ? resultList.get(0) : null;
+	}
 }

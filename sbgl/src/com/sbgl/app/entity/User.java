@@ -12,7 +12,7 @@ public class User extends com.sbgl.app.dao.DaoAbs implements
 	// Fields
 
 	private Integer id;
-	private Integer userid;
+	private String userid;
 	private String name;
 	private String gender;
 	private String password;
@@ -38,7 +38,7 @@ public class User extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** full constructor */
-	public User(Integer id, Integer userid, String name, String gender,
+	public User(Integer id, String userid, String name, String gender,
 			String password, Integer usertype, Integer classid, String email,
 			String telephone, String cardnumber, Integer initlan, String photo,
 			Date createdate, Date modifydate) {
@@ -68,11 +68,11 @@ public class User extends com.sbgl.app.dao.DaoAbs implements
 		this.id = id;
 	}
 
-	public Integer getUserid() {
+	public String getUserid() {
 		return this.userid;
 	}
 
-	public void setUserid(Integer userid) {
+	public void setUserid(String userid) {
 		this.userid = userid;
 	}
 
