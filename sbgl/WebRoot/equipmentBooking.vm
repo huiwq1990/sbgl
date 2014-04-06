@@ -160,7 +160,7 @@
           </div>
           <div class="form-actions actions">  
             <button type="button" class="btn btn-white btn-prev" disabled="disabled">上一步</button>
-            <button type="button" class="btn btn-primary btn-next" data-type="classAjax"   data-last="开始预约">下一步</button>
+            <button type="button" class="btn btn-primary btn-next"  data-last="开始预约">下一步</button>
           </div>
         </div>
         <div class="rent-time panel panel-default">
@@ -288,6 +288,12 @@ $(function () {
 		}
 	});
 
+	
+	
+	$(".wizard").on('change', function(e, data) {
+			//alert(data.step);
+	});
+	
 $(window).load(function(){
 	if(fromdate!=null&&fromdate!=""){
 		$("#fromDate").val(fromdate);
@@ -454,6 +460,8 @@ $(window).load(function(){
 			   		$("#cl1"+parentid).addClass('active');
 			   		$("#cl2"+cId).addClass('active');
 			   }
+			},error:function(){
+				alert("没有找到设备！");
 			}	  
 		});
 	});
@@ -478,6 +486,8 @@ $(window).load(function(){
 			   		$("#cl1"+parentid).addClass('active');
 			   		$("#cl2"+cId).addClass('active');
 			   }
+			},error:function(){
+				alert("没有找到设备！");
 			}	  
 		});
 	});
@@ -504,14 +514,39 @@ $(window).load(function(){
 			   		$("#cl2"+cId).addClass('active');
 			   }
 			   $("#serachtext").val(serach);
-			}	  
+			},error:function(){
+				alert("没有找到设备！");
+			}
 		});
 	});
 	
-	$(".wizard").on('change', function(e, data) {
-			//alert(data.step);
+	$('#rent-bar .wizard').on('finished', function(e, data) {
+		var fromDate = $("#fromDate").val();
+		var endDate = $("#endDate").val();
+		var serach = $("#serachtext").val();
+		$.ajax({
+			url: "equipmentByClass.do",
+			type: 'POST',
+			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate,serach:serach,borrowId:borrowId},
+			dataType: 'html',
+			success: function(data){
+				//刷新数据
+			   $("#equip-wrap").html(data);
+			   $(".classification1").removeClass('active');
+			   $(".classification2").removeClass('active');
+			   if(ctype=='1'){
+			   		$("#cl1"+parentid).addClass('active');	
+			   		$("#cl20").addClass('active');			
+			   }else{	  
+			   		$("#cl1"+parentid).addClass('active');
+			   		$("#cl2"+cId).addClass('active');
+			   }
+			   $("#serachtext").val(serach);
+			},error:function(){
+				alert("没有找到设备！");
+			}
 		});
-	
+	});
 	$("body").on("click", "button[data-type|=suborder]", function() {
 		var fromDate = $("#fromDate").val();
 		var endDate = $("#endDate").val();
