@@ -13,7 +13,7 @@
           <li class="divider"></li>
 		  
 		    #set($user =    $request.getSession().getAttribute("loginUser"))
-			#if($user.privilege != -1)
+			#if($user.privilege == 1)
           <li><a href="${webbaseurl}/adminIndex.${strutsaction}">管理中心</a></li>
 		  #end
         </ul>

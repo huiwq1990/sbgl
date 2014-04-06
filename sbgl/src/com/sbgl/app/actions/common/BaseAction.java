@@ -88,7 +88,7 @@ public class BaseAction extends ActionSupport implements SessionAware,CookiesAwa
 	
 	public boolean isAdmin(){
 		Loginuser lu = getCurrentUser();
-		if(Integer.valueOf(lu.getRoletype())==3){
+		if(Integer.valueOf(lu.getPrivilege())==1){
 			return true;
 		}
 		return false;
