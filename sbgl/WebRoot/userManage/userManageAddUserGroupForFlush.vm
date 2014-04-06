@@ -1,0 +1,3 @@
+#foreach($ug in $userGroupList)
+  <option value="$ug.id">$!ug.name</option>
+#end

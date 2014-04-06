@@ -1,0 +1,76 @@
+<div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">用户管理</div>
+              <div class="tips">在此页面下管理用户信息，如用户的添加、修改、删除及发送通知等。</div>
+              <div class="filter user-group-filter">
+                <ul class="nav nav-tabs nav-tabs-google">
+                  <li><a href="#">其他</a></li>
+                  <li><a href="#">教师</a></li>
+                  <li><a href="#">学生</a></li>
+                  <li class="active"><a href="#">全部</a></li>                  
+                </ul>
+              </div>
+              <div class="operate-item pull-left">
+                <a href="${webbaseurl}/gotoAddUser.action" class="btn btn-primary">添加用户</a>
+                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+              </div>
+
+              <div class="page pull-right clearfix">
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">最新</a></li>
+                      <li><a href="#">最旧</a></li>
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+                  <ul>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+              <ul class="status-filter nav nav-pills pull-right">
+                <li class="active"><a href="#">全部(10)</a></li>
+                <li><a href="#">本科(5)</a></li>
+                <li><a href="#">硕士(2)</a></li>
+                <li><a href="#">博士(2)</a></li>
+                <li><a href="#">在职(2)</a></li>
+              </ul>
+            </div><!--control-bar end-->
+            <div class="panel panel-default">              
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="name">编号</th>
+                    <th class="username">用户名</th>
+                    <th class="user-group">用户组</th>
+                    <th class="admin-group">管理组</th>
+                    <th class="operate">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+				  #foreach($u in $userInfoList)
+    				  <tr>
+                        <td><input class="chk" type="checkbox" name="chk-list" value="$u.id"></td>
+                        <td>$!u.userid</td>
+                        <td>$!u.name</td>
+						#if($u.usertype == 1)
+							<td>学生 - $!u.groupname</td>
+						#elseif($u.usertype == 2)
+							<td>教师 - $!u.groupname</td>
+						#elseif($u.usertype == 4)
+							<td>其他 - $!u.groupname</td>
+						#end
+                        <td>$!u.manaagerGroupname</td>
+                        <td><a data-toggle="modal" href="#modify-model" role="button" action-type="beforeModify" data-id="$u.id" data-usertype="$u.usertype" data-username="$u.name" data-gender="$u.gender" data-password="$u.password" data-groupid="$u.groupid" data-classid="$u.classid" data-classname="$u.classname"data-usercode="$u.userid" data-cardno="$u.cardnumber" data-initlan="$u.initlan" data-telephone="$u.telephone" data-photo="$u.photo" data-email="$u.email">修改</a> <a href="">删除</a></td>
+                      </tr>
+				  #end
+                </tbody>
+              </table>
+            </div>
+          </div>
