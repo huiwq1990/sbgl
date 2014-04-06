@@ -144,6 +144,62 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 		
 	}
 	
+//	为管理员抢占机房
+	@Override
+	public void adminForceGetComputer(List<Computerorderdetail> newOrderComputerorderdetailList,Date currentDate, int currentPeriod ,Date endDate, int endPeriod ,int currentLanguage, List<Borrowperiod> borrowperiodList,int computeroderadvanceorderday){
+		
+//		查找所有的模型
+		List<Computermodel> computermodelList = new ArrayList<Computermodel>();
+		String getAllComputermodelTypeSql = " where a.languagetype="+CommonConfig.languagech+" ";
+		computermodelList = computermodelDao.selectComputermodelByCondition(getAllComputermodelTypeSql);
+		
+//		根据模型构建 模型、时间段、日期的map
+		HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> availableBorrowModelMap = ComputerorderActionUtil.computermodelPeriodDayInfo(computermodelList, currentPeriod, borrowperiodList, computeroderadvanceorderday);
+//		获取已经预约的表单
+		List<Computerorderdetail> haveOrderedValidComputerorderdetailList  = computerorderdetailDao.selectValidComputerorderdetailFromStartToEnd(currentDate, currentPeriod, endDate, endPeriod);
+//		剩余的数量
+		for(Computerorderdetail od : haveOrderedValidComputerorderdetailList){
+			int between = DateUtil.daysBetween(currentDate,od.getBorrowday());
+			System.out.println("model: "+od.getComputermodelid()+"; day: "+od.getBorrowday()+"; period: "+od.getBorrowperiod());
+			int newcount = availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).get(between) - od.getBorrownumber();
+			availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).set(between, newcount);
+		}
+//		查找要删除的订单详情
+		List<Computerorderdetail> delComputerorderdetailList  = new ArrayList<Computerorderdetail>();
+		for(Computerorderdetail od : newOrderComputerorderdetailList){
+			int between = DateUtil.daysBetween(currentDate,od.getBorrowday());
+			log.info("需要抢占机房: "+od.getComputermodelid()+"; day: "+od.getBorrowday()+"; period: "+od.getBorrowperiod());
+			int moreneed = availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).get(between) - od.getBorrownumber();
+			if(moreneed < 0){
+				int tempNum = 0;
+				for(Computerorderdetail odDel : haveOrderedValidComputerorderdetailList){
+					log.info("备选抢占机房: "+odDel.getComputermodelid()+"; day: "+odDel.getBorrowday()+"; period: "+odDel.getBorrowperiod());
+					Date d1 = DateUtil.getDateDayDate(od.getBorrowday());
+					Date d2 = DateUtil.getDateDayDate(odDel.getBorrowday());
+					if( (odDel.getComputermodelid().intValue() == od.getComputermodelid().intValue()) && d1.equals(d2) && (odDel.getBorrowperiod().intValue() == od.getBorrowperiod().intValue())){
+						log.info("抢占："+odDel.getId());
+						tempNum = tempNum+odDel.getBorrownumber();
+						delComputerorderdetailList.add(odDel);
+					}else{
+						continue;
+					}
+					if((tempNum+moreneed) > 0 ){
+						break;
+					}
+				}
+			}
+//			availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).set(between, newcount);
+		}
+		
+		for(Computerorderdetail odDel : delComputerorderdetailList){
+			log.info("delComputerorderdetailList: "+odDel.getId());
+			baseDao.deleteEntity(odDel);
+//			computerorderdetailDao.delById(odDel.getId());
+		}
+		
+//		return ComputerorderActionUtil.checkVaildComputerorderForm(availableBorrowModelMap, haveOrderedValidComputerorderdetailList, newOrderComputerorderdetailList, currentDate);
+	}
+	
 	@Override
 	public void addComputerorder(Computerorder ch,Computerorder en){
 		

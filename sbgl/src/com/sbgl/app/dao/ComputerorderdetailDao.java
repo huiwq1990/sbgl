@@ -66,6 +66,8 @@ public List<Computerorderdetail> selectComputerorderdetailByCondition(String con
 	void delByPeriodComputermodeltype(String borrowday, int period,
 			int computermodeltype);
 
+	void delById(int computerorderid);
+
 
 
  

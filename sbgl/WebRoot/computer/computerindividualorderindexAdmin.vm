@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 机房个人预约</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+#parse("include/includePageCompatibility.vm")
+
+</head>
+
+<body>
+<header id="header-wrap"><!--header-wrap-->
+  
+	#parse("include/includeGlobalHeader.vm")
+  
+  <div class="nav-wrap clearfix">
+	
+	#parse("include/includeSiteNavi.vm")
+	
+	#set($currentPageType="createorder")
+	#parse("include/includeOrderspaceSubNavi.vm")
+	
+  </div>
+</header><!--/#header-wrap-->
+
+<section id="main-wrap"><!--main-wrap-->
+  
+  <div id="main-content" class="clearfix"><!--main-content start--> 
+          <div class="container" id="post-equip">
+            
+            <div class="row">
+
+              <div class="post-list-warp"><!--post-list-warp start-->  
+                <div class="post-list">              
+                  <div class="control-bar"><!--control-bar start-->
+                    <div class="title">机房预约</div>
+                    <div class="tips">当前可预约 2 周内的机房设备，选择您所需要的设备、使用日期、时段及数量。</div>
+					
+					<div class="control-bar clearfix">
+						<ul class="nav nav-pills ">
+							<li 	
+								#if($selComputercategory == 0)
+									class="active"
+								#end
+							><a href="#">全部</a>
+							</li>
+							#foreach($tempcc in $computercategoryList)
+							<li
+								#if($selComputercategory == $!tempcc.computercategorytype)
+									class="active"
+								#end
+							><a href="toComputerIndividualorderPage.action?selComputercategory=$!tempcc.computercategorytype">$!tempcc.name</a></li>
+							#end
+						</ul>
+					</div>
+					
+                  </div><!--control-bar end-->
+    
+				  
+             
+               
+#set($computermodelListSize = $computermodelList.size() - 1)
+#if($computermodelListSize<0)
+	没有模型可以预约
+#end
+
+#if($computermodelListSize>=0)
+#set($computermodelListRegion = [0..$computermodelListSize])
+##取出所有的PC Model
+#foreach($tempmodelindex in $computermodelListRegion)
+	#set($tempmodel = $computermodelList.get($tempmodelindex))		
+	<!--PC 某个模型的信息 -->			   
+			   <!--start-->
+				  <div class="panel panel-default">
+    
+                    <div class="row panel-body">
+                  
+                        <div class="col-md-3">
+                          <img src="$pcimg.url($tempmodel.picpath)" class="img-responsive">
+                        </div>
+                        <div class="col-md-9">
+                          <h3 class="equip-title">$tempmodel.name</h3>
+                          <p class="detail">一段文字描述。</p>
+                          <div class="carousel-bar">
+                            <a class="btn btn-white" href="#post-equip-$!tempmodel.id" data-slide="prev"><i class="icon-chevron-left"></i></a>
+                            <a class="btn btn-white" href="#post-equip-$!tempmodel.id" data-slide="next"><i class="icon-chevron-right"></i></a>
+                          </div>
+                          <div id="post-equip-$!tempmodel.id" class="carousel slide">
+                            <div class="carousel-inner">
+      
+						<!--构建所有的Table -->
+		#set($weektablenum = $showComputeroderadvanceorderday /$computerodertablercolumn - 1 )		##一共有几个周的Table 用可以预约的天数除以7				
+		#set($weektableregion = [0..$weektablenum])
+		#foreach($tempweektableindex in $weektableregion)
+			
+	<!--构建某个模型的某一周的Table -->	
+	#set($borrowperiodListSize = $borrowperiodList.size() - 1)
+	#if($borrowperiodListSize>=0)
+		#set($borrowperiodListRegion = [0..$borrowperiodListSize])
+		
+								<!--tabel start-->
+								##激活第一个表格
+								#if($tempweektableindex ==0)
+									<div class="active item table-responsive">
+								#else
+								<div class=" item table-responsive">
+								#end
+                                <table class="table" data-table-name="$tempmodel.name">
+									
+                                    <thead>
+                                      <tr>
+                                        <th class="time-slop">时间</th>
+										##所有时间段 上午、中午、晚上 取出所有的属性名称
+										#set($weekdayRegion = [0..$computerodertablercolumn-1])
+										#set($weekDateList = $showDateMap.get($tempweektableindex))
+										#set($trueDateList = $dateMap.get($tempweektableindex))
+										#set($weekday = $showWeekdayMap.get($tempweektableindex))
+										#foreach($tempday in $weekdayRegion)
+                                        <th>$!weekday.get($tempday)<br>$weekDateList.get($tempday)</th>
+                                        #end                
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+		##所有时间段 上午、中午、晚上 取出所有的属性名称
+		#foreach($tempperiod in $borrowperiodListRegion)
+			#set($tempBorrowperiod = $borrowperiodList.get($tempperiod))##取出某个时间段				
+                 <tr>
+					<td class="time-slot">$tempBorrowperiod.peroidname</td>
+					
+			##对于可以借的每一天		
+			#foreach($tempday in [0..$computerodertablercolumn-1])		
+				#set($thisday =$tempweektableindex * $computerodertablercolumn+$tempday )
+				#set($availnum = $availableBorrowModelMap.get($tempmodel.computermodeltype).get($tempBorrowperiod.periodnum).get($thisday))
+				#set($toalnum = $totalBorrowModelMap.get($tempmodel.computermodeltype).get($tempBorrowperiod.periodnum).get($thisday))
+				
+				#if($toalnum ==0)
+                       <td></td>
+				#else
+					#set($tableindex = $tempweektableindex*21 + $tempperiod*7 + $tempday)
+					<td class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name"  data-pcpicpath = "$tempmodel.picpath" data-max-num="$toalnum">$toalnum($availnum)<br/>可预约</td>
+				#end                 
+					
+			#end ##end day info computerorderTotalOrderDay
+			
+			
+			 </tr>
+		#end ##end borrowperiodLis
+                                    </tbody>
+                                </table>
+                              
+                              </div>
+							  <!--tabel end-->
+	
+		#end						  
+		<!--end 构建某个模型的某一周的Table -->	
+		
+#end ##end weektable
+<!-- end 构建所有Table-->
+		
+		
+		
+					
+							  
+                            </div>        
+                          </div>
+    
+                        </div>
+             
+                    </div>
+                  </div>  
+				<!--end-->		
+#end
+#end					
+				
+				
+				
+				</div>
+              </div><!--post-list-warp end-->
+              
+              <div class="post-sidebar-warp"><!--post-sidebar-warp start-->
+                <form action="javascript:void(0)">
+			   <div id="post-sidebar" class="thumbnail wizard">
+                  <h3>预约单</h3>
+				 
+                  <div id="rent-list">
+                    <p class="no-add">尚未添加任何预约项。</p>
+                  
+                  </div>
+                  <div class="form-actions actions">  
+                    <button type="button" class="btn btn-white btn-clear">清 空</button>
+                    <button action-type="confirmComputerButton"  class="btn btn-primary">提交预约</button>
+                  </div>
+                </div>
+				</from>
+				
+              </div><!--post-sidebar-warp start-->
+            </div>           
+            
+
+          </div>
+  </div>
+  <!---main-content end-->
+</section>
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/bootstrap-datepicker.js"></script>
+<script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="${jsDomain}/xdate.js"></script>
+<script src="${jsDomain}/computer/computerutil.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/computer/computerorder.js"></script>
+
+<script>
+function CreatePostBookingTable(rowCount,cellCount,startDate) {
+	var tableName = "MAC工作站"
+	var tableContainer = $("<table class='table' data-table-name='" + tableName + "'></table>");
+	var index = 0;				// 单元格索引
+	var html = "";
+	var num = 9;				// 可预约数
+	var day;
+	var week;
+	var bookInfo = "<strong>"+ num + "</strong><div class='info'>可预约</div>"
+	html =
+		"<thead>" +
+		"<tr>";
+	for(var i = 0; i< cellCount; i++) {			// 生成表头（时间）
+		if(i == 0) {
+			html += "<th class='time-slot'>" + "时间" + "</th>";
+		}
+		else {			
+			day = startDate.toString('MM/d');
+			week = startDate.toString('dddd');
+			html += "<th>" + day + "<br/>" + week + "</th>";
+			startDate.addDays(1);
+		}
+	}
+	html +=
+		"</tr>" +
+		"</thead>";
+	  
+	html +=
+		"<tbody>";
+	for(var i = 0; i < (rowCount - 1); i++) {
+		html += "<tr>";
+		for(var j = 0; j < cellCount; j++) {
+			if(j == 0) {
+				html += "<td class='time-slot'>";
+				switch(i)
+				{
+				case 0:
+					html += "上午";
+					break;
+				case 1:
+					html += "下午";
+					break;
+				case 2:
+					html += "晚上";
+					break;
+				}
+				html += "</td>";
+			}
+			else {
+				index++;
+				html += "<td class='bookable' data-index='" + index + "' data-slot='" + i + "' data-max-num='9'>" + bookInfo + "</td>";				  
+			} // if
+		} // for 
+		html += "</tr>";
+	}// for
+	html += "</tbody>";
+  
+	$(tableContainer).appendTo($("#createtable"));
+	//$(html).appendTo(tableContainer);
+}
+function getBookingTime(bookingData, startDate) {
+	var index = bookingData.index;
+	var timeSlot = bookingData.slot;
+	var curdate = bookingData.date;
+	var timeSlotStr = "";
+	var selectedDate = "";
+	// 第几星期(上、下 、晚 7 * 3)
+	var weekTimes = parseInt(index / 21) + 1;
+	if (index % (7 * 3) == 0) {
+		weekTimes = weekTimes - 1;	
+	}
+	var dayWeekIndex = index % 7;								// 7天内的第几天		
+	if (dayWeekIndex == 0) {
+		dayWeekIndex = 7;							// 第7天
+	}
+	var dayIndex = 7 * ( weekTimes - 1 ) + dayWeekIndex;				// 第几天
+	
+	switch(timeSlot)
+	{
+	case 2:
+		timeSlotStr = "上午";
+		break;
+	case 4:
+		timeSlotStr = "下午";
+		break;
+	case 6:
+		timeSlotStr = "晚上";
+		break;
+	}
+	startDate.addDays(dayIndex - 1);
+	var date = startDate.toString('MMMd日 dddd');
+	selectedDate = curdate + " " + timeSlotStr;
+	//alert(timeSlotStr + ", index=" + index + ", weekTimes=" + weekTimes + ", dayWeekIndex=" + dayWeekIndex + ", dayIndex=" + dayIndex);
+	return selectedDate;
+}
+  
+$(window).load(function(){
+	XDate.locales['zh-CN'] = {
+		monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+		monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+		dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六']
+	};
+	XDate.defaultLocale = 'zh-CN';
+	var startDate = new XDate();
+	CreatePostBookingTable(4, 8, startDate);
+  
+	$('#datepicker').datepicker({
+		language: 'zh-CN',
+		format: 'yyyy-mm-dd',
+		todayHighlight: true,
+	});
+	$('.carousel').carousel({
+		interval: false
+	});
+	
+
+	
+//提交预约单
+	$("body").on("click", "button[action-type|=confirmComputerButton]", function() {
+		var orderInfoStr = "";
+		$("input[name='pcorderinfo']").each(function() {			
+				orderInfoStr += $(this).attr("orderpcid") +","+ $(this).prop("value") +","+$(this).attr("orderdate")+","+$(this).attr("orderperiod")+","+$(this).attr("orderpcname")+","+$(this).attr("picpath")+ ";";			
+		});
+	
+			
+		orderInfoStr = orderInfoStr.substring(0,orderInfoStr.length-1);
+
+		var postData = {
+			"orderInfoStr" : orderInfoStr,
+			"computerhomeworkid":0,
+			"computerordertype" : $computerordertype,
+			"reorder":$reorder,//重新预约时用
+			"computerorderid":$computerorderid
+			
+		};
+		
+		jQuery.ajax({  
+		    url:"${webbaseurl}/computerorderFormConfirm.${strutsaction}",  
+		    type:"post",
+		    data:postData,
+			dataType: 'json',
+			success: function(data){
+				var returnJson = jQuery.parseJSON(data); 
+				if(returnJson.flag == 1){
+					//var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					//$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框
+					location.href = "${webbaseurl}/toComputerorderConfirmPage.${strutsaction}?computerordertype=$computerordertype&orderInfoStr="+orderInfoStr+"&computerorderid=$!computerorderid&computerhomeworkid=0&reorder=$!reorder";
+				}else{
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+				}
+			}		  	  
+		});//end jquery
+	});
+//end Order
+	
+	
+	
+	
+	
+	
+	
+	
+	
+});
+</script>
+</body>
+</html>

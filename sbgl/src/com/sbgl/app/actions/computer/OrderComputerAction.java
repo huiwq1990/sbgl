@@ -53,6 +53,7 @@ import com.sbgl.util.DateUtil;
 import com.sbgl.util.Page;
 import com.sbgl.util.ReturnJson;
 import com.sbgl.util.SpringUtil;
+import com.sun.xml.internal.stream.Entity;
 
 
 @Scope("prototype") 
@@ -125,6 +126,7 @@ public class OrderComputerAction  extends BaseAction {
 	int computerodertablercolumn;
 	List<Borrowperiod> borrowperiodList   = new ArrayList<Borrowperiod>();
 	HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> availableBorrowModelMap = new HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> ();
+	HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> totalBorrowModelMap = new HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> ();
 	
 	List<Borrowperiod> showtimeList   = new ArrayList<Borrowperiod>();
 	
@@ -153,6 +155,8 @@ public class OrderComputerAction  extends BaseAction {
 	
 	public String toComputerIndividualorderPage(){
 		try{
+			
+		
 		computerordertype = ComputerorderInfo.IndividualOrder;
 //		如果是个人预约，默认作业id
 		if(computerordertype == ComputerorderInfo.IndividualOrder){
@@ -217,7 +221,13 @@ public class OrderComputerAction  extends BaseAction {
 		calculate(currentDate,currentDateStr );
 		
 		System.out.println(borrowperiodList.size());
-		return SUCCESS;
+		
+		if(this.isAdmin()){
+			return "adminorder";
+		}else{
+			return SUCCESS;
+		}
+		
 		
 		
 		}catch(Exception e){
@@ -301,8 +311,10 @@ public class OrderComputerAction  extends BaseAction {
 		
 //		根据模型构建 模型、时间段、日期的map
 		availableBorrowModelMap = ComputerorderActionUtil.computermodelPeriodDayInfo(computermodelList, currentPeriod, borrowperiodList, computeroderadvanceorderday);
+		
 		if(availableBorrowModelMap == null){
-			 availableBorrowModelMap = new HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> ();			
+			 availableBorrowModelMap = new HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> ();	
+			 
 		}
 		
 //		配合显示，将多出来的那些天数的数量设置为0
@@ -311,11 +323,26 @@ public class OrderComputerAction  extends BaseAction {
 				for(Borrowperiod tempBorrowperiod : borrowperiodList){
 					for(int tempday=computeroderadvanceorderday; tempday < showComputeroderadvanceorderday; tempday++){
 						availableBorrowModelMap.get(tempmodel.getComputermodeltype()).get(tempBorrowperiod.getPeriodnum()).add(0);
+						
 					}	
 				}
 			}
 		}
 		
+
+		
+//		对availableBorrowModelMap复制
+		for(Map.Entry<Integer,HashMap<Integer,ArrayList<Integer>>> entry : availableBorrowModelMap.entrySet()){			
+			HashMap<Integer,ArrayList<Integer>> newHash = new HashMap<Integer,ArrayList<Integer>>();
+			for(Map.Entry<Integer,ArrayList<Integer>> e2 : entry.getValue().entrySet()){
+				ArrayList<Integer> list = new ArrayList<Integer>();
+				for(Integer v : e2.getValue()){
+					list.add(v);
+				}
+				newHash.put(e2.getKey(), list);
+			}
+			totalBorrowModelMap.put(entry.getKey(), newHash);		      
+		}   
 		
 		System.out.println(availableBorrowModelMap.size());
 		
@@ -847,6 +874,27 @@ public class OrderComputerAction  extends BaseAction {
 
 	public void setSelComputercategory(int selComputercategory) {
 		this.selComputercategory = selComputercategory;
+	}
+
+
+	public HashMap<Integer, HashMap<Integer, ArrayList<Integer>>> getTotalBorrowModelMap() {
+		return totalBorrowModelMap;
+	}
+
+
+	public void setTotalBorrowModelMap(
+			HashMap<Integer, HashMap<Integer, ArrayList<Integer>>> totalBorrowModelMap) {
+		this.totalBorrowModelMap = totalBorrowModelMap;
+	}
+
+
+	public String getBorrowPcModelStr() {
+		return borrowPcModelStr;
+	}
+
+
+	public void setBorrowPcModelStr(String borrowPcModelStr) {
+		this.borrowPcModelStr = borrowPcModelStr;
 	}
 	
 	

@@ -71,6 +71,13 @@ public interface ComputerorderService{
 				int computeroderadvanceorderday);
 
 		int deleteComputerorder(List<Integer> orderidList) throws DataError;
+
+		void adminForceGetComputer(
+				List<Computerorderdetail> newOrderComputerorderdetailList,
+				Date currentDate, int currentPeriod, Date endDate,
+				int endPeriod, int currentLanguage,
+				List<Borrowperiod> borrowperiodList,
+				int computeroderadvanceorderday);
 		
 	
 //根据关联查询实体	
