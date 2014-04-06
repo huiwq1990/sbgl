@@ -103,10 +103,10 @@
                       <br>
 					  <span class="rent-num"><strong> 预约号：$!computerorderFull.computerorderserialnumber</strong></span>
 					   #set($currentcomputerorderordertype=$computerorderFull.computerorderordertype)					 
-						 <div class="rent-contact">预约方式：#parse("computer/includeComputerorderType.vm")</div>
+						 <div class="rent-contact">预约方式：#parse("include/includeComputerorderType.vm")</div>
 					
                      <!-- <div class="rent-contact">联系方式：XXXXXX</div> -->
-					 #if($!computerorderFull.computerorderremark)
+					 #if($computerorderFull.computerorderremark)
                       <div class="rent-remark"><i class="icon-pencil"></i> $!computerorderFull.computerorderremark</div>
 					  #end
                     </div>
