@@ -133,7 +133,6 @@
 				}*/
 			});
 			$('#rent-bar .wizard').on('finished', function(e, data) {
-
 				var dateCheckin = $("#rent-bar .wizard .input-daterange .checkin").datepicker("getDate");
 				var dateCheckout = $("#rent-bar .wizard .input-daterange .checkout").datepicker("getDate");
 				if (dateCheckin == "Invalid Date" || dateCheckout == "Invalid Date" ) {

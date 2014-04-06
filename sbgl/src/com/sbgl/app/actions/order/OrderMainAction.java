@@ -100,59 +100,63 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 	
 	//动态刷新设备管理页面
 	public String equipmentByClass(){
-		if(fromDate==null||fromDate.equals("")){
-			fromDate = DateUtil.date.format(new Date());		
-			if(endDate==null||endDate.equals("")){
-				endDate = fromDate;
-			}
-		}else{
-			if(endDate==null||endDate.equals("")){
-				endDate = fromDate;
-			}
-		}
-		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
-		if(lantype==null||lantype.equals("")){
-			lantype = "0";
-		}
-		Integer courseruleid = 0;
-		if(borrowId!=null&&!borrowId.equals("")){
-			equipmenborrowFull = orderMainService.findEquipmenborrow(borrowId);
-			orderCate = equipmenborrowFull.getCategory().toString();
-			courseruleid = equipmenborrowFull.getStatus();
-			listequips = orderMainService.findEquipmentByBorrowId(borrowId,fromDate,endDate); 
-		}
-		Equipmentclassification equipmentclassification = new Equipmentclassification();
-		equipmentclassification = orderMainService.findEquipmentclassification(parentClassId,lantype);
-		class1Name = equipmentclassification.getName();
-		classification2List = orderMainService.findSecondEquipmentclass(parentClassId,lantype);
-		if(serach!=null&&!serach.equals("")){
-			if(classificationId==0){
-				if(courseruleid==9){
-					equipmentList = orderMainService.findEquipmentByClss2(parentClassId,fromDate,endDate,lantype,serach,courseruleid);
-				}else{
-					equipmentList = orderMainService.findEquipmentByClss(parentClassId,fromDate,endDate,lantype,serach);
+		try{
+			if(fromDate==null||fromDate.equals("")){
+				fromDate = DateUtil.date.format(new Date());		
+				if(endDate==null||endDate.equals("")){
+					endDate = fromDate;
 				}
 			}else{
-				if(courseruleid==9){
-					equipmentList = orderMainService.findEquipmentByClss2(classificationId,fromDate,endDate,lantype,serach,courseruleid);
-				}else{
-					equipmentList = orderMainService.findEquipmentByClss(classificationId,fromDate,endDate,lantype,serach);
+				if(endDate==null||endDate.equals("")){
+					endDate = fromDate;
 				}
 			}
-		}else{
-			if(classificationId==0){
-				if(courseruleid==9){
-					equipmentList = orderMainService.findEquipmentByClss2(parentClassId,fromDate,endDate,lantype,courseruleid);
+			String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+			if(lantype==null||lantype.equals("")){
+				lantype = "0";
+			}
+			Integer courseruleid = 0;
+			if(borrowId!=null&&!borrowId.equals("")){
+				equipmenborrowFull = orderMainService.findEquipmenborrow(borrowId);
+				orderCate = equipmenborrowFull.getCategory().toString();
+				courseruleid = equipmenborrowFull.getStatus();
+				listequips = orderMainService.findEquipmentByBorrowId(borrowId,fromDate,endDate); 
+			}
+			Equipmentclassification equipmentclassification = new Equipmentclassification();
+			equipmentclassification = orderMainService.findEquipmentclassification(parentClassId,lantype);
+			class1Name = equipmentclassification.getName();
+			classification2List = orderMainService.findSecondEquipmentclass(parentClassId,lantype);
+			if(serach!=null&&!serach.equals("")){
+				if(classificationId==0){
+					if(courseruleid==9){
+						equipmentList = orderMainService.findEquipmentByClss2(parentClassId,fromDate,endDate,lantype,serach,courseruleid);
+					}else{
+						equipmentList = orderMainService.findEquipmentByClss(parentClassId,fromDate,endDate,lantype,serach);
+					}
 				}else{
-					equipmentList = orderMainService.findEquipmentByClss(parentClassId,fromDate,endDate,lantype);
+					if(courseruleid==9){
+						equipmentList = orderMainService.findEquipmentByClss2(classificationId,fromDate,endDate,lantype,serach,courseruleid);
+					}else{
+						equipmentList = orderMainService.findEquipmentByClss(classificationId,fromDate,endDate,lantype,serach);
+					}
 				}
 			}else{
-				if(courseruleid==9){
-					equipmentList = orderMainService.findEquipmentByClss2(classificationId,fromDate,endDate,lantype,courseruleid);
+				if(classificationId==0){
+					if(courseruleid==9){
+						equipmentList = orderMainService.findEquipmentByClss2(parentClassId,fromDate,endDate,lantype,courseruleid);
+					}else{
+						equipmentList = orderMainService.findEquipmentByClss(parentClassId,fromDate,endDate,lantype);
+					}
 				}else{
-					equipmentList = orderMainService.findEquipmentByClss(classificationId,fromDate,endDate,lantype);
+					if(courseruleid==9){
+						equipmentList = orderMainService.findEquipmentByClss2(classificationId,fromDate,endDate,lantype,courseruleid);
+					}else{
+						equipmentList = orderMainService.findEquipmentByClss(classificationId,fromDate,endDate,lantype);
+					}
 				}
 			}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 		return SUCCESS;
 	}
