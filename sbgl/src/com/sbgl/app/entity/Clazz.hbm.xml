@@ -6,12 +6,15 @@
 -->
 <hibernate-mapping>
     <class name="com.sbgl.app.entity.Clazz" table="clazz" catalog="sbgl">
-        <id name="classId" type="java.lang.Integer">
-            <column name="classId" />
+        <id name="classid" type="java.lang.Integer">
+            <column name="classid" />
             <generator class="assigned" />
         </id>
         <property name="classname" type="java.lang.String">
             <column name="classname" length="100" />
+        </property>
+        <property name="classtype" type="java.lang.Integer">
+            <column name="classtype" />
         </property>
     </class>
 </hibernate-mapping>

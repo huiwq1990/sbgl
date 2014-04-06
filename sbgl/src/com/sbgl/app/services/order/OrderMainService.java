@@ -30,6 +30,12 @@ public interface OrderMainService {
 	public List<EquipmentFull> findEquipmentByClss(Integer classificationid,String fromDate,String endDate,String lantype,String serach);
 	//根据器材分类获得设备(根据最小的分类id)
 	public List<EquipmentFull> findEquipmentByClss(String fromDate,String endDate,String lantype);
+	//根据器材分类获得设备(根据最小的分类id)(课程预约)
+	public List<EquipmentFull> findEquipmentByClss2(String fromDate,String endDate,String lantype, Integer courseruleid);
+	//根据器材分类获得设备
+	public List<EquipmentFull> findEquipmentByClss2(Integer classificationid,String fromDate,String endDate,String lantype, Integer courseruleid);
+	//根据器材分类获得设备(根据设备名称)
+	public List<EquipmentFull> findEquipmentByClss2(Integer classificationid,String fromDate,String endDate,String lantype,String serach, Integer courseruleid);
 	//下订单
 	public void saveOrder(String orderStr,Equipmenborrow equipmenBorrow);
 	//获得设备详情
@@ -42,9 +48,13 @@ public interface OrderMainService {
 	public Integer subOrder(String equIds,String equNums,String fromDate,String endDate,Integer borrowId,Loginuser user) throws Exception;
 	//根据订单查找选择的商品
 	public String findEquipmentByBorrowId(Integer borrowId,String fromDate,String endDate);
+	//根据订单查找选择的商品(课程预约)
+	public String findEquipmentByBorrowId(Integer borrowId,String fromDate,String endDate,Integer courseRuleId);
 	//找未完成的账单
 	public List<EquipmenborrowFull> findUnderWayOrder(Integer userId);
 	//找完成的账单
 	public List<EquipmenborrowFull> findFinishOrder(Integer userId);
+	//获得订单
+	public EquipmenborrowFull findEquipmenborrow(Integer id);
 	
 }

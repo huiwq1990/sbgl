@@ -59,7 +59,7 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 	//进入设备出库页面
 	public String orderalibrary(){
 		equipmentclassificationList = orderExamService.findclassList(borrowId);
-		equipmentMap = orderExamService.findMapBorrow(borrowId);
+		equipmentMap = orderExamService.findMapBorrow(borrowId,1);
 		equipmenborrowFull = orderFinishService.findEquipmenborrow(borrowId);
 		return SUCCESS;
 	}
@@ -67,7 +67,7 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 	//进入设备入库页面
 	public String orderstorage(){
 		equipmentclassificationList = orderExamService.findclassList(borrowId);
-		equipmentMap = orderExamService.findMapBorrow(borrowId);
+		equipmentMap = orderExamService.findMapBorrow(borrowId,2);
 		equipmenborrowFull = orderFinishService.findEquipmenborrow(borrowId);
 		return SUCCESS;
 	}

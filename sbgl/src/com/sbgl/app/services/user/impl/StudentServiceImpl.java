@@ -94,4 +94,10 @@ public class StudentServiceImpl implements StudentService {
 		return 0;
 	}
 
+	@Override
+	public Student getStudentByCode(String stuCode) {
+		List<Student> resultList = baseDao.getEntityByProperty(Student.class.getName(), "studentid", stuCode);
+		return resultList != null ? resultList.get(0) : null;
+	}
+
 }

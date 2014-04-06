@@ -61,5 +61,11 @@
         <property name="examdate" type="java.util.Date">
             <column name="examdate" />
         </property>
+        <property name="sendruleid" type="java.lang.Integer">
+            <column name="sendruleid" />
+        </property>
+        <property name="courseruleid" type="java.lang.Integer">
+            <column name="courseruleid" />
+        </property>
     </class>
 </hibernate-mapping>

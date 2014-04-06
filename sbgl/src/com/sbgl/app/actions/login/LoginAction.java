@@ -19,6 +19,7 @@ import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.entity.Student;
 import com.sbgl.app.services.login.LoginService;
 import com.sbgl.app.services.user.ClazzService;
+import com.sbgl.app.services.user.ManagerService;
 import com.sbgl.app.services.user.StudentService;
 import com.sbgl.util.CookiesUtil;
 import com.sbgl.util.JavascriptWriter;
@@ -47,6 +48,8 @@ public class LoginAction extends ActionSupport {
 	private ClazzService clazzService;
 	@Resource
 	private StudentService studentService;
+	@Resource
+	private ManagerService managerService;
 	
 	public String login(){
 		return SUCCESS;
@@ -92,7 +95,8 @@ public class LoginAction extends ActionSupport {
 				CookiesUtil.addLoginCookie("userid", String.valueOf(loginUser2.getUserid()));
 				flag = true;
 				session.setAttribute("loginUser", loginUser2);
-				if("3".equals(loginUser2.getRoletype())) {
+				Boolean isAdmin = managerService.isExistManagerCode( loginUser2.getUserid() );
+				if(isAdmin) {
 					loginType = "admin";
 				} else {
 					loginType = "user";

@@ -97,6 +97,20 @@ public class OrderMainServiceImpl implements OrderMainService {
 		equipmentList = orderMainDao.findEquipmentByClss(classificationid,fromDate,endDate,lantype,serach);
 		return equipmentList;
 	}
+	
+	public List<EquipmentFull> findEquipmentByClss2(Integer classificationid,String fromDate,String endDate,String lantype, Integer courseruleid) {
+		// TODO Auto-generated method stub
+		List<EquipmentFull> equipmentList = new ArrayList<EquipmentFull>(); 
+		equipmentList = orderMainDao.findEquipmentByClss2(classificationid,fromDate,endDate,lantype,courseruleid);
+		return equipmentList;
+	}
+	
+	public List<EquipmentFull> findEquipmentByClss2(Integer classificationid,String fromDate,String endDate,String lantype,String serach, Integer courseruleid) {
+		// TODO Auto-generated method stub
+		List<EquipmentFull> equipmentList = new ArrayList<EquipmentFull>(); 
+		equipmentList = orderMainDao.findEquipmentByClss2(classificationid,fromDate,endDate,lantype,serach,courseruleid);
+		return equipmentList;
+	}
 
 
 	public void saveOrder(String orderStr, Equipmenborrow equipmenBorrow) {
@@ -123,9 +137,8 @@ public class OrderMainServiceImpl implements OrderMainService {
 		if(borrowId==null||borrowId.equals("")){
 			equipmenborrow.setBorrowid(baseDao.getCode("equipmenborrow"));			
 		}else{
-			baseDao.deleteByProperty("equipmenborrow", "borrowid", borrowId);
-			baseDao.deleteByProperty("Listdetail", "borrowlistid", borrowId);
-			equipmenborrow.setBorrowid(borrowId);	
+			equipmenborrow = baseDao.getEntityById(Equipmenborrow.class, borrowId);
+			baseDao.deleteByProperty("Listdetail", "borrowlistid", borrowId);	
 		}
 		if(temp1!=null&&temp1.length>0){
 			for(int i=0;i<temp1.length;i++){
@@ -153,8 +166,10 @@ public class OrderMainServiceImpl implements OrderMainService {
 		}
 		equipmenborrow.setStatus(1);
 		equipmenborrow.setUserid(user.getId());
-		equipmenborrow.setCategory(1);
-		baseDao.saveEntity(equipmenborrow);	
+		if(equipmenborrow.getCategory()==null){
+			equipmenborrow.setCategory(1);
+		}
+		baseDao.updateEntity(equipmenborrow);	
 		return equipmenborrow.getBorrowid();
 	}	
 
@@ -177,7 +192,10 @@ public class OrderMainServiceImpl implements OrderMainService {
 		// TODO Auto-generated method stub
 		return orderMainDao.findEquipmentByClss(fromDate,endDate,lantype);
 	}
-
+	
+	public List<EquipmentFull> findEquipmentByClss2(String fromDate,String endDate,String lantype, Integer courseruleid){
+		return orderMainDao.findEquipmentByClss2(fromDate,endDate,lantype,courseruleid);
+	}
 
 	public EquipmentFull findEquipmentById(Integer equipmentId,String fromDate,String endDate) {
 		// TODO Auto-generated method stub
@@ -189,6 +207,8 @@ public class OrderMainServiceImpl implements OrderMainService {
 		// TODO Auto-generated method stub
 		return orderMainDao.findEquipmentByBorrowId(borrowId,fromDate,endDate);
 	}
+	
+	
 
 
 	@Override
@@ -203,6 +223,18 @@ public class OrderMainServiceImpl implements OrderMainService {
 		// TODO Auto-generated method stub
 		return orderMainDao.findFinishOrder(userId);
 	} 
+	
+	public EquipmenborrowFull findEquipmenborrow(Integer id){
+		return orderMainDao.findEquipmenborrow(id);
+	}
+
+
+	@Override
+	public String findEquipmentByBorrowId(Integer borrowId, String fromDate,
+			String endDate, Integer courseRuleId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	
 	

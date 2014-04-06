@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 用户管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+#parse("include/includePageCompatibility.vm")
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+	#set($currentPageModule="user")
+	#parse("include/includeAdminHeader.vm")
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">用户组</div>
+              <div class="tips">在此页面下管理用户组信息，如用户组的添加、修改、删除等。</div>
+              <div class="operate-item pull-left">
+                <a href="#add-user-group" class="btn btn-primary" data-toggle="modal" role="button" action-type="clearInput">新建用户组</a>
+                <a href="#" class="btn btn-white s-h" action-type="delUserGroup"><i class="icon-trash"></i> 删除</a>
+              </div>
+              <div class="page pull-right clearfix">
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第<span id="cp">$!crtPage</span>/<span id="tp">$!totPage</span>页 <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#" action-type="goFirst">最新</a></li>
+                      <li><a href="#" action-type="goLast">最旧</a></li>
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+                  <ul>
+                    <li><a href="#" rel="tooltip" action-type="backPage" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" action-type="nextPage" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+              <ul class="status-filter nav nav-pills pull-right">
+                <li class="active" id="0" action-type="seletctType" data-typeid="0"><a href="#">全部($allGroupNum)</a></li>
+                <li id="1" action-type="seletctType" data-typeid="1"><a href="#">学生($!stuGroupNum)</a></li>
+                <li id="2" action-type="seletctType" data-typeid="2"><a href="#">教师($!teaGroupNum)</a></li>
+                <li id="4" action-type="seletctType" data-typeid="4"><a href="#">其他($!otrGroupNum)</a></li>
+              </ul>
+            </div><!--control-bar end-->
+            <div class="panel panel-default">              
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="id">编号</th>
+                    <th class="group-name">用户组名称</th>
+                    <th class="group-type">用户组类型</th>
+                  </tr>
+                </thead>
+                <tbody>
+					#foreach($group in $allGroupList)
+					  <tr>
+                        <td><input class="chk" type="checkbox" name="chk-list" value="$!group.id"></td>
+                        <td>$!group.id<a class="btn btn-white btn-mini" action-type="beforeModify" data-id="$!group.id" data-name="$!group.name" data-type="$!group.type" data-toggle="modal" href="#modify-user-group" role="button">修改</a></td>
+                        <td>$!group.name</td>
+                        #if($!group.type == 1)
+						<td>学生</td>
+						#elseif($!group.type == 2)
+						<td>教师</td>
+						#elseif($!group.type == 4)
+						<td>其他</td>
+						#end
+                      </tr>
+					#end
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+      </div>
+      <!--equip-wrap end-->
+
+      #set($currentWebpage="userManageUserGroup")
+	  #parse("include/includeUserManageSidebar.vm")
+
+</section>
+
+<!-- Modal -->
+<div id="add-user-group" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">新建用户组</h3>
+  </div>
+  <div class="modal-body">
+    <p>根据用户组类型新建用户组。</p>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="inputUserGroupName" class="col-xs-3 control-label">用户组名称</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="inputUserGroupName" placeholder="用户组名称">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputUserGroupType" class="col-xs-3 control-label">所属类别</label>
+        <div class="col-xs-7">
+          <select class="select2 select-white form-control" id="inputUserGroupType">
+            <option value="1">学生</option>
+            <option value="2">教师</option>
+            <option value="4">其他</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary" action-type="addGroup">确 定</button>
+  </div>
+</div>
+<div id="modify-user-group" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">修改用户组</h3>
+  </div>
+  <div class="modal-body">
+    <p>修改用户组名称或其对应类别。</p>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="modifyUserGroupName" class="col-xs-3 control-label">用户组名称</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="modifyUserGroupName" placeholder="用户组名称">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="modifyUserGroupType" class="col-xs-3 control-label">所属类别</label>
+        <div class="col-xs-7">
+          <select class="select2 select-white form-control" id="modifyUserGroupType">
+            <option value="1">学生</option>
+            <option value="2">教师</option>
+            <option value="4">其他</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary"  action-type="modifyGroup">确 定</button>
+  </div>
+</div>
+<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
+  <img src="../img/cover-img.jpg" class="cover" alt="封面照片">
+  <div class="cover-layout"></div>
+  <div class="avatar"><img src="../img/photo.jpg" width="80" height="80" class="img-circle"></div>
+  <div class="user-wrap">
+    <div class="user-name"><a href="#">用户名</a></div>
+    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
+    <div class="user-info">职务等信息</div>
+    <div class="user-info">地点</div>
+  </div>
+  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
+</div>
+
+    <!-- javascript
+    ================================================== -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+<script>
+	var alterGroupName;		//修改组的原名称
+	var alterGroupId;		//修改组的id
+	var alterGroupId;		//修改组的类别
+	var idsForDel = "";  	//用于删除的id串
+	var selectTypeId = "0"; //选择的用户组类型
+	var currentPageNo = 1;  //当前页码
+	var totalPageNo;	    //总页码
+	
+	var cookie = { 
+		//读取COOKIES,n为COOKIE名 
+		Get:function(n){ 
+    		var re=new RegExp(n+'=([^;]*);?','gi');
+    	    var r=re.exec(document.cookie)||[];
+    	    return (r.length>1?r[1]:null)
+		}
+	};
+	
+	$("body").on("click", "a[action-type|=clearInput]", function() {
+		$("#inputUserGroupName").val("");
+		$("#inputUserGroupType").select2("val", 0);
+	});
+	
+	$("body").on("click", "input[type='checkbox']", function() {
+		var num = 0;
+		if($(this).attr("id") === "chk-all") {
+			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
+		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true){
+				num++;  
+			}
+		});
+		if(num > 0){
+			$(".s-h").css({
+				"visibility": "visible",
+				"opacity": "1",
+				"filter": "alpha(opacity=100)"
+			});
+		} else {
+			$(".s-h").css({
+				"visibility": "hidden",
+				"opacity": "0",
+				"filter": "alpha(opacity=0)"
+			});
+		}
+		
+		idsForDel = "";
+		
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true) {
+				//num++;
+				idsForDel += $(this).prop("value") + "_";
+			}
+		});
+	});
+	
+	$("body").on("click", "a[action-type|=beforeModify]", function() {
+		var myData = $(this).data();
+		
+		alterGroupId = myData.id;
+		alterGroupName = myData.name;
+		alterGroupType = myData.type;
+		
+		$("#modifyUserGroupName").val(alterGroupName);
+		$("#modifyUserGroupType").select2("val", alterGroupType);
+		
+		console.log(alterGroupId);
+		console.log(alterGroupName);
+		console.log(alterGroupType);
+		
+	});
+	
+	$('.modal').on('click', ('button.btn-primary'), function () {
+		var _this = $(this);
+		var postData = {};
+		var actionUrl = "";
+		var tip = "";
+	    
+	    if(_this.attr('action-type') == 'addGroup') {
+	        var groupName = $("#inputUserGroupName").val();
+	        var groupType = $("#inputUserGroupType").val();
+			
+			console.log("************ group name is " + groupName);
+			console.log("************ group name is " + groupType);
+    		
+    		if(groupName != "") {
+    			postData = {
+    				"group.name": groupName,
+    				"group.type": groupType,
+    				"group.ownerId": cookie.Get("id"),
+					"crtPage": currentPageNo,
+					"gourpType": selectTypeId
+    			}
+    			actionUrl = "${webbaseurl}/addUGroup.do";
+    			tip = "添加用户组成功！";
+    		} else {
+    			alert("组名称不能为空！");
+				return;
+    		}
+	    }
+		
+		if(_this.attr('action-type') == 'modifyGroup') {
+	        var newGroupName = $("#modifyUserGroupName").val() == "" ? alterGroupName : $("#modifyUserGroupName").val();
+	        var newGroupType = $("#modifyUserGroupType").val();
+			
+			//alert(newGroupName);
+			//alert(newGroupType);
+    		
+    		if(alterGroupName == newGroupName && newGroupType == alterGroupType) {
+    			alert("并未做修改！");
+				return;
+    		} else {
+    			postData = {
+					"group.id": alterGroupId,
+					"group.name": newGroupName,
+    				"group.type": newGroupType,
+					"crtPage": currentPageNo,
+					"gourpType": selectTypeId
+        		};
+				actionUrl = "${webbaseurl}/alterUGroup.do";
+				tip = "修改用户组成功！";
+    		}
+	    }
+		
+		jQuery.ajax({  
+		    url: actionUrl,  
+		    type: "post",
+		    data: postData,
+		    success:function(data,textStatus,jq) {  
+			    var n = noty({text: tip, timeout: 2500, type: 'success'});
+			    _this.parents('.modal').modal('toggle');
+				$("#admin-wrap").html(data);
+	        },  
+		    error:function(data,textStatus,jq){
+		        var n = noty({text: "系统错误，操作失败，请联系管理员！", timeout: 2500, type: 'error'});
+		    }  
+		});
+	});
+	
+	$("body").on("click", "a[action-type|=delUserGroup]", function() {
+		var postData = {
+			groupIds: idsForDel,
+		}
+			
+		jQuery.ajax({  
+		    url: "${webbaseurl}/deleteUGroup.do",  
+		    type: "post",
+		    data: postData,
+		    success:function(data,textStatus,jq){ 
+				var n = noty({text: "删除用户组成功！", timeout: 2500, type: 'success'});
+				//$(this).parents('.modal').modal('toggle');
+				$("#admin-wrap").html(data);
+				
+	        },  
+		    error:function(data,textStatus,jq){
+    			var n = noty({text: "系统异常，请联系系统管理员！", timeout: 2500, type: 'error'});
+			}  
+		});
+	});
+	//筛选器材状态
+	$("body").on("click", "li[action-type|=seletctType]", function() {
+		var myData = $(this).data();
+		
+		$(".active").removeClass("active");
+		$(this).addClass("active");
+		
+		selectTypeId = myData.typeid;
+		currentPageNo = 1;
+		
+		var postData = {
+    		"crtPage": currentPageNo,
+    		"gourpType": selectTypeId
+		};
+		
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/getGroupByType.do",
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+				
+				$(".active").removeClass("active");
+				
+				$("#"+selectTypeId).addClass("active");
+				
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
+	//向后翻页
+	$("body").on("click", "a[action-type|=nextPage]", function() {
+		totalPageNo = $("#tp").html();
+		currentPageNo = $("#cp").html();
+		//console.log("tp = " + totalPageNo);
+		//console.log("cp = " + currentPageNo);
+		if(currentPageNo >= totalPageNo) {
+			return;
+		}
+		
+		currentPageNo++;
+		var postData = {
+    		"crtPage": currentPageNo,
+    		"gourpType": selectTypeId
+		};
+		
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/getGroupByType.do",
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+				
+				$(".active").removeClass("active");
+				
+				$("#"+selectTypeId).addClass("active");
+				
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
+	//向前翻页
+	$("body").on("click", "a[action-type|=backPage]", function() {
+		totalPageNo = $("#tp").html();
+		currentPageNo = $("#cp").html();
+		if(currentPageNo <= 1) {
+			return;
+		}
+		
+		currentPageNo--;
+		
+		var postData = {
+    		"crtPage": currentPageNo,
+    		"gourpType": selectTypeId
+		};
+		
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/getGroupByType.do",
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+				
+				$(".active").removeClass("active");
+				
+				$("#"+selectTypeId).addClass("active");
+				
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
+	//跳到第一页
+	$("body").on("click", "a[action-type|=goFirst]", function() {
+		totalPageNo = $("#tp").html();
+		currentPageNo = $("#cp").html();
+		if(currentPageNo <= 1) {
+			return;
+		}
+		
+		currentPageNo = 1;
+		
+		var postData = {
+    		"crtPage": currentPageNo,
+    		"gourpType": selectTypeId
+		};
+		
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/getGroupByType.do",
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+				
+				$(".active").removeClass("active");
+				
+				$("#"+selectTypeId).addClass("active");
+				
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
+	//跳到最后一页
+	$("body").on("click", "a[action-type|=goLast]", function() {
+		totalPageNo = $("#tp").html();
+		currentPageNo = $("#cp").html();
+		if(currentPageNo >= totalPageNo) {
+			return;
+		}
+		
+		currentPageNo = totalPageNo;
+		
+		var postData = {
+    		"crtPage": currentPageNo,
+    		"gourpType": selectTypeId
+		};
+		
+		
+		jQuery.ajax({
+			url: "${webbaseurl}/getGroupByType.do",
+			type: "post",
+			data: postData,
+			success: function(data,textStatus,jq) {
+				$("#admin-wrap").html(data);
+				
+				$(".active").removeClass("active");
+				
+				$("#"+selectTypeId).addClass("active");
+				
+			},
+			error: function(data,textStatus,jq) {
+				alert("刷新界面失败!");
+			}
+		});
+	});
+</script>
+</body>
+</html>

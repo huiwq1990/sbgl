@@ -1,0 +1,3 @@
+#foreach($clazz in $classList)
+	<option value=$!clazz.classId>$!clazz.classname</option>
+#end

@@ -14,11 +14,16 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.actions.user.template.UserCourse;
 import com.sbgl.app.entity.Administrator;
+import com.sbgl.app.entity.Student;
+import com.sbgl.app.entity.Teacher;
 import com.sbgl.app.entity.Usergroup;
 import com.sbgl.app.entity.Usergrouprelation;
 import com.sbgl.app.services.user.GroupService;
 import com.sbgl.app.services.user.ManagerService;
+import com.sbgl.app.services.user.StudentService;
+import com.sbgl.app.services.user.TeacherService;
 import com.sbgl.app.services.user.UserGroupRelationService;
+import com.sbgl.app.services.user.WorkerService;
 
 
 @Scope("prototype") 
@@ -31,6 +36,10 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 
 	@Resource
 	private ManagerService managerService;
+	@Resource
+	private StudentService studentService;
+	@Resource
+	private TeacherService teacherService;
 	@Resource
 	private GroupService groupService;
 
@@ -102,6 +111,78 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 		returnJSON.put("msg", message);
 		return SUCCESS;
 	}
+	//存储用户编号
+	private String userCode;
+	public String getUserCode() {
+		return userCode;
+	}
+	public void setUserCode(String userCode) {
+		this.userCode = userCode;
+	}
+	//存储管理员管理组
+	private String adminGroup;
+	public String getAdminGroup() {
+		return adminGroup;
+	}
+	public void setAdminGroup(String adminGroup) {
+		this.adminGroup = adminGroup;
+	}
+	
+	public String addManager2() {
+		Administrator admin = new Administrator();
+		returnJSON = null;
+		returnJSON = new HashMap<String,Object>();
+		Boolean isStu = false;
+		Boolean isTea = false;
+		Student stu = null;
+		Teacher tea = null;
+		
+		Boolean isExist = managerService.isExistManagerCode( userCode.trim() );
+		if(isExist) {
+			this.tag = "1";
+			this.message = "该用户已经是管理员！";
+			returnJSON.put("tag", tag);
+			returnJSON.put("msg", message);
+			return SUCCESS;
+		}
+		
+		isStu = studentService.isExistStudentCode( userCode.trim() );
+		if(!isStu) {
+			isTea = teacherService.isExistTeacherCode( userCode.trim() );
+		}
+		
+		if(!isStu && !isTea) {
+			this.tag = "2";
+			this.message = "未找到相关的用户信息！";
+			returnJSON.put("tag", tag);
+			returnJSON.put("msg", message);
+			return SUCCESS;
+		} else if(isStu) {
+			stu = studentService.getStudentByCode( userCode.trim() );
+			admin.setId( stu.getId() );
+			admin.setAdministratorid( stu.getStudentid() );
+			admin.setPrivilege( Integer.parseInt(adminGroup) );
+			admin.setName( stu.getName() );
+		} else if(isTea) {
+			tea = teacherService.getTeacherByCode( userCode.trim() );
+			admin.setId( tea.getId() );
+			admin.setAdministratorid( tea.getTeacherid() );
+			admin.setPrivilege( Integer.parseInt(adminGroup) );
+			admin.setName( tea.getName() );
+		}
+		
+		int returnCode = managerService.addManager( admin );
+		if(returnCode == -1) {
+			this.tag = "3";
+			this.message = "添加管理员信息失败！";
+		} else {
+			this.tag = "0";
+			this.message = "管理员添加成功！";
+		}
+		returnJSON.put("tag", tag);
+		returnJSON.put("msg", message);
+		return SUCCESS;
+	}
 	
 	/**
 	 * 修改管理员信息
@@ -117,9 +198,9 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 			this.tag = "1";
 			this.message = "修改管理员信息失败！";
 		} else {
-			Usergrouprelation ugr = userGroupRelationService.getRelationByType(manager.getId());
-			ugr.setGroupid( group.getId() );
-			userGroupRelationService.alterUserGroupRelation( ugr );
+//			Usergrouprelation ugr = userGroupRelationService.getRelationByType(manager.getId());
+//			ugr.setGroupid( group.getId() );
+//			userGroupRelationService.alterUserGroupRelation( ugr );
 			this.tag = "0";
 			this.message = "修改管理员信息成功！";
 		}
@@ -211,6 +292,7 @@ public class ManagerAction extends ActionSupport implements SessionAware {
 				if(ug != null) {
 					uc.setUserGroupId( String.valueOf(ugr.getId()) );
 					uc.setUserGroupName( ug.getName() );
+					uc.setUserGroupType( String.valueOf( ug.getType() ) );
 				}
 			}
 			allManagerList.add( uc );

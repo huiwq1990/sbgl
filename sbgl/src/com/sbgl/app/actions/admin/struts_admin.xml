@@ -2,16 +2,122 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	 <package name="administration" extends="manage">
-
-        
         
         <action name="adminIndex" class="AdminIndexAction" method="adminIndex">
 			<result name="success">/admin/adminindex.vm</result>
         	<result name="error">/error.vm</result> 
         </action>
         
+        <action name="gotoUGroup" class="GrpAction" method="getGroupByPage">
+        	<result name="success">
+        		/userManage/userManageUserGroup.vm
+        	</result>
+        </action>
+        
+        <action name="addUGroup" class="GrpAction" method="addGroup">
+        	<result name="success">
+        		/userManage/userManageUserGroupForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="alterUGroup" class="GrpAction" method="alterGroup">
+        	<result name="success">
+        		/userManage/userManageUserGroupForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="deleteUGroup" class="GrpAction" method="deleteGroup">
+        	<result name="success">
+        		/userManage/userManageUserGroupForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="getGroupByType" class="GrpAction" method="getGroupByPage">
+        	<result name="success">
+        		/userManage/userManageUserGroupForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="gotoClazz" class="ClassAction" method="getClazzByGroup">
+        	<result name="success">
+        		/userManage/userManageClass.vm
+        	</result>
+        </action>
+        
+        <action name="addAClazz" class="ClassAction" method="addClazz">
+        	<result name="success">
+        		/userManage/userManageClassForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="alterAClazz" class="ClassAction" method="alterClazz">
+        	<result name="success">
+        		/userManage/userManageClassForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="deleteClasses" class="ClassAction" method="deleteClazz">
+        	<result name="success">
+        		/userManage/userManageClassForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="flushClasses" class="ClassAction" method="getClazzByGroup">
+        	<result name="success">
+        		/userManage/userManageClassForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="gotoAddUser" class="UserAction" method="gotoAddUser">
+        	<result name="success">
+        		/userManage/userManageAddUser.vm
+        	</result>
+        </action>
+        
+        <action name="flushUserGroupForAdd" class="UserAction" method="flushUserGroupForAdd">
+        	<result name="success">
+        		/userManage/userManageAddUserGroupForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="flushStuClassForAdd" class="UserAction" method="flushStuClassForAdd">
+        	<result name="success">
+        		/userManage/userManageAddStuClassForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="flushStuClassForIndex" class="UserAction" method="flushStuClassForAdd">
+        	<result name="success">
+        		/userManage/userManageIndexClassForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="flushUserIndex" class="UserAction" method="flushUserIndex">
+        	<result name="success">
+        		/userManage/userManageIndexForFlush.vm
+        	</result>
+        </action>
+        
+        <action name="gotoUserIndex" class="UserAction" method="gotoUserIndex">
+        	<result name="success">
+        		/userManage/userManageIndex.vm
+        	</result>
+        </action>
         
 		
+	</package>
+	
+	<package name="userInfoajax" extends="json-default">
+		<action name="addAUser" class="UserAction" method="addUser">
+        	<result type="json" name="success">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+        <action name="alterAUser" class="UserAction" method="alterUser">
+        	<result type="json" name="success">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
 	</package>
 
 </struts>

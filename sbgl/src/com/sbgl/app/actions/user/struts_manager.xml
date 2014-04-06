@@ -11,7 +11,7 @@
         
         <action name="userManageAdminAdd" class="ManagerAction" method="gotoUserManageAdminAdd">
         	<result name="success">
-        		/user/userManageAddAdmin.vm
+        		/user/userManageAddAdmin2.vm
         	</result>
         </action>
         
@@ -63,6 +63,12 @@
 		</action>
 		
 	 	<action name="addManager" class="ManagerAction" method="addManager">
+        	<result type="json">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+		
+	 	<action name="addManager2" class="ManagerAction" method="addManager2">
         	<result type="json">
         		<param name="root">returnJSON</param>
         	</result>

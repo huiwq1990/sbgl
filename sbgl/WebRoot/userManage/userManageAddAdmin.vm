@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 用户管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+#parse("include/includePageCompatibility.vm")
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+	#set($currentPageModule="user")
+	#parse("include/includeAdminHeader.vm")
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">添加管理员</div>
+              <div class="tips">在此页面下添加新的管理员并分配管理权限。添加管理员前该用户必须存在，并指定该用户为管理员。</div>
+            </div><!--control-bar end-->
+            <div class="panel panel-default">
+              <div class="panel-body">                
+                <form class="form-horizontal" role="form">
+                  <div class="form-group">
+                    <label for="inputUserID" class="col-lg-2 control-label">教工号/学号</label>
+                    <div class="col-lg-4">
+                      <input type="text" class="form-control" id="inputUserID">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputUserType" class="col-lg-2 control-label">管理组</label>
+                    <div class="col-lg-4">
+                      <label class="radio-inline">
+                        <input type="radio" name="inputUserType" id="userType-stu" value="1" checked>系统管理员
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="inputUserType" id="userType-teacher" value="2">系秘
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="inputUserType" id="userType-other" value="3">器材管理员
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="inputUserType" id="userType-other" value="3">机房管理员
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-4">
+                      <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+                      <button type="submit" class="btn btn-primary">添 加</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+      </div>
+      <!--admin-wrap end-->
+	  
+      #set($currentWebpage="userManageAdminAdd")
+	  #parse("include/includeUserManageSidebar.vm")
+
+</section>
+
+
+    <!-- javascript
+    ================================================== -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/fileUpload/vendor/jquery.ui.widget.js"></script>
+<script src="${jsDomain}/fileUpload/jquery.iframe-transport.js"></script>
+<script src="${jsDomain}/jquery.fileupload.js"></script>
+</body>
+</html>

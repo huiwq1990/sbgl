@@ -23,7 +23,12 @@
 			">浏览课程</a>
 			-->
 
-          <!--<a href="教学管理-设备预约安排.html" class="list-group-item">设备预约安排</a>-->
+			<a href="${webbaseurl}/equClassSend.${strutsaction}" class="list-group-item
+			#if($currentWebpage == "equclasssend" )
+			active      
+			#end	
+			">设备预约安排</a>
+			
           <!--<a href="${webbaseurl}/toAddComputerorderclassrulePage.${strutsaction}" class="list-group-item
 			#if($currentWebpage == "computerorderclassruleAdd" )
 			active      

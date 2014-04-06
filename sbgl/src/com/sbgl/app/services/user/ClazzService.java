@@ -21,4 +21,6 @@ public interface ClazzService {
 	public Clazz getClazzById(int clazzId);
 	//获取全部班级的具体人员信息
 	public List<Map<Clazz, List<Student>>> getAllClazzDetail();
+	//根据班级类型获取班级
+	public List<Clazz> getClazzByType(int typeId);
 }

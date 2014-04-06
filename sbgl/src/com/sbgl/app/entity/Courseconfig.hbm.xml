@@ -16,14 +16,14 @@
         <property name="semester" type="java.lang.Integer">
             <column name="semester" />
         </property>
-        <property name="firstday" type="java.util.Date">
-            <column name="firstday"  />
+        <property name="firstday" type="java.sql.Timestamp">
+            <column name="firstday" length="19" />
         </property>
-        <property name="lastday" type="java.util.Date">
-            <column name="lastday"  />
+        <property name="lastday" type="java.sql.Timestamp">
+            <column name="lastday" length="19" />
         </property>
-        <property name="firstweekfirstday" type="java.util.Date">
-            <column name="firstweekfirstday"  />
+        <property name="firstweekfirstday" type="java.sql.Timestamp">
+            <column name="firstweekfirstday" length="19" />
         </property>
         <property name="weeknum" type="java.lang.Integer">
             <column name="weeknum" />

@@ -116,7 +116,7 @@
 				#foreach($row in $equipmenborrowFullList)		
                 <li class="media">
                   <div class="media-body">
-                    <div class="media-heading"><h5><a href="${webbaseurl}/equipOrderContent.do?borrowId=$!row.borrowid">$!row.title</a></h5><span>#if($!row.status==1)
+                    <div class="media-heading"><h5><a #if($!row.status==9) href="${webbaseurl}/equipmentBooking.do?borrowId=$!row.borrowid" #else href="${webbaseurl}/equipOrderContent.do?borrowId=$!row.borrowid" #end>$!row.title</a></h5><span>#if($!row.status==1)
 								等待提交预约申请。
 							  #elseif($!row.status==2)
 								等待审核
@@ -132,6 +132,8 @@
 								部分设备受损，请尽快根据相关规定处理受损设备
 							  #elseif($!row.status==8)
 								已完成
+							  #elseif($!row.status==9)
+								老师已发布任务
 							  #end</span></div>
                     <span class="tag label label-important">#if($!row.category==1)
 							个人预约
