@@ -87,7 +87,7 @@
                 <dt>电子邮箱</dt>
                 <dd>$!email</dd>
                 <dt>手机号码</dt>
-                <dd>$!phone（如果没有：<a href="">添加</a>）</dd>
+                <dd>$!phone</dd>
               </dl>
             </div>
           </div>
