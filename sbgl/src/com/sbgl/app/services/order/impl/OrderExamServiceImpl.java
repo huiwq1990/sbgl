@@ -87,7 +87,7 @@ public class OrderExamServiceImpl implements OrderExamService {
 			listequipdetail.setBorrowlistid(borrowId);
 			listequipdetail.setListequipdetailid(baseDao.getCode("Listequipdetail")); 
 			listequipdetail.setEquipdetailid(Integer.parseInt(strs[i]));
-			listequipdetail.setEquipmentid(equipmentdetail.getComid());
+			listequipdetail.setEquipmentid(equipmentdetail.getEquipmentid());
 			listequipdetail.setEquipstatus("0");
 			listequipdetail.setListdetailid(listdetail.getListdetailid());	
 			baseDao.saveEntity(listequipdetail);

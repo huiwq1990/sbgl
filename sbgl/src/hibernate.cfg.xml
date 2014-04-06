@@ -130,6 +130,7 @@
 			resource="com/sbgl/app/entity/Courseschedulecomputerorder.hbm.xml" />
 		<mapping
 			resource="com/sbgl/app/entity/Coursecomputerorder.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Sendruletouser.hbm.xml" />
 
 
 

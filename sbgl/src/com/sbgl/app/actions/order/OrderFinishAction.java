@@ -95,6 +95,24 @@ public class OrderFinishAction  extends ActionSupport {
 		equipmenborrowFull = orderFinishService.findEquipmenborrow(borrowId);
 		return SUCCESS;
 	}
+	//提交订单审核
+	public String subexamorder(){
+		try{
+			boolean flag = false;
+			flag = orderFinishService.subexamorder(borrowId);
+			if(flag){
+				tag = "1";
+			}else{
+				tag = "2";
+				message = "订单删除失败";
+			}
+		}catch(Exception e){
+			tag = "2";
+			message = "订单删除失败";
+			log.error(e);
+		}
+		return SUCCESS;
+	}
 	
 	public Integer getBorrowId() {
 		return borrowId;

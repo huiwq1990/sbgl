@@ -17,108 +17,76 @@
 <!--[if IE 7]>
 <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
 <![endif]-->
+
+#set($total = $!page.totalpage )
+#if($total == 0)
+	#set($total=1)
+#end
+<script>
+	var idsForDel;
+	var dealtype = 0;
+	var ordertype = 0;
+	var pageNo = 0;
+	var totalpage  = '$total';
+</script>
 </head>
 
 <body id="admin">
 <header id="header-wrap"><!--header-wrap-->
-  <div class="nav-wrap clearfix">
-    <div class="site-nav">
-      <div class="dropdown">
-        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a><!-- #BeginLibraryItem "/Library/siteNav.lbi" --><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-          <li><a href="../index.html"><i class="icon-home"></i> 首页</a></li>
-          <li class="divider"></li>
-          <li><a href="../预约首页.html">我的预约</a></li>
-          <li><a href="../消息中心-站内信.html">站内信</a></li>
-          <li class="divider"></li>
-          <li><a href="../设置页面-账户设置.html">设置与帮助</a></li>
-          <li><a href="管理中心首页.html">管理中心</a></li>
-        </ul>
-          <!-- #EndLibraryItem --></div>
-    </div><!-- #BeginLibraryItem "/Library/器材subnav.lbi" -->    <div class="sub-nav">
-      <ul class="nav nav-tabs nav-tabs-google">
-        <li><a href="管理中心首页.html">首页</a></li>
-        <li><a href="教学管理首页.html">教学</a></li>
-        <li><a href="用户管理首页.html">用户</a></li>
-        <li class="active"><a href="设备预约首页.html">器材</a></li>
-        <li><a href="机房预约管理首页.html">机房</a></li>
-        <li><a href="#">内容</a></li>
-      </ul>
-    </div>    
-    <!-- #EndLibraryItem --><ul class="account-wrap nav nav-pills pull-right">
-          <li class="notice dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">消息1</a></li>
-              <li><a href="#">消息2</a></li>
-            </ul>
-          </li>     
-          <li class="social dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="../img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
-            <div class="dropdown-menu">
-              <div class="media">
-                <a class="pull-left" href="#">
-                  <img src="../img/photo.jpg" width="96" height="96" class="img-rounded">
-                </a>
-                <div class="media-body">
-                  <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
-                  <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
-                  <div class="setting"><a href="#">账户设置</a></div>
-                  <button class="btn btn-primary" type="button">查看个人主页</button>
-                </div>
-              </div>
-            </div>      
-          </li>
-        </ul>
-  </div>
+  #set($currentPageModule="equip")
+  #parse("include/includeAdminHeader.vm")
 </header><!--/#header-wrap-->
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
 
       <ul class="nav nav-tabs">
-        <li class="active"><a href="设备预约首页.html">器材预约</a></li>
-        <li><a href="设备管理首页.html">器材管理</a></li>
+        <li class="active"><a href="${webbaseurl}/orderAdmin.action">器材预约</a></li>
+        <li><a href="${webbaseurl}/equipManageAdmin.do">器材管理</a></li>
       </ul>
       <!--admin-wrap start-->
       <div id="admin-wrap">
         <div id="admin-content" class="clearfix">            
             <div class="control-bar clearfix"><!--control-bar start-->
               <div class="title pull-left">器材预约管理</div>
-			  <div class="tips">在此页面下管理器材预约申请。</div>
+        	  <div class="tips">在此页面下管理器材预约申请。</div>
               <div class="filter user-group-filter">
                 <ul class="nav nav-tabs nav-tabs-google">
-                  <li><a href="#">个人预约</a></li>
-                  <li><a href="#">教学预约</a></li>
-                  <li class="active"><a href="#">全部</a></li>
+                  <li id="ordertype1" class="ordertype"><a href="#" data-type="orderQuery" data-ordertype="1">个人预约</a></li>
+                  <li id="ordertype2" class="ordertype"><a href="#" data-type="orderQuery" data-ordertype="2">教学预约</a></li>
+                  <li id="ordertype0" class="ordertype active" data-type="orderQuery" data-ordertype="0"><a href="#">全部</a></li>
                 </ul>
               </div>
               
               <div class="operate-item pull-left">
-                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+                <a href="#" action-type="deleteDetail" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
               </div>
-
+        
               <div class="page pull-right clearfix">
                 <ul class="page-index nav nav-pills pull-left">
                   <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!page.pageNo/$!page.totalpage页 <b class="caret"></b></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!page.pageNo/$total页 <b class="caret"></b></a>
+					<input type="hidden" name="currpage" id="currpage" value="$!page.pageNo" >
+					<input type="hidden" name="totalpage" id="totalpage" value="$!page.totalpage" >
                     <ul class="dropdown-menu" role="menu">
-					  #foreach($i in [1 .. $!page.totalpage])	
-						<li><a href="#">$i</a></li>
-					  #end
+        			  #foreach($i in [1 .. $total])	
+        				<li><a href="#" data-type="pageQuery" data-pageNo="$!i" >$i</a></li>
+        			  #end
                     </ul>
                   </li>              
                 </ul>
                 <div class="pagination pull-right">
                   <ul>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
+					#set($pageNo2 = $!page.pageNo + 1)
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新" data-type="pageQuery" data-pageNo="$!page.pageNo-1"  ><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"  data-type="pageQuery" data-pageNo="$pageNo2" ><i class="icon-chevron-right" ></i></a></li>
                   </ul>
                 </div>              
               </div>
               <ul class="status-filter nav nav-pills pull-right">
-                <li class="active"><a href="#">全部</a></li>
-                <li><a href="#">待审核($!orderCountFull.orderCount1)</a></li>
-                <li><a href="#">待出库($!orderCountFull.orderCount2)</a></li>
-                <li><a href="#">待入库($!orderCountFull.orderCount3)</a></li>
-                <li><a href="#">已完成</a></li>
+                <li id="dealtype0" class="dealtype active"><a href="#"  data-type="statusQuery" data-dealtype="0"> 全部</a></li>
+                <li id="dealtype1" class="dealtype" ><a href="#" data-type="statusQuery" data-dealtype="1">待审核($!orderCountFull.orderCount1)</a></li>
+                <li id="dealtype2" class="dealtype" ><a href="#" data-type="statusQuery" data-dealtype="2">待出库($!orderCountFull.orderCount2)</a></li>
+                <li id="dealtype3" class="dealtype" ><a href="#" data-type="statusQuery" data-dealtype="3">待入库($!orderCountFull.orderCount3)</a></li>
+                <li id="dealtype4" class="dealtype" ><a href="#" data-type="statusQuery" data-dealtype="4">已完成</a></li>
               </ul>
             </div><!--control-bar end-->
             <div class="panel panel-default table-responsive">
@@ -135,154 +103,58 @@
                   </tr>
                 </thead>
                 <tbody>
-				#foreach($row in $!equipmenborrowFullList)	
+        		#foreach($row in $!equipmenborrowFullList)	
                   <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!row.borrowid"></td>
                     <td>$row.borrowid</td>
                     <td>$row.userName</td>
-					#if($!row.status==2)
-					<td><a href="${webbaseurl}/equipmentExaming.do?borrowId=$row.borrowid" >$row.title</a></td>
+        			#if($!row.status==2)
+        			<td><a href="${webbaseurl}/equipmentExaming.do?borrowId=$row.borrowid" >$row.title</a></td>
                     <td>待审核</td>
-					#elseif($!row.status==4)
-					<td><a href="${webbaseurl}/orderalibrary.do?borrowId=$row.borrowid" >$row.title</a></td>
+        			#elseif($!row.status==4)
+        			<td><a href="${webbaseurl}/orderalibrary.do?borrowId=$row.borrowid" >$row.title</a></td>
                     <td>待出库</td>  
-					#elseif($!row.status==5||$!row.status==6)
-					<td><a href="${webbaseurl}/orderstorage.do?borrowId=$row.borrowid" >$row.title</a></td>
+        			#elseif($!row.status==5||$!row.status==6)
+        			<td><a href="${webbaseurl}/orderstorage.do?borrowId=$row.borrowid" >$row.title</a></td>
                     <td>待入库</td> 
-					#elseif($!row.status==1||$!row.status==3)
-					<td><a href="#">$row.title</a></td>
+        			#elseif($!row.status==1||$!row.status==3)
+        			<td><a href="#">$row.title</a></td>
                     <td>待提交</td> 
-					#elseif($!row.status==7)
-					<td><a href="#" >$row.title</a></td>
+        			#elseif($!row.status==7)
+        			<td><a href="#" >$row.title</a></td>
                     <td>待赔偿</td> 
-					#elseif($!row.status==8)
-					<td><a href="#" >$row.title</a></td>
+        			#elseif($!row.status==8)
+        			<td><a href="#" >$row.title</a></td>
                     <td>已完成</td> 
-					#end          
-					#if($!row.category==1)
+        			#end          
+        			#if($!row.category==1)
                     <td>个人</td>  
-					#elseif($!row.category==2)
+        			#elseif($!row.category==2)
                     <td>教学</td>  
-					#end                  
+        			#end                  
                     <td>$row.remark</td>
                   </tr>
-				#end
+        		#end
                 </tbody>
               </table>
               
             </div>
           </div>
-
       </div><!--equip-wrap end-->
       <div id="lside"><!--sidebar start-->
+		<!--
         <form class="form-group">
           <input type="text" class="form-control" placeholder="搜索预约(订单号、姓名)">
           <i class="icon-search"></i>
         </form>
+		-->
         <div class="list-group">
-          <a href="设备预约首页.html" class="list-group-item active">预约管理</a>
-          <a href="设备预约-新建预约.html" class="list-group-item">新建预约</a>
-          <a href="设备预约-课程预约规则.html" class="list-group-item">课程预约规则</a>
-          <a href="设备预约-设置.html" class="list-group-item">设置</a>
+          <a href="${webbaseurl}/orderAdmin.action" class="list-group-item active">预约管理</a>
+          <a href="${webbaseurl}/orderclassrule.action" class="list-group-item">课程预约规则</a>
         </div>
       </div><!--sidebar end-->
 
 </section>
-
-
-<!-- Modal -->
-<div id="modify-status" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-    <h3 id="myModalLabel">修改</h3>
-  </div>
-  
-  <div class="modal-body">
-      <p>修改设备。</p>
-      <form class="form-horizontal" role="form">
-        <div class="form-group">
-          <label for="inputEquipId" class="col-xs-3 control-label">设备号</label>
-          <div class="col-xs-7">
-            <input type="text" class="form-control" id="inputEquipId" placeholder="设备编号" value="242424">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputEquipModelId" class="col-xs-3 control-label">所属设备型号</label>
-          <div class="col-xs-7">
-            <select class="select2 select-white form-control" id="inputEquipModelId">
-              <optgroup label="数字摄影机">
-                <option value="AK">Alaska</option>
-                <option value="HI">Hawaii</option>
-              </optgroup>
-              <optgroup label="数字摄像机">
-                <option value="CA">California</option>
-              </optgroup>
-              <optgroup label="单反">
-                <option value="AZ">Arizona</option>
-              </optgroup>
-              <optgroup label="镝灯">
-                <option value="AL">Alabama</option>
-              </optgroup>
-              <optgroup label="钨丝灯">
-                <option value="CT">Connecticut</option>
-              </optgroup>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputEquipCategory" class="col-xs-3 control-label">分类</label>
-          <div class="col-xs-7">
-            <select class="select2 select-white form-control" id="inputEquipCategory">
-              <optgroup label="摄影摄像机">
-                <option value="2">数字摄影机</option>
-                <option value="3">数字摄像机</option>
-                <option value="4">单反</option>
-              </optgroup>
-              <optgroup label="灯具">
-                <option value="6">钨丝灯</option>
-                <option value="7">镝灯</option>
-              </optgroup>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputEquipStatus" class="col-xs-3 control-label">状态</label>
-          <div class="col-xs-7">
-            <select class="select2 select-white form-control" id="inputEquipStatus">
-              <option value="0">正常</option>
-              <option value="1">借出</option>
-              <option value="2">维护</option>
-              <option value="3">维修</option>
-              <option value="4">遗失</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputEquipRemark" class="col-xs-3 control-label">备注</label>
-          <div class="col-xs-7">
-            <textarea class="form-control" id="inputEquipRemark" rows="3"></textarea>
-          </div>
-        </div>
-      </form>
-    </div>
-  <div class="modal-footer">
-    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary">确 定</button>
-  </div>
-</div>
-
-<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
-  <img src="../img/cover-img.jpg" class="cover" alt="封面照片">
-  <div class="cover-layout"></div>
-  <div class="avatar"><img src="../img/photo.jpg" width="80" height="80" class="img-circle"></div>
-  <div class="user-wrap">
-    <div class="user-name"><a href="#">用户名</a></div>
-    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
-    <div class="user-info">职务等信息</div>
-    <div class="user-info">地点</div>
-  </div>
-  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
-</div>
 
     <!-- Le javascript
     ================================================== -->
@@ -291,7 +163,116 @@
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
-<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/bfa2.js"></script>
+<script >
+	$("body").on("click", "input[type='checkbox']", function() {
+		var num = 0;
+		if($(this).attr("id") === "chk-all") {
+			$("input[name='chk-list']").prop("checked",$(this).prop("checked"));
+		}
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true){
+				num++;  
+			}
+		});
+		if(num > 0){
+			$(".s-h").css({
+				"visibility": "visible",
+				"opacity": "1",
+				"filter": "alpha(opacity=100)"
+			});
+		} else {
+			$(".s-h").css({
+				"visibility": "hidden",
+				"opacity": "0",
+				"filter": "alpha(opacity=0)"
+			});
+		}
+		
+		idsForDel = "";
+		
+		$("input[name='chk-list']").each(function() {
+			if($(this).prop("checked") === true) {
+				//num++;
+				idsForDel += $(this).prop("value") + "_";
+			}
+		});
+	});
+	
+	$("body").on("click", "a[action-type|=deleteDetail]", function() {
+		jQuery.ajax({  
+		    url:"${webbaseurl}/deleteBorrow.do",  
+		    type: 'POST',
+			data: {ids:idsForDel,dealtype:dealtype,ordertype:ordertype},
+		    dataType: 'html',
+		    success:function(data){  
+				alert("删除成功！");
+		    	 $("#admin-wrap").html(data);
+	        },  
+		    error:function(data) {
+				alert("删除失败！");
+			}  
+		});
+	});
+	
+	$("body").on("click", "a[data-type|=orderQuery]", function() {
+		var myData = $(this).data();
+		var order = myData.ordertype;
+		jQuery.ajax({  
+		    url:"${webbaseurl}/orderAdminContent.do",  
+		    type: 'POST',
+			data: {dealtype:dealtype,ordertype:order},
+		    dataType: 'html',
+		    success:function(data){  
+		    	$("#admin-wrap").html(data);
+				$(".ordertype").removeClass('active');
+				$("#ordertype"+order).addClass('active');
+				pageNo = $("#currpage").val();
+				totalpage = $("#totalpage").val();
+	        } 
+		});
+	});
+	
+	$("body").on("click", "a[data-type|=statusQuery]", function() {
+		var myData = $(this).data();
+		var dealt = myData.dealtype;
+		jQuery.ajax({  
+		    url:"${webbaseurl}/orderAdminContent.do",  
+		    type: 'POST',
+			data: {dealtype:dealt,ordertype:ordertype},
+		    dataType: 'html',
+		    success:function(data){  
+		    	$("#admin-wrap").html(data);
+				$(".dealtype").removeClass('active');
+				$("#dealtype"+dealt).addClass('active');
+				pageNo = $("#currpage").val();
+				totalpage = $("#totalpage").val();
+	        } 
+		});
+	});
+	
+	$("body").on("click", "a[data-type|=pageQuery]", function() {
+		var myData = $(this).data();
+		var pageid = myData.pageNo;
+		if(pageid<0){
+			pageid = 1;
+		}
+		if(pageid>totalpage){
+			pageid = totalpage;
+		}
+		jQuery.ajax({  
+		    url:"${webbaseurl}/orderAdminContent.do",  
+		    type: 'POST',
+			data: {dealtype:dealtype,ordertype:order,pageNo:pageid},
+		    dataType: 'html',
+		    success:function(data){  
+		    	$("#admin-wrap").html(data);
+				pageNo = $("#currpage").val();
+				totalpage = $("#totalpage").val();
+	        } 
+		});
+	});
+</script>
 <!--[if lt IE 10]>
   <script src="../js/jquery.placeholder.js"></script>
   <script>

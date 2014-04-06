@@ -3176,7 +3176,7 @@ DESTINATION 0 新宋体,8,N</a:FontList>
 </o:ReferenceSymbol>
 <o:ReferenceSymbol Id="o10">
 <a:ModificationDate>1386591579</a:ModificationDate>
-<a:Rect>((33336,-78181), (37452,-52330))</a:Rect>
+<a:Rect>((31462,-78181), (39326,-52330))</a:Rect>
 <a:ListOfPoints>((37452,-52330),(37452,-63876),(33336,-63876),(33336,-78181))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>1</a:ArrowStyle>
@@ -3636,7 +3636,7 @@ DESTINATION 0 新宋体,8,N</a:FontList>
 <o:ReferenceSymbol Id="o70">
 <a:CreationDate>1368847341</a:CreationDate>
 <a:ModificationDate>1386590030</a:ModificationDate>
-<a:Rect>((87607,-41967), (88607,-34014))</a:Rect>
+<a:Rect>((87882,-41967), (88332,-34014))</a:Rect>
 <a:ListOfPoints>((88107,-34014),(88107,-41967))</a:ListOfPoints>
 <a:CornerStyle>1</a:CornerStyle>
 <a:ArrowStyle>1</a:ArrowStyle>

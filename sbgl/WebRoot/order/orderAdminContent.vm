@@ -1,0 +1,100 @@
+<div id="admin-content" class="clearfix">            
+    <div class="control-bar clearfix"><!--control-bar start-->
+      <div class="title pull-left">器材预约管理</div>
+	  <div class="tips">在此页面下管理器材预约申请。</div>
+      <div class="filter user-group-filter">
+        <ul class="nav nav-tabs nav-tabs-google">
+          <li id="ordertype1" class="ordertype"><a href="#" data-type="orderQuery" data-ordertype="1">个人预约</a></li>
+          <li id="ordertype2" class="ordertype"><a href="#" data-type="orderQuery" data-ordertype="2">教学预约</a></li>
+          <li id="ordertype0" class="ordertype active" data-type="orderQuery" data-ordertype="0"><a href="#">全部</a></li>
+        </ul>
+      </div>
+      
+      <div class="operate-item pull-left">
+        <a href="#" action-type="deleteDetail" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+      </div>
+
+      <div class="page pull-right clearfix">
+        <ul class="page-index nav nav-pills pull-left">
+          <li class="dropdown">
+			#set($total = $!page.totalpage )
+			#if($total == 0)
+				#set($total=1)
+			#end
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!page.pageNo/$total页 <b class="caret"></b></a>
+			<input type="hidden" name="currpage" id="currpage" value="$!page.pageNo" >
+			<input type="hidden" name="totalpage" id="totalpage" value="$total" >
+            <ul class="dropdown-menu" role="menu">
+			  #foreach($i in [1 .. $total])	
+				<li><a href="#" data-type="pageQuery" data-pageNo="$!i" >$i</a></li>
+			  #end
+            </ul>
+          </li>              
+        </ul>
+        <div class="pagination pull-right">
+          <ul>
+			#set($pageNo2 = $!page.pageNo + 1)
+            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新" data-type="pageQuery" data-pageNo="$!page.pageNo-1"  ><i class="icon-chevron-left"></i></a></li>
+            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"  data-type="pageQuery" data-pageNo="$pageNo2" ><i class="icon-chevron-right" ></i></a></li>
+          </ul>
+        </div>              
+      </div>
+      <ul class="status-filter nav nav-pills pull-right">
+        <li id="dealtype0" class="dealtype active"><a href="#"  data-type="statusQuery" data-dealtype="0"> 全部</a></li>
+        <li id="dealtype1"  class="dealtype" ><a href="#" data-type="statusQuery" data-dealtype="1">待审核($!orderCountFull.orderCount1)</a></li>
+        <li id="dealtype2"  class="dealtype" ><a href="#" data-type="statusQuery" data-dealtype="2">待出库($!orderCountFull.orderCount2)</a></li>
+        <li id="dealtype3"  class="dealtype" ><a href="#" data-type="statusQuery" data-dealtype="3">待入库($!orderCountFull.orderCount3)</a></li>
+        <li id="dealtype4"  class="dealtype" ><a href="#" data-type="statusQuery" data-dealtype="4">已完成</a></li>
+      </ul>
+    </div><!--control-bar end-->
+    <div class="panel panel-default table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+            <th class="id">预约号</th>
+            <th class="user">预约人</th>
+            <th class="title">标题</th>
+            <th class="status">状态</th>
+            <th class="categories">预约类型</th>                    
+            <th class="remark">备注</th>
+          </tr>
+        </thead>
+        <tbody>
+		#foreach($row in $!equipmenborrowFullList)	
+          <tr>
+            <td><input class="chk" type="checkbox" name="chk-list" value="$!row.borrowid"></td>
+            <td>$row.borrowid</td>
+            <td>$row.userName</td>
+			#if($!row.status==2)
+			<td><a href="${webbaseurl}/equipmentExaming.do?borrowId=$row.borrowid" >$row.title</a></td>
+            <td>待审核</td>
+			#elseif($!row.status==4)
+			<td><a href="${webbaseurl}/orderalibrary.do?borrowId=$row.borrowid" >$row.title</a></td>
+            <td>待出库</td>  
+			#elseif($!row.status==5||$!row.status==6)
+			<td><a href="${webbaseurl}/orderstorage.do?borrowId=$row.borrowid" >$row.title</a></td>
+            <td>待入库</td> 
+			#elseif($!row.status==1||$!row.status==3)
+			<td><a href="#">$row.title</a></td>
+            <td>待提交</td> 
+			#elseif($!row.status==7)
+			<td><a href="#" >$row.title</a></td>
+            <td>待赔偿</td> 
+			#elseif($!row.status==8)
+			<td><a href="#" >$row.title</a></td>
+            <td>已完成</td> 
+			#end          
+			#if($!row.category==1)
+            <td>个人</td>  
+			#elseif($!row.category==2)
+            <td>教学</td>  
+			#end                  
+            <td>$row.remark</td>
+          </tr>
+		#end
+        </tbody>
+      </table>
+      
+    </div>
+  </div>

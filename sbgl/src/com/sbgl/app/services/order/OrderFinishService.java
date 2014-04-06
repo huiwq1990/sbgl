@@ -18,4 +18,6 @@ public interface OrderFinishService {
 	public EquipmentFull findEquipmentById(Integer equipmentId);
 	//删除订单
 	public boolean deleteorder(Integer borrowId);
+	//提交订单审核 
+	public boolean subexamorder(Integer borrowId);
 }

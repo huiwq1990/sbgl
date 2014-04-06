@@ -35,54 +35,20 @@
 
 <body>
 <header id="header-wrap"><!--header-wrap-->
-  <div id="global-header">
-    <div id="logo"><a class="brand" href="#"><img src="img/logo.png" alt="北京电影学院摄影系"></a></div>
-    <div id="hdc-wrap">
-      <div class="search-wrap">
-        <form class="form-search">
-          <div class="ipt-wrap form-group"><input type="text" class="form-control"></div>
-          <button type="submit" class="btn btn-primary"><i class="icon-search"></i></button>
-        </form>
-      </div>
-    </div>
-    <ul class="account-wrap nav nav-pills pull-right">
-      <li class="notice dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">消息1</a></li>
-          <li><a href="#">消息2</a></li>
-        </ul>
-      </li>     
-      <li class="social dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="loginhtml" class="username">陈诚</span><img src="img/photo.jpg" width="48" height="48" class="img-circle"> <b class="caret"></b></a>
-        <div class="dropdown-menu">
-          <div class="media">
-            <a class="pull-left" href="#">
-              <img src="img/photo.jpg" width="96" height="96" class="img-rounded">
-            </a>
-            <div class="media-body">
-              <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
-              <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
-              <div class="setting"><a href="#">账户设置</a></div>
-              <button class="btn btn-primary" type="button">查看个人主页</button>
-            </div>
-          </div>
-        </div>      
-      </li>
-    </ul>
-  </div>
+  #parse("include/includeGlobalHeader.vm")
   
   <div class="nav-wrap clearfix">
     <div class="site-nav">
       <div class="dropdown">
         <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 器材预约 <i class="icon-chevron-right"></i></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-          <li><a href="http://google.com"><i class="icon-home"></i> 首页</a></li>
+          <li><a href="${webbaseurl}/index.${strutsaction}"><i class="icon-home"></i> 首页</a></li>
           <li class="divider"></li>
-          <li><a href="#anotherAction">个人主页</a></li>
-          <li><a href="#">人脉</a></li>
+          <li><a href="${webbaseurl}/indexInfo.${strutsaction}">个人主页</a></li>
+         <!-- <li><a href="#">通讯录</a></li> -->
           <li class="divider"></li>
-          <li><a href="#">Separated link</a></li>
+
+		  <li><a href="${webbaseurl}/equipOrdIndex.${strutsaction}">我的预约</a></li>
         </ul>
       </div>
     </div>
@@ -145,78 +111,86 @@
       </div>
       <!--equip-wrap end-->
 
-     
-      <!--rent start-->
+	  <!--rent start-->
       <div id="rent-bar">  
-              <div class="wizard thumbnail">
-
-
-
-<ul class="steps unstyled">
-		<li id="orderli1" data-target="#step1" class="active"><h3>欢迎</h3></li>
-		<li id="orderli2" data-target="#step2"><h3>选择设备</h3></li>
-	</ul>
-<div class="step-content">
-	<div class="step-pane active" id="step1">
-      <p>欢迎使用北京电影学院摄影系在线设备预约系统！</p>
-	  #if($!orderCate==1)
-      <p>您正在进行的是<strong>个人预约</strong>。</p>
-	  #elseif($!orderCate==2)
-      <p>您正在进行的是<strong>课程预约</strong>，以下是<strong>XXX 老师</strong>的相关要求：</p>
-      <div class="media">
-        <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
-          <img src="img/photo.jpg" width="46" height="46" class="img-rounded">
-        </a>
-        <div class="media-body">
-          <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">XXX</a></h5><span>XX月XX日</span></div>
-          <div class="media-content">
-            <h5>数字摄影技术第11周设备申请</h5>
-            <p>数字摄影技术第11周设备申请具体要求如下：</p>
-            <ol>
-              <li>...</li>
-              <li>...</li>
-              <li>...</li>
-              <li>...</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-	  #end      
-    </div>
-	<div class="step-pane" id="step2">
-        <div class="rent-time">
-          <div class="row">
-		    <div class="input-daterange">
-		      <div class="col-xs-5">
-                <input type="text" class="form-control" id="fromDate" name="start" value=""  placeholder="起始日期">
-	          </div>
-	          <div class="col-xs-2">
-                <span class="add-on">至</span>
-	          </div>
-	          <div class="col-xs-5">
-                <input type="text" class="form-control" id="endDate" name="end"  value="" placeholder="归还日期">
-	          </div>
-            </div>
-
-          </div>
-        </div>
-	<button type="button" data-type="classAjax" class="btn btn-primary">根据时间查询</button>
-	<div id="rent-list">
-          <p class="no-add">尚未添加任何设备。</p>
-        </div>
-    </div>
-    
-</div>
-
-<div class="form-actions actions">  
-		<button type="button" class="btn btn-white btn-prev" data-type="suborderpre" disabled="disabled">上一步</button>
-		<button type="button" class="btn btn-primary btn-next" data-type="suborder" data-last="提交预约">下一步</button>
-</div>
-
-
+        <div class="wizard thumbnail">
+          <ul class="steps unstyled">
+            <li data-target="#step1" class="active"><h3>欢迎</h3></li>
+            <li data-target="#step2"><h3>预约时间 <small>打算哪天预约？</small></h3></li>
+          </ul>
+          <div class="step-content">
+            <div class="step-pane active" id="step1">
+              <p>欢迎使用北京电影学院摄影系在线设备预约系统！</p>
+			   #if($!orderCate==1)
+              <p>您正在进行的是<strong>个人预约</strong>。</p>
+        	  #elseif($!orderCate==2)
+              <p>您正在进行的是<strong>课程预约</strong>，以下是<strong>$!equipmenborrowFull.teacherName</strong>课程作业的相关要求：</p>
+              <div class="media">
+                <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
+                  <img src="img/photo.jpg" width="46" height="46" class="img-rounded">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">$!equipmenborrowFull.teacherName</a></h5><span>$!date.format("yyyy-MM-dd ", $!equipmenborrowFull.createtime)</span></div>
+                  <div class="media-content">
+                    <h5>$!equipmenborrowFull.msgtitle</h5>
+                    <p>$!equipmenborrowFull.msgtitle具体要求如下：</p>
+                    $!equipmenborrowFull.content
+                  </div>
+                </div>
               </div>
+			   #end  
+            </div>
+            <div class="step-pane" id="step2">              
+              <div class="rent-time">
+                <div class="row">                  
+                  <div class="input-daterange">
+                    <div class="col-xs-5">
+                      <input type="text" class="form-control checkin" name="start" placeholder="起始日期">
+                    </div>
+                    <div class="col-xs-2">
+                      <span class="add-on">至</span>
+                    </div>
+                    <div class="col-xs-5">
+                      <input type="text" class="form-control checkout" name="end" placeholder="归还日期">
+                    </div>
+                  </div>        
+                </div>
+              </div>          
+            </div>          
+          </div>
+          <div class="form-actions actions">  
+            <button type="button" class="btn btn-white btn-prev" disabled="disabled">上一步</button>
+            <button type="button" class="btn btn-primary btn-next" data-type="classAjax"   data-last="开始预约">下一步</button>
+          </div>
+        </div>
+        <div class="rent-time panel panel-default">
+          <div class="row panel-body input-daterange">  
+            <div class="col-xs-4">
+              <input type="text" class="form-control checkin1" id="fromDate" name="start" value placeholder="起始日期">
+            </div>
+            <div class="col-xs-1 col-no-padding">
+              <span class="add-on">至</span>
+            </div>
+            <div class="col-xs-4">
+              <input type="text" class="form-control checkout1" id="endDate"  name="end" value placeholder="归还日期">
+            </div>
+            <div class="col-xs-3 col-no-padding">
+              <button type="button" data-type="classAjax"  class="btn btn-white">重新搜索</button>
+            </div>
+          </div>
+        </div>
+        <div id="rent-list" class="panel panel-default">
+          <div class="panel-heading"><h3>预约单 <small>请选择你所需要的设备。</small></h3></div>
+          <div class="panel-body">
+            <p class="no-add">尚未添加任何设备。</p>
+          </div>
+          <div class="panel-footer text-right">
+            <button type="button" data-type="suborder"  class="btn btn-primary">提 交</button>
+          </div>
+        </div>
       </div>      
       <!--rent start-->
+     
   </div>
   <!---main-content end-->
 </section>
@@ -274,15 +248,28 @@
     <!-- Placed at the end of the document so the pages load faster -->
 
 <script src="js/jquery.js"></script>
-<script src="js/loader.min.js"></script>
+<script src="js/loader.js"></script>
 <script src="js/select2.js"></script>
 <script src="js/bootstrap-hover-dropdown.min.js"></script>
 <script src="js/bootstrap-datepicker.js"></script>
 <script src="js/locales/bootstrap-datepicker.zh-CN.js"></script>
 <script src="js/bfa2.js"></script>
 <script src="js/highcharts.js"></script>
+<script src="js/jquery.noty.js"></script>
 <script>
-
+var nowTemp = new Date();	
+	var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+	$('.input-daterange').datepicker({
+		language: 'zh-CN',
+		format: 'yyyy-mm-dd',
+		todayHighlight: true,
+		autoclose: true,
+		startDate: now
+	});	 
+	var checkin = $('.checkin .checkin1').datepicker()
+		.on('changeDate', function(ev) {
+	  		$('.checkout')[0].focus();
+	});
 $('.input-daterange').datepicker({
 	language: 'zh-CN',
 	format: 'yyyy-mm-dd',
@@ -453,7 +440,7 @@ $(window).load(function(){
 		$.ajax({
 			url: "equipmentByClass.do",
 			type: 'POST',
-			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate},
+			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate,borrowId:borrowId},
 			dataType: 'html',
 			success: function(data){
 				//刷新数据
@@ -477,7 +464,7 @@ $(window).load(function(){
 		$.ajax({
 			url: "equipmentByClass.do",
 			type: 'POST',
-			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate},
+			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate,borrowId:borrowId},
 			dataType: 'html',
 			success: function(data){
 				//刷新数据
@@ -502,7 +489,7 @@ $(window).load(function(){
 		$.ajax({
 			url: "equipmentByClass.do",
 			type: 'POST',
-			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate,serach:serach},
+			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate,serach:serach,borrowId:borrowId},
 			dataType: 'html',
 			success: function(data){
 				//刷新数据
@@ -522,54 +509,44 @@ $(window).load(function(){
 	});
 	
 	$(".wizard").on('change', function(e, data) {
-			if(data.step===2) {
-				ordertype--;
-			}
+			//alert(data.step);
 		});
 	
 	$("body").on("click", "button[data-type|=suborder]", function() {
 		var fromDate = $("#fromDate").val();
 		var endDate = $("#endDate").val();
-		
-		
-
-		if(ordertype==0){
-			ordertype++;
-			return;
-		}else{
-			var equNum = "";
-    		var equId = "";
-    		$("input[name='equNum']").each(function(i){ 
-				var temp1 = $(this).val();
-    			if(i==0){ 
-    				equNum += temp1;
-    			}else{
-    				equNum += ","+temp1;
-    			}
-    		});
-    		$("input[name='equId']").each(function(j){ 
-				var temp2 = $(this).val();
-    			if(j==0){ 
-    				equId += temp2;
-    			}else{
-    				equId += ","+temp2;
-    			}
-    		});
-			$.ajax({
-				url: "subOrder.do",
-				type: 'POST',
-				data: {equIds:equId,equNums:equNum,fromDate:fromDate,endDate:endDate,borrowId:borrowId},
-				dataType: 'json',
-				success: function(data){
-					if(data.tag==1){
-						location.href="equipmentConfirm.do?borrowId="+data.borrowId;
-					}else{
-						alert(data.message);
-						return;
-					}
-				}	  
-			});
-		}
+		var equNum = "";
+		var equId = "";
+		$("input[name='equNum']").each(function(i){ 
+			var temp1 = $(this).val();
+			if(i==0){ 
+				equNum += temp1;
+			}else{
+				equNum += ","+temp1;
+			}
+		});
+		$("input[name='equId']").each(function(j){ 
+			var temp2 = $(this).val();
+			if(j==0){ 
+				equId += temp2;
+			}else{
+				equId += ","+temp2;
+			}
+		});
+		$.ajax({
+			url: "subOrder.do",
+			type: 'POST',
+			data: {equIds:equId,equNums:equNum,fromDate:fromDate,endDate:endDate,borrowId:borrowId},
+			dataType: 'json',
+			success: function(data){
+				if(data.tag==1){
+					location.href="equipmentConfirm.do?borrowId="+data.borrowId;
+				}else{
+					alert(data.message);
+					return;
+				}
+			}	  
+		});
 	});
 	
 	$("body").on("click", "a[data-type|=equipDetail]", function() {

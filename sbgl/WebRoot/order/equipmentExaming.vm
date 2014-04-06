@@ -21,55 +21,8 @@
 
 <body id="admin">
 <header id="header-wrap"><!--header-wrap-->
-  <div class="nav-wrap clearfix">
-    <div class="site-nav">
-      <div class="dropdown">
-        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a><!-- #BeginLibraryItem "/Library/siteNav.lbi" --><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-          <li><a href="../index.html"><i class="icon-home"></i> 首页</a></li>
-          <li class="divider"></li>
-          <li><a href="../预约首页.html">我的预约</a></li>
-          <li><a href="../消息中心-站内信.html">站内信</a></li>
-          <li class="divider"></li>
-          <li><a href="../设置页面-账户设置.html">设置与帮助</a></li>
-          <li><a href="管理中心首页.html">管理中心</a></li>
-        </ul>
-          <!-- #EndLibraryItem --></div>
-    </div><!-- #BeginLibraryItem "/Library/器材subnav.lbi" -->    <div class="sub-nav">
-      <ul class="nav nav-tabs nav-tabs-google">
-        <li><a href="管理中心首页.html">首页</a></li>
-        <li><a href="教学管理首页.html">教学</a></li>
-        <li><a href="用户管理首页.html">用户</a></li>
-        <li class="active"><a href="设备预约首页.html">器材</a></li>
-        <li><a href="机房预约管理首页.html">机房</a></li>
-        <li><a href="#">内容</a></li>
-      </ul>
-    </div>    
-    <!-- #EndLibraryItem --><ul class="account-wrap nav nav-pills pull-right">
-          <li class="notice dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">消息1</a></li>
-              <li><a href="#">消息2</a></li>
-            </ul>
-          </li>     
-          <li class="social dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="../img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
-            <div class="dropdown-menu">
-              <div class="media">
-                <a class="pull-left" href="#">
-                  <img src="../img/photo.jpg" width="96" height="96" class="img-rounded">
-                </a>
-                <div class="media-body">
-                  <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
-                  <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
-                  <div class="setting"><a href="#">账户设置</a></div>
-                  <button class="btn btn-primary" type="button">查看个人主页</button>
-                </div>
-              </div>
-            </div>      
-          </li>
-        </ul>
-  </div>
+   #set($currentPageModule="equipExam")
+  #parse("include/includeAdminHeader.vm")
 </header><!--/#header-wrap-->
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
            
@@ -128,7 +81,7 @@
                     <hr>                      
                     <a class="btn btn-primary"  data-type="examorder" data-id="$!equipmenborrowFull.borrowid" data-examstate="4" href="#">审核通过</a>
                     <a class="btn btn-white"  data-toggle="modal" href="#reject" role="button">驳 回</a>
-                    <a class="btn btn-white" data-type="deleteorder" data-id="$!equipmenborrowFull.borrowid" data-toggle="modal" href="#delete" role="button">删 除</a>
+                    <a class="btn btn-white" data-toggle="modal" href="#delete" role="button">删 除</a>
                   </div>
                 </div>
                 <div class="thumbnail">
@@ -210,7 +163,7 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary">确 定</button>
+    <button class="btn btn-primary"  data-type="deleteorder" data-id="$!equipmenborrowFull.borrowid" >确 定</button>
   </div>
 </div>
 
@@ -236,7 +189,7 @@
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
 <script>
-	$("body").on("click", "a[data-type|=deleteorder]", function() {
+	$("body").on("click", "button[data-type|=deleteorder]", function() {
 		var myData = $(this).data();
 		cId = myData.id;
 		$.ajax({
@@ -247,7 +200,7 @@
 			success: function(data){
 				if(data.tag==1){
 					alert("删除成功");
-					location.href="equipOrdIndex.do";
+					location.href="orderAdmin.do";
 				}else{
 					alert(data.message);
 					return;
@@ -276,6 +229,31 @@
 			}	  
 		});
 	});
+	
+	$("body").on("click", "button[data-type|=examorder]", function() {
+		var myData = $(this).data();
+		cId = myData.id;
+		examstate = myData.examstate;
+		examcontent = $("#inputRejectReason").val();
+		$.ajax({
+			url: "examorder.do",
+			type: 'POST',
+			data: {borrowId:cId,examstate:examstate},
+			dataType: 'json',
+			success: function(data){
+				if(data.tag==1){
+					alert("驳回成功");
+					location.href="orderAdmin.do";
+				}else{
+					alert(data.message);
+					return;
+				}
+			}	  
+		});
+	});
+	
+	
+	
 </script>
 <!--[if lt IE 10]>
   <script src="../js/jquery.placeholder.js"></script>

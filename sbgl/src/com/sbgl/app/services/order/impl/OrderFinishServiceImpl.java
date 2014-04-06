@@ -68,5 +68,13 @@ public class OrderFinishServiceImpl  implements OrderFinishService  {
 		baseDao.deleteByProperty("ListDetail", "borrowlistid", borrowId);
 		return true;
 	}
+	
+	public boolean subexamorder(Integer borrowId) {
+		// TODO Auto-generated method stub
+		Equipmenborrow equipmenBorrow = baseDao.getEntityById(Equipmenborrow.class, borrowId);
+		equipmenBorrow.setStatus(2);
+		baseDao.updateEntity(equipmenBorrow);
+		return true;
+	}
 
 }
