@@ -60,10 +60,10 @@
                 </div>              
               </div>
               <ul class="status-filter nav nav-pills pull-right">
-                <li class="active" action-type="active" id="0"><a href="#">全部(<span id="totalSum">$!sum</span>)</a></li>
-                <li action-type="active" id="1"><a href="#">学生(<span id="sSum">$!sum1</span>)</a></li>
-                <li action-type="active" id="2"><a href="#">教师(<span id="tSum">$!sum2</span>)</a></li>
-                <li action-type="active" id="4"><a href="#">其他(<span id="wSum">$!sum3</span>)</a></li>
+                <li class="usersel active" action-type="active" id="0"><a href="#">全部(<span id="totalSum">$!sum</span>)</a></li>
+                <li class="usersel" action-type="active" id="1"><a href="#">学生(<span id="sSum">$!sum1</span>)</a></li>
+                <li class="usersel" action-type="active" id="2"><a href="#">教师(<span id="tSum">$!sum2</span>)</a></li>
+                <li class="usersel" action-type="active" id="4"><a href="#">其他(<span id="wSum">$!sum3</span>)</a></li>
               </ul>
             </div><!--control-bar end-->
             <div class="panel panel-default">              
@@ -724,8 +724,7 @@
 			data: postData,
 			success: function(data,textStatus,jq) {
 				$("#admin-wrap").html(data);
-				
-				$(".active").removeClass("active");
+				$(".usersel").removeClass("active");
 				$("#"+selectedType).addClass("active");
 				
 				totalPage = $("#tp").html();

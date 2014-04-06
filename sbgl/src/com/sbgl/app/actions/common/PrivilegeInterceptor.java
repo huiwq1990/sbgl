@@ -23,7 +23,7 @@ public class PrivilegeInterceptor extends AbstractInterceptor {
 		session = request.getSession();
 		
 		Loginuser user = (Loginuser) session.getAttribute("loginUser");
-		if(user != null && "3".equals(user.getRoletype())) {
+		if(user != null && "1".equals(user.getPrivilege())) {
 			return invocation.invoke();
 		} else if(user == null) {
 			return "login";
