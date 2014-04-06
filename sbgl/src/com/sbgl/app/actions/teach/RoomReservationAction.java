@@ -49,9 +49,9 @@ public class RoomReservationAction extends ActionSupport {
 			for (Clazz c : allClazz) {
 				if( stuList != null ) {
 					for (Student stu : stuList) {
-						if( stu.getClassid().equals( c.getClassId() ) ) {
+						if( stu.getClassid().equals( c.getClassid() ) ) {
 							dto = new StuInClassDto();
-							dto.setClassId( c.getClassId() );
+							dto.setClassId( c.getClassid() );
 							dto.setClassName( c.getClassname() );
 							dto.setStudentid( stu.getStudentid() );
 							dto.setId( stu.getId() );
