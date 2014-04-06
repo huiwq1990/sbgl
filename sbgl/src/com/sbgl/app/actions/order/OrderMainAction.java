@@ -88,7 +88,7 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 		}
 		classification2List = orderMainService.findSecondEquipmentclass(lantype);
 		if(courseruleid==9){
-			equipmentList = orderMainService.findEquipmentByClss2(fromDate,endDate,lantype,courseruleid);
+			equipmentList = orderMainService.findEquipmentByClss2(fromDate,endDate,lantype,equipmenborrowFull.getCourseruleid());
 		}else{
 			equipmentList = orderMainService.findEquipmentByClss(fromDate,endDate,lantype);
 		}
@@ -129,13 +129,13 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 			if(serach!=null&&!serach.equals("")){
 				if(classificationId==0){
 					if(courseruleid==9){
-						equipmentList = orderMainService.findEquipmentByClss2(parentClassId,fromDate,endDate,lantype,serach,courseruleid);
+						equipmentList = orderMainService.findEquipmentByClss2(parentClassId,fromDate,endDate,lantype,serach,equipmenborrowFull.getCourseruleid());
 					}else{
 						equipmentList = orderMainService.findEquipmentByClss(parentClassId,fromDate,endDate,lantype,serach);
 					}
 				}else{
 					if(courseruleid==9){
-						equipmentList = orderMainService.findEquipmentByClss2(classificationId,fromDate,endDate,lantype,serach,courseruleid);
+						equipmentList = orderMainService.findEquipmentByClss2(classificationId,fromDate,endDate,lantype,serach,equipmenborrowFull.getCourseruleid());
 					}else{
 						equipmentList = orderMainService.findEquipmentByClss(classificationId,fromDate,endDate,lantype,serach);
 					}
@@ -143,13 +143,13 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 			}else{
 				if(classificationId==0){
 					if(courseruleid==9){
-						equipmentList = orderMainService.findEquipmentByClss2(parentClassId,fromDate,endDate,lantype,courseruleid);
+						equipmentList = orderMainService.findEquipmentByClss2(parentClassId,fromDate,endDate,lantype,equipmenborrowFull.getCourseruleid());
 					}else{
 						equipmentList = orderMainService.findEquipmentByClss(parentClassId,fromDate,endDate,lantype);
 					}
 				}else{
 					if(courseruleid==9){
-						equipmentList = orderMainService.findEquipmentByClss2(classificationId,fromDate,endDate,lantype,courseruleid);
+						equipmentList = orderMainService.findEquipmentByClss2(classificationId,fromDate,endDate,lantype,equipmenborrowFull.getCourseruleid());
 					}else{
 						equipmentList = orderMainService.findEquipmentByClss(classificationId,fromDate,endDate,lantype);
 					}
