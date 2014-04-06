@@ -93,14 +93,19 @@ public class LoginAction extends ActionSupport {
 				CookiesUtil.addLoginCookie("uid", String.valueOf(loginUser2.getId()));
 				CookiesUtil.addLoginCookie("userpass", MD5Util.MD5( loginUser2.getPassword() + loginUser2.getId().toString() ));
 				CookiesUtil.addLoginCookie("userid", String.valueOf(loginUser2.getUserid()));
-				flag = true;
-				session.setAttribute("loginUser", loginUser2);
+				
 				Boolean isAdmin = managerService.isExistManagerCode( loginUser2.getUserid() );
 				if(isAdmin) {
 					loginType = "admin";
+					loginUser2.setPrivilege("1");
 				} else {
 					loginType = "user";
+					loginUser2.setPrivilege("0");
 				}
+				
+				flag = true;
+				session.setAttribute("loginUser", loginUser2);
+				
 			}
 			
 		}catch (Exception e) {
