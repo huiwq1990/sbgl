@@ -103,6 +103,9 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	   }
 	}
 	
+	
+
+	
 
 	/**
 	 * 彻底删除订单详情信息
@@ -122,7 +125,21 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	   }
 	}
 	
-	
+	/**
+	 * 根据id删除订单详情
+	 * @param 
+	 */
+	@Override
+	public void delById(int id){
+		
+		try {
+			this.getHibernateTemplate().delete("Computerorderdetail", id);
+		} catch (RuntimeException re) {
+	        log.error("查询失败", re);           
+	        throw re;
+	            
+	   }
+	}
 	
 	
 
