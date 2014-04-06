@@ -24,7 +24,7 @@
 			#end	
 			">用户组</a>
 			
-			<a href="${webbaseurl}/userManageClass.${strutsaction}" class="list-group-item
+			<a href="${webbaseurl}/gotoClazz.${strutsaction}" class="list-group-item
 			#if($currentWebpage == "userManageClass" )
 			active      
 			#end	
