@@ -11,7 +11,7 @@
         
         <action name="userManageAdminAdd" class="ManagerAction" method="gotoUserManageAdminAdd">
         	<result name="success">
-        		/user/userManageAddAdmin.vm
+        		/user/userManageAddAdmin2.vm
         	</result>
         </action>
         

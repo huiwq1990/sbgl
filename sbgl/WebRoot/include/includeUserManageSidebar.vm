@@ -41,12 +41,13 @@
 			active      
 			#end	
 			">添加管理员</a>
-			
+			<!--
 			<a href="${webbaseurl}/userManageAdminGroup.${strutsaction}" class="list-group-item
 			#if($currentWebpage == "userManageAdminGroup" )
 			active      
 			#end	
 			">管理组</a>
+			-->
         </div>
       </div>
       <!--sidebar end-->
