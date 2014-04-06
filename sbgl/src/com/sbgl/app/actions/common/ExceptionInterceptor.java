@@ -1,10 +1,8 @@
 package com.sbgl.app.actions.common;
 
-import java.io.PrintWriter;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
@@ -13,10 +11,9 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.services.login.LoginService;
+import com.sbgl.app.services.user.ManagerService;
 import com.sbgl.util.CookiesUtil;
-import com.sbgl.util.JavascriptWriter;
 import com.sbgl.util.MD5Util;
-import com.sbgl.util.WebUtils;
 
 public class ExceptionInterceptor extends AbstractInterceptor {
 	/**
@@ -24,6 +21,8 @@ public class ExceptionInterceptor extends AbstractInterceptor {
 	 */
 	@Resource
 	private LoginService loginService;
+	@Resource
+	private ManagerService managerService;
 	private static final long serialVersionUID = 1867067164261737940L;
 	private HttpSession session;
 	private Loginuser loginuser;
@@ -61,6 +60,14 @@ public class ExceptionInterceptor extends AbstractInterceptor {
 			} else if( !CookiesUtil.getCookie("userpass").equals( MD5Util.MD5( loginuser.getPassword() + loginuser.getId().toString() ) ) ) {
 				return "login";
 			}
+			
+			Boolean isAdmin = managerService.isExistManagerCode( loginuser.getUserid() );
+			if(isAdmin) {
+				loginuser.setPrivilege("1");
+			} else {
+				loginuser.setPrivilege("0");
+			}
+			
 			session.setAttribute("loginUser", loginuser);
 		}
 		
