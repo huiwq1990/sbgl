@@ -556,7 +556,7 @@ public class ManageComputerAction extends BaseAction{
 		
 		
 
-		this.totalcount = countlist.size()/2;
+		this.totalcount = countlist.size();
 		page = PageActionUtil.getPage(totalcount, pageNo);
 		pageNo = page.getPageNo();
 		

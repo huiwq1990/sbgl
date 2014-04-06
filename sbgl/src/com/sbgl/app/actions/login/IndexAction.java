@@ -14,14 +14,20 @@ import org.springframework.stereotype.Controller;
 
 import com.sbgl.app.actions.common.BaseAction;
 import com.sbgl.app.actions.computer.ComputerAction;
+import com.sbgl.app.actions.computer.ComputerorderActionUtil;
 import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderInfo;
+import com.sbgl.app.entity.ComputerhomeworkFull;
+import com.sbgl.app.entity.Computerhomeworkreceiver;
+import com.sbgl.app.entity.ComputerhomeworkreceiverFull;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.entity.Loginuser;
+import com.sbgl.app.services.computer.ComputerhomeworkService;
+import com.sbgl.app.services.computer.ComputerhomeworkreceiverService;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
 import com.sbgl.app.services.order.OrderMainService;
@@ -54,6 +60,14 @@ public class IndexAction extends BaseAction{
 	@Resource
 	private OrderMainService orderMainService;
 	
+	@Resource	
+	private ComputerhomeworkService computerhomeworkService;	
+	private List<ComputerhomeworkFull> newComputerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
+	
+	@Resource
+	private ComputerhomeworkreceiverService computerhomeworkreceiverService;	
+	private List<Computerhomeworkreceiver> computerhomeworkreceiverList = new ArrayList<Computerhomeworkreceiver>();
+	
 	private List<EquipmenborrowFull> equipmenborrowFullList;
 	
 	HashMap<Integer, ArrayList<Computerorderdetail>> computerorderdetailMapByComputermodelId = new HashMap<Integer,ArrayList<Computerorderdetail>>();
@@ -82,6 +96,27 @@ public class IndexAction extends BaseAction{
 		return SUCCESS;
 	}
 
+//	查询进行中的预约
+	public void setUnderwayComputerorder(int userid){
+//		进行中的预约是：状态未审核的预约
+		String selunderwayordersql = "  where a.createuserid="+userid + " and a.status in("+ComputerorderInfo.ComputerorderStatusAduitWait+","+ComputerorderInfo.ComputerorderStatusAduitReject+") order by a.createtime desc";
+		computerorderFullUnderwayList = computerorderService.selectComputerorderFullByCondition(selunderwayordersql);
+		
+//		根据作业接收者，查询新的课程预约
+		computerhomeworkreceiverList = computerhomeworkreceiverService.selectComputerhomeworkreceiverByUserAndOrder(userid, ComputerConfig.computerhomeworknotorder);
+		String newhomeworksql="";
+		for(int i=0; i<computerhomeworkreceiverList.size();i++){
+			if( (computerhomeworkreceiverList.get(i).getHasorder()==null) || (computerhomeworkreceiverList.get(i).getHasorder() != ComputerConfig.computerhomeworkhasorder)){
+					newhomeworksql += computerhomeworkreceiverList.get(i).getComputerhomeworkid()+",";
+			}
+		}
+		if(newhomeworksql.length() > 1){
+			newhomeworksql = newhomeworksql.substring(0,newhomeworksql.length()-1);
+			newhomeworksql = " where a.id in (" +newhomeworksql+") "  + " order by computerhomeworkcreatetime desc ";
+			newComputerhomeworkFullList = computerhomeworkService.selectComputerhomeworkFullByCondition(newhomeworksql);
+		}
+		ComputerorderActionUtil.setUnderwayComputerorder(computerorderFullUnderwayList, newComputerhomeworkFullList);
+	}
 
 	public ComputerorderService getComputerorderService() {
 		return computerorderService;
@@ -259,6 +294,54 @@ public class IndexAction extends BaseAction{
 	public void setEquipmenborrowFullList(
 			List<EquipmenborrowFull> equipmenborrowFullList) {
 		this.equipmenborrowFullList = equipmenborrowFullList;
+	}
+
+	public OrderMainService getOrderMainService() {
+		return orderMainService;
+	}
+
+	public void setOrderMainService(OrderMainService orderMainService) {
+		this.orderMainService = orderMainService;
+	}
+
+	public ComputerhomeworkService getComputerhomeworkService() {
+		return computerhomeworkService;
+	}
+
+	public void setComputerhomeworkService(
+			ComputerhomeworkService computerhomeworkService) {
+		this.computerhomeworkService = computerhomeworkService;
+	}
+
+	public List<ComputerhomeworkFull> getNewComputerhomeworkFullList() {
+		return newComputerhomeworkFullList;
+	}
+
+	public void setNewComputerhomeworkFullList(
+			List<ComputerhomeworkFull> newComputerhomeworkFullList) {
+		this.newComputerhomeworkFullList = newComputerhomeworkFullList;
+	}
+
+	public ComputerhomeworkreceiverService getComputerhomeworkreceiverService() {
+		return computerhomeworkreceiverService;
+	}
+
+	public void setComputerhomeworkreceiverService(
+			ComputerhomeworkreceiverService computerhomeworkreceiverService) {
+		this.computerhomeworkreceiverService = computerhomeworkreceiverService;
+	}
+
+	public List<Computerhomeworkreceiver> getComputerhomeworkreceiverList() {
+		return computerhomeworkreceiverList;
+	}
+
+	public void setComputerhomeworkreceiverList(
+			List<Computerhomeworkreceiver> computerhomeworkreceiverList) {
+		this.computerhomeworkreceiverList = computerhomeworkreceiverList;
+	}
+
+	public static Log getLog() {
+		return log;
 	}
 	
 	

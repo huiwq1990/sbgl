@@ -70,5 +70,5 @@
 			  				<script>
 totalpage = $page.totalpagenum;
 currentpagenum = $page.pageNo;
-computerorderStatus : $computerorderStatus;
+computerorderStatus = $computerorderStatus;
 </script>

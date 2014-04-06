@@ -8,11 +8,12 @@
           <li class="divider"></li>
 
 		  <li><a href="${webbaseurl}/viewMineComputerorderList.${strutsaction}">我的预约</a></li>
-		            <li><a href="${webbaseurl}/toComputerhomeworkInboxPage.${strutsaction}">我的作业</a></li> 
+		  
+		         <!--   <li><a href="${webbaseurl}/toComputerhomeworkInboxPage.${strutsaction}">我的作业</a></li> -->
          <!-- <li><a href="${webbaseurl}/toMessageInbox.${strutsaction}">站内信</a></li> -->
           <li class="divider"></li>
 		  
-		    #set($user =    $request.getSession().getAttribute("loginUser"))
+		    #set($user =  $request.getSession().getAttribute("loginUser"))
 			#if($user.privilege == 1)
           <li><a href="${webbaseurl}/adminIndex.${strutsaction}">管理中心</a></li>
 		  #end

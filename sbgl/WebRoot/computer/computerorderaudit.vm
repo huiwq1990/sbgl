@@ -62,7 +62,8 @@
 
                       </div>
                       <hr>
-                      <strong>审核人可能进行的操作:</strong><br>  
+						<!--
+                      <strong>审核人可能进行的操作:</strong><br>  -->
 					
 						<div class="orderstatus">
                       <a class="btn btn-primary" onclick="auditOrder( $computerorderFull.computerorderid ,$!ComputerorderStatusAduitPass)" href="#" role="button">审核通过</a>
@@ -84,21 +85,31 @@
 						 <div class="rent-contact">预约方式：#parse("include/includeComputerorderType.vm")</div>
 					
                      <!-- <div class="rent-contact">联系方式：</div> -->
+					 #if($computerorderFull.computerorderremark)
                       <div class="rent-remark"><i class="icon-pencil"></i> $!computerorderFull.computerorderremark</div>
+					  #end
                     </div>
+					#if($computerorderFull.computerorderrejectreason)
                     <hr>
+						#end
                   </div>                        
                   
 				 
 				  
 				  <ul class="media-list">
                     <li class="media">
+						<!--
                       <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
                         <img src="../img/photo.jpg" width="28" height="28" class="img-rounded">
                       </a>
+					  -->
                       <div class="media-body">
+						<!--
                         <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">教师名</a></h5><span class="post-time" title="详细时间"></span></div>
-                        <p>驳回原因：$!computerorderFull.computerorderrejectreason</p>
+                        -->
+						#if($computerorderFull.computerorderrejectreason)
+						<p>驳回原因：$!computerorderFull.computerorderrejectreason</p>
+						#end
                       </div>
                     </li>
                   </ul>

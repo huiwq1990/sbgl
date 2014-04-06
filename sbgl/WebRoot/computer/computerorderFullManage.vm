@@ -69,17 +69,17 @@
 			  -->
               <ul class="status-filter nav nav-pills pull-right">
 				
-			    <li class="active"><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitAll)">全部</a></li>
+			    <li class="computerorderdelstatusli active"><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitAll)">全部</a></li>
 				
-				<li><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitPass)">审核通过</a></li>
-                <li><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitWait)">待审核</a></li>
-				<li><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitReject)">驳回</a></li>
-				<li><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitDel)">删除</a></li>
+				<li class="computerorderdelstatusli"><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitPass)">审核通过</a></li>
+                <li class="computerorderdelstatusli"><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitWait)">待审核</a></li>
+				<li class="computerorderdelstatusli"><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitReject)">驳回</a></li>
+				<li class="computerorderdelstatusli"><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitDel)">删除</a></li>
               </ul>
             </div><!--control-bar end-->
 			
 			
-						<div id="computerordermanagetable" >
+		<div id="computerordermanagetable" >
 			
             <div class="panel panel-default table-responsive">
 				
@@ -212,7 +212,7 @@ var computerorderStatus = $computerorderStatus;
   
 //更改状态的高亮显示
   $(".status-filter li").click(function () {
-                $("li[class='active']").removeAttr("class");
+                $(".computerorderdelstatusli").removeClass("active");
                 $(this).addClass("active"); 
   });
         

@@ -33,9 +33,9 @@
               <div class="filter user-group-filter">
                 <ul class="nav nav-tabs nav-tabs-google">
 					#foreach($temp in $userGroupList)
-						<li><a href="#" onclick="getCourseByUsergroupId($temp.id)">$temp.name</a></li>
+						<li class="usergroupli"><a href="#" onclick="getCourseByUsergroupId($temp.id)">$temp.name</a></li>
 					#end
-                  <li class="active" onclick="getCourseByUsergroupId(0)"><a href="#">全部</a></li>                  
+                  <li class="usergroupli active" onclick="getCourseByUsergroupId(0)"><a href="#">全部</a></li>                  
                 </ul>
               </div>
               <div class="operate-item pull-left">
@@ -223,7 +223,7 @@ var usergroupid = 0;
 
 //更改状态的高亮显示
   $(".user-group-filter li").click(function () {
-                $("li[class='active']").removeAttr("class");
+                $(".usergroupli").removeClass("active");
                 $(this).addClass("active"); 
   });
 
