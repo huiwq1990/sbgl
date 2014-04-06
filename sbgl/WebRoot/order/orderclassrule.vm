@@ -320,7 +320,8 @@
 			dataType: 'html',
 			success: function(data){
 				//刷新数据
-			   $("#createEquipRule").html(data);
+			   $("#admin-wrap").html(data);
+			   $("#select-categories").select2("val", cid);
 			}	  
 		});
 	});
