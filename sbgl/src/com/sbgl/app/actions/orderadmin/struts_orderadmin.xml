@@ -2,7 +2,7 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	
-	 <package name="OrderAdmin" extends="admin">
+	 <package name="OrderAdmin" extends="manage">
 	 	<!-- 进入设备预约页面 -->
 	 	<action name="orderAdmin" class="OrderAdminAction" method="orderAdmin">
         	<result name="success">/order/orderAdmin.vm</result>

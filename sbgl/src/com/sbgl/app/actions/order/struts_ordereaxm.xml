@@ -2,7 +2,7 @@
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	
-	 <package name="OrderExam" extends="admin">
+	 <package name="OrderExam" extends="manage">
         <!-- 订单审核页面 -->
 	 	<action name="equipmentExaming" class="OrderExamAction" method="equipmentExaming">
         	<result name="success">/order/equipmentExaming.vm</result>
