@@ -57,9 +57,9 @@ public class OrderExamServiceImpl implements OrderExamService {
 	}
 
 	@Override
-	public Map<Integer, List<EquipmentFull>> findMapBorrow(Integer borrowId) {
+	public Map<Integer, List<EquipmentFull>> findMapBorrow(Integer borrowId,Integer type) {
 		// TODO Auto-generated method stub
-		return orderFinishDao.findMapBorrow(borrowId);
+		return orderFinishDao.findMapBorrow(borrowId,type);
 	}
 
 	@Override

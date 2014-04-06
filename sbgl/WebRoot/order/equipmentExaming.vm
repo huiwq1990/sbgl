@@ -95,7 +95,7 @@
         				#if($!equipmenborrowFull.teacherid)
                         <div class="rent-teacher">关联教师：<a rel="popover" href="#">$!equipmenborrowFull.teacherName</a></div>
         				#end
-                        <div class="rent-time"><i class="icon-time"></i>$date.format("yyyy年MM月dd日", $!equipmenborrowFull.borrowtime)  - $date.format("yyyy年MM月dd日", $!equipmenborrowFull.returntime)</div>
+                        <div class="rent-time"><i class="icon-time"></i>$!date.format("yyyy年MM月dd日", $!equipmenborrowFull.borrowtime)  - $!date.format("yyyy年MM月dd日", $!equipmenborrowFull.returntime)</div>
                         <div class="rent-remark"><i class="icon-pencil"></i> $!equipmenborrowFull.remark</div>
                       </div>
                       <hr />
@@ -107,8 +107,8 @@
                           <img src="img/photo.jpg" width="28" height="28" class="img-rounded">
                         </a>
                         <div class="media-body">
-                          <div class="media-heading"><h5><a rel="popover" href="#">教师名</a></h5><span class="post-time" title="详细时间">下午4:53</span></div>
-                          <a href="#" class="lk" title="查看详细说明" rel="tooltip">数字摄影技术第11周设备申请(只显示关联教师发的要求标题)</a>
+                          <div class="media-heading"><h5><a rel="popover" href="#">$!equipmenborrowFull.teacherName</a></h5><span class="post-time" title="详细时间">$!date.format("yyyy年MM月dd日", $!equipmenborrowFull.createtime)</span></div>
+                          <a href="#" class="lk" title="查看详细说明" rel="tooltip">$!equipmenborrowFull.msgtitle</a>
                         </div>
                       </li>
         			#end
@@ -118,7 +118,7 @@
                           <img src="img/photo.jpg" width="28" height="28" class="img-rounded">
                         </a>
                         <div class="media-body">
-                          <div class="media-heading"><h5><a rel="popover" href="#">$!equipmenborrowFull.examuserName</a></h5><span class="post-time" title="详细时间">$date.format("yyyy-MM-dd hh:mm", $!equipmenborrowFull.examdate)</span></div>
+                          <div class="media-heading"><h5><a rel="popover" href="#">$!equipmenborrowFull.examuserName</a></h5><span class="post-time" title="详细时间">$!date.format("yyyy-MM-dd hh:mm", $!equipmenborrowFull.examdate)</span></div>
                           <p>$!equipmenborrowFull.teachersuggest</p>
                         </div>
                       </li>
@@ -192,7 +192,7 @@
 	$("body").on("click", "button[data-type|=deleteorder]", function() {
 		var myData = $(this).data();
 		cId = myData.id;
-		$.ajax({
+		jquery.ajax({
 			url: "deleteorder.do",
 			type: 'POST',
 			data: {borrowId:cId},

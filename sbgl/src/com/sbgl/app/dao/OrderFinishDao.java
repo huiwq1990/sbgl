@@ -20,7 +20,7 @@ public interface OrderFinishDao {
 	//获得订单设备的分类
 	public List<Equipmentclassification> findclassList(Integer borrowId);
 	//获得商品详情信息，根据分类获得
-	public Map<Integer,List<EquipmentFull>> findMapBorrow(Integer borrowId);
+	public Map<Integer,List<EquipmentFull>> findMapBorrow(Integer borrowId,Integer type);
 	//根据联合主键和订单主键获得
 	public  Listdetail findListDetail(Integer borrowId,Integer comId);
 	//根据联合主键和订单主键获得
