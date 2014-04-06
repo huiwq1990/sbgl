@@ -9,8 +9,9 @@ public class Clazz extends com.sbgl.app.dao.DaoAbs implements
 
 	// Fields
 
-	private Integer classId;
+	private Integer classid;
 	private String classname;
+	private Integer classtype;
 
 	// Constructors
 
@@ -19,24 +20,25 @@ public class Clazz extends com.sbgl.app.dao.DaoAbs implements
 	}
 
 	/** minimal constructor */
-	public Clazz(Integer classId) {
-		this.classId = classId;
+	public Clazz(Integer classid) {
+		this.classid = classid;
 	}
 
 	/** full constructor */
-	public Clazz(Integer classId, String classname) {
-		this.classId = classId;
+	public Clazz(Integer classid, String classname, Integer classtype) {
+		this.classid = classid;
 		this.classname = classname;
+		this.classtype = classtype;
 	}
 
 	// Property accessors
 
-	public Integer getClassId() {
-		return this.classId;
+	public Integer getClassid() {
+		return this.classid;
 	}
 
-	public void setClassId(Integer classId) {
-		this.classId = classId;
+	public void setClassid(Integer classid) {
+		this.classid = classid;
 	}
 
 	public String getClassname() {
@@ -45,6 +47,14 @@ public class Clazz extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setClassname(String classname) {
 		this.classname = classname;
+	}
+
+	public Integer getClasstype() {
+		return this.classtype;
+	}
+
+	public void setClasstype(Integer classtype) {
+		this.classtype = classtype;
 	}
 
 }

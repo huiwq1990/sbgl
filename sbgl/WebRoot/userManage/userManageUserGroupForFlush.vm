@@ -1,0 +1,62 @@
+<div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">用户组</div>
+              <div class="tips">在此页面下管理用户组信息，如用户组的添加、修改、删除等。</div>
+              <div class="operate-item pull-left">
+                <a href="#add-user-group" class="btn btn-primary" data-toggle="modal" role="button" action-type="clearInput">新建用户组</a>
+                <a href="#" class="btn btn-white s-h" action-type="delUserGroup"><i class="icon-trash"></i> 删除</a>
+              </div>
+              <div class="page pull-right clearfix">
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第<span id="cp">$!crtPage</span>/<span id="tp">$!totPage</span>页 <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#" action-type="goFirst">最新</a></li>
+                      <li><a href="#" action-type="goLast">最旧</a></li>
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+                  <ul>
+                    <li><a href="#" rel="tooltip" action-type="backPage" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" action-type="nextPage" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+              <ul class="status-filter nav nav-pills pull-right">
+                <li class="active" id="0" action-type="seletctType" data-typeid="0"><a href="#">全部($allGroupNum)</a></li>
+                <li id="1" action-type="seletctType" data-typeid="1"><a href="#">学生($!stuGroupNum)</a></li>
+                <li id="2" action-type="seletctType" data-typeid="2"><a href="#">教师($!teaGroupNum)</a></li>
+                <li id="4" action-type="seletctType" data-typeid="4"><a href="#">其他($!otrGroupNum)</a></li>
+              </ul>
+            </div><!--control-bar end-->
+            <div class="panel panel-default">              
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="id">编号</th>
+                    <th class="group-name">用户组名称</th>
+                    <th class="group-type">用户组类型</th>
+                  </tr>
+                </thead>
+                <tbody>
+					#foreach($group in $allGroupList)
+					  <tr>
+                        <td><input class="chk" type="checkbox" name="chk-list" value="$!group.id"></td>
+                        <td>$!group.id<a class="btn btn-white btn-mini" action-type="beforeModify" data-id="$!group.id" data-name="$!group.name" data-type="$!group.type" data-toggle="modal" href="#modify-user-group" role="button">修改</a></td>
+                        <td>$!group.name</td>
+                        #if($!group.type == 1)
+						<td>学生</td>
+						#elseif($!group.type == 2)
+						<td>教师</td>
+						#elseif($!group.type == 4)
+						<td>其他</td>
+						#end
+                      </tr>
+					#end
+                </tbody>
+              </table>
+            </div>
+          </div>

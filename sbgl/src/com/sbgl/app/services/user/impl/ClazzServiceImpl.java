@@ -24,7 +24,7 @@ public class ClazzServiceImpl implements ClazzService {
 	@Override
 	public int addClazz(Clazz clazz) {
 		int id = baseDao.getCode("clazzId");
-		clazz.setClassId( id );
+		clazz.setClassid( id );
 		
 		try {
 			baseDao.saveEntity( clazz );
@@ -36,10 +36,11 @@ public class ClazzServiceImpl implements ClazzService {
 
 	@Override
 	public int alterClazz(Clazz clazz) {
-		int id = clazz.getClassId();
+		int id = clazz.getClassid();
 		Clazz storeClazz = baseDao.getEntityById(Clazz.class, id);
 		
 		storeClazz.setClassname( clazz.getClassname() );
+		storeClazz.setClasstype( clazz.getClasstype() );
 		
 		try {
 			baseDao.updateEntity( storeClazz );
@@ -85,7 +86,7 @@ public class ClazzServiceImpl implements ClazzService {
 		List<Clazz> allClazz = baseDao.getAllEntity(Clazz.class);
 		List<Student> allStu = null;
 		for (Clazz c : allClazz) {
-			allStu = baseDao.getEntityByIntProperty(Student.class.getName(), "classid", c.getClassId());
+			allStu = baseDao.getEntityByIntProperty(Student.class.getName(), "classid", c.getClassid());
 			if(allStu != null && allStu.size() > 0) {
 				clazzMap.put(c, allStu);
 				resultList.add(clazzMap);
@@ -93,6 +94,12 @@ public class ClazzServiceImpl implements ClazzService {
 			
 		}
 		
+		return resultList;
+	}
+
+	@Override
+	public List<Clazz> getClazzByType(int typeId) {
+		List<Clazz> resultList = baseDao.getEntityByIntProperty(Clazz.class.getName(), "classtype", typeId);
 		return resultList;
 	}
 

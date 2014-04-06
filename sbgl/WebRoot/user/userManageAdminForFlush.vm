@@ -48,9 +48,8 @@
                     <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
                     <th class="name">编号</th>
                     <th class="username">用户名</th>
+                    <th class="user-group">用户组</th>
                     <th class="user-group">管理组</th>
-                    <th class="user-group">权限</th>
-                    <th class="operate">电话</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -59,19 +58,28 @@
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!user.id;$!user.userGroupType"></td>
                     <td>$!user.userCode<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="beforeModify" data-id="$!user.id" data-code="$!user.userCode" data-name="$!user.userName" data-sex="$!user.gender" data-pass="$!user.userPass" data-gid="$!user.userGroupId" data-gname="$!user.userGroupName" data-tel="$!user.tel" data-mail="$!user.mail" data-pic="$!user.photo" data-privi="$!user.privilege">修改</a></td>
                     <td>$!user.userName</td>
-                    <td>$!user.userGroupName</td>
+					#if($!user.userGroupType == 1)
+						<td>学生  - $!user.userGroupName</td>
+					#elseif($!user.userGroupType == 2)
+						<td>教师  - $!user.userGroupName</td>
+					#elseif($!user.userGroupType == 4)
+						<td>其他  - $!user.userGroupName</td>
+					#else
+                        <td>无</td>
+					#end
 					#if($!user.privilege == 0)
 						<td>无</td>
 					#elseif($!user.privilege == 1)
-						<td>查看库存</td>
+						<td>系统管理员</td>
 					#elseif($!user.privilege == 2)
-						<td>录入数据</td>
+						<td>系秘</td>
 					#elseif($!user.privilege == 3)
-						<td>修改订单</td>
+						<td>器材管理员</td>
 					#elseif($!user.privilege == 4)
-						<td>超级管理</td>
+						<td>机房管理员</td>
+					#else
+                        <td>无</td>
 					#end
-                    <td>$!user.tel</td>
                   </tr>
 				  #end
                 </tbody>
