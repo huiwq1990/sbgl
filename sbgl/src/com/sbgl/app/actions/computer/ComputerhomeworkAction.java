@@ -475,18 +475,20 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 					
 			try {
 				
-				if (computerhomeworkid <= 0) {
-					log.error("error,id小于0不规范");
-					return "error";
-				}	
+				if(this.getCurrentUserId() < 0){
+					return "toLogin";
+				}
+				
+				
 				
 				String condition = " where a.id = "+computerhomeworkid;
 				List<ComputerhomeworkFull> tempList = computerhomeworkService.selectComputerhomeworkFullByCondition(condition );
 				
-				if(tempList!=null && tempList.size() >0){
+				if(tempList!=null && tempList.size()==1){
 					
 				}else{
-					return "error";
+					actionMsg = "访问界面不存在";
+					return "pagenotfound";
 				}
 				
 				computerhomeworkFull = tempList.get(0);
@@ -513,7 +515,7 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 			} catch (Exception e) {
 				e.printStackTrace();			
 			}
-			return "Error";
+			return "error";
 		}	
 
 

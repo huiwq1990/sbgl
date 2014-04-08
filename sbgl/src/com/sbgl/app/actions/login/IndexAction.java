@@ -78,6 +78,19 @@ public class IndexAction extends BaseAction{
 	
 	List<ComputerorderEntity> computerorderEntityList = new ArrayList<ComputerorderEntity>();//进行中的预约
 	
+	
+	
+	
+//	订单状态
+	private int ComputerorderStatusAduitAll = ComputerorderInfo.ComputerorderStatusAduitAll;
+	private int ComputerorderStatusAduitPass = ComputerorderInfo.ComputerorderStatusAduitPass;
+	private int ComputerorderStatusAduitReject = ComputerorderInfo.ComputerorderStatusAduitReject;
+	private int ComputerorderStatusAduitDel = ComputerorderInfo.ComputerorderStatusAduitDel;
+	private int ComputerorderStatusAduitWait = ComputerorderInfo.ComputerorderStatusAduitWait;
+	private int IndividualOrder = ComputerorderInfo.IndividualOrder;
+	private int ClassOrder = ComputerorderInfo.ClassOrder;
+	
+	
 	public String index(){
 		
 //		System.out.println("sss");
@@ -352,6 +365,62 @@ public class IndexAction extends BaseAction{
 	public void setComputerorderEntityList(
 			List<ComputerorderEntity> computerorderEntityList) {
 		this.computerorderEntityList = computerorderEntityList;
+	}
+
+	public int getComputerorderStatusAduitAll() {
+		return ComputerorderStatusAduitAll;
+	}
+
+	public void setComputerorderStatusAduitAll(int computerorderStatusAduitAll) {
+		ComputerorderStatusAduitAll = computerorderStatusAduitAll;
+	}
+
+	public int getComputerorderStatusAduitPass() {
+		return ComputerorderStatusAduitPass;
+	}
+
+	public void setComputerorderStatusAduitPass(int computerorderStatusAduitPass) {
+		ComputerorderStatusAduitPass = computerorderStatusAduitPass;
+	}
+
+	public int getComputerorderStatusAduitReject() {
+		return ComputerorderStatusAduitReject;
+	}
+
+	public void setComputerorderStatusAduitReject(int computerorderStatusAduitReject) {
+		ComputerorderStatusAduitReject = computerorderStatusAduitReject;
+	}
+
+	public int getComputerorderStatusAduitDel() {
+		return ComputerorderStatusAduitDel;
+	}
+
+	public void setComputerorderStatusAduitDel(int computerorderStatusAduitDel) {
+		ComputerorderStatusAduitDel = computerorderStatusAduitDel;
+	}
+
+	public int getComputerorderStatusAduitWait() {
+		return ComputerorderStatusAduitWait;
+	}
+
+	public void setComputerorderStatusAduitWait(int computerorderStatusAduitWait) {
+		ComputerorderStatusAduitWait = computerorderStatusAduitWait;
+	}
+
+	public int getIndividualOrder() {
+		return IndividualOrder;
+	}
+
+	public void setIndividualOrder(int individualOrder) {
+		IndividualOrder = individualOrder;
+	}
+
+	public int getClassOrder() {
+		return ClassOrder;
+	}
+
+	public void setClassOrder(int classOrder) {
+		ClassOrder = classOrder;
 	}
 	
 	

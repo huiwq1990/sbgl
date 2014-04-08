@@ -12,9 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
 
 import com.sbgl.app.common.computer.ComputerConfig;
+import com.sbgl.app.entity.Borrowperiod;
 import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.ComputercategoryFull;
 import com.sbgl.app.entity.Computermodel;
@@ -23,8 +26,30 @@ import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.util.ReturnJson;
 
 public class ComputerActionUtil {
-	
+	private static final Log log = LogFactory.getLog(ComputerActionUtil.class); 
+	public static void printAvailBorrowModelMap(List<Computermodel> computermodelList ,List<Borrowperiod> borrowperiodList,int computeroderadvanceorderday,HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> availableBorrowModelMap){
+//		log.info("print model");
+		for (Computermodel tempmodel : computermodelList) {
+			System.out.println("Computer model type:"
+					+ tempmodel.getComputermodeltype());
+			for (Borrowperiod tempBorrowperiod : borrowperiodList) {
+				for (int tempday = 0; tempday < computeroderadvanceorderday; tempday++) {
 
+					System.out.print(availableBorrowModelMap
+							.get(tempmodel.getComputermodeltype())
+							.get(tempBorrowperiod.getPeriodnum()).get(tempday)
+							+ "  ");
+				}
+				System.out.println();
+				// periodDayAvailInfo.put(periodList.get(tempperiod).getId(),
+				// dayInfo);
+			}
+			System.out.println();
+			// availableBorrowModelMap.put(modelList.get(tempmodel).getComputermodeltype(),
+			// periodDayAvailInfo);
+		}
+	}
+	
 	
 	public static HashMap<Integer, ArrayList<ComputerorderdetailFull>> sortComputerorderMap(HashMap<Integer, ArrayList<ComputerorderdetailFull>> computerorderdetailFullMapByComputermodelId){
 		HashMap<Integer, ArrayList<ComputerorderdetailFull>> newComputerorderdetailFullMapByComputermodelId = new HashMap<Integer,ArrayList<ComputerorderdetailFull>>();

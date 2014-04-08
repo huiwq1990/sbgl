@@ -329,7 +329,7 @@ int curcomputerhomeworkid;
 		computermodelList = computermodelService.selectComputermodelByCondition(getAvailableComputermodelFullTypeSql);
 		
 		
-		calculate(computerorderclassrule,orderstartDate,orderEndDate );
+		calculate(orderstartDate,orderEndDate );
 //		System.out.println(borrowperiodList.size());
 		return SUCCESS;
 	}
@@ -356,14 +356,17 @@ int curcomputerhomeworkid;
 		}
 	}
 	
-	public  void calculate(Computerorderclassrule computerorderclassrule,Date orderStartDate,Date orderEndDate) {
-		String currentDateStr = DateUtil.dateFormat(orderStartDate, DateUtil.dateformatstr1);
-		String orderStartDateStr = DateUtil.dateFormat(orderStartDate, DateUtil.dateformatstr1);
-		String orderEndDateStr = DateUtil.dateFormat(orderEndDate, DateUtil.dateformatstr1);
+	public  void calculate(Date orderStartDate,Date orderEndDate) {
+
+		log.info("预约开始时间（如果是开始时间小于当前时间，则是当前时间）："+ DateUtil.dateFormat(orderStartDate, DateUtil.dateformatstr1));
+		log.info("预约结束时间："+ DateUtil.dateFormat(orderEndDate, DateUtil.dateformatstr1));
 		
-		//设置提前预约的天数
+		currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(orderStartDate);			 
+		log.info("当前时间段: "+currentPeriod);
+		//设置提前预约的天数+
 		computeroderadvanceorderday = DateUtil.daysBetween(orderStartDate, orderEndDate)+1;
-		int trueadvanceday = computeroderadvanceorderday;
+		log.info("可以提前预约的天数："+computeroderadvanceorderday);
+
 //		设备预约表格显示的列数，默认是7
 		computerodertablercolumn = ComputerConfig.computerodertablercolumn;
 //		调整预约时间，使时间是7的倍数
@@ -373,14 +376,9 @@ int curcomputerhomeworkid;
 		}else{
 			showComputeroderadvanceorderday = computeroderadvanceorderday;
 		}		
-		System.out.println("showComputeroderadvanceorderday "+showComputeroderadvanceorderday);
-		
-//		int computerorderTotalOrderPeriod = ComputerConfig.computerorderTotalOrderPeriod;
-		
+		log.info("页面显示时的提前预约天数showComputeroderadvanceorderday "+showComputeroderadvanceorderday);
 
-		currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(orderStartDate);			 
-		System.out.println("currentPeriod: "+currentPeriod);
-			
+		
 		buildShowDate(orderStartDate,showComputeroderadvanceorderday,computerodertablercolumn);	 
 			 
 		
@@ -389,16 +387,41 @@ int curcomputerhomeworkid;
 //		String getAllComputermodelTypeSql = " where a.languagetype="+currentlanguagetype+" ";
 //		computermodelList = computermodelService.selectComputermodelByCondition(getAllComputermodelTypeSql);
 		
-		for (int i = 0; i < computermodelList.size(); i++) {
-			System.out.println("当前可借数量id=" + computermodelList.get(i).getId() + "  " + " 名称："+ computermodelList.get(i).getName()
-					+ computermodelList.get(i).getAvailableborrowcountnumber());
-		}
+//		for (int i = 0; i < computermodelList.size(); i++) {
+//			System.out.println("model type=" + computermodelList.get(i).getComputermodeltype() + "  " + " 名称："+ computermodelList.get(i).getName()
+//					+ computermodelList.get(i).getAvailableborrowcountnumber());
+//		}
 		
 		//所有可借时间段信息
 		borrowperiodList =  BorrowperiodUtil.getBorrowperiodList();
 		
+		for(Computermodel model : computermodelList){
+			HashMap<Integer,ArrayList<Integer>> periodDay = new HashMap<Integer,ArrayList<Integer>>();
+			availableBorrowModelMap.put(model.getComputermodeltype(),periodDay);
+			
+			for(Borrowperiod bp : borrowperiodList){
+			
+				ArrayList<Integer> dayList = new ArrayList<Integer>();
+				for(int tempday=0; tempday < computeroderadvanceorderday; tempday++){				
+					dayList.add(0);					
+				}
+				
+				periodDay.put(bp.getPeriodnum(), dayList);
+				
+			}
+			System.out.println();
+//			availableBorrowModelMap.put(modelList.get(tempmodel).getComputermodeltype(), periodDayAvailInfo);
+		}
+		
+		log.info("初始话借用机房的map");
+//		ComputerActionUtil.printAvailBorrowModelMap(computermodelList, borrowperiodList, computeroderadvanceorderday, availableBorrowModelMap);
+		
+		
 //		根据模型构建 模型、时间段、日期的map
 		availableBorrowModelMap = ComputerorderActionUtil.computermodelPeriodDayInfo(computermodelList, currentPeriod, borrowperiodList, computeroderadvanceorderday);
+		log.info("根据模型可借数量初始话借用机房的map");
+//		ComputerActionUtil.printAvailBorrowModelMap(computermodelList, borrowperiodList, computeroderadvanceorderday, availableBorrowModelMap);
+		
 		
 //		配合显示，将多出来的那些天数的数量设置为0
 		if(showComputeroderadvanceorderday > computeroderadvanceorderday){
@@ -456,34 +479,15 @@ int curcomputerhomeworkid;
 			availableBorrowModelMap.put(tempmodel.getComputermodeltype(), periodDayAvailInfo);
 		}
 		*/
-		System.out.println(availableBorrowModelMap.size());
-		/*
-		for(int tempmodelindex=0;tempmodelindex<computermodelList.size();tempmodelindex++){
-			Computermodel tempmodel =  computermodelList.get(tempmodelindex);
-			System.out.println(tempmodel.getName()+"   ");
-			for(int tempperiod=0; tempperiod < borrowperiodList.size(); tempperiod++){
-				Borrowperiod tempBorrowperiod = borrowperiodList.get(tempperiod);
-				System.out.println(tempBorrowperiod.getPeroidname());
-				for(int tempday=0; tempday < computeroderadvanceorderday; tempday++){				
-					
-					System.out.print(availableBorrowModelMap.get(tempmodel.getComputermodeltype()).get(tempBorrowperiod.getId()).get(tempday)+"  ");
-				}	
-				System.out.println();
-			}
-			System.out.println();
-		}*/
-
-	
-			
-
+		
 //		查询当前时间之后，预约的清单
-		System.out.println("预约订单：");
+		log.info("查询当前时间之后，预约的清单");
 		
 
 //		查询当前时间之后，预约的清单
 		Date startDate = orderStartDate;
 		int startPeriod = BorrowperiodUtil.getBorrowTimePeriod(startDate);
-		Date endDate = DateUtil.addDay(startDate, computerorderconfig.getMaxorderday()-1);
+		Date endDate = DateUtil.addDay(startDate, computeroderadvanceorderday-1);
 		int endPeriod = BorrowperiodUtil.getMaxPeriod();
 		
 //		查询已经有的预约
@@ -492,35 +496,18 @@ int curcomputerhomeworkid;
 //		for(int i = 0; i <validHaveorderComputerorderdetailList.size(); i++){
 //			log.info("订单序号：="+validHaveorderComputerorderdetailList.get(i).getId() + ";订单预约设备的类型:" +validHaveorderComputerorderdetailList.get(i).getComputermodelid());
 //		}
-
 		//根据预约清单计算当前可借数量			
 		for(Computerorderdetail od : validHaveorderComputerorderdetailList){
 			int between = DateUtil.daysBetween(orderStartDate,od.getBorrowday());
-			System.out.println("model: "+od.getComputermodelid()+"; day: "+od.getBorrowday()+"; period: "+od.getBorrowperiod());
+			System.out.println("订单详情："+od.getId()+";model: "+od.getComputermodelid()+"; day: "+od.getBorrowday()+"; period: "+od.getBorrowperiod());
 			int newcount = availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).get(between) - od.getBorrownumber();
 			availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).set(between, newcount);
 		}
-
-	/*
-		for(int tempmodelindex=0;tempmodelindex<computermodelList.size();tempmodelindex++){
-			Computermodel tempmodel =  computermodelList.get(tempmodelindex);
-			for(int tempperiod=0; tempperiod < borrowperiodList.size(); tempperiod++){
-				Borrowperiod tempBorrowperiod = borrowperiodList.get(tempperiod);
-				for(int tempday=0; tempday < computeroderadvanceorderday; tempday++){				
-					
-					System.out.print(availableBorrowModelMap.get(tempmodel.getComputermodeltype()).get(tempBorrowperiod.getId()).get(tempday)+"  ");
-				}	
-				System.out.println();
-//				periodDayAvailInfo.put(periodList.get(tempperiod).getId(), dayInfo);
-			}
-			System.out.println();
-//			availableBorrowModelMap.put(modelList.get(tempmodel).getComputermodeltype(), periodDayAvailInfo);
-		}
 		
-		*/
+		log.info("去除预约的订单后，模型可借数量：");
+		ComputerActionUtil.printAvailBorrowModelMap(computermodelList, borrowperiodList, computeroderadvanceorderday, availableBorrowModelMap);
 		
 		
-	
 	}
 
 
