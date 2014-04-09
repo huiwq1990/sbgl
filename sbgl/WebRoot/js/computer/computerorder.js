@@ -11,7 +11,7 @@ $("body").on("click", ".bookable", function() {
 	var maxNum = bookingData.maxNum;
 	var orderpcid = bookingData.pcid;
 //	修改后防止添加冲突
-	var id = orderpcid + "_"+bookingData.index;
+	var id = orderpcid + "-"+bookingData.index;
 	var orderpcname = bookingData.pcname;
 	var orderdate = bookingData.date;
 	var orderperiod = bookingData.slot;
@@ -26,7 +26,7 @@ $("body").on("click", ".bookable", function() {
 			'</div>'+
 		'</div>';
 	var html = 
-	  '<div class="row" id=' + id + '>' + 
+	  '<div class="row" id="'+id+'">' + 
 		  '<div class="item-name">' + timeStr + '</div>' +
 		  '<div class="item-ctrl spinner input-group">' +
 			  '<span class="input-group-btn">' + 
@@ -37,7 +37,7 @@ $("body").on("click", ".bookable", function() {
 				  '<button type="button" class="btn btn-link spinner-up"><i class="icon-plus"></i></button>' +
 			  '</span>' + 
 			  '<span class="input-group-btn">' + 
-				  '<button type="button" class="btn btn-link close"><i class="icon-remove"></i></button>' + 
+				  '<button type="button" class="btn btn-link close" action-type="removeThisOrderItem" data-id="' + orderpcid + '" data-index="' + bookingData.index + '"><i class="icon-remove"></i></button>' + 
 			  '</span>' + 
 		  '</div>' + 
 	  '</div>';
@@ -120,5 +120,16 @@ $("body").on("click", ".bookable", function() {
 		
 	}
 });	
+$("body").on("click", "button[action-type|=removeThisOrderItem]", function() {
+	var thisData = $(this).data();
+	$("#post-equip-" + thisData.id).find('tbody td').each(function(index, el) {
+		if ($(el).data("index") === thisData.index ) {
+			if($(el).hasClass("selected")) {		// 如果选中
+				$(el).find('i').remove();
+				$(el).removeClass("selected");
+			}
+		};
+	});
+});
 
-	})(jQuery);
+})(jQuery);
