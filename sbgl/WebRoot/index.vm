@@ -145,19 +145,49 @@
 				#end 
               </ul>
             </div>
+			
             <div class="thumbnail">
               <div class="hd clearfix">
                 <h3 class="pull-left">进行中的机房预约</h3>
                 <a href="${webbaseurl}/viewMineComputerorderList.${strutsaction}" class="more lk pull-right">查看全部</a>
               </div>
               <ul class="media-list">
-				#foreach($order in $computerorderFullUnderwayList)
+				#foreach($order in $computerorderEntityList)
+					
+				#if($order.type==1)   	
                 <li class="media">
                   <div class="media-body">
-                    <div class="media-heading"><h5><a href="">$order.computerordertitle</a></h5><span>等待你提交预约申请</span></div>
-                    <span class="tag label label-important">#if($order.computerorderordertype==2)课程预约 #else 个人预约 #end</span>                  
+                    <div class="media-heading"><h5>
+						<a href="${webbaseurl}/viewComputerorder.${strutsaction}?computerorderId=$order.computerorderid">$order.computerordertitle</a></h5>
+						<span>
+							#set($curstatus = $order.computerorderstatus)
+							#parse("computer/includeComputerorderStatus.vm")
+						</span>
+					</div>
+					
+                    <span class="tag label label-important">
+					#set($currentcomputerorderordertype = $order.computerorderordertype)
+					#parse("include/includeComputerorderType.vm")
+					</span>                  
                   </div>
                 </li>
+				#else
+				 <li class="media">
+                  <div class="media-body">
+                    <div class="media-heading">
+						<h5>
+						<a href="${webbaseurl}/checkComputerhomework.${strutsaction}?computerhomeworkid=$order.computerhomeworkid">$!order.computerhomeworkname</a>
+						</h5>
+						<span><a href="${webbaseurl}/toComputerClassorderPage.${strutsaction}?computerhomeworkid=$order.computerhomeworkid"">开始预约</a>
+						</span>
+	                </div>
+                    <span class="tag label label-important">
+					等待你提交预约申请
+					</span>                  
+                  </div>
+                </li>
+				#end
+				
 				#end
               </ul>
             </div>

@@ -1,7 +1,7 @@
 				<div class="thumbnail">
                   <div class="hd clearfix">
                     <h3 class="pull-left">预约单</h3>
-                   <div class="pull-right">共 $orderpccaregorynum 种，$orderpctotalnum 个器材</div>
+                    <!--<div class="pull-right">共 $orderpccaregorynum 种，$orderpctotalnum 个器材</div>-->
                   </div>
                   <div class="media-list">
 ##判断map是否为空

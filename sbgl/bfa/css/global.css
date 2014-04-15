@@ -551,7 +551,9 @@ border-bottom: 2px solid #427FED !important;
 	transition: all .218s;
 }
 
-.hero-unit i.icon-ok-sign { font-size: 60px; color: #468847; margin-top: 20px; }
+.hero-unit > i { font-size: 60px; margin-top: 20px; }
+.hero-unit > i.icon-ok-sign { color: #468847; }
+.hero-unit > i.icon-warning-sign { color: #d9534f; }
 .hero-unit code { font-size: 28px; margin: 0 8px; }
 
 .topic-wrap { position: absolute; top: 40px; right: 0; max-width: 5%; text-align: right; }

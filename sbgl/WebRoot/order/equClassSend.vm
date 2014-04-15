@@ -450,7 +450,7 @@
 		var inputSendTo = $("#inputSendTo").val();
 		var inputEquipRule = $('#inputEquipRule').select2('val');
 		var inputMsgTitle = $("#inputMsgTitle").val();
-		var inputContent = $("#inputContent").val();
+		var inputContent = editor.html();
 		var inputDataRange = $("#inputDataRange").val();
 		var inputDataRange2 = $("#inputDataRange2").val();
 		$.ajax({

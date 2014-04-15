@@ -14,6 +14,8 @@
 <!-- 学生跳转到作业详情查看界面 -->       
      	<action name="checkComputerhomework" class="ComputerhomeworkAction" method="checkComputerhomework">
         	<result name="success">/computer/computerhomeworkCheck.vm</result>
+        	<result name="pagenotfound">/404.vm</result> 
+        	<result name="toLogin">/login.vm</result> 
         	<result name="error">/error.vm</result> 
         </action>       
      </package>

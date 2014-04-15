@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import com.sbgl.app.actions.common.BaseAction;
 import com.sbgl.app.actions.computer.ComputerAction;
 import com.sbgl.app.actions.computer.ComputerorderActionUtil;
+import com.sbgl.app.actions.computer.ComputerorderEntity;
 import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderInfo;
@@ -75,10 +76,24 @@ public class IndexAction extends BaseAction{
 	
 	List<ComputerorderFull> computerorderFullUnderwayList = new ArrayList<ComputerorderFull>();//进行中的预约
 	
-
+	List<ComputerorderEntity> computerorderEntityList = new ArrayList<ComputerorderEntity>();//进行中的预约
+	
+	
+	
+	
+//	订单状态
+	private int ComputerorderStatusAduitAll = ComputerorderInfo.ComputerorderStatusAduitAll;
+	private int ComputerorderStatusAduitPass = ComputerorderInfo.ComputerorderStatusAduitPass;
+	private int ComputerorderStatusAduitReject = ComputerorderInfo.ComputerorderStatusAduitReject;
+	private int ComputerorderStatusAduitDel = ComputerorderInfo.ComputerorderStatusAduitDel;
+	private int ComputerorderStatusAduitWait = ComputerorderInfo.ComputerorderStatusAduitWait;
+	private int IndividualOrder = ComputerorderInfo.IndividualOrder;
+	private int ClassOrder = ComputerorderInfo.ClassOrder;
+	
+	
 	public String index(){
 		
-		System.out.println("sss");
+//		System.out.println("sss");
 		Integer userid = this.getCurrentUserId();
 
 		if(userid < 0){		
@@ -87,9 +102,8 @@ public class IndexAction extends BaseAction{
 		}
 		
 
-//		进行中的预约是：状态未审核的预约
-		String selunderwayordersql = "  where a.createuserid="+userid + " and a.status in("+ComputerorderInfo.ComputerorderStatusAduitWait+","+ComputerorderInfo.ComputerorderStatusAduitReject+") order by a.createtime desc";
-		computerorderFullUnderwayList = computerorderService.selectComputerorderFullByCondition(selunderwayordersql);
+//		进行中的预约
+		setUnderwayComputerorder(userid);
 		
 		equipmenborrowFullList = orderMainService.findUnderWayOrder(userid);
 		log.info(computerorderFullUnderwayList.size());
@@ -115,7 +129,7 @@ public class IndexAction extends BaseAction{
 			newhomeworksql = " where a.id in (" +newhomeworksql+") "  + " order by computerhomeworkcreatetime desc ";
 			newComputerhomeworkFullList = computerhomeworkService.selectComputerhomeworkFullByCondition(newhomeworksql);
 		}
-		ComputerorderActionUtil.setUnderwayComputerorder(computerorderFullUnderwayList, newComputerhomeworkFullList);
+		computerorderEntityList = ComputerorderActionUtil.setUnderwayComputerorder(computerorderFullUnderwayList, newComputerhomeworkFullList);
 	}
 
 	public ComputerorderService getComputerorderService() {
@@ -342,6 +356,71 @@ public class IndexAction extends BaseAction{
 
 	public static Log getLog() {
 		return log;
+	}
+
+	public List<ComputerorderEntity> getComputerorderEntityList() {
+		return computerorderEntityList;
+	}
+
+	public void setComputerorderEntityList(
+			List<ComputerorderEntity> computerorderEntityList) {
+		this.computerorderEntityList = computerorderEntityList;
+	}
+
+	public int getComputerorderStatusAduitAll() {
+		return ComputerorderStatusAduitAll;
+	}
+
+	public void setComputerorderStatusAduitAll(int computerorderStatusAduitAll) {
+		ComputerorderStatusAduitAll = computerorderStatusAduitAll;
+	}
+
+	public int getComputerorderStatusAduitPass() {
+		return ComputerorderStatusAduitPass;
+	}
+
+	public void setComputerorderStatusAduitPass(int computerorderStatusAduitPass) {
+		ComputerorderStatusAduitPass = computerorderStatusAduitPass;
+	}
+
+	public int getComputerorderStatusAduitReject() {
+		return ComputerorderStatusAduitReject;
+	}
+
+	public void setComputerorderStatusAduitReject(int computerorderStatusAduitReject) {
+		ComputerorderStatusAduitReject = computerorderStatusAduitReject;
+	}
+
+	public int getComputerorderStatusAduitDel() {
+		return ComputerorderStatusAduitDel;
+	}
+
+	public void setComputerorderStatusAduitDel(int computerorderStatusAduitDel) {
+		ComputerorderStatusAduitDel = computerorderStatusAduitDel;
+	}
+
+	public int getComputerorderStatusAduitWait() {
+		return ComputerorderStatusAduitWait;
+	}
+
+	public void setComputerorderStatusAduitWait(int computerorderStatusAduitWait) {
+		ComputerorderStatusAduitWait = computerorderStatusAduitWait;
+	}
+
+	public int getIndividualOrder() {
+		return IndividualOrder;
+	}
+
+	public void setIndividualOrder(int individualOrder) {
+		IndividualOrder = individualOrder;
+	}
+
+	public int getClassOrder() {
+		return ClassOrder;
+	}
+
+	public void setClassOrder(int classOrder) {
+		ClassOrder = classOrder;
 	}
 	
 	
