@@ -188,7 +188,7 @@
           <select class="select2 form-control" id="inputStuClass">
 		  <option value=-1>无</option>
     		#foreach($clazz in $clazzList)
-    			<option value=$!clazz.classId>$!clazz.classname</option>
+    			<option value=$!clazz.classid>$!clazz.classname</option>
     		#end
 		  </select>
         </div>
@@ -403,6 +403,7 @@
     		var userMail = $("#inputMail").val();
     		var userCould = $("#inputStuCould").val();
 			
+			
 			if(savedFileName == "") {
 				savedFileName = alterPhoto;
 			}
@@ -431,8 +432,7 @@
     		}
 		
 		
-    		if((userCode == alterUserCode && alterUserName == userName && alterUserPass == userPass && alterClazzId == userClazz && alterTel == userTel && alterMail == userMail && alterCan == userCould && alterGroupType == 2) ||
-			   (userCode == alterUserCode && alterUserName == userName && alterUserPass == userPass && alterTel == userTel && alterMail == userMail && alterGroupType != 2)) {
+    		if((userCode == alterUserCode && alterUserName == userName && alterUserPass == userPass && alterClazzId == userClazz && alterTel == userTel && alterMail == userMail && alterCan == userCould && alterGroupType == 2)) {
     			alert("并未做修改！");
 				return;
     		} else {
