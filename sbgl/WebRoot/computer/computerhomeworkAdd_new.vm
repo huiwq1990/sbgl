@@ -146,10 +146,8 @@
   <div class="modal-body">
       <div class="row control-bar">
         <div class="select-user-group col-md-5">
-            <select class="select2 select-white"  style="width: 100%;">
-              <option value="0">班级1</option>
-              <option value="1">班级2</option>
-              <option value="2">班级3</option>
+            <select id="clazz-list" class="select2 select-white" style="width: 100%;">
+				<option value="-1">全部</option>
             </select>
         </div>
         <div class="search-user col-md-7">
@@ -198,6 +196,9 @@
 <script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
 
 <script>
+  var allClazz = {};
+  var allStu = {};
+  
   $('.input-daterange').datepicker({
     language: 'zh-CN',
     format: 'yyyy-mm-dd',
@@ -305,6 +306,17 @@ $('#inputSendTo').select2('data', preload_data );
       type: "post",
       success: function(data,textStatus,jq) {
         //console.log(data);
+		allClazz = data.allClass;
+		allStu = data.allSC;
+		
+		$("#clazz-list").empty();
+		$("#clazz-list").append('<option value="-1">全部</option>');
+		$(data.allClass).each(function(index, el) {
+		 	var c = el;
+			var clazz = '<option value="' + c.classid + '">' + c.classname + '</option>'
+			$("#clazz-list").append(clazz);
+		});
+		
         $("#user-list .media-list").empty();
         $(".select2 select-white").empty();
         $(data.allSC).each(function(index, el) {
@@ -321,6 +333,8 @@ $('#inputSendTo').select2('data', preload_data );
                               '</li>';
                   $("#user-list .media-list").append(html);
         });
+		
+		$("#clazz-list").select2("val", -1);
 
       },
       error: function(data,textStatus,jq) {
@@ -396,7 +410,42 @@ $('#inputSendTo').select2('data', preload_data );
 			 editor.html("");
 	}
 	
-	
+	//监听班级下拉列表变动
+	$("body").on("change", "#clazz-list", function() {
+		var cid = $("#clazz-list").val();
+		var html;
+		//alert(cid);
+		$("#user-list .media-list").empty();
+		$(allStu).each(function(index, el) {
+          	var user = el;
+			if(cid == -1) {
+				html = 
+                      '<li data-id="' + user.id + '" data-name="' + user.name + '" class="media">' +
+                        '<div class="pull-left">' +
+                          '<img src="' + "${imageDomain}/photo.jpg" +'" width="46" height="46">'+
+                        '</div>' +
+                        '<div class="media-body">' +
+                          '<div class="media-heading">' + user.name + '</div>' +
+                          '<div class="text-muted">' + user.className + '</div>' +
+                        '</div>' +
+                      '</li>';
+          		$("#user-list .media-list").append(html);
+			} else if(user.classId == cid) {
+				html = 
+                      '<li data-id="' + user.id + '" data-name="' + user.name + '" class="media">' +
+                        '<div class="pull-left">' +
+                          '<img src="' + "${imageDomain}/photo.jpg" +'" width="46" height="46">'+
+                        '</div>' +
+                        '<div class="media-body">' +
+                          '<div class="media-heading">' + user.name + '</div>' +
+                          '<div class="text-muted">' + user.className + '</div>' +
+                        '</div>' +
+                      '</li>';
+          		$("#user-list .media-list").append(html);
+			}
+        });
+		
+	});
 	
 </script>
 </body>
