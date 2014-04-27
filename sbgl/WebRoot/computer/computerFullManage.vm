@@ -103,7 +103,7 @@
 ##取出所有的属性名称
 #foreach($tempKey in $listRegion)
 			#set($ch = $computerFullListCh.get($tempKey))
-			#set($en = $computerFullListEn.get($tempKey))					
+			##set($en = $computerFullListEn.get($tempKey))					
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!ch.computercomputertype"></td>
                     <td>$ch.computerserialnumber<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button"
@@ -112,12 +112,13 @@
 						data-serialnumber="$!ch.computerserialnumber"
 						data-remark="$!ch.computerremark"
 						
+						data-computertype="$!ch.computercomputertype"
 						data-computermodelid="$!ch.computercomputermodelid" 
 						data-computerstatusid="$!ch.computercomputerstatusid" 
 						
-						data-iden="$!en.computerid" 
-						data-serialnumberen="$!en.computerserialnumber"						
-						data-remarken="$!en.computerremark"
+						##data-iden="$!en.computerid" 
+						##data-serialnumberen="$!en.computerserialnumber"						
+						##data-remarken="$!en.computerremark"
 						
 						
 						>修改</a></td>
@@ -168,21 +169,15 @@
   
   <div class="modal-body">
       <form class="form-horizontal" role="form">
-	
-		<input id="inputEditComputerId" type="hidden" val=""></input>
-	   	<input id="inputEditComputerIdEn" type="hidden" val=""></input>
+		<input id="inputEditComputertype" type="hidden" value=""></input>
+		<input id="inputEditComputerId" type="hidden" value=""></input>
+	   	<input id="inputEditComputerIdEn" type="hidden" value=""></input>
 		<div class="form-group">
                     <label for="inputEditComputerSerialnumber" class="col-lg-3 control-label">编号</label>
                     <div class="col-xs-7">
-                      <input type="text" class="form-control" id="inputEditComputerSerialnumber" placeholder="设备或资源的编号">
+                      <input type="text" class="form-control" id="inputEditComputerSerialnumber" placeholder="机房的编号">
                     </div>
                   </div>
-				  <!--<div class="form-group">
-                    <label for="inputEquipId" class="col-lg-3 control-label">设备英文号</label>
-                    <div class="col-xs-7">
-                      <input type="text" class="form-control" id="inputEditComputerSerialnumberEn" placeholder="设备编号">
-                    </div>
-                  </div>-->
                   <div class="form-group">
                     <label for="inputEditComputerComputercategoryid" class="col-lg-3 control-label">分类</label>
                     <div class="col-xs-7">
@@ -445,7 +440,9 @@ function getComputerByComputermodelId(computermodel){
 		$("#inputEditComputerIdEn").val(myData.iden);	
 		$("#inputEditComputerSerialnumber").val(myData.serialnumber);		
 		$('#inputEditComputerSerialnumberEn').val(myData.serialnumberen);
-
+		
+		$('#inputEditComputertype').val(myData.computertype);
+		
 		$('#inputEditComputerComputermodelid').select2("val",myData.computermodelid);
 		$('#inputEditComputerStatus').select2("val",myData.computerstatusid);
 		
@@ -459,41 +456,40 @@ function getComputerByComputermodelId(computermodel){
 //更新分类
 	$("body").on("click", "button[action-type|=updateComputerButton]", function() {
 		var _this = $(this);
-//alert( $("inputEditComputerSerialnumber").val());
-/*
-alert( $('#inputEditComputerStatus').val());
-return;*/
-			var postData = {
+
+		var postData = {
+			computertype : $("#inputEditComputertype").val(),
+			computermodelid : $("#inputEditComputerComputermodelid").val(),
+			computerstatusid : $('#inputEditComputerStatus').val(),
 			
-				computermodelid : $("#inputEditComputerComputermodelid").val(),
-				computerstatusid : $('#inputEditComputerStatus').val(),
-				
-				id : $("#inputEditComputerId").val(),
-				computerIdEn : $("#inputEditComputerIdEn").val(),
-				
-				serialnumber :  $("#inputEditComputerSerialnumber").val(),
-				computerSerialnumberEn :  $("#inputEditComputerSerialnumberEn").val(),
-				
-				remark : $('#inputEditComputerRemark').val(),
-				computerRemarkEn : $('#inputEditComputerRemarkEn').val()
-			}
+			id : $("#inputEditComputerId").val(),
+			//computerIdEn : $("#inputEditComputerIdEn").val(),
 			
-			jQuery.ajax({  
-			    url:"${webbaseurl}/updateComputerAjax.${strutsaction}",  
-			    type:"post",
-			    data:postData,
-			  	dataType: 'json',
-				success: function(data){
-				var returnJson = jQuery.parseJSON(data); 
-				if(returnJson.flag == 1){
-					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
-					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
-					console.log('this is :'+$(this));
-					refreshComputerTable();
-				}else{
-					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
-				}
-		}	});	  
+			serialnumber :  $("#inputEditComputerSerialnumber").val(),
+			//computerSerialnumberEn :  $("#inputEditComputerSerialnumberEn").val(),
+			
+			remark : $('#inputEditComputerRemark').val()
+			//computerRemarkEn : $('#inputEditComputerRemarkEn').val()
+		}
+			
+		jQuery.ajax({  
+		    url:"${webbaseurl}/updateComputerAjax.${strutsaction}",  
+		    type:"post",
+		    data:postData,
+		  	dataType: 'json',
+			success: function(data){
+    			var returnJson = jQuery.parseJSON(data); 
+    			if(returnJson.flag == 1){
+    				var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+    				_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+    				
+    				refreshComputerTable();
+    			}else{
+    				var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});					
+    				_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框
+    			}
+			}	
+		});	  
 
 	})
 	//end update

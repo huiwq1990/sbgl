@@ -62,6 +62,7 @@ public class ComputerConfig {
 	public final static int computerhomeworknotorder = 0;
 	
 	
+	public final static int computerdelstatus = -1;
 	
 	
 }

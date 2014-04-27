@@ -86,7 +86,7 @@
                         </div>
                         <div class="col-md-9">
                           <h3 class="equip-title">$tempmodel.name</h3>
-                          <p class="detail">一段文字描述。</p>
+                          <p class="detail">$!tempmodel.description</p>
                           <div class="carousel-bar">
                             <a class="btn btn-white" href="#post-equip-$!tempmodel.id" data-slide="prev"><i class="icon-chevron-left"></i></a>
                             <a class="btn btn-white" href="#post-equip-$!tempmodel.id" data-slide="next"><i class="icon-chevron-right"></i></a>
