@@ -216,6 +216,11 @@
 			return;
 		}
 		
+		if(userClazz == "" && isStu) {
+			alert("学生信息必须要有班级!");
+			return;
+		}
+		
 		var regex = /^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,3}|[0-9]{1,3})(\]?)$/;
 		var ret1 = regex.test(userMail);
 		if(userMail != "" && ret1 == false) {
