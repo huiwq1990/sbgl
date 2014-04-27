@@ -85,7 +85,7 @@
                           <img src="$pcimg.url($tempmodel.picpath)" class="img-responsive">
                         </div>
                         <div class="col-md-9">
-                          <h3 class="equip-title">$tempmodel.name</h3>
+                          <h3 class="equip-title">$!tempmodel.name</h3>
                           <p class="detail">$!tempmodel.description</p>
                           <div class="carousel-bar">
                             <a class="btn btn-white" href="#post-equip-$!tempmodel.id" data-slide="prev"><i class="icon-chevron-left"></i></a>
@@ -109,7 +109,7 @@
 								#if($tempweektableindex ==0)
 									<div class="active item table-responsive">
 								#else
-								<div class=" item table-responsive">
+								<div class="item table-responsive">
 								#end
                                 <table class="table" data-table-name="$tempmodel.name">
 									
@@ -223,113 +223,8 @@
 <script src="${jsDomain}/computer/computerorder.js"></script>
 
 <script>
-function CreatePostBookingTable(rowCount,cellCount,startDate) {
-	var tableName = "MAC工作站"
-	var tableContainer = $("<table class='table' data-table-name='" + tableName + "'></table>");
-	var index = 0;				// 单元格索引
-	var html = "";
-	var num = 9;				// 可预约数
-	var day;
-	var week;
-	var bookInfo = "<strong>"+ num + "</strong><div class='info'>可预约</div>"
-	html =
-		"<thead>" +
-		"<tr>";
-	for(var i = 0; i< cellCount; i++) {			// 生成表头（时间）
-		if(i == 0) {
-			html += "<th class='time-slot'>" + "时间" + "</th>";
-		}
-		else {			
-			day = startDate.toString('MM/d');
-			week = startDate.toString('dddd');
-			html += "<th>" + day + "<br/>" + week + "</th>";
-			startDate.addDays(1);
-		}
-	}
-	html +=
-		"</tr>" +
-		"</thead>";
-	  
-	html +=
-		"<tbody>";
-	for(var i = 0; i < (rowCount - 1); i++) {
-		html += "<tr>";
-		for(var j = 0; j < cellCount; j++) {
-			if(j == 0) {
-				html += "<td class='time-slot'>";
-				switch(i)
-				{
-				case 0:
-					html += "上午";
-					break;
-				case 1:
-					html += "下午";
-					break;
-				case 2:
-					html += "晚上";
-					break;
-				}
-				html += "</td>";
-			}
-			else {
-				index++;
-				html += "<td class='bookable' data-index='" + index + "' data-slot='" + i + "' data-max-num='9'>" + bookInfo + "</td>";				  
-			} // if
-		} // for 
-		html += "</tr>";
-	}// for
-	html += "</tbody>";
-  
-	$(tableContainer).appendTo($("#createtable"));
-	//$(html).appendTo(tableContainer);
-}
-function getBookingTime(bookingData, startDate) {
-	var index = bookingData.index;
-	var timeSlot = bookingData.slot;
-	var curdate = bookingData.date;
-	var timeSlotStr = "";
-	var selectedDate = "";
-	// 第几星期(上、下 、晚 7 * 3)
-	var weekTimes = parseInt(index / 21) + 1;
-	if (index % (7 * 3) == 0) {
-		weekTimes = weekTimes - 1;	
-	}
-	var dayWeekIndex = index % 7;								// 7天内的第几天		
-	if (dayWeekIndex == 0) {
-		dayWeekIndex = 7;							// 第7天
-	}
-	var dayIndex = 7 * ( weekTimes - 1 ) + dayWeekIndex;				// 第几天
-	
-	switch(timeSlot)
-	{
-	case 2:
-		timeSlotStr = "上午";
-		break;
-	case 4:
-		timeSlotStr = "下午";
-		break;
-	case 6:
-		timeSlotStr = "晚上";
-		break;
-	}
-	startDate.addDays(dayIndex - 1);
-	var date = startDate.toString('MMMd日 dddd');
-	selectedDate = curdate + " " + timeSlotStr;
-	//alert(timeSlotStr + ", index=" + index + ", weekTimes=" + weekTimes + ", dayWeekIndex=" + dayWeekIndex + ", dayIndex=" + dayIndex);
-	return selectedDate;
-}
-  
+ 
 $(window).load(function(){
-	XDate.locales['zh-CN'] = {
-		monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-		monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-		dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六']
-	};
-	XDate.defaultLocale = 'zh-CN';
-	var startDate = new XDate();
-	CreatePostBookingTable(4, 8, startDate);
-  
 	$('#datepicker').datepicker({
 		language: 'zh-CN',
 		format: 'yyyy-mm-dd',
@@ -381,12 +276,7 @@ $(window).load(function(){
 //end Order
 	
 	
-	
-	
-	
-	
-	
-	
+
 	
 });
 </script>

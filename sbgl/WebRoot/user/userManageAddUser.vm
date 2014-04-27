@@ -108,7 +108,7 @@
                       <select class="select2 form-control" id="inputStuClass">
 						<option value=-1>无</option>
 						#foreach($clazz in $clazzList)
-							<option value=$!clazz.classId>$!clazz.classname</option>
+							<option value=$!clazz.classid>$!clazz.classname</option>
 						#end
                       </select>
                     </div>

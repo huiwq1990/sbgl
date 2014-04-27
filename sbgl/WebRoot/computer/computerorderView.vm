@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 订单查看</title>
+<title>北京电影学院摄影系 - 查看预约记录</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -54,42 +54,31 @@
             </div>        
             <div class="col-md-7">                  
                 
-				#parse("include/includeComputerorderList.vm")
+				      #parse("include/includeComputerorderList.vm")
             
-			</div>
+            </div>
             <div class="col-md-5">
                 <div class="thumbnail">
                   <div class="hd">
-                    <h3>订单状态</h3>
+                    <h3>状态</h3>
                   </div>
                   <div class="caption">
-                     
-                      <hr>
-                      <strong> 
-						#set($curstatus = $computerorderFull.computerorderstatus)
-                        <td> #parse("computer/includeComputerorderStatus.vm") </td>
-                        <td>#if($!computerorderFull.computerorderordertype==2) 
-								课程预约 
-							#else 
-								个人预约 
-							#end</td>
-					  </strong><br>      
-						
-						
-						
-               
-					 #if($curstatus == $ComputerorderStatusAduitReject)
-						 <hr />
-						 <!--
-						 <strong>预约人可进行的操作: </strong><br>-->
-						#if($!computerorderFull.computerorderordertype==2) 
-							<a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}\toComputerClassorder.${strutsaction}?computerorderid=$!computerorderFull.computerorderid&computerhomeworkid=$!computerorderFull.computerordercomputerhomeworkid&reorder=1">重新预约</a>
-						#elseif($!computerorderFull.computerorderordertype==1)  
-							<a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}\toComputerIndividualorder.${strutsaction}?computerorderid=$!computerorderFull.computerorderid&reorder=1">重新预约</a>
-						#else
-							错误
-							#end
-						#end
+
+						        #set($curstatus = $computerorderFull.computerorderstatus)
+                      #parse("computer/includeComputerorderStatus.vm")
+                      
+                      #if($curstatus == $ComputerorderStatusAduitReject)
+            						 <!--
+            						 <strong>预约人可进行的操作: </strong><br>-->
+            						#if($!computerorderFull.computerorderordertype==2) 
+                        <hr />
+            							<a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}\toComputerClassorder.${strutsaction}?computerorderid=$!computerorderFull.computerorderid&computerhomeworkid=$!computerorderFull.computerordercomputerhomeworkid&reorder=1">重新预约</a>
+            						#elseif($!computerorderFull.computerorderordertype==1)  
+            							<a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}\toComputerIndividualorder.${strutsaction}?computerorderid=$!computerorderFull.computerorderid&reorder=1">重新预约</a>
+            						#else
+            							错误
+            							#end
+            						#end
                        </div>
                 </div>
                 <div class="thumbnail">
@@ -103,7 +92,7 @@
                       <br>
 					  <span class="rent-num"><strong> 预约号：$!computerorderFull.computerorderserialnumber</strong></span>
 					   #set($currentcomputerorderordertype=$computerorderFull.computerorderordertype)					 
-						 <div class="rent-contact">预约方式：#parse("include/includeComputerorderType.vm")</div>
+						 <div class="rent-contact">预约类型：#parse("include/includeComputerorderType.vm")</div>
 					
                      <!-- <div class="rent-contact">联系方式：XXXXXX</div> -->
 					 #if($computerorderFull.computerorderremark)

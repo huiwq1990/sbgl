@@ -25,9 +25,9 @@
                 </div>              
               </div>-->
               <ul class="status-filter nav nav-pills pull-right">
-                <li class="active" id="-1" action-type="selectGroup" data-id="-1"><a href="#">全部($sum)</a></li>
+                <li class="classsel active" id="-1" action-type="selectGroup" data-id="-1"><a href="#">全部($sum)</a></li>
 				#foreach($group in $stuGroupList)
-                    <li id="$group.id" action-type="selectGroup" data-id="$group.id"><a href="#">$!group.name<span>($!group.sum)</span></a></li>
+                    <li class="classsel" id="$group.id" action-type="selectGroup" data-id="$group.id"><a href="#">$!group.name<span>($!group.sum)</span></a></li>
 				#end
               </ul>
             </div><!--control-bar end-->
