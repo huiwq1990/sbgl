@@ -106,7 +106,6 @@
                     <label for="inputStuClass" class="col-lg-2 control-label">班级</label>
                     <div class="col-lg-4">
                       <select class="select2 form-control" id="inputStuClass">
-						<option value=-1>无</option>
 						#foreach($clazz in $clazzList)
 							<option value=$!clazz.classid>$!clazz.classname</option>
 						#end

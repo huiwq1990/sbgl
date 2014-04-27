@@ -49,10 +49,18 @@ public class RoomReservationAction extends ActionSupport {
 			for (Clazz c : allClazz) {
 				if( stuList != null ) {
 					for (Student stu : stuList) {
+						dto = new StuInClassDto();
 						if( stu.getClassid().equals( c.getClassid() ) ) {
-							dto = new StuInClassDto();
 							dto.setClassId( c.getClassid() );
 							dto.setClassName( c.getClassname() );
+							dto.setStudentid( stu.getStudentid() );
+							dto.setId( stu.getId() );
+							dto.setName( stu.getName() );
+							dto.setPhoto( stu.getPhoto() );
+							dtoList.add( dto );
+						} else {
+							dto.setClassId( -1 );
+							dto.setClassName( "无班级" );
 							dto.setStudentid( stu.getStudentid() );
 							dto.setId( stu.getId() );
 							dto.setName( stu.getName() );
