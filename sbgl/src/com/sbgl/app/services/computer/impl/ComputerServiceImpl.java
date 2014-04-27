@@ -42,24 +42,7 @@ public class ComputerServiceImpl implements ComputerService{
 	private ComputerstatusDao computerstatusDao;
 	
 	//http://blog.csdn.net/softimes/article/details/7008875 实体添加时需要配置hibernate
-	@Override
-	public void addComputer(Computer computer){
-		computer.setId(baseDao.getCode("Computer"));
-		baseDao.saveEntity(computer);		
-	}
 
-	
-	@Override
-	public void addComputer(Computer ch,Computer en){
-		int type = baseDao.getCode("Computertype");
-		ch.setId(baseDao.getCode("Computer"));
-		ch.setComputertype(type);
-		en.setId(baseDao.getCode("Computer"));
-		en.setComputertype(type);
-		baseDao.saveEntity(ch);	
-		baseDao.saveEntity(en);	
-	}
-	
 	@Override
 	public void addComputerAndSetNum(Computer ch,Computer en,int availBorrow,int originalTotalNum,int originalAvailBorrowNum){
 		int type = baseDao.getCode("Computertype");
@@ -78,12 +61,7 @@ public class ComputerServiceImpl implements ComputerService{
 			baseDao.createSQL(" update Computermodel set availableborrowcountnumber="+(originalAvailBorrowNum+1)+"  where computermodeltype = "+ch.getComputermodelid());
 		}
 	}
-	
-	@Override
-	public void addComputerWithId(Computer computer){
-	
-		baseDao.saveEntity(computer);		
-	}
+
 
 //  根据id删除实体	
 	@Override
@@ -141,20 +119,7 @@ public class ComputerServiceImpl implements ComputerService{
 		
 		return 1;
 	}
-	
-	@Override
-	public void updateComputer(Computer computer){
-		
-		Computer tempComputer = new Computer();
-		//tempComputer = baseDao.getEntityById(Computer.class, computer.getId());
-		tempComputer = computer;
-		//add your code here
-		
-		
-		baseDao.updateEntity(tempComputer);
 
-	}
-	
 	@Override
 	public void updateComputer(Computer ch,Computer en,int orignialComputerModelType,int nowAviBow,int orgAviBow) throws DataError{
 		
@@ -192,22 +157,37 @@ public class ComputerServiceImpl implements ComputerService{
 			Computermodel orgCm = orgCmList.get(0);
 			Computermodel curCm = curCmList.get(0);
 			
-//			修改原有模型数量
+			if(orgCm.getAvailableborrowcountnumber() == null){
+				orgCm.setAvailableborrowcountnumber(0);
+			}	
 			
+			if(curCm.getAvailableborrowcountnumber() == null){
+				curCm.setAvailableborrowcountnumber(0);
+			}	
+			
+//			修改原有模型数量
+			String sql = "";
 //			如果原来机器不可借,只要将模型的总数减一
 			if( orgAviBow != ComputerConfig.computeravailableborrowstatusid ){
-				baseDao.createSQL(" update Computermodel set computercount="+(orgCm.getComputercount()-1)+"  where computermodeltype = "+orgCm.getComputermodeltype());
+				sql = " update Computermodel set computercount="+(orgCm.getComputercount()-1)+"  where computermodeltype = "+orgCm.getComputermodeltype();
+				baseDao.createSQL(sql);
 			}else{
 //				原来模型可借，需要将可借数量减一
-				baseDao.createSQL(" update Computermodel set computercount="+(orgCm.getComputercount()-1)+" and availableborrowcountnumber="+(orgCm.getAvailableborrowcountnumber()-1)+"  where computermodeltype = "+orgCm.getComputermodeltype());	
+				sql = " update Computermodel set computercount="+(orgCm.getComputercount()-1)+" , availableborrowcountnumber="+(orgCm.getAvailableborrowcountnumber()-1)+"  where computermodeltype = "+orgCm.getComputermodeltype();
+				baseDao.createSQL(sql);	
 			}
+			
+			System.out.println(sql);
 			
 //			修改后的模型 ，如果不可借，只将模型总数量加一
 			if( nowAviBow != ComputerConfig.computeravailableborrowstatusid ){
-				baseDao.createSQL(" update Computermodel set computercount="+(curCm.getComputercount()+1)+"  where computermodeltype = "+curCm.getComputermodeltype());
+				sql = " update Computermodel set computercount="+(curCm.getComputercount()+1)+"  where computermodeltype = "+curCm.getComputermodeltype();
+				baseDao.createSQL(sql);
 			}else{
-				baseDao.createSQL(" update Computermodel set computercount="+(curCm.getComputercount()+1)+" and availableborrowcountnumber="+(curCm.getAvailableborrowcountnumber()+1)+"  where computermodeltype = "+orgCm.getComputermodeltype());	
+				sql = " update Computermodel set computercount="+(curCm.getComputercount()+1)+" , availableborrowcountnumber="+(curCm.getAvailableborrowcountnumber()+1)+"  where computermodeltype = "+curCm.getComputermodeltype();
+				baseDao.createSQL(sql);	
 			}
+			System.out.println(sql);
 		}
 
 	
@@ -215,7 +195,7 @@ public class ComputerServiceImpl implements ComputerService{
 
 		
 		baseDao.updateEntity(ch);
-		baseDao.updateEntity(en);
+//		baseDao.updateEntity(en);
 	}
 	
 	
@@ -229,6 +209,15 @@ public class ComputerServiceImpl implements ComputerService{
 	}
 	
 
+	public Computer selectComputerByTypeAndLanguage(int type,int language){
+		List<Computer> l =  computerDao.selectComputerByCondition(" where computertype="+type + " and languagetype="+language);
+		if(l == null){
+			return null;
+		}else{
+			return l.get(0);
+		}
+	}
+	
 //	根据id查询实体类			
 	@Override
 	public Computer selectComputerById(Integer computerId){		
@@ -331,6 +320,7 @@ public class ComputerServiceImpl implements ComputerService{
 //			 return true;
 //		 }
 //	 }
+
 
 
 }

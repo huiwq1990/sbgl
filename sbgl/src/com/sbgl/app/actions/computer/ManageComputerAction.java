@@ -464,8 +464,8 @@ public class ManageComputerAction extends BaseAction{
 		pageNo = page.getPageNo();
 		
 		computerFullListCh = computerService.selectComputerFullByConditionAndPage(sqlch, page);
-		computerFullListEn = computerService.selectComputerFullByConditionAndPage(sqlen, page);
-		System.out.println(computerFullListCh.size()+" " + computerFullListEn.size());
+//		computerFullListEn = computerService.selectComputerFullByConditionAndPage(sqlen, page);
+//		System.out.println(computerFullListCh.size()+" " + computerFullListEn.size());
 		
 //		computer的model及分类信息，只显示中文的
 		String categorysqlch = " where a.languagetype="+ComputerConfig.languagech+" order by a.computercategorytype,a.languagetype";
@@ -556,7 +556,7 @@ public class ManageComputerAction extends BaseAction{
 		
 		
 
-		this.totalcount = countlist.size();
+		this.totalcount = countlist.size()/2;
 		page = PageActionUtil.getPage(totalcount, pageNo);
 		pageNo = page.getPageNo();
 		

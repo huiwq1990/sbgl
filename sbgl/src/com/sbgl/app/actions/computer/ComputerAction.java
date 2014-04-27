@@ -24,6 +24,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.actions.common.BaseAction;
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.entity.*;
@@ -250,9 +251,9 @@ public class ComputerAction extends BaseAction implements ModelDriven<Computer>{
 		computerService.deleteComputerByType(delTypeList);
 
 			
-			returnInfo = "删除成功!";
-			returnStr = ComputerActionUtil.buildReturnStr(ComputerConfig.ajaxsuccessreturn,returnInfo);
-			return SUCCESS;
+		returnInfo = "删除成功!";
+		returnStr = ComputerActionUtil.buildReturnStr(ComputerConfig.ajaxsuccessreturn,returnInfo);
+		return SUCCESS;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -267,12 +268,18 @@ public class ComputerAction extends BaseAction implements ModelDriven<Computer>{
 	}
 
 
+	/*
+	 * 修改信息检查
+	 */
 	public boolean passCheckUpdate(){
 		
 //		String re = 
-		if(computer.getId()==0 || computer.getSerialnumber()==null || computer.getSerialnumber().trim().equals("") ||
+		if(computer==null || computer.getId()==0 || computer.getSerialnumber()==null || computer.getSerialnumber().trim().equals("") ||
 				computer.getComputermodelid()== null || computer.getComputermodelid()==0 ||
 				computer.getComputerstatusid()== null || computer.getComputerstatusid() ==0){
+			this.returnInfo = "提交的机器信息不完整";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);	
 			return false;
 		}
 		
@@ -283,24 +290,26 @@ public class ComputerAction extends BaseAction implements ModelDriven<Computer>{
 	
 	//ajax 修改
 	public String updateComputerAjax(){
-		log.info(logprefix + "updateComputerAjax,id="+computer.getId()+"  " + computerIdEn+"  end");
+		log.info(logprefix + "updateComputerAjax,Computertype="+computer.getComputertype());
 		
 		try {
+		
 			
-		if(!passCheckUpdate()){
-			this.returnInfo = "数据不完整";
-			log.info(returnInfo);
-			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+		if(!passCheckUpdate()){			
 			return SUCCESS;
 		}
-		
-		
 
-		
-			
-			System.out.println("computer.getSerialnumber()"+computer.getSerialnumber());
 //			ch
-			Computer tempch = computerService.selectComputerById(computer.getId());
+			Computer tempch = computerService.selectComputerByTypeAndLanguage(computer.getComputertype(),CommonConfig.languagech);
+			
+			if(tempch == null){
+				this.returnInfo = "获取机器信息失败";
+				log.info(returnInfo);
+				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);	
+				return SUCCESS; 
+			}
+			
+//			int 
 			int originalComputerStatus = tempch.getComputerstatusid();
 			int orignialComputerModelType = tempch.getComputermodelid();
 			tempch.setSerialnumber(computer.getSerialnumber());
@@ -308,15 +317,14 @@ public class ComputerAction extends BaseAction implements ModelDriven<Computer>{
 			tempch.setComputerstatusid(computer.getComputerstatusid());
 			tempch.setRemark(computer.getRemark());
 			
-			log.info("tempch.getComputerstatusid()"+tempch.getComputerstatusid());
 		
-			
+			Computer tempen = new Computer();
 //			en
-			Computer tempen = computerService.selectComputerById(computerIdEn);
-			tempen.setSerialnumber(computerSerialnumberEn);
-			tempen.setComputermodelid(computer.getComputermodelid());			
-			tempen.setComputerstatusid(computer.getComputerstatusid());
-			tempen.setRemark(computerRemarkEn);
+//			Computer tempen = computerService.selectComputerById(computerIdEn);
+//			tempen.setSerialnumber(computerSerialnumberEn);
+//			tempen.setComputermodelid(computer.getComputermodelid());			
+//			tempen.setComputerstatusid(computer.getComputerstatusid());
+//			tempen.setRemark(computerRemarkEn);
 			
 			
 			
@@ -349,10 +357,10 @@ public class ComputerAction extends BaseAction implements ModelDriven<Computer>{
 		}
 
 
-			this.returnInfo = "系统内部错误，修改失败";
-			log.info(returnInfo);
-			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
-			return SUCCESS;
+		this.returnInfo = "系统内部错误，修改失败";
+		log.info(returnInfo);
+		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+		return SUCCESS;
 	}
 	
 	

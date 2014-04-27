@@ -9,11 +9,9 @@ import com.sbgl.util.*;
 
 public interface ComputerService{
 	
-	public void addComputer(Computer computer);
-	
-	public void addComputerWithId(Computer computer);
-		
-	public void updateComputer(Computer computer);
+
+
+
 	
 //  根据id删除实体	
 	public int deleteComputer(Integer computerId);
@@ -47,7 +45,6 @@ public interface ComputerService{
 	void updateComputermodelTo(int originalComputermodelid,
 			int toComputermodelid);
 
-	void addComputer(Computer ch, Computer en);
 
 	List<ComputerFull> selectComputerFullByConditionAndPage(
 			String conditionSql, Page page);
@@ -75,6 +72,9 @@ public interface ComputerService{
 
 	void addComputerAndSetNum(Computer ch, Computer en, int availBorrow,
 			int originalTotalNum, int originalAvailBorrowNum);
+					
+	public Computer selectComputerByTypeAndLanguage(int computertype,
+			int languagech);
 
 
 	

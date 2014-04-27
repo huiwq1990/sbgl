@@ -1,49 +1,50 @@
-        <div class="panel panel-default table-responsive">                          
+				<div class="panel panel-default table-responsive">                          
               <table class="table table-hover">
                 <thead>
                   <tr>
                     <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
                     <th class="id">编号</th>
                     <th class="name">名称(型号)</th>
-          <!--
+					<!--
                     <th class="categories">分类</th>-->
                     <th class="status">状态</th>
                     <th class="remark">备注</th>
                   </tr>
                 </thead>
                 <tbody>
-        <!--数据开始 -->
+				<!--数据开始 -->
 #set($listSize = $computerFullListCh.size() - 1)
 ##判断数据是否为空
 #if($listSize>=0)
 #set($listRegion = [0..$listSize])
 ##取出所有的属性名称
 #foreach($tempKey in $listRegion)
-      #set($ch = $computerFullListCh.get($tempKey))
-      #set($en = $computerFullListEn.get($tempKey))         
+			#set($ch = $computerFullListCh.get($tempKey))
+			##set($en = $computerFullListEn.get($tempKey))					
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!ch.computercomputertype"></td>
                     <td>$ch.computerserialnumber<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button"
-            action-type="editComputerFillIn" 
-            data-id="$!ch.computerid" 
-            data-serialnumber="$!ch.computerserialnumber"
-            data-remark="$!ch.computerremark"
-            
-            data-computermodelid="$!ch.computercomputermodelid" 
-            data-computerstatusid="$!ch.computercomputerstatusid" 
-            
-            data-iden="$!en.computerid" 
-            data-serialnumberen="$!en.computerserialnumber"           
-            data-remarken="$!en.computerremark"
-            
-            
-            >修改</a></td>
+						action-type="editComputerFillIn" 
+						data-id="$!ch.computerid" 
+						data-serialnumber="$!ch.computerserialnumber"
+						data-remark="$!ch.computerremark"
+						
+						data-computertype="$!ch.computercomputertype"
+						data-computermodelid="$!ch.computercomputermodelid" 
+						data-computerstatusid="$!ch.computercomputerstatusid" 
+						
+						##data-iden="$!en.computerid" 
+						##data-serialnumberen="$!en.computerserialnumber"						
+						##data-remarken="$!en.computerremark"
+						
+						
+						>修改</a></td>
                     <td>$ch.computermodelname</td>
-          <!--
+					<!--
                     <td>$ch.computermodelname</td>-->
                     <td>$!ch.computerstatusname</td>
                     <td>$!ch.computerremark</td>
-                  </tr>         
+                  </tr>				  
 #end
 #end
 <!--
@@ -55,14 +56,13 @@
                     <td>预约/使用中</td>
                     <td><a rel="popover" class="lk" href="#" data-original-title="" title="">XXX</a>于2013-10-11至2013-10-15借用</a>。</td>
                   </tr>        
-          -->
+				  -->
                 </tbody>
               </table>              
-               </div>
-      
-         <!--page bar-->
-         #parse("include/includePagebar.vm")
-
+           		 </div>
+			
+				 <!--page bar-->
+				 #parse("include/includePagebar.vm")
 
  <script>
 totalpage = $page.totalpagenum;
