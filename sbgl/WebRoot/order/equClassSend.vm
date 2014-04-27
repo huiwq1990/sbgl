@@ -134,7 +134,7 @@
       <div class="row control-bar">
         <div class="select-user-group col-md-5">
             <select id="clazzsel" class="select2 select-white"  style="width: 100%;">
-				<option value="0">全部</option>
+				<option value="-1">全部</option>
 			#foreach($clazz in $claszzList)
 				<option value="$clazz.classId">$clazz.classname</option>
 			#end
@@ -190,6 +190,9 @@
 
 
 <script>
+	var allClazz = {};
+  	var allStu = {};
+  
 	$('.input-daterange').datepicker({
 		language: 'zh-CN',
 		format: 'yyyy-mm-dd',
@@ -308,6 +311,17 @@
       type: "post",
       success: function(data,textStatus,jq) {
         //console.log(data);
+		allClazz = data.allClass;
+		allStu = data.allSC;
+		
+		$("#clazzsel").empty();
+		$("#clazzsel").append('<option value="-1">全部</option>');
+		$(data.allClass).each(function(index, el) {
+		 	var c = el;
+			var clazz = '<option value="' + c.classid + '">' + c.classname + '</option>'
+			$("#clazzsel").append(clazz);
+		});
+		
         $("#user-list .media-list").empty();
         $(".select2 select-white").empty();
         $(data.allSC).each(function(index, el) {
@@ -332,7 +346,7 @@
     });
   });
   
-  
+  /*
   $("body").on("change", "#clazzsel", function() {
 		var cid = $("#clazzsel").val();
 		if(cid==0){
@@ -354,7 +368,7 @@
             });
 		}
 	});
-	
+	*/
 	// 获取全部班级和学生信息
   $("body").on('click', 'span[data-type|=searchuser]', function(event) {
     	var username = $("#usertext").val();
@@ -467,6 +481,43 @@
 				}
 			}	  
 		});
+	});
+	
+	//监听班级下拉列表变动
+	$("body").on("change", "#clazzsel", function() {
+		var cid = $("#clazzsel").val();
+		var html;
+		//alert(cid);
+		$("#user-list .media-list").empty();
+		$(allStu).each(function(index, el) {
+          	var user = el;
+			if(cid == -1) {
+				html = 
+                      '<li data-id="' + user.id + '" data-name="' + user.name + '" class="media">' +
+                        '<div class="pull-left">' +
+                          '<img src="' + "${imageDomain}/photo.jpg" +'" width="46" height="46">'+
+                        '</div>' +
+                        '<div class="media-body">' +
+                          '<div class="media-heading">' + user.name + '</div>' +
+                          '<div class="text-muted">' + user.className + '</div>' +
+                        '</div>' +
+                      '</li>';
+          		$("#user-list .media-list").append(html);
+			} else if(user.classId == cid) {
+				html = 
+                      '<li data-id="' + user.id + '" data-name="' + user.name + '" class="media">' +
+                        '<div class="pull-left">' +
+                          '<img src="' + "${imageDomain}/photo.jpg" +'" width="46" height="46">'+
+                        '</div>' +
+                        '<div class="media-body">' +
+                          '<div class="media-heading">' + user.name + '</div>' +
+                          '<div class="text-muted">' + user.className + '</div>' +
+                        '</div>' +
+                      '</li>';
+          		$("#user-list .media-list").append(html);
+			}
+        });
+		
 	});
 </script>
 </body>
