@@ -25,6 +25,7 @@ import com.sbgl.app.entity.CourseFull;
 import com.sbgl.app.entity.Equipmenborrow;
 import com.sbgl.app.entity.Equipment;
 import com.sbgl.app.entity.Equipmentclassification;
+import com.sbgl.app.entity.Equipmentgroup;
 import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.entity.Ordercourserule;
 import com.sbgl.app.entity.Ordercourseruledetail;
@@ -120,14 +121,25 @@ public class OrderAdminServiceImpl implements  OrderAdminService{
 		String[] str = ids.split(",");
 		for(int i=0;i<str.length;i++){
 			String[] str2 = str[i].split("_");
-			Equipment equipment = baseDao.getEntityById(Equipment.class, Integer.parseInt(str2[0]));  
+			Equipment equipment; 
+			Equipmentgroup equipmentgroup;
 			Ordercourseruledetail ordercourseruledetail = new Ordercourseruledetail();
+			if(str2[2].equals("1")){
+				equipment = baseDao.getEntityById(Equipment.class, Integer.parseInt(str2[0]));  
+				ordercourseruledetail.setComid(equipment.getComid());
+				ordercourseruledetail.setLantype(equipment.getLantype());
+				ordercourseruledetail.setEquipmentid(equipment.getEquipmentid());
+			}else{
+				equipmentgroup = baseDao.getEntityById(Equipmentgroup.class, Integer.parseInt(str2[0]));  
+				ordercourseruledetail.setComid(equipmentgroup.getComid());
+				ordercourseruledetail.setLantype(equipmentgroup.getLantype());
+				ordercourseruledetail.setEquipmentid(equipmentgroup.getEquipmentgroupid());
+			}
 			ordercourseruledetail.setCourseruleid(ordercourserule.getCourseruleid());
 			ordercourseruledetail.setApplynumber(Integer.parseInt(str2[1]));
+			ordercourseruledetail.setIsgroup(Integer.parseInt(str2[2]));
 			ordercourseruledetail.setCourseruledetailid(baseDao.getCode("Ordercourseruledetail"));
-			ordercourseruledetail.setComid(equipment.getComid());
-			ordercourseruledetail.setLantype(equipment.getLantype());
-			ordercourseruledetail.setEquipmentid(equipment.getEquipmentid());
+			
 			baseDao.saveEntity(ordercourseruledetail);
 		}
 		

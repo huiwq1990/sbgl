@@ -413,6 +413,7 @@
             	var myData = $(elem).data();
 				var equid = myData.modelId;
 				var equnum = $("#equ"+equid).val();
+				var equtype = myData.modeltype;
 				if(isNaN($("#equ"+equid).val())){
 					alert("请填入数字！");
 					ids="";
@@ -423,7 +424,7 @@
 					ids="";
 					return;
 				}
-				ids+=equid+"_"+equnum+",";
+				ids+=equid+"_"+equnum+"_"+equtype+",";
 				//alert(myData.modelId);
 			}
         });
