@@ -347,7 +347,6 @@
 	});
 	
 	$("body").on("click", "button[action-type|=addGroup]", function() {	
-		alert(1);
 		$.ajax({
 			url: "${webbaseurl}/addEquipmentGroup.do",
 			type: 'POST',
