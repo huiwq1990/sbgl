@@ -25,5 +25,9 @@ public List<Computerstatus> selectComputerstatusByCondition(String condition);
 //  分页查询 实体full
 	public List<ComputerstatusFull> selectComputerstatusFullByPage(Page page);
 
+	List<Computerstatus> sel();
+
+	List<ComputerstatusFull> selFull();
+
  
 }

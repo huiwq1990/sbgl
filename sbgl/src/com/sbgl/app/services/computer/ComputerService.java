@@ -76,6 +76,14 @@ public interface ComputerService{
 	public Computer selectComputerByTypeAndLanguage(int computertype,
 			int languagech);
 
+	List<Computer> selByCategorytype(int categorytype, int language);
+
+	List<ComputerFull> selFullByCategorytype(int categorytype, int language);
+
+	List<Computer> selByModeltype(int modeltype, int language);
+
+	List<ComputerFull> selFullByModeltype(int modeltype, int language);
+
 
 	
 }

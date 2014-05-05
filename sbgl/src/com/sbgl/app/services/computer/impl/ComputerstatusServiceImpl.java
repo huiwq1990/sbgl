@@ -69,6 +69,18 @@ public class ComputerstatusServiceImpl implements ComputerstatusService{
 
 	}
 
+	/**
+	 * 查询全部状态
+	 */
+	@Override
+	public List<Computerstatus> sel() {
+		 return computerstatusDao.sel();
+	}
+	@Override
+	public List<ComputerstatusFull> selFull() {
+		 return computerstatusDao.selFull();
+	}
+	
 //	根据id查询实体类			
 	@Override
 	public Computerstatus selectComputerstatusById(Integer computerstatusId){		
@@ -81,6 +93,9 @@ public class ComputerstatusServiceImpl implements ComputerstatusService{
 		return baseDao.getAllEntity(Computerstatus.class);
 		
 	}
+	
+	
+	
 	
 //	根据id查询full类
 	@Override

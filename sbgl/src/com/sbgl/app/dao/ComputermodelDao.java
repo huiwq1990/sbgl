@@ -36,6 +36,10 @@ public List<Computermodel> selectComputermodelByCondition(String condition);
 
 	public List<ComputermodelFull> selectComputermodelFullByComputercategoryId(Integer computercategoryid );
 
+	int countRow(String condition);
+
+	List<Computermodel> selByCategorytype(int categoryType, int language);
+
 
 
  

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sbgl.app.entity.Computer;
 import com.sbgl.app.entity.ComputerFull;
+import com.sbgl.app.entity.Computermodel;
 import com.sbgl.util.*;
 
 public interface ComputerDao{
@@ -32,5 +33,14 @@ public List<Computer> selectComputerByCondition(String condition);
 
 	public List<ComputerFull> selectComputerFullByComputermodelId(Integer computermodelid );
 
- 
+	List<Computer> selByModeltype(List<Integer> modeltypeList, int language);
+
+	List<ComputerFull> selFullByModeltype(List<Integer> modeltypeList,
+			int language);
+
+	List<Computer> selByModeltype(int modeltype, int language);
+
+	List<ComputerFull> selFullByModeltype(int modeltype, int language);
+
+
 }

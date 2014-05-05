@@ -123,44 +123,20 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>{
 			userGroupList = new ArrayList<Usergroup>();
 		}
 		
-                
-//      分页查询 
-		String courseSqlCh = " where  a.languagetype = "+CommonConfig.languagech;
-		
-		String courseSqlEn = " where  a.languagetype = "+CommonConfig.languageen;
-		
-		if(usergroupid != 0){
-			courseSqlCh += "  and a.type="+usergroupid ;			
-			courseSqlEn += "  and a.type="+usergroupid ;
-		}
-		courseFullListCh  = courseService.selectCourseFullByCondition(courseSqlCh);
-		if(courseFullListCh == null){
-	     courseFullListCh = new ArrayList<CourseFull>();
-	    }
-
-		for(CourseFull c : courseFullListCh){
-			System.out.println(c.getCoursename());
-		}
-		 
-        this.totalcount = courseFullListCh.size();
+        this.totalcount = courseService.countRowByGrade(usergroupid)/2;
         page = PageActionUtil.getPage(totalcount, pageNo);
         pageNo = page.getPageNo();
         
-    	courseFullListCh  = courseService.selectCourseFullByConditionAndPage( courseSqlCh,page);        
-        courseFullListEn  = courseService.selectCourseFullByConditionAndPage(courseSqlEn, page);
-		 if(courseFullListCh == null){
+    	courseFullListCh  = courseService.selFullByGradePage(usergroupid, page, CommonConfig.languagech); 
+        courseFullListEn  = courseService.selFullByGradePage(usergroupid, page, CommonConfig.languageen); 
+        
+        if(courseFullListCh == null){
 		     courseFullListCh = new ArrayList<CourseFull>();
-		    }
-			 
-			 if(courseFullListEn == null){
-		        	courseFullListEn = new ArrayList<CourseFull>();
-		     } 
+        }
+        if(courseFullListEn == null){
+	    	courseFullListEn = new ArrayList<CourseFull>();
+        } 
 
-       
-       
-//      for(int i = 0; i < computerhomeworkFullList.size(); i++){
-//      	System.out.println("id=");
-//      }
         if(callType!=null&&callType.equals("ajaxType")){
 			return "success2";
         }else{

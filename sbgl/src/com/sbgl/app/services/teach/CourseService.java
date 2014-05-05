@@ -59,6 +59,14 @@ public interface CourseService{
 	Course selectCourseByCoursetype(Integer coursetype, int language);
 
 	CourseFull selectCourseFullByCoursetype(Integer coursetype, int language);
+
+
+
+	int countRowByGrade(int grade);
+
+	List<CourseFull> selFullByGrade(Integer grade, int language);
+
+	List<CourseFull> selFullByGradePage(Integer grade, Page page, int language);
 		
 	
 	

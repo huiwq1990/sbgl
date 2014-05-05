@@ -33,11 +33,9 @@ public List<Computercategory> selectComputercategoryByCondition(String condition
 
 	public List<ComputercategoryFull> selectComputercategoryFullByComputercategoryId(Integer parentcomputercategoryid );
 
-	List<Computercategoryi18n> selectComputercategoryi18nByConditionAndPage(
-			String conditionSql, Page page);
 
-	List<Computercategoryi18n> selectComputercategoryi18nByCondition(
-			String conditionSql);
+
+	int countRow(String condition);
 
  
 }

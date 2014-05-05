@@ -66,6 +66,7 @@ import com.sbgl.app.services.teach.CourseconfigService;
 import com.sbgl.app.services.user.ClazzService;
 import com.sbgl.app.services.user.GroupService;
 import com.sbgl.util.ComputerDirective;
+import com.sbgl.util.ExceptionUtil;
 import com.sbgl.util.Page;
 import com.sbgl.util.SpringContextUtil;
 import com.sbgl.util.SpringUtil;
@@ -216,9 +217,86 @@ public class ManageComputerAction extends BaseAction{
 
 	
 	
+	//管理 查询
+	public String manageComputercategoryFull(){
+		try{
+			
+		log.info("exec action method:manageComputercategoryFull");
+		
+//      分页查询		
+		//设置总数量，由于是双语 除2
+		this.totalcount = computercategoryService.countComputercategoryRow()/2;
+		page = PageActionUtil.getPage(totalcount, pageNo);
+		pageNo = page.getPageNo();
+		
+//		查询中文的分类
 	
+		computercategoryFullListCh  = computercategoryService.selFullByPage(page, CommonConfig.languagech);
+		if(computercategoryFullListCh == null){
+			computercategoryFullListCh = new ArrayList<ComputercategoryFull>();
+		}
+		
+//		查询英文的分类
+		computercategoryFullListEn  = computercategoryService.selFullByPage(page, CommonConfig.languageen);
+		
+//		获取category model map
+		List<Integer> ctypeList =  new ArrayList<Integer>(); 
+		for(ComputercategoryFull full : computercategoryFullListCh){
+			ctypeList.add(full.getComputercategorycomputercategorytype());
+		}
+		computermodelByComputercategoryId = computermodelService.getCategoryModelMap(ctypeList,CommonConfig.languagech);
+		
+		for(ComputercategoryFull categoryFull : computercategoryFullListCh){
+			int categoryType = categoryFull.getComputercategorycomputercategorytype();
+			ArrayList<Computermodel> entry = computermodelByComputercategoryId.get(categoryType);
+//		for (Entry<Integer, ArrayList<Computermodel>> entry : computermodelByComputercategoryId.entrySet()) {
+			computercategoryModelSize.add(entry.size());
+			
+			int computersize = 0;
+			if(entry != null && entry.size() > 0){
+				for(Computermodel m : entry){
+//					System.out.println(m.getComputercount());
+					if(m.getComputercount() != null){
+						computersize += m.getComputercount();
+					}					
+				}
+			}
+			
+			computercategoryComputerSize.add(computersize);
+		}
+		
+
+		if(computercategoryFullList == null){
+			computercategoryFullList = new ArrayList<ComputercategoryFull>();
+		}
+		
+		if(computercategoryFullListEn == null){
+			computercategoryFullListEn = new ArrayList<ComputercategoryFull>();
+		}	
+		if(computercategoryModelSize == null){
+			computercategoryModelSize = new ArrayList<Integer>();
+		}
+		if(computercategoryComputerSize == null){
+			computercategoryComputerSize = new ArrayList<Integer>();
+		}
+
+		if(callType!=null&&callType.equals("ajaxType")){
+			return "success2";
+		}else{
+			return "success";
+		}
+		
+		}catch(Exception e){
+			e.printStackTrace();
+			String msg = "";
+			ExceptionUtil.recordExcetion(msg, e);
+		}finally{
+			
+		}
+		return "error";
+	}	
 	
-	
+	/*
 			
 	//管理 查询
 	public String manageComputercategoryFull(){
@@ -289,7 +367,8 @@ public class ManageComputerAction extends BaseAction{
 		}else{
 			return "success";
 		}
-	}			
+	}	
+	*/
 	
 	
 //	获取种类到模型的map
@@ -467,19 +546,21 @@ public class ManageComputerAction extends BaseAction{
 //		computerFullListEn = computerService.selectComputerFullByConditionAndPage(sqlen, page);
 //		System.out.println(computerFullListCh.size()+" " + computerFullListEn.size());
 		
+		
 //		computer的model及分类信息，只显示中文的
-		String categorysqlch = " where a.languagetype="+ComputerConfig.languagech+" order by a.computercategorytype,a.languagetype";
-//		System.out.println(categorysqlch);
-		computercategoryFullList  = computercategoryService.selectComputercategoryFullByCondition(categorysqlch);
-//		System.out.println("computercategoryFullList size:"+computercategoryFullList.size());
+		computercategoryFullList  = computercategoryService.selFull(ComputerConfig.languagech);
 		//分类与PC模型map
-		categoryModelMap();
+		List<Integer> ctypeList =  new ArrayList<Integer>(); 
+		for(ComputercategoryFull full : computercategoryFullList){
+			ctypeList.add(full.getComputercategorycomputercategorytype());
+		}
+		computermodelByComputercategoryId = computermodelService.getCategoryModelMap(ctypeList, CommonConfig.languagech);
 		
 		
 		//pc所有状态
-		computerstatusFullList  = computerstatusService.selectComputerstatusFullByCondition("");//查询所有的状态
-		computerstatusList  = computerstatusService.selectComputerstatusByCondition("");//查询所有的状态
-//		log.info("computerstatusList" + computerstatusList.size());
+		computerstatusFullList  = computerstatusService.selFull();//查询所有的状态
+		
+		System.out.println(computerstatusList.size());
 		
 		if(computerFullListCh == null){
 			computerFullListCh = new ArrayList<ComputerFull>();
@@ -490,8 +571,8 @@ public class ManageComputerAction extends BaseAction{
 		if(computermodelByComputercategoryId == null){
 			computermodelByComputercategoryId = new HashMap<Integer,ArrayList<Computermodel>>();
 		}
-		if(computerstatusList == null){
-			computerstatusList = new ArrayList<Computerstatus>();
+		if(computerstatusFullList == null){
+			computerstatusFullList = new ArrayList<ComputerstatusFull>();
 		}
 		
 
@@ -530,6 +611,57 @@ public class ManageComputerAction extends BaseAction{
 		
 	}
 	
+	
+	public String manageComputermodelFull(){
+		try{
+		log.info("exec action method:manageComputermodelFull"+computercategorytype );
+
+
+		totalcount = computermodelService.countRow(computercategorytype)/2;
+		page = PageActionUtil.getPage(totalcount, pageNo);
+		pageNo = page.getPageNo();
+		
+		
+		//查询中文的Model		
+		computermodelFullListCh  = computermodelService.selFullByPage(computercategorytype, page, CommonConfig.languagech);
+		//查询英文的Model
+		computermodelFullListEn  = computermodelService.selFullByPage(computercategorytype, page, CommonConfig.languageen);
+		
+		//model的分类信息，只显示中文的
+		computercategoryList  = computercategoryService.sel(CommonConfig.languagech);
+		
+		if(computermodelFullListCh == null){
+			computermodelFullListCh = new ArrayList<ComputermodelFull>();
+		}
+		if(computermodelFullListEn == null){
+			computermodelFullListEn = new ArrayList<ComputermodelFull>();
+		}
+		if(computercategoryFullList == null){
+			computercategoryFullList = new ArrayList<ComputercategoryFull>();
+		}
+		if(computercategoryList == null){
+			computercategoryList = new ArrayList<Computercategory>();
+		}
+		
+
+		//进入管理界面直接请求，Ajax请求使用AjaxType
+		if(callType!=null&&callType.equals("ajaxType")){
+			return "success2";
+		}else{
+			return "success1";
+		}
+		
+		
+		}catch(Exception e){
+			e.printStackTrace();
+			String msg = "";
+			ExceptionUtil.recordExcetion(msg, e);
+		}finally{
+			
+		}
+		return "error";
+	}
+	/*
 	//管理ComputermodelFull
 	public String manageComputermodelFull(){
 		log.info("exec action method:manageComputermodelFull"+computercategorytype );
@@ -564,7 +696,7 @@ public class ManageComputerAction extends BaseAction{
 		
 		
 		//查询中文的Model		
-		log.info("computermodelFullListCh: " + sqlch);
+//		log.info("computermodelFullListCh: " + sqlch);
 		computermodelFullListCh  = computermodelService.selectComputermodelFullByConditionAndPage(sqlch , page);
 //		log.info("computermodelFullListCh.size"+ computermodelFullListCh.size());
 		//查询英文的Model
@@ -572,10 +704,7 @@ public class ManageComputerAction extends BaseAction{
 //		System.out.println("ssss"+computermodelFullListEn.size());
 		
 		//model的分类信息，只显示中文的
-//		String categorysqlch = " where a.languagetype="+ComputerConfig.languagech+" order by a.computercategorytype,a.languagetype";
-//		computercategoryFullList  = computercategoryService.selectComputercategoryFullByCondition(categorysqlch);
-		String categorysqlch = " where a.languagetype="+ComputerConfig.languagech+" order by a.computercategorytype,a.languagetype";
-		computercategoryList  = computercategoryService.selectComputercategoryByCondition(categorysqlch);
+		computercategoryList  = computercategoryService.sel(CommonConfig.languagech);
 		
 		if(computermodelFullListCh == null){
 			computermodelFullListCh = new ArrayList<ComputermodelFull>();
@@ -599,6 +728,7 @@ public class ManageComputerAction extends BaseAction{
 		}
 	}			
 	
+	*/
 	
 	
 	
@@ -607,24 +737,21 @@ public class ManageComputerAction extends BaseAction{
 	 * @return
 	 */
 	public String toAddComputerPage(){
-//		String sqlch = " where a.languagetype="+ ComputerConfig.languagech +" order by a.computercategorytype";
-//		computercategoryFullList  = computercategoryService.selectComputercategoryFullByConditionAndPage(sqlch , page);
-//		sqlch = " where a.languagetype=0 order by a.computermodeltype ";		
-//		computermodelFullList  = computermodelService.selectComputermodelFullByConditionAndPage(sqlch , page);
-//		
-		
-		String categorysqlch = " where a.languagetype="+ComputerConfig.languagech+" order by a.computercategorytype";
-//		System.out.println(categorysqlch);
-		computercategoryFullList  = computercategoryService.selectComputercategoryFullByCondition(categorysqlch);
-//		System.out.println("computercategoryFullList size:"+computercategoryFullList.size());
+		try{
+		computercategoryFullList  = computercategoryService.selFull(CommonConfig.languagech);
+		System.out.println("computercategoryFullList size:"+computercategoryFullList.size());
 		//分类与PC模型map
-		categoryModelMap();
+		List<Integer> ctypeList =  new ArrayList<Integer>(); 
+		for(ComputercategoryFull full : computercategoryFullList){
+			ctypeList.add(full.getComputercategorycomputercategorytype());
+		}
+		computermodelByComputercategoryId = computermodelService.getCategoryModelMap(ctypeList, CommonConfig.languagech);
 		
+		System.out.println(computermodelByComputercategoryId.size());
 		//PC状态
-		computerstatusList  = computerstatusService.selectComputerstatusByCondition("");//查询所有的状态
+		computerstatusList  = computerstatusService.sel();//查询所有的状态
 		
-//		int a = computermodelByComputercategoryId.get(computercategoryFullList.get(0).getComputercategorycomputercategorytype()).size();
-//		log.info("sdfasfa"+a);
+
 		if(computermodelFullList == null){
 			computermodelFullList = new ArrayList<ComputermodelFull>();
 		}
@@ -639,6 +766,15 @@ public class ManageComputerAction extends BaseAction{
 		}
 		
 		return SUCCESS;
+		
+		}catch(Exception e){
+			e.printStackTrace();
+			String msg = "";
+			ExceptionUtil.recordExcetion(msg, e);
+		}finally{
+			
+		}
+		return "error";
 	}
 	
 	
@@ -758,18 +894,16 @@ public class ManageComputerAction extends BaseAction{
 	 * computermodelByComputercategoryId
 	 */
 	public String toAddComputerhomeworkPage(){
+		try{
+			
 		log.info("exec action method: toAddComputerhomeworkPage");
 		
 
 //		获取全部分类信息
-		String categorysqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";	
-		computercategoryList  = computercategoryService.selectComputercategoryByCondition(categorysqlch);
-//		获取全部模型信息
-		String modelsqlen = " where a.languagetype=1 order by a.computermodeltype,a.languagetype";
-		computermodelList  =  computermodelService.selectComputermodelByCondition(modelsqlen);
-		
+		computercategoryList  = computercategoryService.sel(CommonConfig.languagech);
+
 //		将模型与分类关联
-		computermodelByComputercategoryId = ComputerActionUtil.categoryModelMap(computercategoryList,computermodelList);
+		computermodelByComputercategoryId = computermodelService.getCategoryModelMapByCategoryList(computercategoryList, CommonConfig.languagech);
 	
 //		查询可以选择的预约规则
 		computerorderclassruleFullList  = computerorderclassruleService.selectComputerorderclassruleFullByCondition("");
@@ -778,7 +912,8 @@ public class ManageComputerAction extends BaseAction{
 //		课程组信息
 		usergroupList = groupService.getUserGroupByType(CommonConfig.usergroupstudentid);		
 //		课程信息
-		courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+CommonConfig.languagech);
+		
+		courseFullList  = courseService.selFullByGrade(0, CommonConfig.languagech);
 		courseFullByGroupId = TeachActionUtil.couseFullUsergroupMap(usergroupList, courseFullList);
 		
 //		classStuListMap = clazzService.getAllClazzDetail();
@@ -791,6 +926,16 @@ public class ManageComputerAction extends BaseAction{
 		}
 		
 		return SUCCESS;
+		
+		}catch(Exception e){
+			e.printStackTrace();
+			String msg = "";
+			ExceptionUtil.recordExcetion(msg, e);
+		}finally{
+			
+		}
+		return "error";
+		
 	}	
 	
 	

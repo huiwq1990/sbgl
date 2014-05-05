@@ -283,6 +283,9 @@ public class ComputerAction extends BaseAction implements ModelDriven<Computer>{
 			return false;
 		}
 		
+		
+//		if()
+		
 		return true;
 		
 	

@@ -38,6 +38,43 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
 	
 	private final String basicComputermodelSql = "From Computermodel  as a ";
 	
+	private final String countSql = "select count(*) from Computermodel as a ";
+	
+	
+	/**
+	 * 根据类型查询模型
+	*/
+	@Override
+	public List<Computermodel> selByCategorytype(int categoryType,int language){
+		String sqlch = " where a.status >=0 " +
+						  " and a.languagetype="+language+
+						  " and a.computercategoryid = "+categoryType+
+						  " order by a.computermodeltype,a.languagetype";		
+		ArrayList<Computermodel> list  = (ArrayList<Computermodel>) selectComputermodelByCondition(sqlch );
+		if(list == null){
+			list = new ArrayList<Computermodel>();
+		}
+		
+		return list;
+	}
+	
+	/**
+	 * 根据modeltype删除model,设置status为-1
+	 */
+//	@Override
+//	public void delByType(int modeltype){
+//		String sql = "update Computermodel as tb set tb.computercategoryid = -1 where tb.computercategoryid =  " + computercategoryid;
+//		baseDao.createSQL(sql);		
+//	}
+	
+	@Override
+	public int countRow(String condition) {
+		Long count = (Long)this.getSession()
+         .createQuery(countSql + condition)
+         .uniqueResult();
+		return count.intValue();
+		
+	}
 	
 //	构建某一个型号，某一时段 某一天的可借数量         天的长度是可提前预约的天数（预约n天内的PC）
 	public 	HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> computermodelPeriodDayInfo(int currentPeriod , List<Borrowperiod> borrowperiodList,int computeroderadvanceorderday){

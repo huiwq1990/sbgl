@@ -218,6 +218,43 @@ public class ComputerServiceImpl implements ComputerService{
 		}
 	}
 	
+	
+	@Override
+	public  List<Computer> selByModeltype(int modeltype,int language){		
+		return computerDao.selByModeltype(modeltype, language);
+	}	
+	@Override
+	public  List<ComputerFull> selFullByModeltype(int modeltype,int language){		
+		return computerDao.selFullByModeltype(modeltype, language);
+	}
+	
+	/**
+	 * 根据分类查询
+	 */
+	@Override
+	public  List<Computer> selByCategorytype(int categorytype,int language){
+		List<Computermodel> modeltypeList = computermodelDao.selByCategorytype(categorytype, language);
+		
+		List<Integer> modellist = new ArrayList<Integer>();
+		
+		for(Computermodel m : modeltypeList){
+			modellist.add(m.getComputermodeltype());
+		}
+		
+		return computerDao.selByModeltype(modellist, language);
+	}	
+	@Override
+	public  List<ComputerFull> selFullByCategorytype(int categorytype,int language){
+		List<Computermodel> modeltypeList = computermodelDao.selByCategorytype(categorytype, language);	
+		List<Integer> modellist = new ArrayList<Integer>();
+		for(Computermodel m : modeltypeList){
+			modellist.add(m.getComputermodeltype());
+		}		
+		return computerDao.selFullByModeltype(modellist, language);
+	}
+	
+	
+	
 //	根据id查询实体类			
 	@Override
 	public Computer selectComputerById(Integer computerId){		

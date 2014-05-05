@@ -362,6 +362,8 @@
 		var myData = $(this).data();
 	//	console.log(data);
 	//	alert(myData.computercategoryid);
+		//设置图片上传的提示为空
+		$("#inputModelPicSpanEdit").html("");
 		$('#modifyModelCategoryId').select2("val",myData.computercategoryid);
 		$("#modifyModelName").val(myData.name);
 		$('#modifyDescribe').val(myData.description);

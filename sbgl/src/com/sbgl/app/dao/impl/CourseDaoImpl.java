@@ -34,6 +34,66 @@ public class CourseDaoImpl extends HibernateDaoSupport implements CourseDao{
 			"from Course a  left join Loginuser b on a.adduserid=b.id left join Loginuser c on a.teacherid=c.id left join Usergroup d on a.type=d.id ";
 	
 	private final String basicCourseSql = "From Course as a ";
+	private final String countSql = "select count(*) from Course as a ";
+	
+	
+	/**
+	 * 根据年级查询数据
+	 * @param grade
+	 * @return
+	 */
+	@Override
+	public int countRowByGrade(int grade){
+		
+		String condition = "";
+		if(grade !=0){
+			condition = " where a.status >=0  and a.type=" + grade;
+		}else{
+			condition = " where a.status >=0 " ;
+		}
+		
+		Long count = (Long)this.getSession()
+        .createQuery(countSql + condition)
+        .uniqueResult();
+		return count.intValue();
+	}
+	
+	@Override
+	public List<CourseFull> selFullByGrade(Integer grade, int language){
+		String sql = "";
+		if(grade == 0){
+			 sql =" where a.status >=0 " +
+	  				" and a.languagetype="+language+
+
+	  				" order by a.id";	
+		}else{
+			 sql =" where a.status >=0 " +
+				" and a.languagetype="+language+
+
+				" and a.type="+grade+
+				" order by a.id";				
+		}
+		return this.selectCourseFullByCondition(sql);
+	}
+	
+	@Override
+	public List<CourseFull> selFullByGradePage(Integer grade,Page page,int language){
+		String sql = "";
+		if(grade == 0){
+			 sql =" where a.status >=0 " +
+	  				" and a.languagetype="+language+
+
+	  				" order by a.id";	
+		}else{
+			 sql =" where a.status >=0 " +
+				" and a.languagetype="+language+
+
+				" and a.type="+grade+
+				" order by a.id";				
+		}
+		return this.selectCourseFullByConditionAndPage(sql,page);
+	}
+	
 	
 //	根据课程类型、语言类型查询实体类			
 	@Override

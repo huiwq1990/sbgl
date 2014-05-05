@@ -188,42 +188,27 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 		periodList =  BorrowperiodUtil.getBorrowperiodList();
 		dayList = TeachActionUtil.getDayList();
 		
-
 //		查询computer分类模型信息
-		String categorySqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";	
-		computercategoryList  = computercategoryService.selectComputercategoryByCondition(categorySqlch);		
-		
-		String modelSqlch = " where a.languagetype=0  ";	
-		computermodelList  = computermodelService.selectComputermodelByCondition(modelSqlch);	
-		System.out.println(computercategoryList.size());
-		
-		computermodelByComputercategoryId = ComputerActionUtil.categoryModelMap(computercategoryList, computermodelList);
+		computercategoryList  = computercategoryService.sel(CommonConfig.languagech);
+//		将模型与分类关联
+		computermodelByComputercategoryId = computermodelService.getCategoryModelMapByCategoryList(computercategoryList, CommonConfig.languagech);
+	
 		
 //		课程组信息
 		usergroupList = groupService.getUserGroupByType(CommonConfig.usergroupstudentid);		
 //		课程信息
-		courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+CommonConfig.languagech);
+		courseFullList  = courseService.selFullByGrade(0, CommonConfig.languagech);
 		courseFullByGroupId = TeachActionUtil.couseFullUsergroupMap(usergroupList, courseFullList);
-		System.out.println(courseFullList.size());
-		System.out.println("courseFullByGroupId size:"+courseFullByGroupId.size());
-//		 System.out.println("courseFullByIdGroupId"+courseFullByGroupId.get(1).get(0).getCoursename());
-//		System.out.println(computermodelByComputercategoryId.get(-1).size());
-		 
 
-//		构建学生组课程
-		setCourseMapByStudentgroup();
-		
-	     if(courseFullList == null){
+	    if(courseFullList == null){
 	        	courseFullList = new ArrayList<CourseFull>();
-	        }
+	    }
 		if(computercategoryFullList == null){
 			 computercategoryFullList = new ArrayList<ComputercategoryFull>();
-		}
-		
+		}		
 		if(computermodelByComputercategoryId == null){
 			computermodelByComputercategoryId = new HashMap<Integer,ArrayList<Computermodel>>();
-		}
-		
+		}		
 		if(courseFullByGroupId == null){
 			courseFullByGroupId = new HashMap<Integer,ArrayList<CourseFull>>();
 		}
@@ -231,17 +216,17 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 		return SUCCESS;
 		
 		
-	}catch(DataError d){
-
-//		d.printStackTrace();
-		log.error("没有配置学期信息");
-		return TeachConstant.notsetcourseconfig;
-	}catch(Exception e){
-		e.printStackTrace();
-		log.error("类CoursescheduleAction的方法：addBbstagfavourite错误"+e);
-	}
-	
-	return "error";
+		}catch(DataError d){
+		
+		//		d.printStackTrace();
+			log.error("没有配置学期信息");
+			return TeachConstant.notsetcourseconfig;
+		}catch(Exception e){
+			e.printStackTrace();
+			log.error("类CoursescheduleAction的方法：addBbstagfavourite错误"+e);
+		}
+		
+		return "error";
 	}
 	
 	
@@ -273,24 +258,20 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 				selweek= courseconfig.getWeeknum();
 			}
 			
-//			构建学生组课程
-			setCourseMapByStudentgroup();
+
 
 //			查询computer分类模型信息
-			String categorySqlch = " where a.languagetype="+CommonConfig.languagech+" order by a.computercategorytype,a.languagetype";	
-			computercategoryList  = computercategoryService.selectComputercategoryByCondition(categorySqlch);					
-			String modelSqlch = " where a.languagetype=0  ";	
-			computermodelList  = computermodelService.selectComputermodelByCondition(modelSqlch);	
-			System.out.println(computercategoryList.size());
-//			构建分类模型的map
-			computermodelByComputercategoryId = ComputerActionUtil.categoryModelMap(computercategoryList, computermodelList);
+			computercategoryList  = computercategoryService.sel(CommonConfig.languagech);
+//			将模型与分类关联
+			computermodelByComputercategoryId = computermodelService.getCategoryModelMapByCategoryList(computercategoryList, CommonConfig.languagech);
+		
 			
+//			课程组信息
+			usergroupList = groupService.getUserGroupByType(CommonConfig.usergroupstudentid);		
 //			课程信息
-			courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+CommonConfig.languagech);
-			System.out.println("课程数目："+courseFullList.size());
-			 
-//			System.out.println(computermodelByComputercategoryId.get(-1).size());
-			 
+			courseFullList  = courseService.selFullByGrade(0, CommonConfig.languagech);
+			System.out.println("test  "+courseFullList.size()+"  sss");
+			courseFullByGroupId = TeachActionUtil.couseFullUsergroupMap(usergroupList, courseFullList);
 
 		     if(courseFullList == null){
 		        	courseFullList = new ArrayList<CourseFull>();
@@ -679,8 +660,12 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 
 			setComputermodelByCategoryid();
 			
-//			构建学生组课程
-			setCourseMapByStudentgroup();
+//			课程组信息
+			usergroupList = groupService.getUserGroupByType(CommonConfig.usergroupstudentid);		
+//			课程信息
+			courseFullList  = courseService.selFullByGrade(0, CommonConfig.languagech);
+			courseFullByGroupId = TeachActionUtil.couseFullUsergroupMap(usergroupList, courseFullList);
+			
 //			System.out.println(courseFullList.size());
 			 
 //			System.out.println(computermodelByComputercategoryId.get(-1).size());
@@ -766,27 +751,6 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 	}
 	
 
-//	构建学生组与课程的关系
-	public void setCourseMapByStudentgroup(){
-//		课程组信息
-		usergroupList = groupService.getUserGroupByType(CommonConfig.usergroupstudentid);		
-//		课程信息
-		courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+CommonConfig.languagech);
-		courseFullByGroupId = TeachActionUtil.couseFullUsergroupMap(usergroupList, courseFullList);
-		
-	     if(courseFullList == null){
-	        	courseFullList = new ArrayList<CourseFull>();
-	        }
-		if(computercategoryFullList == null){
-			 computercategoryFullList = new ArrayList<ComputercategoryFull>();
-		}
-		
-		if(computermodelByComputercategoryId == null){
-			computermodelByComputercategoryId = new HashMap<Integer,ArrayList<Computermodel>>();
-		}
-		
-	}
-	
 	//del entityfull Ajax
 	public String deleteCoursescheduleAjax( ){
 		try{

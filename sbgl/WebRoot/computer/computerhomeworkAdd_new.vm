@@ -208,6 +208,8 @@
 
 var preload_data = [];
 function formatText2NameForSelect2(item) { return item.name; }
+
+
 $('#inputSendTo').select2({
       multiple: true,
       preload_data:{ results: preload_data, text: 'name' },
@@ -224,7 +226,6 @@ $('#inputSendTo').select2({
       }
   });
 $('#inputSendTo').select2('data', preload_data );
-
 
 
   var editor;
@@ -287,7 +288,7 @@ $('#inputSendTo').select2('data', preload_data );
               jQuery.each(userList, function(){
                   if(query.term.length == 0 || this.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0 ){
                       data.results.push({id: this.id, text: this.name });
-                      alert(data.results.id);
+                      //alert(data.results.id);
                   }
               }); 
               query.callback(data);

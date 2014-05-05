@@ -146,6 +146,38 @@ public class CourseServiceImpl implements CourseService{
 		return true;		
 
 	}
+	
+	/**
+	 * 根据年级查询数据
+	 * @param grade
+	 * @return
+	 */
+	@Override
+	public int countRowByGrade(int grade){
+		return courseDao.countRowByGrade(grade);
+	}
+	
+	/**
+	 * 根据年级查询课程
+	 * @param grade
+	 * @param language
+	 * @return
+	 */
+	@Override
+	public List<CourseFull> selFullByGrade(Integer grade, int language){
+		return courseDao.selFullByGrade(grade, language);
+	}
+			
+	@Override
+	public List<CourseFull> selFullByGradePage(Integer grade,Page page,int language){
+		return courseDao.selFullByGradePage(grade, page, language);
+	}
+	
+//	
+//	public List<CourseFull> selectCourseFullByPage(Page page){
+//		
+//	}
+	
 //	根据类型查询实体类			
 	@Override
 	public CourseFull selectCourseFullByCoursetype(Integer coursetype,int language){

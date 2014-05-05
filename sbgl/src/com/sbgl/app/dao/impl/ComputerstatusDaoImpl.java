@@ -29,6 +29,17 @@ public class ComputerstatusDaoImpl extends HibernateDaoSupport implements Comput
 	
 	private final String basicComputerstatusSql = "From Computerstatus as a ";
 	
+	@Override
+	public List<Computerstatus> sel( ) {
+		return this.selectComputerstatusByCondition("");
+		
+	}
+	@Override
+	public List<ComputerstatusFull> selFull( ) {
+		return this.selectComputerstatusFullByCondition("");
+		
+	}
+	
 	// 根据条件查询查询实体
 	@Override
 	public List<Computerstatus> selectComputerstatusByCondition(String condition) {

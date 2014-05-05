@@ -6,7 +6,7 @@
 		<!-- default entity manage action -->
     	<action name="manageComputercategory" class="ManageComputerAction" method="manageComputercategory">
         	<result name="success">/computer/computercategoryManage.vm</result>
-        	<result name="error">/error.vm</result> 
+        	<result name="error">/404.vm</result> 
         </action>
 		
 		<!-- entity full manage  -->		
@@ -14,7 +14,7 @@
     	<action name="manageComputercategoryFull" class="ManageComputerAction" method="manageComputercategoryFull">
         	<result name="success">/computer/computercategoryFullManage.vm</result>
         	<result name="success2">/computer/computercategoryFullManageContent.vm</result>
-        	<result name="error">/error.vm</result> 
+        	<result name="error">/404.vm</result> 
         </action>		
     </package>
     

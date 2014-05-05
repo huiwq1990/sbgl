@@ -116,6 +116,8 @@
 						data-computermodelid="$!ch.computercomputermodelid" 
 						data-computerstatusid="$!ch.computercomputerstatusid" 
 						
+						data-computercategoryid="$!ch.computermodelcomputercategoryid" 
+						
 						##data-iden="$!en.computerid" 
 						##data-serialnumberen="$!en.computerserialnumber"						
 						##data-remarken="$!en.computerremark"
@@ -189,7 +191,7 @@
 ##取出所有的属性名称
 #foreach($tempKey in $listRegion)
 			#set($ch = $computercategoryFullList.get($tempKey))						
-                        <option value="$!ch.computercategoryid" >$!ch.computercategoryname</option>                      
+                        <option value="$!ch.computercategorycomputercategorytype" >$!ch.computercategoryname</option>                      
                         
 #end
 #end						
@@ -448,10 +450,64 @@ function getComputerByComputermodelId(computermodel){
 		
 		$('#inputEditComputerRemark').val(myData.remark);
 		$('#inputEditComputerRemarkEn').val(myData.remarken);
+
+		$('#inputEditComputerComputercategoryid').select2("val",myData.computercategoryid);
+		
+		
+		
+    	#foreach($categoryfull in ${computercategoryFullList})	       		
+    		if (myData.computercategoryid == $!categoryfull.computercategorycomputercategorytype) {
+    
+        		#set($modelList = $computermodelByComputercategoryId.get($categoryfull.computercategorycomputercategorytype))
+        		
+        		html = '';
+        			#foreach($model in ${modelList})
+                       html +=   '<option value="$!model.computermodeltype">$!model.name</option> ';
+        			#end
+        		
+        		$("#inputEditComputerComputermodelid").empty();
+        		$("#inputEditComputerComputermodelid").append(html);
+        		
+        		#if($modelList.size() > 0)
+					$('#inputEditComputerComputermodelid').select2("val",myData.computermodelid);
+        			//$("#s2id_inputEquipModelId > a > span").append("$!modelList.get(0).name");
+        		#end    		
+    		}
+    		
+    	#end
+		
 		
 		
 	});
 // end 填充修改框
+
+
+
+    (function($){
+        $("#inputEditComputerComputercategoryid").on("change", function(e) {
+        	var html;
+        	$("#s2id_inputEditComputerComputermodelid > a > span").empty();
+        	#foreach($categoryfull in ${computercategoryFullList})	
+           		
+        		if (e.val == $!categoryfull.computercategorycomputercategorytype) {
+    				#set($modelList = $computermodelByComputercategoryId.get($categoryfull.computercategorycomputercategorytype))
+    
+            		html = '';
+            			#foreach($model in ${modelList})
+                           html +=   '<option value="$!model.computermodeltype">$!model.name</option> ';
+            			#end
+            		
+            		$("#inputEditComputerComputermodelid").empty();
+            		$("#inputEditComputerComputermodelid").append(html);
+            		
+            		#if($modelList.size() > 0)
+            			$("#s2id_inputEditComputerComputermodelid > a > span").append("$!modelList.get(0).name");
+            		#end
+        		
+        		}        		
+        	#end
+        })
+    })(jQuery);
 
 //更新分类
 	$("body").on("click", "button[action-type|=updateComputerButton]", function() {

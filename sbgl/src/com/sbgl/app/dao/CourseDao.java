@@ -29,6 +29,12 @@ public List<Course> selectCourseByCondition(String condition);
 
 	List<Course> selectCourseByCoursetype(Integer coursetype, int language);
 
+	int countRowByGrade(int grade);
+
+	List<CourseFull> selFullByGradePage(Integer grade, Page page, int language);
+
+	List<CourseFull> selFullByGrade(Integer grade, int language);
+
 
  
 }

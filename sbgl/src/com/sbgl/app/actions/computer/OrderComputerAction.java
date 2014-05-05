@@ -194,7 +194,7 @@ public class OrderComputerAction  extends BaseAction {
 		
 		
 		
-		computercategoryList = computercategoryService.selectComputercategoryAll(currentlanguagetype);
+		computercategoryList = computercategoryService.sel(CommonConfig.languagech);
 		
 		if(selComputercategory ==0){
 			computermodelList = computermodelService.selectComputermodelAll(currentlanguagetype);

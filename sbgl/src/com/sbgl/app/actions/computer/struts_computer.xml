@@ -20,7 +20,7 @@
 
     	<action name="toAddComputerPage" class="ManageComputerAction" method="toAddComputerPage">
         	<result name="success">/computer/computerAdd.vm</result>
-        	<result name="error">/error.vm</result> 
+        	<result name="error">/404.vm</result> 
         </action>
 	</package>
 

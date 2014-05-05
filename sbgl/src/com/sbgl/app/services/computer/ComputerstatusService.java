@@ -49,6 +49,12 @@ public interface ComputerstatusService{
 	
 	// 查询实体full        
         public List<ComputerstatusFull>  selectComputerstatusFullByConditionAndPage(String condition,final Page page);
+
+
+
+		List<ComputerstatusFull> selFull();
+
+		List<Computerstatus> sel();
 		
 	
 //根据关联查询实体	

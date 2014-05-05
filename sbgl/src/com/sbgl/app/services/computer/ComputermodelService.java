@@ -1,5 +1,7 @@
 package com.sbgl.app.services.computer;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.sbgl.app.entity.Computercategory;
@@ -14,13 +16,13 @@ public interface ComputermodelService{
 	public void addComputermodelWithId(Computermodel computermodel);
 		
 	public void updateComputermodel(Computermodel computermodel);
-	
+	/*
 //  根据id删除实体	
 	public int deleteComputermodel(Integer computermodelId);
 
 //  根据实体删除实体
 	public int deleteComputermodel(Computermodel computermodel);
-	
+	*/
 //	根据id查询实体类		
 	public Computermodel selectComputermodelById(Integer computermodelId);
 
@@ -33,8 +35,8 @@ public interface ComputermodelService{
 //  查询全部full
 	public List<ComputermodelFull> selectComputermodelFullAll();
 		
-//  查询数量
-	public int countComputermodelRow();
+
+
 //  分页查询
 	public List<Computermodel> selectComputermodelByPage(Page page);
 	public List<ComputermodelFull> selectComputermodelFullByPage(Page page);
@@ -77,6 +79,24 @@ public interface ComputermodelService{
 			Integer computercategoryid, int language);
 
 	List<Computermodel> selectComputermodelAll(int language);
+
+	HashMap<Integer, ArrayList<Computermodel>> getCategoryModelMap(
+			List<Integer> categoryTypeList, int language);
+
+
+	List<Computermodel> selByCategoryType(int categoryType, int language);
+
+	List<Computermodel> selByCategoryType(List<Integer> categoryTypeList,
+			int language);
+
+//  查询数量
+	int countRow(int categorytype);
+
+	List<ComputermodelFull> selFullByPage(int categorytype, Page page,
+			Integer language);
+
+	HashMap<Integer, ArrayList<Computermodel>> getCategoryModelMapByCategoryList(
+			List<Computercategory> categoryList, int language);
 
 	
 		

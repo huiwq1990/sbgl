@@ -21,7 +21,7 @@
                         </div>
                       </div>
                       <a class="pull-left" data-toggle="modal" href="#equip-detail" role="button">
-                        <img src="${computerImagePath}/$tempComputerorderdetailFullList.get(0).computermodelpicpath" width="100" height="100">
+                        <img src="${computerImagePath}/${tempComputerorderdetailFullList.get(0).computermodelpicpath}" width="100" height="100">
                       </a>
                       <div class="media-body">
 						#foreach($temporder in $tempComputerorderdetailFullList)

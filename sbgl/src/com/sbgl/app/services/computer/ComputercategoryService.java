@@ -47,7 +47,7 @@ public interface ComputercategoryService{
 		
 
 ////查询所有的父级分类
-public List<Computercategory> selectParentComputercategory() ;
+//public List<Computercategory> selectParentComputercategory() ;
 
 List<ComputercategoryFull> selectShowedComputercategoryFullByPage(Page page);
 
@@ -58,11 +58,6 @@ void addComputercategory(Computercategory chcomputercategory,
 
 
 
-List<Computercategoryi18n> selectComputercategoryi18nByCondition(
-		String conditionSql);
-
-List<Computercategoryi18n> selectComputercategoryi18nByConditionAndPage(
-		String conditionSql, Page page);
 
 int deleteComputercategoryByType(Integer computercategoryType);
 
@@ -86,6 +81,16 @@ int deleteComputercategoryByType(List<Integer> computercategoryTypeList);
 void updateComputercategory(Computercategory ch, Computercategory en);
 
 List<Computercategory> selectComputercategoryAll(int language);
+
+
+
+
+
+List<ComputercategoryFull> selFullByPage(Page page, Integer language);
+
+List<Computercategory> sel(Integer language);
+
+List<ComputercategoryFull> selFull(Integer language);
 
 
 

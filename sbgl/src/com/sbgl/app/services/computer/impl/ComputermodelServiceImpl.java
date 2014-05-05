@@ -1,13 +1,16 @@
 package com.sbgl.app.services.computer.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
 import com.sbgl.app.entity.Computercategory;
+import com.sbgl.app.entity.ComputercategoryFull;
 import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.app.services.computer.ComputermodelService;
+import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.dao.ComputermodelDao;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.util.*;
@@ -50,6 +53,7 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 		baseDao.saveEntity(computermodel);		
 	}
 
+	/*
 //  根据id删除实体	
 	@Override
 	public int deleteComputermodel(Integer computermodelId){
@@ -65,7 +69,7 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 	@Override
 	public int deleteComputermodel(Computermodel computermodel) {
 		return deleteComputermodel(computermodel.getId());
-	}
+	}*/
 
 	@Override
 	public int deleteComputermodelByTyp(Integer computermodeltype){
@@ -82,9 +86,121 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 			String sql = "delete from Computermodel where computermodeltype="+type;
 			baseDao.createSQL(sql);
 		}
-		
 		return 1;
 	}
+	/**
+	 * 获取分类-模型map
+	 */
+	@Override
+	public HashMap<Integer, ArrayList<Computermodel>> getCategoryModelMap(List<Integer> categoryTypeList,int language){
+		HashMap<Integer, ArrayList<Computermodel>> computermodelByComputercategoryId = new HashMap<Integer,ArrayList<Computermodel>>();
+		
+		if(categoryTypeList == null || categoryTypeList.size() == 0){
+			computermodelByComputercategoryId  = new HashMap<Integer,ArrayList<Computermodel>>();
+			return computermodelByComputercategoryId;
+		}
+
+		ArrayList<Computermodel> allModelList = (ArrayList<Computermodel>) selByCategoryType(categoryTypeList,language);
+		
+		for(Integer computercategoryType : categoryTypeList){
+			computermodelByComputercategoryId.put(computercategoryType, new ArrayList<Computermodel>());
+		}
+		for(Computermodel model : allModelList){
+			computermodelByComputercategoryId.get(model.getComputercategoryid()).add(model);
+		}
+		
+		return computermodelByComputercategoryId;		
+	}
+	
+	@Override
+	public HashMap<Integer, ArrayList<Computermodel>> getCategoryModelMapByCategoryList(List<Computercategory> categoryList,int language){
+		
+		List<Integer> categoryTypeList =  new ArrayList<Integer>(); 
+		for(Computercategory c : categoryList){
+			categoryTypeList.add(c.getComputercategorytype());
+		}
+		
+		return this.getCategoryModelMap(categoryTypeList, language);
+	}
+	
+	/**
+	 * 按页查询,如果分类为0，则默认查询所有的分类
+	 */
+	@Override
+	public List<ComputermodelFull> selFullByPage(int categorytype,Page page,Integer language){
+		String sql = "";
+		if(categorytype == 0){
+			 sql =" where a.status >=0 " +
+	  				" and a.languagetype="+language+
+	  				" and b.languagetype="+language+
+	  				" order by a.computermodeltype,a.languagetype";	
+		}else{
+			 sql =" where a.status >=0 " +
+				" and a.languagetype="+language+
+				" and b.languagetype="+language+
+				" and a.computercategoryid="+categorytype+
+				" order by a.computermodeltype,a.languagetype";				
+		}
+		return computermodelDao.selectComputermodelFullByConditionAndPage(sql,page);
+	}	
+	
+	/**
+	 * 统计行数
+	 */
+	@Override
+	public int countRow(int categorytype){
+		String sql = " where a.status >= 0";
+		if(categorytype > 0){
+			sql += " and a.computercategoryid="+categorytype;
+		}
+		return computermodelDao.countRow(sql);
+	}
+	
+	/**
+	 * 根据类型查询模型
+	*/
+	@Override
+	public List<Computermodel> selByCategoryType(int categoryType,int language){
+		String sqlch = " where a.status >=0 " +
+						  " and a.languagetype="+language+
+						  " and a.computercategoryid = "+categoryType+
+						  " order by a.computermodeltype,a.languagetype";		
+		ArrayList<Computermodel> list  = (ArrayList<Computermodel>) computermodelDao.selectComputermodelByCondition(sqlch );
+		if(list == null){
+			list = new ArrayList<Computermodel>();
+		}
+		
+		return list;
+	}
+	@Override
+	public List<Computermodel> selByCategoryType(List<Integer> categoryTypeList,int language){
+		
+//		SQL: select * from table where id IN (3,6,9,1,2,5,8,7); 
+//		这样的情况取出来后，其实，id还是按1,2,3,4,5,6,7,8,9,排序的，但如果我们真要按IN里面的顺序排序怎么办？SQL能不能完成？是否需要取回来后再foreach一下？其实mysql就有这个方法 
+		
+		String categoryTypeInSql = "  a.computercategoryid in (";
+		for(int computercategoryType : categoryTypeList){
+			categoryTypeInSql += computercategoryType + ",";
+		}
+		categoryTypeInSql = categoryTypeInSql.substring(0,categoryTypeInSql.length()-1);
+		categoryTypeInSql += ")";
+
+		String sql = "  where a.status >=0 " +
+						" and a.languagetype="+language + 
+						" and "+categoryTypeInSql;
+//		System.out.println(sql);
+		
+		List<Computermodel> allComputermodelFullList =  computermodelDao.selectComputermodelByCondition(sql);
+		
+		if(allComputermodelFullList == null){
+			allComputermodelFullList = new ArrayList<Computermodel>();
+		}
+		
+		return allComputermodelFullList;
+	}
+	
+	
+//	public 
 	
 	@Override
 	public void updateComputermodel(Computermodel computermodel){
@@ -162,9 +278,7 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 	}
 	
 	
-	public int countComputermodelRow(){
-		return baseDao.getRowCount(Computermodel.class);
-	}
+
 		
 //  分页查询
 	public List<Computermodel> selectComputermodelByPage(Page page){	
@@ -259,4 +373,5 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 		return 1;
 		
 	}
+
 }

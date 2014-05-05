@@ -1,8 +1,60 @@
-<html >
-	<body >
-		<h1 >后台程序异常！</h1>
-		<br/>
-		$!errorMsg
-		<br/>
-    </body>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 后台管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+#parse("include/includePageCompatibility.vm")	
+	
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+
+	#set($currentPageModule="index")
+	#parse("include/includeAdminHeader.vm")
+	
+</header><!--/#header-wrap-->
+
+
+<section id="main-wrap"><!--main-wrap-->
+  <!--main-content start-->
+  <div id="main-content" class="clearfix">
+    <div class="container">            
+      <div class="row">
+        <div class="hero-unit clearfix">
+          <i class="icon-warning-sign pull-left"></i>
+          <div class="pull-left">
+            <h1>出错啦！</h1>
+            <p>访问的页面不存在，请检查后再试！</p>
+          </div>
+        </div>                                    
+      </div>
+    </div>
+  </div>
+  <!---main-content end-->
+</section>
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/bootstrap-datepicker.js"></script>
+<script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="${jsDomain}/xdate.js"></script>
+<script src="${jsDomain}/computer/computerorder.js"></script>
+
+</body>
 </html>

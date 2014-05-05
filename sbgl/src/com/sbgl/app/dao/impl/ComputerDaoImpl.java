@@ -2,6 +2,7 @@ package com.sbgl.app.dao.impl;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -19,6 +20,7 @@ import com.sbgl.app.dao.DaoAbs;
 import com.sbgl.app.dao.ComputerDao;
 import com.sbgl.app.entity.Computer;
 import com.sbgl.app.entity.ComputerFull;
+import com.sbgl.app.entity.Computermodel;
 import com.sbgl.util.*;
 
 @Repository("computerDao")
@@ -31,6 +33,60 @@ public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
 			"left join Computerstatus c on a.computerstatusid=c.id ";
 	
 	private final String basicComputerSql = "From Computer  as a ";
+	
+	
+	@Override
+	public List<Computer> selByModeltype(int modeltype, int language) {
+		String sql = "  where a.status >=0 " +
+		" and a.languagetype="+language + 
+		" and a.computermodelid ="+modeltype;
+
+		return this.selectComputerByCondition(sql);
+	}
+	
+	@Override
+	public List<ComputerFull> selFullByModeltype(int modeltype, int language) {
+		String sql = "  where a.status >=0 " +
+		" and a.languagetype="+language + 
+		" and a.languagetype="+language + 
+		" and a.computermodelid ="+modeltype;
+
+		return this.selectComputerFullByCondition(sql);
+	}
+	
+	@Override
+	public List<Computer> selByModeltype(List<Integer> modeltypeList, int language) {
+		String modeltypeInSql = "  a.computermodelid in (";
+		for(int modeltype : modeltypeList){
+			modeltypeInSql += modeltype + ",";
+		}
+		modeltypeInSql = modeltypeInSql.substring(0,modeltypeInSql.length()-1);
+		modeltypeInSql += ")";
+
+		String sql = "  where a.status >=0 " +
+						" and a.languagetype="+language + 
+						" and "+modeltypeInSql;
+		
+		return this.selectComputerByCondition(sql);
+	}
+	
+	@Override
+	public  List<ComputerFull> selFullByModeltype(List<Integer> modeltypeList,int language){
+		String modeltypeInSql = "  a.computermodelid in (";
+		for(int modeltype : modeltypeList){
+			modeltypeInSql += modeltype + ",";
+		}
+		modeltypeInSql = modeltypeInSql.substring(0,modeltypeInSql.length()-1);
+		modeltypeInSql += ")";
+
+		String sql = "  where a.status >=0 " +
+						" and a.languagetype="+language + 
+						" and b.languagetype="+language + 
+						" and "+modeltypeInSql;
+		
+		return this.selectComputerFullByCondition(sql);
+	}
+	
 	
 	// 根据条件查询查询实体
 	@Override
