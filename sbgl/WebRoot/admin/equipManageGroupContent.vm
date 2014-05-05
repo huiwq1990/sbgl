@@ -1,0 +1,69 @@
+ <div id="admin-content" class="clearfix">    
+            <!--control-bar start-->
+            <div class="control-bar clearfix">
+              <div class="title pull-left">型号管理</div>
+			  <div class="tips">在此页面下管理设备型号。设备型号包含每种设备的基本信息，如设备名、设备图片、设备资料介绍等等。</div>
+              <div class="filter category-filter">
+                <select id="select-categories" style="width:130px" class="select2">
+                  <option value="-2" data-foo="fa">设备组</option>
+                </select>
+              </div>
+              <div class="operate-item pull-left">
+                <a href="#add-equip-basic-group" class="btn btn-primary" data-toggle="modal" role="button">添加基本设备组</a>
+                <a href="#" class="btn btn-white s-h" action-type="deleteModel"><i class="icon-trash"></i> 删除</a>
+              </div>
+
+              <div class="page pull-right clearfix">
+                <ul class="page-index nav nav-pills pull-left">
+                  <li class="record"></li>
+                  <li class="dropdown">
+					#set($total = $!page.totalpage )
+        			#if($total == 0)
+        				#set($total=1)
+        			#end
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!page.pageNo/$!total页 <b class="caret"></b></a>
+					<input type="hidden" name="currpage" id="currpage" value="$!page.pageNo" >
+					<input type="hidden" name="totalpage" id="totalpage" value="$!page.totalpage" >
+                    <ul class="dropdown-menu" role="menu">
+                      #foreach($i in [1 .. $total])	
+        				<li><a href="#" data-type="pageQuery" data-pageNo="$!i" >$i</a></li>
+        			  #end
+                    </ul>
+                  </li>              
+                </ul>
+                <div class="pagination pull-right">
+					#set($pageNo2 = $!page.pageNo + 1)
+                  <ul>
+                    <li><a href="#" rel="tooltip" action-type="backPage" data-placement="bottom" data-original-title="较旧" data-type="pageQuery" data-pageNo="$!page.pageNo-1" ><i class="icon-chevron-left"></i></a></li>
+                    <li><a href="#" rel="tooltip" action-type="nextPage" data-placement="bottom" data-original-title="较旧" data-type="pageQuery" data-pageNo="$pageNo2"><i class="icon-chevron-right"></i></a></li>
+                  </ul>
+                </div>              
+              </div>
+            </div><!--control-bar end-->
+            <div class="panel panel-default" id="modelDataDomain">
+            
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
+                    <th class="name">设备名称(型号)</th>
+                    <th class="categories">分类</th>
+                    <th class="stock">合作器材公司</th>
+                    <th class="describe">描述</th>
+                  </tr>
+                </thead>
+                <tbody>
+				#foreach($model in $equipmentgroupFullList)
+                  <tr>
+                    <td><input class="chk" type="checkbox" name="chk-list" value="$!model.comid"></td>
+                    <td>$!model.equipmentname</td>
+					<td>设备组</td>
+					<td>#if($!model.branId == "1")双塔影视#end</td>
+                    <td>$!model.equipmentdetail</td>
+                  </tr>
+                #end  
+                </tbody>
+              </table>
+
+            </div>
+          </div>

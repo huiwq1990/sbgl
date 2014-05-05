@@ -135,6 +135,9 @@
 		<mapping resource="com/sbgl/app/entity/Managergroup.hbm.xml" />
 
 		<mapping resource="com/sbgl/app/entity/Sendruletouser.hbm.xml" />
+		<mapping
+			resource="com/sbgl/app/entity/Groupofequipment.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Equipmentgroup.hbm.xml" />
 
 
 

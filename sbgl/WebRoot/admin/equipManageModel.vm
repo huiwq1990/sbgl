@@ -9,7 +9,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
-
+<script>
+	var groupnum = 1;
+</script>
 #parse("include/includePageCompatibility.vm")
 </head>
 
@@ -20,7 +22,7 @@
 </header><!--/#header-wrap-->
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
       <ul class="nav nav-tabs">
-        <li><a href="设备预约首页.html">器材预约</a></li>
+        <li><a href="${webbaseurl}/orderAdmin.do">器材预约</a></li>
         <li class="active"><a href="${webbaseurl}/equipManageAdmin.do">器材管理</a></li>
       </ul>
       <!--admin-wrap start-->
@@ -255,6 +257,87 @@
   </div>
 </div>
 
+<div id="add-equip-basic-group" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">添加基本器材组</h3>
+  </div>
+  <div class="modal-body">
+    <p>这里是添加器材型号相关说明。</p>
+    <form class="form-horizontal" role="form" id="groupform">
+      <div class="form-group">
+        <label for="inputModelName" class="col-xs-3 control-label">型号名</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="inputModelName" name="groupChName"  placeholder="器材型号（如：Arri Alexa Plus）">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputModelNameEn" class="col-xs-3 control-label">英文名</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="inputModelNameEn" name="groupENName" placeholder="器材型号的英文名称">
+        </div>
+      </div>
+      <div id="basic-equip-list">
+        <div class="form-group" id="EquipIdGroup-1">
+          <label for="inputBasicEquipId-1" class="col-xs-3 control-label">添加相关器材</label>
+          <!-- 这里for中的-1可以指代基本器材的ID号，区分每行基本设备，for与下面input中id对应，同理下面的数量 -->
+          <div class="col-xs-4">
+            <select class="select2 select-white form-control inputBasicEquipId" name="inputBasicEquipId" id="inputBasicEquipId-1">
+				#foreach($row2 in $classification1List)	
+              <optgroup label="$!row2.name">
+			  	#foreach($row3 in $classequipmap.get($!row2.classificationid))
+                <option value="$!row3.equipmentid">$!row3.equipmentname</option>
+				#end
+              </optgroup>
+			  #end
+            </select>
+          </div>
+          <label for="inputBasicEquipNum-1" class="col-xs-1 col-no-padding control-label">数量</label>
+          <div class="col-xs-2">
+            <input type="text" class="form-control" id="inputBasicEquipNum-1" name="inputBasicEquipNum" value="1">
+          </div>
+          <button type="button" class="btn btn-white" data-groupid="1" action-type="addBasicEquip" id="EquidGroupBtn-1"><span id="EquidGroupspan-1" class="icon icon-plus"></span></button>
+        </div>
+
+      <div class="form-group groupselafter" >
+        <label for="inputDescribe" class="col-xs-3 control-label">描述</label>
+        <div class="col-xs-7">
+          <textarea class="form-control" id="inputDescribe" name="groupCNdetail" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputDescribeEn" class="col-xs-3 control-label">英文描述</label>
+        <div class="col-xs-7">
+          <textarea class="form-control" id="inputDescribeEn" name="groupENdetail"  rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputPic" class="col-xs-3 control-label">图片</label>
+        <div class="col-xs-7">
+          <span class="btn btn-white file-input-button">
+              <i class="icon-plus"></i>
+              <span>添加图片</span>
+			  <input id="inputEPic" type="file" action-type="showFileNameForAdd" name="file" multiple>
+          </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputStock" class="col-xs-3 control-label">合作器材公司</label>
+        <div class="col-xs-7">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="inputStock1" name="brandid" value="1" checked> 双塔影视
+          </label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button type="button" class="btn btn-primary"  action-type="addGroup" >确 定</button>
+  </div>
+</div>
+
 
     <!-- javascript
     ================================================== -->
@@ -447,6 +530,12 @@
 			}
 			//imgFile = $("#modifyEPic").val();
 		}
+		
+		if(actionUrl==""){
+			return;
+		}
+		
+		
 		
 		jQuery.ajax({  
 		    url:actionUrl,  
@@ -821,6 +910,94 @@
             //alert(data.result.message);
         }
     });
+	
+	$("#inputEPic").fileupload({
+    	url: "${webbaseurl}/uploadImageFile.do",
+        dataType: 'json',
+		change: function (e, data) {
+        	$("#submitBtnForAdd").attr("disabled", "disabled");
+    	},
+        done: function (e, data) {
+			$("#submitBtnForAdd").removeAttr("disabled");
+            console.log(data);
+			if(data.result.tag == 0) {
+				localFileName = data.files[0].name;
+				savedFileName = data.result.savedFileName;
+				$("#imgFileForAdd").html(localFileName);
+				$("#inputEPic").prop('disabled', true);
+			} else if(data.result.tag == 1) {
+				alert("上传图片失败！");
+				localFileName = "";
+				savedFileName = "";
+			}
+            //alert(data.result.savedFileName);
+        }
+    });
+	
+	$("body").on("click", "button[action-type|=addBasicEquip]", function() {
+		var myData = $(this).data();
+		var num = myData.groupid;
+		$("#EquidGroupBtn-"+num).attr("action-type","removeThisBasicEquip");
+		$("#EquidGroupspan-"+num).removeClass("icon-plus");
+		$("#EquidGroupspan-"+num).addClass("icon-minus");
+		groupnum++;
+		var html = '<div class="form-group" id="EquipIdGroup-'+groupnum+'">' +
+          '<label for="inputBasicEquipId-1" class="col-xs-3 control-label">添加相关器材</label>' +
+          '<div class="col-xs-4">' +
+            '<select class="select2 select-white form-control"  name="inputBasicEquipId" id="inputBasicEquipId-'+groupnum+'" >' +
+			  #foreach($row2 in $classification1List)	
+              '<optgroup label="$!row2.name">'+
+			  	#foreach($row3 in $classequipmap.get($!row2.classificationid))
+                '<option value="$!row3.equipmentid">$!row3.equipmentname</option>' +
+				#end
+              '</optgroup>' +
+			  #end
+            '</select>' +
+          '</div>' +
+          '<label for="inputBasicEquipNum-'+groupnum+'" class="col-xs-1 col-no-padding control-label">数量</label>' +
+          '<div class="col-xs-2">' +
+            '<input type="text" class="form-control" id="inputBasicEquipNum-'+groupnum+'" name="inputBasicEquipNum" value="1">' +
+          '</div>' +
+		  '<button type="button" class="btn btn-white" data-groupid="'+groupnum+'" action-type="addBasicEquip" id="EquidGroupBtn-'+groupnum+'"><span id="EquidGroupspan-'+groupnum+'" class="icon icon-plus"></span></button>' +
+        '</div>';
+		$(".groupselafter").before(html);
+		$(".select2").select2({
+			minimumResultsForSearch: 8
+		});
+	});
+	
+	$("body").on("click", "button[action-type|=removeThisBasicEquip]", function() {
+		var myData = $(this).data();
+		var num = myData.groupid;
+		$("#EquipIdGroup-"+num).remove();
+	});
+	
+	$("body").on("click", "button[action-type|=addGroup]", function() {	
+		$.ajax({
+			url: "${webbaseurl}/addEquipmentGroup.do",
+			type: 'POST',
+			data: $('#groupform').serialize(),
+			dataType: 'json',
+			success: function(jsondata){
+				if(jsondata.tag=="1") {
+					
+					alert("增加成功！");
+					_this.parents('.modal').modal('toggle');
+					 
+					var cid = $("#select-categories").val();
+					
+					postData = {
+						"classificationId": cid,
+    					"crtModelPage": currentPageNo
+            		};
+					
+				} else {
+					alert("数据异常，增加失败！");
+				}
+			}	  
+		});
+	});
+	
 </script>
 
 <iframe name="submit" width="0" height="0" />

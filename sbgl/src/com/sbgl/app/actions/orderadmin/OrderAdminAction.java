@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.actions.common.CommonConfig;
+import com.sbgl.app.actions.equipment.template.EquipmentgroupFull;
 import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.actions.order.OrderMainAction;
@@ -26,6 +27,7 @@ import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.entity.Ordercourserule;
 import com.sbgl.app.entity.Ordercourseruledetail;
 import com.sbgl.app.entity.Usergroup;
+import com.sbgl.app.services.equipment.EquipGroupService;
 import com.sbgl.app.services.order.OrderMainService;
 import com.sbgl.app.services.orderadmin.OrderAdminService;
 import com.sbgl.app.services.teach.CourseService;
@@ -45,6 +47,9 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 	@Resource
 	private CourseService courseService;
 	
+	@Resource
+	private EquipGroupService equipGroupService;
+	
 	
 	private String dealtype;  //0:全部，1：待审核，2：待出库，3：已出库,4：已完成
 	private String ordertype;  //0:全部， 1：个人预约，2：课程预约
@@ -59,6 +64,8 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 	private Integer courseruleid;
 	private Ordercourserule ordercourserule;
 	private List<Equipmentclassification> classification1List;
+	
+	private List<EquipmentgroupFull> equipmentgroupFullList;
 	
 	private Map<Integer,List<EquipmentFull>> classequipmap;
 	
@@ -188,6 +195,7 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 		classification1List = orderAdminService.findTopEquipmentclass(lantype);
 		classequipmap = orderAdminService.fingclassequipMap(classification1List,courseruleid);
 		courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+lantype);
+		equipmentgroupFullList = equipGroupService.findEquipmentGroup(courseruleid);
 		if(courseruleid!=null){
 			ordercourserule = orderAdminService.findOrdercourserule(courseruleid);
 		}
@@ -630,6 +638,17 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 
 	public void setInputDataRange2(String inputDataRange2) {
 		this.inputDataRange2 = inputDataRange2;
+	}
+
+
+	public List<EquipmentgroupFull> getEquipmentgroupFullList() {
+		return equipmentgroupFullList;
+	}
+
+
+	public void setEquipmentgroupFullList(
+			List<EquipmentgroupFull> equipmentgroupFullList) {
+		this.equipmentgroupFullList = equipmentgroupFullList;
 	}
 	
 }

@@ -22,17 +22,20 @@
         <property name="applynumber" type="java.lang.Integer">
             <column name="applynumber" />
         </property>
-        <property name="starttime" type="java.util.Date">
-            <column name="starttime"  />
+        <property name="starttime" type="java.sql.Timestamp">
+            <column name="starttime" length="19" />
         </property>
-        <property name="endtime" type="java.util.Date">
-            <column name="endtime" />
+        <property name="endtime" type="java.sql.Timestamp">
+            <column name="endtime" length="19" />
         </property>
         <property name="comid" type="java.lang.Integer">
             <column name="comid" />
         </property>
         <property name="lantype" type="java.lang.String">
             <column name="lantype" length="2" />
+        </property>
+        <property name="isgroup" type="java.lang.Integer">
+            <column name="isgroup" />
         </property>
     </class>
 </hibernate-mapping>
