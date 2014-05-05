@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="equipgroup"  extends="manage">
+		<action name="equipManageGroup" class="EquipmentGroupAction" method="equipManageGroup">
+        	<result name="success">
+        		/admin/equipManageGroup.vm
+        	</result>
+        </action>
+        <action name="equipManageGroupContent" class="EquipmentGroupAction" method="equipManageGroup">
+        	<result name="success">
+        		/admin/equipManageGroupContent.vm
+        	</result>
+        </action>
+        <action name="deleteequipGroup" class="EquipmentGroupAction" method="deleteequipGroup">
+        	<result name="success">
+        		/admin/equipManageGroupContent.vm
+        	</result>
+        </action>
+        
+	</package>
+
+    <package name="equipmentgroupajax" extends="json-default">
+    	<action name="addEquipmentGroup" class="EquipmentGroupAction" method="addEquipmentGroup">
+        	<result type="json"></result>
+        </action>     
+    </package>  
+</struts>

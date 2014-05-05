@@ -176,6 +176,7 @@
 			if($(elem).data('isSelect') == 'true') {
             	var myData = $(elem).data();
 				var equid = myData.modelId;
+				var equtype = myData.modeltype;
 				var equnum = $("#equ"+equid).val();
 				if(isNaN($("#equ"+equid).val())){
 					alert("请填入数字！");
@@ -187,7 +188,7 @@
 					ids="";
 					return;
 				}
-				ids+=equid+"_"+equnum+",";
+				ids+=equid+"_"+equnum+"_"+equtype+",";
 				//alert(myData.modelId);
 			}
         });

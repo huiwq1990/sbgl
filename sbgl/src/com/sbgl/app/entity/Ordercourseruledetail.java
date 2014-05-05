@@ -1,7 +1,6 @@
 package com.sbgl.app.entity;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * Ordercourseruledetail entity. @author MyEclipse Persistence Tools
@@ -17,10 +16,11 @@ public class Ordercourseruledetail extends com.sbgl.app.dao.DaoAbs implements
 	private Integer borrowlistid;
 	private Integer equipmentid;
 	private Integer applynumber;
-	private Date starttime;
-	private Date endtime;
+	private Timestamp starttime;
+	private Timestamp endtime;
 	private Integer comid;
 	private String lantype;
+	private Integer isgroup;
 
 	// Constructors
 
@@ -38,8 +38,8 @@ public class Ordercourseruledetail extends com.sbgl.app.dao.DaoAbs implements
 	/** full constructor */
 	public Ordercourseruledetail(Integer courseruledetailid,
 			Integer courseruleid, Integer borrowlistid, Integer equipmentid,
-			Integer applynumber, Date starttime, Date endtime,
-			Integer comid, String lantype) {
+			Integer applynumber, Timestamp starttime, Timestamp endtime,
+			Integer comid, String lantype, Integer isgroup) {
 		this.courseruledetailid = courseruledetailid;
 		this.courseruleid = courseruleid;
 		this.borrowlistid = borrowlistid;
@@ -49,6 +49,7 @@ public class Ordercourseruledetail extends com.sbgl.app.dao.DaoAbs implements
 		this.endtime = endtime;
 		this.comid = comid;
 		this.lantype = lantype;
+		this.isgroup = isgroup;
 	}
 
 	// Property accessors
@@ -93,19 +94,19 @@ public class Ordercourseruledetail extends com.sbgl.app.dao.DaoAbs implements
 		this.applynumber = applynumber;
 	}
 
-	public Date getStarttime() {
+	public Timestamp getStarttime() {
 		return this.starttime;
 	}
 
-	public void setStarttime(Date starttime) {
+	public void setStarttime(Timestamp starttime) {
 		this.starttime = starttime;
 	}
 
-	public Date getEndtime() {
+	public Timestamp getEndtime() {
 		return this.endtime;
 	}
 
-	public void setEndtime(Date endtime) {
+	public void setEndtime(Timestamp endtime) {
 		this.endtime = endtime;
 	}
 
@@ -123,6 +124,14 @@ public class Ordercourseruledetail extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setLantype(String lantype) {
 		this.lantype = lantype;
+	}
+
+	public Integer getIsgroup() {
+		return this.isgroup;
+	}
+
+	public void setIsgroup(Integer isgroup) {
+		this.isgroup = isgroup;
 	}
 
 }

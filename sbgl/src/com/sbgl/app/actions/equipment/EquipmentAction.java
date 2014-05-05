@@ -17,16 +17,21 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.equipment.template.ClassficationCourse;
 import com.sbgl.app.actions.equipment.template.EquipCourse;
 import com.sbgl.app.actions.equipment.template.EquipModelCourse;
 import com.sbgl.app.actions.equipment.template.ParentClassIdName;
+import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.dao.QueryResult;
+import com.sbgl.app.entity.CourseFull;
 import com.sbgl.app.entity.Equipment;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Equipmentdetail;
 import com.sbgl.app.entity.Loginuser;
+import com.sbgl.app.entity.Ordercourserule;
 import com.sbgl.app.services.equipment.EquipService;
+import com.sbgl.app.services.orderadmin.OrderAdminService;
 import com.sbgl.common.HQLOption;
 import com.sbgl.common.SBGLConsistent;
 import com.sbgl.util.Page;
@@ -43,6 +48,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	private Map<String, Object> session;
 	private String tag;     //返回执行结果 0-成功 1-失败
 	private String message; //返回信息
+	
+	
 	
 	@Resource
 	private EquipService equipService;
@@ -1347,7 +1354,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	public String gotoEquipManageModel() {
 		getAllEquipInfoCourse();
 		doGetClassForEquipAdd();
-		
 		return SUCCESS;
 	}
 	/**
@@ -1507,4 +1513,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		}
 		return SUCCESS;
 	}
+	
+	
 }

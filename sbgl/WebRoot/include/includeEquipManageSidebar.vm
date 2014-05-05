@@ -18,6 +18,12 @@
 	#end	
 	">型号管理</a>
 	
+	<a href="${webbaseurl}/equipManageGroup.${strutsaction}" class="list-group-item
+	#if($currentWebpage == "equipManageGroup" )
+	active      
+	#end	
+	">设备组管理</a>
+	
 	<a href="${webbaseurl}/equipManageClassfication.${strutsaction}" class="list-group-item
 	#if($currentWebpage == "equipManageClassfication" )
 	active      
