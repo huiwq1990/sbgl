@@ -81,7 +81,7 @@
         <div id="admin-content" class="clearfix">            
             <div class="control-bar clearfix"><!--control-bar start-->
               <div class="title pull-left">机房预约管理</div>
-			  <div class="tips">在此页面下管理机房预约申请。</div>
+              <div class="tips">预约信息支持两种显示模式：<span class="icon-list"> 列表模式</span>及 <span class="icon-calendar"> 日历模式</span>，可在两种模式间切换。</div>
 			  <!--
               <div class="filter user-group-filter">
                 <ul class="nav nav-tabs nav-tabs-google">
@@ -95,7 +95,6 @@
               <div class="operate-item pull-left">
                 <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
               </div>
-
               <div class="page pull-right clearfix">
                 <ul class="page-index nav nav-pills pull-left">
                   <li class="dropdown">
@@ -113,6 +112,10 @@
                   </ul>
                 </div>              
               </div>
+              <div class="display-mode btn-group pull-right">
+                <a href="机房预约管理首页.html" class="btn btn-white active"><span class="icon-list"></span></a>
+                <a href="机房预约管理首页（日历模式）.html" class="btn btn-white"><span class="icon-calendar"></span></a>
+              </div>
               <ul class="status-filter nav nav-pills pull-right">
                 <li class="active"><a href="#">待审核(4)</a></li>
                 <li><a href="#">已完成</a></li>
@@ -126,6 +129,7 @@
                     <th class="id">预约号</th>
                     <th class="user">预约人</th>
                     <th class="title">标题</th>
+                    <th class="time">预约时间</th>
                     <th class="status">状态</th>
                     <th class="categories">预约类型</th>
                     <th class="remark">备注</th>
@@ -137,6 +141,7 @@
                     <td>2145322<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
                     <td>姓名</td>
                     <td><a href="机房预约审核.html">XXX的机房预约（XX月XX日、XX日……）机房预约标题</a></td>
+                    <td>2013年10月18日 上午</td>
                     <td>待审核</td>
                     <td>个人</td>                    
                     <td>预约申请人的备注信息</td>
@@ -168,6 +173,9 @@
 <script src="../js/select2.js"></script>
 <script src="../js/bootstrap-hover-dropdown.min.js"></script>
 <script src="../js/bfa.js"></script>
+<script>
+$('btn-group .btn').button()
+</script>
 <!--[if lt IE 10]>
   <script src="../js/jquery.placeholder.js"></script>
   <script>

@@ -478,14 +478,16 @@ border-bottom: 2px solid #427FED !important;
 #stream .thumbnail .media-list { margin-bottom: 20px; }
 #stream .thumbnail h3 { font-weight: normal; font-size: 20px; line-height: 20px; margin: 0; padding-right: 80px;}
 
-#main-wrap .popover .arrow { display: none; }
-#main-wrap .popover, #main-wrap .popover-content { padding: 0; }
-#main-wrap .popover-content { 
+.media .popover .arrow { display: none; }
+.media .popover, .media .popover-content { padding: 0; }
+.media .popover-content { 
 	text-align: center;
 	width: 240px;
 }
-#main-wrap .popover .cover { width: 240px; height: 135px; }
-#main-wrap .popover .cover-layout {
+#course-week-table .popover { max-width: 360px; width: 360px; }
+
+.media .popover .cover { width: 240px; height: 135px; }
+.media .popover .cover-layout {
 	filter: alpha(opacity=27);
 	opacity: .27;
 	background-color: black;
@@ -501,30 +503,30 @@ border-bottom: 2px solid #427FED !important;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 }
-#main-wrap .popover .avatar {
+.media .popover .avatar {
 	margin-bottom: -40px;
 	position: relative;
 	top: -40px;
 }
-#main-wrap .popover .user-wrap { padding: 10px 8px 10px; }
-#main-wrap .popover .user-name { 
+.media .popover .user-wrap { padding: 10px 8px 10px; }
+.media .popover .user-name { 
 	margin-bottom: 4px;
 	font-size: 24px;
 	vertical-align: middle;
 }
-#main-wrap .popover .user-name a {
+.media .popover .user-name a {
 	font-family: arial, helvetica, sans-serif;
 	font-weight: bold;
 	color: #262626;
 	-webkit-transition: color .218s;
 	transition: color .218s;
 }
-#main-wrap .popover:hover .user-name a {
+.media .popover:hover .user-name a {
 	-webkit-transition: color .218s;
 	transition: color .218s;
 	color: #427FED;	
 }
-#main-wrap .popover .user-info {
+.media .popover .user-info {
 	font-weight: normal;
 	color: #737373;
 	font-size: 12px;
@@ -534,8 +536,8 @@ border-bottom: 2px solid #427FED !important;
 	text-overflow: ellipsis;
 }
 
-#main-wrap .popover .contact-wrap { background-color: #F1F1F1; height: 40px; }
-#main-wrap .popover .contact-wrap a {
+.media .popover .contact-wrap { background-color: #F1F1F1; height: 40px; }
+.media .popover .contact-wrap a {
 	color: #000;
 	line-height: 40px;
 	filter: alpha(opacity=50);
@@ -543,7 +545,7 @@ border-bottom: 2px solid #427FED !important;
 	-webkit-transition: all .218s;
 	transition: all .218s;
 }
-#main-wrap .popover .contact-wrap a:hover { 
+.media .popover .contact-wrap a:hover { 
 	text-decoration: none;
 	filter: alpha(opacity=100);
 	opacity: 1;
@@ -973,11 +975,13 @@ transition: none;
 	font-size: 14px;
 	margin-bottom: 10px;
 }
-
+.control-bar .row .nav {margin-bottom: 0; }
 .page-bar .pagination,
 .page-bar .page-index,
 .control-bar .pagination,
-.control-bar .page-index { margin: 0 0 0 10px; }
+.control-bar .page-index,
+.control-bar .display-mode,
+.control-bar .semester-filter { margin: 0 0 0 10px; }
 .page-bar .page-index .record { padding-top: 7px; margin-right: 10px; }
 .control-bar .page-index .record { padding-top: 6px; margin-right: 10px; }
 .page-index .dropdown-toggle .caret { color: #000; }
@@ -1491,6 +1495,7 @@ a.list-group-item.active:focus .list-group-item-text {
 #admin #course-week-table .selectable {	cursor: pointer; position: relative; }
 #admin #course-week-table .selectable:hover { background-color: #F5F9FC; }
 #admin #course-week-table .selected { background-color: #F5F9FC; }
+#admin #course-week-table .label-rent { margin: 4px 6px; cursor: pointer; }
 .select2-results .sub { padding-left: 12px; }
 
 .form-group .progress { margin: 10px 0; }
@@ -2076,4 +2081,70 @@ border-bottom: 2px solid #427FED !important;
   top: -6px;
   right: 30px;
   left: auto;
+}
+
+
+
+/* BS3 按钮（等框架全部迁移至bs3） ================================================= */
+.btn-primary:hover {
+  text-shadow: 0 1px rgba(0, 0, 0, .3);
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+          box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: #3078eb;
+  background-image: -webkit-linear-gradient(top, #4d90fe 0%, #3078eb 100%);
+  background-image:         linear-gradient(to bottom, #4d90fe 0%, #3078eb 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff4d90fe', endColorstr='#ff3078eb', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  background-repeat: repeat-x;
+  border: 1px solid #196aeb;
+}
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  text-shadow: 0 1px rgba(0, 0, 0, .3);
+  background-image: -webkit-linear-gradient(top, #4d90fe 0%, #1969e8 100%);
+  background-image:         linear-gradient(to bottom, #4d90fe 0%, #1969e8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff4d90fe', endColorstr='#ff1969e8', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  background-repeat: repeat-x;
+  border: 1px solid #135fd7;
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3);
+          box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3);
+}
+.btn-primary:focus {
+  border: 1px solid #3079ed;
+  -webkit-box-shadow: inset 0 0 0 1px #fff;
+          box-shadow: inset 0 0 0 1px #fff;
+}
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active {
+  background-color: #4d90fe;
+  background-image: -webkit-linear-gradient(top, #4d90fe 0%, #4787ed 100%);
+  background-image:         linear-gradient(to bottom, #4d90fe 0%, #4787ed 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff4d90fe', endColorstr='#ff4787ed', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  background-repeat: repeat-x;
+  border: 1px solid #3079ed;
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 机房管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="../css/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 9]>
+  <script src="../js/html5shiv.js"></script>
+  <script src="../js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a><!-- #BeginLibraryItem "/Library/siteNav.lbi" --><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <li><a href="../index.html"><i class="icon-home"></i> 首页</a></li>
+          <li class="divider"></li>
+          <li><a href="../预约首页.html">我的预约</a></li>
+          <li><a href="../消息中心-站内信.html">站内信</a></li>
+          <li class="divider"></li>
+          <li><a href="../设置页面-账户设置.html">设置与帮助</a></li>
+          <li><a href="管理中心首页.html">管理中心</a></li>
+        </ul>
+          <!-- #EndLibraryItem --></div>
+    </div><!-- #BeginLibraryItem "/Library/机房subnav.lbi" -->    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        <li><a href="管理中心首页.html">首页</a></li>
+        <li><a href="教学管理首页.html">教学</a></li>
+        <li><a href="用户管理首页.html">用户</a></li>
+        <li><a href="设备预约首页.html">器材</a></li>
+        <li class="active"><a href="机房预约管理首页.html">机房</a></li>
+        <li><a href="#">内容</a></li>
+      </ul>
+    </div><!-- #EndLibraryItem --><ul class="account-wrap nav nav-pills pull-right">
+          <li class="notice dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">消息1</a></li>
+              <li><a href="#">消息2</a></li>
+            </ul>
+          </li>     
+          <li class="social dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">陈诚</span><img src="../img/photo.jpg" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+            <div class="dropdown-menu">
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img src="../img/photo.jpg" width="96" height="96" class="img-rounded">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><h5><a href="#">陈诚</a></h5></div>
+                  <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+                  <div class="setting"><a href="#">账户设置</a></div>
+                  <button class="btn btn-primary" type="button">查看个人主页</button>
+                </div>
+              </div>
+            </div>      
+          </li>
+        </ul>
+  </div>
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="机房预约管理首页.html">机房预约</a></li>
+        <li ><a href="机房信息管理首页.html">机房管理</a></li>
+      </ul>	  
+	  
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">            
+            <div class="control-bar clearfix"><!--control-bar start-->
+              <div class="title pull-left">机房预约管理</div>
+              <div class="tips">表格中不同的颜色代表不同的预约状态。<span class="label label-default">&nbsp;</span> 代表预约已完成；<span class="label label-info">&nbsp;</span> 代表等待审核的预约；<span class="label label-success">&nbsp;</span> 代表审核通过但在预约期间内；<span class="label label-warning">&nbsp;</span> 代表预约存在问题需要处理。</div>
+			  <!--
+              <div class="filter user-group-filter">
+                <ul class="nav nav-tabs nav-tabs-google">
+                  <li><a href="#">个人预约</a></li>
+                  <li><a href="#">教学预约</a></li>
+                  <li class="active"><a href="#">全部</a></li>
+                </ul>
+              </div>
+			  -->
+              
+              <div class="operate-item pull-left">
+                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+              </div>
+              <div class="semester-filter pull-right">
+                <select id="select-categories" style="width:180px" class="select2 select-white">
+                  <option value="0">2012-2013第1学期</option>
+                  <option value="1">2012-2013第2学期</option>
+                  <option value="2">2013-2013第1学期</option>
+                </select>
+              </div>
+              <!-- display-mode -->
+              <div class="display-mode btn-group pull-right">
+                <a href="机房预约管理首页.html" class="btn btn-white"><span class="icon-list"></span></a>
+                <a href="机房预约管理首页（日历模式）.html" class="btn btn-white active"><span class="icon-calendar"></span></a>
+              </div><!-- /.display-mode -->
+              <!--
+              <ul class="status-filter nav nav-pills pull-right">
+                <li class="active"><a href="#">待审核(4)</a></li>
+                <li><a href="#">已完成</a></li>
+              </ul>-->
+            </div><!--control-bar end-->
+            <div class="control-bar">
+              <div class="row">
+                <ul class="tab-drop nav nav-pills col-md-12">
+                  <li class="active"><a href="#" data-week="1">第1周</a></li>
+                  <li><a href="http://www.qq.com" data-week="2">第2周</a></li>
+                  <li><a href="#ptab3" data-week="3">第3周</a></li>
+                  <li><a href="#ptab4" data-week="4">第4周</a></li>
+                  <li><a href="#ptab5" data-week="5">第5周</a></li>
+                  <li><a href="#ptab6" data-week="6">第6周</a></li>
+                  <li><a href="#ptab7" data-week="7">第7周</a></li>
+                  <li><a href="#ptab8" data-week="8">第8周</a></li>
+                  <li><a href="#ptab9" data-week="9">第9周</a></li>
+                  <li><a href="#ptab10" data-week="10">第10周</a></li>
+                  <li><a href="#ptab11" data-week="11">第11周</a></li>
+                  <li><a href="#ptab12" data-week="12">第12周</a></li>
+                  <li><a href="#ptab13" data-week="13">第13周</a></li>
+                  <li><a href="#ptab14" data-week="14">第14周</a></li>
+                  <li><a href="#ptab15" data-week="15">第15周</a></li>
+                  <li><a href="#ptab16" data-week="16">第16周</a></li>
+                  <li><a href="#ptab17" data-week="17">第17周</a></li>                    
+                </ul>
+              </div>
+            </div>
+            <div class="panel panel-default table-responsive">
+              <table id="course-week-table" class="table">
+                <thead>
+                  <tr>
+                    <th class="time-slot">时间</th>
+                    <th>星期一<br>XX月XX日</th>
+                    <th>星期二<br>XX月XX日</th>
+                    <th>星期三<br>XX月XX日</th>
+                    <th>星期四<br>XX月XX日</th>
+                    <th>星期五<br>XX月XX日</th>
+                    <th>星期六<br>XX月XX日</th>
+                    <th>星期日<br>XX月XX日</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="tr-slot-1">
+                    <td class="time-slot">上午</td>
+                    <td data-week="1" data-slot="1">
+                      <span rel="popover-rent" class="label-rent label label-default" data-rent-No="PP001111397053609550" data-rent-status="done">姓名</span><span rel="popover-rent" class="label-rent label label-default" data-rent-No="PP001111397053609550" data-rent-status="done">姓名</span><span rel="popover-rent" class="label-rent label label-default" data-rent-No="PP001111397053609550" data-rent-status="done">姓名</span><span rel="popover-rent" class="label-rent label label-default" data-rent-No="PP001111397053609550" data-rent-status="done">姓名</span><span rel="popover-rent" class="label-rent label label-default" data-rent-No="PP001111397053609550" data-rent-status="done">姓名</span>
+                    </td>
+                    <td data-week="2" data-slot="1">
+                      <span rel="popover-rent" class="label-rent label label-info" data-rent-No="PP001111397053609550" data-rent-status="waiting">姓名</span><span rel="popover-rent" class="label-rent label label-success" data-rent-No="PP003333397053609550" data-rent-status="success">姓名</span><span rel="popover-rent" class="label-rent label label-info" data-rent-No="PP007053609550" data-rent-status="waiting">姓名</span><span rel="popover-rent" class="label-rent label label-default" data-rent-No="PP001111397053609550" data-rent-status="done">姓名</span><span rel="popover-rent" class="label-rent label label-default" data-rent-No="PP001111397053609550" data-rent-status="done">姓名</span><span rel="popover-rent" class="label-rent label label-default" data-rent-No="PP001111397053609550" data-rent-status="done">姓名</span>
+                    </td>
+                    <td data-week="3" data-slot="1">
+                      <span rel="popover-rent" class="label-rent label label-success" data-rent-No="PP001111397053609550" data-rent-status="success">姓名</span>
+                    </td>
+                    <td data-week="4" data-slot="1">
+                      <span rel="popover-rent" class="label-rent label label-warning" data-rent-No="PP001111397053609550" data-rent-status="warning">姓名</span>
+                    </td>
+                    <td data-week="5" data-slot="1"></td>
+                    <td data-week="6" data-slot="1"></td>
+                    <td data-week="7" data-slot="1"></td>
+                  </tr>
+                  <tr id="tr-slot-2">
+                    <td class="time-slot">下午</td>
+                    <td data-week="1" data-slot="2"></td>
+                    <td data-week="2" data-slot="2"></td>
+                    <td data-week="3" data-slot="2"></td>
+                    <td data-week="4" data-slot="2"></td>
+                    <td data-week="5" data-slot="2"></td>
+                    <td data-week="6" data-slot="2"></td>
+                    <td data-week="7" data-slot="2"></td>
+                  </tr>
+                  <tr id="tr-slot-3">
+                    <td class="time-slot">晚上</td>
+                    <td data-week="1" data-slot="3"></td>
+                    <td data-week="2" data-slot="3"></td>
+                    <td data-week="3" data-slot="3"></td>
+                    <td data-week="4" data-slot="3"></td>
+                    <td data-week="5" data-slot="3"></td>
+                    <td data-week="6" data-slot="3"></td>
+                    <td data-week="7" data-slot="3"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+      </div><!--equip-wrap end-->
+      <div id="lside"><!--sidebar start-->
+        <div class="list-group">
+          <a href="机房预约管理首页.html" class="list-group-item active">预约管理</a>
+          <!--<a href="机房预约-教学预约.html" class="list-group-item">教学预约</a>-->
+          <a href="机房预约-设置.html" class="list-group-item">设置</a>
+        </div>
+      </div>
+      <!--sidebar end-->
+</section>
+
+
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="../js/jquery.js"></script>
+<script src="../js/loader.min.js"></script>
+<script src="../js/select2.js"></script>
+<script src="../js/bootstrap-hover-dropdown.min.js"></script>
+<script src="../js/bfa.js"></script>
+<script src="../js/bootstrap-tabdrop.js"></script>
+<script>
+$('.tab-drop.nav-pills').tabdrop();
+
+
+$('span[rel=popover-rent]').popover({
+        trigger: "click",
+        html: true,
+        placement: 'bottom',
+        content: function() {
+          var thisData = $(this).data();
+          var rentNo = thisData.rentNo;
+          var rentTime = "2013年10月18日 上午";
+          var rentRemark = "无备注";
+          var rentStatusInfo = "预约状态说明";
+          var classStatus = "label label-default";
+
+          if (thisData.rentStatus == "done") {
+            classStatus = "label label-default";
+            rentStatusInfo = "已完成。";
+          } else if (thisData.rentStatus == "waiting") {  // 等待审核
+            classStatus = "label label-info";
+            rentStatusInfo = "等待你提交预约申请/或等待用户提交预约申请。（根据实际情况修改）";
+          } else if (thisData.rentStatus == "success") {  // 审核通过，进行中
+            classStatus = "label label-success";
+            rentStatusInfo = "审核已通过，预约进行中。";
+          } else if (thisData.rentStatus == "warning") {  // 审核未成功，异常
+            classStatus = "label label-warning";
+            rentStatusInfo = "预约被驳回，需修改后重新提交预约（根据实际情况修改）";
+          };
+          var html =
+              '<div id="popover-rent-wrapper" style="display: none">' +
+                '<div id="rent-wrap">' +
+                  '<div class="rent-info">' +
+                    '<div class="rent-num">预约号：<a href="#">' + rentNo + '</a></div>' +
+                    '<div class="rent-time"><i class="icon-time"></i> ' + rentTime + '</div>' +
+                    '<div class="rent-remark"><i class="icon-pencil"></i> ' + rentRemark +
+                  '</div>' +
+                  '<hr>' +
+                  '<div class="rent-status"><span class="' + classStatus + '">状态</span> ' + rentStatusInfo + '</div>' +
+                '</div>' +
+              '</div>';
+          return $(html).html();
+        } 
+      });
+
+</script>
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+</body>
+</html>
