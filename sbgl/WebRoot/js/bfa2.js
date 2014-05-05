@@ -158,6 +158,7 @@
 				var eId = myData.id;
 				var eName = myData.name;
 				var maxNum = myData.num;  // 设备最大可预约数量
+				var eCate = myData.cate; //如果cate是-2则为设备组
 				var eSelectNum = 0;
 				if($("#equip-detail").hasClass("in")) {
 					eSelectNum = $(this).parents("#equip-detail").find("select").select2("val");

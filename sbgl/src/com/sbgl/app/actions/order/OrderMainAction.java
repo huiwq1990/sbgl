@@ -124,32 +124,44 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 			}
 			Equipmentclassification equipmentclassification = new Equipmentclassification();
 			equipmentclassification = orderMainService.findEquipmentclassification(parentClassId,lantype);
-			class1Name = equipmentclassification.getName();
+			if(parentClassId==-2){
+				class1Name = "设备组";
+			}else{
+				class1Name = equipmentclassification.getName();
+			}
 			classification2List = orderMainService.findSecondEquipmentclass(parentClassId,lantype);
 			if(serach!=null&&!serach.equals("")){
 				if(classificationId==0){
-					if(courseruleid==9){
+					if(courseruleid==9&&parentClassId!=-2){
 						equipmentList = orderMainService.findEquipmentByClss2(parentClassId,fromDate,endDate,lantype,serach,equipmenborrowFull.getCourseruleid());
+					}else if(parentClassId==-2){
+						equipmentList = orderMainService.findEquipmentByGroup(lantype,serach);
 					}else{
 						equipmentList = orderMainService.findEquipmentByClss(parentClassId,fromDate,endDate,lantype,serach);
 					}
 				}else{
 					if(courseruleid==9){
 						equipmentList = orderMainService.findEquipmentByClss2(classificationId,fromDate,endDate,lantype,serach,equipmenborrowFull.getCourseruleid());
+					}else if(classificationId==-2){
+						equipmentList = orderMainService.findEquipmentByGroup(lantype,serach);
 					}else{
 						equipmentList = orderMainService.findEquipmentByClss(classificationId,fromDate,endDate,lantype,serach);
 					}
 				}
 			}else{
 				if(classificationId==0){
-					if(courseruleid==9){
+					if(courseruleid==9&&parentClassId!=-2){
 						equipmentList = orderMainService.findEquipmentByClss2(parentClassId,fromDate,endDate,lantype,equipmenborrowFull.getCourseruleid());
+					}else if(parentClassId==-2){
+						equipmentList = orderMainService.findEquipmentByGroup(lantype);
 					}else{
 						equipmentList = orderMainService.findEquipmentByClss(parentClassId,fromDate,endDate,lantype);
 					}
 				}else{
 					if(courseruleid==9){
 						equipmentList = orderMainService.findEquipmentByClss2(classificationId,fromDate,endDate,lantype,equipmenborrowFull.getCourseruleid());
+					}else if(classificationId==-2){
+						equipmentList = orderMainService.findEquipmentByGroup(lantype);
 					}else{
 						equipmentList = orderMainService.findEquipmentByClss(classificationId,fromDate,endDate,lantype);
 					}

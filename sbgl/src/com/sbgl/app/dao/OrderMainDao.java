@@ -59,4 +59,8 @@ public interface OrderMainDao {
 	public List<Equipmentclassification> findSecondEquipmentclass(Integer parentid,String lantype);
 	//获取搜索页面课程预约信息
 	public EquipmenborrowFull findEquipmenborrow(Integer id);
+	//获得设备组信息
+	public List<EquipmentFull> findEquipmentByGroup(String lantype,String serach);
+	//获得设备组信息
+	public List<EquipmentFull> findEquipmentByGroup(String lantype);
 }

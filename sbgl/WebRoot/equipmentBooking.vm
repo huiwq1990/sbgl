@@ -57,6 +57,7 @@
         #foreach($row in $classification1List)		
 			<li id="cl1$!row.classificationid" #if($velocityCount=='1') class="active classification1" #else class="classification1" #end><a href="javascript:;"   data-type="classAjax" data-id="$!row.classificationid" data-classtype="1" >$!row.name</a></li>
 		#end
+		<li id="cl1-2" class="classification1"><a href="javascript:;"   data-type="classAjax" data-id="-2" data-classtype="1" >设备组</a></li>	
       </ul>
     </div>
   </div>
@@ -100,7 +101,7 @@
 							 #end
                           </select>
                         </div>                            
-                        <a class="btn btn-white add-btn" data-type="addEquip" data-id="$!row3.equipmentid" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" href="javascript:;">添 加</a>
+                        <a class="btn btn-white add-btn" data-type="addEquip" data-id="$!row3.equipmentid" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" data-cate="$!row3.classificationid" href="javascript:;">添 加</a>
                       </div>                  
                   </div>
                    #end

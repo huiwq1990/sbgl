@@ -56,5 +56,8 @@ public interface OrderMainService {
 	public List<EquipmenborrowFull> findFinishOrder(Integer userId);
 	//获得订单
 	public EquipmenborrowFull findEquipmenborrow(Integer id);
-	
+	//获得设备组信息
+	public List<EquipmentFull> findEquipmentByGroup(String lantype,String serach);
+	//获得设备组信息
+	public List<EquipmentFull> findEquipmentByGroup(String lantype);
 }

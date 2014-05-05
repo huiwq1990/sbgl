@@ -582,6 +582,63 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	}
 
 
+	@Override
+	public List<EquipmentFull> findEquipmentByGroup(String lantype,
+			String search) {
+		// TODO Auto-generated method stub
+		String sql = " select a.equipmentgroupid as Equipmentid,a.Equipmentname,a.Brandid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved  ";
+	    sql+= "  from EquipmentGroup a   "
+			+ " where a.lanType = '"+lantype+"' and a.equipmentname like '%"+search+"%' ";
+		final String sql1 = sql;
+		List<EquipmentFull> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql1);
+				query.setResultTransformer(new EscColumnToBean(EquipmentFull.class));
+				return query.list();
+			}
+		});	
+		if(equipmentList!=null&&!equipmentList.isEmpty()){
+			int size = equipmentList.size();
+			for(int i = 0; i<size; i++){
+				EquipmentFull equipmentFull = equipmentList.get(i);
+				equipmentFull.setClassificationid(-2);
+				equipmentFull.setBorrownum(Long.valueOf(10));
+				equipmentList.set(i, equipmentFull);
+			}
+			return equipmentList;
+		}
+		return null;
+	}
+
+
+	@Override
+	public List<EquipmentFull> findEquipmentByGroup(String lantype) {
+		// TODO Auto-generated method stub
+		String sql = " select a.equipmentgroupid as Equipmentid,a.Equipmentname,a.Brandid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved  ";
+	    sql+= "  from EquipmentGroup a   "
+			+ " where a.lanType = '"+lantype+"' ";
+		final String sql1 = sql;
+		List<EquipmentFull> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql1);
+				query.setResultTransformer(new EscColumnToBean(EquipmentFull.class));
+				return query.list();
+			}
+		});	
+		if(equipmentList!=null&&!equipmentList.isEmpty()){
+			int size = equipmentList.size();
+			for(int i = 0; i<size; i++){
+				EquipmentFull equipmentFull = equipmentList.get(i);
+				equipmentFull.setClassificationid(-2);
+				equipmentFull.setBorrownum(Long.valueOf(10));
+				equipmentList.set(i, equipmentFull);
+			}
+			return equipmentList;
+		}
+		return null;
+	}
+
+
 
 
 }
