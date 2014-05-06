@@ -157,6 +157,18 @@ public class CourseServiceImpl implements CourseService{
 		return courseDao.countRowByGrade(grade);
 	}
 	
+	
+	/**
+	 * 根据课程种类及语言查询课程
+	 * @param type
+	 * @return
+	 */
+	@Override
+	public Course sel(int coursetype,int language){
+		return courseDao.sel(coursetype, language);
+	}
+	
+	
 	/**
 	 * 根据年级查询课程
 	 * @param grade

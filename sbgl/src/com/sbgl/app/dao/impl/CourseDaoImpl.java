@@ -58,6 +58,26 @@ public class CourseDaoImpl extends HibernateDaoSupport implements CourseDao{
 		return count.intValue();
 	}
 	
+	/**
+	 * 根据课程种类及语言查询课程
+	 * @param type
+	 * @return
+	 */
+	@Override
+	public Course sel(int coursetype,int language){
+		String condition = "";
+		
+		condition = " where a.status >=0  and a.coursetype=" + coursetype + " and a.languagetype = "+ language;
+		List l = this.selectCourseByCondition(condition);
+		if(l == null){
+			return null;
+		}else{
+			return (Course) l.get(0);
+		}
+		
+	}
+	
+	
 	@Override
 	public List<CourseFull> selFullByGrade(Integer grade, int language){
 		String sql = "";

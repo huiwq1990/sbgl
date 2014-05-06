@@ -1,6 +1,6 @@
 package com.sbgl.app.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Courseconfig entity. @author MyEclipse Persistence Tools
@@ -14,9 +14,9 @@ public class Courseconfig extends com.sbgl.app.dao.DaoAbs implements
 	private Integer id;
 	private String schoolyear;
 	private Integer semester;
-	private Timestamp firstday;
-	private Timestamp lastday;
-	private Timestamp firstweekfirstday;
+	private Date firstday;
+	private Date lastday;
+	private Date firstweekfirstday;
 	private Integer weeknum;
 	private Integer currentsemester;
 	private Integer status;
@@ -34,7 +34,7 @@ public class Courseconfig extends com.sbgl.app.dao.DaoAbs implements
 
 	/** full constructor */
 	public Courseconfig(Integer id, String schoolyear, Integer semester,
-			Timestamp firstday, Timestamp lastday, Timestamp firstweekfirstday,
+			Date firstday, Date lastday, Date firstweekfirstday,
 			Integer weeknum, Integer currentsemester, Integer status) {
 		this.id = id;
 		this.schoolyear = schoolyear;
@@ -73,27 +73,27 @@ public class Courseconfig extends com.sbgl.app.dao.DaoAbs implements
 		this.semester = semester;
 	}
 
-	public Timestamp getFirstday() {
+	public Date getFirstday() {
 		return this.firstday;
 	}
 
-	public void setFirstday(Timestamp firstday) {
+	public void setFirstday(Date firstday) {
 		this.firstday = firstday;
 	}
 
-	public Timestamp getLastday() {
+	public Date getLastday() {
 		return this.lastday;
 	}
 
-	public void setLastday(Timestamp lastday) {
+	public void setLastday(Date lastday) {
 		this.lastday = lastday;
 	}
 
-	public Timestamp getFirstweekfirstday() {
+	public Date getFirstweekfirstday() {
 		return this.firstweekfirstday;
 	}
 
-	public void setFirstweekfirstday(Timestamp firstweekfirstday) {
+	public void setFirstweekfirstday(Date firstweekfirstday) {
 		this.firstweekfirstday = firstweekfirstday;
 	}
 

@@ -295,32 +295,55 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>{
 	}
 
 
-	
+	boolean checkUpdateParms(){
+		if(course.getName()==null || course.getName().trim().length() ==0 ){
+			this.returnInfo = "请填写课程名称";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return false;
+		}
+		
+		if(coursenameen==null || coursenameen.trim().length() ==0 ){
+			this.returnInfo = "请填写课程英文名称";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return false;
+		}
+		
+		if(course.getTeacherid()==null || course.getTeacherid() ==0 ){
+			this.returnInfo = "请选择教师";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return false;
+		}
+		
+		if(course.getType() == null || course.getType() == 0 ){
+			this.returnInfo = "请选择课程类型";
+			log.info(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return false;
+		}
+		
+		return true;
+	}
 	//ajax 修改
 	public String updateCourseAjax(){
 		log.info(logprefix + "updateCourseAjax");
 
-		try {				
+		try {			
+				if(checkUpdateParms() == false){
+					return SUCCESS;
+				}
 				Course ch = new Course();
 				Course en = new Course();
 				int coursetype = course.getCoursetype();
 				
-				courseList = courseService.selectCourseByCondition(" where coursetype = "+coursetype);
-				if(courseList == null || courseList.size() !=2){
-					log.info(coursetype);
-					this.returnInfo = "获取修改课程信息出错";					
-					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+				ch = courseService.sel(coursetype, CommonConfig.languagech);
+				en = courseService.sel(coursetype, CommonConfig.languageen);
+				if(ch ==null || en ==null){
+					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, "获取课程信息失败");
 					return SUCCESS;
 				}
-				if(courseList.get(0).getLanguagetype() == CommonConfig.languagech){
-					ch = courseList.get(0);
-					en = courseList.get(1);
-				}else{
-					ch = courseList.get(1);
-					en = courseList.get(0);
-				}
-		
-//              选择能更改的属性，与界面一致	
   				ch.setName(course.getName());
   				ch.setType(course.getType());
   				ch.setTeacherid(course.getTeacherid());
@@ -329,8 +352,6 @@ public class CourseAction extends BaseAction implements ModelDriven<Course>{
   				en.setType(course.getType());
   				en.setTeacherid(course.getTeacherid());
 				
-  				
-  				
 				courseService.updateCourse(ch,en);	
 				
 				this.returnInfo = "修改成功";					

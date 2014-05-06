@@ -35,6 +35,8 @@ public List<Course> selectCourseByCondition(String condition);
 
 	List<CourseFull> selFullByGrade(Integer grade, int language);
 
+	Course sel(int coursetype, int language);
+
 
  
 }

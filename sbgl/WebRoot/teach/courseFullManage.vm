@@ -146,14 +146,13 @@
   <div class="modal-body">
       <p>修改信息。</p>
       <form class="form-horizontal" role="form">
-		
-					<input type="hidden" class="form-control" id="inputEditCoursecoursetype" placeholder="" value="">		
+		<input type="hidden" class="form-control" id="inputEditCoursecoursetype" placeholder="" value="">		
 		
 				
-			<div class="form-group">
+        <div class="form-group">
           <label for="name" class="col-xs-3 control-label">课程名称</label>
           <div class="col-xs-7">
-            <input type="text" class="form-control" id="inputEditCoursename" placeholder="" value="">
+        <input type="text" class="form-control" id="inputEditCoursename" placeholder="" value="">
           </div>
         </div>
 		
@@ -169,7 +168,7 @@
 			<div class="form-group">
           <label for="teacherid" class="col-xs-3 control-label">任课老师</label>
           <div class="col-xs-7">
-                         <select class="select2 select-white form-control" id="input_add_course_teacherid">
+                         <select class="select2 select-white form-control" id="inputEditCourseteacherid">
 						#foreach($temp in $teacherList)
                         <option value="$temp.id">$temp.name</option>
                        #end
@@ -180,9 +179,9 @@
 			<div class="form-group">
           <label for="type" class="col-xs-3 control-label">课程类别</label>
           <div class="col-xs-7">
-									#foreach($temp in $userGroupList)
+					#foreach($temp in $userGroupList)
                       <label class="radio-inline">
-                        <input type="radio" name="course_type" id="courseType${temp.id}" value="${temp.id}" checked="">$temp.name
+                        <input type="radio" name="course_type" id="inputEditCoursecoursetype${temp.id}" value="${temp.id}" checked="">$temp.name
                       </label>
 					#end
           </div>
@@ -231,26 +230,21 @@ var usergroupid = 0;
 //	选择修改按钮，填充修改弹出框
 	$("body").on("click", "a[action-type|=editCourseFillIn]", function() {
 		var data = $(this).data();
-		
-		
-		//alert(data.coursetype);
-		
+				
 		$("#inputEditCoursecoursetype").val(data.coursetype);       
-
 		$("#inputEditCoursename").val(data.name);       
-
-		//$("course_type").val(data.type);       
-
-		$("#input_add_course_teacherid").select2('val',data.teacherid);       
+		$("#inputEditCourseteacherid").select2('val',data.teacherid);       
 	
 		$("#inputEditCourseidEn").val(data.iden);    
 
 		$("#inputEditCoursenameEn").val(data.nameen);   
-		
-		$("input[id='course_type'+data.type]").prop("checked",$(this).prop("checked"));
+		var grade ='inputEditCoursecoursetype'+data.type;
+		//$("input[id="+grade+"]").prop("checked",$(this).prop("checked"));
+		alert("input[id=inputEditCoursecoursetype"+data.type+"]");
+		$("input[id='inputEditCoursecoursetype"+data.type+"']").prop("checked",$(this).prop("checked"));
 		//$("[name = course_type ]:checkbox").attr("checked", true);
 		
-			})
+	})
 //end 	editCourseFillIn
 
 
@@ -258,22 +252,22 @@ var usergroupid = 0;
 	$("body").on("click", "button[action-type|=updateCourseButton]", function() {
 		var _this = $(this);
 		var actionUrl = "${webbaseurl}/updateCourseAjax.action";
-		//获取修改的值	
-							var coursetype = $("#inputEditCoursecoursetype").val();      
-					var name = $("#inputEditCoursename").val();       
-					var type = $("#inputEditCoursetype").val();      
-				
-					var teacherid = $("#inputEditCourseteacherid").val();      
-
 		
-		var postData = {
-										
-								coursetype: coursetype,
-								name: name,							
-								type: type,
-							
-								teacherid: teacherid
-									}
+		//获取修改的值	
+        var coursetype = $("#inputEditCoursecoursetype").val();      
+        var name = $("#inputEditCoursename").val();       
+        var type = $("input[name=course_type]:checked").val();
+        var teacherid = $("#inputEditCourseteacherid").val();      
+		var nameen = $("#inputEditCoursenameEn").val(); 
+		//alert(nameen);
+		
+		var postData = {										
+    		coursetype: coursetype,
+    		name: name,							
+    		type: type,
+    		teacherid:teacherid,
+    		coursenameen:nameen
+		}
 			
 			
 		jQuery.ajax({  

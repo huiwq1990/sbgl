@@ -29,7 +29,11 @@ public class DateConverter extends DefaultTypeConverter {
      */  
     @SuppressWarnings("unchecked")  
     public Object convertValue(Map ognlContext, Object value, Class toType) {  
-            Object result = null;  
+            Object result = null; 
+            if(value == null){
+            	return null;
+            }
+
             if (toType == Date.class) {  
                     try {  
                         result = doConvertToDate(value);  
@@ -53,7 +57,11 @@ public class DateConverter extends DefaultTypeConverter {
     private Date doConvertToDate(Object value) throws ParseException {  
             Date result = null;  
   
-            if (value instanceof String) {  
+            if (value instanceof String) {
+            		String valStr = (String)value;
+            		if(valStr==null || valStr.length()==0){
+            			return null;
+            		}
                     result = DateUtils.parseDate((String) value, new String[] { DATE_PATTERN, DATETIME_PATTERN, MONTH_PATTERN });  
   
                     // all patterns failed, try a milliseconds constructor  

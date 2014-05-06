@@ -107,23 +107,17 @@ public class CourseconfigAction extends BaseAction implements ModelDriven<Course
 	public String addCourseconfigAjax(){	
 		log.info("Add Entity Ajax Manner");
 		
-		
-		
 		try {
-			Courseconfig temp = new Courseconfig();
-			// 将model里的属性值赋给temp
-			BeanUtils.copyProperties(temp, courseconfig);			
-			//add your code here.
+
 		
-			courseconfigService.addCourseconfig(temp);
+			if(checkAddParms() == false){
+				return SUCCESS; 
+			}
+			courseconfigService.addCourseconfig(courseconfig);
 
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, "添加当前学期成功");			
 			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
+		} catch(Exception e){
 			e.printStackTrace();
 			log.error("类CourseconfigAction的方法：addBbstagfavourite错误"+e);
 		}
@@ -133,6 +127,41 @@ public class CourseconfigAction extends BaseAction implements ModelDriven<Course
 	}
 
 
+	boolean checkAddParms(){
+		if(courseconfig == null){
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, "添加失败");	
+			return false;
+		}
+		
+		if(courseconfig.getSchoolyear() == null || courseconfig.getSchoolyear().length()==0){
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, "请输入学年");	
+			return false;
+		}
+		
+		if(courseconfig.getSemester() == null || courseconfig.getSemester()<0){
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, "请输入学期");	
+			return false;
+		}
+		
+		if(courseconfig.getFirstday()== null){
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, "请输入学期第一天");	
+			return false;
+		}
+		if(courseconfig.getLastday()== null){
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, "请输入学期最后一天");	
+			return false;
+		}
+		if(courseconfig.getFirstweekfirstday()== null){
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, "请输入学期第一周第一天");	
+			return false;
+		}
+		if(courseconfig.getWeeknum()== null){
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, "请输入学期周数");	
+			return false;
+		}
+		
+		return true;
+	}
 
 	@Override
 	public Courseconfig getModel() {

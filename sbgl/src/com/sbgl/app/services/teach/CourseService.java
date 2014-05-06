@@ -67,6 +67,10 @@ public interface CourseService{
 	List<CourseFull> selFullByGrade(Integer grade, int language);
 
 	List<CourseFull> selFullByGradePage(Integer grade, Page page, int language);
+
+	Course sel(int coursetype, int language);
+
+
 		
 	
 	
