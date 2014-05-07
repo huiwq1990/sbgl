@@ -144,7 +144,7 @@
   </div>
   
   <div class="modal-body">
-      <p>修改信息。</p>
+      <p>修改课程信息。</p>
       <form class="form-horizontal" role="form">
 		<input type="hidden" class="form-control" id="inputEditCoursecoursetype" placeholder="" value="">		
 		
@@ -238,11 +238,8 @@ var usergroupid = 0;
 		$("#inputEditCourseidEn").val(data.iden);    
 
 		$("#inputEditCoursenameEn").val(data.nameen);   
-		var grade ='inputEditCoursecoursetype'+data.type;
-		//$("input[id="+grade+"]").prop("checked",$(this).prop("checked"));
-		alert("input[id=inputEditCoursecoursetype"+data.type+"]");
-		$("input[id='inputEditCoursecoursetype"+data.type+"']").prop("checked",$(this).prop("checked"));
-		//$("[name = course_type ]:checkbox").attr("checked", true);
+
+		$("#inputEditCoursecoursetype" + data.type).prop("checked", true);
 		
 	})
 //end 	editCourseFillIn
@@ -284,7 +281,7 @@ var usergroupid = 0;
 				}else{
 					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});
 				}
-			}		  	  
+			}  
 		});//end jquery 
 
 	})
