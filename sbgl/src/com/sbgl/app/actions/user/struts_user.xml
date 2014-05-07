@@ -53,6 +53,19 @@
         	</result>
         </action>
         
+        <!-- 修改个人信息 -->
+        <action name="account">
+        	<result>
+        		/account/accountSetup.vm
+        	</result>
+        </action>
+        
+        <action name="passwordSet">
+        	<result>
+        		/account/passwordSetup.vm
+        	</result>
+        </action>
+        
 	 </package>
 	 
 	 <package name="userajax" extends="json-default">
@@ -140,6 +153,12 @@
         </action>
         
         <action name="delUser" class="UserAction" method="deleteUser">
+        	<result type="json" name="success">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+        
+        <action name="alterPassword" class="UserAction" method="alterPassword">
         	<result type="json" name="success">
         		<param name="root">returnJSON</param>
         	</result>

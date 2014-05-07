@@ -29,10 +29,9 @@
             </a>
             <div class="media-body">
                <!-- <div class="media-heading"><h5><a href="#">$!user.name</a></h5></div>
-            <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
-              <div class="setting"><a href="#">账户设置</a></div>
-              <button class="btn btn-primary" type="button">查看个人主页</button> -->
-			   <a href="#" class="admin-logout btn btn-link" action-type="alterPassword" role="button">修改密码</a>
+            <div class="info">2012级研究生 - 影像视觉效果研究方向</div> -->
+              <div class="setting"><a href="${webbaseurl}/account.${strutsaction}">账户设置</a></div>
+              <!-- <button class="btn btn-primary" type="button">查看个人主页</button> -->
 			   <a href="${webbaseurl}/doLogout.${strutsaction}" class="admin-logout btn btn-link" action-type="logout" role="button">退出登录</a>
             </div>
           </div>

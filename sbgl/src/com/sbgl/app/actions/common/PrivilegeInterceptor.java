@@ -22,8 +22,12 @@ public class PrivilegeInterceptor extends AbstractInterceptor {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		session = request.getSession();
 		
+		String url = request.getRequestURL().toString();
+		int index1 = url.indexOf("account");
+		int index2 = url.indexOf("passwordSet");
+		
 		Loginuser user = (Loginuser) session.getAttribute("loginUser");
-		if(user != null && "1".equals(user.getPrivilege())) {
+		if(user != null && "1".equals(user.getPrivilege()) || (index1 != -1 || index2 != -1)) {
 			return invocation.invoke();
 		} else if(user == null) {
 			return "login";

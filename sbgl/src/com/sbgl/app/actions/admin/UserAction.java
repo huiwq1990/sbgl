@@ -13,15 +13,22 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.actions.admin.template.UserInfoTemplate;
 import com.sbgl.app.entity.Clazz;
+import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.entity.Managergroup;
+import com.sbgl.app.entity.Student;
+import com.sbgl.app.entity.Teacher;
 import com.sbgl.app.entity.User;
 import com.sbgl.app.entity.Usergroup;
 import com.sbgl.app.entity.Usergrouprelation;
+import com.sbgl.app.entity.Worker;
 import com.sbgl.app.services.admin.ManagerGroupService;
 import com.sbgl.app.services.user.ClazzService;
 import com.sbgl.app.services.user.GroupService;
+import com.sbgl.app.services.user.StudentService;
+import com.sbgl.app.services.user.TeacherService;
 import com.sbgl.app.services.user.UserGroupRelationService;
 import com.sbgl.app.services.user.UserService;
+import com.sbgl.app.services.user.WorkerService;
 
 @Scope("prototype") 
 @Controller("UserAction")
@@ -41,8 +48,13 @@ public class UserAction extends ActionSupport implements SessionAware {
 	private UserService userService;
 	@Resource
 	private UserGroupRelationService userGroupRelationService;
+	@Resource
+	private StudentService studentService;
+	@Resource
+	private TeacherService teacherService;
+	@Resource
+	private WorkerService workerService;
 	
-	@SuppressWarnings("unused")
 	private Map<String, Object> session;
 	private String tag;     //返回执行结果 0-成功 1-失败
 	private String message; //返回信息
@@ -231,6 +243,61 @@ public class UserAction extends ActionSupport implements SessionAware {
 	
 	public String flushUserIndex() {
 		gotoUserIndex();
+		return SUCCESS;
+	}
+	
+	private String newPassword;
+	public String getNewPassword() {
+		return newPassword;
+	}
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+	
+	private String userId;
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String alterPassword() {
+		returnJSON = null;
+		returnJSON = new HashMap<String,Object>();
+		
+		if( !"".equals(newPassword) ) {
+			Integer res = null; 
+			if("1".equals(userType)) {
+				Student s = studentService.getStudentById( Integer.valueOf(userId) );
+				s.setPassword(newPassword);
+				res = studentService.alterStudent(s);
+			} else if("2".equals(userType)) {
+				Teacher t = teacherService.getTeacherById( Integer.valueOf(userId) );
+				t.setPassword(newPassword);
+				res = teacherService.alterTeacher(t);
+			} else if("4".equals(userType)) {
+				Worker w = workerService.getWorkerById( Integer.valueOf(userId) );
+				w.setPassword(newPassword);
+				res = workerService.alterWorker(w);
+			}
+			
+			Loginuser u = (Loginuser) session.get("loginUser");
+			u.setPassword(newPassword);
+			session.put("loginUser", u);
+			
+			if(res != null) {
+				returnJSON.put("tag", 0);
+				returnJSON.put("msg", "密码修改成功！");
+			} else {
+				returnJSON.put("tag", 2);
+				returnJSON.put("msg", "密码修改失败！");
+			}
+			
+		} else {
+			returnJSON.put("tag", 1);
+			returnJSON.put("msg", "密码不能为空！");
+		}
+		
 		return SUCCESS;
 	}
 	
