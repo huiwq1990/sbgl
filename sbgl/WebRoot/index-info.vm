@@ -34,7 +34,7 @@
     <div id="user-profile">
       <div class="media">
         <div id="user-profile-photo" class="pull-left">
-          <img src="${imageDomain}/photo.jpg" width="120" height="120" class="img-circle">
+          <img src="${userImagePath}/$!user.photo" width="120" height="120" class="img-circle">
         </div>
         <div id="user-profile-info" class="media-body">
           <h4 class="profile-name media-heading">$!user.name</h4>
