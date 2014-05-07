@@ -911,8 +911,7 @@ public class ManageComputerAction extends BaseAction{
 		
 //		课程组信息
 		usergroupList = groupService.getUserGroupByType(CommonConfig.usergroupstudentid);		
-//		课程信息
-		
+//		课程信息		
 		courseFullList  = courseService.selFullByGrade(0, CommonConfig.languagech);
 		courseFullByGroupId = TeachActionUtil.couseFullUsergroupMap(usergroupList, courseFullList);
 		

@@ -51,7 +51,10 @@ public class TeachActionUtil {
 		HashMap<Integer, ArrayList<CourseFull>> courseByIdGroupId = new HashMap<Integer,ArrayList<CourseFull>>();
 
 		for(CourseFull c : courseFullList){
-			int cousegroup = c.getCoursetype();
+			Integer cousegroup = c.getCoursetype();//默认情况下课程所属年级不能为空，如果为空则默认不处理。
+			if(cousegroup == null){
+				continue;
+			}
 			if(!courseByIdGroupId.containsKey(cousegroup)){		
 				courseByIdGroupId.put(cousegroup, new ArrayList<CourseFull>());
 			}

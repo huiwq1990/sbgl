@@ -181,7 +181,7 @@
           <div class="col-xs-7">
 					#foreach($temp in $userGroupList)
                       <label class="radio-inline">
-                        <input type="radio" name="course_type" id="inputEditCoursecoursetype${temp.id}" value="${temp.id}" checked="">$temp.name
+                        <input type="radio" name="course_type" id="grade${temp.id}" value="${temp.id}" checked="">$temp.name
                       </label>
 					#end
           </div>
@@ -237,17 +237,22 @@ var usergroupid = 0;
 	
 		$("#inputEditCourseidEn").val(data.iden);    
 
-		$("#inputEditCoursenameEn").val(data.nameen);   
+		$("#inputEditCoursenameEn").val(data.nameen);  
+		
+		
 		var grade ='inputEditCoursecoursetype'+data.type;
 		//$("input[id="+grade+"]").prop("checked",$(this).prop("checked"));
-		alert("input[id=inputEditCoursecoursetype"+data.type+"]");
-		$("input[id='inputEditCoursecoursetype"+data.type+"']").prop("checked",$(this).prop("checked"));
+		//alert("input[id=inputEditCoursecoursetype"+data.type+"]");
+		
+		//$("#grade_"+data.type).prop("checked",$(this).prop("checked"));
+		$("#grade2").prop("checked",$(this).prop("checked"));
+		//$("input[id=inputEditCoursetype"+data.type+"]").prop("checked",$(this).prop("checked"));
 		//$("[name = course_type ]:checkbox").attr("checked", true);
 		
 	})
 //end 	editCourseFillIn
 
-
+	
 //	update
 	$("body").on("click", "button[action-type|=updateCourseButton]", function() {
 		var _this = $(this);
