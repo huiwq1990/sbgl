@@ -41,6 +41,7 @@
 		  <!--
           <div class="profile-more-info">2012级研究生 - 影像视觉效果研究方向</div>-->
         </div>
+		
       </div>
     </div>
     <div class="user-bg-pic"><img src="${imageDomain}/img8.jpg" class="img-responsive"></div>
@@ -63,13 +64,13 @@
             <div class="thumbnail">
               <div class="hd clearfix">
                 <h3 class="pull-left">基本信息</h3>
-                <a href="#modify-basic" class="lk pull-right" data-toggle="modal" role="button">编辑</a>
+                <a href="#modify-basic" class="lk pull-right" data-toggle="modal" role="button" id="editGender">编辑</a>
               </div>
               <dl class="dl-horizontal">
                 <dt>姓名</dt>
                 <dd>$!userName</dd>
                 <dt>性别</dt>
-                <dd>$!gender</dd>
+                <dd id="g">$!gender</dd>
 				 #if($!classBelongTo != "-1")
                     <dt>所在班级</dt>
                     <dd>$!classBelongTo</dd>
@@ -81,13 +82,13 @@
             <div class="thumbnail">
               <div class="hd clearfix">
                 <h3 class="pull-left">联系信息</h3>
-                <a href="#modify-contact" class="lk pull-right" data-toggle="modal" role="button">编辑</a>
+                <a href="#modify-contact" class="lk pull-right" data-toggle="modal" role="button" id="editConn">编辑</a>
               </div>
               <dl class="dl-horizontal">
                 <dt>电子邮箱</dt>
-                <dd>$!email</dd>
+                <dd id="e">$!email</dd>
                 <dt>手机号码</dt>
-                <dd>$!phone</dd>
+                <dd id="p">$!phone</dd>
               </dl>
             </div>
           </div>
@@ -112,46 +113,18 @@
           <label for="inputGender" class="col-xs-4 control-label">性别</label>
           <div class="col-xs-6">
             <label class="radio-inline">
-              <input type="radio" name="inputGender" id="gender-male" value="1" checked="">男
+              <input type="radio" name="inputGender" id="male" value="0">男
             </label>
             <label class="radio-inline">
-              <input type="radio" name="inputGender" id="gender-female" value="2">女
+              <input type="radio" name="inputGender" id="female" value="1">女
             </label>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputBirthday" class="col-xs-4 control-label">生日</label>
-          <div class="col-xs-2">
-            <input type="text" class="form-control" id="inputBirthday" placeholder="1989">
-          </div>
-          <div class="col-xs-2">
-            <select class="select2 select-white form-control" id="inputBirthMonth">
-              <option value="1">1</option><option value="2">2</option>
-              <option value="3">3</option><option value="4">4</option>
-              <option value="5">5</option><option value="6">6</option>
-              <option value="7">7</option><option value="8">8</option>
-              <option value="9">9</option><option value="10">10</option>
-              <option value="11">11</option><option value="12">12</option>
-            </select>
-          </div>
-          <div class="col-xs-2">
-            <select class="select2 select-white form-control" id="inputBirthDay">
-              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
-              <option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option>
-              <option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
-              <option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option>
-              <option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option>
-              <option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option>
-              <option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option>
-              <option value="29">29</option><option value="30">30</option><option value="31">31</option>
-            </select>
           </div>
         </div>
       </form>
     </div>
   <div class="modal-footer">
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary">确 定</button>
+    <button class="btn btn-primary" action-type="alterGender">确 定</button>
   </div>
 </div>
 <div id="modify-contact" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
@@ -177,16 +150,141 @@
     </div>
   <div class="modal-footer">
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary">确 定</button>
+    <button class="btn btn-primary" action-type="alterInfo">确 定</button>
   </div>
 </div>
     <!-- javascript
     ================================================== -->
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/bootstrap-datepicker.js"></script>
+<script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="${jsDomain}/xdate.js"></script>
+<script src="${jsDomain}/computer/computerorder.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+
+<script>
+	var oldGender = "";
+	var oldEmail = "";
+	var oldTel = ""
+	$("body").on("click", "a[role|=button]", function() {
+		var divId = $(this).attr("id");
+		$("#male").removeAttr("checked");
+		$("#female").removeAttr("checked");
+		if(divId == "editGender") {
+			if(oldGender == "") {
+				var gender = $("#g").html();
+    			if(gender == "男") {
+    				$("#male").attr("checked", "");
+    			} else {
+    				$("#female").attr("checked", "");
+    			}
+			} else {
+				if(oldGender == 0) {
+					$("#male").attr("checked", "");
+				} else {
+					$("#female").attr("checked", "");
+				}
+			}
+			
+			
+		} else {
+			if(oldEmail == "") {
+				$("#inputEmail").val("$!email");
+			} else {
+				$("#inputEmail").val(oldEmail);
+			}
+			if(oldTel == "") {
+				$("#inputPhone").val("$!phone");
+			} else {
+				$("#inputPhone").val(oldTel);
+			}
+		}
+	});
+	
+	$("body").on("click", "button[action-type|=alterGender]", function() {
+		var _this = $(this);
+		var gender = $("input[name|=inputGender]:checked").val();
+		
+		//alert(roleType);
+		
+		var postData = {
+			"userId": $!user.id,
+			"newGender": gender,
+			"userType": $!user.roletype
+		};
+		
+		jQuery.ajax({  
+		    url: "${webbaseurl}/alterGender.do",  
+		    type: "post",
+		    data: postData,
+		    success:function(data,textStatus,jq){  
+				oldGender = gender;
+				//alert(data.tag);
+		    	console.log(data);
+				if(data.tag == "0") {
+					if(gender == 0) {
+						$("#g").html("男");
+					} else {
+						$("#g").html("女");
+					}
+					
+					//alert(data.msg);
+					n = noty({text: data.msg, timeout: 2500, type: 'success'});
+		    		_this.parents('.modal').modal('toggle');
+				} else {
+					n = noty({text: data.msg, timeout: 2500, type: 'error'});
+				}
+	        },  
+		    error:function(data,textStatus,jq) {
+				    n = noty({text: data.msg, timeout: 2500, type: 'error'});
+			}  
+		});
+		
+	});
+	
+	$("body").on("click", "button[action-type|=alterInfo]", function() {
+		var _this = $(this);
+		var email = $("#inputEmail").val();
+		var tel = $("#inputPhone").val();
+		
+		var postData = {
+			"userId": $!user.id,
+			"phoneNum": tel,
+			"newEmail": email,
+			"userType": $!user.roletype
+		};
+		
+		jQuery.ajax({  
+		    url: "${webbaseurl}/alterConnInfo.do",  
+		    type: "post",
+		    data: postData,
+		    success:function(data,textStatus,jq){  
+				oldEmail = email;
+				oldTel = tel;
+				//alert(data.tag);
+		    	console.log(data);
+				if(data.tag == "0") {
+					$("#e").html(email);
+					$("#p").html(tel);
+					
+					//alert(data.msg);
+					n = noty({text: data.msg, timeout: 2500, type: 'success'});
+		    		_this.parents('.modal').modal('toggle');
+				} else {
+					n = noty({text: data.msg, timeout: 2500, type: 'error'});
+				}
+	        },  
+		    error:function(data,textStatus,jq) {
+				    n = noty({text: data.msg, timeout: 2500, type: 'error'});
+			}  
+		});
+		
+	});
+</script>
 
 </body>
 </html>

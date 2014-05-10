@@ -301,6 +301,113 @@ public class UserAction extends ActionSupport implements SessionAware {
 		return SUCCESS;
 	}
 	
+	private String newGender;
+	
+	public String getNewGender() {
+		return newGender;
+	}
+	public void setNewGender(String newGender) {
+		this.newGender = newGender;
+	}
+	public String alterGender() {
+		returnJSON = null;
+		returnJSON = new HashMap<String,Object>();
+		
+		if( !"".equals(newGender) ) {
+			Integer res = null; 
+			if("1".equals(userType)) {
+				Student s = studentService.getStudentById( Integer.valueOf(userId) );
+				s.setGender(newGender);
+				res = studentService.alterStudent(s);
+			} else if("2".equals(userType)) {
+				Teacher t = teacherService.getTeacherById( Integer.valueOf(userId) );
+				t.setGender(newGender);
+				res = teacherService.alterTeacher(t);
+			} else if("4".equals(userType)) {
+				Worker w = workerService.getWorkerById( Integer.valueOf(userId) );
+				w.setGender(newGender);
+				res = workerService.alterWorker(w);
+			}
+			
+			Loginuser u = (Loginuser) session.get("loginUser");
+			u.setGender(newGender);
+			session.put("loginUser", u);
+			
+			if(res != null) {
+				returnJSON.put("tag", 0);
+				returnJSON.put("msg", "性别修改成功！");
+			} else {
+				returnJSON.put("tag", 2);
+				returnJSON.put("msg", "性别修改失败！");
+			}
+			
+		} else {
+			returnJSON.put("tag", 1);
+			returnJSON.put("msg", "性别信息有误！");
+		}
+		
+		return SUCCESS;
+	}
+	
+	private String phoneNum;
+	private String newEmail;
+	
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+	public String getNewEmail() {
+		return newEmail;
+	}
+	public void setNewEmail(String newEmail) {
+		this.newEmail = newEmail;
+	}
+	
+	public String alterConnInfo() {
+		returnJSON = null;
+		returnJSON = new HashMap<String,Object>();
+		
+		if( !"".equals(phoneNum) && !"".equals(newEmail) ) {
+			Integer res = null; 
+			if("1".equals(userType)) {
+				Student s = studentService.getStudentById( Integer.valueOf(userId) );
+				s.setTelephone(phoneNum);
+				s.setEmail(newEmail);
+				res = studentService.alterStudent(s);
+			} else if("2".equals(userType)) {
+				Teacher t = teacherService.getTeacherById( Integer.valueOf(userId) );
+				t.setTelephone(phoneNum);
+				t.setEmail(newEmail);
+				res = teacherService.alterTeacher(t);
+			} else if("4".equals(userType)) {
+				Worker w = workerService.getWorkerById( Integer.valueOf(userId) );
+				w.setTelephone(phoneNum);
+				w.setEmail(newEmail);
+				res = workerService.alterWorker(w);
+			}
+			
+			Loginuser u = (Loginuser) session.get("loginUser");
+			u.setTelephone(phoneNum);
+			u.setEmail(newEmail);
+			session.put("loginUser", u);
+			
+			if(res != null) {
+				returnJSON.put("tag", 0);
+				returnJSON.put("msg", "修改联系方式成功！");
+			} else {
+				returnJSON.put("tag", 2);
+				returnJSON.put("msg", "修改联系方式失败！");
+			}
+			
+		} else {
+			returnJSON.put("tag", 1);
+			returnJSON.put("msg", "联系信息有误！");
+		}
+		return SUCCESS;
+	}
+	
 	
 	public String getTag() {
 		return tag;
