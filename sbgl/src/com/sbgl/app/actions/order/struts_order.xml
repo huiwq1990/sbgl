@@ -33,5 +33,10 @@
 	 	<action name="subOrder" class="OrderMainAction" method="subOrder">
         	<result type="json"></result>
         </action>
+        <!-- 获取设备组中设备信息 -->
+	 	<action name="equipmentGroupOrder" class="OrderMainAction" method="equipmentGroupOrder">
+        	<result type="json"></result>
+        </action>
+        
     </package>
 </struts>

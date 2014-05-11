@@ -134,6 +134,8 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 				if(classificationId==0){
 					if(courseruleid==9&&parentClassId!=-2){
 						equipmentList = orderMainService.findEquipmentByClss2(parentClassId,fromDate,endDate,lantype,serach,equipmenborrowFull.getCourseruleid());
+					}else if(courseruleid==9&&parentClassId==-2){
+						equipmentList = orderMainService.findEquipmentByGroup(lantype,serach,equipmenborrowFull.getCourseruleid());
 					}else if(parentClassId==-2){
 						equipmentList = orderMainService.findEquipmentByGroup(lantype,serach);
 					}else{
@@ -152,6 +154,8 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 				if(classificationId==0){
 					if(courseruleid==9&&parentClassId!=-2){
 						equipmentList = orderMainService.findEquipmentByClss2(parentClassId,fromDate,endDate,lantype,equipmenborrowFull.getCourseruleid());
+					}else if(courseruleid==9&&parentClassId==-2){
+						equipmentList = orderMainService.findEquipmentByGroup(lantype,equipmenborrowFull.getCourseruleid());
 					}else if(parentClassId==-2){
 						equipmentList = orderMainService.findEquipmentByGroup(lantype);
 					}else{
@@ -250,6 +254,27 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 			message = "提交订单失败";
 			log.error(e);
 		}
+		return SUCCESS;
+	}
+	
+	//获取设备组中设备信息
+	public String equipmentGroupOrder(){
+		if(fromDate==null||fromDate.equals("")){
+			fromDate = DateUtil.date.format(new Date());		
+			if(endDate==null||endDate.equals("")){
+				endDate = fromDate;
+			}
+		}else{
+			if(endDate==null||endDate.equals("")){
+				endDate = fromDate;
+			}
+		}
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
+		equipmentList = orderMainService.equipmentGroupOrder(equipmentId,fromDate,endDate,lantype);
+		
 		return SUCCESS;
 	}
 	

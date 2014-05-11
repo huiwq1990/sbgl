@@ -251,6 +251,30 @@ public class OrderMainServiceImpl implements OrderMainService {
 		return orderMainDao.findEquipmentByGroup(lantype);
 	}
 
+
+	@Override
+	public List<EquipmentFull> findEquipmentByGroup(String lantype,
+			String serach, Integer courseRuleId) {
+		// TODO Auto-generated method stub
+		return orderMainDao.findEquipmentByGroup(lantype, serach, courseRuleId);
+	}
+
+
+	@Override
+	public List<EquipmentFull> findEquipmentByGroup(String lantype,
+			Integer courseRuleId) {
+		// TODO Auto-generated method stub
+		return orderMainDao.findEquipmentByGroup(lantype, courseRuleId);
+	}
+
+
+	@Override
+	public List<EquipmentFull> equipmentGroupOrder(Integer equipmentId,
+			String fromDate, String endDate,String lantype) {
+		// TODO Auto-generated method stub
+		return orderMainDao.equipmentGroupOrder(equipmentId, fromDate, endDate,lantype); 
+	}
+
 	
 	
 }
