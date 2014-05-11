@@ -172,8 +172,6 @@
 	var oldTel = ""
 	$("body").on("click", "a[role|=button]", function() {
 		var divId = $(this).attr("id");
-		$("#male").removeAttr("checked");
-		$("#female").removeAttr("checked");
 		if(divId == "editGender") {
 			if(oldGender == "") {
 				var gender = $("#g").html();
@@ -183,6 +181,7 @@
     				$("#female").attr("checked", "");
     			}
 			} else {
+				console.log(oldGender);
 				if(oldGender == 0) {
 					$("#male").attr("checked", "");
 				} else {
