@@ -60,4 +60,10 @@ public interface OrderMainService {
 	public List<EquipmentFull> findEquipmentByGroup(String lantype,String serach);
 	//获得设备组信息
 	public List<EquipmentFull> findEquipmentByGroup(String lantype);
+	//获得设备组信息(课程预约)
+	public List<EquipmentFull> findEquipmentByGroup(String lantype,String serach,Integer courseRuleId);
+	//获得设备组信息(课程预约)
+	public List<EquipmentFull> findEquipmentByGroup(String lantype,Integer courseRuleId);
+	//获取设备组中设备信息
+	public List<EquipmentFull> equipmentGroupOrder(Integer equipmentId,String fromDate,String endDate,String lantype);
 }

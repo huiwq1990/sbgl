@@ -409,7 +409,6 @@
 		savedFileName = "";
 		$("#imgFileForAdd").html("");
 		$("#inputEPic").prop('disabled', false);
-		$("#modifyEPic").prop('disabled', false);
 	});
 	
 	$("body").on("click", "input[type='checkbox']", function() {

@@ -639,6 +639,99 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	}
 
 
+	@Override
+	public List<EquipmentFull> findEquipmentByGroup(String lantype,
+			String serach, Integer courseRuleId) {
+		// TODO Auto-generated method stub
+		String sql = " select a.equipmentgroupid as Equipmentid,a.Equipmentname,a.Brandid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved  ";
+	    sql+= "  from EquipmentGroup a  left outer join orderCourseRuleDetail d on d.courseRuleId= '"+courseRuleId+"' and d.comId = a.comId     "
+			+ " where a.lanType = '"+lantype+"' and a.equipmentname like '%"+serach+"%'  and d.comid != '' ";
+		final String sql1 = sql;
+		List<EquipmentFull> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql1);
+				query.setResultTransformer(new EscColumnToBean(EquipmentFull.class));
+				return query.list();
+			}
+		});	
+		if(equipmentList!=null&&!equipmentList.isEmpty()){
+			int size = equipmentList.size();
+			for(int i = 0; i<size; i++){
+				EquipmentFull equipmentFull = equipmentList.get(i);
+				equipmentFull.setClassificationid(-2);
+				equipmentFull.setBorrownum(Long.valueOf(10));
+				equipmentList.set(i, equipmentFull);
+			}
+			return equipmentList;
+		}
+		return null;
+	}
+
+
+	@Override
+	public List<EquipmentFull> findEquipmentByGroup(String lantype,
+			Integer courseRuleId) {
+		// TODO Auto-generated method stub
+		String sql = " select a.equipmentgroupid as Equipmentid,a.Equipmentname,a.Brandid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved  ";
+	    sql+= "  from EquipmentGroup a  left outer join orderCourseRuleDetail d on d.courseRuleId= '"+courseRuleId+"' and d.comId = a.comId   "
+			+ " where a.lanType = '"+lantype+"' and d.comid != '' ";
+		final String sql1 = sql;
+		List<EquipmentFull> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql1);
+				query.setResultTransformer(new EscColumnToBean(EquipmentFull.class));
+				return query.list();
+			}
+		});	
+		if(equipmentList!=null&&!equipmentList.isEmpty()){
+			int size = equipmentList.size();
+			for(int i = 0; i<size; i++){
+				EquipmentFull equipmentFull = equipmentList.get(i);
+				equipmentFull.setClassificationid(-2);
+				equipmentFull.setBorrownum(Long.valueOf(10));
+				equipmentList.set(i, equipmentFull);
+			}
+			return equipmentList;
+		}
+		return null;
+	}
+
+
+	@Override
+	public List<EquipmentFull> equipmentGroupOrder(Integer equipmentId,
+			String fromDate, String endDate,String lantype) {
+		// TODO Auto-generated method stub
+		List<String> dateList = DateUtil.dateRegion(fromDate,endDate);
+		final Integer size = dateList.size();
+		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,(select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
+		    for(int i=0;i<size;i++){
+	    		String dateTemp = dateList.get(i);
+	    		sql +="(select   sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa,b.comId from ListDetail b " 
+	    			+ " where  ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comId )  "  ;  
+	    		if(i!=size-1){
+	    			sql += " union ";
+	    		}
+	    	}
+	    sql+= ")tempaa where tempaa.comId=a.comId) as borrownum,d.num from Equipment a  "
+	    	+ " left outer join groupofequipment d on d.Equipmentid=a.comid "
+	    	+ " left outer join equipmentgroup e on d.equipmentgroupid=e.comid "
+			+ " where a.lanType = '"+lantype+"' and e.equipmentgroupid = '"+equipmentId+"' group by a.comid  ";
+		
+	    final String sql1 = sql;
+	    List<EquipmentFull> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql1);
+				query.setResultTransformer(new EscColumnToBean(EquipmentFull.class));
+				return query.list();
+			}
+		});	
+		if(equipmentList!=null&&!equipmentList.isEmpty()){
+			return equipmentList;
+		}	
+		return null;
+	}
+
+
 
 
 }

@@ -163,5 +163,17 @@
         		<param name="root">returnJSON</param>
         	</result>
         </action>
+        
+        <action name="alterGender" class="UserAction" method="alterGender">
+        	<result type="json" name="success">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+        
+        <action name="alterConnInfo" class="UserAction" method="alterConnInfo">
+        	<result type="json" name="success">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
 	 </package>
 </struts>

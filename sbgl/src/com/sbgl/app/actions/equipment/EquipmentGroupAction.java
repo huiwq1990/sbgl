@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import com.sbgl.app.services.common.CommonService;
 import com.sbgl.app.services.equipment.EquipGroupService;
 import com.sbgl.app.services.orderadmin.OrderAdminService;
 import com.sbgl.util.Page;
+import com.sbgl.util.PropertyUtil;
 import com.sbgl.util.StringUtil;
 
 @Scope("prototype") 
@@ -42,6 +44,8 @@ public class EquipmentGroupAction extends ActionSupport implements SessionAware 
 	private String pageNo;
 	private String ids;
 	private Page page;
+	private String imgGroupName;
+	private String imgGroupRealName;
 	private List<EquipmentgroupFull> equipmentgroupFullList;
 	
 	private List<Equipmentclassification> classification1List;
@@ -133,6 +137,8 @@ public class EquipmentGroupAction extends ActionSupport implements SessionAware 
 			equipmentgroup.setEquipmentdetail(groupCNdetail);
 			equipmentgroup.setEquipmentname(groupChName);
 			equipmentgroup.setComid(commonService.getCode("equipComId"));
+			equipmentgroup.setImgname(imgGroupName);
+			equipmentgroup.setImgnamesaved(imgGroupRealName);
 			Equipmentgroup equipmentENgroup = new Equipmentgroup();
 			equipmentENgroup.setEquipmentgroupid(commonService.getCode("equipId"));
 			equipmentENgroup.setClassificationid(-2);
@@ -141,6 +147,9 @@ public class EquipmentGroupAction extends ActionSupport implements SessionAware 
 			equipmentENgroup.setEquipmentdetail(groupENdetail);
 			equipmentENgroup.setEquipmentname(groupENName);
 			equipmentENgroup.setComid(equipmentgroup.getComid());
+			equipmentENgroup.setImgname(imgGroupName);
+			equipmentENgroup.setImgnamesaved(imgGroupRealName);
+			
 			int size = inputBasicEquipId.size();
 			List<Groupofequipment> groupofequipmentList = new ArrayList<Groupofequipment>();
 			for(int i = 0;i < size;i++){
@@ -280,6 +289,22 @@ public class EquipmentGroupAction extends ActionSupport implements SessionAware 
 
 	public void setIds(String ids) {
 		this.ids = ids;
+	}
+
+	public String getImgGroupName() {
+		return imgGroupName;
+	}
+
+	public void setImgGroupName(String imgGroupName) {
+		this.imgGroupName = imgGroupName;
+	}
+
+	public String getImgGroupRealName() {
+		return imgGroupRealName;
+	}
+
+	public void setImgGroupRealName(String imgGroupRealName) {
+		this.imgGroupRealName = imgGroupRealName;
 	}
 	
 }

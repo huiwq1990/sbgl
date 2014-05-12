@@ -47,7 +47,7 @@
                 </select>
               </div>
               <div class="operate-item pull-left">
-                <a href="#add-equip-basic-group" class="btn btn-primary" data-toggle="modal" role="button">添加基本设备组</a>
+                <a href="#add-equip-basic-group" class="btn btn-primary" data-toggle="modal" action-type="clearInput"  role="button">添加基本设备组</a>
                 <a href="#" class="btn btn-white s-h" action-type="deleteModel"><i class="icon-trash"></i> 删除</a>
               </div>
 
@@ -139,7 +139,7 @@
 				#foreach($row2 in $classification1List)	
               <optgroup label="$!row2.name">
 			  	#foreach($row3 in $classequipmap.get($!row2.classificationid))
-                <option value="$!row3.equipmentid">$!row3.equipmentname</option>
+                <option value="$!row3.comId">$!row3.equipmentname</option>
 				#end
               </optgroup>
 			  #end
@@ -173,6 +173,9 @@
               <span>添加图片</span>
 			  <input id="inputEPic" type="file" action-type="showFileNameForAdd" name="file" multiple>
           </span>
+		   <span id="imgFileForAdd"></span>
+		   <input type="hidden" id="imgGroupName" name="imgGroupName">
+		   <input type="hidden" id="imgGroupRealName" name="imgGroupRealName">
         </div>
       </div>
       <div class="form-group">
@@ -187,7 +190,7 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button type="button" class="btn btn-primary"  action-type="addGroup" >确 定</button>
+    <button type="button" class="btn btn-primary" id="submitBtnForAdd" action-type="addGroup" >确 定</button>
   </div>
 </div>
 
@@ -236,6 +239,13 @@
 	var localFileName;          //本地图片名称
 	var savedFileName;          //保存在服务器的图片名称
 	
+	$("body").on("change", "input[action-type|=showFileNameForAdd]", function() {
+		var file = $("#inputEPic").val();
+		$("#imgFileForAdd").html(file);
+		$("#inputEPic").prop('disabled', true);
+	});
+	
+	
 	//上传图片
 	$("#inputEPic").fileupload({
     	url: "${webbaseurl}/uploadImageFile.do",
@@ -250,6 +260,8 @@
 				localFileName = data.files[0].name;
 				savedFileName = data.result.savedFileName;
 				$("#imgFileForAdd").html(localFileName);
+				$("#imgGroupName").val(localFileName);
+				$("#imgGroupRealName").val(savedFileName);
 				$("#inputEPic").prop('disabled', true);
 			} else if(data.result.tag == 1) {
 				alert("上传图片失败！");
@@ -285,28 +297,6 @@
         }
     });
 	
-	$("#inputEPic").fileupload({
-    	url: "${webbaseurl}/uploadImageFile.do",
-        dataType: 'json',
-		change: function (e, data) {
-        	$("#submitBtnForAdd").attr("disabled", "disabled");
-    	},
-        done: function (e, data) {
-			$("#submitBtnForAdd").removeAttr("disabled");
-            console.log(data);
-			if(data.result.tag == 0) {
-				localFileName = data.files[0].name;
-				savedFileName = data.result.savedFileName;
-				$("#imgFileForAdd").html(localFileName);
-				$("#inputEPic").prop('disabled', true);
-			} else if(data.result.tag == 1) {
-				alert("上传图片失败！");
-				localFileName = "";
-				savedFileName = "";
-			}
-            //alert(data.result.savedFileName);
-        }
-    });
 	
 	$("body").on("click", "button[action-type|=addBasicEquip]", function() {
 		var myData = $(this).data();
@@ -375,6 +365,22 @@
 				}
 			}	  
 		});
+	});
+	
+	$("body").on("click", "a[action-type|=clearInput]", function() {
+		$("#inputModelName").val("");
+		$("#inputModelNameEn").val("");
+		$("#inputDescribe").val("");
+		$("#inputDescribeEn").val("");
+		$("#imgGroupName").val("");
+		$("#imgGroupRealName").val("");
+		$("#imgGroupName").val("");
+		$("#imgGroupRealName").val("");
+		
+		localFileName = "";
+		savedFileName = "";
+		$("#imgFileForAdd").html("");
+		$("#inputEPic").prop('disabled', false);
 	});
 	
 	$("body").on("click", "a[data-type|=pageQuery]", function() {

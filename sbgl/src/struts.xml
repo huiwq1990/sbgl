@@ -13,7 +13,7 @@
 	<package name="default" extends="struts-default">
    		<default-action-ref name="notFound"/>
   		<action name="notFound">
-    		<result>/errorNotFound.vm</result>
+    		<result>/404.vm</result>
    		</action>
 	</package>
 

@@ -91,16 +91,21 @@
                       <div class="thumbnail">
                         <img width="168px" height="128px" class="e-pic" src="$!{equipmentImagePath}/$!row3.imgNameSaved">
                         <div class="caption">
-                          <div class="title"><a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.equipmentid" role="button">$!row3.equipmentname</a></div>
-                          <p class="detail">最多可借：$!row3.borrownum</p>
+                          <div class="title">
+							#if($class1Name!="设备组")<a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.equipmentid" role="button">$!row3.equipmentname</a>
+						  #else <a class="lk" role="button">$!row3.equipmentname</a>
+						  #end</div>
+                          <p class="detail">#if($class1Name!="设备组")最多可借：$!row3.borrownum #else 可借数量根据真实设备变化 #end</p>
                         </div>
                         <div class="select-num">
+						 #if($class1Name!="设备组")
                           <select class="select2 form-control select-white" id="inputEquipStatus">
 							 #foreach($i in [1 .. $!row3.borrownum])	
 								<option value="$i">$i</option>
 							 #end
                           </select>
-                        </div>                            
+						  #end                      
+						</div>                            
                         <a class="btn btn-white add-btn" data-type="addEquip" data-id="$!row3.equipmentid" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" data-cate="$!row3.classificationid" href="javascript:;">添 加</a>
                       </div>                  
                   </div>
@@ -238,7 +243,7 @@
   </div>
   <div class="modal-footer">
     <a class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</a>
-    <a class="btn btn-primary" data-type="addEquip" data-id="$!equipmentFull.equipmentid" data-name="$!equipmentFull.equipmentname" data-num="$!equipmentFull.borrownum" href="javascript:;">添 加</a>
+    <a class="btn btn-primary" data-type="addEquip" data-id="$!equipmentFull.equipmentid" data-name="$!equipmentFull.equipmentname" data-num="$!equipmentFull.borrownum" data-cate="$!parentClassId" href="javascript:;">添 加</a>
   </div>
 </div>
 
