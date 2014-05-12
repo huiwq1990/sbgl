@@ -94,6 +94,12 @@
         	<result name="error">/error.vm</result> 
         </action>
 		
+		<!-- 日历模式管理订单 -->
+		<action name="manageComputerorderCalendar" class="ComputerorderAction" method="manageComputerorderCalendar">
+        	<result name="success">/computer/computerorderManagerCalendar.vm</result>
+        	<result name="notsetcurrentCourseconfig">/computer/computerorderManagerCalendarError.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
 
 
 

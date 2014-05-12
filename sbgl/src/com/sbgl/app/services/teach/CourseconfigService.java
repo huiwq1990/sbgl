@@ -55,6 +55,8 @@ public interface CourseconfigService{
 	int execSql(String sql);
 
 	Courseconfig getCurrentCourseconfig() throws DataError;
+
+	List<Courseconfig> selAll();
 		
 	
 	

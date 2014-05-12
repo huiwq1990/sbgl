@@ -70,5 +70,14 @@ public List<Computerorderdetail> selectComputerorderdetailByCondition(String con
 
 
 
+	List<ComputerorderdetailFull> selectValidFullFromStartToEnd(Date startDate,
+			int startPeriod, Date endDate, int endPeriod, int language);
+
+	List<ComputerorderdetailFull> selectValidFullFromStartToEndByModel(
+			Date startDate, int startPeriod, Date endDate, int endPeriod,
+			String modeltypeStr, int language);
+
+
+
  
 }

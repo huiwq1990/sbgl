@@ -27,10 +27,10 @@
             <div class="control-bar clearfix">
               <div class="title pull-left">设置教学计划</div>
 	
-			  #if($null.isNull($courseconfig))
+			  #if(!$courseconfig)
 			  <div class="tips">当前没有设置学期信息，请设置</div>
 			  #else
-				 <div class="tips">当前学期信息：学年：$courseconfig.schoolyear; 学期：$courseconfig.semester</div>
+				 <div class="tips">当前学期信息：学年：$!courseconfig.schoolyear; 学期：$!courseconfig.semester</div>
 				 <div class="tips">如果学期信息正确，请不要再添加，否则系统会出错！</div>
 			  #end
             </div><!--control-bar end-->
@@ -95,6 +95,19 @@
                     </div>
                   </div>
 				  
+				  
+				 <div class="form-group">
+                    <label for="inputSemesterNextsemesterdaybefore" class="col-lg-2 control-label">下学期前一天</label>
+					<div class="col-lg-7">
+                      <div class="input-daterange row">
+                        <div class="col-lg-3">
+                          <input type="text" class="form-control" id="inputSemesterNextsemesterdaybefore" placeholder="下一个学期的前一天">       
+                        </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+				  
                   <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-4">
                       <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
@@ -151,7 +164,8 @@
 					firstday: $('#inputDataRange').val(),
 					lastday: $('#inputDataRange2').val(),
 					firstweekfirstday: $('#inputFirstDay').val(),
-					weeknum:$('#inputSemesterWeekNum').val()
+					weeknum:$('#inputSemesterWeekNum').val(),
+					nextsemesterdaybefore:$('#inputSemesterNextsemesterdaybefore').val()
 				}
 				
                 //alert("add computer");

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 机房管理</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+#parse("include/includePageCompatibility.vm")
+
+</head>
+
+<body id="admin">
+
+	<header id="header-wrap"><!--header-wrap-->
+	
+	#set($currentPageModule="computer")
+	#parse("include/includeAdminHeader.vm")
+
+	</header><!--/#header-wrap-->
+
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+		<!-- Navi -->
+		#set($currentPageType="computerInfoManage")
+		#parse("computer/includeComputerManageNavi.vm")	
+	  
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">            
+            <div class="control-bar clearfix"><!--control-bar start-->
+              <div class="title pull-left">机房预约管理</div>
+              <div class="tips">表格中不同的颜色代表不同的预约状态。<span class="label label-default">&nbsp;</span> 代表预约已完成；<span class="label label-info">&nbsp;</span> 代表等待审核的预约；<span class="label label-success">&nbsp;</span> 代表审核通过但在预约期间内；<span class="label label-warning">&nbsp;</span> 代表预约存在问题需要处理。</div>
+			  <!--
+              <div class="filter user-group-filter">
+                <ul class="nav nav-tabs nav-tabs-google">
+                  <li><a href="#">个人预约</a></li>
+                  <li><a href="#">教学预约</a></li>
+                  <li class="active"><a href="#">全部</a></li>
+                </ul>
+              </div>
+			  -->
+              
+              <div class="operate-item pull-left">
+                <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
+              </div>
+              <div class="semester-filter pull-right">
+                <select id="select-categories" style="width:180px" class="select2 select-white">
+					
+#foreach($cctemp in ${courseconfigList})	
+                  <option value="0">${cctemp.schoolyear}第${cctemp.semester}学期</option>
+#end
+                </select>
+              </div>
+              <!-- display-mode -->
+              <div class="display-mode btn-group pull-right">
+                <a href="机房预约管理首页.html" class="btn btn-white"><span class="icon-list"></span></a>
+                <a href="机房预约管理首页（日历模式）.html" class="btn btn-white active"><span class="icon-calendar"></span></a>
+              </div><!-- /.display-mode -->
+              <!--
+              <ul class="status-filter nav nav-pills pull-right">
+                <li class="active"><a href="#">待审核(4)</a></li>
+                <li><a href="#">已完成</a></li>
+              </ul>-->
+            </div><!--control-bar end-->
+            <div class="control-bar">
+              <div class="row">
+                <ul class="tab-drop nav nav-pills col-md-12">
+                  <li class="active"><a href="#" data-week="1">第1周</a></li>
+                  <li><a href="http://www.qq.com" data-week="2">第2周</a></li>
+                  <li><a href="#ptab3" data-week="3">第3周</a></li>
+                  <li><a href="#ptab4" data-week="4">第4周</a></li>
+                  <li><a href="#ptab5" data-week="5">第5周</a></li>
+                  <li><a href="#ptab6" data-week="6">第6周</a></li>
+                  <li><a href="#ptab7" data-week="7">第7周</a></li>
+                  <li><a href="#ptab8" data-week="8">第8周</a></li>
+                  <li><a href="#ptab9" data-week="9">第9周</a></li>
+                  <li><a href="#ptab10" data-week="10">第10周</a></li>
+                  <li><a href="#ptab11" data-week="11">第11周</a></li>
+                  <li><a href="#ptab12" data-week="12">第12周</a></li>
+                  <li><a href="#ptab13" data-week="13">第13周</a></li>
+                  <li><a href="#ptab14" data-week="14">第14周</a></li>
+                  <li><a href="#ptab15" data-week="15">第15周</a></li>
+                  <li><a href="#ptab16" data-week="16">第16周</a></li>
+                  <li><a href="#ptab17" data-week="17">第17周</a></li>                    
+                </ul>
+              </div>
+            </div>
+            <div class="panel panel-default table-responsive">
+              <table id="course-week-table" class="table">
+                <thead>
+                  <tr>
+                    <th class="time-slot">时间</th>
+                    <th>星期一<br>XX月XX日</th>
+                    <th>星期二<br>XX月XX日</th>
+                    <th>星期三<br>XX月XX日</th>
+                    <th>星期四<br>XX月XX日</th>
+                    <th>星期五<br>XX月XX日</th>
+                    <th>星期六<br>XX月XX日</th>
+                    <th>星期日<br>XX月XX日</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="tr-slot-1">
+                    <td class="time-slot">上午</td>
+                    <td data-week="1" data-slot="1">
+                      <span rel="popover-rent" class="label-rent label label-default" data-rent-No="PP001111397053609550" data-rent-status="done">姓名</span><span rel="popover-rent" class="label-rent label label-default" data-rent-No="PP001111397053609550" data-rent-status="done">姓名</span><span rel="popover-rent" class="label-rent label label-default" data-rent-No="PP001111397053609550" data-rent-status="done">姓名</span><span rel="popover-rent" class="label-rent label label-default" data-rent-No="PP001111397053609550" data-rent-status="done">姓名</span><span rel="popover-rent" class="label-rent label label-default" data-rent-No="PP001111397053609550" data-rent-status="done">姓名</span>
+                    </td>
+                    <td data-week="2" data-slot="1">
+                      <span rel="popover-rent" class="label-rent label label-info" data-rent-No="PP001111397053609550" data-rent-status="waiting">姓名</span><span rel="popover-rent" class="label-rent label label-success" data-rent-No="PP003333397053609550" data-rent-status="success">姓名</span><span rel="popover-rent" class="label-rent label label-info" data-rent-No="PP007053609550" data-rent-status="waiting">姓名</span><span rel="popover-rent" class="label-rent label label-default" data-rent-No="PP001111397053609550" data-rent-status="done">姓名</span><span rel="popover-rent" class="label-rent label label-default" data-rent-No="PP001111397053609550" data-rent-status="done">姓名</span><span rel="popover-rent" class="label-rent label label-default" data-rent-No="PP001111397053609550" data-rent-status="done">姓名</span>
+                    </td>
+                    <td data-week="3" data-slot="1">
+                      <span rel="popover-rent" class="label-rent label label-success" data-rent-No="PP001111397053609550" data-rent-status="success">姓名</span>
+                    </td>
+                    <td data-week="4" data-slot="1">
+                      <span rel="popover-rent" class="label-rent label label-warning" data-rent-No="PP001111397053609550" data-rent-status="warning">姓名</span>
+                    </td>
+                    <td data-week="5" data-slot="1"></td>
+                    <td data-week="6" data-slot="1"></td>
+                    <td data-week="7" data-slot="1"></td>
+                  </tr>
+                  <tr id="tr-slot-2">
+                    <td class="time-slot">下午</td>
+                    <td data-week="1" data-slot="2"></td>
+                    <td data-week="2" data-slot="2"></td>
+                    <td data-week="3" data-slot="2"></td>
+                    <td data-week="4" data-slot="2"></td>
+                    <td data-week="5" data-slot="2"></td>
+                    <td data-week="6" data-slot="2"></td>
+                    <td data-week="7" data-slot="2"></td>
+                  </tr>
+                  <tr id="tr-slot-3">
+                    <td class="time-slot">晚上</td>
+                    <td data-week="1" data-slot="3"></td>
+                    <td data-week="2" data-slot="3"></td>
+                    <td data-week="3" data-slot="3"></td>
+                    <td data-week="4" data-slot="3"></td>
+                    <td data-week="5" data-slot="3"></td>
+                    <td data-week="6" data-slot="3"></td>
+                    <td data-week="7" data-slot="3"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+      </div><!--equip-wrap end-->
+      <div id="lside"><!--sidebar start-->
+        <div class="list-group">
+          <a href="机房预约管理首页.html" class="list-group-item active">预约管理</a>
+          <!--<a href="机房预约-教学预约.html" class="list-group-item">教学预约</a>-->
+          <a href="机房预约-设置.html" class="list-group-item">设置</a>
+        </div>
+      </div>
+      <!--sidebar end-->
+</section>
+
+
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+<script src="${jsDomain}/select2.js"></script>
+<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
+<script src="${jsDomain}/bfa.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
+<script src="${jsDomain}/jquery.jqpagination.js"></script>
+
+<script>
+$('.tab-drop.nav-pills').tabdrop();
+
+
+$('span[rel=popover-rent]').popover({
+        trigger: "click",
+        html: true,
+        placement: 'bottom',
+        content: function() {
+          var thisData = $(this).data();
+          var rentNo = thisData.rentNo;
+          var rentTime = "2013年10月18日 上午";
+          var rentRemark = "无备注";
+          var rentStatusInfo = "预约状态说明";
+          var classStatus = "label label-default";
+
+          if (thisData.rentStatus == "done") {
+            classStatus = "label label-default";
+            rentStatusInfo = "已完成。";
+          } else if (thisData.rentStatus == "waiting") {  // 等待审核
+            classStatus = "label label-info";
+            rentStatusInfo = "等待你提交预约申请/或等待用户提交预约申请。（根据实际情况修改）";
+          } else if (thisData.rentStatus == "success") {  // 审核通过，进行中
+            classStatus = "label label-success";
+            rentStatusInfo = "审核已通过，预约进行中。";
+          } else if (thisData.rentStatus == "warning") {  // 审核未成功，异常
+            classStatus = "label label-warning";
+            rentStatusInfo = "预约被驳回，需修改后重新提交预约（根据实际情况修改）";
+          };
+          var html =
+              '<div id="popover-rent-wrapper" style="display: none">' +
+                '<div id="rent-wrap">' +
+                  '<div class="rent-info">' +
+                    '<div class="rent-num">预约号：<a href="#">' + rentNo + '</a></div>' +
+                    '<div class="rent-time"><i class="icon-time"></i> ' + rentTime + '</div>' +
+                    '<div class="rent-remark"><i class="icon-pencil"></i> ' + rentRemark +
+                  '</div>' +
+                  '<hr>' +
+                  '<div class="rent-status"><span class="' + classStatus + '">状态</span> ' + rentStatusInfo + '</div>' +
+                '</div>' +
+              '</div>';
+          return $(html).html();
+        } 
+      });
+
+</script>
+<!--[if lt IE 10]>
+  <script src="../js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+</body>
+</html>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sbgl.app.entity.Courseconfig;
 import com.sbgl.app.entity.CourseconfigFull;
+import com.sbgl.common.DataError;
 import com.sbgl.util.*;
 
 public interface CourseconfigDao{
@@ -24,6 +25,10 @@ public List<Courseconfig> selectCourseconfigByCondition(String condition);
 		
 //  分页查询 实体full
 	public List<CourseconfigFull> selectCourseconfigFullByPage(Page page);
+
+	List<Courseconfig> selAll();
+
+	Courseconfig getCurrentCourseconfig() throws DataError;
 
  
 }

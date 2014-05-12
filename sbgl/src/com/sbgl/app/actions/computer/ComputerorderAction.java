@@ -1,5 +1,9 @@
 package com.sbgl.app.actions.computer;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
@@ -24,14 +28,17 @@ import org.apache.commons.beanutils.BeanUtils;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.actions.common.BaseAction;
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.actions.util.PageActionUtil;
+import com.sbgl.app.common.computer.BorrowperiodUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.common.computer.ComputerorderdetailInfo;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
+import com.sbgl.app.services.teach.CourseconfigService;
 import com.sbgl.common.DataError;
 import com.sbgl.util.*;
 
@@ -65,6 +72,11 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 	private Integer computerorderdetailid; //entity full 的id属性名称		
 	
 	
+	@Resource
+	private CourseconfigService courseconfigService;	
+	private Courseconfig courseconfig = new Courseconfig();
+	private Courseconfig currentCourseconfig = new Courseconfig();
+	List<Courseconfig> courseconfigList = new ArrayList<Courseconfig>();
 	
 	
 //	订单状态
@@ -92,7 +104,124 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 	
 //	Pc订单管理前台传参，获取某状态下的Order
 	private int computerorderStatus;
+	
+	List<Borrowperiod> borrowperiodList   = new ArrayList<Borrowperiod>();
+	
+	private int selsemesterweek;
+	private int selsemesterid;
+	private int totalweek;
+	private List<String> showDate = new ArrayList<String>();
+	private List<String> showDayList = new ArrayList<String>();
+	private Map<String,ArrayList<ComputerorderdetailFull>> computerorderdetailFullMap = new HashMap<String,ArrayList<ComputerorderdetailFull>>();
+//	private Map<String,ArrayList<String>> computerorderdetailBorrowUser = new HashMap<String,ArrayList<String>>();
+	private Map<String,HashMap<Integer,String>> computerorderdInfoFlag = new HashMap<String,HashMap<Integer,String>>();
+	
+	public String manageComputerorderCalendar(){
+		try{
+		
+			
+			Date currentDate = DateUtil.currentDate();
+			int currentPeriod =  BorrowperiodUtil.getBorrowTimePeriod(currentDate);
+			Date currentDay = DateUtil.getDateDayDate(currentDate);
+			courseconfigList = courseconfigService.selAll();
+			
+			Date semesterStartDate ;
+			Date selStartDate;
+			Date selEndDate;
+			if(selsemesterid <= 0 || selsemesterweek <=0){//设置默认为当前学期
+//				semesterStartDate = DateUtil.getDateDayDate(currentCourseconfig.getFirstweekfirstday());
+				currentCourseconfig = courseconfigService.getCurrentCourseconfig();
+				if(currentCourseconfig == null){
+					return "notsetcurrentCourseconfig";
+				}
+				
+		
+//			      c.set(Calendar.DAY_OF_WEEK, c.getFirstDayOfWeek() + 6); // Sunday
+			      
+				selStartDate = DateUtil.getDateDayDate(DateUtil.getChineseWeekMondayCurrent());
+//				selStartDate = DateUtil.getDateDayDate(DateUtil.parseDate("2014-5-10"));
+				selEndDate =  DateUtil.getDateDayDate(DateUtil.addDay(selStartDate,6));
+				selsemesterweek = DateUtil.daysBetween(currentCourseconfig.getFirstweekfirstday(), selStartDate)/7+1;
+//				selsemesterweek = 1;
+//				System.out.println(selStartDate);
+//				System.out.println(selEndDate);
+			}else{
+				currentCourseconfig = courseconfigService.selectCourseconfigById(selsemesterid);
+				if(currentCourseconfig == null){
+					return "notsetcurrentCourseconfig";
+				}
+				selStartDate = DateUtil.getDateDayDate(DateUtil.addDay(currentCourseconfig.getFirstweekfirstday(), 7*(selsemesterweek-1)));
+				selEndDate =  DateUtil.getDateDayDate(DateUtil.addDay(selStartDate,6));
+				selsemesterweek = DateUtil.daysBetween(currentCourseconfig.getFirstweekfirstday(), selStartDate)/7+1;
+			}
+			
+			for(int i=0; i < 7; i++){
+				showDate.add(DateUtil.dateFormat(DateUtil.addDay(selStartDate,i), "yyyy-MM-dd"));
+				showDayList.add(DateUtil.getWeekOfDate(DateUtil.addDay(selStartDate,i)));
+			}
+	
+//			下一学期
+//			Courseconfig newSem = 
+			totalweek = currentCourseconfig.getWeeknum();
+			if(currentCourseconfig.getNextsemesterdaybefore()!=null){
+				totalweek = DateUtil.daysBetween(currentCourseconfig.getFirstweekfirstday(), currentCourseconfig.getNextsemesterdaybefore())/7+1;
+			}
+//			DateUtil.getCurrentWeekMonday();
+			computerorderdetailFullList = computerorderdetailService.selectValidFullFromStartToEnd(selStartDate, 0, selEndDate, 10, CommonConfig.languagech);
+			System.out.println(computerorderdetailFullList.size());
+			
+			log.info("选择的学期："+currentCourseconfig.getId()+";选择的周："+selsemesterweek+";周总数："+totalweek);
+			String key = "";//第一个是时间段，第二个是星期
+			borrowperiodList =  BorrowperiodUtil.getBorrowperiodList();			
+			for(Borrowperiod bp : borrowperiodList){
+				for(int i=1; i <=7; i++){
+					key = bp.getPeriodnum()+""+i;
+//					System.out.println(key);
+					computerorderdetailFullMap.put(key, new ArrayList<ComputerorderdetailFull>());
+//					computerorderdetailBorrowUser.put(key, new ArrayList<String>());
+					computerorderdInfoFlag.put(key, new HashMap<Integer,String>());
+				}
+			}
+			for(ComputerorderdetailFull codf : computerorderdetailFullList){
+				
+				if( codf.getComputerorderdetailborrowday().before(currentDay) || 
+						(codf.getComputerorderdetailborrowday().compareTo(currentDay)==0 &&codf.getComputerorderdetailborrowperiod() < currentPeriod)  ){
+					codf.setOldorder(1);
+				}else{
+					codf.setOldorder(0);
+				}
+				int day  = DateUtil.daysBetween(selStartDate,codf.getComputerorderdetailborrowday())+1;
+				key = codf.getComputerorderdetailborrowperiod() + ""+day;
+//				if(!computerorderdetailFullMap.containsKey(key)){
+//					computerorderdetailFullMap.put(key, new ArrayList<ComputerorderdetailFull>());
+//				}
+				if(!computerorderdInfoFlag.get(key).containsKey(codf.getComputerorderid())){
+					computerorderdInfoFlag.get(key).put(codf.getComputerorderid(), codf.getComputerorderid()+"");
+//					computerorderdetailBorrowUser.get(key).add(codf.getOrderusername());
+					computerorderdetailFullMap.get(key).add(codf);
+				}
+				
+				
+				
+			}
+			//			Date semesterStartDate = courseconfigService.selectCourseconfigById(courseconfigService);
+//			selStartDate = DateUtil.addDay(semesterStartDate, (selsemesterweek-1)*7);
+//			selEndDate = DateUtil.addDay(selStartDate, 7);
+		
+		
+		return SUCCESS;
+		
+		
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
+		return "error";
+
+		
+	}
+	
 	//管理 PC预约
 	public String manageComputerorderFull(){
 		log.info("exec action method:manageComputerorderFull");	
@@ -629,6 +758,104 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 
 	public static Log getLog() {
 		return log;
+	}
+
+	public CourseconfigService getCourseconfigService() {
+		return courseconfigService;
+	}
+
+	public void setCourseconfigService(CourseconfigService courseconfigService) {
+		this.courseconfigService = courseconfigService;
+	}
+
+	public Courseconfig getCourseconfig() {
+		return courseconfig;
+	}
+
+	public void setCourseconfig(Courseconfig courseconfig) {
+		this.courseconfig = courseconfig;
+	}
+
+	public Courseconfig getCurrentCourseconfig() {
+		return currentCourseconfig;
+	}
+
+	public void setCurrentCourseconfig(Courseconfig currentCourseconfig) {
+		this.currentCourseconfig = currentCourseconfig;
+	}
+
+	public List<Courseconfig> getCourseconfigList() {
+		return courseconfigList;
+	}
+
+	public void setCourseconfigList(List<Courseconfig> courseconfigList) {
+		this.courseconfigList = courseconfigList;
+	}
+
+	public int getSelsemesterweek() {
+		return selsemesterweek;
+	}
+
+	public void setSelsemesterweek(int selsemesterweek) {
+		this.selsemesterweek = selsemesterweek;
+	}
+
+	public int getSelsemesterid() {
+		return selsemesterid;
+	}
+
+	public void setSelsemesterid(int selsemesterid) {
+		this.selsemesterid = selsemesterid;
+	}
+
+	public List<Borrowperiod> getBorrowperiodList() {
+		return borrowperiodList;
+	}
+
+	public void setBorrowperiodList(List<Borrowperiod> borrowperiodList) {
+		this.borrowperiodList = borrowperiodList;
+	}
+
+	public Map<String, ArrayList<ComputerorderdetailFull>> getComputerorderdetailFullMap() {
+		return computerorderdetailFullMap;
+	}
+
+	public void setComputerorderdetailFullMap(
+			Map<String, ArrayList<ComputerorderdetailFull>> computerorderdetailFullMap) {
+		this.computerorderdetailFullMap = computerorderdetailFullMap;
+	}
+
+	public int getTotalweek() {
+		return totalweek;
+	}
+
+	public void setTotalweek(int totalweek) {
+		this.totalweek = totalweek;
+	}
+
+	public List<String> getShowDate() {
+		return showDate;
+	}
+
+	public void setShowDate(List<String> showDate) {
+		this.showDate = showDate;
+	}
+
+	public List<String> getShowDayList() {
+		return showDayList;
+	}
+
+	public void setShowDayList(List<String> showDayList) {
+		this.showDayList = showDayList;
+	}
+
+	public Map<String, HashMap<Integer, String>> getComputerorderdInfoFlag() {
+		return computerorderdInfoFlag;
+	}
+
+	public void setComputerorderdInfoFlag(
+			Map<String, HashMap<Integer, String>> computerorderdInfoFlag) {
+		this.computerorderdInfoFlag = computerorderdInfoFlag;
 	}
 
 	

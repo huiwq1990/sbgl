@@ -31,6 +31,10 @@
         <property name="currentsemester" type="java.lang.Integer">
             <column name="currentsemester" />
         </property>
+                <property name="nextsemesterdaybefore" type="java.util.Date">
+            <column name="nextsemesterdaybefore"  />
+        </property>
+        
         <property name="status" type="java.lang.Integer">
             <column name="status" />
         </property>

@@ -13,12 +13,14 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.sbgl.app.actions.teach.TeachConstant;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.DaoAbs;
 
 import com.sbgl.app.dao.CourseconfigDao;
 import com.sbgl.app.entity.Courseconfig;
 import com.sbgl.app.entity.CourseconfigFull;
+import com.sbgl.common.DataError;
 import com.sbgl.util.*;
 
 @Repository("courseconfigDao")
@@ -28,6 +30,34 @@ public class CourseconfigDaoImpl extends HibernateDaoSupport implements Courseco
 	private final String basicCourseconfigFullSql = "select a.id as courseconfigid, a.schoolyear as courseconfigschoolyear, a.semester as courseconfigsemester, a.firstday as courseconfigfirstday, a.lastday as courseconfiglastday, a.firstweekfirstday as courseconfigfirstweekfirstday, a.status as courseconfigstatus from Courseconfig a  ";
 	
 	private final String basicCourseconfigSql = "From Courseconfig as a ";
+	
+	
+	
+	/**
+	 * 如果存在当前学期则返回，否则为null
+	 */
+	@Override
+	public Courseconfig getCurrentCourseconfig( ) throws DataError{		
+		
+		String sql = " where currentsemester =" +TeachConstant.coursesconfigcurrentsemester+ " and status >= 0 ";
+		List<Courseconfig> list =  selectCourseconfigByCondition(sql);
+//		System.out.println(list);
+//		System.out.println(list.get(0));
+		if(list == null || list.size()==0){
+			return null;
+		}
+		
+		if(list!=null && list.size()!=1){
+			throw new DataError("学期信息不唯一，获取学期信息出错");
+		}
+		
+		return list.get(0);
+	}
+	
+	@Override
+	public List<Courseconfig> selAll( ) {
+		return selectCourseconfigByCondition(" where status >=0 ");
+	}
 	
 	// 根据条件查询查询实体
 	@Override

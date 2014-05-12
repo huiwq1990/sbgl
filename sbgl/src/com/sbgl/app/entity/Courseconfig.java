@@ -20,6 +20,8 @@ public class Courseconfig extends com.sbgl.app.dao.DaoAbs implements
 	private Integer weeknum;
 	private Integer currentsemester;
 	private Integer status;
+	
+	private Date nextsemesterdaybefore;
 
 	// Constructors
 
@@ -63,6 +65,14 @@ public class Courseconfig extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setSchoolyear(String schoolyear) {
 		this.schoolyear = schoolyear;
+	}
+
+	public Date getNextsemesterdaybefore() {
+		return nextsemesterdaybefore;
+	}
+
+	public void setNextsemesterdaybefore(Date nextsemesterdaybefore) {
+		this.nextsemesterdaybefore = nextsemesterdaybefore;
 	}
 
 	public Integer getSemester() {

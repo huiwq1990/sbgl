@@ -35,11 +35,12 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	private final String basicComputerorderdetailFullSql = 
 		"select a.id as computerorderdetailid, a.computerorderid as computerorderdetailcomputerorderid, a.computermodelid as computerorderdetailcomputermodelid, a.borrownumber as computerorderdetailborrownumber, a.createtime as computerorderdetailcreatetime, a.borrowday as computerorderdetailborrowday, a.borrowperiod as computerorderdetailborrowperiod, a.computerid as computerorderdetailcomputerid, a.status as computerorderdetailstatus, b.id as computerorderid, b.serialnumber as computerorderserialnumber, " +
 		"b.createuserid as computerordercreateuserid, b.title as computerordertitle, b.ordertype as computerorderordertype, b.createtime as computerordercreatetime, b.remark as computerorderremark, b.status as computerorderstatus," +
-		" c.id as computermodelid, c.computermodeltype as computermodelcomputermodeltype, c.languagetype as computermodellanguagetype, c.name as computermodelname, c.computercategoryid as computermodelcomputercategoryid, c.picpath as computermodelpicpath, c.createtime as computermodelcreatetime, c.createuserid as computermodelcreateuserid, c.computercount as computermodelcomputercount, c.availableborrowcountnumber as computermodelavailableborrowcountnumber, c.description as computermodeldescription, c.status as computermodelstatus " +
+		" c.id as computermodelid, c.computermodeltype as computermodelcomputermodeltype, c.languagetype as computermodellanguagetype, c.name as computermodelname, c.computercategoryid as computermodelcomputercategoryid, c.picpath as computermodelpicpath, c.createtime as computermodelcreatetime, c.createuserid as computermodelcreateuserid, c.computercount as computermodelcomputercount, c.availableborrowcountnumber as computermodelavailableborrowcountnumber, c.description as computermodeldescription, c.status as computermodelstatus, " +
 //		" d.id as computerid, d.serialnumber as computerserialnumber, d.computertype as computercomputertype, d.languagetype as computerlanguagetype, d.computermodelid as computercomputermodelid, d.createtime as computercreatetime, d.createuserid as computercreateuserid, d.status as computerstatus, d.remark as computerremark, d.computerstatusid as computercomputerstatusid " +
+		" d.id as orderuserid,d.name as orderusername "+
 		"from Computerorderdetail a  left join Computerorder b on a.computerorderid=b.id " +
-		"left join Computermodel c on a.computermodelid=c.computermodeltype" ;//+
-//		" left join Computer d on a.computerid=d.computertype ";
+		"left join Computermodel c on a.computermodelid=c.computermodeltype " +
+		"left join loginuser d on b.createuserid=d.id ";
 	
 	private final String basicComputerorderdetailSql = "From Computerorderdetail as a ";
 	
@@ -199,6 +200,60 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
             cond += "              (computermodelid in ("+modeltypeStr+") )";
             log.info(cond);
             return selectComputerorderdetailByCondition(cond);
+
+    }
+    
+    
+    /**
+     * 
+     * @param startDate
+     * @param startPeriod
+     * @param endDate
+     * @param endPeriod
+     * @param modeltypeStr
+     * @param language 模型的语言
+     * @return
+     */
+    @Override
+	public List<ComputerorderdetailFull> selectValidFullFromStartToEndByModel(Date startDate, int startPeriod, Date endDate, int endPeriod,String modeltypeStr,int language){
+    	
+//		日期格式化为 yyyy-MM-dd 00:00:00
+		String startDateStr= DateUtil.dateFormat(DateUtil.getDateDayDate(startDate), DateUtil.dateformatstr1);
+    	String endDateStr = DateUtil.dateFormat(DateUtil.getDateDayDate(endDate), DateUtil.dateformatstr1);
+        
+            String cond = "where ( (a.borrowday = '" + startDateStr+"' and a.borrowperiod >="+startPeriod+") or ";//今天当前时段之后的
+            cond +=  "             ((a.borrowday > '" + startDateStr+"') and (a.borrowday < '" + endDateStr+"'))  or";//明天到最后一天前之前的
+            cond +=  "             ((a.borrowday = '" + endDateStr+"') and (a.borrowperiod <= '" + endPeriod+"') )";//最后一天时间小于
+            cond +=  "           ) ";
+            cond += "            and";
+            cond +=  "           ( a.status in ("+ComputerorderdetailInfo.ComputerorderdetailStatusAduitPass+","+ComputerorderdetailInfo.ComputerorderdetailStatusAduitWait+") ) ";
+            cond += "            and";
+            cond += "            (a.computermodelid in ("+modeltypeStr+") )";
+            cond += "            and";
+            cond += "            (c.languagetype="+language+")";
+            log.info(cond);
+            return selectComputerorderdetailFullByCondition(cond);
+
+    }
+    @Override
+	public List<ComputerorderdetailFull> selectValidFullFromStartToEnd(Date startDate, int startPeriod, Date endDate, int endPeriod,int language){
+    	
+//		日期格式化为 yyyy-MM-dd 00:00:00
+		String startDateStr= DateUtil.dateFormat(DateUtil.getDateDayDate(startDate), DateUtil.dateformatstr1);
+    	String endDateStr = DateUtil.dateFormat(DateUtil.getDateDayDate(endDate), DateUtil.dateformatstr1);
+        
+            String cond = "where ( (a.borrowday = '" + startDateStr+"' and a.borrowperiod >="+startPeriod+") or ";//今天当前时段之后的
+            cond +=  "             ((a.borrowday > '" + startDateStr+"') and (a.borrowday < '" + endDateStr+"'))  or";//明天到最后一天前之前的
+            cond +=  "             ((a.borrowday = '" + endDateStr+"') and (a.borrowperiod <= '" + endPeriod+"') )";//最后一天时间小于
+            cond +=  "           ) ";
+            cond += "            and";
+            cond +=  "           ( a.status in ("+ComputerorderdetailInfo.ComputerorderdetailStatusAduitPass+","+ComputerorderdetailInfo.ComputerorderdetailStatusAduitWait+") ) ";
+            cond += "            and";
+//            cond += "            (a.computermodelid in ("+modeltypeStr+") )";
+//            cond += "            and";
+            cond += "            (c.languagetype="+language+")";
+            log.info(cond);
+            return selectComputerorderdetailFullByCondition(cond);
 
     }
 	
@@ -411,6 +466,7 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	
 		return null;
 	}
+
 
  
 }

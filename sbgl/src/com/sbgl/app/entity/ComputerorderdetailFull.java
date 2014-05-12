@@ -46,8 +46,33 @@ public class ComputerorderdetailFull extends DaoAbs implements java.io.Serializa
 			private String computerremark;
 			private Integer computercomputerstatusid;
 		
-	
+			private Integer orderuserid;
+			private String  orderusername;
 			
+			private Integer oldorder = 0;
+			
+			
+			
+			
+			
+			public Integer getOldorder() {
+				return oldorder;
+			}
+			public void setOldorder(Integer oldorder) {
+				this.oldorder = oldorder;
+			}
+			public Integer getOrderuserid() {
+				return orderuserid;
+			}
+			public void setOrderuserid(Integer orderuserid) {
+				this.orderuserid = orderuserid;
+			}
+			public String getOrderusername() {
+				return orderusername;
+			}
+			public void setOrderusername(String orderusername) {
+				this.orderusername = orderusername;
+			}
 			public void setComputerorderdetailid(Integer computerorderdetailid){		
 			this.computerorderdetailid = computerorderdetailid;
 		}

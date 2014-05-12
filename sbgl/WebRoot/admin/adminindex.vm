@@ -40,7 +40,7 @@
 				<div class="panel-heading">学期信息</div>
                  <div class="panel-body">
 					<dl class="dl-horizontal">
-                      #if($null.isNull($courseconfig))
+                      #if(!$courseconfig)
 						<dt>当前没有设置学期信息，请设置</dt>
 					  #else
 				      <dt>学年</dt>

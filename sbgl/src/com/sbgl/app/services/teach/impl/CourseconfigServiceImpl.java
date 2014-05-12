@@ -96,25 +96,29 @@ public class CourseconfigServiceImpl implements CourseconfigService{
 
 	
 	
-	
+	/**
+	 * 如果存在当前学期则返回，否则为null
+	 */
 	@Override
 	public Courseconfig getCurrentCourseconfig( ) throws DataError{		
-		List<Courseconfig> list =  courseconfigDao.selectCourseconfigByCondition(" where currentsemester =" +TeachConstant.coursesconfigcurrentsemester);
-		if(list == null){
-			return null;
-		}
 		
-		if(list!=null && list.size()!=1){
-			throw new DataError("学期信息不唯一，获取学期信息出错");
-		}
-		
-		return list.get(0);
+		return courseconfigDao.getCurrentCourseconfig();
 	}
+	
+	
 	
 //	根据id查询实体类			
 	@Override
 	public Courseconfig selectCourseconfigById(Integer courseconfigId){		
 		return baseDao.getEntityById(Courseconfig.class, courseconfigId);
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public List<Courseconfig> selAll(){		
+		return courseconfigDao.selAll();
 	}
 	
 //	@Override

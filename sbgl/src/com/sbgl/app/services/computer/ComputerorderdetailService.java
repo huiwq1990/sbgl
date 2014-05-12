@@ -83,6 +83,15 @@ public interface ComputerorderdetailService{
 			Date startDate, int startPeriod, Date endDate, int endPeriod,
 			String modeltypeStr);
 
+
+
+	List<ComputerorderdetailFull> selectValidFullFromStartToEndByModel(
+			Date startDate, int startPeriod, Date endDate, int endPeriod,
+			String modeltypeStr, int language);
+
+	List<ComputerorderdetailFull> selectValidFullFromStartToEnd(Date startDate,
+			int startPeriod, Date endDate, int endPeriod, int language);
+
 		
 	
 	

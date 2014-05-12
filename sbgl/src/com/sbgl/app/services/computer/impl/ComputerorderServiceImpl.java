@@ -28,6 +28,7 @@ import com.sbgl.app.dao.ComputermodelDao;
 import com.sbgl.app.dao.ComputerorderDao;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.ComputerorderdetailDao;
+import com.sbgl.app.dao.CourseconfigDao;
 import com.sbgl.common.DataError;
 import com.sbgl.util.*;
 
@@ -60,7 +61,10 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 	
 	@Resource
 	private ComputerhomeworkreceiverDao computerhomeworkreceiverDao;
+	
 
+	@Resource
+	private CourseconfigDao courseconfigDao;
 	
 	//http://blog.csdn.net/softimes/article/details/7008875 实体添加时需要配置hibernate
 	@Override
@@ -287,6 +291,28 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 		
 		baseDao.updateEntity(tempComputerorder);
 
+	}
+	
+	/**
+	 * 根据学期查询
+	 */
+	public void selByCal(){
+		 int selsemesterweek;
+		 int selsemester;
+//
+//			
+//			Date selStartDate;
+//			Date selEndDate;
+//			if(selsemester <= 0 || selsemesterweek <=0){//设置默认为当前学期
+//				
+//				selsemesterweek = 1;
+//			}
+//
+//			Date semesterStartDate ;//= courseconfigDao.s
+//			DateUtil.getCurrentWeekMonday();
+//			
+//			selStartDate = DateUtil.addDay(semesterStartDate, (selsemesterweek-1)*7);
+//			selEndDate = DateUtil.addDay(selStartDate, 7);
 	}
 
 //	根据id查询实体类			

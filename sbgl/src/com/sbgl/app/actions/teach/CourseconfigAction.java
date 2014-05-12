@@ -58,17 +58,28 @@ public class CourseconfigAction extends BaseAction implements ModelDriven<Course
 	
 	//管理 查询
 	public String toAddCourseconfigPage(){
-		
+		try{
+			
 		Calendar cal = Calendar.getInstance(); 
 		currentyear= cal.get(Calendar.YEAR);
 		
 		try {
 			courseconfig = courseconfigService.getCurrentCourseconfig();
+			if(courseconfig == null){
+				System.out.println("sdafdfafa");
+			}
 		} catch (DataError e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return SUCCESS;
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "error";
+
 	}			
 
 		
@@ -159,7 +170,10 @@ public class CourseconfigAction extends BaseAction implements ModelDriven<Course
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, "请输入学期周数");	
 			return false;
 		}
-		
+		if(courseconfig.getNextsemesterdaybefore()== null){
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, "请输入下一学期前一天");	
+			return false;
+		}
 		return true;
 	}
 

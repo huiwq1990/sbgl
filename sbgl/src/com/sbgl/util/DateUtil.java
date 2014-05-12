@@ -106,6 +106,29 @@ public class DateUtil {
 		Date sunday = currentDate.getTime();
 		return sunday;
 	}
+	
+	/**
+	 * 获取某个时间的周一
+	 * @param date
+	 * @return
+	 */
+	public static Date getChineseWeekMonday(Date date){
+		Calendar c = new GregorianCalendar();
+	      c.setFirstDayOfWeek(Calendar.MONDAY);
+	      c.setTime(date);
+	      c.set(Calendar.DAY_OF_WEEK, c.getFirstDayOfWeek()); // Monday
+//	      System.out.println("c"+c.getTime());
+	      return c.getTime();
+	}
+	
+	public static Date getChineseWeekMondayCurrent( ){
+		Calendar c = new GregorianCalendar();
+	      c.setFirstDayOfWeek(Calendar.MONDAY);
+	      c.setTime(DateUtil.currentDate());
+	      c.set(Calendar.DAY_OF_WEEK, c.getFirstDayOfWeek()); // Monday
+//	      System.out.println("c"+c.getTime());
+	      return c.getTime();
+	}
 
 	// 上月第一天
 	public static Date getPreviousMonthFirst() {

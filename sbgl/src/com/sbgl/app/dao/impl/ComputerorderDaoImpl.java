@@ -33,6 +33,12 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 	private final String basicComputerorderSql = "From Computerorder as a ";
 	
 
+	
+	public void selByWeek(){
+		
+	}
+	
+	
 	/**
 	 * 彻底删除订单信息
 	 * @param computerorderid 
