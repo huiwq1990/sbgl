@@ -116,6 +116,10 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 //	private Map<String,ArrayList<String>> computerorderdetailBorrowUser = new HashMap<String,ArrayList<String>>();
 	private Map<String,HashMap<Integer,String>> computerorderdInfoFlag = new HashMap<String,HashMap<Integer,String>>();
 	
+	/**
+	 * 日历模式浏览预约
+	 * @return
+	 */
 	public String manageComputerorderCalendar(){
 		try{
 		
@@ -160,8 +164,8 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 				showDayList.add(DateUtil.getWeekOfDate(DateUtil.addDay(selStartDate,i)));
 			}
 	
-//			下一学期
-//			Courseconfig newSem = 
+
+//			默认显示周数为设置值，如果有设置下一学期第一天，这计算处理
 			totalweek = currentCourseconfig.getWeeknum();
 			if(currentCourseconfig.getNextsemesterdaybefore()!=null){
 				totalweek = DateUtil.daysBetween(currentCourseconfig.getFirstweekfirstday(), currentCourseconfig.getNextsemesterdaybefore())/7+1;
@@ -224,8 +228,7 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 	
 	//管理 PC预约
 	public String manageComputerorderFull(){
-		log.info("exec action method:manageComputerorderFull");	
-		
+		log.info("exec action method:manageComputerorderFull");			
 		
 //		装载数据
 		String sql = " ";	

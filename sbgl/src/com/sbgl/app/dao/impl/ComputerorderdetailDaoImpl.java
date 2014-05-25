@@ -40,7 +40,7 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 		" d.id as orderuserid,d.name as orderusername "+
 		"from Computerorderdetail a  left join Computerorder b on a.computerorderid=b.id " +
 		"left join Computermodel c on a.computermodelid=c.computermodeltype " +
-		"left join loginuser d on b.createuserid=d.id ";
+		"left join Loginuser d on b.createuserid=d.id ";
 	
 	private final String basicComputerorderdetailSql = "From Computerorderdetail as a ";
 	
@@ -142,7 +142,46 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	   }
 	}
 	
+	/**
+	 * 根据订单号查询订单详情
+	 */
+	@Override
+	public List<Computerorderdetail> selByOrderId(int orderid) {
+		
+		
+		String cond = "where ";
+		cond += "              computerorderid = "+orderid;// 今天当前时段之后的
 	
+		log.info(cond);
+		return selectComputerorderdetailByCondition(cond);
+	}
+	@Override
+	public List<ComputerorderdetailFull> selFullByOrderId(int orderid,int language) {
+		String cond = "where ";
+		cond += "              a.computerorderid = "+orderid;
+		cond += "              and ";
+		cond += "              c.languagetype = "+language;
+
+		return selectComputerorderdetailFullByCondition(cond);
+	}
+	
+	
+	/**
+	 * 统计订单时间
+	 */
+	@Override
+	public int getOrderTime(int orderid){
+		List<Computerorderdetail> codList = selByOrderId(orderid);
+		if(codList == null){
+			return 0;
+		}else{
+			int count = 0;
+			for (int i = 0; i < codList.size(); i++) {
+				count += codList.get(i).getBorrownumber();
+			}
+			return count;
+		}
+	}
 
 	/**
 	 * 查询某个天有效的订单详情
@@ -235,6 +274,10 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
             return selectComputerorderdetailFullByCondition(cond);
 
     }
+    
+    /**
+     * 查询有效的订单，即状态为待审核及审核通过的
+     */
     @Override
 	public List<ComputerorderdetailFull> selectValidFullFromStartToEnd(Date startDate, int startPeriod, Date endDate, int endPeriod,int language){
     	
@@ -256,6 +299,8 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
             return selectComputerorderdetailFullByCondition(cond);
 
     }
+    
+    
 	
 	// 根据条件查询查询实体
 	@Override

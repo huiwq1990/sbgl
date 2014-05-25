@@ -14,12 +14,23 @@ public class Computerhomeworkreceiver extends com.sbgl.app.dao.DaoAbs implements
 	private Integer userid;
 	private Integer hasview;
 	private Integer hasorder;
+	private Integer haveordertime;
+	private Integer leftordertime;
 	private Integer status;
-
+	private Integer  havefinish;
+//	private Integer  ordernum;
 	// Constructors
 
 	/** default constructor */
 	public Computerhomeworkreceiver() {
+	}
+
+	public Integer getHaveordertime() {
+		return haveordertime;
+	}
+
+	public void setHaveordertime(Integer haveordertime) {
+		this.haveordertime = haveordertime;
 	}
 
 	/** minimal constructor */
@@ -86,6 +97,22 @@ public class Computerhomeworkreceiver extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public Integer getLeftordertime() {
+		return leftordertime;
+	}
+
+	public void setLeftordertime(Integer leftordertime) {
+		this.leftordertime = leftordertime;
+	}
+
+	public Integer getHavefinish() {
+		return havefinish;
+	}
+
+	public void setHavefinish(Integer havefinish) {
+		this.havefinish = havefinish;
 	}
 
 }

@@ -162,6 +162,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 //	统计预约单的参数
 	int orderpccaregorynum = 0;//订单模型数量
 	int orderpctotalnum = 0;//订单机器数量
+	int ordertimecount = 0;
 	
 	private	int computerordertype = 0;
 	private int computerhomeworkid = 0;
@@ -190,8 +191,8 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			return ComputerConfig.usernotloginreturnstr;
 		}
 		
-		String sql = " where a.computerorderid = "+computerorderId  + " and c.languagetype="+ComputerConfig.languagech ;
-		computerorderdetailFullList = computerorderdetailService.selectComputerorderdetailFullByCondition(sql);
+//		String sql = " where a.computerorderid = "+computerorderId  + " and c.languagetype="+ComputerConfig.languagech ;
+		computerorderdetailFullList = computerorderdetailService.selFullByOrderId(computerorderId, this.getCurrentLanguage());
 //		System.out.println("computerorderdetailFullList size:"+computerorderdetailFullList.size());
 		
 //		computerstatusList  = computerstatusService.selectComputerstatusByCondition("");
@@ -228,6 +229,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	 * @return
 	 */
 	public String viewMineComputerorderList(){
+		try{
 		
 		Integer userid = this.getCurrentUserId();
 
@@ -245,7 +247,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		computerhomeworkreceiverList = computerhomeworkreceiverService.selectComputerhomeworkreceiverByUserAndOrder(userid, ComputerConfig.computerhomeworknotorder);
 		String newhomeworksql="";
 		for(int i=0; i<computerhomeworkreceiverList.size();i++){
-			if( (computerhomeworkreceiverList.get(i).getHasorder()==null) || (computerhomeworkreceiverList.get(i).getHasorder() != ComputerConfig.computerhomeworkhasorder)){
+			if( (computerhomeworkreceiverList.get(i).getHavefinish()==null) || (computerhomeworkreceiverList.get(i).getHavefinish() !=1)){
 					newhomeworksql += computerhomeworkreceiverList.get(i).getComputerhomeworkid()+",";
 			}
 		}
@@ -279,6 +281,13 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		}
 		
 		return SUCCESS;
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		
+		return "404";
 	}
 	
 	
@@ -342,11 +351,9 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	 * @return
 	 */
 	public String computerorderFormConfirm(){	
-		log.info("computerorderFormConfirm"+computerordertype + " "+ computerhomeworkid);
+		log.info("computerorderFormConfirm,预约类型："+computerordertype + " 作业id:"+ computerorder.getComputerhomeworkid());
 
-	
-		try{
-		
+		try{		
 			if(getCurrentUser()==null){
 				returnInfo = "用户未登录";
 				log.error(returnInfo);
@@ -397,8 +404,33 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 					return SUCCESS;
 				}
+			}else if(computerordertype == ComputerorderInfo.ClassOrder ){ //课程预约
+				computerhomeworkreceiver =  computerhomeworkreceiverService.sel(computerorder.getComputerhomeworkid(), this.getCurrentUserId());
+				log.info("homeworkid:"+computerorder.getComputerhomeworkid()+"  userid:"+this.getCurrentUserId());
+				if(computerhomeworkreceiver == null){
+					returnInfo = "查不到相关作业信息";
+					log.error(returnInfo);
+					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+					return SUCCESS;
+				}
 				
 				
+				log.info("课程预约验证,预约数量："+ordertimecount+"  允许借用数量："+computerhomeworkreceiver.getLeftordertime());
+				if(ordertimecount > computerhomeworkreceiver.getLeftordertime()){
+					returnInfo = "您最多可预约的时间为:"+computerhomeworkreceiver.getLeftordertime()+"，预约数量超出限制";
+					log.error(returnInfo);
+					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+					return SUCCESS;
+				}
+				
+				boolean pass = validClassOrderForm(computerorder.getComputerhomeworkid());
+
+				if(!pass){
+					returnInfo = "预约数量不能满足";
+					log.error(returnInfo);
+					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+					return SUCCESS;
+				}
 			}else{
 				boolean pass = validClassOrderForm(computerorder.getComputerhomeworkid());
 
@@ -409,10 +441,6 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 					return SUCCESS;
 				}
 			}
-			
-			
-		
-			
 			
 			//			session.put("computerhomeworkid", curcomputerhomeworkid);
 //			System.out.println("computerhomeworkid"+curcomputerhomeworkid);
@@ -442,6 +470,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 
 	/**
 	 * 检查预约表单是否规范，并且给Order赋值
+	 * 统计数量
 	 * @param str
 	 * @return
 	 */
@@ -477,7 +506,10 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 				te.setBorrownumber(Integer.valueOf(info[1]));
 				te.setBorrowday(DateUtil.parseDate(info[2]));
 				te.setBorrowperiod(Integer.valueOf(info[3]));
-	
+				
+//				设置数量
+				ordertimecount += te.getBorrownumber();
+				
 				computerorderdetailList.add(te);	
 			}
 			
@@ -491,7 +523,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		}
 	}
 
-	
+//	void set
 	public boolean checkOrderDateAndPeriod(){
 		Date currentDate = DateUtil.currentDate();
 		Date currentDayDate = DateUtil.getDateDayDate(currentDate);

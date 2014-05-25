@@ -70,6 +70,8 @@ public interface ComputerhomeworkService{
 			Computerhomework computerhomework,
 			List<Computerhomeworkreceiver> chrList) throws RuntimeException;
 
+	Computerhomework sel(Integer computerhomeworkId);
+
 		
 	
 	

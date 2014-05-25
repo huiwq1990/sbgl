@@ -105,6 +105,18 @@ public class ComputerorderdetailServiceImpl implements ComputerorderdetailServic
 		computerorderdetailDao.delByPeriodComputermodeltype(borrowday, period, computermodeltype);
 	}
 
+	@Override
+	public List<Computerorderdetail> selByOrderId(int orderid) {
+		return computerorderdetailDao.selByOrderId(orderid);
+	}
+	@Override
+	public List<ComputerorderdetailFull> selFullByOrderId(int orderid,int language) {
+		return computerorderdetailDao.selFullByOrderId(orderid, language);
+	}
+	
+	
+	
+	
 //	根据id查询实体类			
 	@Override
 	public Computerorderdetail selectComputerorderdetailById(Integer computerorderdetailId){		
@@ -299,11 +311,15 @@ public class ComputerorderdetailServiceImpl implements ComputerorderdetailServic
     	return computerorderdetailDao.selectValidComputerorderdetailFromStartToEndByModel(startDate, startPeriod, endDate, endPeriod, modeltypeStr);
     }
     
+
     @Override
 	public List<ComputerorderdetailFull> selectValidFullFromStartToEndByModel(Date startDate, int startPeriod, Date endDate, int endPeriod,String modeltypeStr,int language){
     	return computerorderdetailDao.selectValidFullFromStartToEndByModel(startDate, startPeriod, endDate, endPeriod, modeltypeStr, language);
-    }
-    	
+    }    
+    /**
+     * 查询有效的订单，即状态为待审核及审核通过的
+     * new api
+     */
     @Override
 	public List<ComputerorderdetailFull> selectValidFullFromStartToEnd(Date startDate, int startPeriod, Date endDate, int endPeriod,int language){
     	return computerorderdetailDao.selectValidFullFromStartToEnd(startDate, startPeriod, endDate, endPeriod, language);

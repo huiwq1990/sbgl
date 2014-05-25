@@ -14,8 +14,8 @@ public interface ComputerorderService{
 	
 	public void addComputerorder(Computerorder computerorder);
 
-	public void addComputerorder(Computerorder ch,Computerorder en);
-	public void addComputerorderWithId(Computerorder computerorder);
+//	public void addComputerorder(Computerorder ch,Computerorder en);
+//	public void addComputerorderWithId(Computerorder computerorder);
 		
 	public void updateComputerorder(Computerorder computerorder);
 	

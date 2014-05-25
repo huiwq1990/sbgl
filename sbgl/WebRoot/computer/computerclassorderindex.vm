@@ -194,6 +194,7 @@
 <script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
 <script src="${jsDomain}/xdate.js"></script>
 <script src="${jsDomain}/computer/computerorder.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
 
 <script>
 function CreatePostBookingTable(rowCount,cellCount,startDate) {
@@ -316,6 +317,7 @@ $(window).load(function(){
 	
 //提交预约单
 	$("body").on("click", "button[action-type|=confirmComputerButton]", function() {
+		var _this = $(this);
 		var orderInfoStr = "";
 		$("input[name='pcorderinfo']").each(function() {			
 				orderInfoStr += $(this).attr("orderpcid") +","+ $(this).prop("value") +","+$(this).attr("orderdate")+","+$(this).attr("orderperiod")+","+$(this).attr("orderpcname")+","+$(this).attr("picpath")+ ";";			
@@ -342,7 +344,8 @@ $(window).load(function(){
 		    data:postData,
 			dataType: 'json',
 			success: function(data){
-				var returnJson = jQuery.parseJSON(data); 
+				var returnJson = jQuery.parseJSON(data);
+				//alert("ssss");
 				if(returnJson.flag == 1){
 					//var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
 					//$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框
@@ -351,7 +354,8 @@ $(window).load(function(){
 					//location.href = "${webbaseurl}/toComputerorderConfirmPage.${strutsaction}?computerorderid=$!computerorderid&reorder=$!reorder";
 				}else{
 					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});					
-					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+    				_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框
+					//alert("sss");
 				}
 			}		  	  
 		});//end jquery

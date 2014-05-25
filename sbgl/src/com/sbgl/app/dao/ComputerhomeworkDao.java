@@ -32,5 +32,7 @@ public List<Computerhomework> selectComputerhomeworkByCondition(String condition
 
 	public List<ComputerhomeworkFull> selectComputerhomeworkFullByComputerorderclassruleId(Integer computerorderclassruleid );
 
+	List<Computerhomework> sel(Integer id);
+
  
 }

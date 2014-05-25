@@ -214,34 +214,33 @@ int curcomputerhomeworkid;
 		
 
 		
-		computerhomeworkList = computerhomeworkService.selectComputerhomeworkByCondition(" where a.id= "+ computerhomeworkid+"  ");
+		computerhomework = computerhomeworkService.sel(computerhomeworkid);
 		
 //		作业存在多个或没有
-		if(computerhomeworkList==null || computerhomeworkList.size()!= 1){
+		if(computerhomework==null){
 			actionMsg = "获取作业信息出错";
 			log.error(actionMsg);
 			return ComputerConfig.pagenotfound;
 		}
 		
 //		检查是否已经预约
-		String checkHaveOrderSql = " where computerhomeworkid = "+computerhomeworkid + " and userid = "+this.getCurrentUserId();
-		computerhomeworkreceiverList = computerhomeworkreceiverService.selectComputerhomeworkreceiverByCondition(checkHaveOrderSql);
+//		String checkHaveOrderSql = " where computerhomeworkid = "+computerhomeworkid + " and userid = "+this.getCurrentUserId();
+		computerhomeworkreceiver = computerhomeworkreceiverService.sel(computerhomeworkid,this.getCurrentUserId());
 //		取出用户的关于这个作业的预约接收信息
-		if(computerhomeworkreceiverList!= null && computerhomeworkreceiverList.size() == 1){
-		
+		if(computerhomeworkreceiver!= null){		
 		}else{
 			actionMsg = "作业预约状态获取出错";
 			log.error(actionMsg);
 			return ComputerConfig.pagenotfound;
 		}
+
+//		原先使用 computerhomeworkreceiver.getHasorder()判断是否能预约 现在改为
+		if(computerhomeworkreceiver.getHavefinish()!=null && computerhomeworkreceiver.getHavefinish()==1){
+			orderstatus = 1;
+		}
 		
-//		if(computerhomeworkreceiverList == null){
-//			orderstatus = 0;
-//			computerorderid = 0;
-//		}else{
-			orderstatus = computerhomeworkreceiverList.get(0).getHasorder();
-//		}
 		
+//		computerhomework.get
 		
 		if(orderstatus == 1 && reorder !=1){
 			actionMsg = "已经预约过，不能再进行预约";
@@ -263,7 +262,7 @@ int curcomputerhomeworkid;
 		
 		
 //		根据作业获取规则的id
-		computerorderclassruleid = computerhomeworkList.get(0).getComputerorderclassruleid();
+		computerorderclassruleid = computerhomework.getComputerorderclassruleid();
 		computerorderclassruleList = computerorderclassruleService.selectComputerorderclassruleByCondition( " where a.id = "+computerorderclassruleid+" " );
 		if(computerorderclassruleList == null || computerorderclassruleList.size() != 1){
 			actionMsg = "无法获取作业规则信息，访问界面不存在";
@@ -272,7 +271,7 @@ int curcomputerhomeworkid;
 		}
 		computerorderclassrule = computerorderclassruleList.get(0);
 	
-		
+//		computerorderclassrule.get
 		Date orderstartDate = computerorderclassrule.getOrderstarttime();
 		if(currentDate.after(orderstartDate)){
 			orderstartDate = currentDate;

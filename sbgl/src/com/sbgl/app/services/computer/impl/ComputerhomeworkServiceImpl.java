@@ -129,11 +129,12 @@ public class ComputerhomeworkServiceImpl implements ComputerhomeworkService{
 		baseDao.saveEntity(temp);
 		
 		
-		
 		for (Computerhomeworkreceiver chr : chrList ) {
 			chr.setId(baseDao.getCode("Computerhomeworkreceiver"));
 			chr.setComputerhomeworkid(temp.getId());
-			
+			chr.setHavefinish(0);
+			chr.setLeftordertime(rule.getAvailableordertime());
+			chr.setHaveordertime(0);
 			baseDao.saveEntity(chr);
 		}
 		
@@ -197,7 +198,15 @@ public class ComputerhomeworkServiceImpl implements ComputerhomeworkService{
 
 	}
 
-//	根据id查询实体类			
+//	根据id查询实体类		
+	@Override
+	public Computerhomework sel(Integer computerhomeworkId){		
+		List<Computerhomework> l =  computerhomeworkDao.sel(computerhomeworkId);
+		if(l ==null){
+			return null;
+		}
+		return l.get(0);
+	}
 	@Override
 	public Computerhomework selectComputerhomeworkById(Integer computerhomeworkId){		
 		return baseDao.getEntityById(Computerhomework.class, computerhomeworkId);

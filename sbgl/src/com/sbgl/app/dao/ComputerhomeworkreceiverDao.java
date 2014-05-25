@@ -32,5 +32,7 @@ public List<Computerhomeworkreceiver> selectComputerhomeworkreceiverByCondition(
 
 	public List<ComputerhomeworkreceiverFull> selectComputerhomeworkreceiverFullByLoginuserId(Integer userid );
 
+	List<Computerhomeworkreceiver> sel(int homeworkid, int userid);
+
  
 }

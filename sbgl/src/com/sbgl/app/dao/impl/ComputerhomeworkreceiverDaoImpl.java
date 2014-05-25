@@ -25,10 +25,30 @@ import com.sbgl.util.*;
 public class ComputerhomeworkreceiverDaoImpl extends HibernateDaoSupport implements ComputerhomeworkreceiverDao{
 
 	private static final Log log = LogFactory.getLog(ComputerhomeworkreceiverDaoImpl.class);
-	private final String basicComputerhomeworkreceiverFullSql = "select a.id as computerhomeworkreceiverid, a.computerhomeworkid as computerhomeworkreceivercomputerhomeworkid, a.userid as computerhomeworkreceiveruserid, " +
-			"b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime from Computerhomeworkreceiver a  left join Loginuser b on a.userid=b.id ";
+	private final String basicComputerhomeworkreceiverFullSql = 
+		"select a.id as computerhomeworkreceiverid, a.computerhomeworkid as computerhomeworkreceivercomputerhomeworkid, a.userid as computerhomeworkreceiveruserid, " +
+			"b.id as loginuserid, b.name as loginusername, b.createtime as loginusercreatetime " +
+			" from Computerhomeworkreceiver a  " +
+			"left join Loginuser b on a.userid=b.id ";
 	
 	private final String basicComputerhomeworkreceiverSql = "From Computerhomeworkreceiver as a ";
+	
+	
+	/**
+	 * 根据homework 及user id 获取信息
+	 */
+	@Override
+	public List<Computerhomeworkreceiver> sel(int homeworkid,int userid) {
+		final String  sql = basicComputerhomeworkreceiverSql +" where status >= 0 and computerhomeworkid = "+homeworkid +" and userid="+userid ;
+		
+		try {
+             List l = this.getHibernateTemplate().find(sql);
+			 return l;
+        } catch (RuntimeException re) {
+            log.error("失败", re);
+            throw re;
+        }
+	}
 	
 	// 根据条件查询查询实体
 	@Override

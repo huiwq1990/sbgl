@@ -30,6 +30,14 @@ public class ComputerhomeworkDaoImpl extends HibernateDaoSupport implements Comp
 	private final String basicComputerhomeworkSql = "From Computerhomework as a  ";
 	
 	
+	@Override
+	public List<Computerhomework> sel(Integer id) {
+		String sql = " where status >=0 and id = "+id;
+		List l = selectComputerhomeworkByCondition(sql);
+//		if(l == null)
+		return l;
+	}
+	
 	// 根据条件查询查询实体
 	@Override
 	public List<Computerhomework> selectComputerhomeworkByCondition(String condition) {

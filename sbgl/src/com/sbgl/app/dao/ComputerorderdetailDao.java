@@ -77,6 +77,12 @@ public List<Computerorderdetail> selectComputerorderdetailByCondition(String con
 			Date startDate, int startPeriod, Date endDate, int endPeriod,
 			String modeltypeStr, int language);
 
+	List<Computerorderdetail> selByOrderId(int orderid);
+
+	List<ComputerorderdetailFull> selFullByOrderId(int orderid, int language);
+
+	int getOrderTime(int orderid);
+
 
 
  

@@ -122,6 +122,7 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 //		computerorderdetailList = (ArrayList<Computerorderdetail>)session.get("computerorderdetailList");
 		
 //		需要先保存order，获取id，再保存详情
+		int ordernumcount = 0;
 		for(int i=0 ; i < computerorderdetailList.size();i++){
 			Computerorderdetail cd = computerorderdetailList.get(i);
 			cd.setComputerorderid(computerorder.getId());
@@ -130,19 +131,30 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 			
 			cd.setId(baseDao.getCode("Computerorderdetail"));
 			baseDao.saveEntity(cd);
+			
+			ordernumcount+= cd.getBorrownumber();
 		}
 		
 //		如果是课程预约，需要修改作业的状态，一次作业只能预约一次
 		if(computerordertype == ComputerorderInfo.ClassOrder){
-			String hmresql = " where computerhomeworkid = "+ computerorder.getComputerhomeworkid() +" and userid="+ uid;
-			System.out.println(hmresql);
-			List<Computerhomeworkreceiver> computerhomeworkreceiverList = computerhomeworkreceiverDao.selectComputerhomeworkreceiverByCondition(hmresql);
+	
+			List<Computerhomeworkreceiver> computerhomeworkreceiverList  = computerhomeworkreceiverDao.sel(computerorder.getComputerhomeworkid(), uid);
 			if(computerhomeworkreceiverList == null || computerhomeworkreceiverList.size()!=1){
 				throw new RuntimeException("无法更改作业状态");  
 			}
 			
-			String updateChrSql = " update Computerhomeworkreceiver set hasorder="+ComputerConfig.computerhomeworkhasorder+" , hasview="+ComputerConfig.computerhomeworkhasview+" where id = "+computerhomeworkreceiverList.get(0).getId();
-			baseDao.createSQL(updateChrSql);
+			Computerhomeworkreceiver temp = computerhomeworkreceiverList.get(0);
+			log.info(ordernumcount + "  "+temp.getLeftordertime());
+			if(ordernumcount < temp.getLeftordertime()){
+				temp.setHavefinish(0);
+			}else if(ordernumcount == temp.getLeftordertime()){
+				temp.setHavefinish(1);
+			}else{
+				 throw new RuntimeException("预约数量超出允许值");  
+			}
+			temp.setHaveordertime(ordernumcount + temp.getHaveordertime());
+			temp.setLeftordertime(temp.getLeftordertime()-ordernumcount);
+			baseDao.updateEntity(temp);
 		}
 
 		
@@ -204,25 +216,8 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 //		return ComputerorderActionUtil.checkVaildComputerorderForm(availableBorrowModelMap, haveOrderedValidComputerorderdetailList, newOrderComputerorderdetailList, currentDate);
 	}
 	
-	@Override
-	public void addComputerorder(Computerorder ch,Computerorder en){
-		
-	/*
-		int type = baseDao.getCode("Computerordertype");
-		ch.setId(baseDao.getCode("Computerorder"));
-		ch.setComputerordertype(type);
-		en.setId(baseDao.getCode("Computerorder"));
-		en.setComputerordertype(type);
-		baseDao.saveEntity(ch);	
-		baseDao.saveEntity(en);		
-	*/
-	}
 
-	@Override
-	public void addComputerorderWithId(Computerorder computerorder){
-	
-		baseDao.saveEntity(computerorder);		
-	}
+
 	
 	/**
 	 * 验证表单中的预约数量能否满足
@@ -338,13 +333,30 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 	@Override
 	public boolean auditComputerorder(Computerorder cr){
 
-
-			
 //		computerorderService.execSql("  update Computerorder set rejectreason= "+computerorder.getRejectreason()+" and status="+computerorder.getStatus()+" where id = "+computerorder.getId());
 
 		baseDao.updateEntity(cr);
 		baseDao.createSQL(" update Computerorderdetail set status="+cr.getStatus()+" where computerorderid = "+cr.getId());
-
+		
+//		课程预约被驳回
+		if(cr.getOrdertype() == ComputerorderInfo.ClassOrder && cr.getStatus() == ComputerorderInfo.ComputerorderStatusAduitReject){
+			int count = computerorderdetailDao.getOrderTime(cr.getId());
+			
+			List<Computerhomeworkreceiver> computerhomeworkreceiverList = computerhomeworkreceiverDao.sel(cr.getComputerhomeworkid(), cr.getCreateuserid());
+			if(computerhomeworkreceiverList == null || computerhomeworkreceiverList.size()!=1){
+				throw new RuntimeException("无法更改作业状态");  
+			}			
+			Computerhomeworkreceiver temp = computerhomeworkreceiverList.get(0);
+			
+			temp.setHavefinish(0);
+			temp.setLeftordertime(temp.getLeftordertime()+count);
+			temp.setHaveordertime(temp.getHaveordertime() - count);
+			
+			baseDao.updateEntity(temp);			
+		}
+		
+		
+//		baseDao.createSQL(" update Computerorderdetail set status="+cr.getStatus()+" where computerorderid = "+cr.getId());
 		return true;
 	}
 	

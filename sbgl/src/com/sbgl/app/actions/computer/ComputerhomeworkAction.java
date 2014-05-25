@@ -223,7 +223,8 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 
 			
 
-//  ajax add	
+//  ajax add
+	/*
 	public String addComputerhomeworkAjax(){	
 		log.info("Add Entity Ajax Manner");
 		
@@ -269,7 +270,7 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 		return SUCCESS;
 	}
 
-	
+	*/
 	public boolean checkAddForm(){
 		if(receiverids == null || receiverids.length() == 0){
 			returnInfo = "接收人不能为空";

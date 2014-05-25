@@ -92,6 +92,10 @@ public interface ComputerorderdetailService{
 	List<ComputerorderdetailFull> selectValidFullFromStartToEnd(Date startDate,
 			int startPeriod, Date endDate, int endPeriod, int language);
 
+	List<Computerorderdetail> selByOrderId(int orderid);
+
+	List<ComputerorderdetailFull> selFullByOrderId(int orderid, int language);
+
 		
 	
 	

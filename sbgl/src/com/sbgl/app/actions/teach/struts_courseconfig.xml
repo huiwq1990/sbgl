@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-	 <package name="courseconfig" extends="manage">
+	<package name="courseconfig" extends="manage">
+		<!-- default entity manage action -->
+		<action name="toAddCourseconfigPage" class="CourseconfigAction" method="toAddCourseconfigPage">
+			<result name="success">/teach/courseconfigAdd.vm</result>
+			<result name="error">/error.vm</result> 
+		</action>
 
-<!-- default entity manage action -->
-    	<action name="toAddCourseconfigPage" class="CourseconfigAction" method="toAddCourseconfigPage">
-        	<result name="success">/teach/courseconfigAdd.vm</result>
-        	<result name="error">/error.vm</result> 
-        </action>
-
-<!-- default entity manage action -->
+		<!-- default entity manage action -->
     	<action name="manageCourseconfig" class="CourseconfigAction" method="manageCourseconfig">
         	<result name="success1">/teach/courseconfigManage.vm</result>
 			<result name="success2">/teach/courseconfigFullManageContent.vm</result>
@@ -24,10 +23,6 @@
         	<result name="error">/error.vm</result> 
         </action>
 		
-		
-
-
-	
     </package>
     
     <!-- Ajax方式 -->

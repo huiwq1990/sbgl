@@ -62,6 +62,8 @@ public interface ComputerhomeworkreceiverService{
 	List<Computerhomeworkreceiver> selectComputerhomeworkreceiverByUserAndOrder(
 			int uid, int hasorder);
 
+	Computerhomeworkreceiver sel(int homeworkid, int userid);
+
 		
 	
 	

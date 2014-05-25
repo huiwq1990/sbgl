@@ -93,6 +93,20 @@ public class ComputerhomeworkreceiverServiceImpl implements Computerhomeworkrece
 		return 1;
 		
 	}
+	
+	/**
+	 * 获取信息
+	 */
+	@Override
+	public Computerhomeworkreceiver sel(int homeworkid,int userid) {
+		List<Computerhomeworkreceiver> l = computerhomeworkreceiverDao.sel(homeworkid, userid);
+		if(l ==null || l.size() == 0){
+			return null;
+		}else{
+			
+		}
+		return l.get(0);
+	}
 
 //	根据id查询实体类			
 	@Override
