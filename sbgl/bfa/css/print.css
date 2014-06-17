@@ -1,0 +1,34 @@
+/* 打印 ================================================= */
+#print {
+	background-color: #ffffff;
+}
+#print hr {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border: 0;
+	border-top: 2px solid #000000;
+}
+#print .rent-sheet-info dl {
+	margin-bottom: 0;
+}
+#print .rent-sheet-info .dl-horizontal dt {
+	width: 130px;
+	text-align: left;
+}
+#print .rent-sheet-info .dl-horizontal dd {
+	margin-left: 150px;
+	line-height: 40px;
+}
+#print .rent-sheet-info dt, dd {
+	margin: 0 0 4px 0;
+}
+#print .table thead > tr > th {
+	border-bottom: 2px solid #000000;
+}
+#print .table tbody > tr > th,
+#print .table tfoot > tr > th,
+#print .table thead > tr > td,
+#print .table tbody > tr > td,
+#print .table tfoot > tr > td {
+	border-top: 1px solid #000000;
+}
