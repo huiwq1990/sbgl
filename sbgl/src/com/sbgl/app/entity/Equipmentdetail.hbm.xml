@@ -76,5 +76,8 @@
         <property name="classificationid" type="java.lang.Integer">
             <column name="classificationid" />
         </property>
+        <property name="rent" type="java.lang.String">
+            <column name="rent" precision="12" scale="0" />
+        </property>
     </class>
 </hibernate-mapping>

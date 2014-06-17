@@ -1170,6 +1170,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			}
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String rentUnit[] = null;
 		for (Equipmentdetail equipdetail : tempList) {
 			EquipCourse ec = new EquipCourse();
 			ec.setId( String.valueOf( equipdetail.getEquipdetailid() ) );
@@ -1236,6 +1237,11 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			ec.setSupplyer( equipdetail.getSupplyer() );
 			ec.setUseManageDept( equipdetail.getUsemanagedept() );
 			ec.setWorth( String.valueOf( equipdetail.getWorth() ) );
+			if( equipdetail.getRent() != null && !"".equals(equipdetail.getRent()) ) {
+				rentUnit = equipdetail.getRent().split("/");
+				ec.setRent( rentUnit[0] );
+				ec.setRentUnit( rentUnit[1] );
+			}
 			
 			equipDetailCourse.add( ec );
 		}
