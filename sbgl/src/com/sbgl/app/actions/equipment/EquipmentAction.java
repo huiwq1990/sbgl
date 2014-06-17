@@ -1075,14 +1075,14 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		}*/
 		List<HQLOption> hqlOptionList =  new ArrayList<HQLOption>();
 		if(classificationId != null && !classificationId.equals("0")) {
-			if("-2".equals(classificationId)) {  //如果是未分类的情况下
+			if("-1".equals(classificationId)) {  //如果是未分类的情况下
 				hqlOptionList.add( new HQLOption<Integer>("equipmentid", -1, SBGLConsistent.HQL_OPTION_EQ, SBGLConsistent.HQL_VALUE_INT, SBGLConsistent.HQL_OPTION_AD) );
 			} else {
 				List<Equipment> modelList = equipService.getEquipsByClassification( Integer.valueOf( classificationId ) );
 				StringBuffer sb = new StringBuffer();
 				if(modelList != null && modelList.size() > 0) {
 					for (Equipment e : modelList) {
-						sb.append( e.getEquipmentid() + "," );
+						sb.append( e.getComid() + "," );
 					}
 					hqlOptionList.add( new HQLOption<String>("equipmentid", sb.toString(), SBGLConsistent.HQL_OPTION_IN, SBGLConsistent.HQL_VALUE_INT, SBGLConsistent.HQL_OPTION_AD) );
 				}
