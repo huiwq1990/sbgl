@@ -20,8 +20,8 @@
 </header><!--/#header-wrap-->
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
       <ul class="nav nav-tabs">
-        <li><a href="设备预约首页.html">器材预约</a></li>
-        <li class="active"><a href="设备管理首页.html">器材管理</a></li>
+        <li><a href="${webbaseurl}/orderAdmin.do">器材预约</a></li>
+        <li class="active"><a href="${webbaseurl}/equipManageAdmin.do">器材管理</a></li>
       </ul>
       <!--admin-wrap start-->
       <div id="admin-wrap">
@@ -94,6 +94,18 @@
                     </div>
                   </div>
 				  <div class="form-group">
+                    <label for="inputEquipId" class="col-lg-2 control-label">租金</label>
+                    <div class="col-lg-4" style="width: 26.45%;">
+                      <input type="text" class="form-control" id="rent" placeholder="格式：0.00">
+                    </div>
+					<div class="col-lg-4" style="width: 17%;">
+                      <select class="select2" id="rentUnit">
+						<option value="0" data-foo="fa">每天</option>
+						<option value="1" data-foo="fa">每个</option>
+                      </select>
+                    </div>
+                  </div>
+				  <div class="form-group">
                     <label for="inputEquipId" class="col-lg-2 control-label">使用/管理部门</label>
                     <div class="col-lg-4">
                       <input type="text" class="form-control" id="useManageDept" placeholder="使用与管理部门">
@@ -136,8 +148,8 @@
                     <label for="inputEquipModelId" class="col-lg-2 control-label">所属设备型号</label>
                     <div class="col-lg-4">
                       <select class="select2 select-white form-control" id="inputEquipModelId">
-						<optgroup label="未知型号">
-						<option value="-1">未知型号</option>
+						<optgroup label="全部型号">
+						<option value="-1">全部型号</option>
 						#foreach($equip in $equipCourse)
             				#if($!equip.showClass == '1')
             					<optgroup label="$!equip.cName">
@@ -228,6 +240,8 @@
 		var manufacturer = $("#manufacturer").val();
 		var supplyer = $("#supplyer").val();
 		var worth = $("#worth").val();
+		var rent = $("#rent").val();
+		var rentUnit =  $("#rentUnit").val();
 		var useManageDept = $("#useManageDept").val();
 		var manager = $("#manager").val();
 		var storagePlace = $("#storagePlace").val();
@@ -253,6 +267,11 @@
 			alert("金额输入格式错误！");
 			return;
 		}
+		var ret4 = regex2.test(rent);
+		if(ret4 == false && rent != "") {
+			alert("租金输入格式错误！");
+			return;
+		}
 		/*
 		console.log("detailNum " + detailNum);
 		console.log("state" + state);
@@ -265,6 +284,12 @@
 			alert("资产编号不能为空!");
 			return;
 		}
+		
+		if(modelId == -1 || modelId == "") {
+			alert("必须选择型号，若无型号请先创建!");
+			return;
+		}
+		
 		var postData = {
 			"equipmentdetail.administrationid": cookie.Get("uid"),
 			"equipmentdetail.equipserial": equipserial,
@@ -282,7 +307,8 @@
 			"equipmentdetail.storageposition": storagePosition,
 			"equipmentdetail.storenumber": storenumber,
 			"equipmentdetail.classificationid": ci,
-			"equipmentdetail.assetnumber": assetNumber
+			"equipmentdetail.assetnumber": assetNumber,
+			"equipmentdetail.rent": rent + "/" + rentUnit
 		}
 	
 		jQuery.ajax({  

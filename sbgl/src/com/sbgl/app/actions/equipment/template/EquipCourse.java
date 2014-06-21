@@ -21,6 +21,8 @@ public class EquipCourse {
 	private String storenumber;
 	private String equipserial;
 	private String assetNumber;
+	private String rent;
+	private String rentUnit;
 	
 	
 	public String getId() {
@@ -142,6 +144,18 @@ public class EquipCourse {
 	}
 	public void setAssetNumber(String assetNumber) {
 		this.assetNumber = assetNumber;
+	}
+	public String getRent() {
+		return rent;
+	}
+	public void setRent(String rent) {
+		this.rent = rent;
+	}
+	public String getRentUnit() {
+		return rentUnit;
+	}
+	public void setRentUnit(String rentUnit) {
+		this.rentUnit = rentUnit;
 	}
 	
 }

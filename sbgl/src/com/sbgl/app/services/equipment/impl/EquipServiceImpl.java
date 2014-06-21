@@ -279,6 +279,7 @@ public class EquipServiceImpl implements EquipService {
 		storeEquipmentdetail.setSysremark( equipmentdetail.getSysremark() );
 		storeEquipmentdetail.setUsermark( equipmentdetail.getUsermark() );
 		storeEquipmentdetail.setClassificationid( equipmentdetail.getClassificationid() );
+		storeEquipmentdetail.setRent( equipmentdetail.getRent() );
 		//判断当前添加器材的型号，更新型号表相关统计字段
 		if(deleteFlag) {
 			Equipment e = null;

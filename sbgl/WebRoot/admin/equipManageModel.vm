@@ -133,7 +133,7 @@
         <label for="modifyEquipCategory" class="col-xs-3 control-label">分类</label>
         <div class="col-xs-7">
           <select class="select2 select-white form-control" id="modifyEquipCategory">
-            <option value="-1" data-foo="fa">无分类</option>
+            <option value="-1" data-foo="fa">全部分类</option>
 			#foreach($clazz in $classForEquipAdd)
 				#if($!clazz.isParent == '1')
 					<optgroup label="$!clazz.name">
@@ -207,7 +207,7 @@
         <label for="inputECategory" class="col-xs-3 control-label">分类</label>
         <div class="col-xs-7">
           <select class="select2 select-white form-control" id="inputECategory">
-            <option value="-1" data-foo="fa">无分类</option>
+            <option value="-1" data-foo="fa">全部分类</option>
 			#foreach($clazz in $classForEquipAdd)
 				#if($!clazz.isParent == '1')
 					<optgroup label="$!clazz.name">
@@ -464,6 +464,17 @@
 				brandId = $("#inputStock1").val();
 			}
 			
+			if(modelName == "") {
+				alert("型号名不能为空！");
+				return;
+			}
+			
+			
+			if(clazzId == -1 || clazzId == "") {
+				alert("分类不能为空，若无分类可选请先建立分类！");
+				return;
+			}
+			
 			if(modelName != "") {
 				//console.log("**********" + modelName);
     			postData = {
@@ -502,6 +513,16 @@
 			var brandId = -1;
 			if($("#modifyStock1").prop("checked")) {
 				brandId = $("#modifyStock1").val();
+			}
+			
+			if(ename == "") {
+				alert("型号名不能为空！");
+				return;
+			}
+			
+			if(cidInput == -1 || cidInput == "") {
+				alert("分类不能为空，若无分类可选请先建立分类！");
+				return;
 			}
 			
 			if(ename == modelNameForAlter && modelCIdForAlter == cidInput && modelMemoForAlter == memo && localFileName == "" && modelBrandIdForAlter == brandId && enameEN == modelNameForAlterEN && modelMemoForAlterEN == memoEN) {

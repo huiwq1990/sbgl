@@ -1075,22 +1075,13 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		}*/
 		List<HQLOption> hqlOptionList =  new ArrayList<HQLOption>();
 		if(classificationId != null && !classificationId.equals("0")) {
-			if("-2".equals(classificationId)) {  //如果是未分类的情况下
-				hqlOptionList.add( new HQLOption<Integer>("equipmentid", -1, SBGLConsistent.HQL_OPTION_EQ, SBGLConsistent.HQL_VALUE_INT, SBGLConsistent.HQL_OPTION_AD) );
-			} else {
-				List<Equipment> modelList = equipService.getEquipsByClassification( Integer.valueOf( classificationId ) );
-				StringBuffer sb = new StringBuffer();
-				if(modelList != null && modelList.size() > 0) {
-					for (Equipment e : modelList) {
-						sb.append( e.getEquipmentid() + "," );
-					}
-					hqlOptionList.add( new HQLOption<String>("equipmentid", sb.toString(), SBGLConsistent.HQL_OPTION_IN, SBGLConsistent.HQL_VALUE_INT, SBGLConsistent.HQL_OPTION_AD) );
+			List<Equipment> modelList = equipService.getEquipsByClassification( Integer.valueOf( classificationId ) );
+			StringBuffer sb = new StringBuffer();
+			if(modelList != null && modelList.size() > 0) {
+				for (Equipment e : modelList) {
+					sb.append( e.getComid() + "," );
 				}
-				//由于更新界面器材状态数量的需要，此时需要统计在当前分类下的各种状态的数量
-//				QueryResult tempResult = equipService.getEquipDetailByPageWithOptions(hqlOptionList, new Page(0, 10000));
-//				if(tempResult != null && tempResult.getTotalResultNum() > 0) {
-//					tempList = (List<Equipmentdetail>) tempResult.getResultList();
-//				}
+				hqlOptionList.add( new HQLOption<String>("equipmentid", sb.toString(), SBGLConsistent.HQL_OPTION_IN, SBGLConsistent.HQL_VALUE_INT, SBGLConsistent.HQL_OPTION_AD) );
 			}
 			QueryResult tempResult = equipService.getEquipDetailByPageWithOptions(hqlOptionList, new Page(0, 10000));
 			if(tempResult != null && tempResult.getTotalResultNum() > 0) {
@@ -1179,6 +1170,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			}
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String rentUnit[] = null;
 		for (Equipmentdetail equipdetail : tempList) {
 			EquipCourse ec = new EquipCourse();
 			ec.setId( String.valueOf( equipdetail.getEquipdetailid() ) );
@@ -1245,6 +1237,11 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			ec.setSupplyer( equipdetail.getSupplyer() );
 			ec.setUseManageDept( equipdetail.getUsemanagedept() );
 			ec.setWorth( String.valueOf( equipdetail.getWorth() ) );
+			if( equipdetail.getRent() != null && !"".equals(equipdetail.getRent()) ) {
+				rentUnit = equipdetail.getRent().split("/");
+				ec.setRent( rentUnit[0] );
+				ec.setRentUnit( rentUnit[1] );
+			}
 			
 			equipDetailCourse.add( ec );
 		}
