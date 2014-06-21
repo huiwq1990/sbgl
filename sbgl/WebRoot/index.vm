@@ -178,11 +178,14 @@
 						<h5>
 						<a href="${webbaseurl}/checkComputerhomework.${strutsaction}?computerhomeworkid=$order.computerhomeworkid">$!order.computerhomeworkname</a>
 						</h5>
-						<span><a href="${webbaseurl}/toComputerClassorderPage.${strutsaction}?computerhomeworkid=$order.computerhomeworkid"">开始预约</a>
+						
+						<span>
+							等待你提交预约申请
+							<!--<a href="${webbaseurl}/toComputerClassorderPage.${strutsaction}?computerhomeworkid=$order.computerhomeworkid">开始预约</a>-->
 						</span>
 	                </div>
                     <span class="tag label label-important">
-					等待你提交预约申请
+					课程预约
 					</span>                  
                   </div>
                 </li>

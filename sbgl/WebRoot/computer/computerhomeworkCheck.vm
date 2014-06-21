@@ -20,8 +20,9 @@
   
   <div class="nav-wrap clearfix">	
 	#parse("include/includeSiteNavi.vm")	
-	#set($currentPageType="computerHomeworkSpace")
-	#parse("include/includeHomeworkspaceSubNavi.vm") 
+
+		#set($currentPageType="createorder")
+	#parse("include/includeOrderspaceSubNavi.vm")
   </div>
   
 </header><!--/#header-wrap-->
@@ -59,7 +60,7 @@
                         </div>
                       </div>
                       <a class="pull-left" data-toggle="modal" href="#equip-detail" role="button">
-                        <img src="${computerImagePath}/$!temp.computermodelpicpath" width="100" height="100">
+                        <img src="$pcimg.url(${temp.computermodelpicpath})" width="100" height="100">
                       </a>                  
                     </div>
 #end
@@ -96,6 +97,12 @@
                       <div class="rent-remark"><i class="icon-pencil"></i></div>
                     </div>
                     <hr>
+						
+						<!--
+						 <strong>预约人可能进行的操作:</strong><br> -->
+                <a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}/toComputerClassorderPage.${strutsaction}?computerhomeworkid=$computerhomeworkFull.computerhomeworkid">开始预约</a>
+                <a class="btn btn-white" action-type="" action-data="" href="javascript:;">删 除</a> 
+				
                   </div>                        
                  
 				  <!--

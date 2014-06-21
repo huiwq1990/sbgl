@@ -28,7 +28,7 @@ public class ComputerImageUrlTool {
 	
 	public String url(String pcname){	
 		if(pcname == null || pcname.trim().length()==0){
-			return "";
+			return CommonConfig.WebBaseUrl + "/computerImage"+"/default.jpg";
 		}
 		return CommonConfig.WebBaseUrl + "/computerImage"+"/"+pcname;
 	}

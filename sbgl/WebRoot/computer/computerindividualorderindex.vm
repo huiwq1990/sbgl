@@ -55,7 +55,7 @@
 								#if($selComputercategory == $!tempcc.computercategorytype)
 									class="active"
 								#end
-							><a href="toComputerIndividualorderPage.action?selComputercategory=$!tempcc.computercategorytype">$!tempcc.name</a></li>
+							><a href="${webbaseurl}/toComputerIndividualorderPage.action?selComputercategory=$!tempcc.computercategorytype">$!tempcc.name</a></li>
 							#end
 						</ul>
 					</div>

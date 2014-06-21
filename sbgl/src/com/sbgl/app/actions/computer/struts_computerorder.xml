@@ -52,6 +52,7 @@
 		<!-- 用户查看自己的预约列表-->
 		<action name="viewMineComputerorderList" class="ManageComputerorder" method="viewMineComputerorderList">
         	<result name="success">/computer/computerorderindex.vm</result>
+        	 <result name="404">/404.vm</result> 
        		 <result name="usernotlogin">/computer/errorpage.vm</result> 
         	<result name="error">/error.vm</result> 
         </action>

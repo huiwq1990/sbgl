@@ -1,4 +1,10 @@
+ function reWizardHeight() {
+				$("#rent-list").animate({
+					height: $("#rent-list .panel-body").height() + 130
+				});
+			}
 
+ 
 (function($){
 
 /* ============ 机房预约 ============= */
