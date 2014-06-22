@@ -352,10 +352,13 @@
             </div>
           </div>
         </div>
-        <div id="rent-list" class="panel panel-default">
+        <div id="rent-list-wrap" class="panel panel-default">
           <div class="panel-heading"><h3>预约单 <small>请选择你所需要的设备。</small></h3></div>
           <div class="panel-body">
-            <p class="no-add">尚未添加任何设备。</p>
+            <div id="rent-list">
+              <p class="no-add">尚未添加任何设备。</p>
+            </div>
+
           </div>
           <div class="panel-footer text-right">
             <button type="button" class="btn btn-primary">提 交</button>
@@ -430,86 +433,86 @@
 
 
 $(function () {
-	var nowTemp = new Date();	
-	var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-	$('.input-daterange').datepicker({
-		language: 'zh-CN',
-		format: 'yyyy-mm-dd',
-		todayHighlight: true,
-		autoclose: true,
-		startDate: now
-	});	 
-	var checkin = $('.checkin .checkin1').datepicker()
-		.on('changeDate', function(ev) {
-	  		$('.checkout')[0].focus();
-	});
-	
-	
-	Highcharts.setOptions({
-		lang: {
-			months: ['一月', '二月', '三月', '四月', '五月', '六月', 
-				'七月', '八月', '九月', '十月', '十一月', '十二月'],
-			shortMonths: ['1月', '2月', '3月', '4月', '5月', '6月', 
-				'7月', '8月', '9月', '10月', '11月', '12月'],
-			weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-		}
-	});
+  var nowTemp = new Date(); 
+  var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+  $('.input-daterange').datepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd',
+    todayHighlight: true,
+    autoclose: true,
+    startDate: now
+  });  
+  var checkin = $('.checkin .checkin1').datepicker()
+    .on('changeDate', function(ev) {
+        $('.checkout')[0].focus();
+  });
 
-	$(window).load(function(){
-		$('#equip-chart').highcharts({
-			chart: {
-				type: 'line'
-			},
-			title: {
-				text: ''
-			},
-			xAxis: {
-				type: 'datetime',
-				dateTimeLabelFormats: {
-					day: '%b%e日'
-				},
-				plotBands: [{ // Light air
-					from: Date.UTC(2013, 8, 18),
-					to: Date.UTC(2013, 8, 19),
-					color: 'rgba(68, 170, 213, 0.1)',
-					label: {
-						text: '您的预约时间',
-						style: {
-							color: '#606060'
-						}
-					}
-				}], 
-			},
-			yAxis: {
-				title: {
-					text: '数量'
-				},
-				min: 0,
-				allowDecimals: false
-			},
-			series: [{
-				name: '参考数量',
-				pointInterval: 24 * 3600 * 1000, // 一天
-				pointStart: Date.UTC(2013, 8, 17),
-				data: [1, 0, 4, 10,5],
-				marker: {
-					fillColor: 'white',
-					lineWidth: 2,
-					lineColor: Highcharts.getOptions().colors[0]
-				}
-			}],
-			legend: {
-				enabled: false
-			},
-			plotOptions: {
-				line: {
-					dataLabels: {
-						enabled: true
-					}
-				}
-			},
-		});
-	});
+
+  Highcharts.setOptions({
+    lang: {
+      months: ['一月', '二月', '三月', '四月', '五月', '六月', 
+        '七月', '八月', '九月', '十月', '十一月', '十二月'],
+      shortMonths: ['1月', '2月', '3月', '4月', '5月', '6月', 
+        '7月', '8月', '9月', '10月', '11月', '12月'],
+      weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+    }
+  });
+
+  $(window).load(function(){
+    $('#equip-chart').highcharts({
+      chart: {
+        type: 'line'
+      },
+      title: {
+        text: ''
+      },
+      xAxis: {
+        type: 'datetime',
+        dateTimeLabelFormats: {
+          day: '%b%e日'
+        },
+        plotBands: [{ // Light air
+          from: Date.UTC(2013, 8, 18),
+          to: Date.UTC(2013, 8, 19),
+          color: 'rgba(68, 170, 213, 0.1)',
+          label: {
+            text: '您的预约时间',
+            style: {
+              color: '#606060'
+            }
+          }
+        }], 
+      },
+      yAxis: {
+        title: {
+          text: '数量'
+        },
+        min: 0,
+        allowDecimals: false
+      },
+      series: [{
+        name: '参考数量',
+        pointInterval: 24 * 3600 * 1000, // 一天
+        pointStart: Date.UTC(2013, 8, 17),
+        data: [1, 0, 4, 10,5],
+        marker: {
+          fillColor: 'white',
+          lineWidth: 2,
+          lineColor: Highcharts.getOptions().colors[0]
+        }
+      }],
+      legend: {
+        enabled: false
+      },
+      plotOptions: {
+        line: {
+          dataLabels: {
+            enabled: true
+          }
+        }
+      },
+    });
+  });
 });
 </script>
 </body>
