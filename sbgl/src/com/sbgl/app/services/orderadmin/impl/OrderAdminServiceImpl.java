@@ -208,5 +208,12 @@ public class OrderAdminServiceImpl implements  OrderAdminService{
 		}
 		return true;
 	}
+
+
+	@Override
+	public List<EquipmenborrowFull> getEquipmenborrowByDate(String date) {
+		// TODO Auto-generated method stub
+		return orderAdminDao.getEquipmenborrowByDate(date);
+	}
 	
 }
