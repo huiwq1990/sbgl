@@ -91,20 +91,15 @@
 		
 		
 <!--del-->
-        <!--del entity-->
-        <action name="deleteComputerhomeworkreceiver" class="ComputerhomeworkreceiverAction" method="deleteComputerhomeworkreceiver">
+        <!--删除自己的课程预约通知-->
+        <action name="deleteMineComputerhomeworkreceiver" class="ComputerhomeworkreceiverAction" method="deleteMineComputerhomeworkreceiver">
         	<result type="redirectAction">
-				<param name="actionName">manageComputerhomeworkreceiver</param>
+				<param name="actionName">viewMineComputerorderList</param>
 			</result>
+			<result name="404">/404.vm</result> 
         	<result name="error">/error.vm</result> 
         </action>
-		<!--del entityfull-->
-        <action name="deleteComputerhomeworkreceiverFull" class="ComputerhomeworkreceiverAction" method="deleteComputerhomeworkreceiverFull">
-        	<result type="redirectAction">
-				<param name="actionName">manageComputerhomeworkreceiverFull</param>
-			</result>
-        	<result name="error">/error.vm</result> 
-        </action>
+	
 		
 <!--更新实体-->
         <action name="updateComputerhomeworkreceiver" class="ComputerhomeworkreceiverAction" method="updateComputerhomeworkreceiver">

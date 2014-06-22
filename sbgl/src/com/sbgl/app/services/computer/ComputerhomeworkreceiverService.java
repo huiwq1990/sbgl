@@ -59,10 +59,12 @@ public interface ComputerhomeworkreceiverService{
 
 	int execSql(String sql);
 
-	List<Computerhomeworkreceiver> selectComputerhomeworkreceiverByUserAndOrder(
-			int uid, int hasorder);
+//	List<Computerhomeworkreceiver> selectComputerhomeworkreceiverByUserAndOrder(
+//			int uid, int hasorder);
 
 	Computerhomeworkreceiver sel(int homeworkid, int userid);
+
+	int delById(int id);
 
 		
 	

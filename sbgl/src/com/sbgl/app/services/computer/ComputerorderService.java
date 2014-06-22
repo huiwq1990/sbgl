@@ -3,6 +3,7 @@ package com.sbgl.app.services.computer;
 import java.util.Date;
 import java.util.List;
 
+import com.sbgl.app.actions.computer.ComputerorderEntity;
 import com.sbgl.app.entity.Borrowperiod;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
@@ -78,6 +79,8 @@ public interface ComputerorderService{
 				int endPeriod, int currentLanguage,
 				List<Borrowperiod> borrowperiodList,
 				int computeroderadvanceorderday);
+
+		List<ComputerorderEntity> getUnderwayComputerorder(int userid);
 		
 	
 //根据关联查询实体	

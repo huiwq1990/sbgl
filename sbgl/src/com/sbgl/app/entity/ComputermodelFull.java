@@ -18,6 +18,9 @@ public class ComputermodelFull extends DaoAbs implements java.io.Serializable {
 			private Integer computermodelavailableborrowcountnumber;
 			private String computermodeldescription;
 			private Integer computermodelstatus;
+			
+			private Integer computermodelhourrentprice;
+			
 			private Integer computercategoryid;
 			private Integer computercategorycomputercategorytype;
 			private String computercategorylanguagetype;
@@ -148,6 +151,12 @@ public class ComputermodelFull extends DaoAbs implements java.io.Serializable {
 		}
 		public Integer getComputercategorystatus(){		
 			return this.computercategorystatus;
+		}
+		public Integer getComputermodelhourrentprice() {
+			return computermodelhourrentprice;
+		}
+		public void setComputermodelhourrentprice(Integer computermodelhourrentprice) {
+			this.computermodelhourrentprice = computermodelhourrentprice;
 		}
 		
 	

@@ -15,6 +15,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.sbgl.app.actions.teach.TeachConstant;
+import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.dao.DaoAbs;
 
@@ -75,6 +76,19 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
             log.error("失败", re);
             throw re;
         }
+	}
+	
+	/**
+	 * 查询进行中的预约
+	 * @param uid
+	 * @return
+	 */
+	@Override
+	public List<ComputerorderFull> setUnderwayComputerorder(int uid){
+		String selunderwayordersql = "  where a.createuserid="+uid + " and a.status in("+ComputerorderInfo.ComputerorderStatusAduitWait+","+ComputerorderInfo.ComputerorderStatusAduitReject+") order by a.createtime desc";
+		List<ComputerorderFull> computerorderFullUnderwayList = selectComputerorderFullByCondition(selunderwayordersql);
+		return computerorderFullUnderwayList;
+		
 	}
 	
 	

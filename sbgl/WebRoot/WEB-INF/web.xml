@@ -87,7 +87,11 @@
   <listener>
      <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
   </listener> 
-  
+    <listener>
+  <listener-class>
+    com.sbgl.listener.ResourcesListener
+  </listener-class>
+ </listener>
     <welcome-file-list>
     <welcome-file>/index.jsp</welcome-file>
   </welcome-file-list>

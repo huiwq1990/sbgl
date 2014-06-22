@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 机房型号管理</title>
+<title>北京电影学院摄影系 - 机房型号管理 $resource.str("messageinbox.title")</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -70,6 +70,7 @@
                         <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
                         <th class="name">设备名称(型号)</th>
                         <th class="categories">分类</th>
+                        <th class="hourrentprice">单位价格/小时</th>
                         <th class="describe">描述</th>
     					<th class="num">总数量</th>
                         <th class="num">可借数量</th>
@@ -93,13 +94,19 @@
     						data-name="$!ch.computermodelname" 
     						data-computercategoryid = "$!ch.computermodelcomputercategoryid" 
     						data-description="$!ch.computermodeldescription"
+							data-hourrentprice="$!en.computermodelhourrentprice" 
+							
+							data-picpath="$!en.computermodelpicpath" 
+							
     						data-iden="$!en.computermodelid" 
     						data-nameen="$!en.computermodelname" 
     						data-computercategoryiden="$!en.computermodelcomputercategoryid" 
+							
     						data-descriptionen="$!en.computermodeldescription">修改</a>
     						<br><small>$!en.computermodelname</small>
     					</td>
                         <td>$!ch.computercategoryname<br><small>$!en.computercategoryname</small></td>
+                            <td>$!ch.computermodelhourrentprice</td>
                         <td>$!ch.computermodeldescription<br><small>$!en.computermodeldescription</small></td>
     					<td>$!ch.computermodelcomputercount</td>
                         <td>$!ch.computermodelavailableborrowcountnumber</td>                        
@@ -177,6 +184,18 @@
           </select>
         </div>
       </div>
+	  
+	  
+	  
+	       <div class="form-group">
+        <label for="modifyHourrentprice" class="col-xs-3 control-label">单位价格/小时</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="modifyHourrentprice" placeholder="每小时的租金">
+        </div>
+      </div>
+	  
+	  
+	  
       <div class="form-group">
         <label for="modifyDescribe" class="col-xs-3 control-label">描述</label>
         <div class="col-xs-7">
@@ -196,7 +215,7 @@
                      <i class="icon-plus"></i>
               <span>添加图片</span>
               <input id="inputModelPicEdit" type="file" name="file" action-type="showFileNameForAdd" multiple>
-				
+				<input id="modifyPicpath" type="hidden" />
           </span>
 		  <span id="imgFileForAddEdit"></span>
 		  <span id="inputModelPicSpanEdit"></span>
@@ -250,6 +269,18 @@
           </select>
         </div>
       </div>
+	  
+	  
+	  
+	  	  
+	       <div class="form-group">
+        <label for="inputHourrentprice" class="col-xs-3 control-label">单位价格/小时</label>
+        <div class="col-xs-7">
+          <input type="text" class="form-control" id="inputHourrentprice" placeholder="每小时的租金">
+        </div>
+      </div>
+	  
+	  
       <div class="form-group">
         <label for="inputDescribe" class="col-xs-3 control-label">描述</label>
         <div class="col-xs-7">
@@ -332,6 +363,7 @@
 				"name": inputModelName,				
 				"computermodelNameEn": inputModelNameEn,
 				"description": inputDescribe,
+				"hourrentprice": $('#inputHourrentprice').val(),
 				"computermodelDescriptionEn":inputDescribeEn,
 				"picpath":uploadPicPath
 		}
@@ -367,6 +399,10 @@
 		$('#modifyModelCategoryId').select2("val",myData.computercategoryid);
 		$("#modifyModelName").val(myData.name);
 		$('#modifyDescribe').val(myData.description);
+		
+		$('#modifyHourrentprice').val(myData.hourrentprice);
+		$("#modifyPicpath").val(myData.picpath);
+		
 		$("#modifyModelNameEn").val(myData.nameen);
 		$('#modifyDescribeEn').val(myData.descriptionen);		
 		$('#editComputermodelIdCh').val(myData.id);
@@ -394,6 +430,8 @@
 				"computercategoryid":editComputermodelComputercategoryid,
 				"description": editComputermodelDescription,
 				"picpath" : uploadPicPath,
+				"hourrentprice": $('#modifyHourrentprice').val(),
+				"picpath" : $('#modifyPicpath').val(),
 				"computermodelIdEn": editComputermodelIdEn,
 				"computermodelNameEn":modifyModelNameEn,
 				"computermodelDescriptionEn":modifyDescribeEn
@@ -558,6 +596,10 @@
 				$("#inputModelPicSpan").html("图片上传成功");
 				uploadPicPath = returnJson.reason;
 				
+				$("#modifyPicpath").val(returnJson.reason);
+				//alert($("#modifyPicpath").val());
+				//$("#modifyPicpath").val(returnJson.reason);
+				
 				//$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
 			}else{
 				//alert(returnJson.reason);
@@ -585,7 +627,8 @@
 				//var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});	
 				$("#inputModelPicSpanEdit").html("图片上传成功");
 				uploadPicPath = returnJson.reason;
-				
+					$("#modifyPicpath").val(returnJson.reason);
+				//alert($("#modifyPicpath").val());
 				//$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
 			}else{
 				//alert(returnJson.reason);

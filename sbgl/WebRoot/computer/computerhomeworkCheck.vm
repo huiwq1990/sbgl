@@ -21,7 +21,7 @@
   <div class="nav-wrap clearfix">	
 	#parse("include/includeSiteNavi.vm")	
 
-		#set($currentPageType="createorder")
+		#set($currentPageType="computerclassorderview")
 	#parse("include/includeOrderspaceSubNavi.vm")
   </div>
   
@@ -101,7 +101,7 @@
 						<!--
 						 <strong>预约人可能进行的操作:</strong><br> -->
                 <a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}/toComputerClassorderPage.${strutsaction}?computerhomeworkid=$computerhomeworkFull.computerhomeworkid">开始预约</a>
-                <a class="btn btn-white" action-type="" action-data="" href="javascript:;">删 除</a> 
+                <a class="btn btn-white" action-type="" action-data="" href="${webbaseurl}/deleteMineComputerhomeworkreceiver.${strutsaction}?computerhomeworkid=$computerhomeworkFull.computerhomeworkid">删 除</a> 
 				
                   </div>                        
                  

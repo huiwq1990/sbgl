@@ -7,6 +7,7 @@
 
 		<action name="index" class="IndexAction" method="index">
         	<result name="success">/index.vm</result>
+        	<result name="404">/404.vm</result> 
         	<result name="error">/error.vm</result> 
 		</action>
 

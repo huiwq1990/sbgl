@@ -10,7 +10,7 @@ public interface ComputerhomeworkreceiverDao{
 
 	
 //删除实体
-	public int deleteEntity(Integer computerhomeworkreceiverId);
+//	public int deleteEntity(Integer computerhomeworkreceiverId);
 
 public List<Computerhomeworkreceiver> selectComputerhomeworkreceiverByCondition(String condition);
 	 public List<Computerhomeworkreceiver>  selectComputerhomeworkreceiverByConditionAndPage(String conditionSql,final Page page) ;
@@ -33,6 +33,11 @@ public List<Computerhomeworkreceiver> selectComputerhomeworkreceiverByCondition(
 	public List<ComputerhomeworkreceiverFull> selectComputerhomeworkreceiverFullByLoginuserId(Integer userid );
 
 	List<Computerhomeworkreceiver> sel(int homeworkid, int userid);
+
+
+	List<Computerhomeworkreceiver> selByFinishStatus(int uid, int havefinish);
+
+	void delById(int id);
 
  
 }

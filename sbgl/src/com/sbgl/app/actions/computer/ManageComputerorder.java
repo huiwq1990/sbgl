@@ -238,7 +238,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			return ComputerConfig.usernotloginreturnstr;
 		}
 		
-
+/*
 //		进行中的预约是：状态未审核的预约
 		String selunderwayordersql = "  where a.createuserid="+userid + " and a.status in("+ComputerorderInfo.ComputerorderStatusAduitWait+","+ComputerorderInfo.ComputerorderStatusAduitReject+") order by a.createtime desc";
 		computerorderFullUnderwayList = computerorderService.selectComputerorderFullByCondition(selunderwayordersql);
@@ -258,12 +258,15 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		}
 		
 		computerorderEntityList = ComputerorderActionUtil.setUnderwayComputerorder(computerorderFullUnderwayList, newComputerhomeworkFullList);
+*/
+		
+		computerorderEntityList = computerorderService.getUnderwayComputerorder(userid);
 		
 //		预约完成的订单
 		String selfinordersql = "  where a.createuserid="+userid + " and a.status ="+ComputerorderInfo.ComputerorderStatusAduitPass+" order by a.createtime desc";
 		computerorderFullFinishList = computerorderService.selectComputerorderFullByCondition(selfinordersql);
 		
-		System.out.println(computerorderFullUnderwayList.size());
+//		System.out.println(computerorderFullUnderwayList.size());
 //		String sql = " where a.computerorderid = "+computerorderId  + " and c.languagetype="+ComputerConfig.languagech ;
 		if(computerorderFullUnderwayList==null){
 			computerorderFullUnderwayList = new ArrayList<ComputerorderFull>();

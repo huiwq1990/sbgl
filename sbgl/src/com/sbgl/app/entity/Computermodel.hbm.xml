@@ -43,5 +43,9 @@
         <property name="status" type="java.lang.Integer">
             <column name="status" />
         </property>
+        
+               <property name="hourrentprice" type="java.lang.Integer">
+            <column name="hourrentprice" />
+        </property>
     </class>
 </hibernate-mapping>

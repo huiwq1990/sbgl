@@ -67,5 +67,9 @@ public class CommonConfig {
 	public final static String pagenotfound = "pagenotfound";
 	public final static String innererror = "innererror";
 	
+	public final static String resourcetextmap = "textmap";
+	public final static String resourcetextmapch = "resourcetextmapch";
+	public final static String resourcetextmapen = "resourcetextmapen";
+	
 	
 }

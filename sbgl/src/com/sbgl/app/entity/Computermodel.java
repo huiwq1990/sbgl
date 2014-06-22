@@ -23,6 +23,8 @@ public class Computermodel extends com.sbgl.app.dao.DaoAbs implements
 	private Integer availableborrowcountnumber;
 	private String description;
 	private Integer status;
+	
+	private Integer hourrentprice;
 
 	// Constructors
 
@@ -63,6 +65,17 @@ public class Computermodel extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	
+
+
+	public Integer getHourrentprice() {
+		return hourrentprice;
+	}
+
+	public void setHourrentprice(Integer hourrentprice) {
+		this.hourrentprice = hourrentprice;
 	}
 
 	public Integer getComputermodeltype() {

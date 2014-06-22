@@ -50,6 +50,20 @@ public class ComputerhomeworkreceiverDaoImpl extends HibernateDaoSupport impleme
         }
 	}
 	
+	
+	@Override
+	public List<Computerhomeworkreceiver> selByFinishStatus(int uid,int havefinish) {
+		return selectComputerhomeworkreceiverByCondition(" where userid ="+uid+" and havefinish="+havefinish+" and status >= 0");
+	}
+	
+	@Override
+	public void delById(int id) {
+		Computerhomeworkreceiver c  =  this.getHibernateTemplate().get(Computerhomeworkreceiver.class,id);
+		c.setStatus(-1);
+		this.getHibernateTemplate().saveOrUpdate(c);
+	}
+
+	
 	// 根据条件查询查询实体
 	@Override
 	public List<Computerhomeworkreceiver> selectComputerhomeworkreceiverByCondition(String condition) {
@@ -127,24 +141,7 @@ public class ComputerhomeworkreceiverDaoImpl extends HibernateDaoSupport impleme
                 return computerhomeworkreceiverList;
         }
 	
-	
-	
-//  删除实体
-	public int deleteEntity(Integer computerhomeworkreceiverId) {
-		// TODO Auto-generated method stub		
-//		log.debug("正在删除");
-        try {
-        	String hqlString="update Computerhomeworkreceiver as tb set tb.status = 0 where tb.id = " +computerhomeworkreceiverId; 
-        	Query query = this.getHibernateTemplate().getSessionFactory().getCurrentSession().createQuery(hqlString);    	   	
-        	int ret=query.executeUpdate();
 
-            log.debug("删除:"+ret);
-            return ret;
-        } catch (RuntimeException re) {
-            log.error("删除失败", re);
-            throw re;
-        }
-	}
 
 //  根据实体id查询实体full	
 	@Override

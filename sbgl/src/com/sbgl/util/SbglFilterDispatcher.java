@@ -1,6 +1,8 @@
 package com.sbgl.util;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.dispatcher.FilterDispatcher;
 
 import com.opensymphony.xwork2.ActionContext;
+import com.sbgl.app.actions.common.CommonConfig;
 
 public class SbglFilterDispatcher extends FilterDispatcher {
 	 private static String imageDomain = PropertyUtil.readValue("/system.properties", "imageDomain");
@@ -54,6 +57,25 @@ public class SbglFilterDispatcher extends FilterDispatcher {
 		request.setAttribute("userImagePath", userImagePath);
 		request.setAttribute("computerImageUrl", computerImageUrl);
 		request.setAttribute("strutsaction", strutsaction);
+		String lan = (String) request.getSession().getAttribute(CommonConfig.sessionLanguagetype);
+		if(lan == null){
+			lan = "0";
+		}
+		
+		
+		Map<String,String> textmap = new ConcurrentHashMap<String,String>();
+		if(lan.equals(CommonConfig.languageenStr)){
+			textmap.clear();
+			textmap = (Map<String, String>) servletContext.getAttribute(CommonConfig.resourcetextmapen);
+	
+		}else{
+			textmap.clear();
+			textmap = (Map<String, String>) servletContext.getAttribute(CommonConfig.resourcetextmapch);
+			
+		}
+		request.setAttribute(CommonConfig.resourcetextmap, textmap);
+
+		
 		super.doFilter(request, arg1, arg2);
 	}
 

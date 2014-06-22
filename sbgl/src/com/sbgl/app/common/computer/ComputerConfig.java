@@ -59,8 +59,9 @@ public class ComputerConfig {
 	public final static int computerhomeworknotview = 0;
 	public final static int computerhomeworkhasorder = 1;
 	
-	public final static int computerhomeworknotorder = 0;
-	
+//	public final static int computerhomeworknotorder = 0;
+	public final static int computerhomeworkorderfinish = 1;
+	public final static int computerhomeworkordernotfinish = 0;
 	
 	public final static int computerdelstatus = -1;
 	

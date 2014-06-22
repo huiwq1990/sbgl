@@ -19,6 +19,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sbgl.app.actions.common.BaseAction;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputerhomeworkreceiverService;
 import com.sbgl.util.*;
@@ -27,11 +28,11 @@ import com.sbgl.util.*;
 
 @Scope("prototype") 
 @Controller("ComputerhomeworkreceiverAction")
-public class ComputerhomeworkreceiverAction extends ActionSupport implements SessionAware,ModelDriven<Computerhomeworkreceiver>{
+public class ComputerhomeworkreceiverAction extends BaseAction implements SessionAware,ModelDriven<Computerhomeworkreceiver>{
 	
 	private static final Log log = LogFactory.getLog(ComputerhomeworkreceiverAction.class);
 
-	private Map<String, Object> session;
+
 	
 	//Service	
 	@Resource
@@ -40,15 +41,13 @@ public class ComputerhomeworkreceiverAction extends ActionSupport implements Ses
 	private Computerhomeworkreceiver computerhomeworkreceiver = new Computerhomeworkreceiver();//实例化一个模型
 	private Computerhomeworkreceiver computerhomeworkreceiverModel = new Computerhomeworkreceiver();//实例化一个模型
 	private ComputerhomeworkreceiverFull computerhomeworkreceiverFull = new ComputerhomeworkreceiverFull();//实例化一个模型
-	private String actionMsg; // Action间传递的消息参数
-	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
+	
 	List<Computerhomeworkreceiver> computerhomeworkreceiverList = new ArrayList<Computerhomeworkreceiver>();
 	List<ComputerhomeworkreceiverFull> computerhomeworkreceiverFullList = new ArrayList<ComputerhomeworkreceiverFull>();
 	private Integer computerhomeworkreceiverid; //entity full 的id属性名称		
 	private String logprefix = "exec action method:";		
-	Page page = new Page();
-	Integer pageNo=1;	
-	ReturnJson returnJson = new ReturnJson();
+
+
 	String computerhomeworkreceiverIdsForDel;
 	
 //  manage Computerhomeworkreceiver
@@ -170,117 +169,28 @@ public class ComputerhomeworkreceiverAction extends ActionSupport implements Ses
 		return SUCCESS;
 	}
 
-//删除
-	public String deleteComputerhomeworkreceiver( ){
+/**
+ * 
+ * @return
+ */
+	public String deleteMineComputerhomeworkreceiver( ){
 		try{
-			if(computerhomeworkreceiver.getId() != null && computerhomeworkreceiver.getId() > 0){
-				computerhomeworkreceiverService.deleteComputerhomeworkreceiver(computerhomeworkreceiver.getId());
-				actionMsg = getText("deleteComputerhomeworkreceiverSuccess");
-			}else{
-				System.out.println("删除的id不存在");
-				actionMsg = getText("deleteComputerhomeworkreceiverFail");
+			System.out.println("作业id:"+computerhomeworkreceiver.getComputerhomeworkid());
+			computerhomeworkreceiver = computerhomeworkreceiverService.sel(computerhomeworkreceiver.getComputerhomeworkid(), this.getCurrentUserId());
+			if(computerhomeworkreceiver == null){
+				return "404";
 			}
-			
+			System.out.println("删除的作业接收者："+computerhomeworkreceiver.getId());
+			computerhomeworkreceiverService.delById(computerhomeworkreceiver.getId());
+				
 			return SUCCESS;
 		}catch(Exception e){
 			e.printStackTrace();
-			log.error("类ComputerhomeworkreceiverAction的方法：deleteComputerhomeworkreceiver错误"+e);
-		}
-		return "Error";
-	}
-	
-//删除Ajax
-	public String deleteComputerhomeworkreceiverAjax( ){
-		try{
-			if(computerhomeworkreceiver.getId() != null && computerhomeworkreceiver.getId() >= 0){
-				computerhomeworkreceiverService.deleteComputerhomeworkreceiver(computerhomeworkreceiver.getId());				
-			}
 			
-			return "IdNotExist";
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerhomeworkreceiverAction的方法：deleteComputerhomeworkreceiver错误"+e);
 		}
-		return "Error";
+		return "404";
 	}
 
-	
-//	del entityfull
-	public String deleteComputerhomeworkreceiverFull(){
-		try {
-		
-			Integer getId = computerhomeworkreceiver.getId();
-			if(getId != null && getId < 0){
-				log.info("删除的id不规范");
-				return "Error";
-			}
-		
-		
-			Computerhomeworkreceiver temp = computerhomeworkreceiverService.selectComputerhomeworkreceiverById(getId);
-			if (temp != null) {
-				computerhomeworkreceiverService.deleteComputerhomeworkreceiver(getId);
-				return SUCCESS;
-			} else {
-				log.info("删除的id不存在");
-				return "Error";
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "Error";
-	}
-	
-	//del entityfull Ajax
-	public String deleteComputerhomeworkreceiverFullAjax( ){
-		
-		log.info(logprefix + "deleteComputercategoryFullAjax");
-             
-		try{
-			String ids[] = computerhomeworkreceiverIdsForDel.split(";");
-			for(int i=0; i < ids.length;i++){
-                                
-				Integer tempDelId = Integer.valueOf(ids[i]);                        
-				log.info(tempDelId);
-                                //检查id
-                                if(tempDelId == null || tempDelId < 0){
-                                        returnJson.setFlag(0);
-                                        returnJson.setReason("删除的id不规范");
-                                        log.info("删除的id不规范");
-                                        JSONObject jo = JSONObject.fromObject(returnJson);
-                                        this.returnStr = jo.toString();
-                                        return SUCCESS;
-                                }        
-                                //del
-                                Computerhomeworkreceiver temp = computerhomeworkreceiverService.selectComputerhomeworkreceiverById(tempDelId);                        
-                                if (temp != null) {                        
-                                        //其他操作                                        
-                                        computerhomeworkreceiverService.deleteComputerhomeworkreceiver(tempDelId);                                        
-                                } else {
-                                        log.info("删除的id不存在");                
-                                        returnJson.setFlag(0);
-                                        returnJson.setReason("删除的id不存在");
-                                        JSONObject jo = JSONObject.fromObject(returnJson);
-                                        this.returnStr = jo.toString();
-                                        return SUCCESS;
-                                }
-                        }
-                        returnJson.setFlag(1);
-//                        returnJson.setReason("删除的id不存在");
-                        JSONObject jo = JSONObject.fromObject(returnJson);
-                        this.returnStr = jo.toString();
-                        return SUCCESS;
-                        
-                } catch (Exception e) {
-                        e.printStackTrace();
-                }
-                
-                returnJson.setFlag(0);
-                returnJson.setReason("删除的内部错误");
-                JSONObject jo = JSONObject.fromObject(returnJson);
-                this.returnStr = jo.toString();
-                return SUCCESS;
-        }
 
 //修改
 	public String updateComputerhomeworkreceiver(){
@@ -556,23 +466,7 @@ public class ComputerhomeworkreceiverAction extends ActionSupport implements Ses
 		this.computerhomeworkreceiverFullList = computerhomeworkreceiverFullList;
 	}
 
-	public String getReturnStr() {
-		return returnStr;
-	}
 
-
-	public void setReturnStr(String returnStr) {
-		this.returnStr = returnStr;
-	}
-	
-	public Page getPage() {
-		return page;
-	}
-
-
-	public void setPage(Page page) {
-		this.page = page;
-	}
 	
 	public int getComputerhomeworkreceiverid() {
 		return computerhomeworkreceiverid;
@@ -581,13 +475,8 @@ public class ComputerhomeworkreceiverAction extends ActionSupport implements Ses
 	public void setComputerhomeworkreceiverid(int computerhomeworkreceiverid) {
 		this.computerhomeworkreceiverid = computerhomeworkreceiverid;
 	}
-		public Integer getPageNo() {
-		return pageNo;
-	}
+	
 
-	public void setPageNo(Integer pageNo) {
-		this.pageNo = pageNo;
-	}
 	
 	
 	public String getComputerhomeworkreceiverIdsForDel() {

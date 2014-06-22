@@ -162,7 +162,7 @@ public class ComputermodelAction extends BaseAction implements ModelDriven<Compu
 			computermodel.setComputercount(0);
 			computermodel.setCreateuserid(uid);
 
-			
+			System.out.println(computermodel.getHourrentprice());
 			Computermodel modelCh = new Computermodel();
 			Computermodel modelEn = new Computermodel();
 
@@ -170,6 +170,7 @@ public class ComputermodelAction extends BaseAction implements ModelDriven<Compu
 			BeanUtils.copyProperties(modelCh, computermodel);	
 			modelCh.setLanguagetype(ComputerConfig.languagechStr);
 			modelCh.setCreateuserid(uid);
+//			modelCh.setHourrentprice()
 			modelCh.setStatus(0);
 			
 			BeanUtils.copyProperties(modelEn, computermodel);
@@ -365,6 +366,7 @@ public class ComputermodelAction extends BaseAction implements ModelDriven<Compu
   				tempCh.setDescription(computermodel.getDescription());
   				tempCh.setComputercategoryid(computermodel.getComputercategoryid());
   				tempCh.setPicpath(computermodel.getPicpath());
+  				tempCh.setHourrentprice(computermodel.getHourrentprice());
 
 //  			修改En  				
   				tempEn.setName(computermodelNameEn);
@@ -372,7 +374,7 @@ public class ComputermodelAction extends BaseAction implements ModelDriven<Compu
 //  				System.out.println(computermodelDescriptionEn);
   				tempEn.setComputercategoryid(computermodel.getComputercategoryid());
   				tempEn.setPicpath(computermodel.getPicpath());
-  				
+  				tempEn.setHourrentprice(computermodel.getHourrentprice());
 				computermodelService.updateComputermodel(tempCh,tempEn);			
 
 				this.returnInfo = "修改型号成功";

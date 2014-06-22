@@ -34,5 +34,7 @@ public List<Computerhomework> selectComputerhomeworkByCondition(String condition
 
 	List<Computerhomework> sel(Integer id);
 
+	List<ComputerhomeworkFull> selFullByList(List<Integer> idList);
+
  
 }

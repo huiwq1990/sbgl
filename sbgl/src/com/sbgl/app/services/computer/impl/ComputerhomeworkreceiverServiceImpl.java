@@ -68,7 +68,11 @@ public class ComputerhomeworkreceiverServiceImpl implements Computerhomeworkrece
 	public int deleteComputerhomeworkreceiver(Computerhomeworkreceiver computerhomeworkreceiver) {
 		return deleteComputerhomeworkreceiver(computerhomeworkreceiver.getId());
 	}
-
+	@Override
+	public int delById(int id){
+		computerhomeworkreceiverDao.delById(id);
+		return 1;
+	}
 	
 	@Override
 	public void updateComputerhomeworkreceiver(Computerhomeworkreceiver computerhomeworkreceiver){
@@ -201,10 +205,10 @@ public class ComputerhomeworkreceiverServiceImpl implements Computerhomeworkrece
 	}
 	
 	
-	@Override
-	public List<Computerhomeworkreceiver> selectComputerhomeworkreceiverByUserAndOrder(int uid,int hasorder) {
-		return computerhomeworkreceiverDao.selectComputerhomeworkreceiverByCondition(" where userid ="+uid+" and hasorder="+hasorder+" ");
-	}
+//	@Override
+//	public List<Computerhomeworkreceiver> selectComputerhomeworkreceiverByUserAndOrder(int uid,int hasorder) {
+//		return computerhomeworkreceiverDao.selectComputerhomeworkreceiverByCondition(" where userid ="+uid+" and hasorder="+hasorder+" ");
+//	}
 
 
 	public BaseDao getBaseDao() {

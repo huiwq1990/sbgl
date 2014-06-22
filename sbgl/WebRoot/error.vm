@@ -2,27 +2,45 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 后台管理</title>
+<title>北京电影学院摄影系 - 系统错误</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
-#parse("include/includePageCompatibility.vm")	
-	
+<!--[if lt IE 10]>
+  <script src="js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
 </head>
 
-<body id="admin">
+<body>
 <header id="header-wrap"><!--header-wrap-->
+  <div id="global-header">
+    <div id="logo"><a class="brand" href="#"><img src="img/logo.png" alt="北京电影学院摄影系"></a></div>
+    <div id="hdc-wrap">
+      <div class="search-wrap">
+        <form class="form-search">
+          <div class="ipt-wrap form-group"><input type="text" class="form-control"></div>
+          <button type="submit" class="btn btn-primary"><i class="icon-search"></i></button>
+        </form>
+      </div>
+    </div>
+  
+  </div>
 
-	#set($currentPageModule="index")
-	#parse("include/includeAdminHeader.vm")
-	
 </header><!--/#header-wrap-->
-
 
 <section id="main-wrap"><!--main-wrap-->
   <!--main-content start-->
@@ -48,13 +66,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
-<script src="${jsDomain}/select2.js"></script>
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
-<script src="${jsDomain}/bootstrap-datepicker.js"></script>
-<script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
-<script src="${jsDomain}/xdate.js"></script>
-<script src="${jsDomain}/computer/computerorder.js"></script>
-
 </body>
 </html>

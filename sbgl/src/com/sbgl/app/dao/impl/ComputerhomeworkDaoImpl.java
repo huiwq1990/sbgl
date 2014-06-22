@@ -2,6 +2,7 @@ package com.sbgl.app.dao.impl;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -38,6 +39,8 @@ public class ComputerhomeworkDaoImpl extends HibernateDaoSupport implements Comp
 		return l;
 	}
 	
+	
+	
 	// 根据条件查询查询实体
 	@Override
 	public List<Computerhomework> selectComputerhomeworkByCondition(String condition) {
@@ -69,7 +72,27 @@ public class ComputerhomeworkDaoImpl extends HibernateDaoSupport implements Comp
 	      }
         }
 	
-	
+    @Override
+    public List<ComputerhomeworkFull> selFullByList(List<Integer> idList) {
+
+    	if(idList.size()<1){
+    		return new ArrayList<ComputerhomeworkFull>();
+    	}
+    	String sql = "";
+    	for(int i : idList){
+    		sql +=i+",";
+    	}
+    	sql = sql.substring(0,sql.length()-1);
+    	
+    	String r = " where a.id in (" +sql+") "  + " order by computerhomeworkcreatetime desc ";
+//    	System.out.println(r);
+    	return selectComputerhomeworkFullByCondition(r);
+    	
+    		
+    	
+    	
+    }
+        
 	//条件查询full
 	@Override
 	public List<ComputerhomeworkFull> selectComputerhomeworkFullByCondition(String condition) {

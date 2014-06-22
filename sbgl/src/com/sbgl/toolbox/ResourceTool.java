@@ -37,6 +37,12 @@ public class ResourceTool {
 	}
 
 	public String str(String key){
+		System.out.println("tool get str:"+key);
+		System.out.println();
+		System.out.println();
+		
+		System.out.println();
+		System.out.println();
 		Locale loc = (request!=null)?request.getLocale():Locale.getDefault();
 		System.out.println("ssssssss" +request.getSession());
 		String languagetype = (String) request.getSession().getAttribute(CommonConfig.sessionLanguagetype);

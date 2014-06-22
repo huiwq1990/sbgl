@@ -29,5 +29,7 @@ public List<Computerorder> selectComputerorderByCondition(String condition);
 
 	Computerorder selectById(int computerorderid);
 
+	List<ComputerorderFull> setUnderwayComputerorder(int uid);
+
  
 }

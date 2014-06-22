@@ -43,43 +43,16 @@ public class IndexAction extends BaseAction{
 	
 	@Resource
 	private ComputerorderService computerorderService;	
-	private Computerorder computerorder = new Computerorder();//实例化一个模型
-	private ComputerorderFull computerorderFull = new ComputerorderFull();//实例化一个模型
-	List<Computerorder> computerorderList = new ArrayList<Computerorder>();
-	List<ComputerorderFull> computerorderFullList = new ArrayList<ComputerorderFull>();
-	private int computerorderid = 0; //entity full 的id属性名称		
-	int computerorderId;//订单的id
-	
-	@Resource
-	private ComputerorderdetailService computerorderdetailService;	
-	private Computerorderdetail computerorderdetail = new Computerorderdetail();//实例化一个模型
-	private ComputerorderdetailFull computerorderdetailFull = new ComputerorderdetailFull();//实例化一个模型	
-	List<Computerorderdetail> computerorderdetailList = new ArrayList<Computerorderdetail>();
-	List<ComputerorderdetailFull> computerorderdetailFullList = new ArrayList<ComputerorderdetailFull>();
-	private Integer computerorderdetailid; //entity full 的id属性名称		
+
 	
 	@Resource
 	private OrderMainService orderMainService;
 	
-	@Resource	
-	private ComputerhomeworkService computerhomeworkService;	
-	private List<ComputerhomeworkFull> newComputerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
-	
-	@Resource
-	private ComputerhomeworkreceiverService computerhomeworkreceiverService;	
-	private List<Computerhomeworkreceiver> computerhomeworkreceiverList = new ArrayList<Computerhomeworkreceiver>();
 	
 	private List<EquipmenborrowFull> equipmenborrowFullList;
-	
-	HashMap<Integer, ArrayList<Computerorderdetail>> computerorderdetailMapByComputermodelId = new HashMap<Integer,ArrayList<Computerorderdetail>>();
-	HashMap<Integer, ArrayList<ComputerorderdetailFull>> computerorderdetailFullMapByComputermodelId = new HashMap<Integer,ArrayList<ComputerorderdetailFull>>();
-	
-	List<ComputerorderFull> computerorderFullUnderwayList = new ArrayList<ComputerorderFull>();//进行中的预约
+
 	
 	List<ComputerorderEntity> computerorderEntityList = new ArrayList<ComputerorderEntity>();//进行中的预约
-	
-	
-	
 	
 //	订单状态
 	private int ComputerorderStatusAduitAll = ComputerorderInfo.ComputerorderStatusAduitAll;
@@ -94,43 +67,31 @@ public class IndexAction extends BaseAction{
 	public String index(){
 		
 //		System.out.println("sss");
-		Integer userid = this.getCurrentUserId();
-
-		if(userid < 0){		
-			actionMsg = "用户未登录";
-			return ComputerConfig.usernotloginreturnstr;
-		}
-		
-
-//		进行中的预约
-		setUnderwayComputerorder(userid);
-		
-		equipmenborrowFullList = orderMainService.findUnderWayOrder(userid);
-		log.info(computerorderFullUnderwayList.size());
-		return SUCCESS;
-	}
-
-//	查询进行中的预约
-	public void setUnderwayComputerorder(int userid){
-//		进行中的预约是：状态未审核的预约
-		String selunderwayordersql = "  where a.createuserid="+userid + " and a.status in("+ComputerorderInfo.ComputerorderStatusAduitWait+","+ComputerorderInfo.ComputerorderStatusAduitReject+") order by a.createtime desc";
-		computerorderFullUnderwayList = computerorderService.selectComputerorderFullByCondition(selunderwayordersql);
-		
-//		根据作业接收者，查询新的课程预约
-		computerhomeworkreceiverList = computerhomeworkreceiverService.selectComputerhomeworkreceiverByUserAndOrder(userid, ComputerConfig.computerhomeworknotorder);
-		String newhomeworksql="";
-		for(int i=0; i<computerhomeworkreceiverList.size();i++){
-			if( (computerhomeworkreceiverList.get(i).getHasorder()==null) || (computerhomeworkreceiverList.get(i).getHasorder() != ComputerConfig.computerhomeworkhasorder)){
-					newhomeworksql += computerhomeworkreceiverList.get(i).getComputerhomeworkid()+",";
+			
+		try{
+			Integer userid = this.getCurrentUserId();
+	
+			if(userid < 0){		
+				actionMsg = "用户未登录";
+				return ComputerConfig.usernotloginreturnstr;
 			}
+			
+	
+	//		进行中的预约
+			computerorderEntityList = computerorderService.getUnderwayComputerorder(userid);
+			
+			equipmenborrowFullList = orderMainService.findUnderWayOrder(userid);
+			
+			return SUCCESS;
+		}catch(Exception e){
+			e.printStackTrace();
 		}
-		if(newhomeworksql.length() > 1){
-			newhomeworksql = newhomeworksql.substring(0,newhomeworksql.length()-1);
-			newhomeworksql = " where a.id in (" +newhomeworksql+") "  + " order by computerhomeworkcreatetime desc ";
-			newComputerhomeworkFullList = computerhomeworkService.selectComputerhomeworkFullByCondition(newhomeworksql);
-		}
-		computerorderEntityList = ComputerorderActionUtil.setUnderwayComputerorder(computerorderFullUnderwayList, newComputerhomeworkFullList);
+		
+		
+		return "404";
+		
 	}
+
 
 	public ComputerorderService getComputerorderService() {
 		return computerorderService;
@@ -142,161 +103,13 @@ public class IndexAction extends BaseAction{
 	}
 
 
-	public Computerorder getComputerorder() {
-		return computerorder;
+	public OrderMainService getOrderMainService() {
+		return orderMainService;
 	}
 
 
-	public void setComputerorder(Computerorder computerorder) {
-		this.computerorder = computerorder;
-	}
-
-
-	public ComputerorderFull getComputerorderFull() {
-		return computerorderFull;
-	}
-
-
-	public void setComputerorderFull(ComputerorderFull computerorderFull) {
-		this.computerorderFull = computerorderFull;
-	}
-
-
-	public List<Computerorder> getComputerorderList() {
-		return computerorderList;
-	}
-
-
-	public void setComputerorderList(List<Computerorder> computerorderList) {
-		this.computerorderList = computerorderList;
-	}
-
-
-	public List<ComputerorderFull> getComputerorderFullList() {
-		return computerorderFullList;
-	}
-
-
-	public void setComputerorderFullList(
-			List<ComputerorderFull> computerorderFullList) {
-		this.computerorderFullList = computerorderFullList;
-	}
-
-
-	public int getComputerorderid() {
-		return computerorderid;
-	}
-
-
-	public void setComputerorderid(int computerorderid) {
-		this.computerorderid = computerorderid;
-	}
-
-
-	public int getComputerorderId() {
-		return computerorderId;
-	}
-
-
-	public void setComputerorderId(int computerorderId) {
-		this.computerorderId = computerorderId;
-	}
-
-
-	public ComputerorderdetailService getComputerorderdetailService() {
-		return computerorderdetailService;
-	}
-
-
-	public void setComputerorderdetailService(
-			ComputerorderdetailService computerorderdetailService) {
-		this.computerorderdetailService = computerorderdetailService;
-	}
-
-
-	public Computerorderdetail getComputerorderdetail() {
-		return computerorderdetail;
-	}
-
-
-	public void setComputerorderdetail(Computerorderdetail computerorderdetail) {
-		this.computerorderdetail = computerorderdetail;
-	}
-
-
-	public ComputerorderdetailFull getComputerorderdetailFull() {
-		return computerorderdetailFull;
-	}
-
-
-	public void setComputerorderdetailFull(
-			ComputerorderdetailFull computerorderdetailFull) {
-		this.computerorderdetailFull = computerorderdetailFull;
-	}
-
-
-	public List<Computerorderdetail> getComputerorderdetailList() {
-		return computerorderdetailList;
-	}
-
-
-	public void setComputerorderdetailList(
-			List<Computerorderdetail> computerorderdetailList) {
-		this.computerorderdetailList = computerorderdetailList;
-	}
-
-
-	public List<ComputerorderdetailFull> getComputerorderdetailFullList() {
-		return computerorderdetailFullList;
-	}
-
-
-	public void setComputerorderdetailFullList(
-			List<ComputerorderdetailFull> computerorderdetailFullList) {
-		this.computerorderdetailFullList = computerorderdetailFullList;
-	}
-
-
-	public Integer getComputerorderdetailid() {
-		return computerorderdetailid;
-	}
-
-
-	public void setComputerorderdetailid(Integer computerorderdetailid) {
-		this.computerorderdetailid = computerorderdetailid;
-	}
-
-
-	public HashMap<Integer, ArrayList<Computerorderdetail>> getComputerorderdetailMapByComputermodelId() {
-		return computerorderdetailMapByComputermodelId;
-	}
-
-
-	public void setComputerorderdetailMapByComputermodelId(
-			HashMap<Integer, ArrayList<Computerorderdetail>> computerorderdetailMapByComputermodelId) {
-		this.computerorderdetailMapByComputermodelId = computerorderdetailMapByComputermodelId;
-	}
-
-
-	public HashMap<Integer, ArrayList<ComputerorderdetailFull>> getComputerorderdetailFullMapByComputermodelId() {
-		return computerorderdetailFullMapByComputermodelId;
-	}
-
-
-	public void setComputerorderdetailFullMapByComputermodelId(
-			HashMap<Integer, ArrayList<ComputerorderdetailFull>> computerorderdetailFullMapByComputermodelId) {
-		this.computerorderdetailFullMapByComputermodelId = computerorderdetailFullMapByComputermodelId;
-	}
-
-
-	public List<ComputerorderFull> getComputerorderFullUnderwayList() {
-		return computerorderFullUnderwayList;
-	}
-
-
-	public void setComputerorderFullUnderwayList(
-			List<ComputerorderFull> computerorderFullUnderwayList) {
-		this.computerorderFullUnderwayList = computerorderFullUnderwayList;
+	public void setOrderMainService(OrderMainService orderMainService) {
+		this.orderMainService = orderMainService;
 	}
 
 
@@ -310,120 +123,92 @@ public class IndexAction extends BaseAction{
 		this.equipmenborrowFullList = equipmenborrowFullList;
 	}
 
-	public OrderMainService getOrderMainService() {
-		return orderMainService;
-	}
-
-	public void setOrderMainService(OrderMainService orderMainService) {
-		this.orderMainService = orderMainService;
-	}
-
-	public ComputerhomeworkService getComputerhomeworkService() {
-		return computerhomeworkService;
-	}
-
-	public void setComputerhomeworkService(
-			ComputerhomeworkService computerhomeworkService) {
-		this.computerhomeworkService = computerhomeworkService;
-	}
-
-	public List<ComputerhomeworkFull> getNewComputerhomeworkFullList() {
-		return newComputerhomeworkFullList;
-	}
-
-	public void setNewComputerhomeworkFullList(
-			List<ComputerhomeworkFull> newComputerhomeworkFullList) {
-		this.newComputerhomeworkFullList = newComputerhomeworkFullList;
-	}
-
-	public ComputerhomeworkreceiverService getComputerhomeworkreceiverService() {
-		return computerhomeworkreceiverService;
-	}
-
-	public void setComputerhomeworkreceiverService(
-			ComputerhomeworkreceiverService computerhomeworkreceiverService) {
-		this.computerhomeworkreceiverService = computerhomeworkreceiverService;
-	}
-
-	public List<Computerhomeworkreceiver> getComputerhomeworkreceiverList() {
-		return computerhomeworkreceiverList;
-	}
-
-	public void setComputerhomeworkreceiverList(
-			List<Computerhomeworkreceiver> computerhomeworkreceiverList) {
-		this.computerhomeworkreceiverList = computerhomeworkreceiverList;
-	}
-
-	public static Log getLog() {
-		return log;
-	}
 
 	public List<ComputerorderEntity> getComputerorderEntityList() {
 		return computerorderEntityList;
 	}
+
 
 	public void setComputerorderEntityList(
 			List<ComputerorderEntity> computerorderEntityList) {
 		this.computerorderEntityList = computerorderEntityList;
 	}
 
+
 	public int getComputerorderStatusAduitAll() {
 		return ComputerorderStatusAduitAll;
 	}
+
 
 	public void setComputerorderStatusAduitAll(int computerorderStatusAduitAll) {
 		ComputerorderStatusAduitAll = computerorderStatusAduitAll;
 	}
 
+
 	public int getComputerorderStatusAduitPass() {
 		return ComputerorderStatusAduitPass;
 	}
+
 
 	public void setComputerorderStatusAduitPass(int computerorderStatusAduitPass) {
 		ComputerorderStatusAduitPass = computerorderStatusAduitPass;
 	}
 
+
 	public int getComputerorderStatusAduitReject() {
 		return ComputerorderStatusAduitReject;
 	}
+
 
 	public void setComputerorderStatusAduitReject(int computerorderStatusAduitReject) {
 		ComputerorderStatusAduitReject = computerorderStatusAduitReject;
 	}
 
+
 	public int getComputerorderStatusAduitDel() {
 		return ComputerorderStatusAduitDel;
 	}
+
 
 	public void setComputerorderStatusAduitDel(int computerorderStatusAduitDel) {
 		ComputerorderStatusAduitDel = computerorderStatusAduitDel;
 	}
 
+
 	public int getComputerorderStatusAduitWait() {
 		return ComputerorderStatusAduitWait;
 	}
+
 
 	public void setComputerorderStatusAduitWait(int computerorderStatusAduitWait) {
 		ComputerorderStatusAduitWait = computerorderStatusAduitWait;
 	}
 
+
 	public int getIndividualOrder() {
 		return IndividualOrder;
 	}
+
 
 	public void setIndividualOrder(int individualOrder) {
 		IndividualOrder = individualOrder;
 	}
 
+
 	public int getClassOrder() {
 		return ClassOrder;
 	}
 
+
 	public void setClassOrder(int classOrder) {
 		ClassOrder = classOrder;
 	}
-	
-	
-	
+
+
+	public static Log getLog() {
+		return log;
+	}
+
+
 	
 }

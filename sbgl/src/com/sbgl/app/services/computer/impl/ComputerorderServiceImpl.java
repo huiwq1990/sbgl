@@ -7,6 +7,7 @@ import java.util.List;
 
 
 import com.sbgl.app.entity.Borrowperiod;
+import com.sbgl.app.entity.ComputerhomeworkFull;
 import com.sbgl.app.entity.Computerhomeworkreceiver;
 import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.entity.ComputermodelFull;
@@ -17,12 +18,14 @@ import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.computer.ComputerorderActionUtil;
+import com.sbgl.app.actions.computer.ComputerorderEntity;
 import com.sbgl.app.actions.computer.ManageComputerorder;
 import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.actions.util.SnActionUtil;
 import com.sbgl.app.common.computer.BorrowperiodUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderInfo;
+import com.sbgl.app.dao.ComputerhomeworkDao;
 import com.sbgl.app.dao.ComputerhomeworkreceiverDao;
 import com.sbgl.app.dao.ComputermodelDao;
 import com.sbgl.app.dao.ComputerorderDao;
@@ -61,7 +64,8 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 	
 	@Resource
 	private ComputerhomeworkreceiverDao computerhomeworkreceiverDao;
-	
+	@Resource
+	private ComputerhomeworkDao computerhomeworkDao;
 
 	@Resource
 	private CourseconfigDao courseconfigDao;
@@ -146,9 +150,9 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 			Computerhomeworkreceiver temp = computerhomeworkreceiverList.get(0);
 			log.info(ordernumcount + "  "+temp.getLeftordertime());
 			if(ordernumcount < temp.getLeftordertime()){
-				temp.setHavefinish(0);
+				temp.setHavefinish(ComputerConfig.computerhomeworkordernotfinish);
 			}else if(ordernumcount == temp.getLeftordertime()){
-				temp.setHavefinish(1);
+				temp.setHavefinish(ComputerConfig.computerhomeworkorderfinish);
 			}else{
 				 throw new RuntimeException("预约数量超出允许值");  
 			}
@@ -240,6 +244,31 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 		return ComputerorderActionUtil.checkVaildComputerorderForm(availableBorrowModelMap, haveOrderedValidComputerorderdetailList, newOrderComputerorderdetailList, currentDate);
 	}
 
+	/**
+	 *进行中的预约，作业通知及为完成的预约
+	 */
+	@Override
+	public List<ComputerorderEntity> getUnderwayComputerorder(int userid){
+//		进行中的预约是：状态未审核的预约、驳回的
+		List<ComputerorderFull> computerorderFullUnderwayList = computerorderDao.setUnderwayComputerorder(userid);
+		
+//		根据作业接收者，查询新的课程预约
+		List<Computerhomeworkreceiver> computerhomeworkreceiverList = computerhomeworkreceiverDao.selByFinishStatus(userid, ComputerConfig.computerhomeworkordernotfinish);
+		if(computerhomeworkreceiverList == null){
+			computerhomeworkreceiverList = new ArrayList<Computerhomeworkreceiver>();
+		}
+		List<Integer> idList = new ArrayList<Integer>();
+		for(int i=0; i<computerhomeworkreceiverList.size();i++){
+//			newhomeworksql += computerhomeworkreceiverList.get(i).getComputerhomeworkid()+",";
+			idList.add(computerhomeworkreceiverList.get(i).getComputerhomeworkid());
+		}
+		System.out.println("新的通知："+idList.size());
+		List<ComputerhomeworkFull> newComputerhomeworkFullList = computerhomeworkDao.selFullByList(idList);
+
+		List<ComputerorderEntity> computerorderEntityList = ComputerorderActionUtil.setUnderwayComputerorder(computerorderFullUnderwayList, newComputerhomeworkFullList);
+		return computerorderEntityList;
+	}
+	
 //  根据id删除实体	
 	@Override
 	public int deleteComputerorder(Integer computerorderId){
