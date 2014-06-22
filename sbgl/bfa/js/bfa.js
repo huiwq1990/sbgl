@@ -290,7 +290,6 @@
 							event.stopImmediatePropagation();
 						}							
 					});
-
 					if ($("#rent-list .row").length > 0) {
 						$("#rent-list .no-add").hide("fast", function() {
 							reWizardHeight();
@@ -304,17 +303,24 @@
 					$("#rent-list > .post-equip-group").each(function(){
 						if(($(this).data("name")) == groupName) {		// 组存在
 							$(this).find(".group-body > #" + id).remove();
-							event.stopImmediatePropagation();
 						}
 					});
 					$("#rent-list > .post-equip-group").each(function(){
 						if($(this).find(".row").length <= 0) {			// 如果组内无预约，移除该组
 							$(this).remove();
-							event.stopImmediatePropagation();
 						};
 					});
 					$(this).find(".icon-ok").remove();		// 移除选中标识
 
+					if ($("#rent-list .row").length > 0) {
+						$("#rent-list .no-add").hide("fast", function() {
+							reWizardHeight();
+						});
+					} else {
+						$("#rent-list .no-add").show("fast", function() {
+							reWizardHeight();	
+						});
+					}
 				}
 			});	
 			$(".post-sidebar-warp").on("click", "#rent-list .close", function() {
