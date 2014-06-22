@@ -1,6 +1,5 @@
 package com.sbgl.app.services.equipment.impl;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -79,6 +78,7 @@ public class EquipServiceImpl implements EquipService {
 		storeEquip.setEquipmentdetail( equip.getEquipmentdetail() );
 		storeEquip.setCategory( equip.getCategory() );
 		storeEquip.setRemark( equip.getRemark() );
+		storeEquip.setRent( equip.getRent() );
 		
 		try {
 			baseDao.updateEntity( storeEquip );
@@ -279,7 +279,6 @@ public class EquipServiceImpl implements EquipService {
 		storeEquipmentdetail.setSysremark( equipmentdetail.getSysremark() );
 		storeEquipmentdetail.setUsermark( equipmentdetail.getUsermark() );
 		storeEquipmentdetail.setClassificationid( equipmentdetail.getClassificationid() );
-		storeEquipmentdetail.setRent( equipmentdetail.getRent() );
 		//判断当前添加器材的型号，更新型号表相关统计字段
 		if(deleteFlag) {
 			Equipment e = null;

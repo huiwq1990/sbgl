@@ -46,5 +46,6 @@ public interface OrderAdminService {
 	public List<Clazz>  findAllClazz();
 	//发送规则
 	public boolean sendRule(String inputSendTo,String inputEquipRule,String inputMsgTitle,String inputContent,String inputDataRange,String inputDataRange2,Loginuser loginuser);
-	
+	//根据日期获得当天所有订单
+	public List<EquipmenborrowFull>  getEquipmenborrowByDate(String date);
 }

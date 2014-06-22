@@ -604,6 +604,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				totalModelPages = String.valueOf( result.getTotalResultNum() / 10 );
 			}
 			
+			String[] rentUnit = null;
+			
 			for (Equipment equipment : (List<Equipment>)result.getResultList()) {
 				EquipModelCourse emc = new EquipModelCourse();
 				emc.setId( String.valueOf( equipment.getEquipmentid() ) );
@@ -616,6 +618,11 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				emc.setComId( String.valueOf( equipment.getComid() ) );
 				emc.setImgName( equipment.getImgname() );
 				emc.setBranId( String.valueOf( equipment.getBrandid() ) );
+				if( equipment.getRent() != null && !"".equals(equipment.getRent()) ) {
+					rentUnit = equipment.getRent().split("/");
+					emc.setRent( rentUnit[0] );
+					emc.setRentUnit( rentUnit[1] );
+				}
 				
 				allModelCourse.add( emc );
 			}
@@ -1237,11 +1244,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			ec.setSupplyer( equipdetail.getSupplyer() );
 			ec.setUseManageDept( equipdetail.getUsemanagedept() );
 			ec.setWorth( String.valueOf( equipdetail.getWorth() ) );
-			if( equipdetail.getRent() != null && !"".equals(equipdetail.getRent()) ) {
-				rentUnit = equipdetail.getRent().split("/");
-				ec.setRent( rentUnit[0] );
-				ec.setRentUnit( rentUnit[1] );
-			}
 			
 			equipDetailCourse.add( ec );
 		}

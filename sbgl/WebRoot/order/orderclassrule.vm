@@ -115,6 +115,7 @@
         <div class="list-group">
 			<a href="${webbaseurl}/orderAdmin.action" class="list-group-item">预约管理</a>
           <a href="${webbaseurl}/orderclassrule.action" class="list-group-item active">课程预约规则</a>
+          <a href="${webbaseurl}/orderCalendarShow.action" class="list-group-item">器材管理-日历模式</a>
 		  
           <!--<a href="设备预约-新建预约.html" class="list-group-item">新建预约</a>
           <a href="设备预约-设置.html" class="list-group-item">设置</a>-->

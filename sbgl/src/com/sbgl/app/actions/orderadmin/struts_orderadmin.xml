@@ -39,6 +39,10 @@
 	 	<action name="equClassSelContent" class="OrderAdminAction" method="equClassSend">
         	<result name="success">/order/equClassSelContent.vm</result>
         </action>
+        <!-- 器材管理-日历模式 -->
+	 	<action name="orderCalendarShow" class="OrderAdminAction" method="orderCalendarShow">
+        	<result name="success">/order/orderCalendarShow.vm</result>
+        </action>          
     </package>
     <package name="OrderAdminAjax" extends="json-default">	
     	<!-- 创建规则 -->

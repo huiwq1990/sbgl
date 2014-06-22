@@ -1,6 +1,7 @@
 package com.sbgl.app.actions.orderadmin;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +21,12 @@ import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.actions.order.OrderMainAction;
 import com.sbgl.app.actions.teach.TeachActionUtil;
+import com.sbgl.app.common.computer.BorrowperiodUtil;
+import com.sbgl.app.entity.Borrowperiod;
 import com.sbgl.app.entity.Clazz;
+import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.entity.CourseFull;
+import com.sbgl.app.entity.Courseconfig;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.entity.Ordercourserule;
@@ -31,7 +36,9 @@ import com.sbgl.app.services.equipment.EquipGroupService;
 import com.sbgl.app.services.order.OrderMainService;
 import com.sbgl.app.services.orderadmin.OrderAdminService;
 import com.sbgl.app.services.teach.CourseService;
+import com.sbgl.app.services.teach.CourseconfigService;
 import com.sbgl.app.services.user.GroupService;
+import com.sbgl.util.DateUtil;
 import com.sbgl.util.Page;
 
 
@@ -49,6 +56,9 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 	
 	@Resource
 	private EquipGroupService equipGroupService;
+	
+	@Resource
+	private CourseconfigService courseconfigService;	
 	
 	
 	private String dealtype;  //0:全部，1：待审核，2：待出库，3：已出库,4：已完成
@@ -82,6 +92,21 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 
 	private HashMap<Integer, ArrayList<Ordercourserule>> courseruleMap;
 	
+
+	private Courseconfig courseconfig = new Courseconfig();
+	private Courseconfig currentCourseconfig = new Courseconfig();
+	List<Courseconfig> courseconfigList = new ArrayList<Courseconfig>();
+	
+	
+	private int selsemesterweek;
+	private int selsemesterid;
+	private int totalweek;
+
+	private List<String> showDate = new ArrayList<String>();
+	private List<String> showDayList = new ArrayList<String>();
+	
+
+	private Map<Integer,ArrayList<EquipmenborrowFull>> orderEquipmenborrowMap;
 	
 	private String inputSendTo;
 	private String inputEquipRule;
@@ -371,6 +396,74 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 			
 		return SUCCESS;
 	}
+	
+	/**
+	 * 日历模式浏览预约
+	 * @return
+	 */
+	public String orderCalendarShow(){
+		try{
+		
+			
+			Date currentDate = DateUtil.currentDate();
+			int currentPeriod =  BorrowperiodUtil.getBorrowTimePeriod(currentDate);
+			Date currentDay = DateUtil.getDateDayDate(currentDate);
+			courseconfigList = courseconfigService.selAll();
+			
+			Date semesterStartDate ;
+			Date selStartDate;
+			Date selEndDate;
+			if(selsemesterid <= 0 || selsemesterweek <=0){//设置默认为当前学期
+				currentCourseconfig = courseconfigService.getCurrentCourseconfig();
+				if(currentCourseconfig == null){
+					return "notsetcurrentCourseconfig";
+				}
+				
+			      
+				selStartDate = DateUtil.getDateDayDate(DateUtil.getChineseWeekMondayCurrent());
+				selEndDate =  DateUtil.getDateDayDate(DateUtil.addDay(selStartDate,6));
+				selsemesterweek = DateUtil.daysBetween(currentCourseconfig.getFirstweekfirstday(), selStartDate)/7+1;
+			}else{
+				currentCourseconfig = courseconfigService.selectCourseconfigById(selsemesterid);
+				if(currentCourseconfig == null){
+					return "notsetcurrentCourseconfig";
+				}
+				selStartDate = DateUtil.getDateDayDate(DateUtil.addDay(currentCourseconfig.getFirstweekfirstday(), 7*(selsemesterweek-1)));
+				selEndDate =  DateUtil.getDateDayDate(DateUtil.addDay(selStartDate,6));
+				selsemesterweek = DateUtil.daysBetween(currentCourseconfig.getFirstweekfirstday(), selStartDate)/7+1;
+			}
+
+			orderEquipmenborrowMap = new HashMap<Integer, ArrayList<EquipmenborrowFull>>();
+			for(int i=0; i < 7; i++){
+				String date = DateUtil.dateFormat(DateUtil.addDay(selStartDate,i), "yyyy-MM-dd");
+				
+				List<EquipmenborrowFull> list = orderAdminService.getEquipmenborrowByDate(date);
+				
+				orderEquipmenborrowMap.put((i+1), new ArrayList<EquipmenborrowFull>());
+				if(list!=null&&list.size()>0){
+					for(EquipmenborrowFull equipmenborrowFull :list){		
+						orderEquipmenborrowMap.get((i+1)).add(equipmenborrowFull);
+					}
+				}
+				showDate.add(date);
+				showDayList.add(DateUtil.getWeekOfDate(DateUtil.addDay(selStartDate,i)));
+			}
+	
+
+			//默认显示周数为设置值，如果有设置下一学期第一天，这计算处理
+			totalweek = currentCourseconfig.getWeeknum();
+			if(currentCourseconfig.getNextsemesterdaybefore()!=null){
+				totalweek = DateUtil.daysBetween(currentCourseconfig.getFirstweekfirstday(), currentCourseconfig.getNextsemesterdaybefore())/7+1;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
+		return SUCCESS;
+		
+	}
 
 	public List<EquipmenborrowFull> getEquipmenborrowFullList() {
 		return equipmenborrowFullList;
@@ -650,5 +743,104 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 			List<EquipmentgroupFull> equipmentgroupFullList) {
 		this.equipmentgroupFullList = equipmentgroupFullList;
 	}
+
+
+	public Courseconfig getCourseconfig() {
+		return courseconfig;
+	}
+
+
+	public void setCourseconfig(Courseconfig courseconfig) {
+		this.courseconfig = courseconfig;
+	}
+
+
+	public Courseconfig getCurrentCourseconfig() {
+		return currentCourseconfig;
+	}
+
+
+	public void setCurrentCourseconfig(Courseconfig currentCourseconfig) {
+		this.currentCourseconfig = currentCourseconfig;
+	}
+
+
+	public List<Courseconfig> getCourseconfigList() {
+		return courseconfigList;
+	}
+
+
+	public void setCourseconfigList(List<Courseconfig> courseconfigList) {
+		this.courseconfigList = courseconfigList;
+	}
+
+
+	public int getSelsemesterweek() {
+		return selsemesterweek;
+	}
+
+
+	public void setSelsemesterweek(int selsemesterweek) {
+		this.selsemesterweek = selsemesterweek;
+	}
+
+
+	public int getSelsemesterid() {
+		return selsemesterid;
+	}
+
+
+	public void setSelsemesterid(int selsemesterid) {
+		this.selsemesterid = selsemesterid;
+	}
+
+
+	public int getTotalweek() {
+		return totalweek;
+	}
+
+
+	public void setTotalweek(int totalweek) {
+		this.totalweek = totalweek;
+	}
+
+
+	public List<String> getShowDate() {
+		return showDate;
+	}
+
+
+	public void setShowDate(List<String> showDate) {
+		this.showDate = showDate;
+	}
+
+
+	public List<String> getShowDayList() {
+		return showDayList;
+	}
+
+
+	public void setShowDayList(List<String> showDayList) {
+		this.showDayList = showDayList;
+	}
+
+
+	public Map<Integer, ArrayList<EquipmenborrowFull>> getOrderEquipmenborrowMap() {
+		return orderEquipmenborrowMap;
+	}
+
+
+	public void setOrderEquipmenborrowMap(
+			Map<Integer, ArrayList<EquipmenborrowFull>> orderEquipmenborrowMap) {
+		this.orderEquipmenborrowMap = orderEquipmenborrowMap;
+	}
+
+
+	
+	
+
+	
+
+	
 	
 }

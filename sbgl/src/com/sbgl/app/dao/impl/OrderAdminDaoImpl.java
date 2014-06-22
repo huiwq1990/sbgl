@@ -71,4 +71,23 @@ public class OrderAdminDaoImpl extends HibernateDaoSupport implements OrderAdmin
 		
 	}
 
+	@Override
+	public List<EquipmenborrowFull> getEquipmenborrowByDate(String date) {
+		// TODO Auto-generated method stub
+		String sql2 = " select title,borrowid,status from equipmenborrow where date_format(borrowtime,'%Y-%m-%d') <='"+date+"' and  date_format(returntime,'%Y-%m-%d') >= '"+date+"'";
+		final String sql = sql2;
+		try {
+			Query query =  this.getCurrentSession().createSQLQuery(sql);
+			query.setResultTransformer(new EscColumnToBean(EquipmenborrowFull.class));
+			List<EquipmenborrowFull> list =query.list();
+			if(list!=null&&!list.isEmpty()){
+				return list;  
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	
+		return null;
+	}
+
 }

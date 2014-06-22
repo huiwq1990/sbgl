@@ -94,18 +94,6 @@
                     </div>
                   </div>
 				  <div class="form-group">
-                    <label for="inputEquipId" class="col-lg-2 control-label">租金</label>
-                    <div class="col-lg-4" style="width: 26.45%;">
-                      <input type="text" class="form-control" id="rent" placeholder="格式：0.00">
-                    </div>
-					<div class="col-lg-4" style="width: 17%;">
-                      <select class="select2" id="rentUnit">
-						<option value="0" data-foo="fa">每天</option>
-						<option value="1" data-foo="fa">每个</option>
-                      </select>
-                    </div>
-                  </div>
-				  <div class="form-group">
                     <label for="inputEquipId" class="col-lg-2 control-label">使用/管理部门</label>
                     <div class="col-lg-4">
                       <input type="text" class="form-control" id="useManageDept" placeholder="使用与管理部门">
@@ -267,11 +255,6 @@
 			alert("金额输入格式错误！");
 			return;
 		}
-		var ret4 = regex2.test(rent);
-		if(ret4 == false && rent != "") {
-			alert("租金输入格式错误！");
-			return;
-		}
 		/*
 		console.log("detailNum " + detailNum);
 		console.log("state" + state);
@@ -307,8 +290,7 @@
 			"equipmentdetail.storageposition": storagePosition,
 			"equipmentdetail.storenumber": storenumber,
 			"equipmentdetail.classificationid": ci,
-			"equipmentdetail.assetnumber": assetNumber,
-			"equipmentdetail.rent": rent + "/" + rentUnit
+			"equipmentdetail.assetnumber": assetNumber
 		}
 	
 		jQuery.ajax({  
