@@ -114,7 +114,8 @@
                 <li><a href="#">单反</a></li>
               </ul>
             </div>
-            <div class="row">      
+            <div class="row">
+      
                   <div class="w-200">                  
                       <div class="thumbnail">
                         <img width="168px" height="128px" class="e-pic" src="img/170x140.jpg">
@@ -278,7 +279,8 @@
                         </div>                            
                         <a class="btn btn-white add-btn" data-type="addEquip" data-id="123432" data-name="Arri Alexa Plus" data-num="5" href="javascript:;">添 加</a>
                       </div>                  
-                  </div>                  
+                  </div>
+                  
             </div>
           </div>
         </div>
@@ -287,80 +289,79 @@
 
       <!--rent start-->
       <div id="rent-bar">  
-        <div class="wizard thumbnail">
-          <ul class="steps unstyled">
-            <li data-target="#step1" class="active"><h3>欢迎</h3></li>
-            <li data-target="#step2"><h3>预约时间 <small>打算哪天预约？</small></h3></li>
-          </ul>
-          <div class="step-content">
-            <div class="step-pane active" id="step1">
-              <p>欢迎使用北京电影学院摄影系在线设备预约系统！</p>
-              <p>您正在进行的是<strong>个人预约</strong>。</p>
-              <p>您正在进行的是<strong>课程预约</strong>，以下是<strong>XXX</strong>课程作业的相关要求：</p>
-              <div class="media">
-                <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
-                  <img src="img/photo.jpg" width="46" height="46" class="img-rounded">
-                </a>
-                <div class="media-body">
-                  <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">XXX</a></h5><span>XX月XX日</span></div>
-                  <div class="media-content">
-                    <h5>数字摄影技术第11周设备申请</h5>
-                    <p>数字摄影技术第11周设备申请具体要求如下：</p>
-                    <ol>
-                      <li>...</li>
-                    </ol>
-                  </div>
-                </div>
+              <div class="wizard thumbnail">
+
+
+
+<ul class="steps unstyled">
+		<li data-target="#step1" class="active"><h3>欢迎</h3></li>
+		<li data-target="#step2"><h3>预约时间 <small>打算哪天预约？</small></h3></li>
+		<li data-target="#step3"><h3>选择设备</h3></li>
+	</ul>
+<div class="step-content">
+	<div class="step-pane active" id="step1">
+      <p>欢迎使用北京电影学院摄影系在线设备预约系统！</p>
+      <p>您正在进行的是<strong>个人预约</strong>。</p>
+      <p>您正在进行的是<strong>课程预约</strong>，以下是<strong>XXX</strong>课程作业的相关要求：</p>
+      <div class="media">
+        <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
+          <img src="img/photo.jpg" width="46" height="46" class="img-rounded">
+        </a>
+        <div class="media-body">
+          <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">XXX</a></h5><span>XX月XX日</span></div>
+          <div class="media-content">
+            <h5>数字摄影技术第11周设备申请</h5>
+            <p>数字摄影技术第11周设备申请具体要求如下：</p>
+            <ol>
+              <li>...</li>
+              <li>...</li>
+              <li>...</li>
+              <li>...</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      
+    </div>
+	<div class="step-pane" id="step2">
+    
+        <div class="rent-time">
+          <div class="row">
+		  
+		    <div class="input-daterange">
+		      <div class="col-xs-5">
+                <input type="text" class="form-control" name="start" placeholder="起始日期">
+	          </div>
+	          <div class="col-xs-2">
+                <span class="add-on">至</span>
+	          </div>
+	          <div class="col-xs-5">
+                <input type="text" class="form-control" name="end" placeholder="归还日期">
+	          </div>
+            </div>
+
+          </div>
+        </div>
+
+    </div>
+    
+	<div class="step-pane" id="step3">
+        <div id="rent-list">
+          <p class="no-add">尚未添加任何设备。</p>
+        </div>
+    
+    </div>
+
+</div>
+
+<div class="form-actions actions">  
+		<button type="button" class="btn btn-white btn-prev" disabled="disabled">上一步</button>
+		<button type="button" class="btn btn-primary btn-next" data-last="提交预约">下一步</button>
+</div>
+
+
               </div>
-            </div>
-            <div class="step-pane" id="step2">              
-              <div class="rent-time">
-                <div class="row">                  
-                  <div class="input-daterange">
-                    <div class="col-xs-5">
-                      <input type="text" class="form-control checkin" name="start" placeholder="起始日期">
-                    </div>
-                    <div class="col-xs-2">
-                      <span class="add-on">至</span>
-                    </div>
-                    <div class="col-xs-5">
-                      <input type="text" class="form-control checkout" name="end" placeholder="归还日期">
-                    </div>
-                  </div>        
-                </div>
-              </div>          
-            </div>          
-          </div>
-          <div class="form-actions actions">  
-            <button type="button" class="btn btn-white btn-prev" disabled="disabled">上一步</button>
-            <button type="button" class="btn btn-primary btn-next" data-last="开始预约">下一步</button>
-          </div>
-        </div>
-        <div class="rent-time panel panel-default">
-          <div class="row panel-body input-daterange">  
-            <div class="col-xs-4">
-              <input type="text" class="form-control checkin1" name="start" value placeholder="起始日期">
-            </div>
-            <div class="col-xs-1 col-no-padding">
-              <span class="add-on">至</span>
-            </div>
-            <div class="col-xs-4">
-              <input type="text" class="form-control checkout1" name="end" value placeholder="归还日期">
-            </div>
-            <div class="col-xs-3 col-no-padding">
-              <button type="button" class="btn btn-white">重新搜索</button>
-            </div>
-          </div>
-        </div>
-        <div id="rent-list" class="panel panel-default">
-          <div class="panel-heading"><h3>预约单 <small>请选择你所需要的设备。</small></h3></div>
-          <div class="panel-body">
-            <p class="no-add">尚未添加任何设备。</p>
-          </div>
-          <div class="panel-footer text-right">
-            <button type="button" class="btn btn-primary">提 交</button>
-          </div>
-        </div>
       </div>      
       <!--rent start-->
   </div>
@@ -427,23 +428,13 @@
 <script src="js/jquery.noty.js"></script>
 <script>
 
-
+$('.input-daterange').datepicker({
+	language: 'zh-CN',
+	format: 'yyyy-mm-dd',
+	todayHighlight: true,
+});
 
 $(function () {
-	var nowTemp = new Date();	
-	var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-	$('.input-daterange').datepicker({
-		language: 'zh-CN',
-		format: 'yyyy-mm-dd',
-		todayHighlight: true,
-		autoclose: true,
-		startDate: now
-	});	 
-	var checkin = $('.checkin .checkin1').datepicker()
-		.on('changeDate', function(ev) {
-	  		$('.checkout')[0].focus();
-	});
-	
 	
 	Highcharts.setOptions({
 		lang: {

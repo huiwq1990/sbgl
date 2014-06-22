@@ -150,7 +150,7 @@
 					$(".modal-backdrop").remove();
 					$("#rent-bar .wizard").remove();
 					$("#rent-bar > .rent-time").show();
-					$("#rent-bar > #rent-list-wrap").show();
+					$("#rent-bar > #rent-list").show();
 				}
 			});
 			/* 添加设备按钮 */
@@ -167,7 +167,7 @@
 					eSelectNum = $(this).parent().find("select").select2("val");
 				}
 				var html = 
-					'<div class="row" id="' + eId + '">' + 
+					'<div class="row" id=' + eId + '>' + 
 						'<div class="item-name">' + eName + '</div>' +
 						'<div class="item-ctrl spinner input-group">' +
 							'<span class="input-group-btn">' + 
@@ -183,11 +183,11 @@
 						'</div>' + 
 					'</div>';
 					
-				if ($("#rent-list-wrap #" + eId).length > 0) {
+				if ($("#rent-list #" + eId).length > 0) {
 					alert("设备" + eName + "已添加！");
-				} else {
-					$("#rent-list").append(html);
-					var spinner = $("#rent-list-wrap #" + eId).children(".spinner").spinner({max: maxNum});		// 设置设备最大可预约数量
+				} else {									
+					$("#rent-list .panel-body").append(html);					
+					var spinner = $("#rent-list #" + eId).children(".spinner").spinner({max: maxNum});		// 设置设备最大可预约数量
 					$("#rent-list #" + eId).children(".spinner").spinner('value', eSelectNum);
 					var overMaxNum = 0;
 					$("#rent-list .spinner").on("changed", $(this), function(event) {		// 处理达到最大预约数量时的消息提示
@@ -266,8 +266,8 @@
 					}
 				}
 			});
-			$("body").on("click", "#rent-bar #rent-list .close", function() {
-				$(this).parents("#rent-list .row").remove();
+			$("body").on("click", "#rent-list .close", function() {
+				$(this).parent().parent().parent().remove();
 				if ($("#rent-list .row").length > 0) {
 					$("#rent-list .no-add").hide("fast", function() {
 						reWizardHeight();
@@ -288,7 +288,7 @@
 				var id = bookingData.index;
 				var maxNum = bookingData.maxNum;
 				var groupHtml = 
-					'<div class="post-equip-group" data-name="'+ groupName + '">' +
+					'<div class="post-equip-group" data-name=' + groupName + '>' +
 						'<div class="group-hd">' +
 							'<div class="group-name pull-left">' + groupName + '</div>' +
 							'<div class="group-line"><hr></div>' +
@@ -297,7 +297,7 @@
 						'</div>'
 					'</div>';
 				var html = 
-				  '<div class="row" id="' + id + '" data-index="' + id +'">' + 
+				  '<div class="row" id=' + id + '>' + 
 					  '<div class="item-name">' + timeStr + '</div>' +
 					  '<div class="item-ctrl spinner input-group">' +
 						  '<span class="input-group-btn">' + 
@@ -316,83 +316,81 @@
 				$(this).toggleClass("selected");
 				if($(this).hasClass("selected")) {		// 如果选中
 					$(this).append('<i class="icon-ok"></i>');
-					var isGroupExist = false;
-					$("#rent-list > .post-equip-group").each(function( index ){
-						if(($(this).data("name")) == groupName) {		// 组存在，该组的新预约加入组中
-							isGroupExist = true;
-							event.stopImmediatePropagation();
-						}							
-					});
-					if(!isGroupExist) {		// 组不存在，创建组
-						$("#rent-list").append(groupHtml);
-					}
-					$("#rent-list > .post-equip-group").each(function(){
-						
-						if(($(this).data("name")) == groupName) {		// 组存在，该组的新预约加入组中
-							$(this).children(".group-body").append(html);
-							$("#rent-list #" + id).children(".spinner").spinner({max: maxNum});
-							$("#rent-list #" + id).children(".spinner").spinner('value', 1);
-							isGroupExist = true;
-							event.stopImmediatePropagation();
-						}							
-					});
-	
-					if ($("#rent-list .row").length > 0) {
-						$("#rent-list .no-add").hide("fast", function() {
-							reWizardHeight();
-						});
+					if ($("#rent-list #" + id).length > 0) {
+						alert(timeStr + "已添加！");
 					} else {
-						$("#rent-list .no-add").show("fast", function() {
-							reWizardHeight();	
+						var isGroupExist = false;
+						$("#rent-list > .post-equip-group").each(function( index ){
+							if(($(this).data("name")) == groupName) {		// 组存在，该组的新预约加入组中
+								isGroupExist = true;
+								event.stopImmediatePropagation();
+							}							
 						});
+						if(!isGroupExist) {		// 组不存在，创建组
+							$("#rent-list").append(groupHtml);
+						}
+						$("#rent-list > .post-equip-group").each(function(){
+							
+							if(($(this).data("name")) == groupName) {		// 组存在，该组的新预约加入组中
+								$(this).children(".group-body").append(html);
+								$("#rent-list #" + id).children(".spinner").spinner({max: maxNum});
+								$("#rent-list #" + id).children(".spinner").spinner('value', 1);
+								isGroupExist = true;
+								event.stopImmediatePropagation();
+							}							
+						});
+						//$("#rent-list").append(html);
+											
+		//				$("#rent-list #" + eId).children(".spinner").spinner({max: maxNum});		// 设置设备最大可预约数量
+		//				$("#rent-list #" + eId).children(".spinner").spinner('value', eSelectNum);
+		//				$("#rent-list .spinner").on("changed", $(this), function(event) {		// 处理达到最大预约数量时的消息提示
+		//					if($(this).spinner('value') === maxNum) {
+		//						$(this).on("click", ".spinner-up",function(){
+		//							alert("已达最大可预约数量！");
+		//						});
+		//					} else {
+		//						$(this).off("click", ".spinner-up");
+		//					}
+		//					event.stopImmediatePropagation();
+		//				});
+						
+		//				if ($("#rent-list .row").length > 0) {
+		//					$("#rent-list .no-add").hide("fast", function() {
+		//						reWizardHeight();
+		//					});
+		//				} else {
+		//					$("#rent-list .no-add").show("fast", function() {
+		//						reWizardHeight();	
+		//					});
+		//				}
+		
+						if ($("#rent-list .row").length > 0) {
+							$("#rent-list .no-add").hide("fast", function() {
+								reWizardHeight();
+							});
+						} else {
+							$("#rent-list .no-add").show("fast", function() {
+								reWizardHeight();	
+							});
+						}
 					}
-				} else {		// 如果取消选中
+				} else {
 					$("#rent-list > .post-equip-group").each(function(){
 						if(($(this).data("name")) == groupName) {		// 组存在
 							$(this).find(".group-body > #" + id).remove();
 							event.stopImmediatePropagation();
-						}
-					});
+						}							
+					});	
 					$("#rent-list > .post-equip-group").each(function(){
 						if($(this).find(".row").length <= 0) {			// 如果组内无预约，移除该组
 							$(this).remove();
 							event.stopImmediatePropagation();
-						};
-					});
+						};							
+					});						
 					$(this).find(".icon-ok").remove();		// 移除选中标识
 					
 				}
-			});	
-			$(".post-sidebar-warp").on("click", "#rent-list .close", function() {
-				var tdIndex = $(this).parents("#rent-list .row").data("index");
-				var groupName = $(this).parents("#rent-list .post-equip-group").data("name"); 
-				$(this).parents("#rent-list .row").remove();
-				$("#rent-list > .post-equip-group").each(function(){
-						if($(this).find(".row").length <= 0) {			// 如果组内无预约，移除该组
-							$(this).remove();
-							event.stopImmediatePropagation();
-						};
-				});
-				$(".post-list table").each(function(index, table) {
-					if($(table).data("tableName") == groupName) {
-						$(table).find("td").each(function(index, td) {
-							if($(td).data("index") == tdIndex) {
-								$(td).removeClass("selected");
-								$(td).find(".icon-ok").remove();		// 移除选中标识
-							}
-						});
-					}
-				});
-				if ($("#rent-list .row").length > 0) {
-					$("#rent-list .no-add").hide("fast", function() {
-						reWizardHeight();
-					});
-				} else {
-					$("#rent-list .no-add").show("fast", function() {
-						reWizardHeight();	
-					});
-				}
-			});
+			});			
 
 /*			function reWizardHeight_old() {
 				$("#rent-bar .wizard").animate({
@@ -401,15 +399,15 @@
 			}*/
 
             function reWizardHeight() {
-				$("#rent-list-wrap .panel-body").animate({
-					height: $("#rent-list").height() + 30
+				$("#rent-list").animate({
+					height: $("#rent-list .panel-body").height() + 130
 				});
 			}
 
 
 			$('.spinner').spinner();
 			/*
-			$("#rent-list-wrap").mCustomScrollbar({
+			$("#rent-list").mCustomScrollbar({
 				scrollButtons:{
 					enable:false
 				},

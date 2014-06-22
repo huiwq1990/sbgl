@@ -80,9 +80,11 @@
     </div>
     <div class="sub-nav">
       <ul class="nav nav-tabs nav-tabs-google">
-        <li><a href="index-简介.html">电脑教室</a></li>
-        <li class="active"><a href="index.html">剪辑机房</a></li>
-        <li><a href="index.html">调色机房</a></li>
+        <li><a href="#">全部</a></li>
+        <li><a href="#">器材预约</a></li>
+        <li><a href="#">机房预约</a></li>
+        <li class="divider"></li>
+        <li class="active"><a href="#">预约提交</a></li>
       </ul>
     </div>
   </div>
@@ -243,7 +245,7 @@
                             <div class="carousel-inner">
                               <div class="active item table-responsive">
                               
-                                <table class="table" data-table-name="DELL 工作站">
+                                <table class="table">
                                     <thead>
                                       <tr>
                                         <th class="time-slop">时间</th>
@@ -259,7 +261,7 @@
                                     <tbody>
                                       <tr>
                                         <td class="time-slot">上午</td>
-                                        <td class="bookable" data-index="1" data-slot="0" data-max-num="9"><strong>9</strong><div class="info">可预约</div></td>
+                                        <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -587,22 +589,43 @@
                 </div>
               </div><!--post-list-warp end-->
               
-              <div class="post-sidebar-warp"><!-- post-sidebar-warp -->
-                <div id="rent-list-wrap" class="panel panel-default">
-                  <div class="panel-heading"><h3>预约单 <small>请选择你所需要的机房和时段。</small></h3></div>
-                  <div class="panel-body">
-                    <div id="rent-list">
-                      <p class="no-add">尚未添加任何设备。</p>
+              <div class="post-sidebar-warp"><!--post-sidebar-warp start-->
+                <div id="post-sidebar" class="thumbnail wizard">
+                  <h3>预约单</h3>
+                  <div id="rent-list">
+                    <p class="no-add">尚未添加任何预约项。</p>
+                    <div class="post-equip-group" data-name="MAC工作站">
+                      <div class="group-hd">
+                        <div class="group-name pull-left">MAC工作站</div>
+                        <div class="group-line">
+                          <hr>
+                        </div>
+                      </div>
+                      <div class="group-body">
+                        <div class="row" id="123432"><div class="item-name">9月12日 星期一 上午</div><div class="item-ctrl spinner input-group"><span class="input-group-btn"><button type="button" class="btn btn-link spinner-down"><i class="icon-minus"></i></button></span><input type="text" class="spinner-input form-control" maxlength="1"><span class="input-group-btn"><button type="button" class="btn btn-link spinner-up"><i class="icon-plus"></i></button></span><span class="input-group-btn"><button type="button" class="btn btn-link close"><i class="icon-remove"></i></button></span></div></div>
+                      </div>
+                    
+                    
+                    </div>
+                    <div class="post-equip-group" data-name="DELL工作站">
+                      <div class="group-hd">
+                        <div class="group-name pull-left">DELL工作站</div>
+                        <div class="group-line">
+                          <hr>
+                        </div>
+                      </div>
+                      <div class="group-body">
+                        <div class="row" id="123432"><div class="item-name">9月12日 星期一 上午</div><div class="item-ctrl spinner input-group"><span class="input-group-btn"><button type="button" class="btn btn-link spinner-down"><i class="icon-minus"></i></button></span><input type="text" class="spinner-input form-control" maxlength="1"><span class="input-group-btn"><button type="button" class="btn btn-link spinner-up"><i class="icon-plus"></i></button></span><span class="input-group-btn"><button type="button" class="btn btn-link close"><i class="icon-remove"></i></button></span></div></div>
+                      </div>                    
                     </div>
                   </div>
-                  <div class="panel-footer text-right">
+                  <div class="form-actions actions">  
                     <button type="button" class="btn btn-white btn-clear">清 空</button>
-                    <button type="button" class="btn btn-primary">提 交</button>
+                    <button type="button" class="btn btn-primary">提交预约</button>
                   </div>
                 </div>
-              </div><!--/post-sidebar-warp-->
-
-            </div>
+              </div><!--post-sidebar-warp start-->
+            </div>           
             
 
           </div>
@@ -651,7 +674,7 @@ function CreatePostBookingTable(rowCount,cellCount,startDate) {
 		"</thead>";
 	  
 	html +=
-		"<tbody>";
+		"<thead>";
 	for(var i = 0; i < (rowCount - 1); i++) {
 		html += "<tr>";
 		for(var j = 0; j < cellCount; j++) {
