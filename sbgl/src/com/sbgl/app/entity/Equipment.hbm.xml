@@ -67,5 +67,8 @@
         <property name="imgname" type="java.lang.String">
             <column name="imgname" length="200" />
         </property>
+        <property name="rent" type="java.lang.String">
+            <column name="rent" length="100" />
+        </property>
     </class>
 </hibernate-mapping>

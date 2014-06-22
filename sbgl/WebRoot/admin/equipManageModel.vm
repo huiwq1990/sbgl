@@ -86,7 +86,7 @@
                   <tr>
 				  #if($!model.showClass != 1)
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!model.id"></td>
-                    <td>$!model.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-idEN="$!model.idEN" data-name="$!model.name" data-nameEN="$!model.nameEN" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo" data-memoEN="$!model.memoEN" data-imgname="$!model.imgName" data-brandid="$!model.branId">修改</a></td>
+                    <td>$!model.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-idEN="$!model.idEN" data-name="$!model.name" data-nameEN="$!model.nameEN" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo" data-memoEN="$!model.memoEN" data-imgname="$!model.imgName" data-brandid="$!model.branId" data-rent="$!model.rent" data-rentunit="$!model.rentUnit">修改</a></td>
 					<td>$!model.cName</td>
 					<td>#if($!model.branId == "1")双塔影视#end</td>
                     <td>$!model.memo</td>
@@ -141,6 +141,18 @@
 					<option value="$!clazz.id">$!clazz.name</option>
 				#end
 			#end
+          </select>
+        </div>
+      </div>
+	  <div class="form-group">
+        <label for="inputEquipId" class="col-xs-3 control-label">租金</label>
+        <div class="col-lg-4" style="width: 38.2%;">
+          <input type="text" class="form-control" id="alterRent" placeholder="格式：0.00">
+        </div>
+		<div class="col-lg-4" style="width: 17%;">
+          <select class="select2" id="alterRentUnit">
+			<option value="0" data-foo="fa">每天</option>
+			<option value="1" data-foo="fa">每个</option>
           </select>
         </div>
       </div>
@@ -215,6 +227,18 @@
 					<option value="$!clazz.id">$!clazz.name</option>
 				#end
 			#end
+          </select>
+        </div>
+      </div>
+	  <div class="form-group">
+        <label for="inputEquipId" class="col-xs-3 control-label">租金</label>
+        <div class="col-lg-4" style="width: 38.2%;">
+          <input type="text" class="form-control" id="addRent" placeholder="格式：0.00">
+        </div>
+		<div class="col-lg-4" style="width: 17%;">
+          <select class="select2" id="addRentUnit">
+			<option value="0" data-foo="fa">每天</option>
+			<option value="1" data-foo="fa">每个</option>
           </select>
         </div>
       </div>
@@ -377,6 +401,8 @@
 	var modelMemoForAlter;
 	var modelMemoForAlterEN;
 	var modelBrandIdForAlter;
+	var rentForAlter;
+	var rentUnitForAlter;
 	var idsForDel;
 	var currentPageNo = 1;		//当前页码
 	var totalPageNo;			//总页码
@@ -401,6 +427,8 @@
 	
 	$("body").on("click", "a[action-type|=clearInput]", function() {
 		$("#inputECategory").select2("val", -1);
+		$("#addRent").val("");
+		$("#addRentUnit").select2("val", 0);
 		$("#inputEModelName").val("");
 		$("#inputEModelNameEN").val("");
 		$("#inputEDescribe").val("");
@@ -460,6 +488,9 @@
 			var memo = $("#inputEDescribe").val();
 			var memoEN = $("#inputEDescribeEN").val();
 			var brandId = -1;
+			var rent = $("#addRent").val();
+			var rentUnit = $("#addRentUnit").val();
+			
 			if($("#inputStock1").prop("checked")) {
 				brandId = $("#inputStock1").val();
 			}
@@ -474,6 +505,13 @@
 				alert("分类不能为空，若无分类可选请先建立分类！");
 				return;
 			}
+			
+			var regex2 = /^[0-9]+(.[0-9]+)?$/;
+			var ret4 = regex2.test(rent);
+    		if(ret4 == false && rent != "") {
+    			alert("租金输入格式错误！");
+    			return;
+    		}
 			
 			if(modelName != "") {
 				//console.log("**********" + modelName);
@@ -494,6 +532,8 @@
         			"equipmentEN.equipmentdetail": memoEN,
         			"equipment.lantype": "0",
         			"equipmentEN.lantype": "1",
+        			"equipment.rent": rent + "/" + rentUnit,
+        			"equipmentEN.rent": rent + "/" + rentUnit,
 					"crtModelPage": currentPageNo
         		}
     			
@@ -511,6 +551,9 @@
     		var memo = $("#modifyEDescribe").val();
     		var memoEN = $("#modifyEDescribeEN").val();
 			var brandId = -1;
+			var rent = $("#alterRent").val();
+			var rentUnit = $("#alterRentUnit").val();
+			
 			if($("#modifyStock1").prop("checked")) {
 				brandId = $("#modifyStock1").val();
 			}
@@ -525,7 +568,14 @@
 				return;
 			}
 			
-			if(ename == modelNameForAlter && modelCIdForAlter == cidInput && modelMemoForAlter == memo && localFileName == "" && modelBrandIdForAlter == brandId && enameEN == modelNameForAlterEN && modelMemoForAlterEN == memoEN) {
+			var regex2 = /^[0-9]+(.[0-9]+)?$/;
+			var ret4 = regex2.test(rent);
+    		if(ret4 == false && rent != "") {
+    			alert("租金输入格式错误！");
+    			return;
+    		}
+			
+			if(ename == modelNameForAlter && modelCIdForAlter == cidInput && modelMemoForAlter == memo && localFileName == "" && modelBrandIdForAlter == brandId && enameEN == modelNameForAlterEN && modelMemoForAlterEN == memoEN && rentForAlter == rent && rentUnitForAlter == rentUnit) {
     			alert("并未做修改或等待图片上传完毕！");
 				return;
     		} else {
@@ -537,6 +587,7 @@
 					"equipment.brandid": brandId,
         			"equipment.imgnamesaved": savedFileName,
     				"equipment.equipmentdetail": memo,
+    				"equipment.rent": rent + "/" + rentUnit,
     				"equipmentEN.equipmentid": modelIdForAlterEN,
     				"equipmentEN.equipmentname": enameEN,
     				"equipmentEN.classificationid": cidInput,
@@ -544,6 +595,7 @@
 					"equipmentEN.brandid": brandId,
         			"equipmentEN.imgnamesaved": savedFileName,
     				"equipmentEN.equipmentdetail": memoEN,
+    				"equipmentEN.rent": rent + "/" + rentUnit,
 					"crtModelPage": currentPageNo
     			}
 				actionUrl = "${webbaseurl}/altEquipModel.do";
@@ -606,6 +658,8 @@
 		$("#modifyEquipCategory").select2("val", myData.cid);
 		$("#modifyEDescribe").val(myData.memo);
 		$("#modifyEDescribeEN").val(myData.memoen);
+		$("#alterRent").val(myData.rent);
+		$("#alterRentUnit").select2("val", myData.rentunit);
 		
 		modelNameForAlter = myData.name;
 		modelNameForAlterEN = myData.nameen;
@@ -615,6 +669,7 @@
 		modelMemoForAlter = myData.memo;
 		modelMemoForAlterEN = myData.memoen;
 		modelBrandIdForAlter = myData.brandid;
+		rentForAlter = myData.rent;
 		
 		equipmentid = myData.id;
 		
