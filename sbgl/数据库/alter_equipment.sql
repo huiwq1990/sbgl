@@ -1,0 +1,1 @@
+ALTER TABLE `sbgl`.`equipment` ADD COLUMN `rent` VARCHAR(100) NULL  AFTER `imgname` ;
