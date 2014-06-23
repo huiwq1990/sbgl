@@ -102,7 +102,7 @@ function getSelectedCheckboxList() {
             });
 			
 			$('body').tooltip({
-				selector: 'a[rel=tooltip],input[rel=tooltip],abbr[rel=tooltip],strong[rel=tooltip]',
+				selector: 'a[rel=tooltip],input[rel=tooltip],abbr[rel=tooltip],strong[rel=tooltip]'
 			});
 			$('a[rel=popover]').popover({
 				trigger: "manual",
@@ -285,9 +285,9 @@ function getSelectedCheckboxList() {
 
 		
 
-			function reWizardHeight() {
-				$("#rent-bar .wizard").animate({
-					height: $("#rent-bar .wizard .step-content").height() + 130
+	        function reWizardHeight() {
+				$("#rent-list-wrap .panel-body").animate({
+					height: $("#rent-list").height() + 30
 				});
 			}
 
