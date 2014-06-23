@@ -67,8 +67,11 @@
         <property name="imgname" type="java.lang.String">
             <column name="imgname" length="200" />
         </property>
-        <property name="rent" type="java.lang.String">
-            <column name="rent" length="100" />
+        <property name="rentvalue" type="java.lang.Float">
+            <column name="rentvalue" precision="12" scale="0" />
+        </property>
+        <property name="rentunit" type="java.lang.Integer">
+            <column name="rentunit" />
         </property>
     </class>
 </hibernate-mapping>

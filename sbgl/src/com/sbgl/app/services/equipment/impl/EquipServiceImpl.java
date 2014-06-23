@@ -78,7 +78,8 @@ public class EquipServiceImpl implements EquipService {
 		storeEquip.setEquipmentdetail( equip.getEquipmentdetail() );
 		storeEquip.setCategory( equip.getCategory() );
 		storeEquip.setRemark( equip.getRemark() );
-		storeEquip.setRent( equip.getRent() );
+		storeEquip.setRentvalue( equip.getRentvalue() );
+		storeEquip.setRentunit( equip.getRentunit() );
 		
 		try {
 			baseDao.updateEntity( storeEquip );

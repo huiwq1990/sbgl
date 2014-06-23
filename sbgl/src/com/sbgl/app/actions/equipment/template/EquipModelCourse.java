@@ -13,8 +13,8 @@ public class EquipModelCourse {
 	private String showClass;
 	private String imgName;
 	private String comId;
-	private String rent;
-	private String rentUnit;
+	private String rentId;
+	private String rentValue;
 	
 	public String getId() {
 		return id;
@@ -88,17 +88,16 @@ public class EquipModelCourse {
 	public void setComId(String comId) {
 		this.comId = comId;
 	}
-	public String getRent() {
-		return rent;
+	public String getRentId() {
+		return rentId;
 	}
-	public void setRent(String rent) {
-		this.rent = rent;
+	public void setRentId(String rentId) {
+		this.rentId = rentId;
 	}
-	public String getRentUnit() {
-		return rentUnit;
+	public String getRentValue() {
+		return rentValue;
 	}
-	public void setRentUnit(String rentUnit) {
-		this.rentUnit = rentUnit;
+	public void setRentValue(String rentValue) {
+		this.rentValue = rentValue;
 	}
-	
 }

@@ -10,6 +10,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONArray;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.interceptor.SessionAware;
@@ -17,26 +19,20 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.equipment.template.ClassficationCourse;
 import com.sbgl.app.actions.equipment.template.EquipCourse;
 import com.sbgl.app.actions.equipment.template.EquipModelCourse;
 import com.sbgl.app.actions.equipment.template.ParentClassIdName;
-import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.dao.QueryResult;
-import com.sbgl.app.entity.CourseFull;
 import com.sbgl.app.entity.Equipment;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Equipmentdetail;
-import com.sbgl.app.entity.Loginuser;
-import com.sbgl.app.entity.Ordercourserule;
+import com.sbgl.app.entity.Rentunit;
 import com.sbgl.app.services.equipment.EquipService;
-import com.sbgl.app.services.orderadmin.OrderAdminService;
+import com.sbgl.app.services.equipment.RentUnitService;
 import com.sbgl.common.HQLOption;
 import com.sbgl.common.SBGLConsistent;
 import com.sbgl.util.Page;
-
-import net.sf.json.JSONArray;
 
 @Scope("prototype") 
 @Controller("EquipmentAction")
@@ -53,6 +49,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	
 	@Resource
 	private EquipService equipService;
+	@Resource
+	private RentUnitService rentUnitService;
 	
 	@Override
 	public void setSession(Map<String, Object> session) {
@@ -604,8 +602,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				totalModelPages = String.valueOf( result.getTotalResultNum() / 10 );
 			}
 			
-			String[] rentUnit = null;
-			
 			for (Equipment equipment : (List<Equipment>)result.getResultList()) {
 				EquipModelCourse emc = new EquipModelCourse();
 				emc.setId( String.valueOf( equipment.getEquipmentid() ) );
@@ -618,11 +614,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				emc.setComId( String.valueOf( equipment.getComid() ) );
 				emc.setImgName( equipment.getImgname() );
 				emc.setBranId( String.valueOf( equipment.getBrandid() ) );
-				if( equipment.getRent() != null && !"".equals(equipment.getRent()) ) {
-					rentUnit = equipment.getRent().split("/");
-					emc.setRent( rentUnit[0] );
-					emc.setRentUnit( rentUnit[1] );
-				}
+				emc.setRentId( String.valueOf( equipment.getRentunit() ) );
+				emc.setRentValue( String.valueOf( equipment.getRentvalue() ) );
 				
 				allModelCourse.add( emc );
 			}
@@ -1349,10 +1342,20 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			}
 		}
 	}
-
+	
+	private List<Rentunit> rentUnitList;
+	public List<Rentunit> getRentUnitList() {
+		return rentUnitList;
+	}
+	
+	private void doGetRentUnitForEquipAdd() {
+		rentUnitList = rentUnitService.getAll();
+	}
+	
 	public String gotoEquipManageModel() {
 		getAllEquipInfoCourse();
 		doGetClassForEquipAdd();
+		doGetRentUnitForEquipAdd();
 		return SUCCESS;
 	}
 	/**

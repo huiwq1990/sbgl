@@ -31,7 +31,8 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 	private Integer comid;
 	private String imgnamesaved;
 	private String imgname;
-	private String rent;
+	private Float rentvalue;
+	private Integer rentunit;
 
 	// Constructors
 
@@ -52,7 +53,7 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 			Integer repairnum, Integer losednum, Integer recyclingnum,
 			String equipmentdetail, Integer category, String remark,
 			String lantype, Integer comid, String imgnamesaved, String imgname,
-			String rent) {
+			Float rentvalue, Integer rentunit) {
 		this.equipmentid = equipmentid;
 		this.equipmentname = equipmentname;
 		this.brandid = brandid;
@@ -73,7 +74,8 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 		this.comid = comid;
 		this.imgnamesaved = imgnamesaved;
 		this.imgname = imgname;
-		this.rent = rent;
+		this.rentvalue = rentvalue;
+		this.rentunit = rentunit;
 	}
 
 	// Property accessors
@@ -238,12 +240,20 @@ public class Equipment extends com.sbgl.app.dao.DaoAbs implements
 		this.imgname = imgname;
 	}
 
-	public String getRent() {
-		return this.rent;
+	public Float getRentvalue() {
+		return this.rentvalue;
 	}
 
-	public void setRent(String rent) {
-		this.rent = rent;
+	public void setRentvalue(Float rentvalue) {
+		this.rentvalue = rentvalue;
+	}
+
+	public Integer getRentunit() {
+		return this.rentunit;
+	}
+
+	public void setRentunit(Integer rentunit) {
+		this.rentunit = rentunit;
 	}
 
 }

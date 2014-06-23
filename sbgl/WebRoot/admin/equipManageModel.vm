@@ -86,7 +86,7 @@
                   <tr>
 				  #if($!model.showClass != 1)
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!model.id"></td>
-                    <td>$!model.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-idEN="$!model.idEN" data-name="$!model.name" data-nameEN="$!model.nameEN" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo" data-memoEN="$!model.memoEN" data-imgname="$!model.imgName" data-brandid="$!model.branId" data-rent="$!model.rent" data-rentunit="$!model.rentUnit">修改</a></td>
+                    <td>$!model.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-idEN="$!model.idEN" data-name="$!model.name" data-nameEN="$!model.nameEN" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo" data-memoEN="$!model.memoEN" data-imgname="$!model.imgName" data-brandid="$!model.branId" data-rent="$!model.rentValue" data-rentunit="$!model.rentId">修改</a></td>
 					<td>$!model.cName</td>
 					<td>#if($!model.branId == "1")双塔影视#end</td>
                     <td>$!model.memo</td>
@@ -151,8 +151,9 @@
         </div>
 		<div class="col-lg-4" style="width: 17%;">
           <select class="select2" id="alterRentUnit">
-			<option value="0" data-foo="fa">每天</option>
-			<option value="1" data-foo="fa">每个</option>
+			#foreach($ru in $rentUnitList)
+			<option value="$!ru.id" data-foo="fa">$!ru.unitname</option>
+			#end
           </select>
         </div>
       </div>
@@ -237,8 +238,9 @@
         </div>
 		<div class="col-lg-4" style="width: 17%;">
           <select class="select2" id="addRentUnit">
-			<option value="0" data-foo="fa">每天</option>
-			<option value="1" data-foo="fa">每个</option>
+			#foreach($ru in $rentUnitList)
+			<option value="$!ru.id" data-foo="fa">$!ru.unitname</option>
+			#end
           </select>
         </div>
       </div>
@@ -532,8 +534,10 @@
         			"equipmentEN.equipmentdetail": memoEN,
         			"equipment.lantype": "0",
         			"equipmentEN.lantype": "1",
-        			"equipment.rent": rent + "/" + rentUnit,
-        			"equipmentEN.rent": rent + "/" + rentUnit,
+        			"equipment.rentvalue": rent,
+        			"equipmentEN.rentvalue": rent,
+        			"equipment.rentunit": rentUnit,
+        			"equipmentEN.rentunit": rentUnit,
 					"crtModelPage": currentPageNo
         		}
     			
@@ -587,7 +591,8 @@
 					"equipment.brandid": brandId,
         			"equipment.imgnamesaved": savedFileName,
     				"equipment.equipmentdetail": memo,
-    				"equipment.rent": rent + "/" + rentUnit,
+    				"equipment.rentvalue": rent,
+    				"equipment.rentunit": rentUnit,
     				"equipmentEN.equipmentid": modelIdForAlterEN,
     				"equipmentEN.equipmentname": enameEN,
     				"equipmentEN.classificationid": cidInput,
@@ -595,7 +600,8 @@
 					"equipmentEN.brandid": brandId,
         			"equipmentEN.imgnamesaved": savedFileName,
     				"equipmentEN.equipmentdetail": memoEN,
-    				"equipmentEN.rent": rent + "/" + rentUnit,
+    				"equipmentEN.rentvalue": rent,
+    				"equipmentEN.rentunit": rentUnit,
 					"crtModelPage": currentPageNo
     			}
 				actionUrl = "${webbaseurl}/altEquipModel.do";

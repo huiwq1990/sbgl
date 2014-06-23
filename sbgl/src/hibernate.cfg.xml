@@ -138,6 +138,7 @@
 		<mapping
 			resource="com/sbgl/app/entity/Groupofequipment.hbm.xml" />
 		<mapping resource="com/sbgl/app/entity/Equipmentgroup.hbm.xml" />
+		<mapping resource="com/sbgl/app/entity/Rentunit.hbm.xml" />
 
 
 
