@@ -26,6 +26,8 @@ public class EquipmentFull extends DaoAbs {
 	private Integer comId;
 	private String imgNameSaved;
 	private String imgName;
+	private Float rentvalue;
+	private Integer rentunit;
 	
 	private Long borrownum;  //可借数量
 	private String categoryName; //分类名称
@@ -212,6 +214,18 @@ public class EquipmentFull extends DaoAbs {
 	}
 	public void setNum(Integer num) {
 		this.num = num;
+	}
+	public Float getRentvalue() {
+		return rentvalue;
+	}
+	public void setRentvalue(Float rentvalue) {
+		this.rentvalue = rentvalue;
+	}
+	public Integer getRentunit() {
+		return rentunit;
+	}
+	public void setRentunit(Integer rentunit) {
+		this.rentunit = rentunit;
 	}
 	
 

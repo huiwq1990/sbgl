@@ -132,7 +132,8 @@ public class EscColumnToBean implements ResultTransformer {
             	 return propertyAccessor.getSetter(resultClass, field.getName()); 
             }
         }  
-        throw new RuntimeException("找不到数据库字段 ："+ alias + " 对应的POJO属性或其getter方法，比如数据库字段为USER_ID或USERID，那么JAVA属性应为userId");  
+       return null;
+        //throw new RuntimeException("找不到数据库字段 ："+ alias + " 对应的POJO属性或其getter方法，比如数据库字段为USER_ID或USERID，那么JAVA属性应为userId");  
     }  
   
     @SuppressWarnings("unchecked")  

@@ -321,8 +321,8 @@
 							var htmlMoreStr = '<div class="item-need-more">( 还需：<span class="need-num"></span> )</div>';
 							var needMore;
 							if(curVal === maxNum) {
-								var str = "已达最大可借数量，继续添加，系统会记录下你所需实际数量，并提供相应建议!";
-								var n = noty({text: str, timeout: 6000});
+								//var str = "已达最大可借数量，继续添加，系统会记录下你所需实际数量，并提供相应建议!";
+								//var n = noty({text: str, timeout: 6000});
 	
 								$(_this).on("click", ".spinner-up",function(){
 									if ($(_this).parent().find(".item-need-more").length === 0 ) {								

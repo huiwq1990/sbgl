@@ -300,6 +300,7 @@ $(function () {
 			//alert(data.step);
 	});
 	
+	
 $(window).load(function(){
 	if(fromdate!=null&&fromdate!=""){
 		$("#fromDate").val(fromdate);
@@ -307,6 +308,7 @@ $(window).load(function(){
 	if(enddate!=null&&enddate!=""){
 		$("#endDate").val(enddate);
 	}
+
     if(listequips!=null){
     	tempddd=listequips.split('|');
     	for(var i=0;i<tempddd.length;i++){
@@ -347,8 +349,8 @@ $(window).load(function(){
 						var htmlMoreStr = '<div class="item-need-more">( 还需：<span class="need-num"></span> )</div>';
 						var needMore;
 						if(curVal === maxNum) {
-							var str = "已达最大可借数量，继续添加，系统会记录下你所需实际数量，并提供相应建议!";
-							var n = noty({text: str, timeout: 8000});
+							//var str = "已达最大可借数量，继续添加，系统会记录下你所需实际数量，并提供相应建议!";
+							//var n = noty({text: str, timeout: 8000});
 
 							$(_this).on("click", ".spinner-up",function(){
 								if ($(_this).parent().find(".item-need-more").length === 0 ) {								
@@ -436,6 +438,38 @@ $(window).load(function(){
 	  
 	cookie.show();
 	
+	$("body").on("keydown", "input[id|=serachtext]", function(e) {
+        if(e.keyCode==13){
+            var fromDate = $("#fromDate").val();
+    		var endDate = $("#endDate").val();
+    		var serach = $("#serachtext").val();
+    		jQuery.ajax({
+    			url: "equipmentByClass.do",
+    			type: 'POST',
+    			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate,serach:serach,borrowId:borrowId},
+    			dataType: 'html',
+    			success: function(data){
+    				//刷新数据
+    			   $("#equip-wrap").html(data);
+    			   $(".classification1").removeClass('active');
+    			   $(".classification2").removeClass('active');
+    			   if(ctype=='1'){
+    			   		$("#cl1"+parentid).addClass('active');	
+    			   		$("#cl20").addClass('active');			
+    			   }else{	  
+    			   		$("#cl1"+parentid).addClass('active');
+    			   		$("#cl2"+cId).addClass('active');
+    			   }
+    			   $("#serachtext").val(serach);
+    			},error:function(a, b, c){
+    				alert("a"+XMLHttpRequest);
+    				alert("b"+textStatus);
+    				alert("c"+errorThrown);
+    				
+    			}	
+    		});
+        }
+    }); 
 	
 	$("body").on("click", "a[data-type|=classAjax]", function() {
 		var fromDate = $("#fromDate").val();
@@ -492,8 +526,11 @@ $(window).load(function(){
 			   		$("#cl1"+parentid).addClass('active');
 			   		$("#cl2"+cId).addClass('active');
 			   }
-			},error:function(){
-				alert("没有找到设备！");
+			},error:function(XMLHttpRequest, textStatus, errorThrown){
+				alert("a"+XMLHttpRequest);
+				alert("b"+textStatus);
+				alert("c"+errorThrown);
+				
 			}	  
 		});
 	});
@@ -670,6 +707,10 @@ $(window).load(function(){
 			}	  
 		});
 	});
+	
+	
+	
+	
 </script>
 </body>
 </html>

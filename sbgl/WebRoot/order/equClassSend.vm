@@ -290,7 +290,7 @@
               jQuery.each(userList, function(){
                   if(query.term.length == 0 || this.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0 ){
                       data.results.push({id: this.id, text: this.name });
-                      alert(data.results.id);
+                      //alert(data.results.id);
                   }
 			  		
               }); 
