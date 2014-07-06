@@ -1,22 +1,18 @@
     <div class="site-nav">
       <div class="dropdown">
-        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 器材预约 <i class="icon-chevron-right"></i></a><!-- #BeginLibraryItem "/Library/siteNav.lbi" --><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 器材预约 <i class="icon-chevron-right"></i></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
           <li><a href="${webbaseurl}/index.${strutsaction}"><i class="icon-home"></i> 首页</a></li>
           <li class="divider"></li>
           <li><a href="${webbaseurl}/indexInfo.${strutsaction}">个人主页</a></li>
-         <!-- <li><a href="#">通讯录</a></li> -->
+          <li><a href="${webbaseurl}/viewMineComputerorderList.${strutsaction}">我的预约</a></li>
+          <!-- <li><a href="${webbaseurl}/toMessageInbox.${strutsaction}">站内信</a></li> -->
           <li class="divider"></li>
-
-		  <li><a href="${webbaseurl}/viewMineComputerorderList.${strutsaction}">我的预约</a></li>
-		  
-		         <!--   <li><a href="${webbaseurl}/toComputerhomeworkInboxPage.${strutsaction}">我的作业</a></li> -->
-         <!-- <li><a href="${webbaseurl}/toMessageInbox.${strutsaction}">站内信</a></li> -->
-          <li class="divider"></li>
-		  
-		    #set($user =  $request.getSession().getAttribute("loginUser"))
+          <li><a href="${webbaseurl}/account.${strutsaction}">设置与帮助</a></li>
+      #set($user =  $request.getSession().getAttribute("loginUser"))
 			#if($user.privilege == 1)
           <li><a href="${webbaseurl}/adminIndex.${strutsaction}">管理中心</a></li>
 		  #end
         </ul>
-          <!-- #EndLibraryItem --></div>
+      </div>
     </div>
