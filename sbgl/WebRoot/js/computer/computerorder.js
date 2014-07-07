@@ -70,30 +70,6 @@ $("body").on("click", ".bookable", function() {
 					event.stopImmediatePropagation();
 				}							
 			});
-			//$("#rent-list").append(html);
-								
-//				$("#rent-list #" + eId).children(".spinner").spinner({max: maxNum});		// 设置设备最大可预约数量
-//				$("#rent-list #" + eId).children(".spinner").spinner('value', eSelectNum);
-//				$("#rent-list .spinner").on("changed", $(this), function(event) {		// 处理达到最大预约数量时的消息提示
-//					if($(this).spinner('value') === maxNum) {
-//						$(this).on("click", ".spinner-up",function(){
-//							alert("已达最大可预约数量！");
-//						});
-//					} else {
-//						$(this).off("click", ".spinner-up");
-//					}
-//					event.stopImmediatePropagation();
-//				});
-			
-//				if ($("#rent-list .row").length > 0) {
-//					$("#rent-list .no-add").hide("fast", function() {
-//						reWizardHeight();
-//					});
-//				} else {
-//					$("#rent-list .no-add").show("fast", function() {
-//						reWizardHeight();	
-//					});
-//				}
 
 			if ($("#rent-list .row").length > 0) {
 				$("#rent-list .no-add").hide("fast", function() {
@@ -130,17 +106,44 @@ $("body").on("click", ".bookable", function() {
 		
 	}
 });	
-$("body").on("click", "button[action-type|=removeThisOrderItem]", function() {
-	var thisData = $(this).data();
-	$("#post-equip-" + thisData.id).find('tbody td').each(function(index, el) {
-		if ($(el).data("index") === thisData.index ) {
-			if($(el).hasClass("selected")) {		// 如果选中
-				$(el).find('i').remove();
-				$(el).removeClass("selected");
-			}
-		};
+
+// 侧栏预约单删除（移除）按钮
+$(".post-sidebar-warp").on("click", "#rent-list .close", function() {
+	var tdIndex = $(this).parents("#rent-list .row").data("index");
+	var groupName = $(this).parents("#rent-list .post-equip-group").data("name"); 
+	$(this).parents("#rent-list .row").remove();
+	$("#rent-list > .post-equip-group").each(function(){
+			if($(this).find(".row").length <= 0) {			// 如果组内无预约，移除该组
+				$(this).remove();
+				event.stopImmediatePropagation();
+			};
 	});
+	$(".post-list table").each(function(index, table) {
+		if($(table).data("tableName") == groupName) {
+			$(table).find("td").each(function(index, td) {
+				if($(td).data("index") == tdIndex) {
+					$(td).removeClass("selected");
+					$(td).find(".icon-ok").remove();		// 移除选中标识
+				}
+			});
+		}
+	});
+	if ($("#rent-list .row").length > 0) {
+		$("#rent-list .no-add").hide("fast", function() {
+			reWizardHeight();
+		});
+	} else {
+		$("#rent-list .no-add").show("fast", function() {
+			reWizardHeight();	
+		});
+	}
 });
 
+
+function reWizardHeight() {
+	$("#rent-list-wrap .panel-body").animate({
+		height: $("#rent-list").height() + 30
+	});
+}
 
 })(jQuery);
