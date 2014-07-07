@@ -6,7 +6,7 @@ public class CommonConfig {
 //	用户组 学生的id
 	public final static int usergroupstudentid = 1;
 	
-	public final static String WebBaseUrl = "http://localhost:8080/sbgl"; 
+	public final static String WebBaseUrl = "http://202.205.122.94:8080/sbgl"; 
 	public final static String strutsaction="action";
 	
 //	模块名称

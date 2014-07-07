@@ -26,7 +26,10 @@ public class ImageUrlTool {
 	}
 	
 	
-	public String url(String cate,String name){	
+	public String url(String cate,String name){
+		
+		String webbaseurl = (String) request.getAttribute("webbaseurl");
+		System.out.println("webbaseurl" + webbaseurl);
 		if(cate == null || cate.trim().length()==0){
 			return "";
 		}
@@ -35,9 +38,9 @@ public class ImageUrlTool {
 		}
 		
 		if(cate.equals("user")){
-			return CommonConfig.WebBaseUrl + "/userImage"+"/"+name;
+			return webbaseurl + "/userImage"+"/"+name;
 		}else if(cate.equals("pc")){
-			return CommonConfig.WebBaseUrl + "/computerImage"+"/"+name;
+			return webbaseurl + "/computerImage"+"/"+name;
 		}
 		
 		return "";

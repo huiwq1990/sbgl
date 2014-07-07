@@ -22,7 +22,7 @@
       
     <tool>
         <key>pcimg</key>
-        <scope>application</scope>
+        <scope>request</scope>
         <class>com.sbgl.toolbox.ComputerImageUrlTool</class>
     </tool> 
     

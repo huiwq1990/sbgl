@@ -11,6 +11,7 @@ public class ComputerImageUrlTool {
 	
 	private HttpServletRequest request;
 	private VelocityContext velocity;
+	private String defaulturl = "http://localhost:8080/sbgl";
 
 	/*
 	 * Initialize toolbox
@@ -26,10 +27,19 @@ public class ComputerImageUrlTool {
 	}
 	
 	
-	public String url(String pcname){	
-		if(pcname == null || pcname.trim().length()==0){
-			return CommonConfig.WebBaseUrl + "/computerImage"+"/default.jpg";
+	public String url(String pcname){
+		if(request==null){
+			return defaulturl+ "/computerImage"+"/default.jpg";
 		}
-		return CommonConfig.WebBaseUrl + "/computerImage"+"/"+pcname;
+		
+		String webbaseurl = (String) request.getAttribute("webbaseurl");
+		if(webbaseurl==null){
+			return defaulturl+ "/computerImage"+"/default.jpg";
+		}
+//		System.out.println("webbaseurl" + webbaseurl);
+		if(pcname == null || pcname.trim().length()==0){
+			return webbaseurl + "/computerImage"+"/default.jpg";
+		}
+		return webbaseurl + "/computerImage"+"/"+pcname;
 	}
 }

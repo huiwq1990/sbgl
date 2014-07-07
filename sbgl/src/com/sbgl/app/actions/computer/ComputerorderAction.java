@@ -211,7 +211,7 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 			//			Date semesterStartDate = courseconfigService.selectCourseconfigById(courseconfigService);
 //			selStartDate = DateUtil.addDay(semesterStartDate, (selsemesterweek-1)*7);
 //			selEndDate = DateUtil.addDay(selStartDate, 7);
-		
+		System.out.println("sss"+computerorderdetailFullMap.size() );
 		
 		return SUCCESS;
 		

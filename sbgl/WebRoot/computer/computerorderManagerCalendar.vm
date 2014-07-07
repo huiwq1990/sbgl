@@ -99,11 +99,12 @@
 					
 #foreach($bp in ${borrowperiodList})
 					                 <tr id="tr-slot-${bp.periodnum}">	
-										<td class="time-slot">全天</td>
+										<td class="time-slot">${bp.peroidname}</td>
 						#foreach($day in [1..7])
-							#set($orderdetaillist = $computerorderdetailFullMap.get($day))
+							#set($key = $bp.periodnum +""+ $day)
+							#set($orderdetaillist = $computerorderdetailFullMap.get($key))
 							#set($size = $orderdetaillist.size())
-						 <td data-week="${day} ${size}" data-slot="${bp.periodnum}">
+						 <td data-week="${day}" data-slot="${bp.periodnum}">
 							
 							
 							#foreach($od in ${orderdetaillist})
