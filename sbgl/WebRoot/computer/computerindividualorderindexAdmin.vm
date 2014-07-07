@@ -186,7 +186,7 @@
 						  </div>
 						</div>
 						<div class="panel-footer text-right">
-							<button type="button" class="btn btn-primary">提 交</button>
+							<button action-type="confirmComputerButton" class="btn btn-primary">提交预约</button>
 						</div>
 					</div>
 				</from>
@@ -258,8 +258,6 @@ $(window).load(function(){
 		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六']
 	};
 	XDate.defaultLocale = 'zh-CN';
-	var startDate = new XDate();
-	CreatePostBookingTable(4, 8, startDate);
   
 	$('#datepicker').datepicker({
 		language: 'zh-CN',

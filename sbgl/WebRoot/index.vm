@@ -119,21 +119,21 @@
                     <div class="media-heading"><h5><a #if($!row.status==9) href="${webbaseurl}/equipmentBooking.do?borrowId=$!row.borrowid" #else href="${webbaseurl}/equipOrderContent.do?borrowId=$!row.borrowid" #end>$!row.title</a></h5><span>#if($!row.status==1)
 								等待提交预约申请。
 							  #elseif($!row.status==2)
-								等待审核
+								请耐心等待管理员的审核。
 							  #elseif($!row.status==3)
-								预约被驳回，需修改后重新提交预约
+								预约被驳回，需修改后重新提交预约。
 							  #elseif($!row.status==4)
-								审核通过，请于规定时间领取相关设备
+								审核通过，请于规定时间领取相关设备。
 							  #elseif($!row.status==5)
-								请于规定时间归还相关设备
+								请于规定时间归还相关设备。
 							  #elseif($!row.status==6)
-								已超期，请尽快归还相关设备
+								已超期，请尽快归还相关设备。
 							  #elseif($!row.status==7)
-								部分设备受损，请尽快根据相关规定处理受损设备
+								部分设备受损，请尽快根据相关规定处理受损设备。
 							  #elseif($!row.status==8)
-								已完成
+								已完成。
 							  #elseif($!row.status==9)
-								老师已发布任务
+								您有一个教学任务需要处理。
 							  #end</span></div>
                     <span class="tag label label-important">#if($!row.category==1)
 							个人预约
