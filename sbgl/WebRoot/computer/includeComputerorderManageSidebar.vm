@@ -7,17 +7,11 @@
 	<div class="list-group">
 		
 		<a href="${webbaseurl}/manageComputerorderFull.action" class="list-group-item
-		#if($currentWebpage == "computerorderFullManage.vm" )
+		#if($currentWebpage == "computerorderFullManage.vm" || $currentWebpage == "computerorderManagerCalendar.vm")
 			 active        
 		#end		
 		">预约管理</a> 
-		
-		
-		<a href="${webbaseurl}/manageComputerorderCalendar.action" class="list-group-item
-		#if($currentWebpage == "computerorderManagerCalendar.vm" )
-			 active        
-		#end		
-		">预约管理-日历模式</a> 
+
 		<a href="${webbaseurl}/toSetComputerorderconfig.action" class="list-group-item
 		#if($currentWebpage == "computerorderConfig.vm" )
 			 active        

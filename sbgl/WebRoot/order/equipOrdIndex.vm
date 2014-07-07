@@ -63,7 +63,7 @@
                         <div class="caption">
                           <div class="rent-info">
                             <div class="rent-num">预约号：$!row.borrowid</div>
-                            <div class="rent-time"><i class="icon-time"></i> $!date.format("yyyy-MM-dd ", $!row.borrowtime)  - $!date.format("yyyy-MM-dd ", $!row.returntime)</div>
+                            <div class="rent-time"><i class="icon-time"></i> $!date.format("yyyy-MM-dd ", $!row.borrowtime)  至 $!date.format("yyyy-MM-dd ", $!row.returntime)</div>
                             <div class="rent-remark"><i class="icon-pencil"></i>$!row.remark</div>
                           </div>
                           <hr />

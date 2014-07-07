@@ -89,7 +89,7 @@
 			  #elseif($!equipmenborrowFull.category==2)
 				<div class="rent-type">预约类型：课程预约</div>
 			  #end
-              <div class="rent-time">预约时间：$!date.format("yyyy-MM-dd ", $!equipmenborrowFull.borrowtime)  - $!date.format("yyyy-MM-dd ", $!equipmenborrowFull.returntime)</div>
+              <div class="rent-time">预约时间：$!date.format("yyyy-MM-dd ", $!equipmenborrowFull.borrowtime)  至 $!date.format("yyyy-MM-dd ", $!equipmenborrowFull.returntime)</div>
 			  #if($!equipmenborrowFull.category==2)
 				<div class="rent-teacher">关联教师：<a rel="popover" class="lk" href="#">$!equipmenborrowFull.teacherName</a></div>
 			  #end

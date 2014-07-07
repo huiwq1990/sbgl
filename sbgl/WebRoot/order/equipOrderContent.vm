@@ -83,27 +83,25 @@
             </div>
             <div class="caption">
               <div class="status">
-                <strong>预约人的状态:</strong><br>
 				  #if($!equipmenborrowFull.status==1)
 					等待提交预约申请。
 				  #elseif($!equipmenborrowFull.status==2)
-					等待审核
+					等待审核。
 				  #elseif($!equipmenborrowFull.status==3)
-					预约被驳回，需修改后重新提交预约
+					预约被驳回，需修改后重新提交预约。
 				  #elseif($!equipmenborrowFull.status==4)
-					审核通过，请于规定时间领取相关设备
+					审核通过，请于规定时间领取相关设备。
 				  #elseif($!equipmenborrowFull.status==5)
-					请于规定时间归还相关设备
+					请于规定时间归还相关设备。
 				  #elseif($!equipmenborrowFull.status==6)
-					已超期，请尽快归还相关设备
+					已超期，请尽快归还相关设备。
 				  #elseif($!equipmenborrowFull.status==7)
-					部分设备受损，请尽快根据相关规定处理受损设备
+					部分设备受损，请尽快根据相关规定处理受损设备。
 				  #elseif($!equipmenborrowFull.status==8)
-					已完成
+					已完成。
 				  #end
                 </div>
                 <hr />
-                <strong>预约人的操作:</strong><br>
 				#if($!equipmenborrowFull.status==1||$!equipmenborrowFull.status==3)
                 <a class="btn btn-primary" data-type="subexamorder" data-id="$!equipmenborrowFull.borrowid"  href="javascript:;">开始预约</a>
 				#end
