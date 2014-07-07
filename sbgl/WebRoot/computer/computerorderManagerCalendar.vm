@@ -49,6 +49,11 @@
               <div class="operate-item pull-left">
                 <a href="#" class="btn btn-white s-h"><i class="icon-trash"></i> 删除</a>
               </div>
+              <!-- display-mode -->
+              <div class="display-mode btn-group pull-right">
+                <a href="${webbaseurl}/manageComputerorderFull.action" class="btn btn-white"><span class="icon-list"></span></a>
+                <a href="${webbaseurl}/manageComputerorderCalendar.action" class="btn btn-white active"><span class="icon-calendar"></span></a>
+              </div><!-- /.display-mode -->
               <div class="semester-filter pull-right">
                 <select id="select-categories" style="width:180px" class="select2 select-white"	onchange="toSelSemester(this[selectedIndex].value);">					
 #foreach($cctemp in ${courseconfigList})	
@@ -60,16 +65,7 @@
 #end
                 </select>
               </div>
-              <!-- display-mode
-              <div class="display-mode btn-group pull-right">
-                <a href="机房预约管理首页.html" class="btn btn-white"><span class="icon-list"></span></a>
-                <a href="机房预约管理首页（日历模式）.html" class="btn btn-white active"><span class="icon-calendar"></span></a>
-              </div>    --><!-- /.display-mode -->
-              <!--
-              <ul class="status-filter nav nav-pills pull-right">
-                <li class="active"><a href="#">待审核(4)</a></li>
-                <li><a href="#">已完成</a></li>
-              </ul>-->
+
             </div><!--control-bar end-->
             <div class="control-bar">
               <div class="row">

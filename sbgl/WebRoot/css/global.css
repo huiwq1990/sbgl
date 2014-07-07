@@ -1450,8 +1450,9 @@ a.list-group-item.active:focus .list-group-item-text {
 }
 .table .chk-column { width: 13px; }
 .table .id { width: 140px; }
-.table .categories { width: 140px; }
-.table .status { width: 100px; }
+.table .user { width: 140px; }
+.table .categories { width: 100px; }
+.table .status { width: 240px; }
 .table .btn,
 .media-list .btn { 
 	margin: 0 0 3px 10px;

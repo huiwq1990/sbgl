@@ -67,14 +67,17 @@
                 </div>              
               </div>
 			  -->
+
+              <div class="display-mode btn-group pull-right">
+                <a href="${webbaseurl}/manageComputerorderFull.action" class="btn btn-white active"><span class="icon-list"></span></a>
+                <a href="${webbaseurl}/manageComputerorderCalendar.action" class="btn btn-white"><span class="icon-calendar"></span></a>
+              </div>
               <ul class="status-filter nav nav-pills pull-right">
-				
-			    <li class="computerorderdelstatusli active"><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitAll)">全部</a></li>
-				
-				<li class="computerorderdelstatusli"><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitPass)">审核通过</a></li>
-                <li class="computerorderdelstatusli"><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitWait)">待审核</a></li>
-				<li class="computerorderdelstatusli"><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitReject)">驳回</a></li>
-				<li class="computerorderdelstatusli"><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitDel)">删除</a></li>
+                <li class="active"><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitAll)">全部</a></li>
+                <li><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitPass)">审核通过</a></li>
+                <li><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitWait)">待审核</a></li>
+                <li><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitReject)">驳回</a></li>
+                <li><a href="#" onclick="getComputerorderByAuditStatus($ComputerorderStatusAduitDel)">删除</a></li>
               </ul>
             </div><!--control-bar end-->
 			
@@ -110,7 +113,7 @@
                     <td>$!temp.computerorderserialnumber<!--<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a>--></td>
                     <td>$!temp.createusername</td>
 					
-                    <td><a href="${webbaseurl}/toAuditComputerorderPage.${strutsaction}?computerorderId=$!temp.computerorderid">$!temp.computerordertitle</a></td>
+                    <td><a href="${webbaseurl}/toAuditComputerorderPage.${strutsaction}?computerorderId=$!temp.computerorderid" target="_blank">$!temp.computerordertitle</a></td>
                      #if($!temp.computerorderstatus == $ComputerorderStatusAduitPass)
 						<td>审核通过</td>
 					#elseif($!temp.computerorderstatus ==$ComputerorderStatusAduitReject)
@@ -211,8 +214,11 @@ var computerorderStatus = $computerorderStatus;
   
 //更改状态的高亮显示
   $(".status-filter li").click(function () {
-                $(".computerorderdelstatusli").removeClass("active");
-                $(this).addClass("active"); 
+    var _this = $(this);
+    $(".status-filter li").each(function(index, el) {
+        $(el).removeClass('active')
+    });
+    _this.addClass('active');
   });
         
      
