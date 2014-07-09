@@ -1,7 +1,7 @@
 #if($curstatus == $ComputerorderStatusAduitPass)
 审核通过，请在预约时间内使用机房资源。
 #elseif($curstatus ==$ComputerorderStatusAduitReject)
-您的申请已被驳回。
+您的申请已被驳回，见详细中的驳回说明。
 #elseif($curstatus ==$ComputerorderStatusAduitDel)
 您的申请已被删除。
 #elseif($curstatus ==$ComputerorderStatusAduitWait)

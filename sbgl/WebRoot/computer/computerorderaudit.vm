@@ -38,7 +38,8 @@
               
       <div class="row">
             <div class="control-bar col-md-12">
-              <div class="title">$!computerorderFull.computerordertitle  </div>
+              #set($currentcomputerorderordertype=$computerorderFull.computerorderordertype)
+              <div class="title">$!computerorderFull.computerordertitle <span class="label label-important">#parse("include/includeComputerorderType.vm")</span></div>
             </div>        
             <div class="col-md-7">      
 				
@@ -53,24 +54,35 @@
                   </div>
                   <div class="caption">
                       <div class="status">
-						订单当前状态：#set($curstatus = $computerorderFull.computerorderstatus)
-					  #parse("computer/includeComputerorderStatus.vm")
-					  <br>
-					  #if($computerorderFull.computerorderstatus ==$ComputerorderStatusAduitReject)
-						驳回原因：$!computerorderFull.computerorderrejectreason
-						#end
-
+            						#set($curstatus = $computerorderFull.computerorderstatus)
+                        #if($curstatus == $ComputerorderStatusAduitPass)
+                        审核通过。
+                        #elseif($curstatus ==$ComputerorderStatusAduitReject)
+                        申请已被驳回，具体原因见下方详细中的驳回说明。
+                        #elseif($curstatus ==$ComputerorderStatusAduitDel)
+                        申请已被删除。
+                        #elseif($curstatus ==$ComputerorderStatusAduitWait)
+                        待审核，请尽快审核该预约申请！
+                        #else 
+                        错误
+                        #end
                       </div>
                       <hr>
 						<!--
                       <strong>审核人可能进行的操作:</strong><br>  -->
 					
-						<div class="orderstatus">
+						        <div class="orderstatus">
+                      #if($computerorderFull.computerorderstatus != $ComputerorderStatusAduitPass)
                       <a class="btn btn-primary" onclick="auditOrder( $computerorderFull.computerorderid ,$!ComputerorderStatusAduitPass)" href="#" role="button">审核通过</a>
+                      #end
+                      #if($computerorderFull.computerorderstatus != $ComputerorderStatusAduitReject)
                       <a class="btn btn-white" data-toggle="modal" href="#reject" role="button">驳 回</a>
+                      #end
+                      #if($computerorderFull.computerorderstatus != $ComputerorderStatusAduitDel)
                       <a class="btn btn-white" data-toggle="modal" href="#delete" role="button">删 除</a>
-                        </div>
-				  </div>
+                      #end
+                    </div>
+				          </div>
                 </div>
                 <div class="thumbnail">
                   <div class="hd">
@@ -78,44 +90,28 @@
                   </div>
                   <div class="caption">
                     <div class="rent-detail">
-                      <span class="rent-user"><strong>申请者：<a rel="popover" class="lk" href="#" data-original-title="" title="">$!computerorderFull.createusername</a></strong></span>
-                      <br>
-					  <span class="rent-num"><strong> 预约号：$!computerorderFull.computerorderserialnumber</strong></span>
-					  #set($currentcomputerorderordertype=$computerorderFull.computerorderordertype)					 
-						 <div class="rent-contact">预约方式：#parse("include/includeComputerorderType.vm")</div>
-					
-                     <!-- <div class="rent-contact">联系方式：</div> -->
-					 #if($computerorderFull.computerorderremark)
+                      <span class="rent-user"><strong>申请者：<a rel="popover" class="lk" href="#" data-original-title="" title="">$!computerorderFull.createusername</a></strong></span> - <span class="rent-num"><strong> 预约号：$!computerorderFull.computerorderserialnumber</strong></span>
+                      #set($currentcomputerorderordertype=$computerorderFull.computerorderordertype)	
+                      <div class="rent-userinfo">学生 - 本科 - 班级(教师)</div>				 
+                      <div class="rent-contact">预约类型：#parse("include/includeComputerorderType.vm")</div>
+                      <div class="rent-contact">联系方式：XXXXXXX</div>
+                      #if($computerorderFull.computerorderremark)
                       <div class="rent-remark"><i class="icon-pencil"></i> $!computerorderFull.computerorderremark</div>
-					  #end
+                      #end
                     </div>
-					#if($computerorderFull.computerorderrejectreason)
+                    #if($computerorderFull.computerorderstatus == $ComputerorderStatusAduitReject)
                     <hr>
-						#end
+                    #end
                   </div>                        
                   
 				 
-				  
-				  <ul class="media-list">
-                    <li class="media">
-						<!--
-                      <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
-                        <img src="../img/photo.jpg" width="28" height="28" class="img-rounded">
-                      </a>
-					  -->
-                      <div class="media-body">
-						<!--
-                        <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">教师名</a></h5><span class="post-time" title="详细时间"></span></div>
-                        -->
-						#if($computerorderFull.computerorderrejectreason)
-						<p>驳回原因：$!computerorderFull.computerorderrejectreason</p>
-						#end
-                      </div>
-                    </li>
-                  </ul>
-                                            
-                </div>               
-            </div>                    
+				  #if($computerorderFull.computerorderstatus == $ComputerorderStatusAduitReject)
+                  <div class="caption">
+                    <p>驳回原因：$!computerorderFull.computerorderrejectreason</p>
+                  </div>
+            #end
+                </div>
+            </div>
       </div>
 
 

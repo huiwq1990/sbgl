@@ -217,15 +217,15 @@ function getBookingTime(bookingData, startDate) {
 	var timeSlotStr = "";
 	var selectedDate = "";
 	// 第几星期(上、下 、晚 7 * 3)
-	var weekTimes = parseInt(index / 21) + 1;
-	if (index % (7 * 3) == 0) {
-		weekTimes = weekTimes - 1;	
-	}
-	var dayWeekIndex = index % 7;								// 7天内的第几天		
-	if (dayWeekIndex == 0) {
-		dayWeekIndex = 7;							// 第7天
-	}
-	var dayIndex = 7 * ( weekTimes - 1 ) + dayWeekIndex;				// 第几天
+	// var weekTimes = parseInt(index / 21) + 1;
+	// if (index % (7 * 3) == 0) {
+	// 	weekTimes = weekTimes - 1;	
+	// }
+	// var dayWeekIndex = index % 7;								// 7天内的第几天		
+	// if (dayWeekIndex == 0) {
+	// 	dayWeekIndex = 7;							// 第7天
+	// }
+	// var dayIndex = 7 * ( weekTimes - 1 ) + dayWeekIndex;				// 第几天
 	
 	switch(timeSlot)
 	{
@@ -239,8 +239,8 @@ function getBookingTime(bookingData, startDate) {
 		timeSlotStr = "晚上";
 		break;
 	}
-	startDate.addDays(dayIndex - 1);
-	var date = startDate.toString('MMMd日 dddd');
+	// startDate.addDays(dayIndex - 1);
+	// var date = startDate.toString('MMMd日 dddd');
 	selectedDate = curdate + " " + timeSlotStr;
 	//alert(timeSlotStr + ", index=" + index + ", weekTimes=" + weekTimes + ", dayWeekIndex=" + dayWeekIndex + ", dayIndex=" + dayIndex);
 	return selectedDate;
@@ -255,7 +255,6 @@ $(window).load(function(){
 	};
 	XDate.defaultLocale = 'zh-CN';
 	var startDate = new XDate();
-	CreatePostBookingTable(4, 8, startDate);
   
 	$('#datepicker').datepicker({
 		language: 'zh-CN',

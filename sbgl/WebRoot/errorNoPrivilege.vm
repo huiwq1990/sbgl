@@ -1,8 +1,49 @@
-<html >
-	<body >
-		<h1 >
-			没有权限访问，请更换用户登录！
-        </h1>
-        <!--<a href="${webbaseurl}/index.do">首页</a>-->
-    </body>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>北京电影学院摄影系 - 出错啦！</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body>
+<header id="header-wrap"><!--header-wrap-->
+  <div id="global-header">
+    <div id="logo"><a class="brand" href="${webbaseurl}/index.action"><img src="img/logo.png" alt="北京电影学院摄影系"></a></div> 
+  </div>
+
+</header><!--/#header-wrap-->
+
+<section id="main-wrap"><!--main-wrap-->
+  <!--main-content start-->
+  <div id="main-content" class="clearfix">
+    <div class="container">            
+      <div class="row">
+        <div class="hero-unit clearfix">
+          <i class="icon-warning-sign pull-left"></i>
+          <div class="pull-left">
+            <h1>出错啦！</h1>
+            <p>您好像没有权限访问该页面！</p>
+          </div>
+        </div>                                    
+      </div>
+    </div>
+  </div>
+  <!---main-content end-->
+</section>
+
+</body>
 </html>
