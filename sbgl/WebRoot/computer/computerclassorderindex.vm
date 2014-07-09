@@ -28,22 +28,16 @@
 </header><!--/#header-wrap-->
 
 <section id="main-wrap"><!--main-wrap-->
-  
   <div id="main-content" class="clearfix"><!--main-content start--> 
           <div class="container" id="post-equip">
-            
             <div class="row">
-
               <div class="post-list-warp"><!--post-list-warp start-->  
                 <div class="post-list">              
                   <div class="control-bar"><!--control-bar start-->
                     <div class="title">机房预约</div>
                     <div class="tips">当前可预约 2 周内的机房设备，选择您所需要的设备、使用日期、时段及数量。</div>
                   </div><!--control-bar end-->
-    
-				  
-             
-               
+
 #set($computermodelListSize = $computermodelList.size() - 1)
 #if($computermodelListSize>=0)
 #set($computermodelListRegion = [0..$computermodelListSize])
@@ -63,10 +57,10 @@
                           <h3 class="equip-title">$tempmodel.name</h3>
                           <p class="detail">$tempmodel.description</p>
                           <div class="carousel-bar">
-                            <a class="btn btn-white" href="#post-equip-$!tempmodel.id" data-slide="prev"><i class="icon-chevron-left"></i></a>
-                            <a class="btn btn-white" href="#post-equip-$!tempmodel.id" data-slide="next"><i class="icon-chevron-right"></i></a>
+                            <a class="btn btn-white" href="#post-equip-$!tempmodel.computermodeltype" data-slide="prev"><i class="icon-chevron-left"></i></a>
+                            <a class="btn btn-white" href="#post-equip-$!tempmodel.computermodeltype" data-slide="next"><i class="icon-chevron-right"></i></a>
                           </div>
-                          <div id="post-equip-$!tempmodel.id" class="carousel slide">
+                          <div id="post-equip-$!tempmodel.computermodeltype" class="carousel slide">
                             <div class="carousel-inner">
       
 						<!--构建所有的Table -->
@@ -90,7 +84,7 @@
 									
                                     <thead>
                                       <tr>
-                                        <th class="time-slop">时间</th>
+                                        <th class="time-slot">时间</th>
 										##所有时间段 上午、中午、晚上 取出所有的属性名称
 										#set($weekdayRegion = [0..$computerodertablercolumn-1])
 										#set($weekDateList = $showDateMap.get($tempweektableindex))
@@ -136,13 +130,10 @@
 #end ##end weektable
 <!-- end 构建所有Table-->
 		
-		
-		
-					
-							  
+
                             </div>        
                           </div>
-    
+
                         </div>
              
                     </div>
@@ -150,33 +141,29 @@
 				<!--end-->		
 #end
 #end					
-				
-				
-				
+
 				</div>
               </div><!--post-list-warp end-->
               
-              <div class="post-sidebar-warp"><!--post-sidebar-warp start-->
+            <div class="post-sidebar-warp"><!--post-sidebar-warp start-->
                 <form action="javascript:void(0)">
-			   <div id="post-sidebar" class="thumbnail wizard">
-                  <h3>预约单</h3>
-				 
-                  <div id="rent-list">
-                    <p class="no-add">尚未添加任何预约项。</p>
-                  
-                  </div>
-                  <div class="form-actions actions">  
-                    <button type="button" class="btn btn-white btn-clear">清 空</button>
-                    <button action-type="confirmComputerButton"  class="btn btn-primary">提交预约</button>
-                  </div>
-                </div>
+					<div id="rent-list-wrap" class="panel panel-default">
+						<div class="panel-heading">
+							<h3>预约单 <small>请选择你所需要的机房和时段。</small></h3>
+						</div>
+						<div class="panel-body"> 
+						  <div id="rent-list">
+						    <p class="no-add">尚未添加任何预约项。</p>
+						  </div>
+						</div>
+						<div class="panel-footer text-right">
+							<button action-type="confirmComputerButton" class="btn btn-primary">提交预约</button>
+						</div>
+					</div>
 				</from>
-				
-              </div><!--post-sidebar-warp start-->
-            </div>           
-            
-
-          </div>
+            </div><!--post-sidebar-warp end-->
+        </div>
+    </div>
   </div>
   <!---main-content end-->
 </section>
@@ -197,66 +184,6 @@
 <script src="${jsDomain}/jquery.noty.js"></script>
 
 <script>
-function CreatePostBookingTable(rowCount,cellCount,startDate) {
-	var tableName = "MAC工作站"
-	var tableContainer = $("<table class='table' data-table-name='" + tableName + "'></table>");
-	var index = 0;				// 单元格索引
-	var html = "";
-	var num = 9;				// 可预约数
-	var day;
-	var week;
-	var bookInfo = "<strong>"+ num + "</strong><div class='info'>可预约</div>"
-	html =
-		"<thead>" +
-		"<tr>";
-	for(var i = 0; i< cellCount; i++) {			// 生成表头（时间）
-		if(i == 0) {
-			html += "<th class='time-slot'>" + "时间" + "</th>";
-		}
-		else {			
-			day = startDate.toString('MM/d');
-			week = startDate.toString('dddd');
-			html += "<th>" + day + "<br/>" + week + "</th>";
-			startDate.addDays(1);
-		}
-	}
-	html +=
-		"</tr>" +
-		"</thead>";
-	  
-	html +=
-		"<tbody>";
-	for(var i = 0; i < (rowCount - 1); i++) {
-		html += "<tr>";
-		for(var j = 0; j < cellCount; j++) {
-			if(j == 0) {
-				html += "<td class='time-slot'>";
-				switch(i)
-				{
-				case 0:
-					html += "上午";
-					break;
-				case 1:
-					html += "下午";
-					break;
-				case 2:
-					html += "晚上";
-					break;
-				}
-				html += "</td>";
-			}
-			else {
-				index++;
-				html += "<td class='bookable' data-index='" + index + "' data-slot='" + i + "' data-max-num='9'>" + bookInfo + "</td>";				  
-			} // if
-		} // for 
-		html += "</tr>";
-	}// for
-	html += "</tbody>";
-  
-	$(tableContainer).appendTo($("#createtable"));
-	//$(html).appendTo(tableContainer);
-}
 function getBookingTime(bookingData, startDate) {
 	var index = bookingData.index;
 	var timeSlot = bookingData.slot;
@@ -264,15 +191,15 @@ function getBookingTime(bookingData, startDate) {
 	var timeSlotStr = "";
 	var selectedDate = "";
 	// 第几星期(上、下 、晚 7 * 3)
-	var weekTimes = parseInt(index / 21) + 1;
-	if (index % (7 * 3) == 0) {
-		weekTimes = weekTimes - 1;	
-	}
-	var dayWeekIndex = index % 7;								// 7天内的第几天		
-	if (dayWeekIndex == 0) {
-		dayWeekIndex = 7;							// 第7天
-	}
-	var dayIndex = 7 * ( weekTimes - 1 ) + dayWeekIndex;				// 第几天
+	// var weekTimes = parseInt(index / 21) + 1;
+	// if (index % (7 * 3) == 0) {
+	// 	weekTimes = weekTimes - 1;	
+	// }
+	// var dayWeekIndex = index % 7;								// 7天内的第几天		
+	// if (dayWeekIndex == 0) {
+	// 	dayWeekIndex = 7;							// 第7天
+	// }
+	// var dayIndex = 7 * ( weekTimes - 1 ) + dayWeekIndex;				// 第几天
 	
 	switch(timeSlot)
 	{
@@ -286,8 +213,8 @@ function getBookingTime(bookingData, startDate) {
 		timeSlotStr = "晚上";
 		break;
 	}
-	startDate.addDays(dayIndex - 1);
-	var date = startDate.toString('MMMd日 dddd');
+	// startDate.addDays(dayIndex - 1);
+	// var date = startDate.toString('MMMd日 dddd');
 	selectedDate = curdate + " " + timeSlotStr;
 	//alert(timeSlotStr + ", index=" + index + ", weekTimes=" + weekTimes + ", dayWeekIndex=" + dayWeekIndex + ", dayIndex=" + dayIndex);
 	return selectedDate;
@@ -302,7 +229,6 @@ $(window).load(function(){
 	};
 	XDate.defaultLocale = 'zh-CN';
 	var startDate = new XDate();
-	CreatePostBookingTable(4, 8, startDate);
   
 	$('#datepicker').datepicker({
 		language: 'zh-CN',

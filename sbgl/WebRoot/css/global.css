@@ -557,6 +557,8 @@ border-bottom: 2px solid #427FED !important;
 .hero-unit > i.icon-ok-sign { color: #468847; }
 .hero-unit > i.icon-warning-sign { color: #d9534f; }
 .hero-unit code { font-size: 28px; margin: 0 8px; }
+.hero-unit p { margin-bottom: 15px; font-size: 21px; font-weight: 200; }
+.hero-unit h1 { font-size: 60px; line-height: 1.1; }
 
 .topic-wrap { position: absolute; top: 40px; right: 0; max-width: 5%; text-align: right; }
 .topic-sys, .topic-cus { 

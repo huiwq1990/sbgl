@@ -24,7 +24,6 @@
   <div id="global-header">
     <div id="logo"><a class="brand" href="${webbaseurl}/index.action"><img src="img/logo.png" alt="北京电影学院摄影系"></a></div> 
   </div>
-
 </header><!--/#header-wrap-->
 
 <section id="main-wrap"><!--main-wrap-->

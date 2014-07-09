@@ -35,13 +35,12 @@
     <div class="container">
       <div class="row">
             <div class="control-bar col-md-12">
-              <div class="title">$!computerorderFull.computerordertitle  </div>
+              <div class="title">$computerhomeworkFull.computerhomeworkname <span class="label label-important">教学预约</span></div>
             </div>        
             <div class="col-md-7">                  
                 <div class="thumbnail">
                   <div class="hd clearfix">
-                    <h3 class="pull-left">允许借的机房</h3>
-<!--                     <div class="pull-right">共XX种，XX个器材</div> -->
+                    <h3 class="pull-left">预约单</h3>
                   </div>
                   <div class="media-list">
 
@@ -61,13 +60,11 @@
                       </div>
                       <a class="pull-left" data-toggle="modal" href="#equip-detail" role="button">
                         <img src="$pcimg.url(${temp.computermodelpicpath})" width="100" height="100">
-                      </a>                  
+                      </a>
                     </div>
 #end
 #end
 
-
-                
 					       </div>
                 </div>
             </div>
@@ -75,50 +72,33 @@
 
 			
             <div class="col-md-5">
-               
+                <div class="thumbnail">
+                  <div class="hd">
+                    <h3>状态</h3>
+                  </div>
+                  <div class="caption">
+                      <div class="status">等待您提交预约申请!</div>
+                      <hr>
+                    <div class="orderstatus">
+                      <a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}/toComputerClassorderPage.${strutsaction}?computerhomeworkid=$computerhomeworkFull.computerhomeworkid">开始预约</a>
+                      <a class="btn btn-white" action-type="" action-data="" href="${webbaseurl}/deleteMineComputerhomeworkreceiver.${strutsaction}?computerhomeworkid=$computerhomeworkFull.computerhomeworkid">删 除</a>
+                    </div>
+                  </div>
+                </div>
                 <div class="thumbnail">
                   <div class="hd">
                     <h3>详情</h3>
                   </div>
                   <div class="caption">
                     <div class="rent-detail">
-          						<div class="name">作业名称：$computerhomeworkFull.computerhomeworkname</div>
-          					 
-          						<div class="name">预约时间：$date.format("yyyy年MM月dd日",$computerhomeworkFull.computerorderclassruleorderstarttime) 至 $date.format("yyyy年MM月dd日",$computerhomeworkFull.computerorderclassruleorderendtime)</div>
-          					
-          						<div class="name">总共学时：$computerhomeworkFull.computerorderclassruleavailableordertime</div>
-          						
-          						<div class="name">课程名称：$courseFull.coursename</div>
-          						
-          						<div class="name">教师名称：$courseFull.teacherloginusername</div>
-						
-						
-	
+          						<div class="rent-time">预约时间：$date.format("yyyy年MM月dd日",$computerhomeworkFull.computerorderclassruleorderstarttime) 至 $date.format("yyyy年MM月dd日",$computerhomeworkFull.computerorderclassruleorderendtime)</div>
+          						<div class="rent-coursename">课程名称：$courseFull.coursename</div>
+          						<div class="rent-teacher">教师：$courseFull.teacherloginusername</div>
+                      <div class="rent-period">总学时：$computerhomeworkFull.computerorderclassruleavailableordertime</div>
                       <div class="rent-remark"><i class="icon-pencil"></i></div>
                     </div>
-                    <hr>
-						
-						<!--
-						 <strong>预约人可能进行的操作:</strong><br> -->
-                <a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}/toComputerClassorderPage.${strutsaction}?computerhomeworkid=$computerhomeworkFull.computerhomeworkid">开始预约</a>
-                <a class="btn btn-white" action-type="" action-data="" href="${webbaseurl}/deleteMineComputerhomeworkreceiver.${strutsaction}?computerhomeworkid=$computerhomeworkFull.computerhomeworkid">删 除</a> 
-				
-                  </div>                        
-                 
-				  <!--
-				  <ul class="media-list">
-                    <li class="media">
-                      <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
-                        <img src="../img/photo.jpg" width="28" height="28" class="img-rounded">
-                      </a>
-                      <div class="media-body">
-                        <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">$courseFull.teacherloginusername</a></h5><span class="post-time" title="详细时间">下午4:53</span></div>
-                       
-                      </div>
-                    </li>
-                  </ul>
-                   -->                         
-                </div>               
+                  </div>
+                </div>
             </div> 	
       </div>
     </div>
