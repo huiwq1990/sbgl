@@ -440,7 +440,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 
 	public List<EquipmenborrowFull> findUnderWayOrder(Integer userId) {
 		// TODO Auto-generated method stub
-		final String sql = " select case when a.status='9' then b.MsgTitle else a.title end title,a.*  from EquipmenBorrow a left outer join sendruletouser b on a.Sendruleid = b.Sendruleid where a.status not in ('8') and a.userid ='"+userId+"'  ";
+		final String sql = " select case when a.status='9' then b.MsgTitle else a.title end title,a.*  from EquipmenBorrow a left outer join sendruletouser b on a.Sendruleid = b.Sendruleid where a.status not in ('1','8') and a.userid ='"+userId+"'  ";
 		List<EquipmenborrowFull> equipmenborrowtList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(sql);
