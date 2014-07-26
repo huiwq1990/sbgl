@@ -83,6 +83,28 @@
 			});
 
 
+			var lastScrollTop = 0;
+			$(window).scroll(function () {
+				var st = $(this).scrollTop();
+				lastScrollTop = st;
+                if ($(window).scrollTop() > 0) {
+					$("#global-header").css("top", 0 - $(window).scrollTop());
+					$(".nav-wrap").css("top", 80 - $(window).scrollTop());
+					$("#rent-bar").css("top", 145 - $(window).scrollTop());
+					$(".site-nav .dropdown-menu").css("top","-2px");
+					if ($(window).scrollTop() >= 80) {
+						$(".nav-wrap").css("top", 0);
+						$("#rent-bar").css("top", 65);
+					}
+                }
+                else {
+					$(".site-nav .dropdown-menu").css("top","80px");
+					$("#global-header").css("top", 0);
+					$(".nav-wrap").css("top", 80);
+					$("#rent").css("top", 145);
+                }
+            });
+
 			/* ============ 器材预约 ============ */
 			/* 添加预约设备向导 */
 			$("#rent-bar .wizard").height($("#rent-bar .wizard .step-content").height() + 60);
