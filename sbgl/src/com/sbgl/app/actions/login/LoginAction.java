@@ -109,7 +109,17 @@ public class LoginAction extends ActionSupport {
 					loginUser2.setPrivilege("0");
 				}
 				
-				if( "true".equals( loginInfo != null ? loginInfo.getIsfirstlogin() : "" ) ) {
+				if(loginInfo == null) {
+					loginInfo = new Userlogininfo();
+					loginInfo.setUserid( loginUser2.getId() );
+					loginInfo.setIsfirstlogin( "true" );
+					loginInfo.setLastlogintime( new Date() );
+					loginInfo.setLogincount(1);
+					loginInfo.setRemark(null);
+					loginInfoService.addUserLoinInfo(loginInfo);
+				}
+				
+				if( "true".equals( loginInfo.getIsfirstlogin() ) ) {
 					loginType = "firstLogin";
 					session.setAttribute("isFirst", true);
 				} else {
