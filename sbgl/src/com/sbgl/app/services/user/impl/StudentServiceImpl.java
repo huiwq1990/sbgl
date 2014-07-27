@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.entity.Student;
+import com.sbgl.app.entity.Userlogininfo;
 import com.sbgl.app.services.user.StudentService;
 
 @Scope("prototype") 
@@ -24,8 +25,17 @@ public class StudentServiceImpl implements StudentService {
 		student.setId( id );
 		student.setMakedate( new Date() );
 		
+		Userlogininfo info = new Userlogininfo();
+		info.setId( baseDao.getCode("loginInfoId") );
+		info.setIsfirstlogin( new Boolean(true).toString() );
+		info.setLastlogintime(null);
+		info.setLogincount(0);
+		info.setRemark(null);
+		info.setUserid(id);
+		
 		try {
 			baseDao.saveEntity( student );
+			baseDao.saveEntity( info );
 		} catch (RuntimeException re) {
             id = -1;
         }

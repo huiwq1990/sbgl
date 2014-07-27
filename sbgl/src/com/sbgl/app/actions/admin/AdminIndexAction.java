@@ -1,7 +1,10 @@
 package com.sbgl.app.actions.admin;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -16,13 +19,18 @@ import com.sbgl.app.entity.ComputerorderFull;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.entity.Courseconfig;
+import com.sbgl.app.entity.Loginuser;
+import com.sbgl.app.entity.Student;
+import com.sbgl.app.entity.Teacher;
+import com.sbgl.app.entity.Userlogininfo;
+import com.sbgl.app.entity.Worker;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
-import com.sbgl.app.services.order.OrderMainService;
 import com.sbgl.app.services.orderadmin.OrderAdminService;
 import com.sbgl.app.services.teach.CourseconfigService;
 import com.sbgl.app.services.user.StudentService;
 import com.sbgl.app.services.user.TeacherService;
+import com.sbgl.app.services.user.UserlogininfoService;
 import com.sbgl.app.services.user.WorkerService;
 import com.sbgl.common.DataError;
 
@@ -38,6 +46,8 @@ public class AdminIndexAction extends BaseAction{
 	private TeacherService teacherService;
 	@Resource
 	private WorkerService workerService;
+	@Resource
+	private UserlogininfoService loginInfoService;
 	
 	@Resource
 	private ComputerorderService computerorderService;	
@@ -95,6 +105,78 @@ public class AdminIndexAction extends BaseAction{
 		} catch (DataError e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		return SUCCESS;
+	}
+	
+	public String firstSetup() {
+		return SUCCESS;
+	}
+	
+	private Map<String,Object> returnJSON;
+	public Map<String,Object> getReturnJSON() {
+		return returnJSON;
+	}
+	
+	private String password;
+	private String phoneNumber;
+	private String email;
+	
+	public String finishSetup() {
+		returnJSON = null;
+		returnJSON = new HashMap<String,Object>();
+		Loginuser u = (Loginuser) session.get("loginUser");
+		Integer id = u.getId();
+		String userType = u.getRoletype();
+		
+		Integer res = null;
+		if("1".equals(userType)) {
+			Student s = studentService.getStudentById(id);
+			s.setPassword(password);
+			s.setTelephone(phoneNumber);
+			s.setEmail(email);
+			res = studentService.alterStudent(s);
+		} else if("2".equals(userType)) {
+			Teacher t = teacherService.getTeacherById(id);
+			t.setPassword(password);
+			t.setTelephone(phoneNumber);
+			t.setEmail(email);
+			res = teacherService.alterTeacher(t);
+		} else if("4".equals(userType)) {
+			Worker w = workerService.getWorkerById(id);
+			w.setPassword(password);
+			w.setTelephone(phoneNumber);
+			w.setEmail(email);
+			res = workerService.alterWorker(w);
+		}
+		
+		u.setTelephone(phoneNumber);
+		u.setEmail(email);
+		u.setPassword(password);
+		session.put("loginUser", u);
+		
+		if(res == null) {
+			returnJSON.put("tag", -1);
+			returnJSON.put("msg", "更新用户信息失败！");
+		} else {
+			Userlogininfo loginInfo = loginInfoService.getLoinInfoByUserId(id);
+			loginInfo.setIsfirstlogin("false");
+			loginInfo.setLastlogintime( new Date() );
+			Integer count = loginInfo.getLogincount();
+			count = count == null ? 0 : ++count;
+			loginInfo.setLogincount(count);
+			loginInfoService.alterUserLoginInfo(loginInfo);
+			
+			session.put("isFirst", false);
+			
+			if( "1".equals(u.getPrivilege()) ) {
+				returnJSON.put("tag", 0);
+				returnJSON.put("url", "./adminIndex.action");
+			} else {
+				returnJSON.put("tag", 0);
+				returnJSON.put("url", "./index.action");
+			}
 		}
 		
 		return SUCCESS;
@@ -303,8 +385,27 @@ public class AdminIndexAction extends BaseAction{
 		this.courseconfig = courseconfig;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 	
-	
-	
-	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 }

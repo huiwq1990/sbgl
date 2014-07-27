@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.sbgl.app.dao.BaseDao;
+import com.sbgl.app.entity.Userlogininfo;
 import com.sbgl.app.entity.Worker;
 import com.sbgl.app.services.user.WorkerService;
 
@@ -24,8 +25,17 @@ public class WorkerServiceImpl implements WorkerService {
 		worker.setId( id );
 		worker.setMakedate( new Date() );
 		
+		Userlogininfo info = new Userlogininfo();
+		info.setId( baseDao.getCode("loginInfoId") );
+		info.setIsfirstlogin( new Boolean(true).toString() );
+		info.setLastlogintime(null);
+		info.setLogincount(0);
+		info.setRemark(null);
+		info.setUserid(id);
+		
 		try {
 			baseDao.saveEntity( worker );
+			baseDao.saveEntity( info );
 		} catch (RuntimeException re) {
             id = -1;
         }
