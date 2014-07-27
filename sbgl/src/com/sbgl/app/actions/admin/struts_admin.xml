@@ -129,6 +129,7 @@
         		<param name="root">returnJSON</param>
         	</result>
         </action>
+        
 	</package>
 
 </struts>
