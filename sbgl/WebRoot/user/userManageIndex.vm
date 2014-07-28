@@ -75,6 +75,7 @@
                     <th class="username">用户名</th>
                     <th class="user-group">用户组</th>
                     <th class="admin-group">类别</th>
+                    <th class="admin-group">班级</th>
                     <th class="operate">电话</th>
                   </tr>
                 </thead>
@@ -91,6 +92,11 @@
 						<td>教师</td>
 					#elseif($!user.userGroupType == 4)
 						<td>其他</td>
+					#end
+					#if($!user.userGroupType == 1)
+						<td>$!user.clazzName</td>
+					#else
+						<td>——</td>
 					#end
                     <td>$!user.tel</td>
                   </tr>
