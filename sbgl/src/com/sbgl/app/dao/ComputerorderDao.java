@@ -33,5 +33,7 @@ public List<Computerorder> selectComputerorderByCondition(String condition);
 
 	List<ComputerorderFull> selFullByStatus(int uid, int orderstatus);
 
+	List<ComputerorderFull> selFullByStatus(int orderstatus);
+
  
 }

@@ -444,7 +444,7 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 		Computerorder computerorder = new Computerorder();	
 		computerorder.setSerialnumber( SnActionUtil.genComputerorderSn(this.getCurrentAdminId(), 3, DateUtil.currentDate()));
 		computerorder.setCreateuserid(this.getCurrentAdminId());
-		computerorder.setOrdertype(3);
+		computerorder.setOrdertype(ComputerorderInfo.ClassScheduleOrder);
 		String ordertitle = course.getName()+"的课程安排预约";
 		computerorder.setTitle(ordertitle);
 		computerorder.setCreatetime(DateUtil.currentDate());

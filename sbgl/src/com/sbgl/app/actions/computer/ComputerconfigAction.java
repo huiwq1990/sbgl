@@ -23,7 +23,11 @@ import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputerconfigService;
 import com.sbgl.util.*;
 
-
+/**
+ * 现在已经不用了
+ * @author hg
+ *
+ */
 
 @Scope("prototype") 
 @Controller("ComputerconfigAction")

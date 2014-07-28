@@ -16,6 +16,6 @@ public class ComputerorderInfo {
 //	课程预约
 	public static final int ClassOrder = 2;
 //	课程安排
-	public static final int ClassScheduleOrder = 2;
+	public static final int ClassScheduleOrder = 3;
 	
 }

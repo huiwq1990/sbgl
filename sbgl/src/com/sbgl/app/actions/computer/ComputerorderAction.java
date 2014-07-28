@@ -233,9 +233,9 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 //		装载数据
 		String sql = " ";	
 		if(computerorderStatus==ComputerorderInfo.ComputerorderStatusAduitAll){
-			
+			sql = " where a.ordertype !="+ComputerorderInfo.ClassScheduleOrder+" ";
 		}else{
-			sql = sql+" where a.status="+computerorderStatus+" ";
+			sql = " where a.ordertype !="+ComputerorderInfo.ClassScheduleOrder+" and a.status="+computerorderStatus+" ";
 		}
 		
 		sql += " order by a.createtime desc";

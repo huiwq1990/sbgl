@@ -90,9 +90,23 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 		return computerorderFullUnderwayList;
 		
 	}
+
+	@Override
+	public List<ComputerorderFull> selFullByStatus(int orderstatus){
+//		String selunderwayordersql = "  where a.createuserid="+uid + " and a.status in("+ComputerorderInfo.ComputerorderStatusAduitWait+","+ComputerorderInfo.ComputerorderStatusAduitReject+") order by a.createtime desc";
+		String selbystatus = "";
+		if(orderstatus==0){
+			selbystatus = " order by a.createtime desc";
+		}else{
+			selbystatus = " where  a.status ="+orderstatus+" order by a.createtime desc";
+		}
+		
+		List<ComputerorderFull> computerorderFullUnderwayList = selectComputerorderFullByCondition(selbystatus);
+		return computerorderFullUnderwayList;		
+	}	
 	
 	/**
-	 * 查询审核通过的预约
+	 * 查询的预约
 	 * @param uid
 	 * @return
 	 */
@@ -102,8 +116,7 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements Compute
 		String selbystatus = " where a.createuserid="+uid + " and a.status ="+orderstatus+" order by a.createtime desc";
 		
 		List<ComputerorderFull> computerorderFullUnderwayList = selectComputerorderFullByCondition(selbystatus);
-		return computerorderFullUnderwayList;
-		
+		return computerorderFullUnderwayList;	
 	}	
 	
 	// 根据条件查询查询实体

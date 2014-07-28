@@ -128,12 +128,13 @@ public class OrderComputerAction  extends BaseAction {
 	HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> availableBorrowModelMap = new HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> ();
 	HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> totalBorrowModelMap = new HashMap<Integer,HashMap<Integer,ArrayList<Integer>>> ();
 	
-	List<Borrowperiod> showtimeList   = new ArrayList<Borrowperiod>();
+	List<Integer> showPeriodList   = new ArrayList<Integer>();
 	
 	HashMap<Integer,ArrayList<String>> showDateMap = new HashMap<Integer,ArrayList<String>>();
 	HashMap<Integer,ArrayList<String>> showWeekdayMap = new HashMap<Integer,ArrayList<String>>();
 	HashMap<Integer,ArrayList<String>> dateMap = new HashMap<Integer,ArrayList<String>>();
 
+//	List<>
 	
 //	预约类型
 	int computerordertype;
@@ -173,15 +174,16 @@ public class OrderComputerAction  extends BaseAction {
 //			JsonActionUtil.buildReturnStr(JsonActionUtil., errorStr)
 			this.actionMsg = "预约功能暂时关闭。";
 			return "orderclose";
-		}
-		
+		}		
 		//设置提前预约的天数
 		computeroderadvanceorderday = computerorderconfig.getMaxorderday();
-//		if()
+
 		log.info("提前预约最大天数" + computeroderadvanceorderday);
 //		设备预约表格显示的列数，默认是7
 		computerodertablercolumn = ComputerConfig.computerodertablercolumn;
-
+//		设置可以预约的时段
+		
+//		showPeriodList
 		
 //		设置当前时间
 		Date currentDate = DateUtil.currentDate();
@@ -220,7 +222,15 @@ public class OrderComputerAction  extends BaseAction {
 		log.info("computermodelList" + computermodelList.size());
 		calculate(currentDate,currentDateStr );
 		
-		System.out.println(borrowperiodList.size());
+		String availborrowperiod = computerorderconfig.getOrderperiod();
+		for(int i=0;i<3;i++){
+			if(availborrowperiod.charAt(i)=='0'){
+				borrowperiodList.remove(i);
+			}
+		}
+//		availableBorrowModelMap
+		
+//		System.out.println(borrowperiodList.size());
 		
 		if(this.isAdmin()){
 			return "adminorder";
@@ -771,15 +781,7 @@ public class OrderComputerAction  extends BaseAction {
 	}
 
 
-	public List<Borrowperiod> getShowtimeList() {
-		return showtimeList;
-	}
-
-
-	public void setShowtimeList(List<Borrowperiod> showtimeList) {
-		this.showtimeList = showtimeList;
-	}
-
+	
 
 	public HashMap<Integer, ArrayList<String>> getShowDateMap() {
 		return showDateMap;

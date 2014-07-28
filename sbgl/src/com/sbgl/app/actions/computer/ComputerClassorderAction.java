@@ -336,6 +336,14 @@ int curcomputerhomeworkid;
 		
 		
 		calculate(orderstartDate,orderEndDate );
+		
+		
+		String availborrowperiod = computerorderconfig.getOrderperiod();
+		for(int i=0;i<3;i++){
+			if(availborrowperiod.charAt(i)=='0'){
+				borrowperiodList.remove(i);
+			}
+		}
 //		System.out.println(borrowperiodList.size());
 		return SUCCESS;
 	}
