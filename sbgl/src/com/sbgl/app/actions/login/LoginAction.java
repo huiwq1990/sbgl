@@ -1,6 +1,7 @@
 package com.sbgl.app.actions.login;
 
 import java.io.PrintWriter;
+import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -17,10 +18,12 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.entity.Clazz;
 import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.entity.Student;
+import com.sbgl.app.entity.Userlogininfo;
 import com.sbgl.app.services.login.LoginService;
 import com.sbgl.app.services.user.ClazzService;
 import com.sbgl.app.services.user.ManagerService;
 import com.sbgl.app.services.user.StudentService;
+import com.sbgl.app.services.user.UserlogininfoService;
 import com.sbgl.util.CookiesUtil;
 import com.sbgl.util.JavascriptWriter;
 import com.sbgl.util.MD5Util;
@@ -50,6 +53,8 @@ public class LoginAction extends ActionSupport {
 	private StudentService studentService;
 	@Resource
 	private ManagerService managerService;
+	@Resource
+	private UserlogininfoService loginInfoService;
 	
 	public String login(){
 		return SUCCESS;
@@ -95,12 +100,38 @@ public class LoginAction extends ActionSupport {
 				CookiesUtil.addLoginCookie("userid", String.valueOf(loginUser2.getUserid()));
 				
 				Boolean isAdmin = managerService.isExistManagerCode( loginUser2.getUserid() );
+				Userlogininfo loginInfo = loginInfoService.getLoinInfoByUserId( loginUser2.getId() );
 				if(isAdmin) {
 					loginType = "admin";
 					loginUser2.setPrivilege("1");
 				} else {
 					loginType = "user";
 					loginUser2.setPrivilege("0");
+				}
+				
+				if(loginInfo == null) {
+					loginInfo = new Userlogininfo();
+					loginInfo.setUserid( loginUser2.getId() );
+					loginInfo.setIsfirstlogin( "true" );
+					loginInfo.setLastlogintime( new Date() );
+					loginInfo.setLogincount(1);
+					loginInfo.setRemark(null);
+					loginInfoService.addUserLoinInfo(loginInfo);
+				}
+				
+				if( "true".equals( loginInfo.getIsfirstlogin() ) ) {
+					loginType = "firstLogin";
+					session.setAttribute("isFirst", true);
+				} else {
+					session.setAttribute("isFirst", false);
+				}
+				//更新用户登录信息
+				if(loginInfo != null) {
+					loginInfo.setLastlogintime( new Date() );
+					Integer count = loginInfo.getLogincount();
+					count = count == null ? 0 : ++count;
+					loginInfo.setLogincount(count);
+					loginInfoService.alterUserLoginInfo(loginInfo);
 				}
 				
 				flag = true;

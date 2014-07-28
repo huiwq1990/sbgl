@@ -46,6 +46,10 @@ public class ExceptionInterceptor extends AbstractInterceptor {
 //		System.out.println("============================" + uid);
 		loginuser = (Loginuser)session.getAttribute("loginUser");
 //		System.out.println("++++++++++++++++++++++++++++" + loginuser!=null?loginuser.getUserid():"未找到");
+		Boolean isFirst = (Boolean) session.getAttribute("isFirst");
+		if(isFirst != null && isFirst) {
+			return "firstSetup";
+		}
 		if( uid == null && loginuser == null && url.indexOf("doLogin") == -1) {
 			return "login";
 		} else if(uid != null && loginuser == null) {

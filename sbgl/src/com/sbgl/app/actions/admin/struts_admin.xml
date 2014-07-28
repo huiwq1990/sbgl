@@ -8,6 +8,11 @@
         	<result name="error">/error.vm</result> 
         </action>
         
+        <action name="firstSetup" class="AdminIndexAction" method="firstSetup">
+			<result name="success">/firstSetup.vm</result>
+        	<result name="error">/error.vm</result> 
+        </action>
+        
         <action name="gotoUGroup" class="GrpAction" method="getGroupByPage">
         	<result name="success">
         		/userManage/userManageUserGroup.vm
@@ -118,6 +123,13 @@
         		<param name="root">returnJSON</param>
         	</result>
         </action>
+        
+        <action name="finishSetup" class="AdminIndexAction" method="finishSetup">
+			<result type="json" name="success">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+        
 	</package>
 
 </struts>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>账号初始化 - 北京电影学院摄影系</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/global.css" rel="stylesheet" type="text/css" />
+
+<!--[if lt IE 10]>
+  <script src="js/jquery.placeholder.js"></script>
+  <script>
+  $('input, textarea').placeholder();
+  </script>
+<![endif]-->
+<!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+<![endif]-->
+</head>
+
+<body>
+<header id="header-wrap"><!--header-wrap-->
+  <div id="global-header">
+    <div id="logo"><span class="brand"><img src="img/logo.png" alt="北京电影学院摄影系"></span></div>
+  </div>
+
+  <div class="nav-wrap clearfix">
+    <div class="site-nav">
+      <div class="dropdown">
+        <span class="pos"><i class="icon-home"></i> 欢迎 <i class="icon-chevron-right"></i></span>
+      </div>
+    </div>
+  </div>
+</header><!--/#header-wrap-->
+
+<section id="main-wrap"><!--main-wrap-->
+  <!--main-content start-->
+  <div id="main-content" class="clearfix">
+    <div class="container">
+      <div class="row">
+        <div class="panel panel-default">
+          <div id="initUser" class="init-wizard">
+            <ul class="steps panel-body">
+              <li data-target="#step1" class="active media"><span class="badge badge-info pull-left">1</span><div class="media-body">欢迎<br><small>Welcome</small></div></li>
+              <li data-target="#step2" class="media"><span class="badge pull-left">2</span><div class="media-body">设置密码<br><small>Password Setting</small></div></li>
+              <li data-target="#step3" class="media"><span class="badge pull-left">3</span><div class="media-body">联系方式<br><small>Contact Info</small></div></li>
+              <li data-target="#step4" class="media"><span class="badge pull-left">4</span><div class="media-body">语言设置<br><small>Language Setting</small></div></li>
+              <li data-target="#step5" class="media"><span class="badge pull-left">5</span><div class="media-body">完成<br><small>Complete</small></div></li>
+            </ul>
+            <form class="form-horizontal" role="form">
+              <div class="step-content panel-body">
+                <div class="step-pane active" id="step1">
+                  <h4>欢迎 Welcome，XX（用户名）！</h4>
+                  <div class="tips">
+                    <p>这是您首次登录本系统，为了方便您日后的使用，我们将花费您1分钟左右的时间来完善您的账号信息。<br>
+                    This is the first time you login our system, in order to use our system conveniently in the future, we will spend about 1 minute of your time to complete your account information.</p>
+                  </div>
+                </div>
+                <div class="step-pane" id="step2">
+                  <div class="tips">
+                    <p>为了您的账户安全，请设置新的密码。密码必须由6~20位的字母或数字组成，区分大小写。<br>
+                    For your account security, please set your new password. Password must be made up of 6~20 letters or numbers, case sensitive.</p>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputPassword1" class="col-sm-2 control-label">密码</label>
+                    <div class="col-sm-10">
+                      <input type="password" class="form-control" id="inputPassword1" placeholder="Password">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputPassword2" class="col-sm-2 control-label">确认密码</label>
+                    <div class="col-sm-10">
+                      <input type="password" class="form-control" id="inputPassword2" placeholder="Confirm password">
+                    </div>
+                  </div>
+                </div>
+                <div class="step-pane" id="step3">
+                  <div class="tips">
+                    <p>填写您的联系方式。该联系方式将作为您租赁器材等的联系凭证，务必真实并能联系到您！<br>
+                    Fill in your contact information. The contact will serve as a required information of your lease equipment, must be true and can contact you!</p>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputPhoneNumber" class="col-sm-2 control-label">联系电话（手机）</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Mobile Phone Number">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail" class="col-sm-2 control-label">电子邮箱</label>
+                    <div class="col-sm-10">
+                      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                    </div>
+                  </div>
+                </div>
+                <div class="step-pane" id="step4">
+                  <div class="tips">
+                    <p>选择您常用的语言，它将作为系统的默认语言。<br>
+                    Choose your favorite language. This will be the system default language.</p>
+                  </div>
+                  <div class="form-group">
+                    <label for="inlineLangOptions" class="col-sm-2 control-label">语言（Language）</label>
+                    <div class="col-sm-10">
+                      <label class="radio-inline">
+                        <input type="radio" name="inlineLangOptions" id="inlineLang1" value="ch-zn" checked> 中文
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="inlineLangOptions" id="inlineLang2" value="en"> English
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="step-pane" id="step5">
+                  <div class="tips">
+                    <h4><i class="icon-ok icon-2x text-success"></i> 非常感谢，账号设置已完成。Thank you, Account setup is complete.</h4>
+                    <p>温馨提示：账号密码及语言使用偏好可以在系统界面右上角的用户账号 - 账号设置或左侧导航栏中的设置与帮助中修改。<br>
+                    Tips: the account password and language preferences can be changed in the User Account - Account Settings, the top right corner of the system interface, or in the left navigation bar Setting and Help.</p>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="panel-footer actions">
+              <button type="button" class="btn btn-white btn-prev">上一步 (Prev)</button>
+              <button type="button" class="btn btn-primary btn-next" data-last="完成 (Finish)">下一步 (Next)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!---main-content end-->
+</section>
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery.js"></script>
+<script src="js/loader.min.js"></script>
+<script src="js/select2.js"></script>
+<script src="js/bfa.js"></script>
+<script src="js/jquery.noty.js"></script>
+
+<script>
+$('#initUser').wizard();
+$('#initUser').on('change', function(e, data) {
+  if(data.step === 2 && data.direction === 'next') { // 密码判断
+    var password1 = $("#inputPassword1").val();
+    var password2 = $("#inputPassword2").val();
+    var regPassword = /[a-zA-Z0-9]{6,20}/;
+    if (!regPassword.test(password1)) {
+      var str = "密码必须由6~20位的字母或数字组成，区分大小写！<br>Password must be made up of 6~20 letters or numbers, case sensitive!"
+      var n = noty({text: str, timeout: 3000, type: 'error'});
+      return e.preventDefault();
+    };
+    if (password1 === "") {  // 密码不相同
+      var str = "密码不能为空！<br>Password cannot be empty!"
+      var n = noty({text: str, timeout: 2500, type: 'error'});
+      return e.preventDefault();
+    };
+    if (password1 !== password2) {  // 密码不相同
+      var str = "两次输入的密码不同！<br>Two password is different!"
+      var n = noty({text: str, timeout: 2500, type: 'error'});
+      return e.preventDefault();
+    };
+  }
+  if(data.step === 3 && data.direction === 'next') { // 联系方式
+    var phoneNumber = $("#inputPhoneNumber").val();
+    var email = $("#inputEmail").val();
+    var regMobile = /^0?1[1-9][0-9]\d{8}$/; // 手机
+    var regEmail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/; // 邮箱
+    if (!regMobile.test(phoneNumber)) { //num是需要测试的，返回布尔值
+      var str = "请输入正确的手机号码！<br>Please enter a correct phone number!"
+      var n = noty({text: str, timeout: 2500, type: 'error'});
+      return e.preventDefault();
+    };
+    if (!regEmail.test(email)) { //num是需要测试的，返回布尔值
+      var str = "请输入正确的电子邮箱地址！<br>Please enter a correct Email address!"
+      var n = noty({text: str, timeout: 2500, type: 'error'});
+      return e.preventDefault();
+    };
+  }
+});
+
+//完成初始化设置
+$('#initUser').on('finished', function(e, data) {
+  alert("finished!");     // 记得移除这段alert！！！！
+});
+</script>
+</body>
+</html>
