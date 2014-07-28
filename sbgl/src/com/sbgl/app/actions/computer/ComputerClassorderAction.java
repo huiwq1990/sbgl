@@ -243,7 +243,8 @@ int curcomputerhomeworkid;
 //		computerhomework.get
 		
 		if(orderstatus == 1 && reorder !=1){
-			actionMsg = "已经预约过，不能再进行预约";
+//			actionMsg = "已经预约过，不能再进行预约";
+			actionMsg = getMsg("computerclassorder_classorderhaveorder");
 			log.error(actionMsg);
 			return ComputerConfig.pagenotfound;
 		}
@@ -255,7 +256,8 @@ int curcomputerhomeworkid;
 			computerorderconfig = ComputerActionUtil.getDefaultComputerorderconfig();
 		}		
 		if(computerorderconfig.getOpenorder() == 0){
-			this.actionMsg = "预约功能暂时关闭。";
+//			this.actionMsg = "预约功能暂时关闭。";
+			actionMsg = getMsg("computerclassorder_classorderclose");
 			return "orderclose";
 		}		
 		
@@ -265,7 +267,8 @@ int curcomputerhomeworkid;
 		computerorderclassruleid = computerhomework.getComputerorderclassruleid();
 		computerorderclassruleList = computerorderclassruleService.selectComputerorderclassruleByCondition( " where a.id = "+computerorderclassruleid+" " );
 		if(computerorderclassruleList == null || computerorderclassruleList.size() != 1){
-			actionMsg = "无法获取作业规则信息，访问界面不存在";
+//			actionMsg = "无法获取作业规则信息，访问界面不存在";
+			actionMsg = getMsg("computerclassorder_classordernotruler");
 			log.error(actionMsg);
 			return ComputerConfig.pagenotfound;
 		}
@@ -280,14 +283,16 @@ int curcomputerhomeworkid;
 		Date orderEndDate = computerorderclassrule.getOrderendtime();
 //		检查规则日期
 		if(orderstartDate == null || orderEndDate == null ){
-			actionMsg = "作业规则日期错误";
+//			actionMsg = "作业规则日期错误";
+			actionMsg = getMsg("computerclassorder_classorderruledateerror");
 			log.error(actionMsg);
 			return ComputerConfig.pagenotfound;
 		}
 		
 		
 		if(currentDate.after(computerorderclassrule.getOrderendtime())){
-			actionMsg = "作业预约日期结束";
+//			actionMsg = "课程预约的规定日期已过。";
+			actionMsg = this.getMsg("computerclassorder_classorderoutdate");
 			log.error(actionMsg);
 			return ComputerConfig.pagenotfound;
 		}
@@ -301,7 +306,8 @@ int curcomputerhomeworkid;
 //		如果为空，直接返回
 		if(computerorderclassruledetailList == null || computerorderclassruledetailList.size() == 0){
 			computermodelList = new ArrayList<Computermodel>();
-			actionMsg = "没有可以预约的PC";
+//			actionMsg = "没有可以预约的PC";
+			actionMsg = getMsg("computerclassorder_notpc");
 			log.error(actionMsg);
 			return ComputerConfig.pagenotfound;
 		}
@@ -315,7 +321,8 @@ int curcomputerhomeworkid;
 			borrowPcModelStr = borrowPcModelStr.substring(0,borrowPcModelStr.length()-1);
 		}else{
 			log.info("没有可以预约的模型,直接返回！");
-			actionMsg = "没有可以预约的模型!";
+//			actionMsg = "没有可以预约的模型!";
+			actionMsg = getMsg("computerclassorder_notpcmodel");
 			return SUCCESS;
 		}
 		

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 机房个人预约</title>
+<title>$!{computerindividualordererror_title}</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -43,6 +43,7 @@ $actionMsg
 				
 				</div>
 				
+  </div>
   </div>
   <!---main-content end-->
 </section>

@@ -1,0 +1,11 @@
+#if($curstatus == $ComputerorderStatusAduitPass)
+$!{textmap.computerorderstatus_audit_pass}
+#elseif($curstatus ==$ComputerorderStatusAduitReject)
+$!{textmap.computerorderstatus_audit_reject}
+#elseif($curstatus ==$ComputerorderStatusAduitDel)
+$!{textmap.computerorderstatus_audit_del}
+#elseif($curstatus ==$ComputerorderStatusAduitWait)
+$!{textmap.computerorderstatus_audit_wait}
+#else 
+$!{textmap.computerorderstatus_audit_error}
+#end

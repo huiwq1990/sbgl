@@ -26,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.actions.common.BaseAction;
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.actions.util.SnActionUtil;
 import com.sbgl.app.common.computer.BorrowperiodUtil;
@@ -49,6 +50,7 @@ import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.entity.Computerstatus;
 import com.sbgl.app.entity.ComputerstatusFull;
+import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.services.computer.ComputerhomeworkService;
 import com.sbgl.app.services.computer.ComputerhomeworkreceiverService;
 import com.sbgl.app.services.computer.ComputerorderService;
@@ -172,6 +174,10 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	int reorder = 0;
 //	int computerorderid;
 	
+	//用户角色信息
+	private String userRoleName = "";
+	private  Map<Integer,String> userRoleMap = new HashMap<Integer,String>();
+	
 	private List<Borrowperiod> periodList = new ArrayList<Borrowperiod>();
 
 	/**
@@ -263,9 +269,9 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		computerorderEntityList = computerorderService.getUnderwayComputerorder(userid);
 		
 //		预约完成的订单
-		String selfinordersql = "  where a.createuserid="+userid + " and a.status ="+ComputerorderInfo.ComputerorderStatusAduitPass+" order by a.createtime desc";
-		computerorderFullFinishList = computerorderService.selectComputerorderFullByCondition(selfinordersql);
-		
+//		String selfinordersql = "  where a.createuserid="+userid + " and a.status ="+ComputerorderInfo.ComputerorderStatusAduitPass+" order by a.createtime desc";
+//		computerorderFullFinishList = computerorderService.selectComputerorderFullByCondition(selfinordersql);
+		computerorderFullFinishList = computerorderService.selFullByStatus(userid, ComputerorderInfo.ComputerorderStatusAduitPass);
 //		System.out.println(computerorderFullUnderwayList.size());
 //		String sql = " where a.computerorderid = "+computerorderId  + " and c.languagetype="+ComputerConfig.languagech ;
 		if(computerorderFullUnderwayList==null){
@@ -289,7 +295,6 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			e.printStackTrace();
 		}
 		
-		
 		return "404";
 	}
 	
@@ -312,11 +317,11 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		if(computerorderFull == null){
 			actionMsg = "访问的页面不存在";
 			log.info(actionMsg);
-			return ComputerConfig.pagenotfound;
+			return "404";
 		}
 		
-		String sql = " where a.computerorderid = "+computerorderId  + " and c.languagetype="+ComputerConfig.languagech ;
-		computerorderdetailFullList = computerorderdetailService.selectComputerorderdetailFullByCondition(sql);
+//		String sql = " where a.computerorderid = "+computerorderId  + " and c.languagetype="+ComputerConfig.languagech ;
+		computerorderdetailFullList = computerorderdetailService.selFullByOrderId(computerorderId, this.getCurrentLanguage());
 //		System.out.println("computerorderdetailFullList size:"+computerorderdetailFullList.size());
 		
 		if(computerorderdetailFullList==null){
@@ -343,8 +348,11 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			computerorderdetailFullMapByComputermodelId = ComputerActionUtil.sortComputerorderMap(computerorderdetailFullMapByComputermodelId);
 		}
 		
-		System.out.println("computerorderdetailFullMapByComputermodelId size:"+computerorderdetailFullMapByComputermodelId.size());
-		
+//		System.out.println("computerorderdetailFullMapByComputermodelId size:"+computerorderdetailFullMapByComputermodelId.size());
+		Loginuser user = (Loginuser) ServletActionContext.getRequest().getSession().getAttribute("loginUser");
+//		System.out.println(user.getName() + user.getTelephone());
+		userRoleName = CommonConfig.userRoleMap.get(Integer.valueOf(user.getRoletype()));
+		System.out.println(user.getRoletype() +userRoleName);
 		return SUCCESS;
 	}
 	
@@ -353,12 +361,13 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	 * 在预约界面按提交按钮提交表单,将详细信息放到session中
 	 * @return
 	 */
-	public String computerorderFormConfirm(){	
+	public String computerorderFormConfirm(){
 		log.info("computerorderFormConfirm,预约类型："+computerordertype + " 作业id:"+ computerorder.getComputerhomeworkid());
 
 		try{		
 			if(getCurrentUser()==null){
-				returnInfo = "用户未登录";
+//				returnInfo = "用户未登录";
+				returnInfo = getMsg("computerorderconfirm_usernotlogin");
 				log.error(returnInfo);
 				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 				return SUCCESS;
@@ -367,7 +376,8 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		log.info("预约信息："+orderInfoStr);
 		if(confirmOrderInfo(orderInfoStr) == false){
 			
-			returnInfo = "预约表单数据错误";
+//			returnInfo = "预约表单数据错误";
+			returnInfo = getMsg("computerorderconfirm_formerror");
 			log.error(returnInfo);
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 			return SUCCESS;
@@ -375,14 +385,16 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			
 			Computerorderconfig config = computerorderconfigService.getCurrentComputerorderconfig();
 			if(config == null || config.getMaxorderday() == 0){
-				returnInfo = "获取预约配置信息出错";
+//				returnInfo = "获取预约配置信息出错";
+				returnInfo = getMsg("computerorderconfirm_orderconfignotfound");
 				log.error(returnInfo);
 				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 				return SUCCESS;
 			}
 			
 			if(!checkOrderDateAndPeriod()){
-				returnInfo = "不能预约过去的PC";
+//				returnInfo = "不能预约过去的PC";
+				returnInfo = getMsg("computerorderconfirm_orderpassedpcerror");
 				log.error(returnInfo);
 				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 				return SUCCESS;
@@ -402,7 +414,8 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 				boolean pass = validOrderForm(config);
 
 				if(!pass){
-					returnInfo = "预约数量不能满足";
+//					returnInfo = "预约数量不能满足";
+					returnInfo = getMsg("computerorderconfirm_ordernumexceed");
 					log.error(returnInfo);
 					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 					return SUCCESS;
@@ -411,7 +424,8 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 				computerhomeworkreceiver =  computerhomeworkreceiverService.sel(computerorder.getComputerhomeworkid(), this.getCurrentUserId());
 				log.info("homeworkid:"+computerorder.getComputerhomeworkid()+"  userid:"+this.getCurrentUserId());
 				if(computerhomeworkreceiver == null){
-					returnInfo = "查不到相关作业信息";
+//					returnInfo = "查不到相关作业信息";
+					returnInfo = getMsg("computerorderconfirm_orderhomeworknotfound");
 					log.error(returnInfo);
 					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 					return SUCCESS;
@@ -420,7 +434,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 				
 				log.info("课程预约验证,预约数量："+ordertimecount+"  允许借用数量："+computerhomeworkreceiver.getLeftordertime());
 				if(ordertimecount > computerhomeworkreceiver.getLeftordertime()){
-					returnInfo = "您最多可预约的时间为:"+computerhomeworkreceiver.getLeftordertime()+"，预约数量超出限制";
+					returnInfo = getMsg("computerorderconfirm_ordertimeexceed1")+computerhomeworkreceiver.getLeftordertime()+getMsg("computerorderconfirm_ordertimeexceed2");
 					log.error(returnInfo);
 					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 					return SUCCESS;
@@ -429,7 +443,8 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 				boolean pass = validClassOrderForm(computerorder.getComputerhomeworkid());
 
 				if(!pass){
-					returnInfo = "预约数量不能满足";
+//					returnInfo = "预约数量不能满足";
+					returnInfo = getMsg("computerorderconfirm_ordernumexceed");
 					log.error(returnInfo);
 					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 					return SUCCESS;
@@ -438,7 +453,8 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 				boolean pass = validClassOrderForm(computerorder.getComputerhomeworkid());
 
 				if(!pass){
-					returnInfo = "预约数量不能满足";
+//					returnInfo = "预约数量不能满足";
+					returnInfo = getMsg("computerorderconfirm_ordernumexceed");
 					log.error(returnInfo);
 					this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 					return SUCCESS;
@@ -453,7 +469,8 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			
 			
 			
-			returnInfo = "成功";
+//			returnInfo = "成功";
+			returnInfo = getMsg("computerorderconfirm_ordersuccess");
 			log.info(returnInfo);
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
 			return SUCCESS;
@@ -465,7 +482,8 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		
 		}
 		
-		returnInfo = "内部错误";
+//		returnInfo = "内部错误";
+		returnInfo = getMsg("computerorderconfirm_ordererror");
 		log.info(returnInfo);
 		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 		return SUCCESS;
@@ -554,7 +572,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 //	课程预约界面点击提交按钮后，如果computerorderFormConfirm指向成功，跳转到预约确认界面
 	public String toComputerorderConfirmPage(){	
 		log.info("toComputerorderConfirmPage computerordertype:"+computerordertype+"  "+reorder);
-		System.out.println(session.get("computerordertype"));
+//		System.out.println(session.get("computerordertype"));
 		
 //		装载时间段的信息,界面上用于显示
 		periodList = BorrowperiodUtil.getBorrowperiodList();
@@ -705,13 +723,15 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		
 		Integer uid = getCurrentUserId();
 		if(uid < 0){			
-			returnInfo = "用户未登录";
+//			returnInfo = "用户未登录";
+			returnInfo = getMsg("computerordersubmit_usernotlogin");
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn,returnInfo);
 			return SUCCESS;
 		}
 		
 		if(confirmOrderInfo(orderInfoStr) == false){
-			returnInfo = "表单不正确";
+//			returnInfo = "表单不正确";
+			returnInfo = getMsg("computerordersubmit_formerror");
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn,returnInfo);
 			return SUCCESS;
 		}
@@ -719,7 +739,8 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 //		设置默认标题
 		if(computerorder.getTitle()==null || computerorder.getTitle().trim().length()==0){
 //			computerorder.setTitle(DateUtil.dateFormat(DateUtil.currentDate(), "MM-dd")+"机房预约");
-			returnInfo = "请输入标题";
+//			returnInfo = "请输入标题";
+			returnInfo = getMsg("computerordersubmit_notitle");
 			log.error(returnInfo);
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 			return SUCCESS;
@@ -728,7 +749,8 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		
 		Computerorderconfig config = computerorderconfigService.getCurrentComputerorderconfig();
 		if(config == null || config.getMaxorderday() == 0){
-			returnInfo = "获取预约配置信息出错";
+//			returnInfo = "获取预约配置信息出错";
+			returnInfo = getMsg("computerordersubmit_orderconfigerror");
 			log.error(returnInfo);
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 			return SUCCESS;
@@ -752,7 +774,8 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			boolean pass = validOrderForm(config);
 
 			if(!pass){
-				returnInfo = "预约数量不能满足";
+//				returnInfo = "预约数量不能满足";
+				returnInfo = getMsg("computerordersubmit_ordernumexceed");
 				log.error(returnInfo);
 				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 				return SUCCESS;
@@ -761,13 +784,15 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			boolean pass = validClassOrderForm(computerorder.getComputerhomeworkid());
 
 			if(!pass){
-				returnInfo = "预约数量不能满足";
+//				returnInfo = "预约数量不能满足";
+				returnInfo = getMsg("computerordersubmit_ordernumexceed");
 				log.error(returnInfo);
 				this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 				return SUCCESS;
 			}
 		}else{
-			returnInfo = "预约类型不对";
+//			returnInfo = "预约类型不对";
+			returnInfo = getMsg("computerordersubmit_ordertypeerror");
 			log.error(returnInfo);
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 			return SUCCESS;
@@ -792,8 +817,9 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		}
 		
 		session.put("computerorderSerialnumber", computerorder.getSerialnumber());
-		System.out.println( computerorder.getSerialnumber());
-		returnInfo = "预约成功";
+//		System.out.println( computerorder.getSerialnumber());
+//		returnInfo = "预约成功";
+		returnInfo = getMsg("computerordersubmit_ordersuccess");
 		returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn,returnInfo);
 		return SUCCESS;
 			
@@ -806,7 +832,8 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			log.error("addComputerorderAjax错误"+e);
 		}
 		
-		returnInfo = "系统发生内部错误";
+//		returnInfo = "系统发生内部错误";
+		returnInfo = getMsg("computerordersubmit_ordererror");
 		returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn,returnInfo);
 		return SUCCESS;
 	}
@@ -1498,6 +1525,38 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		this.computerorderEntityList = computerorderEntityList;
 	}
 
+
+	public int getOrdertimecount() {
+		return ordertimecount;
+	}
+
+
+	public void setOrdertimecount(int ordertimecount) {
+		this.ordertimecount = ordertimecount;
+	}
+
+
+	public String getUserRoleName() {
+		return userRoleName;
+	}
+
+
+	public void setUserRoleName(String userRoleName) {
+		this.userRoleName = userRoleName;
+	}
+
+
+	public Map<Integer, String> getUserRoleMap() {
+		return userRoleMap;
+	}
+
+
+	public void setUserRoleMap(Map<Integer, String> userRoleMap) {
+		this.userRoleMap = userRoleMap;
+	}
+
+
+	
 
 
 

@@ -62,6 +62,7 @@
 		<action name="viewComputerorder" class="ManageComputerorder" method="viewComputerorder">
         	<result name="success">/computer/computerorderView.vm</result>
        		<result name="pagenotfound">/common/pagenotfound.vm</result>
+       		<result name="404">/404.vm</result> 
         	<result name="error">/error.vm</result> 
         </action>
         

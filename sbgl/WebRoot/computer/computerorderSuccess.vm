@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 机房预约完成</title>
+<title>$!{textmap.computerordersuccess_title}</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -38,9 +38,9 @@
         <div class="hero-unit clearfix">
           <i class="icon-ok-sign pull-left"></i>
           <div class="pull-left">
-            <h1>预约已提交，请等待审核</h1>
-            <p>您的预约申请已成功提交，预约号为<code>${computerorderSerialnumber}</code>，请耐心等待审核。</p>
-            <p>审核通过后系统将会通知您，请在规定时间内使用机房相关设备，并遵守机房使用规定。</p>
+            <h1>$!{textmap.computerordersuccess_h1}</h1>
+            <p>$!{textmap.computerordersuccess_p1}<code>${computerorderSerialnumber}</code>$!{textmap.computerordersuccess_p2}</p>
+            <p>$!{textmap.computerordersuccess_p3}</p>
             <p><a class="btn btn-primary btn-large" href="${webbaseurl}/viewMineComputerorderList.${strutsaction}">我的预约</a></p>
           </div>
         </div>                                    

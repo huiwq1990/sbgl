@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 机房预约</title>
+<title>$!{textmap.computerorderconfirm_title}</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -39,7 +39,7 @@
             
             <div class="row">
                   <div class="control-bar col-md-12">
-                    <div class="title">机房预约信息确认</div>
+                    <div class="title">$!{textmap.computerorderconfirm_maincontent_title}</div>
                   </div>
      
 				  
@@ -53,25 +53,25 @@
                   <div class="col-md-5">
                       <div class="thumbnail">
                         <div class="hd">
-                          <h3>详情</h3>
+                          <h3>$!{textmap.computerorderconfirm_detail_title}</h3>
                         </div>
                         <div class="caption">
 						  #set($user =    $request.getSession().getAttribute("loginUser"))
-                          <div class="rent-user">申请者：<a rel="popover" class="lk" href="#">$!user.name</a></div>
+                          <div class="rent-user">$!{textmap.computerorderconfirm_detail_orderuser}：<a rel="popover" class="lk" href="#">$!user.name</a></div>
                          
-						  <div class="rent-type">预约类型：
+						  <div class="rent-type">$!{textmap.computerorderconfirm_detail_ordertype}：
 							#set($currentcomputerorderordertype=$computerordertype)					 
 							#parse("include/includeComputerorderType.vm")
 						  </div><!--end rent type-->
                         </div>
                         <hr />
-                        <div class="hd"><h3>标题 <small>（可选，系统根据预约时间生成默认标题）</small></h3></div>
-                        <div class="caption"><input type="text" id="inputAddComputerorderTitle" value="$!computerorder.title" class="form-control" placeholder="XXX的机房预约（XX月XX日、XX月XX日）"></div>
-                        <div class="hd"><h3>备注 <small>有什么需要备注说明的？例如使用目的相关说明（可选）</small></h3></div>
-                        <div class="caption"><textarea class="form-control" id="inputAddComputerorderRemark"  rows="3" placeholder="预约备注"></textarea></div>
+                        <div class="hd"><h3>$!{textmap.computerorderconfirm_detail_ordertitle} <small>$!{textmap.computerorderconfirm_detail_ordertitle_small}</small></h3></div>
+                        <div class="caption"><input type="text" id="inputAddComputerorderTitle" value="$!computerorder.title" class="form-control" placeholder="$!{textmap.computerorderconfirm_detail_ordertitle_placeholder}"></div>
+                        <div class="hd"><h3>$!{textmap.computerorderconfirm_detail_orderremark} <small>$!{textmap.computerorderconfirm_detail_orderremark_small}</small></h3></div>
+                        <div class="caption"><textarea class="form-control" id="inputAddComputerorderRemark"  rows="3" placeholder="$!{textmap.computerorderconfirm_detail_orderremark_placeholder}"></textarea></div>
                         <div class="form-actions actions">  
-                          <button type="button" action-type="" class="btn btn-white">返回修改</button>
-						              <button type="button" action-type="orderComputerButton" class="btn btn-primary">提交预约</button>
+                          <button type="button" action-type="" class="btn btn-white">$!{textmap.computerorderconfirm_detail_returnandedit}</button>
+						              <button type="button" action-type="orderComputerButton" class="btn btn-primary">$!{textmap.computerorderconfirm_detail_orderrejectreason}</button>
                         </div>
                       </div>               
                   </div>                  

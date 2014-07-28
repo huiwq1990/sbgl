@@ -52,7 +52,8 @@ public class ResourcesListener extends HttpServlet implements
 	public void contextInitialized(ServletContextEvent sce) {
 		timer = new Timer(true);
 		sce.getServletContext().log("定时器启动");
-		timer.schedule(new MyTask(sce.getServletContext()), 0, 60 * 60 * 1000);
+//		timer.schedule(new MyTask(sce.getServletContext()), 0, 60 * 60 * 1000);
+		timer.schedule(new MyTask(sce.getServletContext()), 0,  60 * 1000);
 		sce.getServletContext().log("添加到任务调度表");
 	}
 
@@ -87,21 +88,21 @@ public class ResourcesListener extends HttpServlet implements
 				context.setAttribute(CommonConfig.resourcetextmapch, textMap);
 				
 				config = new CompositeConfiguration();
-			    textMap = new ConcurrentHashMap<String,String>();
+				 Map<String,String>  textMapEn = new ConcurrentHashMap<String,String>();
 		        try {
 					config.addConfiguration(new PropertiesConfiguration("messages_en_US.properties"));
 					Iterator<String> keys = config.getKeys();        
 			       
 			        while(keys.hasNext()){
 			        	String key = keys.next();
-			        	textMap.put(key, config.getString(key));
+			        	textMapEn.put(key, config.getString(key));
 			        }
 			        
 				} catch (ConfigurationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				context.setAttribute(CommonConfig.resourcetextmapen, textMap);
+				context.setAttribute(CommonConfig.resourcetextmapen, textMapEn);
 				
 			}
 		}

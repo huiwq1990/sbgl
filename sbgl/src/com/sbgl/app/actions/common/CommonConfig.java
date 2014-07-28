@@ -1,5 +1,8 @@
 package com.sbgl.app.actions.common;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class CommonConfig {
 	
@@ -71,5 +74,8 @@ public class CommonConfig {
 	public final static String resourcetextmapch = "resourcetextmapch";
 	public final static String resourcetextmapen = "resourcetextmapen";
 	
-	
+	public static Map<Integer,String> userRoleMap = new HashMap<Integer,String>(){{
+	       put( 1 ,  "学生" );
+	       put( 2 ,  "教师" );
+}};
 }

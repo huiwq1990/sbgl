@@ -5,14 +5,18 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.ServletActionContext;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.sbgl.app.actions.common.BaseAction;
+import com.sbgl.app.actions.common.CommonActionUtil;
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.computer.ComputerAction;
 import com.sbgl.app.actions.computer.ComputerorderActionUtil;
 import com.sbgl.app.actions.computer.ComputerorderEntity;
@@ -63,6 +67,7 @@ public class IndexAction extends BaseAction{
 	private int IndividualOrder = ComputerorderInfo.IndividualOrder;
 	private int ClassOrder = ComputerorderInfo.ClassOrder;
 	
+	public String languagetype;
 	
 	public String index(){
 		
@@ -92,6 +97,19 @@ public class IndexAction extends BaseAction{
 		
 	}
 
+
+	public String changeLanguage(){
+		try{
+		ServletActionContext.getRequest().getSession().setAttribute(CommonConfig.sessionLanguagetype,languagetype);
+		this.forwardurl =  this.getActionUrl();
+		System.out.println("forwardurl" +forwardurl + " "+ this.getUrl());
+		return SUCCESS;
+		}catch(Exception e){
+			e.printStackTrace();			
+		}
+		return "404";
+	}
+	
 
 	public ComputerorderService getComputerorderService() {
 		return computerorderService;
@@ -207,6 +225,16 @@ public class IndexAction extends BaseAction{
 
 	public static Log getLog() {
 		return log;
+	}
+
+
+	public String getLanguagetype() {
+		return languagetype;
+	}
+
+
+	public void setLanguagetype(String languagetype) {
+		this.languagetype = languagetype;
 	}
 
 

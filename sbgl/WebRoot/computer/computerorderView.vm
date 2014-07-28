@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 查看预约记录</title>
+<title>$!{textmap.computerorderview_title}</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -61,36 +61,37 @@
             <div class="col-md-5">
                 <div class="thumbnail">
                   <div class="hd">
-                    <h3>状态</h3>
+                    <h3>$!{textmap.computerorderview_order_status_title}</h3>
                   </div>
                   <div class="caption">
-						        #set($curstatus = $computerorderFull.computerorderstatus)
-                      #parse("computer/includeComputerorderStatus.vm")
+					#set($curstatus = $computerorderFull.computerorderstatus)
+                      #parse("include/includeComputerorderStatus.vm")
                       
                       #if($curstatus == $ComputerorderStatusAduitReject)
                         <hr>
+							        ###如果是驳回，根据预约类型显示重新预约，
             						#if($!computerorderFull.computerorderordertype==2) 
-            							<a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}\toComputerClassorder.${strutsaction}?computerorderid=$!computerorderFull.computerorderid&computerhomeworkid=$!computerorderFull.computerordercomputerhomeworkid&reorder=1">重新预约</a>
+            							<a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}\toComputerClassorder.${strutsaction}?computerorderid=$!computerorderFull.computerorderid&computerhomeworkid=$!computerorderFull.computerordercomputerhomeworkid&reorder=1">$!{textmap.computerorderview_classorder_reject_tip}</a>
             						#elseif($!computerorderFull.computerorderordertype==1)  
-            							<a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}\toComputerIndividualorder.${strutsaction}?computerorderid=$!computerorderFull.computerorderid&reorder=1">重新预约</a>
+            							<a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}\toComputerIndividualorder.${strutsaction}?computerorderid=$!computerorderFull.computerorderid&reorder=1">$!{textmap.computerorderview_indivorder_reject_tip}</a>
             						#else
-            							错误
+            							$!{textmap.computerorderstatus_audit_error}
             							#end
             						#end
                        </div>
                 </div>
                 <div class="thumbnail">
                   <div class="hd">
-                    <h3>详情</h3>
+                    <h3>$!{textmap.computerorderstatus_detail_title}</h3>
                   </div>
         
 				  <div class="caption">
                     <div class="rent-detail">
-                      <span class="rent-user"><strong>申请者： 我（姓名）</strong></span> - <span class="rent-num"><strong> 预约号：$!computerorderFull.computerorderserialnumber</strong></span>
-                      <div class="rent-userinfo">学生 - 本科 - 班级(教师)</div> 
+                      <span class="rent-user"><strong>$!{textmap.computerorderview_detail_orderuser}: $!{user.name}</strong></span> - <span class="rent-num"><strong> $!{textmap.computerorderview_detail_ordernum}：$!computerorderFull.computerorderserialnumber</strong></span>
+                      <div class="rent-userinfo">${userRoleName}</div> 
                       #set($currentcomputerorderordertype=$computerorderFull.computerorderordertype)
-                      <div class="rent-contact">预约类型：#parse("include/includeComputerorderType.vm")</div>
-					            <div class="rent-contact">联系方式：XXXXXX</div>
+                      <div class="rent-contact">$!{textmap.computerorderview_detail_ordertype}：#parse("include/includeComputerorderType.vm")</div>
+					            <div class="rent-contact">$!{textmap.computerorderview_detail_orderuserphone}：$!{user.telephone}</div>
 					 #if($computerorderFull.computerorderremark)
                       <div class="rent-remark"><i class="icon-pencil"></i> $!computerorderFull.computerorderremark</div>
 					  #end
@@ -108,7 +109,7 @@
                       </a>
                       <div class="media-body">
                         <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">$!computerorderFull.auditusername</a></h5></div>
-                        <p>驳回原因：$!computerorderFull.computerorderrejectreason</p>
+                        <p>$!{textmap.computerorderview_detail_orderrejectreason}：$!computerorderFull.computerorderrejectreason</p>
                       </div>
                     </li>
                   </ul>

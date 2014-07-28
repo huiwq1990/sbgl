@@ -1,6 +1,7 @@
-#Sat Feb 22 15:37:54 CST 2014
+#Sun Jul 20 09:34:38 CST 2014
 eclipse.preferences.version=1
 encoding//WebRoot/index.vm=UTF-8
 encoding//WebRoot/login.vm=UTF-8
 encoding//src/messages_en_US.properties=UTF-8
+encoding//src/messages_zh_CN.properties=UTF-8
 encoding/<project>=UTF-8

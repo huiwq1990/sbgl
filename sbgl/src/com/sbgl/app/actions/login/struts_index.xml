@@ -18,5 +18,11 @@
         	</result>
         </action>
         
+        
+         <action name="changeLanguage" class="IndexAction" method="changeLanguage" >
+        <result name="success" type="redirectAction">${forwardurl}</result>   
+        <result name="404">/404.vm</result> 
+        	<result name="error">/error.vm</result>             
+    	</action>
     </package>
  </struts>

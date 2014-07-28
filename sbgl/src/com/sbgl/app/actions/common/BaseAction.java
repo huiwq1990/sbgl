@@ -3,6 +3,7 @@ package com.sbgl.app.actions.common;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.CookiesAware;
@@ -31,7 +32,7 @@ public class BaseAction extends ActionSupport implements SessionAware,CookiesAwa
 	
 	protected String callType;
 	
-	
+	protected String forwardurl; // 重定向url
 	
 	public void setPageInfo(int totalcount){
 		if(pageNo ==0){
@@ -107,11 +108,61 @@ public class BaseAction extends ActionSupport implements SessionAware,CookiesAwa
 		return CommonActionUtil.getLanguagetype((String) session.get(ComputerConfig.sessionLanguagetype));		
 	}
 	
+	/**
+	 * 获取国际化信息
+	 * @param name
+	 * @return
+	 */
+	public String getMsg(String name){
+		Map<String,String> textmap = (Map<String, String>) ServletActionContext.getRequest().getAttribute(CommonConfig.resourcetextmap);
+		
+		if(textmap ==null){
+			return "";
+		}
+		if(textmap.containsKey(name)){
+			return textmap.get(name);
+		}else{
+			return "";
+		}
+	}
 	
+	public String getUrl(){
+		HttpServletRequest request = ServletActionContext.getRequest();
+
+		String path = request.getContextPath(); 
+		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/"; 
+		String  url  =  "http://"  +  request.getServerName()  +  ":"  +  request.getServerPort()  +  request.getContextPath()+request.getServletPath().substring(0,request.getServletPath().lastIndexOf("/")+1);  
+		   
+		if(request.getQueryString()!=null) 
+		{   
+		    url+="?"+request.getQueryString();           
+		} 
+		return url;
+//		System.out.println("path："+path); 
+//		System.out.println("basePath："+basePath);    
+//		System.out.println("URL："+url);    
+//		System.out.println("URL参数："+request.getQueryString());  
+	}
 	
-	
-	
-	
+	public String getActionUrl(){
+		HttpServletRequest request = ServletActionContext.getRequest();
+
+		String path = request.getContextPath(); 
+		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/"; 
+		String  url  =  "http://"  +  request.getServerName()  +  ":"  +  request.getServerPort()  +  request.getContextPath()+request.getServletPath().substring(0,request.getServletPath().lastIndexOf("/")+1);  
+		   
+		if(request.getQueryString()!=null) 
+		{   
+			path+="?"+request.getQueryString();           
+		} 
+		
+		path = path.substring(1,path.length());
+		return path;
+//		System.out.println("path："+path); 
+//		System.out.println("basePath："+basePath);    
+//		System.out.println("URL："+url);    
+//		System.out.println("URL参数："+request.getQueryString());  
+	}
 
 	public Map<String, Object> getSession() {
 		return session;
@@ -193,6 +244,14 @@ public class BaseAction extends ActionSupport implements SessionAware,CookiesAwa
 
 	public void setCallType(String callType) {
 		this.callType = callType;
+	}
+
+	public String getForwardurl() {
+		return forwardurl;
+	}
+
+	public void setForwardurl(String forwardurl) {
+		this.forwardurl = forwardurl;
 	}
 
 	

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 机房课程预约</title>
+<title>${textmap.computerclassorderindex_title}</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -33,10 +33,12 @@
             <div class="row">
               <div class="post-list-warp"><!--post-list-warp start-->  
                 <div class="post-list">              
-                  <div class="control-bar"><!--control-bar start-->
-                    <div class="title">机房预约</div>
-                    <div class="tips">当前可预约 2 周内的机房设备，选择您所需要的设备、使用日期、时段及数量。</div>
-                  </div><!--control-bar end-->
+                  
+					<div class="control-bar"><!--control-bar start-->
+                    <div class="title">${textmap.computerclassorderindex_maincontent_title}</div>
+                    <div class="tips">${textmap.computerclassorderindex_maincontent_tips}</div>
+                  
+					</div><!--control-bar end-->
 
 #set($computermodelListSize = $computermodelList.size() - 1)
 #if($computermodelListSize>=0)
@@ -60,6 +62,7 @@
                             <a class="btn btn-white" href="#post-equip-$!tempmodel.computermodeltype" data-slide="prev"><i class="icon-chevron-left"></i></a>
                             <a class="btn btn-white" href="#post-equip-$!tempmodel.computermodeltype" data-slide="next"><i class="icon-chevron-right"></i></a>
                           </div>
+						  
                           <div id="post-equip-$!tempmodel.computermodeltype" class="carousel slide">
                             <div class="carousel-inner">
       
@@ -84,7 +87,7 @@
 									
                                     <thead>
                                       <tr>
-                                        <th class="time-slot">时间</th>
+                                        <th class="time-slot">${textmap.computerclassorderindex_ordertable_timeslot}</th>
 										##所有时间段 上午、中午、晚上 取出所有的属性名称
 										#set($weekdayRegion = [0..$computerodertablercolumn-1])
 										#set($weekDateList = $showDateMap.get($tempweektableindex))
@@ -137,35 +140,43 @@
                         </div>
              
                     </div>
-                  </div>  
-				<!--end-->		
+                  </div>  <!---row panel-body end-->
+				<!--end-->	
+						</div><!---panel panel-default end-->
 #end
 #end					
 
-				</div>
+				</div><!--post-list end-->
               </div><!--post-list-warp end-->
               
             <div class="post-sidebar-warp"><!--post-sidebar-warp start-->
-                <form action="javascript:void(0)">
+                
+				<form action="javascript:void(0)">
 					<div id="rent-list-wrap" class="panel panel-default">
 						<div class="panel-heading">
-							<h3>预约单 <small>请选择你所需要的机房和时段。</small></h3>
+							<h3>${textmap.computerclassorderindex_orderlist_title} <small>${textmap.computerclassorderindex_orderlist_title_small}</small></h3>
 						</div>
 						<div class="panel-body"> 
 						  <div id="rent-list">
-						    <p class="no-add">尚未添加任何预约项。</p>
+						    <p class="no-add">${textmap.computerclassorderindex_orderlist_notadd}</p>
 						  </div>
 						</div>
 						<div class="panel-footer text-right">
-							<button action-type="confirmComputerButton" class="btn btn-primary">提交预约</button>
+							<button action-type="confirmComputerButton" class="btn btn-primary">${textmap.computerclassorderindex_orderlist_submit}</button>
 						</div>
 					</div>
-				</from>
+				</form>
+				
+				
             </div><!--post-sidebar-warp end-->
-        </div>
-    </div>
-  </div>
-  <!---main-content end-->
+        
+				  </div><!---row end-->
+    
+				
+				</div><!---main-content end-->
+  
+			  
+			  </div>  <!---main-wrap end-->
 </section>
 
 

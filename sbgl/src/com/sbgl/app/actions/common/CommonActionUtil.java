@@ -17,4 +17,12 @@ public class CommonActionUtil {
 		
 		return ComputerConfig.languageen;
 	}
+	public static int getLanguagetype(Integer str){
+		
+		if(str==null || str!=1){
+			return ComputerConfig.languagech;
+		}
+		
+		return ComputerConfig.languageen;
+	}
 }

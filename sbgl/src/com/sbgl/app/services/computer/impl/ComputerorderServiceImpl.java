@@ -359,6 +359,13 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 		return computerorderDao.selectComputerorderFullById(computerorderId); 
 	}	
 	
+//	根据状态full类
+	@Override
+	public
+	List<ComputerorderFull> selFullByStatus(int uid, int orderstatus){
+		return computerorderDao.selFullByStatus(uid, orderstatus);
+	}
+	
 	@Override
 	public boolean auditComputerorder(Computerorder cr){
 

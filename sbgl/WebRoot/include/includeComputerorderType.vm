@@ -1,7 +1,7 @@
-#if($!currentcomputerorderordertype == 1)
-个人预约
+#if($!currentcomputerorderordertype == 1)	
+${textmap.computerordertype_individual}
 #elseif($!currentcomputerorderordertype ==2)
-课程预约
+${textmap.computerordertype_class}
 #elseif($!currentcomputerorderordertype ==3)
-课程安排
+${textmap.computerordertype_course}
 #end

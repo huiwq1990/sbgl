@@ -3,6 +3,57 @@
     <li
 	#if($currentPageType == "equorderSpace"|| $currentPageType == "equsunorderSpace" || $currentPageType == "equorderSpace2")
 		 class="active"      
+	#end><a href="${webbaseurl}/equipOrdIndex.${strutsaction}">${textmap.subsitenavi_eqp_rent}</a></li>
+	
+    <li
+	#if($currentPageType == "computerorderSpace" )
+		 class="active"      
+	#end	
+	><a href="${webbaseurl}/viewMineComputerorderList.${strutsaction}">${textmap.subsitenavi_pc_order}</a></li>
+	
+
+
+	#if($currentPageType == "createorder" )
+		<li class="divider"></li>
+		<li class="active"><a href="#">${textmap.subsitenavi_createorder}</a></li>
+	#end	
+	
+	#if($currentPageType == "computerorderfinish" )
+		<li class="divider"></li>
+		<li class="active"><a href="#">${textmap.subsitenavi_computerorderfinish}</a></li>
+	#end
+	
+	
+	#if($currentPageType == "computerorderview" )
+		<li class="divider"></li>
+		<li class="active"><a href="#">${textmap.subsitenavi_computerorderview}</a></li>
+	#end
+	
+   #if($currentPageType == "computerclassorderview" )
+		<li class="divider"></li>
+		<li class="active"><a href="#">${textmap.subsitenavi_computerclassorderview}</a></li>
+	#end
+	
+	#if($currentPageType == "equorderSpace" )
+		<li class="divider"></li>
+		<li class="active"><a href="#">${textmap.subsitenavi_equorderSpace}</a></li>
+	#end
+	
+	#if($currentPageType == "equsunorderSpace" )
+		<li class="divider"></li>
+		<li class="active"><a href="#">${textmap.subsitenavi_equsunorderSpace}</a></li>
+	#end
+	
+  </ul>
+</div>
+	
+<!--
+
+<div class="sub-nav">
+  <ul class="nav nav-tabs nav-tabs-google">
+    <li
+	#if($currentPageType == "equorderSpace"|| $currentPageType == "equsunorderSpace" || $currentPageType == "equorderSpace2")
+		 class="active"      
 	#end><a href="${webbaseurl}/equipOrdIndex.${strutsaction}">器材预约</a></li>
 	
     <li
@@ -46,3 +97,4 @@
 	
   </ul>
 </div>
+-->

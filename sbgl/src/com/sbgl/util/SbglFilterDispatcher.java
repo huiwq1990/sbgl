@@ -66,13 +66,13 @@ public class SbglFilterDispatcher extends FilterDispatcher {
 		Map<String,String> textmap = new ConcurrentHashMap<String,String>();
 		if(lan.equals(CommonConfig.languageenStr)){
 			textmap.clear();
-			textmap = (Map<String, String>) servletContext.getAttribute(CommonConfig.resourcetextmapen);
-	
+			textmap = (Map<String, String>) servletContext.getAttribute(CommonConfig.resourcetextmapen);	
 		}else{
 			textmap.clear();
 			textmap = (Map<String, String>) servletContext.getAttribute(CommonConfig.resourcetextmapch);
-			
 		}
+		
+//		System.out.println("textmaptextmap"+textmap);
 		request.setAttribute(CommonConfig.resourcetextmap, textmap);
 
 		

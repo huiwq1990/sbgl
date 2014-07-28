@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 我的预约</title>
+<title>$!{textmap.computerorderindex_title}</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -36,7 +36,7 @@
           
           <div class="col3 container">
             <div class="control-bar clearfix">
-              <div class="title pull-left">进行中的预约</div>
+              <div class="title pull-left">$!{textmap.computerorderindex_underwayorder_title}</div>
               <a class="btn btn-primary pull-right" href="${webbaseurl}/toComputerIndividualorderPage.${strutsaction}" role="button" data-toggle="modal">创建预约</a>
             </div>
             <div class="row">
@@ -48,7 +48,7 @@
 ##取出所有的属性名称
 #foreach($tempKey in $computerorderFullListRegion)
 			#set($temp = $computerorderEntityList.get($tempKey))				
-           
+           #set($curstatus = $temp.computerorderstatus)
 			#if($temp.type==1)      
 			<div class="col-3">                  
                       <div class="thumbnail">
@@ -56,14 +56,14 @@
                           <h4 class="pull-left"><a class="lk" href="${webbaseurl}/viewComputerorder.action?computerorderId=$temp.computerorderid">$!temp.computerordertitle</a></h4>
                         </div>
                          <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> 
-							机房预约<br>
+							$!{textmap.computerorderindex_computerorder}<br>
 							#set($currentcomputerorderordertype = $temp.computerorderordertype)
 							#parse("include/includeComputerorderType.vm")
 						
 						</div>
 						<div class="caption">
                           <div class="rent-info">
-                            <div class="rent-num">预约号：$!temp.computerorderserialnumber</div>
+                            <div class="rent-num">$!{textmap.computerorderindex_ordernum}：$!temp.computerorderserialnumber</div>
 							
                             <div class="rent-time"><i class="icon-time"></i>$date.format("yyyy年MM月dd日",$!temp.computerordercreatetime)</div>
                             <div class="rent-remark"><i class="icon-pencil">$!temp.computerorderremark</i></div>
@@ -72,17 +72,17 @@
                           <hr />
 						  #if($!temp.computerorderstatus == $ComputerorderStatusAduitWait)
                           <div class="rent-status clearfix">
-							#set($curstatus = $temp.computerorderstatus)
-                            <div class="status pull-left"><span class="label label-info">状态</span>#parse("computer/includeComputerorderStatus.vm")</div>
+							
+                            <div class="status pull-left"><span class="label label-info">$!{textmap.computerorderindex_status}</span>#parse("computer/includeComputerorderStatus.vm")</div>
                           </div>
 						  #elseif($!temp.computerorderstatus == $ComputerorderStatusAduitReject)
 							  <div class="rent-status clearfix">
-                            <div class="status pull-left"><span class="label label-warning">状态</span> 预约被驳回，需修改后重新提交预约</div>
-                            <a class="btn btn-white pull-right" action-type="" action-data="" href="${webbaseurl}/viewComputerorder.action?computerorderId=$temp.computerorderid">查看原因</a>
+                            <div class="status pull-left"><span class="label label-warning">$!{textmap.computerorderindex_status}</span>#parse("include/includeComputerorderStatus.vm")</div>
+                            <a class="btn btn-white pull-right" action-type="" action-data="" href="${webbaseurl}/viewComputerorder.action?computerorderId=$temp.computerorderid">$!{textmap.computerorderindex_orderreject_checkreason}</a>
                           </div>
 						  #else
 							  <div class="rent-status clearfix">
-                            <div class="status pull-left"><span class="label label-error">状态</span> 状态出错</div>
+                            <div class="status pull-left"><span class="label label-error">$!{textmap.computerorderindex_status}</span> #parse("include/includeComputerorderStatus.vm")</div>
                           </div>
 							#end
                         </div>
@@ -106,7 +106,7 @@
                           <hr />
 						  
 						   <div class="rent-status clearfix">
-                            <div class="status pull-left"><span class="label label-info">状态</span> 等待你提交预约申请</div>
+                            <div class="status pull-left"><span class="label label-info">$!{textmap.computerorderindex_status}</span> $!{textmap.computerorderindex_order_waitfororder}</div>
                             <a class="btn btn-white pull-right" action-type="" action-data="" href="${webbaseurl}/toComputerClassorderPage.${strutsaction}?computerhomeworkid=$temp.computerhomeworkid">开始预约</a>
                           </div>
               
@@ -123,7 +123,7 @@
             
             <hr class="hr-block" />
             <div class="control-bar clearfix">
-              <div class="title pull-left">已完成</div>
+              <div class="title pull-left">$!{textmap.computerorderindex_finishorder_title}</div>
             </div>
             <div class="row thumbnails">
 
@@ -140,14 +140,14 @@
                           <h4 class="pull-left"><a class="lk" href="${webbaseurl}/viewComputerorder.action?computerorderId=$temp.computerorderid">$!temp.computerordertitle</a></h4>
                         </div>
                         <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> 
-							机房预约<br>
+							$!{textmap.computerorderindex_computerorder}<br>
 							#set($currentcomputerorderordertype = $temp.computerorderordertype)
 							#parse("include/includeComputerorderType.vm")
 						</div>
                         <div class="caption">
                           <div class="rent-info">
                             
-							   <div class="rent-num">预约号：$!temp.computerorderserialnumber</div>							
+							   <div class="rent-num">$!{textmap.computerorderindex_ordernum}：$!temp.computerorderserialnumber</div>							
                             <div class="rent-time"><i class="icon-time"></i>$date.format("yyyy年MM月dd日",$!temp.computerordercreatetime)</div>
                             <div class="rent-remark"><i class="icon-pencil">$!temp.computerorderremark</i></div>
                           
@@ -156,7 +156,7 @@
                           <hr />
                           <div class="rent-status clearfix">
 							#set($curstatus = $temp.computerorderstatus)
-                            <div class="status pull-left"><span class="label label-success">状态</span> #parse("computer/includeComputerorderStatus.vm")</div>
+                            <div class="status pull-left"><span class="label label-success">$!{textmap.computerorderindex_status}</span> #parse("computer/includeComputerorderStatus.vm")</div>
                           </div>
                         </div>
                       </div>                  

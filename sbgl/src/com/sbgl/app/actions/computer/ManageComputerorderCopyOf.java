@@ -60,8 +60,8 @@ import com.sbgl.app.services.computer.ComputerstatusService;
 import com.sbgl.util.DateUtil;
 import com.sbgl.util.ReturnJson;
 
-@Scope("prototype") 
-@Controller("ManageComputerorder22")
+//@Scope("prototype") 
+//@Controller("ManageComputerorder22")
 public class ManageComputerorderCopyOf extends BaseAction implements ModelDriven<Computerorder> {
 	private static final Log log = LogFactory.getLog(ManageComputerorderCopyOf.class);
 

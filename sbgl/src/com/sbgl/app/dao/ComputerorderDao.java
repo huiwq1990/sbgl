@@ -31,5 +31,7 @@ public List<Computerorder> selectComputerorderByCondition(String condition);
 
 	List<ComputerorderFull> setUnderwayComputerorder(int uid);
 
+	List<ComputerorderFull> selFullByStatus(int uid, int orderstatus);
+
  
 }

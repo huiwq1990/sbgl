@@ -81,6 +81,8 @@ public interface ComputerorderService{
 				int computeroderadvanceorderday);
 
 		List<ComputerorderEntity> getUnderwayComputerorder(int userid);
+
+		List<ComputerorderFull> selFullByStatus(int uid, int orderstatus);
 		
 	
 //根据关联查询实体	

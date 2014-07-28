@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系</title>
+<title>$!{textmap.index_title}</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -47,8 +47,8 @@
     <div class="user-bg-pic"><img src="img/img8.jpg" class="img-responsive"></div>
     <nav class="user-nav">
       <ul class="nav nav-tabs nav-tabs-google">
-        <li><a href="${webbaseurl}/indexInfo.do">简介</a></li>
-        <li class="active"><a href="index.html">信息</a></li>
+        <li><a href="${webbaseurl}/indexInfo.do">$!{textmap.index_intro}</a></li>
+        <li class="active"><a href="index.html">$!{textmap.index_info}</a></li>
       </ul>
     </nav>
   </div>
@@ -63,17 +63,17 @@
           <div class="col-md-6">
             <div class="thumbnail">
               <div class="hd clearfix">
-                <h3 class="pull-left">新的  </h3>
+                <h3 class="pull-left">$!{textmap.index_new} </h3>
               </div>
               <div class="row p-20">
                 <div class="col-md-4">
-                  <a class="btn btn-white btn-block" href="${webbaseurl}/equipmentBooking.${strutsaction}"><h4><i class="icon-camera-retro icon-2x"></i></h4><h4>设备预约</h4></a>
+                  <a class="btn btn-white btn-block" href="${webbaseurl}/equipmentBooking.${strutsaction}"><h4><i class="icon-camera-retro icon-2x"></i></h4><h4>$!{textmap.index_equiporder}</h4></a>
                 </div>
                 <div class="col-md-4">
-                  <a class="btn btn-white btn-block" href="${webbaseurl}/toComputerIndividualorderPage.${strutsaction}"><h4><i class="icon-desktop icon-2x"></i></h4><h4>机房预约</h4></a>
+                  <a class="btn btn-white btn-block" href="${webbaseurl}/toComputerIndividualorderPage.${strutsaction}"><h4><i class="icon-desktop icon-2x"></i></h4><h4>$!{textmap.index_computerorder}</h4></a>
                 </div>
                 <div class="col-md-4">
-                  <a class="btn btn-white btn-block" href="消息中心-站内信-写站内信.html"><h4><i class="icon-envelope icon-2x"></i></h4><h4>站内信</h4></a>
+                  <a class="btn btn-white btn-block" href="消息中心-站内信-写站内信.html"><h4><i class="icon-envelope icon-2x"></i></h4><h4>$!{textmap.index_msg}</h4></a>
                 </div>
               </div>
             </div>
@@ -109,36 +109,36 @@
           <div class="col-md-6">
             <div class="thumbnail">
               <div class="hd clearfix">
-                <h3 class="pull-left">进行中的设备预约</h3>
-                <a href="${webbaseurl}/equipOrdIndex.${strutsaction}" class="more lk pull-right">查看全部</a>
+                <h3 class="pull-left">$!{textmap.index_equip_underwayorder}</h3>
+                <a href="${webbaseurl}/equipOrdIndex.${strutsaction}" class="more lk pull-right">$!{textmap.index_equip_viewall}</a>
               </div>
               <ul class="media-list">
 				#foreach($row in $equipmenborrowFullList)		
                 <li class="media">
                   <div class="media-body">
                     <div class="media-heading"><h5><a #if($!row.status==9) href="${webbaseurl}/equipmentBooking.do?borrowId=$!row.borrowid" #else href="${webbaseurl}/equipOrderContent.do?borrowId=$!row.borrowid" #end>$!row.title</a></h5><span>#if($!row.status==1)
-								等待提交预约申请。
+								$!{textmap.index_equipstatus1}
 							  #elseif($!row.status==2)
-								请耐心等待管理员的审核。
+								$!{textmap.index_equipstatus2}
 							  #elseif($!row.status==3)
-								预约被驳回，需修改后重新提交预约。
+								$!{textmap.index_equipstatus3}
 							  #elseif($!row.status==4)
-								审核通过，请于规定时间领取相关设备。
+								$!{textmap.index_equipstatus4}
 							  #elseif($!row.status==5)
-								请于规定时间归还相关设备。
+								$!{textmap.index_equipstatus5}
 							  #elseif($!row.status==6)
-								已超期，请尽快归还相关设备。
+								$!{textmap.index_equipstatus6}
 							  #elseif($!row.status==7)
-								部分设备受损，请尽快根据相关规定处理受损设备。
+							$!{textmap.index_equipstatus7}
 							  #elseif($!row.status==8)
-								已完成。
+								$!{textmap.index_equipstatus8}
 							  #elseif($!row.status==9)
-								您有一个教学任务需要处理。
+								$!{textmap.index_equipstatus9}
 							  #end</span></div>
                     <span class="tag label label-important">#if($!row.category==1)
-							个人预约
+							$!{textmap.index_equip_ordertype1}
 						  #elseif($!row.category==2)
-							课程预约
+							$!{textmap.index_equip_ordertype2}
 						  #end</span>                  
                   </div>
                 </li>
@@ -148,8 +148,8 @@
 			
             <div class="thumbnail">
               <div class="hd clearfix">
-                <h3 class="pull-left">进行中的机房预约</h3>
-                <a href="${webbaseurl}/viewMineComputerorderList.${strutsaction}" class="more lk pull-right">查看全部</a>
+                <h3 class="pull-left">$!{textmap.index_pc_underway_title}</h3>
+                <a href="${webbaseurl}/viewMineComputerorderList.${strutsaction}" class="more lk pull-right">$!{textmap.index_pc_order_viewall}</a>
               </div>
               <ul class="media-list">
 				#foreach($order in $computerorderEntityList)
@@ -180,12 +180,12 @@
 						</h5>
 						
 						<span>
-							等待你提交预约申请
+							$!{textmap.index_pc_order_waitapply}
 							<!--<a href="${webbaseurl}/toComputerClassorderPage.${strutsaction}?computerhomeworkid=$order.computerhomeworkid">开始预约</a>-->
 						</span>
 	                </div>
                     <span class="tag label label-important">
-					课程预约
+					$!{textmap.index_pc_order_type_class}
 					</span>                  
                   </div>
                 </li>

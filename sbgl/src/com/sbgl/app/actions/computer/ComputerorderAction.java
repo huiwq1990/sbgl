@@ -463,7 +463,8 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 			}else{
 				actionMsg = getText("selectComputerorderByIdFail");
 				System.out.println(actionMsg);
-			}			
+			}		
+			
 			return SUCCESS;
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
@@ -484,7 +485,7 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
  * need give parmeter id
  * get id from modle,
  * @return
- */
+ *//*
 	public String viewComputerorderFull() {
 				
 		try {
@@ -493,7 +494,7 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 			
 			if (getId < 0) {
 				log.error("error,id小于0不规范");
-				return "error";
+				return "404";
 			}	
 			
 			ComputerorderFull temComputerorderFull = computerorderService.selectComputerorderFullById(getId);				
@@ -502,7 +503,7 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 				return SUCCESS;				
 			}else{
 				log.error("error,查询实体不存在。");
-				return "Error";
+				return "404";
 			}			
 
 		} catch (IllegalAccessException e) {
@@ -512,10 +513,10 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 		} catch (Exception e) {
 			e.printStackTrace();			
 		}
-		return "Error";
+		return "error";
 	}
 
-
+*/
 	
 	@Override
 	public Computerorder getModel() {
