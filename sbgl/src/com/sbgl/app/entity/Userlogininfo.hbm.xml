@@ -19,8 +19,11 @@
         <property name="logincount" type="java.lang.Integer">
             <column name="logincount" />
         </property>
-        <property name="lastlogintime" type="java.sql.Timestamp">
+        <property name="lastlogintime" type="java.util.Date">
             <column name="lastlogintime" length="19" />
+        </property>
+        <property name="pagelanguage" type="java.lang.String">
+            <column name="pagelanguage" length="5" />
         </property>
         <property name="remark" type="java.lang.String">
             <column name="remark" length="100" />

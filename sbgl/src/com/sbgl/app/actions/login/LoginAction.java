@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.entity.Clazz;
 import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.entity.Student;
@@ -97,7 +98,7 @@ public class LoginAction extends ActionSupport {
 			if(loginUser2 != null){
 				CookiesUtil.addLoginCookie("uid", String.valueOf(loginUser2.getId()));
 				CookiesUtil.addLoginCookie("userpass", MD5Util.MD5( loginUser2.getPassword() + loginUser2.getId().toString() ));
-				CookiesUtil.addLoginCookie("userid", String.valueOf(loginUser2.getUserid()));
+				CookiesUtil.addLoginCookie(CommonConfig.cookieuserid, String.valueOf(loginUser2.getUserid()));
 				
 				Boolean isAdmin = managerService.isExistManagerCode( loginUser2.getUserid() );
 				Userlogininfo loginInfo = loginInfoService.getLoinInfoByUserId( loginUser2.getId() );
@@ -112,10 +113,11 @@ public class LoginAction extends ActionSupport {
 				if(loginInfo == null) {
 					loginInfo = new Userlogininfo();
 					loginInfo.setUserid( loginUser2.getId() );
-					loginInfo.setIsfirstlogin( "true" );
+					loginInfo.setIsfirstlogin("true");
 					loginInfo.setLastlogintime( new Date() );
 					loginInfo.setLogincount(1);
 					loginInfo.setRemark(null);
+					loginInfo.setPagelanguage("0");
 					loginInfoService.addUserLoinInfo(loginInfo);
 				}
 				
@@ -135,7 +137,10 @@ public class LoginAction extends ActionSupport {
 				}
 				
 				flag = true;
-				session.setAttribute("loginUser", loginUser2);
+				session.setAttribute(CommonConfig.sessionuser, loginUser2);
+				session.setAttribute(CommonConfig.sessionLanguagetype, loginInfo.getPagelanguage());
+				
+				CookiesUtil.addCookie("pageLan", loginInfo.getPagelanguage());
 				
 			}
 			

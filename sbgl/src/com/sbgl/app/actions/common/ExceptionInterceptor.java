@@ -43,8 +43,9 @@ public class ExceptionInterceptor extends AbstractInterceptor {
 		session = request.getSession();
 		String url = request.getRequestURL().toString();
 		String uid = CookiesUtil.getCookie("uid");
+		String pageLan = CookiesUtil.getCookie("pageLan");
 //		System.out.println("============================" + uid);
-		loginuser = (Loginuser)session.getAttribute("loginUser");
+		loginuser = (Loginuser)session.getAttribute(CommonConfig.sessionuser);
 //		System.out.println("++++++++++++++++++++++++++++" + loginuser!=null?loginuser.getUserid():"未找到");
 		Boolean isFirst = (Boolean) session.getAttribute("isFirst");
 		if(isFirst != null && isFirst) {
@@ -59,6 +60,7 @@ public class ExceptionInterceptor extends AbstractInterceptor {
 				CookiesUtil.removeCookie("uid");
 				CookiesUtil.removeCookie("userpass");
 				CookiesUtil.removeCookie("userid");
+				CookiesUtil.removeCookie("pageLan");
 				
 				return "login";
 			} else if( !CookiesUtil.getCookie("userpass").equals( MD5Util.MD5( loginuser.getPassword() + loginuser.getId().toString() ) ) ) {
@@ -72,7 +74,8 @@ public class ExceptionInterceptor extends AbstractInterceptor {
 				loginuser.setPrivilege("0");
 			}
 			
-			session.setAttribute("loginUser", loginuser);
+			session.setAttribute(CommonConfig.sessionuser, loginuser);
+			session.setAttribute(CommonConfig.sessionLanguagetype, pageLan);
 		}
 		
 		try {

@@ -20,6 +20,7 @@ import com.sbgl.app.entity.Teacher;
 import com.sbgl.app.entity.User;
 import com.sbgl.app.entity.Usergroup;
 import com.sbgl.app.entity.Usergrouprelation;
+import com.sbgl.app.entity.Userlogininfo;
 import com.sbgl.app.entity.Worker;
 import com.sbgl.app.services.admin.ManagerGroupService;
 import com.sbgl.app.services.user.ClazzService;
@@ -28,7 +29,9 @@ import com.sbgl.app.services.user.StudentService;
 import com.sbgl.app.services.user.TeacherService;
 import com.sbgl.app.services.user.UserGroupRelationService;
 import com.sbgl.app.services.user.UserService;
+import com.sbgl.app.services.user.UserlogininfoService;
 import com.sbgl.app.services.user.WorkerService;
+import com.sbgl.util.CookiesUtil;
 
 @Scope("prototype") 
 @Controller("UserAction")
@@ -54,6 +57,8 @@ public class UserAction extends ActionSupport implements SessionAware {
 	private TeacherService teacherService;
 	@Resource
 	private WorkerService workerService;
+	@Resource
+	private UserlogininfoService loginInfoService;
 	
 	private Map<String, Object> session;
 	private String tag;     //返回执行结果 0-成功 1-失败
@@ -296,6 +301,43 @@ public class UserAction extends ActionSupport implements SessionAware {
 		} else {
 			returnJSON.put("tag", 1);
 			returnJSON.put("msg", "密码不能为空！");
+		}
+		
+		return SUCCESS;
+	}
+	
+	private String pageLan;
+	public String getPageLan() {
+		return pageLan;
+	}
+	public void setPageLan(String pageLan) {
+		this.pageLan = pageLan;
+	}
+	public String alterPageLan() {
+		returnJSON = null;
+		returnJSON = new HashMap<String,Object>();
+		
+		if( !"".equals(pageLan) ) {
+			Integer res = null; 
+			Userlogininfo loginInfo = loginInfoService.getLoinInfoByUserId( Integer.valueOf(userId) );
+			if(loginInfo != null) {
+				loginInfo.setPagelanguage(pageLan);
+				res = loginInfoService.alterUserLoginInfo(loginInfo);
+				
+				if(res != null) {
+					returnJSON.put("tag", 0);
+					returnJSON.put("msg", "界面语言修改成功！");
+				} else {
+					returnJSON.put("tag", 2);
+					returnJSON.put("msg", "界面语言修改失败！");
+				}
+			}
+			
+			CookiesUtil.removeCookie("pageLan");
+			CookiesUtil.addCookie("pageLan", pageLan);
+		} else {
+			returnJSON.put("tag", -1);
+			returnJSON.put("msg", "后台故障！");
 		}
 		
 		return SUCCESS;

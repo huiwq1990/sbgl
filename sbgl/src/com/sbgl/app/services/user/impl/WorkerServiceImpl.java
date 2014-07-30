@@ -32,6 +32,7 @@ public class WorkerServiceImpl implements WorkerService {
 		info.setLogincount(0);
 		info.setRemark(null);
 		info.setUserid(id);
+		info.setPagelanguage("0");
 		
 		try {
 			baseDao.saveEntity( worker );

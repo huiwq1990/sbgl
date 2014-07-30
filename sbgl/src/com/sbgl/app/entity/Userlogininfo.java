@@ -16,6 +16,7 @@ public class Userlogininfo extends com.sbgl.app.dao.DaoAbs implements
 	private String isfirstlogin;
 	private Integer logincount;
 	private Date lastlogintime;
+	private String pagelanguage;
 	private String remark;
 
 	// Constructors
@@ -31,12 +32,14 @@ public class Userlogininfo extends com.sbgl.app.dao.DaoAbs implements
 
 	/** full constructor */
 	public Userlogininfo(Integer id, Integer userid, String isfirstlogin,
-			Integer logincount, Date lastlogintime, String remark) {
+			Integer logincount, Date lastlogintime, String pagelanguage,
+			String remark) {
 		this.id = id;
 		this.userid = userid;
 		this.isfirstlogin = isfirstlogin;
 		this.logincount = logincount;
 		this.lastlogintime = lastlogintime;
+		this.pagelanguage = pagelanguage;
 		this.remark = remark;
 	}
 
@@ -80,6 +83,14 @@ public class Userlogininfo extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setLastlogintime(Date lastlogintime) {
 		this.lastlogintime = lastlogintime;
+	}
+
+	public String getPagelanguage() {
+		return this.pagelanguage;
+	}
+
+	public void setPagelanguage(String pagelanguage) {
+		this.pagelanguage = pagelanguage;
 	}
 
 	public String getRemark() {

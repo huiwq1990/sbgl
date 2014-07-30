@@ -26,7 +26,7 @@ public class PrivilegeInterceptor extends AbstractInterceptor {
 		int index1 = url.indexOf("account");
 		int index2 = url.indexOf("passwordSet");
 		
-		Loginuser user = (Loginuser) session.getAttribute("loginUser");
+		Loginuser user = (Loginuser) session.getAttribute(CommonConfig.sessionuser);
 		Boolean isFirst = (Boolean) session.getAttribute("isFirst");
 		if(isFirst != null && isFirst) {
 			return "firstSetup";

@@ -109,10 +109,10 @@
                     <label for="inlineLangOptions" class="col-sm-2 control-label">语言（Language）</label>
                     <div class="col-sm-10">
                       <label class="radio-inline">
-                        <input type="radio" name="inlineLangOptions" id="inlineLang1" value="ch-zn" checked> 中文
+                        <input type="radio" name="inlineLangOptions" id="inlineLang1" value="0" checked> 中文
                       </label>
                       <label class="radio-inline">
-                        <input type="radio" name="inlineLangOptions" id="inlineLang2" value="en"> English
+                        <input type="radio" name="inlineLangOptions" id="inlineLang2" value="1"> English
                       </label>
                     </div>
                   </div>
@@ -152,6 +152,7 @@
 var pwd = "";
 var eml = "";
 var phn = "";
+var lan = "0";
 $('#initUser').wizard();
 $('#initUser').on('change', function(e, data) {
   if(data.step === 2 && data.direction === 'next') { // 密码判断
@@ -203,6 +204,7 @@ $('#initUser').on('finished', function(e, data) {
 		"password": pwd,
 		"phoneNumber": phn,
 		"email": eml,
+		"pageLan": lan
 	};
 	
 	jQuery.ajax({  
@@ -221,6 +223,11 @@ $('#initUser').on('finished', function(e, data) {
 			    n = noty({text: "后台系统错误！", timeout: 2500, type: 'error'});
 		}  
 	});
+});
+//判断选择的语言选项
+$("body").on("click", "[name|=inlineLangOptions]", function() {
+	lan = $(this).val();
+	console.log("================ page lan:"+lan);
 });
 </script>
 </body>

@@ -164,6 +164,12 @@
         	</result>
         </action>
         
+        <action name="alterPageLan" class="UserAction" method="alterPageLan">
+        	<result type="json" name="success">
+        		<param name="root">returnJSON</param>
+        	</result>
+        </action>
+        
         <action name="alterGender" class="UserAction" method="alterGender">
         	<result type="json" name="success">
         		<param name="root">returnJSON</param>

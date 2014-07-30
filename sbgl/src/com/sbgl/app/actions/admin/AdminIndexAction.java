@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.sbgl.app.actions.common.BaseAction;
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.orderadmin.OrderCountFull;
 import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.entity.Computerorder;
@@ -122,6 +123,7 @@ public class AdminIndexAction extends BaseAction{
 	private String password;
 	private String phoneNumber;
 	private String email;
+	private String pageLan;
 	
 	public String finishSetup() {
 		returnJSON = null;
@@ -154,7 +156,7 @@ public class AdminIndexAction extends BaseAction{
 		u.setTelephone(phoneNumber);
 		u.setEmail(email);
 		u.setPassword(password);
-		session.put("loginUser", u);
+		session.put(CommonConfig.sessionuser, u);
 		
 		if(res == null) {
 			returnJSON.put("tag", -1);
@@ -166,6 +168,7 @@ public class AdminIndexAction extends BaseAction{
 			Integer count = loginInfo.getLogincount();
 			count = count == null ? 0 : ++count;
 			loginInfo.setLogincount(count);
+			loginInfo.setPagelanguage(pageLan);
 			loginInfoService.alterUserLoginInfo(loginInfo);
 			
 			session.put("isFirst", false);
@@ -407,5 +410,13 @@ public class AdminIndexAction extends BaseAction{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public String getPageLan() {
+		return pageLan;
+	}
+
+	public void setPageLan(String pageLan) {
+		this.pageLan = pageLan;
 	}
 }

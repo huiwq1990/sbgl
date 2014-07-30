@@ -58,6 +58,7 @@ public class UserlogininfoServiceImpl implements UserlogininfoService {
 		storeInfo.setLastlogintime( info.getLastlogintime() );
 		storeInfo.setLogincount( info.getLogincount() );
 		storeInfo.setRemark( info.getRemark() );
+		storeInfo.setPagelanguage( info.getPagelanguage() );
 
 		try {
 			baseDao.updateEntity( storeInfo );

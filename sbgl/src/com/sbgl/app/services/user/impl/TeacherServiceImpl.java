@@ -32,6 +32,7 @@ public class TeacherServiceImpl implements TeacherService {
 		info.setLogincount(0);
 		info.setRemark(null);
 		info.setUserid(id);
+		info.setPagelanguage("0");
 		
 		try {
 			baseDao.saveEntity( teacher );

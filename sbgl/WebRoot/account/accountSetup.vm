@@ -58,8 +58,8 @@
                   <label for="inputLanguage" class="col-md-3 control-label">语言</label>
                   <div class="col-md-4">
                     <select class="select2 select-white form-control" id="inputLanguage">
-                      <option value="1">简体中文</option>
-                      <option value="2">English</option>
+                      <option value="0">简体中文</option>
+                      <option value="1">English</option>
                     </select>
 
                   </div>
@@ -96,10 +96,31 @@
 
 <script>
 	$("body").on("click", ".btn", function() {
-		//console.log($!user.roletype);
-		//console.log($!user.id);
-		//console.log($!user.password);
-		var n = noty({text: " 修改成功！", timeout: 700, type: 'success'});
+		var pageLan = $("#inputLanguage").val();
+		console.log("=============== pageLan = " + pageLan);
+		var postData = {
+			"userId": $!user.id,
+			"pageLan": pageLan
+		};
+		
+		jQuery.ajax({  
+		    url: "${webbaseurl}/alterPageLan.do",  
+		    type: "post",
+		    data: postData,
+		    success:function(data,textStatus,jq){  
+				//alert(data.tag);
+				if(data.tag == "0") {
+					//alert(data.msg);
+					n = noty({text: data.msg, timeout: 2500, type: 'success'});
+					
+				} else {
+					n = noty({text: data.msg, timeout: 2500, type: 'error'});
+				}
+	        },  
+		    error:function(data,textStatus,jq) {
+			    n = noty({text: "后台出错！", timeout: 2500, type: 'error'});
+			}  
+		});
 	});
 </script>
 
