@@ -7,12 +7,12 @@
 			  
 			  </div>
               <form class="navbar-search pull-right">
-                <input id="serachtext" type="text" class="form-control" placeholder="搜索设备">
+                <input id="serachtext" type="text" class="form-control" placeholder="$!{textmap.order_searchequipment}">
                 <i data-type="classAjax" class="icon-search"></i>
               </form>
               <ul class="nav nav-pills pull-right">
                 #foreach($row2 in $!classification2List)		
-					#if($velocityCount=='1')<li id="cl20" class="active classification2" ><a href="javascript:;" data-type="classAjax" data-id="0" data-classtype="2" data-parentid="$!class1Id">全部</a></li>#end
+					#if($velocityCount=='1')<li id="cl20" class="active classification2" ><a href="javascript:;" data-type="classAjax" data-id="0" data-classtype="2" data-parentid="$!class1Id">$!{textmap.order_all}</a></li>#end
         			<li id="cl2$!row2.classificationid" class="classification2"><a href="javascript:;" data-type="classAjax" data-id="$!row2.classificationid" data-classtype="2" data-parentid="$!class1Id">$!row2.name</a></li>
         		#end
               </ul>
@@ -24,13 +24,13 @@
                         <img width="168px" height="128px" class="e-pic" src="$!{equipmentImagePath}/$!row3.imgNameSaved">
                         <div class="caption">
                           <div class="title">
-							#if($class1Name!="设备组")<a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.equipmentid" role="button">$!row3.equipmentname</a>
+							#if($class1Name!=$!{textmap.order_equipmengroup})<a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.equipmentid" role="button">$!row3.equipmentname</a>
 						  #else <a class="lk" role="button">$!row3.equipmentname</a>
 						  #end</div>
-                          <p class="detail">#if($class1Name!="设备组")最多可借：$!row3.borrownum #else 可借数量根据真实设备变化 #end</p>
+                          <p class="detail">#if($class1Name!=$!{textmap.order_equipmengroup})$!{textmap.order_canborrowupto}：$!row3.borrownum #else $!{textmap.order_canborrwouptochange} #end</p>
                         </div>
                         <div class="select-num">
-						 #if($class1Name!="设备组")
+						 #if($class1Name!=$!{textmap.order_equipmengroup})
                           <select class="select2 form-control select-white" id="inputEquipStatus">
 							 #foreach($i in [1 .. $!row3.borrownum])	
 								<option value="$i">$i</option>
@@ -38,7 +38,7 @@
                           </select>
 						  #end
                         </div>                            
-                        <a class="btn btn-white add-btn" data-type="addEquip" data-id="$!row3.equipmentid" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" data-cate="$!parentClassId" href="javascript:;">添 加</a>
+                        <a class="btn btn-white add-btn" data-type="addEquip" data-id="$!row3.equipmentid" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" data-cate="$!parentClassId" href="javascript:;">$!{textmap.order_add}</a>
                       </div>                  
                   </div>
                    #end          
