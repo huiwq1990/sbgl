@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.sbgl.app.dao.BaseDao;
+import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.entity.Userlogininfo;
 import com.sbgl.app.services.user.UserlogininfoService;
 
@@ -68,4 +69,12 @@ public class UserlogininfoServiceImpl implements UserlogininfoService {
 		return id;
 	}
 
+	@Override
+	public Loginuser getLoginuserById(int id) {
+		List<Loginuser> list = baseDao.getEntityByIntProperty(Loginuser.class.getName(), "id", id);
+		if(list != null && list.size() == 1) {
+			return list.get(0);
+		}
+		return null;
+	}
 }

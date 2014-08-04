@@ -1,5 +1,6 @@
 package com.sbgl.app.services.user;
 
+import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.entity.Userlogininfo;
 
 public interface UserlogininfoService {
@@ -30,4 +31,11 @@ public interface UserlogininfoService {
 	 * @return 是否是第一次登录
 	 */
 	public Boolean getIsFirstLoginByUserId(int userId);
+	
+	/**
+	 * 根据id获取用户基本信息
+	 * @param id 登录用户view对应的表id
+	 * @return 用户基本信息（登录信息）
+	 */
+	public Loginuser getLoginuserById(int id);
 }
