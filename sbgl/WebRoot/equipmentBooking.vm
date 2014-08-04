@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 设备预约</title>
+<title>$!{textmap.order_equipappintementtitle}</title>
 
 <meta name="description" content="">
 <meta name="author" content="">
@@ -37,15 +37,15 @@
   <div class="nav-wrap clearfix">
     <div class="site-nav">
       <div class="dropdown">
-        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> 器材预约 <i class="icon-chevron-right"></i></a>
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> $!{textmap.order_equipment} <i class="icon-chevron-right"></i></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-          <li><a href="${webbaseurl}/index.${strutsaction}"><i class="icon-home"></i> 首页</a></li>
+          <li><a href="${webbaseurl}/index.${strutsaction}"><i class="icon-home"></i> $!{textmap.order_index}</a></li>
           <li class="divider"></li>
-          <li><a href="${webbaseurl}/indexInfo.${strutsaction}">个人主页</a></li>
+          <li><a href="${webbaseurl}/indexInfo.${strutsaction}"> $!{textmap.order_personalhomepage}</a></li>
          <!-- <li><a href="#">通讯录</a></li> -->
           <li class="divider"></li>
 
-		  <li><a href="${webbaseurl}/equipOrdIndex.${strutsaction}">我的预约</a></li>
+		  <li><a href="${webbaseurl}/equipOrdIndex.${strutsaction}">$!{textmap.order_myreservation}</a></li>
         </ul>
       </div>
     </div>
@@ -54,7 +54,7 @@
         #foreach($row in $classification1List)		
 			<li id="cl1$!row.classificationid" #if($velocityCount=='1') class="active classification1" #else class="classification1" #end><a href="javascript:;"   data-type="classAjax" data-id="$!row.classificationid" data-classtype="1" >$!row.name</a></li>
 		#end
-		<li id="cl1-2" class="classification1"><a href="javascript:;"   data-type="classAjax" data-id="-2" data-classtype="1" >设备组</a></li>	
+		<li id="cl1-2" class="classification1"><a href="javascript:;"   data-type="classAjax" data-id="-2" data-classtype="1" >$!{textmap.order_equipmengroup}</a></li>	
       </ul>
     </div>
   </div>
@@ -72,12 +72,12 @@
 		  
 			  </div>
               <form class="navbar-search pull-right">
-                <input id="serachtext" type="text" class="form-control" placeholder="搜索设备" >
+                <input id="serachtext" type="text" class="form-control" placeholder="$!{textmap.order_searchequipment}" >
                 <i data-type="classAjax" class="icon-search"></i>
               </form>
               <ul class="nav nav-pills pull-right">
                 #foreach($row2 in $!classification2List)		
-					#if($velocityCount=='1')<li id="cl20" class="active classification2" ><a href="javascript:;" data-type="classAjax" data-id="0" data-classtype="2" data-parentid="$!class1Id">全部</a></li>#end
+					#if($velocityCount=='1')<li id="cl20" class="active classification2" ><a href="javascript:;" data-type="classAjax" data-id="0" data-classtype="2" data-parentid="$!class1Id">$!{textmap.order_all}</a></li>#end
         			<li id="cl2$!row2.classificationid" class="classification2"><a href="javascript:;" data-type="classAjax" data-id="$!row2.classificationid" data-classtype="2" data-parentid="$!class1Id">$!row2.name</a></li>
         		#end
               </ul>
@@ -89,13 +89,13 @@
                         <img width="168px" height="128px" class="e-pic" src="$!{equipmentImagePath}/$!row3.imgNameSaved">
                         <div class="caption">
                           <div class="title">
-							#if($class1Name!="设备组")<a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.equipmentid" role="button">$!row3.equipmentname</a>
+							#if($class1Name!=$!{textmap.order_equipmengroup})<a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.equipmentid" role="button">$!row3.equipmentname</a>
 						  #else <a class="lk" role="button">$!row3.equipmentname</a>
 						  #end</div>
-                          <p class="detail">#if($class1Name!="设备组")最多可借：$!row3.borrownum #else 可借数量根据真实设备变化 #end</p>
+                          <p class="detail">#if($class1Name!=$!{textmap.order_equipmengroup})$!{textmap.order_canborrowupto}：$!row3.borrownum #else $!{textmap.order_canborrwouptochange} #end</p>
                         </div>
                         <div class="select-num">
-						 #if($class1Name!="设备组")
+						 #if($class1Name!=$!{textmap.order_equipmengroup})
                           <select class="select2 form-control select-white" id="inputEquipStatus">
 							 #foreach($i in [1 .. $!row3.borrownum])	
 								<option value="$i">$i</option>
@@ -103,7 +103,7 @@
                           </select>
 						  #end                      
 						</div>                            
-                        <a class="btn btn-white add-btn" data-type="addEquip" data-id="$!row3.equipmentid" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" data-cate="$!row3.classificationid" href="javascript:;">添 加</a>
+                        <a class="btn btn-white add-btn" data-type="addEquip" data-id="$!row3.equipmentid" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" data-cate="$!row3.classificationid" href="javascript:;">$!{textmap.order_add}</a>
                       </div>                  
                   </div>
                    #end
@@ -118,16 +118,16 @@
       <div id="rent-bar">  
         <div class="wizard thumbnail">
           <ul class="steps unstyled">
-            <li data-target="#step1" class="active"><h3>欢迎</h3></li>
-            <li data-target="#step2"><h3>预约时间 <small>打算哪天预约？</small></h3></li>
+            <li data-target="#step1" class="active"><h3>$!{textmap.order_welcome}</h3></li>
+            <li data-target="#step2"><h3>$!{textmap.order_makeanappointment} <small>$!{textmap.order_todaytheappointment} </small></h3></li>
           </ul>
           <div class="step-content">
             <div class="step-pane active" id="step1">
-              <p>欢迎使用北京电影学院摄影系在线设备预约系统！</p>
+              <p>$!{textmap.order_welcomeapp}</p>
 			   #if($!orderCate==1)
-              <p>您正在进行的是<strong>个人预约</strong>。</p>
+              <p>$!{textmap.order_youis}<strong>$!{textmap.order_personalappointment}</strong>。</p>
         	  #elseif($!orderCate==2)
-              <p>您正在进行的是<strong>课程预约</strong>，以下是<strong>$!equipmenborrowFull.teacherName</strong>课程作业的相关要求：</p>
+              <p>$!{textmap.order_youis}<strong>$!{textmap.order_teachingappointment}</strong>，$!{textmap.order_following}<strong>$!equipmenborrowFull.teacherName</strong>$!{textmap.order_relevantrequirements}</p>
               <div class="media">
                 <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
                   <img src="img/photo.jpg" width="46" height="46" class="img-rounded">
@@ -136,7 +136,7 @@
                   <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">$!equipmenborrowFull.teacherName</a></h5><span>$!date.format("yyyy-MM-dd ", $!equipmenborrowFull.createtime)</span></div>
                   <div class="media-content">
                     <h5>$!equipmenborrowFull.msgtitle</h5>
-                    <p>$!equipmenborrowFull.msgtitle具体要求如下：</p>
+                    <p>$!equipmenborrowFull.msgtitle $!{textmap.order_specificrequirements}：</p>
                     $!equipmenborrowFull.content
                   </div>
                 </div>
@@ -148,13 +148,13 @@
                 <div class="row">                  
                   <div class="input-daterange">
                     <div class="col-xs-5">
-                      <input type="text" class="form-control checkin" name="start" placeholder="起始日期">
+                      <input type="text" class="form-control checkin" name="start" placeholder="$!{textmap.order_startdate}">
                     </div>
                     <div class="col-xs-2">
-                      <span class="add-on">至</span>
+                      <span class="add-on">$!{textmap.order_to}</span>
                     </div>
                     <div class="col-xs-5">
-                      <input type="text" class="form-control checkout" name="end" placeholder="归还日期">
+                      <input type="text" class="form-control checkout" name="end" placeholder="$!{textmap.order_returndate}">
                     </div>
                   </div>        
                 </div>
@@ -162,35 +162,35 @@
             </div>          
           </div>
           <div class="form-actions actions">  
-            <button type="button" class="btn btn-white btn-prev" disabled="disabled">上一步</button>
-            <button type="button" class="btn btn-primary btn-next"  data-last="开始预约">下一步</button>
+            <button type="button" class="btn btn-white btn-prev" disabled="disabled">$!{textmap.order_astep}</button>
+            <button type="button" class="btn btn-primary btn-next"  data-last="$!{textmap.order_appointmentstart}">$!{textmap.order_whatnext}</button>
           </div>
         </div>
         <div class="rent-time panel panel-default">
           <div class="row panel-body input-daterange">  
             <div class="col-xs-4">
-              <input type="text" class="form-control checkin1" id="fromDate" name="start" value placeholder="起始日期">
+              <input type="text" class="form-control checkin1" id="fromDate" name="start" value placeholder="$!{textmap.order_startdate}">
             </div>
             <div class="col-xs-1 col-no-padding">
-              <span class="add-on">至</span>
+              <span class="add-on">$!{textmap.order_to}</span>
             </div>
             <div class="col-xs-4">
-              <input type="text" class="form-control checkout1" id="endDate"  name="end" value placeholder="归还日期">
+              <input type="text" class="form-control checkout1" id="endDate"  name="end" value placeholder="$!{textmap.order_returndate}">
             </div>
             <div class="col-xs-3 col-no-padding">
-              <button type="button" data-type="classAjax"  class="btn btn-white">重新搜索</button>
+              <button type="button" data-type="classAjax"  class="btn btn-white">$!{textmap.order_research}</button>
             </div>
           </div>
         </div>
         <div id="rent-list-wrap" class="panel panel-default">
-          <div class="panel-heading"><h3>预约单 <small>请选择你所需要的设备。</small></h3></div>
+          <div class="panel-heading"><h3>$!{textmap.order_reservation} <small>$!{textmap.order_selectthedevice}。</small></h3></div>
           <div class="panel-body">
             <div id="rent-list">
-              <p class="no-add">尚未添加任何设备。</p>
+              <p class="no-add">$!{textmap.order_notaddedanyequipment}。</p>
             </div>
           </div>
           <div class="panel-footer text-right">
-            <button type="button" data-type="suborder"  class="btn btn-primary">提 交</button>
+            <button type="button" data-type="suborder"  class="btn btn-primary">$!{textmap.order_submit}</button>
           </div>
         </div>
       </div>      
@@ -203,7 +203,7 @@
 <div id="equip-detail" class="modal hide fade" tabindex="-1" role="dialog">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-    <h3 id="myModalLabel">设备详情</h3>
+    <h3 id="myModalLabel">$!{textmap.order_equipinfo}</h3>
   </div>
   <div class="modal-body">
     <div class="media">
@@ -212,11 +212,11 @@
       </div>
       <div class="media-body">
         <dl class="dl-horizontal">
-          <dt>型号</dt>
+          <dt>$!{textmap.order_model}</dt>
           <dd>$!equipmentFull.equipmentname</dd>
-          <dt>所属分类</dt>
+          <dt>$!{textmap.order_category}</dt>
           <dd>$!equipmentFull.categoryName</dd>
-          <dt>预约数量</dt>
+          <dt>$!{textmap.order_numberofreservations}</dt>
           <dd>
             <div class="select-num">
               <select class="select2 form-control select-white" id="inputEquipStatus" style="width: 80px;">
@@ -230,19 +230,19 @@
               </select>
             </div>
           </dd>
-          <dt>介绍</dt>
+          <dt>$!{textmap.order_equipintroduction}</dt>
           <dd>$!equipmentFull.equipmentdetail</dd>
         </dl>
       </div>
     </div>
-    <div class="equip-chart-title">近期可预约数量</div>
+    <div class="equip-chart-title">$!{textmap.order_reservationnumber}</div>
     <div class="equip-chart-warp scrollable" style="width: 628px; overflow-x: auto">  
       <div id="equip-chart" style="width:100%; height:150px;"></div>
     </div>
   </div>
   <div class="modal-footer">
-    <a class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</a>
-    <a class="btn btn-primary" data-type="addEquip" data-id="$!equipmentFull.equipmentid" data-name="$!equipmentFull.equipmentname" data-num="$!equipmentFull.borrownum" data-cate="$!parentClassId" href="javascript:;">添 加</a>
+    <a class="btn btn-white" data-dismiss="modal" aria-hidden="true">$!{textmap.order_cancel}</a>
+    <a class="btn btn-primary" data-type="addEquip" data-id="$!equipmentFull.equipmentid" data-name="$!equipmentFull.equipmentname" data-num="$!equipmentFull.borrownum" data-cate="$!parentClassId" href="javascript:;">$!{textmap.order_add}</a>
   </div>
 </div>
 
