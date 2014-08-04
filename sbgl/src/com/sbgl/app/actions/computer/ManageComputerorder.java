@@ -26,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.sbgl.app.actions.common.BaseAction;
+import com.sbgl.app.actions.common.CommonActionUtil;
 import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.actions.util.SnActionUtil;
@@ -51,6 +52,7 @@ import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.entity.Computerstatus;
 import com.sbgl.app.entity.ComputerstatusFull;
 import com.sbgl.app.entity.Loginuser;
+import com.sbgl.app.entity.User;
 import com.sbgl.app.services.computer.ComputerhomeworkService;
 import com.sbgl.app.services.computer.ComputerhomeworkreceiverService;
 import com.sbgl.app.services.computer.ComputerorderService;
@@ -59,6 +61,8 @@ import com.sbgl.app.services.computer.ComputerorderclassruledetailService;
 import com.sbgl.app.services.computer.ComputerorderconfigService;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
 import com.sbgl.app.services.computer.ComputerstatusService;
+import com.sbgl.app.services.login.LoginService;
+import com.sbgl.app.services.user.UserService;
 import com.sbgl.util.DateUtil;
 import com.sbgl.util.ReturnJson;
 
@@ -135,7 +139,9 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	private List<ComputerhomeworkFull> computerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
 	private List<ComputerhomeworkFull> newComputerhomeworkFullList = new ArrayList<ComputerhomeworkFull>();
 	
-
+	@Resource	
+	private LoginService loginService;
+	Loginuser auditUser;//审核人信息
 	
 	private int ComputerorderStatusAduitAll = ComputerorderInfo.ComputerorderStatusAduitAll;
 	private int ComputerorderStatusAduitPass = ComputerorderInfo.ComputerorderStatusAduitPass;
@@ -179,7 +185,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	private  Map<Integer,String> userRoleMap = new HashMap<Integer,String>();
 	
 	private List<Borrowperiod> periodList = new ArrayList<Borrowperiod>();
-
+	Map<Integer,Borrowperiod> periodMap = new HashMap<Integer,Borrowperiod>();
 	/**
 	 * 跳转到订单审核界面
 	 * @return
@@ -190,6 +196,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		
 //		装载时间段的信息,界面上用于显示
 		periodList = BorrowperiodUtil.getBorrowperiodList();
+		periodMap = BorrowperiodUtil.getBorrowperiodMap(CommonConfig.languagech);
 		
 		computerorderFull = computerorderService.selectComputerorderFullById(computerorderId);
 		if(computerorderFull == null){
@@ -225,6 +232,9 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			computerorderdetailFullMapByComputermodelId = ComputerActionUtil.sortComputerorderMap(computerorderdetailFullMapByComputermodelId);
 		}
 		System.out.println("computerorderdetailFullMapByComputermodelId size:"+computerorderdetailFullMapByComputermodelId.size());
+		
+		Loginuser user = (Loginuser) ServletActionContext.getRequest().getSession().getAttribute("loginUser");
+		userRoleName = CommonActionUtil.getUserRole(this.getCurrentLanguage()).get(Integer.valueOf(user.getRoletype()));
 		
 		return SUCCESS;
 	}
@@ -311,6 +321,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		
 //		装载时间段的信息,界面上用于显示
 		periodList = BorrowperiodUtil.getBorrowperiodList();
+		periodMap = BorrowperiodUtil.getBorrowperiodMap(this.getCurrentLanguage());
 		
 		computerorderFull = computerorderService.selectComputerorderFullById(computerorderId);
 		//如果找不到相应的预约单，返回错误
@@ -351,8 +362,12 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 //		System.out.println("computerorderdetailFullMapByComputermodelId size:"+computerorderdetailFullMapByComputermodelId.size());
 		Loginuser user = (Loginuser) ServletActionContext.getRequest().getSession().getAttribute("loginUser");
 //		System.out.println(user.getName() + user.getTelephone());
-		userRoleName = CommonConfig.userRoleMap.get(Integer.valueOf(user.getRoletype()));
+		userRoleName = CommonActionUtil.getUserRole(this.getCurrentLanguage()).get(Integer.valueOf(user.getRoletype()));
 		System.out.println(user.getRoletype() +userRoleName);
+		Loginuser l = new Loginuser();
+		l.setId(computerorderFull.getAudituserid());
+		auditUser = loginService.findUser(l);
+		System.out.println(auditUser.getName());
 		return SUCCESS;
 	}
 	
@@ -575,12 +590,12 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 //		System.out.println(session.get("computerordertype"));
 		
 //		装载时间段的信息,界面上用于显示
-		periodList = BorrowperiodUtil.getBorrowperiodList();
-		
+		periodList = BorrowperiodUtil.getBorrowperiodList(this.getCurrentLanguage());
+		periodMap = BorrowperiodUtil.getBorrowperiodMap(this.getCurrentLanguage());
 
 		if(confirmOrderInfo(orderInfoStr) == false){
 //		if(session==null || !session.containsKey("computerordertype") || !session.containsKey("computerorderdetailFullList")){
-			actionMsg = "预约信息不完整";
+			actionMsg = this.getMsg("computerorderconfirm_orderinfoerror");
 			return ComputerConfig.pagenotfound;
 		}
 //		获取预约类型
@@ -1556,21 +1571,34 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	}
 
 
-	
+	public Map<Integer, Borrowperiod> getPeriodMap() {
+		return periodMap;
+	}
 
 
+	public void setPeriodMap(Map<Integer, Borrowperiod> periodMap) {
+		this.periodMap = periodMap;
+	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public LoginService getLoginService() {
+		return loginService;
+	}
+
+
+	public void setLoginService(LoginService loginService) {
+		this.loginService = loginService;
+	}
+
+
+	public Loginuser getAuditUser() {
+		return auditUser;
+	}
+
+
+	public void setAuditUser(Loginuser auditUser) {
+		this.auditUser = auditUser;
+	}
+
+
 }

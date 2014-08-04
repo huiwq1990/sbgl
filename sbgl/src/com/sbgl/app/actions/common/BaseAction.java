@@ -114,6 +114,7 @@ public class BaseAction extends ActionSupport implements SessionAware,CookiesAwa
 	 * @return
 	 */
 	public String getMsg(String name){
+		
 		Map<String,String> textmap = (Map<String, String>) ServletActionContext.getRequest().getAttribute(CommonConfig.resourcetextmap);
 		
 		if(textmap ==null){
@@ -124,6 +125,8 @@ public class BaseAction extends ActionSupport implements SessionAware,CookiesAwa
 		}else{
 			return "";
 		}
+		
+		
 	}
 	
 	public String getUrl(){

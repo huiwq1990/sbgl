@@ -187,7 +187,8 @@ int curcomputerhomeworkid;
 	 * 需要传入课程规则id:computerorderclassruleid
 	 * @return
 	 */
-	public String toComputerClassorderPage(){		
+	public String toComputerClassorderPage(){	
+		try{
 		log.info("exec toComputerClassorderPage");
 		
 //		curcomputerhomeworkid = 
@@ -207,9 +208,10 @@ int curcomputerhomeworkid;
 		computerordertype = ComputerorderInfo.ClassOrder;
 		
 		if(computerhomeworkid == null || computerhomeworkid <0){
-			actionMsg = "无法获取作业信息，访问界面不存在";
+//			actionMsg = "无法获取作业信息，访问界面不存在";
+			actionMsg = this.getMsg("computerclassorder_nothomeworkid");
 			log.error(actionMsg);
-			return ComputerConfig.pagenotfound;
+			return ComputerConfig.ordererror;
 		}
 		
 
@@ -218,9 +220,10 @@ int curcomputerhomeworkid;
 		
 //		作业存在多个或没有
 		if(computerhomework==null){
-			actionMsg = "获取作业信息出错";
+//			actionMsg = "获取作业信息出错";
+			actionMsg = this.getMsg("computerclassorder_couldnotgethomework");
 			log.error(actionMsg);
-			return ComputerConfig.pagenotfound;
+			return ComputerConfig.ordererror;
 		}
 		
 //		检查是否已经预约
@@ -229,9 +232,10 @@ int curcomputerhomeworkid;
 //		取出用户的关于这个作业的预约接收信息
 		if(computerhomeworkreceiver!= null){		
 		}else{
-			actionMsg = "作业预约状态获取出错";
+//			actionMsg = "作业预约状态获取出错";
+			actionMsg = this.getMsg("computerclassorder_homeworkorderstatuserror");
 			log.error(actionMsg);
-			return ComputerConfig.pagenotfound;
+			return ComputerConfig.ordererror;
 		}
 
 //		原先使用 computerhomeworkreceiver.getHasorder()判断是否能预约 现在改为
@@ -246,7 +250,7 @@ int curcomputerhomeworkid;
 //			actionMsg = "已经预约过，不能再进行预约";
 			actionMsg = getMsg("computerclassorder_classorderhaveorder");
 			log.error(actionMsg);
-			return ComputerConfig.pagenotfound;
+			return ComputerConfig.ordererror;
 		}
 		
 		
@@ -258,7 +262,7 @@ int curcomputerhomeworkid;
 		if(computerorderconfig.getOpenorder() == 0){
 //			this.actionMsg = "预约功能暂时关闭。";
 			actionMsg = getMsg("computerclassorder_classorderclose");
-			return "orderclose";
+			return ComputerConfig.ordererror;
 		}		
 		
 		
@@ -270,7 +274,7 @@ int curcomputerhomeworkid;
 //			actionMsg = "无法获取作业规则信息，访问界面不存在";
 			actionMsg = getMsg("computerclassorder_classordernotruler");
 			log.error(actionMsg);
-			return ComputerConfig.pagenotfound;
+			return ComputerConfig.ordererror;
 		}
 		computerorderclassrule = computerorderclassruleList.get(0);
 	
@@ -286,7 +290,7 @@ int curcomputerhomeworkid;
 //			actionMsg = "作业规则日期错误";
 			actionMsg = getMsg("computerclassorder_classorderruledateerror");
 			log.error(actionMsg);
-			return ComputerConfig.pagenotfound;
+			return ComputerConfig.ordererror;
 		}
 		
 		
@@ -294,7 +298,7 @@ int curcomputerhomeworkid;
 //			actionMsg = "课程预约的规定日期已过。";
 			actionMsg = this.getMsg("computerclassorder_classorderoutdate");
 			log.error(actionMsg);
-			return ComputerConfig.pagenotfound;
+			return ComputerConfig.ordererror;
 		}
 		
 		
@@ -309,7 +313,7 @@ int curcomputerhomeworkid;
 //			actionMsg = "没有可以预约的PC";
 			actionMsg = getMsg("computerclassorder_notpc");
 			log.error(actionMsg);
-			return ComputerConfig.pagenotfound;
+			return ComputerConfig.ordererror;
 		}
 		
 //		设置可借出的pc model type
@@ -346,6 +350,11 @@ int curcomputerhomeworkid;
 		}
 //		System.out.println(borrowperiodList.size());
 		return SUCCESS;
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return "404";
 	}
 
 	
@@ -407,7 +416,7 @@ int curcomputerhomeworkid;
 //		}
 		
 		//所有可借时间段信息
-		borrowperiodList =  BorrowperiodUtil.getBorrowperiodList();
+		borrowperiodList =  BorrowperiodUtil.getBorrowperiodList(this.getCurrentLanguage());
 		
 		for(Computermodel model : computermodelList){
 			HashMap<Integer,ArrayList<Integer>> periodDay = new HashMap<Integer,ArrayList<Integer>>();

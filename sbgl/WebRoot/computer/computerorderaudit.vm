@@ -1,8 +1,9 @@
+#set($textmap=$application.getAttribute("resourcetextmapch"))
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 机房预约审核</title>
+<title>北京电影学院摄影系 - 机房预约审核 $textmap.test</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -53,20 +54,8 @@
                     <h3>状态</h3>
                   </div>
                   <div class="caption">
-                      <div class="status">
-            						#set($curstatus = $computerorderFull.computerorderstatus)
-                        #if($curstatus == $ComputerorderStatusAduitPass)
-                        审核通过。
-                        #elseif($curstatus ==$ComputerorderStatusAduitReject)
-                        申请已被驳回，具体原因见下方详细中的驳回说明。
-                        #elseif($curstatus ==$ComputerorderStatusAduitDel)
-                        申请已被删除。
-                        #elseif($curstatus ==$ComputerorderStatusAduitWait)
-                        待审核，请尽快审核该预约申请！
-                        #else 
-                        错误
-                        #end
-                      </div>
+                      #set($curstatus = $computerorderFull.computerorderstatus)
+                      #parse("include/includeComputerorderStatus.vm")
                       <hr>
 						<!--
                       <strong>审核人可能进行的操作:</strong><br>  -->
@@ -90,11 +79,10 @@
                   </div>
                   <div class="caption">
                     <div class="rent-detail">
-                      <span class="rent-user"><strong>申请者：<a rel="popover" class="lk" href="#" data-original-title="" title="">$!computerorderFull.createusername</a></strong></span> - <span class="rent-num"><strong> 预约号：$!computerorderFull.computerorderserialnumber</strong></span>
-                      #set($currentcomputerorderordertype=$computerorderFull.computerorderordertype)	
-                      <div class="rent-userinfo">学生 - 本科 - 班级(教师)</div>				 
+                      <span class="rent-user"><strong>申请者：<a rel="popover" class="lk" href="#" data-original-title="" title="">$!computerorderFull.createusername</a></strong></span> - <span class="rent-num"><strong> 预约号：$!computerorderFull.computerorderserialnumber</strong></span>	
+                      <div class="rent-userinfo">${userRoleName}</div> 		 
                       <div class="rent-contact">预约类型：#parse("include/includeComputerorderType.vm")</div>
-                      <div class="rent-contact">联系方式：XXXXXXX</div>
+                      <div class="rent-contact">联系方式：$!{user.telephone}</div>
                       #if($computerorderFull.computerorderremark)
                       <div class="rent-remark"><i class="icon-pencil"></i> $!computerorderFull.computerorderremark</div>
                       #end

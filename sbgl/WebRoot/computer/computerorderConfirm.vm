@@ -71,7 +71,7 @@
                         <div class="caption"><textarea class="form-control" id="inputAddComputerorderRemark"  rows="3" placeholder="$!{textmap.computerorderconfirm_detail_orderremark_placeholder}"></textarea></div>
                         <div class="form-actions actions">  
                           <button type="button" action-type="" class="btn btn-white">$!{textmap.computerorderconfirm_detail_returnandedit}</button>
-						              <button type="button" action-type="orderComputerButton" class="btn btn-primary">$!{textmap.computerorderconfirm_detail_orderrejectreason}</button>
+						              <button type="button" action-type="orderComputerButton" class="btn btn-primary">$!{textmap.computerorderconfirm_detail_submit}</button>
                         </div>
                       </div>               
                   </div>                  

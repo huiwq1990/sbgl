@@ -7,39 +7,37 @@
 <!--跳转到个人预约页面 -->
 		<action name="toComputerIndividualorder" class="OrderComputerAction" method="toComputerIndividualorderPage">
         	<result name="success">/computer/computerindividualorderindex.vm</result>
+        	<result name="success2">/computer/computerindividualorderindexRefresh.vm</result>
         	<result name="adminorder">/computer/computerindividualorderindexAdmin.vm</result>
-        	<result name="orderclose">/computer/computerindividualorderError.vm</result>
-        	<result name="innererror">/computer/computerindividualorderError.vm</result>    	
-        	<result name="error">/error.vm</result> 
+        	<result name="ordererror">/computer/computerindividualorderindexError.vm</result>        	
+        	<result name="404">/404.vm</result> 
 		</action>
 
 		<action name="toComputerIndividualorderPage" class="OrderComputerAction" method="toComputerIndividualorderPage">
-        	<result name="success">/computer/computerindividualorderindex.vm</result>
+    		<result name="success">/computer/computerindividualorderindex.vm</result>
+    		<result name="success2">/computer/computerindividualorderindexRefresh.vm</result>
         	<result name="adminorder">/computer/computerindividualorderindexAdmin.vm</result>
-        	<result name="orderclose">/computer/computerindividualorderError.vm</result> 
-        	<result name="innererror">/computer/computerindividualorderError.vm</result>    	
-        	<result name="error">/error.vm</result> 
+        	<result name="ordererror">/computer/computerindividualorderindexError.vm</result>        	
+        	<result name="404">/404.vm</result>
 		</action>
 		
 		
 		<!-- 跳转到课程预约页面 -->
 		<action name="toComputerClassorder" class="ComputerClassorderAction" method="toComputerClassorderPage">
         	<result name="success">/computer/computerclassorderindex.vm</result>
-        	<result name="pagenotfound">/computer/computerclassorderError.vm</result>
-        	<result name="orderclose">/computer/computerclassorderError.vm</result>     	
-			<result name="innererror">/computer/errorpage.vm</result>
+        	<result name="ordererror">/computer/computerclassorderindexError.vm</result>     	
+			<result name="404">/404.vm</result>
 		</action>
 		<action name="toComputerClassorderPage" class="ComputerClassorderAction" method="toComputerClassorderPage">
         	<result name="success">/computer/computerclassorderindex.vm</result>
-        	<result name="pagenotfound">/computer/computerclassorderError.vm</result>
-        	<result name="orderclose">/computer/computerclassorderError.vm</result>     	
-			<result name="innererror">/computer/errorpage.vm</result>
+        	<result name="ordererror">/computer/computerclassorderindexError.vm</result>     	
+			<result name="404">/404.vm</result>
 		</action>
 		
 		<!-- 用户点击预约按钮后，跳转到预约确认界面 -->
 		<action name="toComputerorderConfirmPage" class="ManageComputerorder" method="toComputerorderConfirmPage">
         	<result name="success">/computer/computerorderConfirm.vm</result>
-        	<result name="pagenotfound">/error/pagenotfound.vm</result> 
+        	<result name="404">/404.vm</result> 
         </action>
         
         

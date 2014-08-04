@@ -28,13 +28,13 @@
     
     <tool>
         <key>imgtool</key>
-        <scope>application</scope>
+        <scope>request</scope>
         <class>com.sbgl.toolbox.ImageUrlTool</class>
     </tool> 
     
     <tool>
         <key>bptool</key>
-        <scope>application</scope>
+        <scope>request</scope>
         <class>com.sbgl.toolbox.BorrowperiodTool</class>
     </tool> 
    <!--  

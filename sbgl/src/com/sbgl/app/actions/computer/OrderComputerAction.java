@@ -134,6 +134,8 @@ public class OrderComputerAction  extends BaseAction {
 	HashMap<Integer,ArrayList<String>> showWeekdayMap = new HashMap<Integer,ArrayList<String>>();
 	HashMap<Integer,ArrayList<String>> dateMap = new HashMap<Integer,ArrayList<String>>();
 
+	
+//	int firstComputercategory = 0;//pc种类的第一个，用于高亮显示
 //	List<>
 	
 //	预约类型
@@ -146,6 +148,7 @@ public class OrderComputerAction  extends BaseAction {
 //	提交预约表单的参数
 	private String orderInfoStr;
 	
+	private String callType;
 	
 //	判断是否已经预约
 	int reorder = 0;//默认为0或者没有，如果为1，则为重新预约
@@ -157,7 +160,6 @@ public class OrderComputerAction  extends BaseAction {
 	public String toComputerIndividualorderPage(){
 		try{
 			
-		
 		computerordertype = ComputerorderInfo.IndividualOrder;
 //		如果是个人预约，默认作业id
 		if(computerordertype == ComputerorderInfo.IndividualOrder){
@@ -172,8 +174,8 @@ public class OrderComputerAction  extends BaseAction {
 		
 		if(computerorderconfig.getOpenorder() == 0){
 //			JsonActionUtil.buildReturnStr(JsonActionUtil., errorStr)
-			this.actionMsg = "预约功能暂时关闭。";
-			return "orderclose";
+			this.actionMsg = this.getMsg("computerindividualorderindex_classorderclose");
+			return "ordererror";
 		}		
 		//设置提前预约的天数
 		computeroderadvanceorderday = computerorderconfig.getMaxorderday();
@@ -195,11 +197,15 @@ public class OrderComputerAction  extends BaseAction {
 		int currentlanguagetype = this.getCurrentLanguage();
 		
 		
-		
-		computercategoryList = computercategoryService.sel(CommonConfig.languagech);
-		
+		//获取分类，及模型
+		computercategoryList = computercategoryService.sel(currentlanguagetype);
+		if(computercategoryList==null || computercategoryList.size()==0){
+			return SUCCESS;
+		}		
 		if(selComputercategory ==0){
-			computermodelList = computermodelService.selectComputermodelAll(currentlanguagetype);
+			//设置默认选择的分类
+			selComputercategory = computercategoryList.get(0).getComputercategorytype();
+			computermodelList = computermodelService.selectComputermodelByComputercategoryId(selComputercategory, currentlanguagetype);			
 		}else{
 			computermodelList = computermodelService.selectComputermodelByComputercategoryId(selComputercategory, currentlanguagetype);
 		}
@@ -207,13 +213,14 @@ public class OrderComputerAction  extends BaseAction {
 //		设置可借出的pc model type, 由于需要查询模型对应的订单，
 //		如果没有模型，这直接返回界面
 		borrowPcModelStr = "";
-		if(computermodelList!=null && computermodelList.size()>0){
+		if(computermodelList!=null && computermodelList.size()>0){			
 			for (int i = 0; i < computermodelList.size(); i++) {
 				borrowPcModelStr += computermodelList.get(i).getComputermodeltype() + ",";
 			}
 			borrowPcModelStr = borrowPcModelStr.substring(0,borrowPcModelStr.length()-1);
 		}else{
-			return SUCCESS;
+			this.actionMsg = this.getMsg("computerindividualorderindex_nomodecouldorder");
+			return "ordererror";
 		}
 
 		
@@ -232,21 +239,23 @@ public class OrderComputerAction  extends BaseAction {
 		
 //		System.out.println(borrowperiodList.size());
 		
-		if(this.isAdmin()){
-			return "adminorder";
+//		if(this.isAdmin()){
+//			return "adminorder";
+//		}
+
+		if(callType!=null&&callType.equals("ajaxType")){
+			return "success2";
 		}else{
-			return SUCCESS;
+			return "success";
 		}
-		
-		
 		
 		}catch(Exception e){
 			e.printStackTrace();
 //			log.error("addComputerorderAjax错误"+e);
 		
 		}
-		actionMsg = "系统内部错误";
-		return "innererror";
+		actionMsg = this.getMsg("computerindividualorderindex_systemerror");
+		return "404";
 	}
 
 	
@@ -262,7 +271,7 @@ public class OrderComputerAction  extends BaseAction {
 				String timeStr = DateUtil.dateFormat( date , "yyyy-MM-dd");
 				weekStr.add(dayStr);
 				time.add(timeStr);
-				weekday.add(DateUtil.getWeekOfDate(date));
+				weekday.add(DateUtil.getWeekOfDate(date,this.getCurrentLanguage()));
 				
 			}
 			showDateMap.put(i, weekStr);
@@ -299,7 +308,7 @@ public class OrderComputerAction  extends BaseAction {
 		buildShowDate(currentDate,showComputeroderadvanceorderday,computerodertablercolumn);	 
 			 
 
-		borrowperiodList =  BorrowperiodUtil.getBorrowperiodList();
+		borrowperiodList =  BorrowperiodUtil.getBorrowperiodList(this.getCurrentLanguage());
 		
 		for(Computermodel model : computermodelList){
 			HashMap<Integer,ArrayList<Integer>> periodDay = new HashMap<Integer,ArrayList<Integer>>();
@@ -897,6 +906,26 @@ public class OrderComputerAction  extends BaseAction {
 
 	public void setBorrowPcModelStr(String borrowPcModelStr) {
 		this.borrowPcModelStr = borrowPcModelStr;
+	}
+
+
+	public List<Integer> getShowPeriodList() {
+		return showPeriodList;
+	}
+
+
+	public void setShowPeriodList(List<Integer> showPeriodList) {
+		this.showPeriodList = showPeriodList;
+	}
+
+
+	public String getCallType() {
+		return callType;
+	}
+
+
+	public void setCallType(String callType) {
+		this.callType = callType;
 	}
 	
 	

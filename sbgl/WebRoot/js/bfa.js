@@ -89,7 +89,7 @@ $(document).ready(function(){
 		var _this = this;
 		setTimeout(function() {
 			if (!$(".popover:hover").length) {
-		  		$(_this).popover("hide")
+		  		$(_this).popover("hide");
 			}
 	  	}, 300);
 	});
@@ -99,18 +99,21 @@ $(document).ready(function(){
 
 	/* ============ 机房预约 ============= */
 	$("body").on("click", ".bookable", function() {
+		//alert(globalSelectOrderListMap);
 		var bookingData = $(this).data();
 		var groupName = $(this).parents("table").data("tableName");
 		var startDate = new XDate();
-		var timeStr = getBookingTime(bookingData, startDate);
-		
+		//var timeStr = getBookingTime(bookingData, startDate);
+		var timeStr =  bookingData.date+ ' '+bookingData.periodname;
 		var maxNum = bookingData.maxNum;
 		var orderpcid = bookingData.pcid;
 		var index = bookingData.index;
-		var id = orderpcid + '-' + index;
+		var id = bookingData.pcid+"-"+bookingData.index;
+		var tdid = bookingData.id;//预约清单上显示的条目，用id确定，用于判读是否加入全局变量
 		var orderpcname = bookingData.pcname;
 		var orderdate = bookingData.date;
 		var orderperiod = bookingData.slot;
+		//alert(orderperiod);
 		var picpath =  bookingData.pcpicpath;
 		var groupHtml = 
 			'<div class="post-equip-group" data-name="' + groupName + '" >' +
@@ -161,6 +164,9 @@ $(document).ready(function(){
 						$("#rent-list #" + id).children(".spinner").spinner({max: maxNum});
 						$("#rent-list #" + id).children(".spinner").spinner('value', 1);
 						isGroupExist = true;
+						
+						globalSelectOrderListMap.put(tdid,'1');  //添加
+						
 						event.stopImmediatePropagation();
 					}							
 				});
@@ -186,8 +192,10 @@ $(document).ready(function(){
 					$(this).remove();
 				};
 			});
+			
 			$(this).find(".icon-ok").remove();		// 移除选中标识
-
+			globalSelectOrderListMap.remove(tdid);   
+			
 			if ($("#rent-list .row").length > 0) {
 				$("#rent-list .no-add").hide("fast", function() {
 					reWizardHeight();
@@ -204,6 +212,10 @@ $(document).ready(function(){
 	$(".post-sidebar-warp").on("click", "#rent-list .close", function() {
 		var tdIndex = $(this).parents("#rent-list .row").data("index");
 		var modelId = $(this).parents("#rent-list .row").data("modelId"); 
+		var tdid= 'td'+modelId+'_'+tdIndex;
+		
+		globalSelectOrderListMap.remove(tdid);   //不管预约单在那个分类的界面下，如果删除某个模型，都要删map
+		
 		$(this).parents("#rent-list .row").remove();
 		$("#rent-list > .post-equip-group").each(function(){
 				if($(this).find(".row").length <= 0) {			// 如果组内无预约，移除该组
@@ -215,6 +227,10 @@ $(document).ready(function(){
 			if ($(td).data("index") === tdIndex ) {
 				$(td).removeClass("selected");
 				$(td).find(".icon-ok").remove();		// 移除选中标识
+				
+				
+				
+				
 			};
 		});
 		if ($("#rent-list .row").length > 0) {

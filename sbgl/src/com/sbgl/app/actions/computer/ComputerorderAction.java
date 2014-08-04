@@ -355,6 +355,7 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 	
 	
 	//审核表单，修改表单状态
+	
 	public String auditComputerorderAjax(){
 		log.info(logprefix + "auditComputerorderAjax,id="+computerorder.getId());
 		
@@ -370,7 +371,7 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 //              修改状态				
   				tempComputerorder.setStatus(computerorder.getStatus());
   				tempComputerorder.setRejectreason(computerorder.getRejectreason());
-  				
+  				tempComputerorder.setAudituserid(this.getCurrentUserId());//设置审核人
   				computerorderService.auditComputerorder(tempComputerorder);
   				
 				returnInfo = "审核完成";

@@ -78,11 +78,11 @@
 		
 								<!--tabel start-->
 								##激活第一个表格
+								<div class=" 
 								#if($tempweektableindex ==0)
-									<div class="active item table-responsive">
-								#else
-								<div class=" item table-responsive">
+									active 
 								#end
+								 item table-responsive">
                                 <table class="table" data-table-name="$tempmodel.name">
 									
                                     <thead>
@@ -113,7 +113,7 @@
                        <td></td>
 				#else
 					#set($tableindex = $tempweektableindex*21 + $tempperiod*7 + $tempday)
-					<td class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name" data-pcpicpath = "$tempmodel.picpath"  data-max-num="$availnum">$availnum<br/>可预约</td>
+					<td class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-periodname="$tempBorrowperiod.peroidname" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name" data-pcpicpath="$tempmodel.picpath"  data-max-num="$availnum">$availnum<br/>${textmap.computerindividualorderindex_orderable}</td>
 				#end                 
 					
 			#end ##end day info computerorderTotalOrderDay
@@ -134,7 +134,7 @@
 <!-- end 构建所有Table-->
 		
 
-                            </div>        
+                            
                           </div>
 
                         </div>

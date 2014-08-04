@@ -73,7 +73,7 @@
                   <a class="btn btn-white btn-block" href="${webbaseurl}/toComputerIndividualorderPage.${strutsaction}"><h4><i class="icon-desktop icon-2x"></i></h4><h4>$!{textmap.index_computerorder}</h4></a>
                 </div>
                 <div class="col-md-4">
-                  <a class="btn btn-white btn-block" href="消息中心-站内信-写站内信.html"><h4><i class="icon-envelope icon-2x"></i></h4><h4>$!{textmap.index_msg}</h4></a>
+                  <a class="btn btn-white btn-block" href=""><h4><i class="icon-envelope icon-2x"></i></h4><h4>$!{textmap.index_msg}</h4></a>
                 </div>
               </div>
             </div>
@@ -161,7 +161,7 @@
 						<a href="${webbaseurl}/viewComputerorder.${strutsaction}?computerorderId=$order.computerorderid">$order.computerordertitle</a></h5>
 						<span>
 							#set($curstatus = $order.computerorderstatus)
-							#parse("computer/includeComputerorderStatus.vm")
+							#parse("include/includeComputerorderStatus.vm")
 						</span>
 					</div>
 					

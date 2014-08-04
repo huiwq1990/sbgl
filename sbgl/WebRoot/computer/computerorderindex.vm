@@ -37,7 +37,7 @@
           <div class="col3 container">
             <div class="control-bar clearfix">
               <div class="title pull-left">$!{textmap.computerorderindex_underwayorder_title}</div>
-              <a class="btn btn-primary pull-right" href="${webbaseurl}/toComputerIndividualorderPage.${strutsaction}" role="button" data-toggle="modal">创建预约</a>
+              <a class="btn btn-primary pull-right" href="${webbaseurl}/toComputerIndividualorderPage.${strutsaction}" role="button" data-toggle="modal">$!{textmap.computerorderindex_createorder}</a>
             </div>
             <div class="row">
       
@@ -65,7 +65,7 @@
                           <div class="rent-info">
                             <div class="rent-num">$!{textmap.computerorderindex_ordernum}：$!temp.computerorderserialnumber</div>
 							
-                            <div class="rent-time"><i class="icon-time"></i>$date.format("yyyy年MM月dd日",$!temp.computerordercreatetime)</div>
+                            <div class="rent-time"><i class="icon-time"></i>$date.format("yyyy-MM-dd",$!temp.computerordercreatetime)</div>
                             <div class="rent-remark"><i class="icon-pencil">$!temp.computerorderremark</i></div>
                           
 						  </div>
@@ -73,7 +73,7 @@
 						  #if($!temp.computerorderstatus == $ComputerorderStatusAduitWait)
                           <div class="rent-status clearfix">
 							
-                            <div class="status pull-left"><span class="label label-info">$!{textmap.computerorderindex_status}</span>#parse("computer/includeComputerorderStatus.vm")</div>
+                            <div class="status pull-left"><span class="label label-info">$!{textmap.computerorderindex_status}</span>#parse("include/includeComputerorderStatus.vm")</div>
                           </div>
 						  #elseif($!temp.computerorderstatus == $ComputerorderStatusAduitReject)
 							  <div class="rent-status clearfix">
@@ -107,7 +107,7 @@
 						  
 						   <div class="rent-status clearfix">
                             <div class="status pull-left"><span class="label label-info">$!{textmap.computerorderindex_status}</span> $!{textmap.computerorderindex_order_waitfororder}</div>
-                            <a class="btn btn-white pull-right" action-type="" action-data="" href="${webbaseurl}/toComputerClassorderPage.${strutsaction}?computerhomeworkid=$temp.computerhomeworkid">开始预约</a>
+                            <a class="btn btn-white pull-right" action-type="" action-data="" href="${webbaseurl}/toComputerClassorderPage.${strutsaction}?computerhomeworkid=$temp.computerhomeworkid">${textmap.computerorderindex_startorder}</a>
                           </div>
               
                          
@@ -148,7 +148,7 @@
                           <div class="rent-info">
                             
 							   <div class="rent-num">$!{textmap.computerorderindex_ordernum}：$!temp.computerorderserialnumber</div>							
-                            <div class="rent-time"><i class="icon-time"></i>$date.format("yyyy年MM月dd日",$!temp.computerordercreatetime)</div>
+                            <div class="rent-time"><i class="icon-time"></i>$date.format("yyyy-MM-dd",$!temp.computerordercreatetime)</div>
                             <div class="rent-remark"><i class="icon-pencil">$!temp.computerorderremark</i></div>
                           
 						  
@@ -156,7 +156,7 @@
                           <hr />
                           <div class="rent-status clearfix">
 							#set($curstatus = $temp.computerorderstatus)
-                            <div class="status pull-left"><span class="label label-success">$!{textmap.computerorderindex_status}</span> #parse("computer/includeComputerorderStatus.vm")</div>
+                            <div class="status pull-left"><span class="label label-success">$!{textmap.computerorderindex_status}</span> #parse("include/includeComputerorderStatus.vm")</div>
                           </div>
                         </div>
                       </div>                  

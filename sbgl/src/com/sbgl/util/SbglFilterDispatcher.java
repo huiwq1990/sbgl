@@ -74,7 +74,7 @@ public class SbglFilterDispatcher extends FilterDispatcher {
 		
 //		System.out.println("textmaptextmap"+textmap);
 		request.setAttribute(CommonConfig.resourcetextmap, textmap);
-
+//		System.out.println();
 		
 		super.doFilter(request, arg1, arg2);
 	}

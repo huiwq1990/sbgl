@@ -49,8 +49,11 @@
             <div class="row">
 
               <div class="post-list-warp"><!--post-list-warp start-->  
-                <div class="post-list">              
-                  <div class="control-bar"><!--control-bar start-->
+                
+				<div class="post-list">              
+                 
+				  
+				  <div class="control-bar"><!--control-bar start-->
                     <div class="title">${textmap.computerindividualorderindex_maincontent_title}</div>
                     <div class="tips">${textmap.computerindividualorderindex_maincontent_tips}</div>			
                   </div><!--control-bar end-->
@@ -99,11 +102,12 @@
 		
 								<!--tabel start-->
 								##激活第一个表格
+								<div class=" 
 								#if($tempweektableindex ==0)
-									<div class="active item table-responsive">
-								#else
-								<div class=" item table-responsive">
+									active 
 								#end
+								 item table-responsive">
+								 
                                 <table class="table" data-table-name="$tempmodel.name">
 									
                                     <thead>
@@ -136,7 +140,7 @@
                        <td></td>
 				#else
 					#set($tableindex = $tempweektableindex*21 + $tempperiod*7 + $tempday)
-					<td class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name"  data-pcpicpath = "$tempmodel.picpath" data-max-num="$toalnum">$toalnum($availnum)<br/>可预约</td>
+					<td class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-periodname="$tempBorrowperiod.peroidname" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name"  data-pcpicpath = "$tempmodel.picpath" data-max-num="$toalnum">$toalnum($availnum)<br/>${textmap.computerindividualorderindex_orderable}</td>
 				#end                 
 					
 			#end ##end day info computerorderTotalOrderDay
@@ -153,7 +157,7 @@
 		#end						  
 		<!--end 构建某个模型的某一周的Table -->	
 		
-#end ##end weektable
+	#end ##end weektable
 <!-- end 构建所有Table-->
 		
 		
@@ -191,8 +195,10 @@
 							<button action-type="confirmComputerButton" class="btn btn-primary">${textmap.computerindividualorderindex_orderlist_submit}</button>
 						</div>
 					</div>
-				</from>
+				</form>
             </div><!--post-sidebar-warp end-->
+			
+			
         </div>
     </div>
   </div>
@@ -251,6 +257,7 @@ function getBookingTime(bookingData, startDate) {
 	//alert(timeSlotStr + ", index=" + index + ", weekTimes=" + weekTimes + ", dayWeekIndex=" + dayWeekIndex + ", dayIndex=" + dayIndex);
 	return selectedDate;
 }
+
   
 $(window).load(function(){
 	XDate.locales['zh-CN'] = {
@@ -270,6 +277,10 @@ $(window).load(function(){
 		interval: false
 	});
 	
+});
+
+
+
 
 	
 //提交预约单
@@ -309,10 +320,13 @@ $(window).load(function(){
 			}		  	  
 		});//end jquery
 	});
-//end Order
+//end submit Order
+
+
+
+
+
 	
-	
-});
 </script>
 </body>
 </html>

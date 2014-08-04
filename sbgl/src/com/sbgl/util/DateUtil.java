@@ -10,6 +10,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.computer.PeriodUtil;
 
 /**
@@ -377,6 +378,31 @@ public class DateUtil {
        if (w < 0)
            w = 0;
        return weekDays[w];
+   }
+   
+   
+   /**
+    * 获取当前日期是星期几<br>
+    * 
+    * @param dt
+    * @return 当前日期是星期几
+    */
+
+   public static String getWeekOfDateEn(Date dt) {
+       String[] weekDays = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+       Calendar cal = Calendar.getInstance();
+       cal.setTime(dt);
+       int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+       if (w < 0)
+           w = 0;
+       return weekDays[w];
+   }
+   public static String getWeekOfDate(Date dt,int language){
+	   if(language == CommonConfig.languageen){
+		   return getWeekOfDateEn(dt);
+	   }else{
+		   return getWeekOfDate(dt);
+	   }
    }
    
    public static String getChineseTime(Date date) {

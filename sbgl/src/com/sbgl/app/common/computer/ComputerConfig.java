@@ -52,7 +52,7 @@ public class ComputerConfig {
 //	访问界面不存在
 	public final static String pagenotfound = "pagenotfound";
 	public final static String innererror = "innererror";
-	
+	public final static String ordererror = "ordererror";
 	
 //	作业已经查看预约
 	public final static int computerhomeworkhasview = 1;

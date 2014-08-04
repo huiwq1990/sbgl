@@ -73,6 +73,9 @@ public class ResourcesListener extends HttpServlet implements
 		        Map<String,String> textMap = new ConcurrentHashMap<String,String>();
 		        try {
 					config.addConfiguration(new PropertiesConfiguration("messages_zh_CN.properties"));
+					config.addConfiguration(new PropertiesConfiguration("messages_zh_CN_hg.properties"));
+					config.addConfiguration(new PropertiesConfiguration("messages_zh_CN_wm.properties"));
+					config.addConfiguration(new PropertiesConfiguration("messages_zh_CN_be.properties"));
 					Iterator<String> keys = config.getKeys();        
 			       
 			        while(keys.hasNext()){
@@ -91,6 +94,9 @@ public class ResourcesListener extends HttpServlet implements
 				 Map<String,String>  textMapEn = new ConcurrentHashMap<String,String>();
 		        try {
 					config.addConfiguration(new PropertiesConfiguration("messages_en_US.properties"));
+					config.addConfiguration(new PropertiesConfiguration("messages_en_US_hg.properties"));
+					config.addConfiguration(new PropertiesConfiguration("messages_en_US_wm.properties"));
+					config.addConfiguration(new PropertiesConfiguration("messages_en_US_be.properties"));
 					Iterator<String> keys = config.getKeys();        
 			       
 			        while(keys.hasNext()){

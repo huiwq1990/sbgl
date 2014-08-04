@@ -1,0 +1,38 @@
+
+
+	<div class="hd">
+                    <h3>$!{textmap.computerorderstatus_detail_title}</h3>
+                  </div>
+        
+				  <div class="caption">
+                    <div class="rent-detail">
+                      <span class="rent-user"><strong>$!{textmap.computerorderview_detail_orderuser}: $!{user.name}</strong></span> - <span class="rent-num"><strong> $!{textmap.computerorderview_detail_ordernum}：$!computerorderFull.computerorderserialnumber</strong></span>
+                      <div class="rent-userinfo">${textmap.computerorderview_detail_userrole} ${userRoleName}</div> 
+                      #set($currentcomputerorderordertype=$computerorderFull.computerorderordertype)
+                      <div class="rent-contact">$!{textmap.computerorderview_detail_ordertype} #parse("include/includeComputerorderType.vm")</div>
+					            <div class="rent-contact">$!{textmap.computerorderview_detail_orderuserphone} $!{user.telephone}</div>
+					 #if($computerorderFull.computerorderremark)
+                      <div class="rent-remark"><i class="icon-pencil"></i> $!computerorderFull.computerorderremark</div>
+					  #end
+                    </div>
+                    #if($curstatus == $ComputerorderStatusAduitReject)
+                    <hr>
+                    #end
+                  </div>
+				  
+				  #if($curstatus == $ComputerorderStatusAduitReject)
+                  <ul class="media-list">
+					
+                      
+					<li class="media">
+                      <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
+                        <img src="$imgtool.url("user","$!computerorderFull.audituserpicpath")" width="28" height="28" class="img-rounded">
+							<!--src="$imgtool.url("user","$!computerorderFull.audituserpicpath")" -->
+                      </a>
+                      <div class="media-body">
+                        <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">$!computerorderFull.auditusername</a></h5></div>
+                        <p>$!{textmap.computerorderview_detail_orderrejectreason}：$!computerorderFull.computerorderrejectreason</p>
+                      </div>
+                    </li>
+                  </ul>
+				  #end                     

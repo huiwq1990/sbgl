@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.computer.PeriodUtil;
 import com.sbgl.app.entity.Borrowperiod;
 import com.sbgl.util.DateUtil;
@@ -91,7 +92,13 @@ public class BorrowperiodUtil {
 		 System.out.println(getMaxPeriod());
 	}
 
-	
+	public static List<Borrowperiod> getBorrowperiodList(int lan){
+		if(lan == CommonConfig.languageen){
+			return getBorrowperiodListEn();
+		}else{
+			return getBorrowperiodList();
+		}
+	}
 	
 	public static List<Borrowperiod> getBorrowperiodList(){
 		
@@ -118,6 +125,32 @@ public class BorrowperiodUtil {
 		return periodList;
 	}
 	
+	public static List<Borrowperiod> getBorrowperiodListEn(){
+		
+		List<Borrowperiod> periodList = new ArrayList<Borrowperiod>();
+		
+		Borrowperiod p2 = new Borrowperiod();
+		p2.setId(2);
+		p2.setPeriodnum(2);
+		p2.setPeroidname("Morning");
+		periodList.add(p2);
+		
+		Borrowperiod p4 = new Borrowperiod();
+		p4.setId(4);
+		p4.setPeriodnum(4);
+		p4.setPeroidname("Afternoon");
+		periodList.add(p4);
+		
+		Borrowperiod p6 = new Borrowperiod();
+		p6.setId(6);
+		p6.setPeriodnum(6);
+		p6.setPeroidname("Evening");
+		periodList.add(p6);
+		
+		return periodList;
+	}
+	
+	
 	
 	public static Map<Integer,Borrowperiod> getBorrowperiodMap(){
 		
@@ -131,8 +164,23 @@ public class BorrowperiodUtil {
 		return periodMap;
 	}
 
-	
 	public static Borrowperiod getBorrowperiodByNum(int num){
 		return getBorrowperiodMap().get(num);
+	}
+	
+	
+	public static Map<Integer,Borrowperiod> getBorrowperiodMap(int language){
+		
+		Map<Integer,Borrowperiod> periodMap = new HashMap<Integer,Borrowperiod>();
+		List<Borrowperiod> periodList = getBorrowperiodList(language);
+		for(Borrowperiod bp : periodList){
+			periodMap.put(bp.getId(), bp);
+		}
+		
+		
+		return periodMap;
+	}
+	public static Borrowperiod getBorrowperiodByNum(int num,int language){
+		return getBorrowperiodMap(language).get(num);
 	}
 }

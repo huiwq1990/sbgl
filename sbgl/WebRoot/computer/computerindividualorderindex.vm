@@ -1,3 +1,4 @@
+#set($user = $request.getSession().getAttribute("loginUser"))
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,15 +25,17 @@
 	#parse("include/includeSiteNavi.vm")
 	
 	<div class="sub-nav">
-      <ul class="nav nav-tabs nav-tabs-google">
+      <ul class="nav nav-tabs nav-tabs-google categorylist">
 		<!--
 		<li	#if($selComputercategory == 0) class="active" #end>
 			<a href="#">全部</a>
 		</li>
 		-->
+		
+
 	#foreach($tempcc in $computercategoryList)
-		<li	#if($selComputercategory == $!tempcc.computercategorytype) class="active" #end>
-			<a href="${webbaseurl}/toComputerIndividualorderPage.action?selComputercategory=$!tempcc.computercategorytype">$!tempcc.name</a>
+		<li	class="categoryitem  #if($selComputercategory == $!tempcc.computercategorytype)  active  #end " >
+			<a href="#" onclick="refreshModelList($!tempcc.computercategorytype)" >$!tempcc.name</a>
 		</li>
 	#end
       </ul>
@@ -47,10 +50,11 @@
           <div class="container" id="post-equip">
             
             <div class="row">
-
+<div id="refreshModelList">
               <div class="post-list-warp"><!--post-list-warp start-->  
                 <div class="post-list">              
-                  <div class="control-bar"><!--control-bar start-->
+                  
+					<div class="control-bar"><!--control-bar start-->
                     <div class="title">${textmap.computerindividualorderindex_maincontent_title}</div>
                     <div class="tips">${textmap.computerindividualorderindex_maincontent_tips}</div>
                   </div><!--control-bar end-->
@@ -99,11 +103,12 @@
 		
 								<!--tabel start-->
 								##激活第一个表格
+								<div class=" 
 								#if($tempweektableindex ==0)
-									<div class="active item table-responsive">
-								#else
-								<div class="item table-responsive">
+									active 
 								#end
+								 item table-responsive">
+								 
                                 <table class="table" data-table-name="$tempmodel.name">
 									
                                     <thead>
@@ -130,11 +135,21 @@
 			#foreach($tempday in [0..$computerodertablercolumn-1])		
 				#set($thisday =$tempweektableindex * $computerodertablercolumn+$tempday )
 				#set($availnum = $availableBorrowModelMap.get($tempmodel.computermodeltype).get($tempBorrowperiod.periodnum).get($thisday))
+				#set($toalnum = $totalBorrowModelMap.get($tempmodel.computermodeltype).get($tempBorrowperiod.periodnum).get($thisday))
+				
 				#if($availnum ==0)
                        <td></td>
 				#else
 					#set($tableindex = $tempweektableindex*21 + $tempperiod*7 + $tempday)
-					<td class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name"  data-pcpicpath = "$tempmodel.picpath" data-max-num="$availnum">$availnum<br/>可预约</td>
+					<td id="td${tempmodel.computermodeltype}_${tableindex}"	data-id="td${tempmodel.computermodeltype}_${tableindex}" class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-periodname="$tempBorrowperiod.peroidname" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name"  data-pcpicpath = "$tempmodel.picpath" 
+						#if($user.privilege == 1)
+							data-max-num="$toalnum"> 
+							$toalnum($availnum)<br/>${textmap.computerindividualorderindex_orderable}
+						#else
+							data-max-num="$availnum"> 
+							$availnum<br/>${textmap.computerindividualorderindex_orderable}
+						#end <!--end if-->
+					</td><!--end td-->
 				#end                 
 					
 			#end ##end day info computerorderTotalOrderDay
@@ -171,7 +186,7 @@
 				
 				</div>
               </div><!--post-list-warp end-->
-              
+</div>   <!-- end refreshDiv-->       
             <div class="post-sidebar-warp"><!--post-sidebar-warp start-->
                 <form action="javascript:void(0)">
 					<div id="rent-list-wrap" class="panel panel-default">
@@ -180,14 +195,14 @@
 						</div>
 						<div class="panel-body"> 
 						  <div id="rent-list">
-						    <p class="no-add">${textmpa.computerindividualorderindex_orderlist_notadd}</p>
+						    <p class="no-add">${textmap.computerindividualorderindex_orderlist_notadd}</p>
 						  </div>
 						</div>
 						<div class="panel-footer text-right">
 							<button action-type="confirmComputerButton" class="btn btn-primary">${textmap.computerindividualorderindex_orderlist_submit}</button>
 						</div>
 					</div>
-				</from>
+				</form>
             </div><!--post-sidebar-warp end-->
         </div>
     </div>
@@ -199,6 +214,10 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+<script src="${jsDomain}/map.js"></script>
+<script >
+	var globalSelectOrderListMap = new Map(); 
+</script>
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
@@ -211,7 +230,7 @@
 <script src="${jsDomain}/jquery.noty.js"></script>
 
 <script>
- 
+
 function getBookingTime(bookingData, startDate) {
 	var index = bookingData.index;
 	var timeSlot = bookingData.slot;
@@ -266,7 +285,7 @@ $(window).load(function(){
 	$('.carousel').carousel({
 		interval: false
 	});
-	
+});//end window	
 	
 
 	
@@ -310,8 +329,38 @@ $(window).load(function(){
 //end Order
 	
 
-	
-});
+
+
+//更改状态的高亮显示
+  $(".categorylist li").click(function () {
+                $(".categoryitem").removeClass("active");
+                $(this).addClass("active"); 
+  });
+
+//刷新数据
+function refreshModelList(selComputercategory){
+		jQuery.ajax({  
+		    url: '${webbaseurl}/toComputerIndividualorderPage.action',  
+		    type: "post",
+		    data:{	
+					callType:'ajaxType',
+					selComputercategory:selComputercategory
+				},
+		    dataType: 'html',
+			success: function(data){
+			
+				$("#refreshModelList").html(data);
+				
+				
+			}//end jquery success 	  
+		});	
+		
+		//alert(globalSelectOrderListMap);
+				
+}
+//end refresh
+
 </script>
+
 </body>
 </html>

@@ -28,6 +28,14 @@ public class BorrowperiodTool {
 	
 	
 	public String getName(int periodnum){
-		return BorrowperiodUtil.getBorrowperiodByNum(periodnum).getPeroidname();
+		if(request==null || request.getSession()==null){
+			return BorrowperiodUtil.getBorrowperiodByNum(periodnum,CommonConfig.languagech).getPeroidname();
+		}
+		
+		String languagetype = (String) request.getSession().getAttribute(CommonConfig.sessionLanguagetype);
+		if(languagetype !=null && languagetype.equals(CommonConfig.languageenStr)){
+			return BorrowperiodUtil.getBorrowperiodByNum(periodnum,CommonConfig.languageen).getPeroidname();
+		}
+		return BorrowperiodUtil.getBorrowperiodByNum(periodnum,CommonConfig.languagech).getPeroidname();
 	}
 }

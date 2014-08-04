@@ -77,5 +77,5 @@ public class CommonConfig {
 	public static Map<Integer,String> userRoleMap = new HashMap<Integer,String>(){{
 	       put( 1 ,  "学生" );
 	       put( 2 ,  "教师" );
-}};
+	}};
 }

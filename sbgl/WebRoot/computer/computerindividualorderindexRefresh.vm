@@ -1,0 +1,139 @@
+          <div class="post-list-warp"><!--post-list-warp start-->  
+                <div class="post-list">              
+                  
+					<div class="control-bar"><!--control-bar start-->
+                    <div class="title">${textmap.computerindividualorderindex_maincontent_title}</div>
+                    <div class="tips">${textmap.computerindividualorderindex_maincontent_tips}</div>
+                  </div><!--control-bar end-->
+    
+				  
+             
+               
+#set($computermodelListSize = $computermodelList.size() - 1)
+#if($computermodelListSize<0)
+	${textmap.computerindividualorderindex_maincontent_nomodelinfo}
+#end
+
+#if($computermodelListSize>=0)
+#set($computermodelListRegion = [0..$computermodelListSize])
+##取出所有的PC Model
+#foreach($tempmodelindex in $computermodelListRegion)
+	#set($tempmodel = $computermodelList.get($tempmodelindex))		
+	<!--PC 某个模型的信息 -->			   
+			   <!--start-->
+				  <div class="panel panel-default">
+    
+                    <div class="row panel-body">
+                  
+                        <div class="col-md-3">
+                          <img src="$pcimg.url($tempmodel.picpath)" class="img-responsive">
+                        </div>
+                        <div class="col-md-9">
+                          <h3 class="equip-title">$!tempmodel.name</h3>
+                          <p class="detail">$!tempmodel.description</p>
+                          <div class="carousel-bar">
+                            <a class="btn btn-white" href="#post-equip-$!tempmodel.computermodeltype" data-slide="prev"><i class="icon-chevron-left"></i></a>
+                            <a class="btn btn-white" href="#post-equip-$!tempmodel.computermodeltype" data-slide="next"><i class="icon-chevron-right"></i></a>
+                          </div>
+                          <div id="post-equip-$!tempmodel.computermodeltype" class="carousel slide">
+                            <div class="carousel-inner">
+      
+						<!--构建所有的Table -->
+		#set($weektablenum = $showComputeroderadvanceorderday /$computerodertablercolumn - 1 )		##一共有几个周的Table 用可以预约的天数除以7				
+		#set($weektableregion = [0..$weektablenum])
+		#foreach($tempweektableindex in $weektableregion)
+			
+	<!--构建某个模型的某一周的Table -->	
+	#set($borrowperiodListSize = $borrowperiodList.size() - 1)
+	#if($borrowperiodListSize>=0)
+		#set($borrowperiodListRegion = [0..$borrowperiodListSize])
+		
+								<!--tabel start-->
+								##激活第一个表格
+								<div class=" 
+								#if($tempweektableindex ==0)
+									active 
+								#end
+								 item table-responsive">
+								 
+                                <table class="table" data-table-name="$tempmodel.name">
+									
+                                    <thead>
+                                      <tr>
+                                        <th class="time-slot">${textmap.computerindividualorderindex_ordertable_timeslot}</th>
+										##所有时间段 上午、中午、晚上 取出所有的属性名称
+										#set($weekdayRegion = [0..$computerodertablercolumn-1])
+										#set($weekDateList = $showDateMap.get($tempweektableindex))
+										#set($trueDateList = $dateMap.get($tempweektableindex))
+										#set($weekday = $showWeekdayMap.get($tempweektableindex))
+										#foreach($tempday in $weekdayRegion)
+                                        <th>$!weekday.get($tempday)<br>$weekDateList.get($tempday)</th>
+                                        #end                
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+		##所有时间段 上午、中午、晚上 取出所有的属性名称
+		#foreach($tempperiod in $borrowperiodListRegion)
+			#set($tempBorrowperiod = $borrowperiodList.get($tempperiod))##取出某个时间段				
+                 <tr>
+					<td class="time-slot">$tempBorrowperiod.peroidname</td>
+					
+			##对于可以借的每一天		
+			#foreach($tempday in [0..$computerodertablercolumn-1])		
+				#set($thisday =$tempweektableindex * $computerodertablercolumn+$tempday )
+				#set($availnum = $availableBorrowModelMap.get($tempmodel.computermodeltype).get($tempBorrowperiod.periodnum).get($thisday))
+				#if($availnum ==0)
+                       <td></td>
+				#else
+					#set($tableindex = $tempweektableindex*21 + $tempperiod*7 + $tempday)
+					<td class="bookable" id="td${tempmodel.computermodeltype}_${tableindex}"	data-id="td${tempmodel.computermodeltype}_${tableindex}" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-periodname="$tempBorrowperiod.peroidname" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name"  data-pcpicpath = "$tempmodel.picpath" data-max-num="$availnum">$availnum<br/>可预约</td>
+				#end                 
+					
+			#end ##end day info computerorderTotalOrderDay
+			
+			
+			 </tr>
+		#end ##end borrowperiodLis
+                                    </tbody>
+                                </table>
+                              
+                              </div>
+							  <!--tabel end-->
+	
+		#end						  
+		<!--end 构建某个模型的某一周的Table -->	
+		
+#end ##end weektable
+<!-- end 构建所有Table-->
+		
+		
+							  
+                            </div>        
+                          </div>
+    
+                        </div>
+             
+                    </div>
+                  </div>  
+				<!--end-->		
+#end
+#end					
+				
+				
+				
+				</div>
+              </div><!--post-list-warp end-->
+			  
+			  
+			  <script>
+			  	globalSelectOrderListMap.each(function(key,value,index){   
+       				if($("#"+key).length>0){
+						//alert(globalSelectOrderListMap);
+						$("#"+key).removeClass("selected");
+                		$("#"+key).addClass("selected"); 
+						$("#"+key).append('<i class="icon-ok"></i>'); 
+						
+					}//end if
+    			});   //end map
+			  </script>
+              
