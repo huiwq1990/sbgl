@@ -63,7 +63,7 @@ public class ExceptionInterceptor extends AbstractInterceptor {
 				CookiesUtil.removeCookie("pageLan");
 				
 				return "login";
-			} else if( !CookiesUtil.getCookie("userpass").equals( MD5Util.MD5( loginuser.getPassword() + loginuser.getId().toString() ) ) ) {
+			} else if( !CookiesUtil.getCookie("userpass").equals( loginuser.getPassword() ) ) {
 				return "login";
 			}
 			

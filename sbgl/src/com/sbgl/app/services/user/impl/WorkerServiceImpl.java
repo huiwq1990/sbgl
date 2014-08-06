@@ -12,6 +12,7 @@ import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.entity.Userlogininfo;
 import com.sbgl.app.entity.Worker;
 import com.sbgl.app.services.user.WorkerService;
+import com.sbgl.util.CardPassUtil;
 
 @Scope("prototype") 
 @Service("workerService")
@@ -23,6 +24,7 @@ public class WorkerServiceImpl implements WorkerService {
 	public int addWorker(Worker worker) {
 		int id = baseDao.getCode("userId");
 		worker.setId( id );
+		worker.setPassword( CardPassUtil.encrypt(worker.getPassword()) );
 		worker.setMakedate( new Date() );
 		
 		Userlogininfo info = new Userlogininfo();
@@ -51,7 +53,7 @@ public class WorkerServiceImpl implements WorkerService {
 		storeWorker.setEmail( worker.getEmail() );
 		storeWorker.setGender( worker.getGender() );
 		storeWorker.setName( worker.getName() );
-		storeWorker.setPassword( worker.getPassword() );
+		storeWorker.setPassword( CardPassUtil.encrypt(worker.getPassword()) );
 		storeWorker.setPhoto( worker.getPhoto() );
 		storeWorker.setTelephone( worker.getTelephone() );
 		storeWorker.setWorkid( worker.getWorkid() );
