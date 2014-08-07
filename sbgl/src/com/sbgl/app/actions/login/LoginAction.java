@@ -94,9 +94,14 @@ public class LoginAction extends ActionSupport {
 		Loginuser loginUser2 = new Loginuser();		
 		boolean flag  = false;
 		String loginType = "";
-		try{	
-			loginuser.setPassword( CardPassUtil.encrypt(loginuser.getPassword()) );
+		try{
+			//兼容以前密码没有加密的情况
 			loginUser2 = loginService.findUser(loginuser);
+			if(loginUser2 == null) {
+				loginuser.setPassword( CardPassUtil.encrypt(loginuser.getPassword()) );
+				loginUser2 = loginService.findUser(loginuser);
+			}
+			
 			if(loginUser2 != null){
 				CookiesUtil.addLoginCookie("uid", String.valueOf(loginUser2.getId()));
 				CookiesUtil.addLoginCookie("userpass", loginUser2.getPassword());
