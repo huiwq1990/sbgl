@@ -184,7 +184,7 @@ public class CardPassUtil {
   
    public static void main(String[] args) {
 	   try{
-		String s = "111111";
+		String s = "000000";
 		String enc = CardPassUtil.encrypt(s);
 		String dec = CardPassUtil.decrypt("d8626ea774acede067f431f9fb5cc9e36e8662b6d7f37c27");
 		System.out.println("=====1==="+enc);

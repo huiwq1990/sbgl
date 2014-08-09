@@ -53,7 +53,7 @@ public class ResourcesListener extends HttpServlet implements
 		timer = new Timer(true);
 		sce.getServletContext().log("定时器启动");
 //		timer.schedule(new MyTask(sce.getServletContext()), 0, 60 * 60 * 1000);
-		timer.schedule(new MyTask(sce.getServletContext()), 0,  60 * 1000);
+		timer.schedule(new MyTask(sce.getServletContext()), 0,  60*60 * 1000);
 		sce.getServletContext().log("添加到任务调度表");
 	}
 

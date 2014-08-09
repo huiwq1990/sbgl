@@ -56,7 +56,7 @@
                   
 					<div class="control-bar"><!--control-bar start-->
                     <div class="title">${textmap.computerindividualorderindex_maincontent_title}</div>
-                    <div class="tips">${textmap.computerindividualorderindex_maincontent_tips}</div>
+                    <div class="tips">${textmap.computerindividualorderindex_maincontent_tips1} ${availborrowweeks} ${textmap.computerindividualorderindex_maincontent_tips2}</div>
                   </div><!--control-bar end-->
     
 				  

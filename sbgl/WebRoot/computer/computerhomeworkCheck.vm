@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 机房预约确认</title>
+<title>${textmap.computerhomeworkcheck_title}</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -35,12 +35,15 @@
     <div class="container">
       <div class="row">
             <div class="control-bar col-md-12">
-              <div class="title">$computerhomeworkFull.computerhomeworkname <span class="label label-important">教学预约</span></div>
+              <div class="title">${computerhomeworkFull.computerhomeworkname} <span class="label label-important">
+					#set($currentcomputerorderordertype = $currentcomputerorderordertype)
+					#parse("include/includeComputerorderType.vm")
+			  </span></div>
             </div>        
             <div class="col-md-7">                  
                 <div class="thumbnail">
                   <div class="hd clearfix">
-                    <h3 class="pull-left">预约单</h3>
+                    <h3 class="pull-left">${textmap.computerhomeworkcheck_availcomputermodel}</h3>
                   </div>
                   <div class="media-list">
 
@@ -74,27 +77,29 @@
             <div class="col-md-5">
                 <div class="thumbnail">
                   <div class="hd">
-                    <h3>状态</h3>
+                    <h3>${textmap.computerhomeworkcheck_orderstatustitle}</h3>
                   </div>
                   <div class="caption">
-                      <div class="status">等待您提交预约申请!</div>
+                      <div class="status">
+						#set($curstatus = $currentcomputerorderauditstatus)
+                      #parse("include/includeComputerorderStatus.vm")</div>
                       <hr>
                     <div class="orderstatus">
-                      <a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}/toComputerClassorderPage.${strutsaction}?computerhomeworkid=$computerhomeworkFull.computerhomeworkid">开始预约</a>
-                      <a class="btn btn-white" action-type="" action-data="" href="${webbaseurl}/deleteMineComputerhomeworkreceiver.${strutsaction}?computerhomeworkid=$computerhomeworkFull.computerhomeworkid">删 除</a>
+                      <a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}/toComputerClassorderPage.${strutsaction}?computerhomeworkid=$computerhomeworkFull.computerhomeworkid">${textmap.computerhomeworkcheck_startorder}</a>
+                      <a class="btn btn-white" action-type="" action-data="" href="${webbaseurl}/deleteMineComputerhomeworkreceiver.${strutsaction}?computerhomeworkid=$computerhomeworkFull.computerhomeworkid">${textmap.computerhomeworkcheck_delorder}</a>
                     </div>
                   </div>
                 </div>
                 <div class="thumbnail">
                   <div class="hd">
-                    <h3>详情</h3>
+                    <h3>${textmap.computerhomeworkcheck_orderdetailtitle}</h3>
                   </div>
                   <div class="caption">
                     <div class="rent-detail">
-          						<div class="rent-time">预约时间：$date.format("yyyy年MM月dd日",$computerhomeworkFull.computerorderclassruleorderstarttime) 至 $date.format("yyyy年MM月dd日",$computerhomeworkFull.computerorderclassruleorderendtime)</div>
-          						<div class="rent-coursename">课程名称：$courseFull.coursename</div>
-          						<div class="rent-teacher">教师：$courseFull.teacherloginusername</div>
-                      <div class="rent-period">总学时：$computerhomeworkFull.computerorderclassruleavailableordertime</div>
+          						<div class="rent-time">${textmap.computerhomeworkcheck_ordertimetitle} $date.format("yyyy-MM-dd",$computerhomeworkFull.computerorderclassruleorderstarttime) ${textmap.computerhomeworkcheck_ordertimeto} $date.format("yyyy-MM-dd",$computerhomeworkFull.computerorderclassruleorderendtime)</div>
+          						<div class="rent-coursename">${textmap.computerhomeworkcheck_coursetitle} ${courseFull.coursename}</div>
+          						<div class="rent-teacher">${textmap.computerhomeworkcheck_teachername} $courseFull.teacherloginusername</div>
+                      <div class="rent-period">${textmap.computerhomeworkcheck_totaltime} $computerhomeworkFull.computerorderclassruleavailableordertime</div>
                       <div class="rent-remark"><i class="icon-pencil"></i></div>
                     </div>
                   </div>
@@ -108,19 +113,6 @@
 </section>
 
 
-
-<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
-  <img src="../img/cover-img.jpg" class="cover" alt="封面照片">
-  <div class="cover-layout"></div>
-  <div class="avatar"><img src="../img/photo.jpg" width="80" height="80" class="img-circle"></div>
-  <div class="user-wrap">
-    <div class="user-name"><a href="#">用户名</a></div>
-    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
-    <div class="user-info">职务等信息</div>
-    <div class="user-info">地点</div>
-  </div>
-  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
-</div>
 
     <!-- Le javascript
     ================================================== -->

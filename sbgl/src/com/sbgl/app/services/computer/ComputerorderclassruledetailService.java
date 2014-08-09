@@ -57,6 +57,9 @@ public interface ComputerorderclassruledetailService{
 //根据关联查询实体full	
 	public List<ComputerorderclassruledetailFull> selectComputerorderclassruledetailFullByComputermodelId(Integer allowedcomputermodelid );
 
+	List<ComputerorderclassruledetailFull> selByComputerorderclassruleId(
+			int ruleid, int language);
+
 		
 	
 	

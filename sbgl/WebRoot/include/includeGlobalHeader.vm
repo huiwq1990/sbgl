@@ -33,12 +33,13 @@
             <div class="info">2012级研究生 - 影像视觉效果研究方向</div> -->
               <div class="setting"><a href="${webbaseurl}/account.${strutsaction}">${textmap.globalheader_account_setting}</a></div>
               <!-- <button class="btn btn-primary" type="button">查看个人主页</button> -->
+			  <!--
 			  #if($languagetype!=1)
 				<a href="${webbaseurl}/changeLanguage.${strutsaction}?languagetype=1" class="admin-logout btn btn-link" action-type="logout" role="button">English</a>
 				#else 
 			  <a href="${webbaseurl}/changeLanguage.${strutsaction}?languagetype=0" class="admin-logout btn btn-link" action-type="logout" role="button">中文</a>
 			  #end
-				
+			  -->
 			   <a href="${webbaseurl}/doLogout.${strutsaction}" class="admin-logout btn btn-link" action-type="logout" role="button">${textmap.globalheader_logout}</a>
             </div>
           </div>

@@ -6,6 +6,8 @@ $!{textmap.computerorderstatus_audit_reject}
 $!{textmap.computerorderstatus_audit_del}
 #elseif($curstatus ==$ComputerorderStatusAduitWait)
 $!{textmap.computerorderstatus_audit_wait}
+#elseif($curstatus ==$ComputerorderStatusWaitApply)
+$!{textmap.computerorderstatus_wait_apply}
 #else 
 $!{textmap.computerorderstatus_audit_error}
 #end

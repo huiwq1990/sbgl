@@ -31,6 +31,16 @@ public class ComputerorderclassruledetailDaoImpl extends HibernateDaoSupport imp
 	
 	private final String basicComputerorderclassruledetailSql = "From Computerorderclassruledetail as a  ";
 	
+	
+	@Override
+	public List<ComputerorderclassruledetailFull> selByComputerorderclassruleId(int ruleid,int language) {
+		String borrowPcSql  = " where a.computerorderclassruleid = "+ ruleid+ " and b.languagetype = "+language;
+		return selectComputerorderclassruledetailFullByCondition(borrowPcSql);				
+	}
+	
+	
+	
+	
 	// 根据条件查询查询实体
 	@Override
 	public List<Computerorderclassruledetail> selectComputerorderclassruledetailByCondition(String condition) {

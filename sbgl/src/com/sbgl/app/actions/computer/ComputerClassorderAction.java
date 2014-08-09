@@ -180,6 +180,8 @@ public class ComputerClassorderAction  extends BaseAction  {
 	
 	private String passType;
 	
+	int availborrowweeks = 0;//总共可预约的周数
+	
 int curcomputerhomeworkid;
 	
 	/**
@@ -370,8 +372,8 @@ int curcomputerhomeworkid;
 				String timeStr = DateUtil.dateFormat( date , "yyyy-MM-dd");
 				weekStr.add(dayStr);
 				time.add(timeStr);
-				weekday.add(DateUtil.getWeekOfDate(date));
-				
+//				weekday.add(DateUtil.getWeekOfDate(date));
+				weekday.add(DateUtil.getWeekOfDateAbbr(date,this.getCurrentLanguage()));
 			}
 			showDateMap.put(i, weekStr);
 			dateMap.put(i, time);
@@ -399,6 +401,7 @@ int curcomputerhomeworkid;
 		}else{
 			showComputeroderadvanceorderday = computeroderadvanceorderday;
 		}		
+		availborrowweeks  = showComputeroderadvanceorderday/computerodertablercolumn ;
 		log.info("页面显示时的提前预约天数showComputeroderadvanceorderday "+showComputeroderadvanceorderday);
 
 		
@@ -1247,6 +1250,26 @@ int curcomputerhomeworkid;
 
 	public void setShowWeekdayMap(HashMap<Integer, ArrayList<String>> showWeekdayMap) {
 		this.showWeekdayMap = showWeekdayMap;
+	}
+
+
+	public int getAvailborrowweeks() {
+		return availborrowweeks;
+	}
+
+
+	public void setAvailborrowweeks(int availborrowweeks) {
+		this.availborrowweeks = availborrowweeks;
+	}
+
+
+	public int getCurcomputerhomeworkid() {
+		return curcomputerhomeworkid;
+	}
+
+
+	public void setCurcomputerhomeworkid(int curcomputerhomeworkid) {
+		this.curcomputerhomeworkid = curcomputerhomeworkid;
 	}
 	
 	

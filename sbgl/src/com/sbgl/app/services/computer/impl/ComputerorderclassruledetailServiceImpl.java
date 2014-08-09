@@ -80,7 +80,12 @@ public class ComputerorderclassruledetailServiceImpl implements Computerordercla
 		
 		
 		baseDao.updateEntity(tempComputerorderclassruledetail);
-
+		
+	}
+	
+	@Override
+	public List<ComputerorderclassruledetailFull> selByComputerorderclassruleId(int ruleid, int language){
+		return computerorderclassruledetailDao.selByComputerorderclassruleId(ruleid, language);
 	}
 
 //	根据id查询实体类			

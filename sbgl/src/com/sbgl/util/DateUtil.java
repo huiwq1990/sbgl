@@ -397,6 +397,26 @@ public class DateUtil {
            w = 0;
        return weekDays[w];
    }
+   
+   
+   public static String getWeekOfDateAbbrEn(Date dt) {
+       String[] weekDays = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+       Calendar cal = Calendar.getInstance();
+       cal.setTime(dt);
+       int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+       if (w < 0)
+           w = 0;
+       return weekDays[w];
+   }
+   
+   public static String getWeekOfDateAbbr(Date dt,int language){
+	   if(language == CommonConfig.languageen){
+		   return getWeekOfDateAbbrEn(dt);
+	   }else{
+		   return getWeekOfDate(dt);
+	   }
+   }
+   
    public static String getWeekOfDate(Date dt,int language){
 	   if(language == CommonConfig.languageen){
 		   return getWeekOfDateEn(dt);

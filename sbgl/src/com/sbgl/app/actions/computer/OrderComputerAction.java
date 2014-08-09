@@ -155,7 +155,7 @@ public class OrderComputerAction  extends BaseAction {
 
 	private String borrowPcModelStr;
 
-	
+	int availborrowweeks = 0;
 	
 	public String toComputerIndividualorderPage(){
 		try{
@@ -179,7 +179,7 @@ public class OrderComputerAction  extends BaseAction {
 		}		
 		//设置提前预约的天数
 		computeroderadvanceorderday = computerorderconfig.getMaxorderday();
-
+		
 		log.info("提前预约最大天数" + computeroderadvanceorderday);
 //		设备预约表格显示的列数，默认是7
 		computerodertablercolumn = ComputerConfig.computerodertablercolumn;
@@ -271,7 +271,7 @@ public class OrderComputerAction  extends BaseAction {
 				String timeStr = DateUtil.dateFormat( date , "yyyy-MM-dd");
 				weekStr.add(dayStr);
 				time.add(timeStr);
-				weekday.add(DateUtil.getWeekOfDate(date,this.getCurrentLanguage()));
+				weekday.add(DateUtil.getWeekOfDateAbbr(date,this.getCurrentLanguage()));
 				
 			}
 			showDateMap.put(i, weekStr);
@@ -288,13 +288,12 @@ public class OrderComputerAction  extends BaseAction {
 //		
 
 //		调整预约时间，使时间是7的倍数
-		if(computeroderadvanceorderday%computerodertablercolumn !=0){
-			
+		if(computeroderadvanceorderday%computerodertablercolumn !=0){			
 			showComputeroderadvanceorderday = (computeroderadvanceorderday/computerodertablercolumn + 1) * computerodertablercolumn ;			
 		}else{
 			showComputeroderadvanceorderday = computeroderadvanceorderday;
 		}
-		
+		availborrowweeks  = showComputeroderadvanceorderday/computerodertablercolumn ;
 //		log.info("")
 		System.out.println("computeroderadvanceorderday "+computeroderadvanceorderday +"showComputeroderadvanceorderday "+showComputeroderadvanceorderday);
 //		int computerorderTotalOrderPeriod = ComputerConfig.computerorderTotalOrderPeriod;
@@ -926,6 +925,16 @@ public class OrderComputerAction  extends BaseAction {
 
 	public void setCallType(String callType) {
 		this.callType = callType;
+	}
+
+
+	public int getAvailborrowweeks() {
+		return availborrowweeks;
+	}
+
+
+	public void setAvailborrowweeks(int availborrowweeks) {
+		this.availborrowweeks = availborrowweeks;
 	}
 	
 	

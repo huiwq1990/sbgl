@@ -30,6 +30,7 @@ import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.actions.util.PageActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
+import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.entity.*;
 import com.sbgl.app.services.computer.ComputerhomeworkService;
 import com.sbgl.app.services.computer.ComputerhomeworkreceiverService;
@@ -127,7 +128,9 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 	private String allowborrowpcids;
 	
 	
-
+//	作业默认是等待提交，课程预约
+	private Integer  currentcomputerorderauditstatus=0;
+	private Integer   currentcomputerorderordertype = 0;
 	
 //	学生查看作业收件箱
 	public String toComputerhomeworkInboxPage(){
@@ -476,39 +479,37 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 					
 			try {
 				
-				if(this.getCurrentUserId() < 0){
-					return "toLogin";
+//				默认是等待审核
+				currentcomputerorderauditstatus = this.getComputerorderStatusWaitApply();
+//				课程预约
+				currentcomputerorderordertype = this.getClassOrder();
+				
+				computerhomeworkFull = computerhomeworkService.selectComputerhomeworkFullById(computerhomeworkid);
+				if(computerhomeworkFull==null){				
+					return "404";
 				}
 				
-				
-				
-				String condition = " where a.id = "+computerhomeworkid;
-				List<ComputerhomeworkFull> tempList = computerhomeworkService.selectComputerhomeworkFullByCondition(condition );
-				
-				if(tempList!=null && tempList.size()==1){
-					
-				}else{
-					actionMsg = "访问界面不存在";
-					return "pagenotfound";
-				}
-				
-				computerhomeworkFull = tempList.get(0);
-//				System.out.println(tempList.size() + " "+computerhomeworkFull.getComputerorderclassruleid());
-				
+								
 //				查询作业可以借的PC
 				int ruleId = computerhomeworkFull.getComputerorderclassruleid();
 				if(ruleId > 0){
-					String borrowPcSql  = " where a.computerorderclassruleid = "+ ruleId+ " and b.languagetype = 0";
-					computerorderclassruledetailFullList = computerorderclassruledetailService.selectComputerorderclassruledetailFullByCondition(borrowPcSql);				
+//					String borrowPcSql  = " where a.computerorderclassruleid = "+ ruleId+ " and b.languagetype = "+this.getCurrentLanguage();
+					computerorderclassruledetailFullList = computerorderclassruledetailService.selByComputerorderclassruleId(ruleId, this.getCurrentLanguage());				
+				}else{
+					return "404";
 				}
 				
 //				查询课程信息
 				courseFull = courseService.selectCourseFullByCoursetype(computerhomeworkFull.getComputerorderclassruleclassid(),this.getCurrentLanguage());
 				
-				System.out.println(courseFull.getCoursename());
+//				System.out.println(courseFull.getCoursename());
 				
 				if(computerorderclassruledetailFullList == null){
 					computerorderclassruledetailFullList = new ArrayList<ComputerorderclassruledetailFull>();
+				}
+				
+				if(courseFull==null){
+					return "404";
 				}
 				
 				return SUCCESS;
@@ -516,7 +517,7 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 			} catch (Exception e) {
 				e.printStackTrace();			
 			}
-			return "error";
+			return "404";
 		}	
 
 
@@ -1148,7 +1149,30 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 		return log;
 	}
 
-	
+
+
+	public Integer getCurrentcomputerorderauditstatus() {
+		return currentcomputerorderauditstatus;
+	}
+
+
+	public void setCurrentcomputerorderauditstatus(
+			Integer currentcomputerorderauditstatus) {
+		this.currentcomputerorderauditstatus = currentcomputerorderauditstatus;
+	}
+
+
+	public Integer getCurrentcomputerorderordertype() {
+		return currentcomputerorderordertype;
+	}
+
+
+	public void setCurrentcomputerorderordertype(
+			Integer currentcomputerorderordertype) {
+		this.currentcomputerorderordertype = currentcomputerorderordertype;
+	}
+
+
 	
 	
 }

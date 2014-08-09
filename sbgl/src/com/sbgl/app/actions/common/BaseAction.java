@@ -12,11 +12,23 @@ import org.apache.struts2.interceptor.SessionAware;
 import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.actions.computer.ComputerActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
+import com.sbgl.app.common.computer.ComputerorderInfo;
 import com.sbgl.app.entity.Loginuser;
 import com.sbgl.util.Page;
 
 public class BaseAction extends ActionSupport implements SessionAware,CookiesAware{
 
+	
+	
+	public int ComputerorderStatusAduitAll = ComputerorderInfo.ComputerorderStatusAduitAll;
+	public int ComputerorderStatusAduitPass = ComputerorderInfo.ComputerorderStatusAduitPass;
+	public int ComputerorderStatusAduitReject = ComputerorderInfo.ComputerorderStatusAduitReject;
+	public int ComputerorderStatusAduitDel = ComputerorderInfo.ComputerorderStatusAduitDel;
+	public int ComputerorderStatusAduitWait = ComputerorderInfo.ComputerorderStatusAduitWait;
+	public int  ComputerorderStatusWaitApply = ComputerorderInfo.ComputerorderStatusWaitApply;
+	public int IndividualOrder = ComputerorderInfo.IndividualOrder;
+	public int ClassOrder = ComputerorderInfo.ClassOrder;
+	
 	protected Map<String, Object> session;
 	protected Map<String, String> cookiesMap;
 
@@ -255,6 +267,70 @@ public class BaseAction extends ActionSupport implements SessionAware,CookiesAwa
 
 	public void setForwardurl(String forwardurl) {
 		this.forwardurl = forwardurl;
+	}
+
+	public int getComputerorderStatusAduitAll() {
+		return ComputerorderStatusAduitAll;
+	}
+
+	public void setComputerorderStatusAduitAll(int computerorderStatusAduitAll) {
+		ComputerorderStatusAduitAll = computerorderStatusAduitAll;
+	}
+
+	public int getComputerorderStatusAduitPass() {
+		return ComputerorderStatusAduitPass;
+	}
+
+	public void setComputerorderStatusAduitPass(int computerorderStatusAduitPass) {
+		ComputerorderStatusAduitPass = computerorderStatusAduitPass;
+	}
+
+	public int getComputerorderStatusAduitReject() {
+		return ComputerorderStatusAduitReject;
+	}
+
+	public void setComputerorderStatusAduitReject(int computerorderStatusAduitReject) {
+		ComputerorderStatusAduitReject = computerorderStatusAduitReject;
+	}
+
+	public int getComputerorderStatusAduitDel() {
+		return ComputerorderStatusAduitDel;
+	}
+
+	public void setComputerorderStatusAduitDel(int computerorderStatusAduitDel) {
+		ComputerorderStatusAduitDel = computerorderStatusAduitDel;
+	}
+
+	public int getComputerorderStatusAduitWait() {
+		return ComputerorderStatusAduitWait;
+	}
+
+	public void setComputerorderStatusAduitWait(int computerorderStatusAduitWait) {
+		ComputerorderStatusAduitWait = computerorderStatusAduitWait;
+	}
+
+	public int getComputerorderStatusWaitApply() {
+		return ComputerorderStatusWaitApply;
+	}
+
+	public void setComputerorderStatusWaitApply(int computerorderStatusWaitApply) {
+		ComputerorderStatusWaitApply = computerorderStatusWaitApply;
+	}
+
+	public int getIndividualOrder() {
+		return IndividualOrder;
+	}
+
+	public void setIndividualOrder(int individualOrder) {
+		IndividualOrder = individualOrder;
+	}
+
+	public int getClassOrder() {
+		return ClassOrder;
+	}
+
+	public void setClassOrder(int classOrder) {
+		ClassOrder = classOrder;
 	}
 
 	

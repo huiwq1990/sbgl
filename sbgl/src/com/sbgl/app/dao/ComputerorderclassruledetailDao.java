@@ -32,5 +32,10 @@ public List<Computerorderclassruledetail> selectComputerorderclassruledetailByCo
 
 	public List<ComputerorderclassruledetailFull> selectComputerorderclassruledetailFullByComputermodelId(Integer allowedcomputermodelid );
 
+
+
+	List<ComputerorderclassruledetailFull> selByComputerorderclassruleId(
+			int ruleid, int language);
+
  
 }
