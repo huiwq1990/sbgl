@@ -173,6 +173,7 @@ public class AdminIndexAction extends BaseAction{
 			loginInfoService.alterUserLoginInfo(loginInfo);
 			
 			session.put("isFirst", false);
+			session.put(CommonConfig.sessionLanguagetype, pageLan);
 			
 			if( "1".equals(u.getPrivilege()) ) {
 				returnJSON.put("tag", 0);
