@@ -23,15 +23,15 @@ public class PrivilegeInterceptor extends AbstractInterceptor {
 		session = request.getSession();
 		
 		String url = request.getRequestURL().toString();
-		int index1 = url.indexOf("account");
-		int index2 = url.indexOf("passwordSet");
+//		int index1 = url.indexOf("account");
+//		int index2 = url.indexOf("passwordSet");
 		
 		Loginuser user = (Loginuser) session.getAttribute(CommonConfig.sessionuser);
 		Boolean isFirst = (Boolean) session.getAttribute("isFirst");
 		if(isFirst != null && isFirst) {
 			return "firstSetup";
 		}
-		if(user != null && "1".equals(user.getPrivilege()) || (index1 != -1 || index2 != -1)) {
+		if(user != null && "1".equals(user.getPrivilege())) {
 			return invocation.invoke();
 		} else if(user == null) {
 			return "login";
