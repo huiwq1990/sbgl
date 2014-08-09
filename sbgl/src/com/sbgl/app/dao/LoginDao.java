@@ -5,4 +5,5 @@ import com.sbgl.app.entity.Loginuser;
 public interface LoginDao {
 	public Loginuser findUser(Loginuser loginuser);
 	public Loginuser checkUser(int uid);
+	Loginuser selById(int uid);
 }

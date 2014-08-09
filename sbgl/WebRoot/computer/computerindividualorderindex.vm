@@ -137,20 +137,23 @@
 				#set($availnum = $availableBorrowModelMap.get($tempmodel.computermodeltype).get($tempBorrowperiod.periodnum).get($thisday))
 				#set($toalnum = $totalBorrowModelMap.get($tempmodel.computermodeltype).get($tempBorrowperiod.periodnum).get($thisday))
 				
-				#if($availnum ==0)
-                       <td></td>
-				#else
+				
 					#set($tableindex = $tempweektableindex*21 + $tempperiod*7 + $tempday)
+					<!--需要拼接td，使其根据用户权限显示最大可借数量-->
 					<td id="td${tempmodel.computermodeltype}_${tableindex}"	data-id="td${tempmodel.computermodeltype}_${tableindex}" class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-periodname="$tempBorrowperiod.peroidname" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name"  data-pcpicpath = "$tempmodel.picpath" 
 						#if($user.privilege == 1)
 							data-max-num="$toalnum"> 
 							$toalnum($availnum)<br/>${textmap.computerindividualorderindex_orderable}
 						#else
-							data-max-num="$availnum"> 
-							$availnum<br/>${textmap.computerindividualorderindex_orderable}
-						#end <!--end if-->
+							#if($availnum ==0)
+								<td></td>
+							#else
+								data-max-num="$availnum"> 
+								$availnum<br/>${textmap.computerindividualorderindex_orderable}
+							#end
+						#end <!--end if user.privilege-->
 					</td><!--end td-->
-				#end                 
+				       
 					
 			#end ##end day info computerorderTotalOrderDay
 			

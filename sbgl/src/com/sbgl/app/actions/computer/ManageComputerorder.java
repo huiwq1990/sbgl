@@ -39,6 +39,7 @@ import com.sbgl.app.entity.Computerhomework;
 import com.sbgl.app.entity.ComputerhomeworkFull;
 import com.sbgl.app.entity.Computerhomeworkreceiver;
 import com.sbgl.app.entity.ComputerhomeworkreceiverFull;
+import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
@@ -55,6 +56,7 @@ import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.entity.User;
 import com.sbgl.app.services.computer.ComputerhomeworkService;
 import com.sbgl.app.services.computer.ComputerhomeworkreceiverService;
+import com.sbgl.app.services.computer.ComputermodelService;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.services.computer.ComputerorderclassruleService;
 import com.sbgl.app.services.computer.ComputerorderclassruledetailService;
@@ -151,6 +153,10 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	private int IndividualOrder = ComputerorderInfo.IndividualOrder;
 	private int ClassOrder = ComputerorderInfo.ClassOrder;
 	
+	@Resource
+	private ComputermodelService computermodelService;
+//	private List<ComputerorderPreemption> computerorderForceGetInfo = new ArrayList<ComputerorderPreemption>();
+	private HashMap<Integer, ArrayList<ComputerorderPreemption>> computerorderPreemptionMap = new HashMap<Integer,ArrayList<ComputerorderPreemption>>();
 	
 //	查看自己的预约
 	List<ComputerorderFull> computerorderFullUnderwayList = new ArrayList<ComputerorderFull>();//进行中的预约
@@ -235,6 +241,10 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		
 		Loginuser user = (Loginuser) ServletActionContext.getRequest().getSession().getAttribute("loginUser");
 		userRoleName = CommonActionUtil.getUserRole(this.getCurrentLanguage()).get(Integer.valueOf(user.getRoletype()));
+		
+		if(computerorderFull.getAudituserid()!=null && computerorderFull.getAudituserid()>0){
+			auditUser = loginService.selById(computerorderFull.getAudituserid());
+		}
 		
 		return SUCCESS;
 	}
@@ -364,10 +374,12 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 //		System.out.println(user.getName() + user.getTelephone());
 		userRoleName = CommonActionUtil.getUserRole(this.getCurrentLanguage()).get(Integer.valueOf(user.getRoletype()));
 		System.out.println(user.getRoletype() +userRoleName);
-		Loginuser l = new Loginuser();
-		l.setId(computerorderFull.getAudituserid());
-		auditUser = loginService.findUser(l);
-		System.out.println(auditUser.getName());
+	
+		if(computerorderFull.getAudituserid()!=null && computerorderFull.getAudituserid()>0){
+			auditUser = loginService.selById(computerorderFull.getAudituserid());
+		}
+		
+//		System.out.println(auditUser.getName());
 		return SUCCESS;
 	}
 	
@@ -865,8 +877,43 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		int currentLanguage = this.getCurrentLanguage();
 		List<Borrowperiod> borrowperiodList = BorrowperiodUtil.getBorrowperiodList();
 		int computeroderadvanceorderday = config.getMaxorderday();
-		computerorderService.adminForceGetComputer(computerorderdetailList, currentDate , currentPeriod, endDate, endPeriod, currentLanguage , borrowperiodList, computeroderadvanceorderday);
-
+		List<Computerorderdetail> delOrderdetail = computerorderService.adminForceGetComputer(computerorderdetailList, currentDate , currentPeriod, endDate, endPeriod, currentLanguage , borrowperiodList, computeroderadvanceorderday);
+		
+		for(Computerorderdetail cod : delOrderdetail){
+			ComputerorderPreemption temp = new ComputerorderPreemption();
+			
+			Computerorder co = computerorderService.selectComputerorderById(cod.getComputerorderid());
+			temp.setComputerorder(co);
+			
+			List<Computermodel> cmList = computermodelService.selByModeltype(cod.getComputermodelid(), this.getCurrentLanguage());
+			Computermodel cm = new Computermodel();
+			if(cmList!=null && cmList.size()==1){
+				cm = cmList.get(0);
+			}
+			temp.setComputermodel(cm);
+			
+			Loginuser lu = loginService.selById(co.getCreateuserid());
+			temp.setLoginuser(lu);
+			String periodname = BorrowperiodUtil.getBorrowperiodMap(this.getCurrentLanguage()).get(cod.getBorrowperiod()).getPeroidname();
+			temp.setPeriodname(periodname);
+			
+			if(!computerorderPreemptionMap.containsKey(lu.getId())){
+				ArrayList<ComputerorderPreemption> list = new ArrayList<ComputerorderPreemption>();
+				list.add(temp);
+				computerorderPreemptionMap.put(lu.getId(), list);
+			}else{
+				computerorderPreemptionMap.get(lu.getId()).add(temp);
+			}			
+		}
+		System.out.println(delOrderdetail.size());
+		for(int key : computerorderPreemptionMap.keySet()){
+			ArrayList<ComputerorderPreemption> list = computerorderPreemptionMap.get(key);
+			for(ComputerorderPreemption cp : list){
+				System.out.println("ComputerorderPreemption "+cp.getLoginuser().getName()+" "+cp.getComputerorder().getTitle()+"  "+cp.getComputermodel().getName()+" "+cp.getPeriodname());
+			}
+			
+		}
+		
 	}
 	
 

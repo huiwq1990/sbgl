@@ -166,7 +166,7 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 	
 //	为管理员抢占机房
 	@Override
-	public void adminForceGetComputer(List<Computerorderdetail> newOrderComputerorderdetailList,Date currentDate, int currentPeriod ,Date endDate, int endPeriod ,int currentLanguage, List<Borrowperiod> borrowperiodList,int computeroderadvanceorderday){
+	public List<Computerorderdetail> adminForceGetComputer(List<Computerorderdetail> newOrderComputerorderdetailList,Date currentDate, int currentPeriod ,Date endDate, int endPeriod ,int currentLanguage, List<Borrowperiod> borrowperiodList,int computeroderadvanceorderday){
 		
 //		查找所有的模型
 		List<Computermodel> computermodelList = new ArrayList<Computermodel>();
@@ -216,6 +216,9 @@ public class ComputerorderServiceImpl implements ComputerorderService{
 			baseDao.deleteEntity(odDel);
 //			computerorderdetailDao.delById(odDel.getId());
 		}
+		
+		
+		return delComputerorderdetailList;
 		
 //		return ComputerorderActionUtil.checkVaildComputerorderForm(availableBorrowModelMap, haveOrderedValidComputerorderdetailList, newOrderComputerorderdetailList, currentDate);
 	}

@@ -199,7 +199,14 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 		return allComputermodelFullList;
 	}
 	
-	
+	/**
+	 * 根据模型类型查询
+	 */
+	public List<Computermodel> selByModeltype(int modeltype,int language){
+		
+		return computermodelDao.selByModeltype(modeltype, language);
+		
+	}
 //	public 
 	
 	@Override

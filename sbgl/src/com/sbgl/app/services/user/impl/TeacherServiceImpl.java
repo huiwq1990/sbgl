@@ -12,6 +12,7 @@ import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.entity.Teacher;
 import com.sbgl.app.entity.Userlogininfo;
 import com.sbgl.app.services.user.TeacherService;
+import com.sbgl.util.CardPassUtil;
 
 @Scope("prototype") 
 @Service("teacherService")
@@ -23,6 +24,7 @@ public class TeacherServiceImpl implements TeacherService {
 	public int addTeacher(Teacher teacher) {
 		int id = baseDao.getCode("userId");
 		teacher.setId( id );
+		teacher.setPassword( CardPassUtil.encrypt(teacher.getPassword()) );
 		teacher.setMakedate( new Date() );
 		
 		Userlogininfo info = new Userlogininfo();
@@ -51,7 +53,7 @@ public class TeacherServiceImpl implements TeacherService {
 		storeTeacher.setEmail( teacher.getEmail() );
 		storeTeacher.setGender( teacher.getGender() );
 		storeTeacher.setName( teacher.getName() );
-		storeTeacher.setPassword( teacher.getPassword() );
+		storeTeacher.setPassword( CardPassUtil.encrypt(teacher.getPassword()) );
 		storeTeacher.setPhoto( teacher.getPhoto() );
 		storeTeacher.setTeacherid( teacher.getTeacherid() );
 		storeTeacher.setTelephone( teacher.getTelephone() );

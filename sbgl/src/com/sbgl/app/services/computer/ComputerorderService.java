@@ -73,7 +73,7 @@ public interface ComputerorderService{
 
 		int deleteComputerorder(List<Integer> orderidList) throws DataError;
 
-		void adminForceGetComputer(
+		List<Computerorderdetail> adminForceGetComputer(
 				List<Computerorderdetail> newOrderComputerorderdetailList,
 				Date currentDate, int currentPeriod, Date endDate,
 				int endPeriod, int currentLanguage,

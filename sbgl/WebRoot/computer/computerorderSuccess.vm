@@ -40,9 +40,11 @@
           <div class="pull-left">
             <h1>$!{textmap.computerordersuccess_h1}</h1>
             <p>$!{textmap.computerordersuccess_p1}<code>${computerorderSerialnumber}</code>$!{textmap.computerordersuccess_p2}</p>
-            <p>$!{textmap.computerordersuccess_p3} ssss</p>
+            <p>$!{textmap.computerordersuccess_p3}</p>
             <p><a class="btn btn-primary btn-large" href="${webbaseurl}/viewMineComputerorderList.${strutsaction}">${textmap.computerordersuccess_myorder}</a></p>
-          </div>
+          
+			
+		  </div>
         </div>                                    
       </div>
     </div>

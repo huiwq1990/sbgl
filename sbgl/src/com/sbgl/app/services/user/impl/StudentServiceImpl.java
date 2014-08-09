@@ -12,6 +12,7 @@ import com.sbgl.app.dao.BaseDao;
 import com.sbgl.app.entity.Student;
 import com.sbgl.app.entity.Userlogininfo;
 import com.sbgl.app.services.user.StudentService;
+import com.sbgl.util.CardPassUtil;
 
 @Scope("prototype") 
 @Service("studentService")
@@ -23,6 +24,7 @@ public class StudentServiceImpl implements StudentService {
 	public int addStudent(Student student) {
 		int id = baseDao.getCode("userId");
 		student.setId( id );
+		student.setPassword( CardPassUtil.encrypt(student.getPassword()) );
 		student.setMakedate( new Date() );
 		
 		Userlogininfo info = new Userlogininfo();
@@ -53,7 +55,7 @@ public class StudentServiceImpl implements StudentService {
 		storeStu.setEmail( student.getEmail() );
 		storeStu.setGender( student.getGender() );
 		storeStu.setName( student.getName() );
-		storeStu.setPassword( student.getPassword() );
+		storeStu.setPassword( CardPassUtil.encrypt(student.getPassword()) );
 		storeStu.setPhoto( student.getPhoto() );
 		storeStu.setStudentid( student.getStudentid() );
 		storeStu.setTelephone( student.getTelephone() );

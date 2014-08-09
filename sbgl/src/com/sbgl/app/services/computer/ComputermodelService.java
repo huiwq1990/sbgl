@@ -98,6 +98,8 @@ public interface ComputermodelService{
 	HashMap<Integer, ArrayList<Computermodel>> getCategoryModelMapByCategoryList(
 			List<Computercategory> categoryList, int language);
 
+	List<Computermodel> selByModeltype(int modeltype, int language);
+
 	
 		
 	

@@ -42,13 +42,32 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
 	
 	
 	/**
-	 * 根据类型查询模型
+	 * 根据分类类型查询模型
 	*/
 	@Override
 	public List<Computermodel> selByCategorytype(int categoryType,int language){
 		String sqlch = " where a.status >=0 " +
 						  " and a.languagetype="+language+
 						  " and a.computercategoryid = "+categoryType+
+						  " order by a.computermodeltype,a.languagetype";		
+		ArrayList<Computermodel> list  = (ArrayList<Computermodel>) selectComputermodelByCondition(sqlch );
+		if(list == null){
+			list = new ArrayList<Computermodel>();
+		}
+		
+		return list;
+	}
+	
+	
+	/**
+	 * 根据模型类型查询模型
+	 * 
+	*/
+	@Override
+	public List<Computermodel> selByModeltype(int modeltype,int language){
+		String sqlch = " where a.status >=0 " +
+						  " and a.languagetype="+language+
+						  " and a.computermodeltype = "+modeltype+
 						  " order by a.computermodeltype,a.languagetype";		
 		ArrayList<Computermodel> list  = (ArrayList<Computermodel>) selectComputermodelByCondition(sqlch );
 		if(list == null){

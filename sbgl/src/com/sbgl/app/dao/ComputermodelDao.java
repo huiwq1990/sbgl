@@ -40,6 +40,8 @@ public List<Computermodel> selectComputermodelByCondition(String condition);
 
 	List<Computermodel> selByCategorytype(int categoryType, int language);
 
+	List<Computermodel> selByModeltype(int categoryType, int language);
+
 
 
  

@@ -25,6 +25,7 @@ import com.sbgl.app.services.user.ClazzService;
 import com.sbgl.app.services.user.ManagerService;
 import com.sbgl.app.services.user.StudentService;
 import com.sbgl.app.services.user.UserlogininfoService;
+import com.sbgl.util.CardPassUtil;
 import com.sbgl.util.CookiesUtil;
 import com.sbgl.util.JavascriptWriter;
 import com.sbgl.util.MD5Util;
@@ -93,11 +94,17 @@ public class LoginAction extends ActionSupport {
 		Loginuser loginUser2 = new Loginuser();		
 		boolean flag  = false;
 		String loginType = "";
-		try{	
+		try{
+			//兼容以前密码没有加密的情况
 			loginUser2 = loginService.findUser(loginuser);
+			if(loginUser2 == null) {
+				loginuser.setPassword( CardPassUtil.encrypt(loginuser.getPassword()) );
+				loginUser2 = loginService.findUser(loginuser);
+			}
+			
 			if(loginUser2 != null){
 				CookiesUtil.addLoginCookie("uid", String.valueOf(loginUser2.getId()));
-				CookiesUtil.addLoginCookie("userpass", MD5Util.MD5( loginUser2.getPassword() + loginUser2.getId().toString() ));
+				CookiesUtil.addLoginCookie("userpass", loginUser2.getPassword());
 				CookiesUtil.addLoginCookie(CommonConfig.cookieuserid, String.valueOf(loginUser2.getUserid()));
 				
 				Boolean isAdmin = managerService.isExistManagerCode( loginUser2.getUserid() );
@@ -137,6 +144,7 @@ public class LoginAction extends ActionSupport {
 				}
 				
 				flag = true;
+				loginUser2.setPassword( CardPassUtil.decrypt(loginUser2.getPassword()) );
 				session.setAttribute(CommonConfig.sessionuser, loginUser2);
 				session.setAttribute(CommonConfig.sessionLanguagetype, loginInfo.getPagelanguage());
 				

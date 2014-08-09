@@ -25,6 +25,7 @@ import com.sbgl.app.services.user.StudentService;
 import com.sbgl.app.services.user.TeacherService;
 import com.sbgl.app.services.user.UserGroupRelationService;
 import com.sbgl.app.services.user.WorkerService;
+import com.sbgl.util.CardPassUtil;
 
 @Scope("prototype") 
 @Controller("StudentAction")
@@ -280,7 +281,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 											   s.getGender(),
 											   s.getStudentid(),
 											   s.getName(),
-											   s.getPassword(),
+											   CardPassUtil.decrypt( s.getPassword() ),
 											   String.valueOf( ugr == null ? "-1" : ug.getId() ),
 											   ugr == null ? "无分组" : ug.getName(),
 											   "1",
@@ -308,7 +309,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 											   t.getGender(),
 											   t.getTeacherid(),
 											   t.getName(),
-											   t.getPassword(),
+											   CardPassUtil.decrypt( t.getPassword() ),
 											   String.valueOf( ugr == null ? "-1" : ug.getId() ),
 											   ugr == null ? "无分组" : ug.getName(),
 											   "2",
@@ -335,7 +336,7 @@ public class StudentAction extends ActionSupport implements SessionAware {
 											   w.getGender(),
 											   w.getWorkid(),
 											   w.getName(),
-											   w.getPassword(),
+											   CardPassUtil.decrypt( w.getPassword() ),
 											   String.valueOf( ugr == null ? "-1" : ug.getId() ),
 											   ugr == null ? "无分组" : ug.getName(),
 											   "4",

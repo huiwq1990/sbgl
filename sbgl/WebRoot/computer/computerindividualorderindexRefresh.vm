@@ -1,4 +1,4 @@
-          <div class="post-list-warp"><!--post-list-warp start-->  
+      <div class="post-list-warp"><!--post-list-warp start-->  
                 <div class="post-list">              
                   
 					<div class="control-bar"><!--control-bar start-->
@@ -82,12 +82,25 @@
 			#foreach($tempday in [0..$computerodertablercolumn-1])		
 				#set($thisday =$tempweektableindex * $computerodertablercolumn+$tempday )
 				#set($availnum = $availableBorrowModelMap.get($tempmodel.computermodeltype).get($tempBorrowperiod.periodnum).get($thisday))
-				#if($availnum ==0)
-                       <td></td>
-				#else
+				#set($toalnum = $totalBorrowModelMap.get($tempmodel.computermodeltype).get($tempBorrowperiod.periodnum).get($thisday))
+				
+				
 					#set($tableindex = $tempweektableindex*21 + $tempperiod*7 + $tempday)
-					<td class="bookable" id="td${tempmodel.computermodeltype}_${tableindex}"	data-id="td${tempmodel.computermodeltype}_${tableindex}" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-periodname="$tempBorrowperiod.peroidname" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name"  data-pcpicpath = "$tempmodel.picpath" data-max-num="$availnum">$availnum<br/>可预约</td>
-				#end                 
+					<!--需要拼接td，使其根据用户权限显示最大可借数量-->
+					<td id="td${tempmodel.computermodeltype}_${tableindex}"	data-id="td${tempmodel.computermodeltype}_${tableindex}" class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-periodname="$tempBorrowperiod.peroidname" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name"  data-pcpicpath = "$tempmodel.picpath" 
+						#if($user.privilege == 1)
+							data-max-num="$toalnum"> 
+							$toalnum($availnum)<br/>${textmap.computerindividualorderindex_orderable}
+						#else
+							#if($availnum ==0)
+								<td></td>
+							#else
+								data-max-num="$availnum"> 
+								$availnum<br/>${textmap.computerindividualorderindex_orderable}
+							#end
+						#end <!--end if user.privilege-->
+					</td><!--end td-->
+				       
 					
 			#end ##end day info computerorderTotalOrderDay
 			

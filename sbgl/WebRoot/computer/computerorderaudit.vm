@@ -74,31 +74,8 @@
 				          </div>
                 </div>
                 <div class="thumbnail">
-                  <div class="hd">
-                    <h3>详情</h3>
-                  </div>
-                  <div class="caption">
-                    <div class="rent-detail">
-                      <span class="rent-user"><strong>申请者：<a rel="popover" class="lk" href="#" data-original-title="" title="">$!computerorderFull.createusername</a></strong></span> - <span class="rent-num"><strong> 预约号：$!computerorderFull.computerorderserialnumber</strong></span>	
-                      <div class="rent-userinfo">${userRoleName}</div> 		 
-                      <div class="rent-contact">预约类型：#parse("include/includeComputerorderType.vm")</div>
-                      <div class="rent-contact">联系方式：$!{user.telephone}</div>
-                      #if($computerorderFull.computerorderremark)
-                      <div class="rent-remark"><i class="icon-pencil"></i> $!computerorderFull.computerorderremark</div>
-                      #end
-                    </div>
-                    #if($computerorderFull.computerorderstatus == $ComputerorderStatusAduitReject)
-                    <hr>
-                    #end
-                  </div>                        
-                  
-				 
-				  #if($computerorderFull.computerorderstatus == $ComputerorderStatusAduitReject)
-                  <div class="caption">
-                    <p>驳回原因：$!computerorderFull.computerorderrejectreason</p>
-                  </div>
-            #end
-                </div>
+                  #parse("include/includeComputerorderIndividualInfo.vm")
+                </div><!--end thumbnail-->
             </div>
       </div>
 
@@ -106,6 +83,9 @@
 
 
 </section>
+
+#set($showUser=$auditUser)
+#parse("include/includeShowUserInfo.vm")
 
 <!-- Modal -->
 <div id="reject" class="modal hide fade" role="dialog" aria-labelledby="myRejectLabel" aria-hidden="true" style="display: none; ">
@@ -144,20 +124,6 @@
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
     <button class="btn btn-primary" onclick="auditOrder( $computerorderFull.computerorderid ,$!ComputerorderStatusAduitDel)" >确 定</button>
   </div>
-</div>
-
-
-<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
-  <img src="../img/cover-img.jpg" class="cover" alt="封面照片">
-  <div class="cover-layout"></div>
-  <div class="avatar"><img src="../img/photo.jpg" width="80" height="80" class="img-circle"></div>
-  <div class="user-wrap">
-    <div class="user-name"><a href="#">用户名</a></div>
-    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
-    <div class="user-info">职务等信息</div>
-    <div class="user-info">地点</div>
-  </div>
-  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
 </div>
 
     <!-- Le javascript

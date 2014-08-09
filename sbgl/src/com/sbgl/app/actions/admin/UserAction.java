@@ -286,11 +286,10 @@ public class UserAction extends ActionSupport implements SessionAware {
 				res = workerService.alterWorker(w);
 			}
 			
-			Loginuser u = (Loginuser) session.get("loginUser");
-			u.setPassword(newPassword);
-			session.put("loginUser", u);
-			
 			if(res != null) {
+				Loginuser u = (Loginuser) session.get("loginUser");
+				u.setPassword(newPassword);
+				session.put("loginUser", u);
 				returnJSON.put("tag", 0);
 				returnJSON.put("msg", "密码修改成功！");
 			} else {
