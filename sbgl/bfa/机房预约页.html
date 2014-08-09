@@ -139,12 +139,12 @@
                                   <tbody>
                                     <tr>
                                       <td class="time-slot">上午</td>
-                                      <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
+                                      <td class="bookable"><strong>9</strong><div class="info">available</div></td>
                                       <td></td>
                                       <td></td>
                                       <td></td>
                                       <td></td>
-                                      <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
+                                      <td class="bookable"><strong>9</strong><br><small>可预约</small></td>
                                       <td></td>
                                     </tr>
                                     <tr>
@@ -330,7 +330,7 @@
                                     </thead>
                                     <tbody>
                                       <tr>
-                                        <td class="time-slot">上午</td>
+                                        <td class="time-slot">上午<br><div class="info">8:00-11:00</div></td>
                                         <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
                                         <td></td>
                                         <td></td>
@@ -379,7 +379,7 @@
                                     </thead>
                                     <tbody>
                                       <tr>
-                                        <td class="time-slot">上午</td>
+                                        <td class="time-slot">上午<br><div class="info">8:00-11:00</div></td>
                                         <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
                                         <td></td>
                                         <td></td>
@@ -449,7 +449,7 @@
                                     </thead>
                                     <tbody>
                                       <tr>
-                                        <td class="time-slot">上午</td>
+                                        <td class="time-slot">上午<br><div class="info">8:00-11:00</div></td>
                                         <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
                                         <td></td>
                                         <td></td>
@@ -498,7 +498,7 @@
                                     </thead>
                                     <tbody>
                                       <tr>
-                                        <td class="time-slot">上午</td>
+                                        <td class="time-slot">上午<br><div class="info">8:00-11:00</div></td>
                                         <td class="bookable"><strong>9</strong><div class="info">可预约</div></td>
                                         <td></td>
                                         <td></td>
@@ -584,7 +584,7 @@ function CreatePostBookingTable(rowCount,cellCount,startDate) {
   var num = 9;        // 可预约数
   var day;
   var week;
-  var bookInfo = "<strong>"+ num + "</strong><div class='info'>可预约</div>"
+  var bookInfo = "<strong>"+ num + "</strong><br><small>available</small>"
   html =
     "<thead>" +
     "<tr>";
@@ -592,7 +592,7 @@ function CreatePostBookingTable(rowCount,cellCount,startDate) {
     if(i == 0) {
       html += "<th class='time-slot'>" + "时间" + "</th>";
     }
-    else {      
+    else {
       day = startDate.toString('MM/d');
       week = startDate.toString('dddd');
       html += "<th>" + day + "<br/>" + week + "</th>";
@@ -613,20 +613,20 @@ function CreatePostBookingTable(rowCount,cellCount,startDate) {
         switch(i)
         {
         case 0:
-          html += "上午";
+          html += "AM";
           break;
         case 1:
-          html += "下午";
+          html += 'PM <sup><abbr title="Afternoon">1</abbr></sup>';
           break;
         case 2:
-          html += "晚上";
+          html += 'PM <sup><abbr title="Night">2</abbr></sup>';
           break;
         }
         html += "</td>";
       }
       else {
         index++;
-        html += "<td class='bookable' data-index='" + index + "' data-slot='" + i + "' data-max-num='9'>" + bookInfo + "</td>";         
+        html += "<td class='bookable' data-index='" + index + "' data-slot='" + i + "' data-max-num='9'>" + bookInfo + "</td>";
       } // if
     } // for 
     html += "</tr>";
