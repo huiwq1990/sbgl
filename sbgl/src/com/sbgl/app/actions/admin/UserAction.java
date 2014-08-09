@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.actions.admin.template.UserInfoTemplate;
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.entity.Clazz;
 import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.entity.Managergroup;
@@ -331,7 +332,7 @@ public class UserAction extends ActionSupport implements SessionAware {
 					returnJSON.put("msg", "界面语言修改失败！");
 				}
 			}
-			
+			session.put(CommonConfig.sessionLanguagetype, pageLan);
 			CookiesUtil.removeCookie("pageLan");
 			CookiesUtil.addCookie("pageLan", pageLan);
 		} else {
