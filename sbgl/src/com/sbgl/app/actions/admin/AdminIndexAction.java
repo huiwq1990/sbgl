@@ -34,6 +34,7 @@ import com.sbgl.app.services.user.TeacherService;
 import com.sbgl.app.services.user.UserlogininfoService;
 import com.sbgl.app.services.user.WorkerService;
 import com.sbgl.common.DataError;
+import com.sbgl.util.CardPassUtil;
 
 
 @Scope("prototype") 
@@ -135,19 +136,19 @@ public class AdminIndexAction extends BaseAction{
 		Integer res = null;
 		if("1".equals(userType)) {
 			Student s = studentService.getStudentById(id);
-			s.setPassword(password);
+			s.setPassword( CardPassUtil.encrypt(password) );
 			s.setTelephone(phoneNumber);
 			s.setEmail(email);
 			res = studentService.alterStudent(s);
 		} else if("2".equals(userType)) {
 			Teacher t = teacherService.getTeacherById(id);
-			t.setPassword(password);
+			t.setPassword( CardPassUtil.encrypt(password) );
 			t.setTelephone(phoneNumber);
 			t.setEmail(email);
 			res = teacherService.alterTeacher(t);
 		} else if("4".equals(userType)) {
 			Worker w = workerService.getWorkerById(id);
-			w.setPassword(password);
+			w.setPassword( CardPassUtil.encrypt(password) );
 			w.setTelephone(phoneNumber);
 			w.setEmail(email);
 			res = workerService.alterWorker(w);
@@ -155,7 +156,7 @@ public class AdminIndexAction extends BaseAction{
 		
 		u.setTelephone(phoneNumber);
 		u.setEmail(email);
-		u.setPassword(password);
+		u.setPassword( CardPassUtil.encrypt(password) );
 		session.put(CommonConfig.sessionuser, u);
 		
 		if(res == null) {
