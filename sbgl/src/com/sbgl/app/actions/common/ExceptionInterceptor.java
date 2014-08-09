@@ -13,7 +13,6 @@ import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.services.login.LoginService;
 import com.sbgl.app.services.user.ManagerService;
 import com.sbgl.util.CookiesUtil;
-import com.sbgl.util.MD5Util;
 
 public class ExceptionInterceptor extends AbstractInterceptor {
 	/**
@@ -54,7 +53,7 @@ public class ExceptionInterceptor extends AbstractInterceptor {
 		if( uid == null && loginuser == null && url.indexOf("doLogin") == -1) {
 			return "login";
 		} else if(uid != null && loginuser == null) {
-			loginuser = loginService.checkUser( Integer.valueOf( CookiesUtil.getCookie("uid") ) );
+			loginuser = loginService.checkUser( Integer.valueOf(uid) );
 			//如果还是未找到cookie中存储的用户，删除之
 			if( loginuser == null ) {
 				CookiesUtil.removeCookie("uid");

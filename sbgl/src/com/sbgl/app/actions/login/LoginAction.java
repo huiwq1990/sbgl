@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -28,14 +26,17 @@ import com.sbgl.app.services.user.UserlogininfoService;
 import com.sbgl.util.CardPassUtil;
 import com.sbgl.util.CookiesUtil;
 import com.sbgl.util.JavascriptWriter;
-import com.sbgl.util.MD5Util;
 import com.sbgl.util.WebUtils;
 
 @Scope("prototype") 
 @Controller("LoginAction")
 public class LoginAction extends ActionSupport {
 	
-	private static final Log log = LogFactory.getLog(LoginAction.class);
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	//	private static final Log log = LogFactory.getLog(LoginAction.class);
 	private HttpSession session;
 	private Loginuser loginuser;
 	
@@ -148,7 +149,7 @@ public class LoginAction extends ActionSupport {
 				session.setAttribute(CommonConfig.sessionuser, loginUser2);
 				session.setAttribute(CommonConfig.sessionLanguagetype, loginInfo.getPagelanguage());
 				
-				CookiesUtil.addCookie("pageLan", loginInfo.getPagelanguage());
+				CookiesUtil.addLoginCookie("pageLan", loginInfo.getPagelanguage());
 				
 			}
 			

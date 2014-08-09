@@ -334,7 +334,7 @@ public class UserAction extends ActionSupport implements SessionAware {
 			}
 			session.put(CommonConfig.sessionLanguagetype, pageLan);
 			CookiesUtil.removeCookie("pageLan");
-			CookiesUtil.addCookie("pageLan", pageLan);
+			CookiesUtil.addLoginCookie("pageLan", pageLan);
 		} else {
 			returnJSON.put("tag", -1);
 			returnJSON.put("msg", "后台故障！");
@@ -457,6 +457,5 @@ public class UserAction extends ActionSupport implements SessionAware {
 	public String getMessage() {
 		return message;
 	}
-	
 
 }
