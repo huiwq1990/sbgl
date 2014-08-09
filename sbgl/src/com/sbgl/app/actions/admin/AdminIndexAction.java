@@ -136,19 +136,19 @@ public class AdminIndexAction extends BaseAction{
 		Integer res = null;
 		if("1".equals(userType)) {
 			Student s = studentService.getStudentById(id);
-			s.setPassword( CardPassUtil.encrypt(password) );
+			s.setPassword(password);
 			s.setTelephone(phoneNumber);
 			s.setEmail(email);
 			res = studentService.alterStudent(s);
 		} else if("2".equals(userType)) {
 			Teacher t = teacherService.getTeacherById(id);
-			t.setPassword( CardPassUtil.encrypt(password) );
+			t.setPassword(password);
 			t.setTelephone(phoneNumber);
 			t.setEmail(email);
 			res = teacherService.alterTeacher(t);
 		} else if("4".equals(userType)) {
 			Worker w = workerService.getWorkerById(id);
-			w.setPassword( CardPassUtil.encrypt(password) );
+			w.setPassword(password);
 			w.setTelephone(phoneNumber);
 			w.setEmail(email);
 			res = workerService.alterWorker(w);
