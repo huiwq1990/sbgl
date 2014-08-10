@@ -179,7 +179,7 @@
 		if(divId == "editGender") {
 			if(oldGender == "") {
 				var gender = $("#g").html();
-    			if(gender == "男") {
+    			if(gender == "$!{textmap.baseinfo_sex_male}") {
     				$("#male").attr("checked", "");
     			} else {
     				$("#female").attr("checked", "");
