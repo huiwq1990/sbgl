@@ -32,6 +32,7 @@ import com.sbgl.app.services.user.UserGroupRelationService;
 import com.sbgl.app.services.user.UserService;
 import com.sbgl.app.services.user.UserlogininfoService;
 import com.sbgl.app.services.user.WorkerService;
+import com.sbgl.util.CardPassUtil;
 import com.sbgl.util.CookiesUtil;
 
 @Scope("prototype") 
@@ -360,14 +361,17 @@ public class UserAction extends ActionSupport implements SessionAware {
 			if("1".equals(userType)) {
 				Student s = studentService.getStudentById( Integer.valueOf(userId) );
 				s.setGender(newGender);
+				s.setPassword( CardPassUtil.decrypt(s.getPassword()) );
 				res = studentService.alterStudent(s);
 			} else if("2".equals(userType)) {
 				Teacher t = teacherService.getTeacherById( Integer.valueOf(userId) );
 				t.setGender(newGender);
+				t.setPassword( CardPassUtil.decrypt(t.getPassword()) );
 				res = teacherService.alterTeacher(t);
 			} else if("4".equals(userType)) {
 				Worker w = workerService.getWorkerById( Integer.valueOf(userId) );
 				w.setGender(newGender);
+				w.setPassword( CardPassUtil.decrypt(w.getPassword()) );
 				res = workerService.alterWorker(w);
 			}
 			
@@ -417,16 +421,19 @@ public class UserAction extends ActionSupport implements SessionAware {
 				Student s = studentService.getStudentById( Integer.valueOf(userId) );
 				s.setTelephone(phoneNum);
 				s.setEmail(newEmail);
+				s.setPassword( CardPassUtil.decrypt(s.getPassword()) );
 				res = studentService.alterStudent(s);
 			} else if("2".equals(userType)) {
 				Teacher t = teacherService.getTeacherById( Integer.valueOf(userId) );
 				t.setTelephone(phoneNum);
 				t.setEmail(newEmail);
+				t.setPassword( CardPassUtil.decrypt(t.getPassword()) );
 				res = teacherService.alterTeacher(t);
 			} else if("4".equals(userType)) {
 				Worker w = workerService.getWorkerById( Integer.valueOf(userId) );
 				w.setTelephone(phoneNum);
 				w.setEmail(newEmail);
+				w.setPassword( CardPassUtil.decrypt(w.getPassword()) );
 				res = workerService.alterWorker(w);
 			}
 			
