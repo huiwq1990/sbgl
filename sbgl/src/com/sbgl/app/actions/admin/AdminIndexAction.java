@@ -35,6 +35,7 @@ import com.sbgl.app.services.user.UserlogininfoService;
 import com.sbgl.app.services.user.WorkerService;
 import com.sbgl.common.DataError;
 import com.sbgl.util.CardPassUtil;
+import com.sbgl.util.CookiesUtil;
 
 
 @Scope("prototype") 
@@ -174,6 +175,7 @@ public class AdminIndexAction extends BaseAction{
 			
 			session.put("isFirst", false);
 			session.put(CommonConfig.sessionLanguagetype, pageLan);
+			CookiesUtil.addLoginCookie("pageLan", loginInfo.getPagelanguage());
 			
 			if( "1".equals(u.getPrivilege()) ) {
 				returnJSON.put("tag", 0);
