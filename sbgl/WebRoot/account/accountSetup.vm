@@ -23,7 +23,7 @@
     #parse("include/includeSiteNavi.vm")
     <div class="sub-nav">
       <ul class="nav nav-tabs nav-tabs-google">
-        <li class="active"><a href="#">$!{textmap.usercenter_accountsetup}</a></li>
+        <li class="active"><a href="#">${textmap.usercenter_accountsetup}</a></li>
         <!--<li><a href="#">帮助</a></li>-->
       </ul>
     </div>
