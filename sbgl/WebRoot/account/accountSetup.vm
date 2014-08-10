@@ -95,7 +95,7 @@
 <script src="${jsDomain}/jquery.noty.js"></script>
 
 <script>
-	$("body").on("click", ".btn", function() {
+	$("body").on("click", "button.btn-primary", function() {
 		var pageLan = $("#inputLanguage").val();
 		console.log("=============== pageLan = " + pageLan);
 		var postData = {
