@@ -33,17 +33,15 @@
   
   <div id="main-content" class="clearfix"><!--main-content start--> 
           <div class="container" id="post-equip">
-            
             <div class="row">
-      
-$actionMsg				
-				
-				
-				
-				
+				<div class="hero-unit clearfix">
+				  <i class="icon-warning-sign pull-left"></i>
+				  <div class="pull-left">
+				    <h1>${textmap.error_message_title}</h1>
+				    <p>$actionMsg</p>
+				  </div>
 				</div>
-				
-  </div>
+          </div>
   </div>
   <!---main-content end-->
 </section>

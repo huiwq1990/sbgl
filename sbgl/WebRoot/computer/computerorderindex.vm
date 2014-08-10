@@ -73,16 +73,16 @@
 						  #if($!temp.computerorderstatus == $ComputerorderStatusAduitWait)
                           <div class="rent-status clearfix">
 							
-                            <div class="status pull-left"><span class="label label-info">$!{textmap.computerorderindex_status}</span>#parse("include/includeComputerorderStatus.vm")</div>
+                            <div class="status pull-left"><span class="label label-info">$!{textmap.computerorderindex_status}</span> #parse("include/includeComputerorderStatusIndex.vm")</div>
                           </div>
 						  #elseif($!temp.computerorderstatus == $ComputerorderStatusAduitReject)
 							  <div class="rent-status clearfix">
-                            <div class="status pull-left"><span class="label label-warning">$!{textmap.computerorderindex_status}</span>#parse("include/includeComputerorderStatus.vm")</div>
+                            <div class="status pull-left"><span class="label label-warning">$!{textmap.computerorderindex_status}</span> #parse("include/includeComputerorderStatusIndex.vm")</div>
                             <a class="btn btn-white pull-right" action-type="" action-data="" href="${webbaseurl}/viewComputerorder.action?computerorderId=$temp.computerorderid">$!{textmap.computerorderindex_orderreject_checkreason}</a>
                           </div>
 						  #else
 							  <div class="rent-status clearfix">
-                            <div class="status pull-left"><span class="label label-error">$!{textmap.computerorderindex_status}</span> #parse("include/includeComputerorderStatus.vm")</div>
+                            <div class="status pull-left"><span class="label label-error">$!{textmap.computerorderindex_status}</span> #parse("include/includeComputerorderStatusIndex.vm")</div>
                           </div>
 							#end
                         </div>
@@ -106,7 +106,7 @@
                           <hr />
 						  
 						   <div class="rent-status clearfix">
-                            <div class="status pull-left"><span class="label label-info">$!{textmap.computerorderindex_status}</span> $!{textmap.computerorderindex_order_waitfororder}</div>
+                            <div class="status pull-left"><span class="label label-info">$!{textmap.computerorderindex_status}</span> $!{textmap.computerorderstatus_wait_apply}</div>
                             <a class="btn btn-white pull-right" action-type="" action-data="" href="${webbaseurl}/toComputerClassorderPage.${strutsaction}?computerhomeworkid=$temp.computerhomeworkid">${textmap.computerorderindex_startorder}</a>
                           </div>
               
@@ -153,11 +153,6 @@
                           
 						  
 						  </div>
-                          <hr />
-                          <div class="rent-status clearfix">
-							#set($curstatus = $temp.computerorderstatus)
-                            <div class="status pull-left"><span class="label label-success">$!{textmap.computerorderindex_status}</span> #parse("include/includeComputerorderStatus.vm")</div>
-                          </div>
                         </div>
                       </div>                  
                   </div>

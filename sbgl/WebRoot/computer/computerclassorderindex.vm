@@ -94,7 +94,7 @@
 										#set($trueDateList = $dateMap.get($tempweektableindex))
 										#set($weekdayList = $showWeekdayMap.get($tempweektableindex))
 										#foreach($tempday in $weekdayRegion)
-                                        <th>$weekDateList.get($tempday)<br>$!weekdayList.get($tempday)</th>
+                                        <th>$!weekdayList.get($tempday)<br>$weekDateList.get($tempday)</th>
                                         #end                
                                       </tr>
                                     </thead>
@@ -113,7 +113,7 @@
                        <td></td>
 				#else
 					#set($tableindex = $tempweektableindex*21 + $tempperiod*7 + $tempday)
-					<td class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-periodname="$tempBorrowperiod.peroidname" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name" data-pcpicpath="$tempmodel.picpath"  data-max-num="$availnum">$availnum<br/>${textmap.computerindividualorderindex_orderable}</td>
+					<td class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-periodname="$tempBorrowperiod.peroidname" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name" data-pcpicpath="$tempmodel.picpath"  data-max-num="$availnum">$availnum<br/><small>${textmap.computerindividualorderindex_orderable}</small></td>
 				#end                 
 					
 			#end ##end day info computerorderTotalOrderDay

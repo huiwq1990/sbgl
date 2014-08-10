@@ -120,7 +120,7 @@
 										#set($trueDateList = $dateMap.get($tempweektableindex))
 										#set($weekday = $showWeekdayMap.get($tempweektableindex))
 										#foreach($tempday in $weekdayRegion)
-                                        <th>$!weekday.get($tempday)<br>$weekDateList.get($tempday)</th>
+                                        <th>$weekDateList.get($tempday)<br>$!weekday.get($tempday)</th>
                                         #end                
                                       </tr>
                                     </thead>
@@ -143,13 +143,13 @@
 					<td id="td${tempmodel.computermodeltype}_${tableindex}"	data-id="td${tempmodel.computermodeltype}_${tableindex}" class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-periodname="$tempBorrowperiod.peroidname" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name"  data-pcpicpath = "$tempmodel.picpath" 
 						#if($user.privilege == 1)
 							data-max-num="$toalnum"> 
-							$toalnum($availnum)<br/>${textmap.computerindividualorderindex_orderable}
+							$toalnum($availnum)<br/><small>${textmap.computerindividualorderindex_orderable}</small>
 						#else
 							#if($availnum ==0)
 								<td></td>
 							#else
 								data-max-num="$availnum"> 
-								$availnum<br/>${textmap.computerindividualorderindex_orderable}
+								$availnum<br/><small>${textmap.computerindividualorderindex_orderable}</small>
 							#end
 						#end <!--end if user.privilege-->
 					</td><!--end td-->

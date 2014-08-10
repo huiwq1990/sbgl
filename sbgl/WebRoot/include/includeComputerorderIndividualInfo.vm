@@ -1,7 +1,7 @@
 
 
 	<div class="hd">
-                    <h3>$!{textmap.computerorderstatus_detail_title}</h3>
+                    <h3>$!{textmap.computerorderview_detail_title}</h3>
                   </div>
         
 				  <div class="caption">

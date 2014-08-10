@@ -1,13 +1,13 @@
 #if($curstatus == $ComputerorderStatusAduitPass)
-$!{textmap.computerorderstatus_audit_pass}
+$!{textmap.computerorderstatus_audit_pass_detail}
 #elseif($curstatus ==$ComputerorderStatusAduitReject)
-$!{textmap.computerorderstatus_audit_reject}
+$!{textmap.computerorderstatus_audit_reject_detail}
 #elseif($curstatus ==$ComputerorderStatusAduitDel)
-$!{textmap.computerorderstatus_audit_del}
+$!{textmap.computerorderstatus_audit_del_detail}
 #elseif($curstatus ==$ComputerorderStatusAduitWait)
-$!{textmap.computerorderstatus_audit_wait}
+$!{textmap.computerorderstatus_audit_wait_detail}
 #elseif($curstatus ==$ComputerorderStatusWaitApply)
-$!{textmap.computerorderstatus_wait_apply}
+$!{textmap.computerorderstatus_wait_apply_detail}
 #else 
-$!{textmap.computerorderstatus_audit_error}
+$!{textmap.computerorderstatus_audit_error_detail}
 #end
