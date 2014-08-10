@@ -70,7 +70,11 @@
                 <dt>$!{textmap.baseinfo_name}</dt>
                 <dd>$!userName</dd>
                 <dt>$!{textmap.baseinfo_sex}</dt>
-                <dd id="g">$!gender</dd>
+				#if($!gender == "男")
+					<dd id="g">$!{textmap.baseinfo_sex_male}</dd>
+				#else
+					<dd id="g">$!{textmap.baseinfo_sex_female}</dd>
+				#end
 				 #if($!classBelongTo != "-1")
                     <dt>$!{textmap.baseinfo_class}</dt>
                     <dd>$!classBelongTo</dd>
@@ -130,7 +134,7 @@
 <div id="modify-contact" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-    <h3 id="myModalLabel">$!{textmap.baseinfo_detail}</h3>
+    <h3 id="myModalLabel">$!{textmap.baseinfo_contactinfo}</h3>
   </div>
   <div class="modal-body">
       <form class="form-horizontal" role="form">
