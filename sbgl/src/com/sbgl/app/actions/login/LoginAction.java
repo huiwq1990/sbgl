@@ -187,6 +187,7 @@ public class LoginAction extends ActionSupport {
 		CookiesUtil.removeCookie("uid");
 		CookiesUtil.removeCookie("userpass");
 		CookiesUtil.removeCookie("userid");
+		CookiesUtil.removeCookie("pageLan");
 		
 		session.removeAttribute("loginUser");
 		
