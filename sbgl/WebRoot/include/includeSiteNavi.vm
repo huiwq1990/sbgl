@@ -5,7 +5,7 @@
           <li><a href="${webbaseurl}/index.${strutsaction}"><i class="icon-home"></i> ${textmap.sitenavi_home}</a></li>
           <li class="divider"></li>
           <li><a href="${webbaseurl}/indexInfo.${strutsaction}">${textmap.sitenavi_myspace}</a></li>
-          <li><a href="${webbaseurl}/viewMineComputerorderList.${strutsaction}">${textmap.sitenavi_myorder}</a></li>
+          <li><a href="${webbaseurl}/viewMyComputerorderList.${strutsaction}">${textmap.sitenavi_myorder}</a></li>
           <!-- <li><a href="${webbaseurl}/toMessageInbox.${strutsaction}">站内信</a></li> -->
           <li class="divider"></li>
           <li><a href="${webbaseurl}/account.${strutsaction}">${textmap.sitenavi_setandhelp}</a></li>
