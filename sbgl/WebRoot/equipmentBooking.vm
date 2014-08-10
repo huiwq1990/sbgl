@@ -125,9 +125,9 @@
             <div class="step-pane active" id="step1">
               <p>$!{textmap.order_welcomeapp}</p>
 			   #if($!orderCate==1)
-              <p>$!{textmap.order_youis}<strong>$!{textmap.order_personalappointment}</strong>。</p>
+              <p>$!{textmap.order_youis}<strong>$!{textmap.order_personalappointment}</strong></p>
         	  #elseif($!orderCate==2)
-              <p>$!{textmap.order_youis}<strong>$!{textmap.order_teachingappointment}</strong>，$!{textmap.order_following}<strong>$!equipmenborrowFull.teacherName</strong>$!{textmap.order_relevantrequirements}</p>
+              <p>$!{textmap.order_youis}<strong>$!{textmap.order_teachingappointment}</strong>$!{textmap.order_following}<strong>$!equipmenborrowFull.teacherName</strong>$!{textmap.order_relevantrequirements}</p>
               <div class="media">
                 <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
                   <img src="img/photo.jpg" width="46" height="46" class="img-rounded">
