@@ -52,7 +52,7 @@
                 <ul class="nav nav-tabs nav-tabs-google">
                   <li id="ordertype1" class="ordertype"><a href="#" data-type="orderQuery" data-ordertype="1">个人预约</a></li>
                   <li id="ordertype2" class="ordertype"><a href="#" data-type="orderQuery" data-ordertype="2">教学预约</a></li>
-                  <li id="ordertype0" class="ordertype active" data-type="orderQuery" data-ordertype="0"><a href="#">全部</a></li>
+                  <li id="ordertype0" class="ordertype active"><a href="#" data-type="orderQuery" data-ordertype="0">全部</a></li>
                 </ul>
               </div>
               
@@ -218,7 +218,8 @@
 	
 	$("body").on("click", "a[data-type|=orderQuery]", function() {
 		var myData = $(this).data();
-		var order = myData.ordertype;
+		var order = myData.ordertype;		
+		ordertype = order;
 		jQuery.ajax({  
 		    url:"${webbaseurl}/orderAdminContent.do",  
 		    type: 'POST',
@@ -228,6 +229,8 @@
 		    	$("#admin-wrap").html(data);
 				$(".ordertype").removeClass('active');
 				$("#ordertype"+order).addClass('active');
+				$(".dealtype").removeClass('active');
+				$("#dealtype"+dealtype).addClass('active');
 				pageNo = $("#currpage").val();
 				totalpage = $("#totalpage").val();
 	        } 
@@ -237,6 +240,7 @@
 	$("body").on("click", "a[data-type|=statusQuery]", function() {
 		var myData = $(this).data();
 		var dealt = myData.dealtype;
+		dealtype = dealt;
 		jQuery.ajax({  
 		    url:"${webbaseurl}/orderAdminContent.do",  
 		    type: 'POST',
@@ -246,6 +250,8 @@
 		    	$("#admin-wrap").html(data);
 				$(".dealtype").removeClass('active');
 				$("#dealtype"+dealt).addClass('active');
+				$(".ordertype").removeClass('active');
+				$("#ordertype"+ordertype).addClass('active');
 				pageNo = $("#currpage").val();
 				totalpage = $("#totalpage").val();
 	        } 

@@ -55,37 +55,37 @@
                         <div class="hd clearfix">
                           <h4 class="pull-left"><a class="lk" href="${webbaseurl}/equipOrderContent.do?borrowId=$!row.borrowid">$!row.title</a></h4>
                         </div>
-                        <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> 设备预约<br/>#if($!row.category==1)
-							个人预约
+                        <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> ${textmap.order_equipment}<br/>#if($!row.category==1)
+							${textmap.order_personalappointment}
 						  #elseif($!row.category==2)
-							课程预约
+							${textmap.order_teachingappointment}
 						  #end</div>
                         <div class="caption">
                           <div class="rent-info">
-                            <div class="rent-num">预约号：$!row.borrowid</div>
-                            <div class="rent-time"><i class="icon-time"></i> $!date.format("yyyy-MM-dd ", $!row.borrowtime)  至 $!date.format("yyyy-MM-dd ", $!row.returntime)</div>
+                            <div class="rent-num">${textmap.order_reservationno} ：$!row.borrowid</div>
+                            <div class="rent-time"><i class="icon-time"></i> $!date.format("yyyy-MM-dd ", $!row.borrowtime)  ${textmap.order_to} $!date.format("yyyy-MM-dd ", $!row.returntime)</div>
                             <div class="rent-remark"><i class="icon-pencil"></i>$!row.remark</div>
                           </div>
                           <hr />
                           <div class="rent-status clearfix">
-                            <div class="status pull-left"><span class="label label-info">状态</span>#if($!row.status==1)
-								等待提交预约申请。
+                            <div class="status pull-left"><span class="label label-info">${textmap.order_status}</span>#if($!row.status==1)
+								${textmap.order_waitingforthesub}
 							  #elseif($!row.status==2)
-								等待审核
+								${textmap.order_waitforaudit}
 							  #elseif($!row.status==3)
-								预约被驳回，需修改后重新提交预约
+								${textmap.order_theappointmentwasrejected}					
 							  #elseif($!row.status==4)
-								审核通过，请于规定时间领取相关设备
+								${textmap.order_throughtheaudit}						
 							  #elseif($!row.status==5)
-								请于规定时间归还相关设备
+								${textmap.order_pleasereturnto}					
 							  #elseif($!row.status==6)
-								已超期，请尽快归还相关设备
+								${textmap.order_hasbeenextended}
 							  #elseif($!row.status==7)
-								部分设备受损，请尽快根据相关规定处理受损设备
+								${textmap.order_partoftheequipment}								
 							  #elseif($!row.status==8)
-								已完成
+								${textmap.finishorder_title}
 							  #elseif($!row.status==9)
-								老师已发布任务
+								${textmap.order_publishingtask}							
 							  #end</div>
                           </div>
                         </div>
@@ -105,35 +105,37 @@
                         <div class="hd clearfix">
                           <h4 class="pull-left"><a class="lk" href="${webbaseurl}/equipOrderContent.do?borrowId=$!row2.borrowid">$!row2.title</a></h4>
                         </div>
-                        <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> 设备预约<br/>#if($!row2.category==1)
-							个人预约
+                        <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i>  ${textmap.order_equipment}<br/>#if($!row2.category==1)
+							${textmap.order_personalappointment}
 						  #elseif($!row2.category==2)
-							课程预约
+							${textmap.order_teachingappointment}
 						  #end</div>
                         <div class="caption">
                           <div class="rent-info">
-                            <div class="rent-num">预约号：$!row2.borrowid</div>
+                            <div class="rent-num">${textmap.order_reservationno} ：$!row2.borrowid</div>
                             <div class="rent-time"><i class="icon-time"></i> $date.format("yyyy-MM-dd ", $!row2.borrowtime)  - $date.format("yyyy-MM-dd ", $!row2.returntime)</div>
                             <div class="rent-remark"><i class="icon-pencil"></i>$!row2.remark</div>
                           </div>
                           <hr />
                           <div class="rent-status clearfix">
-                            <div class="status pull-left"><span class="label label-info">状态</span>#if($!row2.status==1)
-								等待提交预约申请。
+                            <div class="status pull-left"><span class="label label-info">${textmap.order_status}</span>#if($!row2.status==1)
+								${textmap.order_waitingforthesub}
 							  #elseif($!row2.status==2)
-								等待审核
+								${textmap.order_waitforaudit}
 							  #elseif($!row2.status==3)
-								预约被驳回，需修改后重新提交预约
+								${textmap.order_theappointmentwasrejected}
 							  #elseif($!row2.status==4)
-								审核通过，请于规定时间领取相关设备
+								${textmap.order_throughtheaudit}
 							  #elseif($!row2.status==5)
-								请于规定时间归还相关设备
+								${textmap.order_pleasereturnto}	
 							  #elseif($!row2.status==6)
-								已超期，请尽快归还相关设备
+								${textmap.order_hasbeenextended}
 							  #elseif($!row.status==7)
-								部分设备受损，请尽快根据相关规定处理受损设备
+								${textmap.order_partoftheequipment}	
 							  #elseif($!row2.status==8)
-								已完成
+								${textmap.finishorder_title}
+							  #elseif($!row2.status==9)
+								${textmap.order_publishingtask}							
 							  #end</div>
                           </div>
                         </div>
@@ -165,7 +167,7 @@
   <div class="modal-body">
     <div class="text-center clearfix">
       <a class="btn btn-white btn-large btn-type pull-left" href="${webbaseurl}/equipmentBooking.do?orderCate=1"><h4><i class="icon-camera-retro icon-2x"></i></h4><h3>设备预约</h3></a>
-      <a class="btn btn-white btn-large btn-type pull-right" href="机房预约页.html"><h4><i class="icon-desktop icon-2x"></i></h4><h3>机房预约</h3></a>
+      <a class="btn btn-white btn-large btn-type pull-right" href="${webbaseurl}/toComputerIndividualorderPage.action"><h4><i class="icon-desktop icon-2x"></i></h4><h3>机房预约</h3></a>
     </div>
   </div>
   <div class="modal-footer">

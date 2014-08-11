@@ -188,6 +188,8 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 				endDate = fromDate;
 			}
 		}
+		fromDate = DateUtil.date.format(DateUtil.addDay(DateUtil.parseDate(fromDate), -7));
+		endDate = DateUtil.date.format(DateUtil.addDay(DateUtil.parseDate(endDate), 7));
 		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
 		if(lantype==null||lantype.equals("")){
 			lantype = "0";

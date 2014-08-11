@@ -338,6 +338,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	}
 	
 	public String findDayNum(Integer equipmentId,String fromDate,String endDate,String lantype){
+
 		List<String> dateList = DateUtil.dateRegion(fromDate,endDate);
 		final Integer size = dateList.size();
 	    String sql = " select  CONCAT(" ;
