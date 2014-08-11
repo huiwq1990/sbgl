@@ -268,7 +268,7 @@
 	var isWkr = false;		//判读是否是其他
 	
 	var curPage = 1;		//当前页码
-	var totalPage = 2;		//总页码
+	var totalPage = $!totalPage;		//总页码
 	var selectedType = 0;	//选中的人员类型，默认是全部人员
 	
 	var cookie = { 
@@ -746,6 +746,8 @@
 	
 	//向前一页翻页
 	$("body").on("click", "a[action-type|=backPage]", function() {
+		//alert(curPage);
+		//alert(totalPage);
 		if(curPage - 1 <= 0 ) {
 			curPage = 1;
 			return;
@@ -780,7 +782,7 @@
 	$("body").on("click", "a[action-type|=nextPage]", function() {
 		//alert(curPage);
 		//alert(totalPage);
-		if(curPage + 1 > totalPage ) {
+		if(parseInt(curPage) + 1 > totalPage ) {
 			curPage = totalPage;
 			return;
 		} else {
