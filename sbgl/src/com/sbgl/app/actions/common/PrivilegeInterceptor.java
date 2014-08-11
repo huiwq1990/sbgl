@@ -78,6 +78,12 @@ public class PrivilegeInterceptor extends AbstractInterceptor {
 				return "login";
 			}
 		}
+		
+		Boolean isFirst = (Boolean) session.getAttribute("isFirst");
+		if(isFirst != null && isFirst) {
+			return "firstSetup";
+		}
+		
 		Boolean isAdmin = managerService.isExistManagerCode( user.getUserid() );
 		if(index1 != -1 || index2 != -1 || index3 != -1 || index4 != -1) {
 			if(isAdmin) {
@@ -88,11 +94,6 @@ public class PrivilegeInterceptor extends AbstractInterceptor {
 				session.setAttribute(CommonConfig.sessionuser, user);
 			}
 			return invocation.invoke();
-		} else {
-			Boolean isFirst = (Boolean) session.getAttribute("isFirst");
-			if(isFirst != null && isFirst) {
-				return "firstSetup";
-			}
 		}
 		if(isAdmin) {
 			user.setPrivilege("1");
