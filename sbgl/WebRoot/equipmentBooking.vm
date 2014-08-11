@@ -35,26 +35,13 @@
   #parse("include/includeGlobalHeader.vm")
   
   <div class="nav-wrap clearfix">
-    <div class="site-nav">
-      <div class="dropdown">
-        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> $!{textmap.order_equipment} <i class="icon-chevron-right"></i></a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-          <li><a href="${webbaseurl}/index.${strutsaction}"><i class="icon-home"></i> $!{textmap.order_index}</a></li>
-          <li class="divider"></li>
-          <li><a href="${webbaseurl}/indexInfo.${strutsaction}"> $!{textmap.order_personalhomepage}</a></li>
-         <!-- <li><a href="#">通讯录</a></li> -->
-          <li class="divider"></li>
-
-		  <li><a href="${webbaseurl}/equipOrdIndex.${strutsaction}">$!{textmap.order_myreservation}</a></li>
-        </ul>
-      </div>
-    </div>
+    #parse("include/includeSiteNavi.vm")
     <div class="sub-nav">
       <ul class="nav nav-tabs nav-tabs-google">
         #foreach($row in $classification1List)		
-			<li id="cl1$!row.classificationid" #if($velocityCount=='1') class="active classification1" #else class="classification1" #end><a href="javascript:;"   data-type="classAjax" data-id="$!row.classificationid" data-classtype="1" >$!row.name</a></li>
+			<li id="cl1$!row.classificationid" #if($velocityCount=='1') class="active classification1" #else class="classification1" #end><a href="javascript:;" data-type="classAjax" data-id="$!row.classificationid" data-classtype="1" >$!row.name</a></li>
 		#end
-		<li id="cl1-2" class="classification1"><a href="javascript:;"   data-type="classAjax" data-id="-2" data-classtype="1" >$!{textmap.order_equipmengroup}</a></li>	
+		<li id="cl1-2" class="classification1"><a href="javascript:;" data-type="classAjax" data-id="-2" data-classtype="1" >$!{textmap.order_equipmengroup}</a></li>	
       </ul>
     </div>
   </div>
@@ -125,9 +112,9 @@
             <div class="step-pane active" id="step1">
               <p>$!{textmap.order_welcomeapp}</p>
 			   #if($!orderCate==1)
-              <p>$!{textmap.order_youis}<strong>$!{textmap.order_personalappointment}</strong></p>
+              <p>$!{textmap.order_youis} <strong>$!{textmap.order_personalappointment}</strong></p>
         	  #elseif($!orderCate==2)
-              <p>$!{textmap.order_youis}<strong>$!{textmap.order_teachingappointment}</strong>$!{textmap.order_following}<strong>$!equipmenborrowFull.teacherName</strong>$!{textmap.order_relevantrequirements}</p>
+              <p>$!{textmap.order_youis} <strong>$!{textmap.order_teachingappointment}</strong>$!{textmap.order_following}<strong>$!equipmenborrowFull.teacherName</strong>$!{textmap.order_relevantrequirements}</p>
               <div class="media">
                 <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
                   <img src="img/photo.jpg" width="46" height="46" class="img-rounded">
@@ -265,7 +252,7 @@
 var nowTemp = new Date();	
 	var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 	$('.input-daterange').datepicker({
-		language: 'zh-CN',
+		language: '${textmap.datepicker_language}',
 		format: 'yyyy-mm-dd',
 		todayHighlight: true,
 		autoclose: true,
@@ -276,7 +263,7 @@ var nowTemp = new Date();
 	  		$('.checkout')[0].focus();
 	});
 $('.input-daterange').datepicker({
-	language: 'zh-CN',
+	language: '${textmap.datepicker_language}',
 	format: 'yyyy-mm-dd',
 	todayHighlight: true,
 });

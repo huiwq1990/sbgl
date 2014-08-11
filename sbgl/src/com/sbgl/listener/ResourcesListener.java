@@ -53,7 +53,7 @@ public class ResourcesListener extends HttpServlet implements
 		timer = new Timer(true);
 		sce.getServletContext().log("定时器启动");
 //		timer.schedule(new MyTask(sce.getServletContext()), 0, 60 * 60 * 1000);
-		timer.schedule(new MyTask(sce.getServletContext()), 0,  20 * 1000);
+		timer.schedule(new MyTask(sce.getServletContext()), 0,  2 * 1000);
 		sce.getServletContext().log("添加到任务调度表");
 	}
 
@@ -72,7 +72,7 @@ public class ResourcesListener extends HttpServlet implements
 		        CompositeConfiguration config = new CompositeConfiguration();
 		        Map<String,String> textMap = new ConcurrentHashMap<String,String>();
 		        try {
-					config.addConfiguration(new PropertiesConfiguration("messages_zh_CN.properties"));
+					//config.addConfiguration(new PropertiesConfiguration("messages_zh_CN.properties"));
 					config.addConfiguration(new PropertiesConfiguration("messages_zh_CN_hg.properties"));
 					config.addConfiguration(new PropertiesConfiguration("messages_zh_CN_wm.properties"));
 					config.addConfiguration(new PropertiesConfiguration("messages_zh_CN_be.properties"));
@@ -93,7 +93,7 @@ public class ResourcesListener extends HttpServlet implements
 				config = new CompositeConfiguration();
 				 Map<String,String>  textMapEn = new ConcurrentHashMap<String,String>();
 		        try {
-					config.addConfiguration(new PropertiesConfiguration("messages_en_US.properties"));
+					//config.addConfiguration(new PropertiesConfiguration("messages_en_US.properties"));
 					config.addConfiguration(new PropertiesConfiguration("messages_en_US_hg.properties"));
 					config.addConfiguration(new PropertiesConfiguration("messages_en_US_wm.properties"));
 					config.addConfiguration(new PropertiesConfiguration("messages_en_US_be.properties"));

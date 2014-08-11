@@ -66,45 +66,19 @@
                 <h3 class="pull-left">$!{textmap.index_new} </h3>
               </div>
               <div class="row p-20">
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <a class="btn btn-white btn-block" href="${webbaseurl}/equipmentBooking.${strutsaction}"><h4><i class="icon-camera-retro icon-2x"></i></h4><h4>$!{textmap.index_equiporder}</h4></a>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <a class="btn btn-white btn-block" href="${webbaseurl}/toComputerIndividualorderPage.${strutsaction}"><h4><i class="icon-desktop icon-2x"></i></h4><h4>$!{textmap.index_computerorder}</h4></a>
                 </div>
-                <div class="col-md-4">
+                <!--
+				<div class="col-md-4">
                   <a class="btn btn-white btn-block" href=""><h4><i class="icon-envelope icon-2x"></i></h4><h4>$!{textmap.index_msg}</h4></a>
                 </div>
+				-->
               </div>
             </div>
-			<!--
-            <div class="thumbnail">
-              <div class="hd clearfix">
-                <h3 class="pull-left">站内信</h3>
-                <a href="消息中心-站内信.html" class="more lk pull-right">查看全部</a>
-              </div>
-              <ul class="media-list">
-                <li class="media">
-                  <a rel="popover" class="pull-left" href="#">
-                    <img src="img/photo.jpg" width="46" height="46" class="img-rounded">
-                  </a>
-                  <div class="media-body">
-                    <div class="media-heading"><h5><a rel="popover" href="消息中心-站内信-查看站内信.html">李全胜</a></h5><span>7月6日</span></div>
-                    <a href="#">回复：关于HDR图像的问题</a>
-                  </div>
-                </li>
-                <li class="media">
-                  <a rel="popover" class="pull-left" href="#">
-                    <img src="img/photo.jpg" width="46" height="46" class="img-rounded">
-                  </a>
-                  <div class="media-body">
-                    <div class="media-heading"><h5><a rel="popover" href="#">林韬</a></h5><span>7月6日</span></div>
-                    <a href="#">第11周摄影作业要求</a>
-                  </div>
-                </li>
-              </ul>
-            </div>
-			-->
           </div>
           <div class="col-md-6">
             <div class="thumbnail">
@@ -161,7 +135,7 @@
 						<a href="${webbaseurl}/viewComputerorder.${strutsaction}?computerorderId=$order.computerorderid">$order.computerordertitle</a></h5>
 						<span>
 							#set($curstatus = $order.computerorderstatus)
-							#parse("include/includeComputerorderStatus.vm")
+							#parse("include/includeComputerorderStatusIndex.vm")
 						</span>
 					</div>
 					
