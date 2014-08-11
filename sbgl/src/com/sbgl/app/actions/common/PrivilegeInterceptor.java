@@ -34,9 +34,11 @@ public class PrivilegeInterceptor extends AbstractInterceptor {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		session = request.getSession();
 		
-//		String url = request.getRequestURL().toString();
-//		int index1 = url.indexOf("account");
-//		int index2 = url.indexOf("passwordSet");
+		String url = request.getRequestURL().toString();
+		int index1 = url.indexOf("firstSetup");
+		int index2 = url.indexOf("passwordSet");
+		int index3 = url.indexOf("account");
+		int index4 = url.indexOf("login");
 		
 		Loginuser user = (Loginuser) session.getAttribute(CommonConfig.sessionuser);
 		if(user == null) {
@@ -72,18 +74,33 @@ public class PrivilegeInterceptor extends AbstractInterceptor {
 					CookiesUtil.addLoginCookie("pageLan", loginInfo.getPagelanguage());
 				}
 				
-				session.setAttribute(CommonConfig.sessionuser, user);
-				
 			} else {
 				return "login";
 			}
 		}
 		Boolean isAdmin = managerService.isExistManagerCode( user.getUserid() );
+		if(index1 != -1 || index2 != -1 || index3 != -1 || index4 != -1) {
+			if(isAdmin) {
+				user.setPrivilege("1");
+				session.setAttribute(CommonConfig.sessionuser, user);
+			} else {
+				user.setPrivilege("0");
+				session.setAttribute(CommonConfig.sessionuser, user);
+			}
+			return invocation.invoke();
+		} else {
+			Boolean isFirst = (Boolean) session.getAttribute("isFirst");
+			if(isFirst != null && isFirst) {
+				return "firstSetup";
+			}
+		}
 		if(isAdmin) {
 			user.setPrivilege("1");
+			session.setAttribute(CommonConfig.sessionuser, user);
 			return invocation.invoke();
 		} else {
 			user.setPrivilege("0");
+			session.setAttribute(CommonConfig.sessionuser, user);
 			return "noPrivilege";
 		}
 	}
