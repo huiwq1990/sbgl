@@ -11,6 +11,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -25,7 +26,7 @@ import com.sbgl.util.Page;
 public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 	
 	private static final Log log = LogFactory.getLog(BaseDaoImpl.class);
-
+	
 	public <T> void deleteEntity(T entity) {
 		// TODO Auto-generated method stub		
 		log.debug("正在删除");

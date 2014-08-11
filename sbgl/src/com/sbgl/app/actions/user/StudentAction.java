@@ -250,120 +250,45 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		}
 		
 		allUserList = new ArrayList<UserCourse>();
+		
+		List<Object> allList = new ArrayList<Object>();
 		List<Student> sList = null;
 		List<Teacher> tList = null;
 		List<Worker> wList = null;
 		
-		sList = studentService.getAllStudent();
-		tList = teacherService.getAllTeacher();
-		wList = workerService.getAllWorker();
-		
-		sum1 = String.valueOf( sList != null ? sList.size() : "0" );
-		sum2 = String.valueOf( tList != null ? tList.size() : "0" );
-		sum3 = String.valueOf( wList != null ? wList.size() : "0" );
-		sum = String.valueOf( (sList != null ? sList.size() : 0) +
-							  (tList != null ? tList.size() : 0) + 
-							  (wList != null ? wList.size() : 0) );
-		
-		if(sList != null && ("0".equals(type) || "1".equals(type))) {
-			for(Student s : sList) {
-				Usergrouprelation ugr = userGroupRelationService.getRelationByType( s.getId() );
-				Usergroup ug = null;
-				Clazz clazz = null;
-				if(ugr != null) {
-					ug = groupService.getUserGroupByid( ugr.getGroupid() );
-				}
-				if(s.getClassid() != -1) {
-					clazz = clazzService.getClazzById( s.getClassid() );
-				}
-				
-				UserCourse uc = new UserCourse(String.valueOf( s.getId() ),
-											   s.getGender(),
-											   s.getStudentid(),
-											   s.getName(),
-											   CardPassUtil.decrypt( s.getPassword() ),
-											   String.valueOf( ugr == null ? "-1" : ug.getId() ),
-											   ugr == null ? "无分组" : ug.getName(),
-											   "1",
-											   String.valueOf( s.getClassid() ),
-											   s.getClassid() == -1 ? "无班级" : clazz.getClassname(),
-											   s.getTelephone(),
-											   s.getEmail(),
-											   s.getCouldborrow(),
-											   s.getPhoto(),
-											   ""
-											   );
-				allUserList.add( uc );
-				
+		if("0".equals(type) || "1".equals(type)) {
+			sList = studentService.getAllStudent();
+			if(sList != null) {
+				allList.addAll(sList);
 			}
 		}
-		if(tList != null && ("0".equals(type) || "2".equals(type))) {
-			for(Teacher t : tList) {
-				Usergrouprelation ugr = userGroupRelationService.getRelationByType( t.getId() );
-				Usergroup ug = null;
-				if(ugr != null) {
-					ug = groupService.getUserGroupByid( ugr.getGroupid() );
-				}
-				
-				UserCourse uc = new UserCourse(String.valueOf( t.getId() ),
-											   t.getGender(),
-											   t.getTeacherid(),
-											   t.getName(),
-											   CardPassUtil.decrypt( t.getPassword() ),
-											   String.valueOf( ugr == null ? "-1" : ug.getId() ),
-											   ugr == null ? "无分组" : ug.getName(),
-											   "2",
-											   "",
-											   "",
-											   t.getTelephone(),
-											   t.getEmail(),
-											   "not",
-											   t.getPhoto(),
-											   ""
-											   );
-				allUserList.add( uc );
-			}		
+		if("0".equals(type) || "2".equals(type)) {
+			tList = teacherService.getAllTeacher();
+			if(tList != null) {
+				allList.addAll(tList);
+			}
 		}
-		if(wList != null && ("0".equals(type) || "4".equals(type))) {
-			for(Worker w : wList) {
-				Usergrouprelation ugr = userGroupRelationService.getRelationByType( w.getId() );
-				Usergroup ug = null;
-				if(ugr != null) {
-					ug = groupService.getUserGroupByid( ugr.getGroupid() );
-				}
-				
-				UserCourse uc = new UserCourse(String.valueOf( w.getId() ),
-											   w.getGender(),
-											   w.getWorkid(),
-											   w.getName(),
-											   CardPassUtil.decrypt( w.getPassword() ),
-											   String.valueOf( ugr == null ? "-1" : ug.getId() ),
-											   ugr == null ? "无分组" : ug.getName(),
-											   "4",
-											   "",
-											   "",
-											   w.getTelephone(),
-											   w.getEmail(),
-											   "not",
-											   w.getPhoto(),
-											   ""
-											   );
-				allUserList.add( uc );
+		if( "0".equals(type) || "4".equals(type) ) {
+			wList = workerService.getAllWorker();
+			if(wList != null) {
+				allList.addAll(wList);
 			}
 		}
 		
-		if(allUserList == null || allUserList.size() == 0) {
+		
+		int allSize = allList.size();
+		if(allList == null || allSize == 0) {
 			totalPage = "1";
-		} else if(allUserList.size() % 10 != 0 && allUserList.size() > 10) {
-			totalPage = String.valueOf( allUserList.size() / 10 + 1 );
-		} else if(allUserList.size() % 10 != 0 && allUserList.size() < 10) {
+		} else if(allSize % 10 != 0 && allSize > 10) {
+			totalPage = String.valueOf( allSize / 10 + 1 );
+		} else if(allSize % 10 != 0 && allSize < 10) {
 			totalPage = "1";
 		} else {
-			totalPage = String.valueOf( allUserList.size() / 10 );
+			totalPage = String.valueOf( allSize / 10 );
 		}
 		if(curPage == "0" || curPage == "" || curPage == null) {
 			curPage = "1";
-		} else if(Integer.valueOf(curPage) > (allUserList.size() / 10)) {
+		} else if(Integer.valueOf(curPage) > (allSize / 10)) {
 			curPage = totalPage;
 		} else if("-1".equals(curPage)) {
 			curPage = totalPage;
@@ -372,9 +297,103 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		//根据前台页面请求页码返回数据
 		if(curPage != null && curPage != "") {
 			int startIndex = Integer.valueOf( curPage.trim() ) - 1;
-			int endIndex = (startIndex + 1) * 10 > allUserList.size() ? allUserList.size() : (startIndex + 1) * 10;
-			allUserList = allUserList.subList(startIndex*10, endIndex);
+			int endIndex = (startIndex + 1) * 10 > allSize ? allSize : (startIndex + 1) * 10;
+			
+			allList = allList.subList(startIndex*10, endIndex);
+			if(allSize > 0) {
+				Usergrouprelation ugr = null;
+				Usergroup ug = null;
+				Clazz clazz = null;
+				Student s = null;
+				Teacher t = null;
+				Worker w = null;
+				for (Object o : allList) {
+					if(o instanceof Student) {
+						s = (Student) o;
+						ugr = userGroupRelationService.getRelationByType( s.getId() );
+						if(ugr != null) {
+							ug = groupService.getUserGroupByid( ugr.getGroupid() );
+						}
+						if(s.getClassid() != -1) {
+							clazz = clazzService.getClazzById( s.getClassid() );
+						}
+						
+						UserCourse uc = new UserCourse(String.valueOf( s.getId() ),
+													   s.getGender(),
+													   s.getStudentid(),
+													   s.getName(),
+													   CardPassUtil.decrypt( s.getPassword() ),
+													   String.valueOf( ugr == null ? "-1" : ug.getId() ),
+													   ugr == null ? "无分组" : ug.getName(),
+													   "1",
+													   String.valueOf( s.getClassid() ),
+													   s.getClassid() == -1 ? "无班级" : clazz.getClassname(),
+													   s.getTelephone(),
+													   s.getEmail(),
+													   s.getCouldborrow(),
+													   s.getPhoto(),
+													   ""
+													   );
+						allUserList.add( uc );
+					} else if(o instanceof Teacher) {
+						t = (Teacher) o;
+						if(ugr != null) {
+							ug = groupService.getUserGroupByid( ugr.getGroupid() );
+						}
+						
+						UserCourse uc = new UserCourse(String.valueOf( t.getId() ),
+													   t.getGender(),
+													   t.getTeacherid(),
+													   t.getName(),
+													   CardPassUtil.decrypt( t.getPassword() ),
+													   String.valueOf( ugr == null ? "-1" : ug.getId() ),
+													   ugr == null ? "无分组" : ug.getName(),
+													   "2",
+													   "",
+													   "",
+													   t.getTelephone(),
+													   t.getEmail(),
+													   "not",
+													   t.getPhoto(),
+													   ""
+													   );
+						allUserList.add( uc );
+					} else if(o instanceof Worker) {
+						w = (Worker) o;
+						if(ugr != null) {
+							ug = groupService.getUserGroupByid( ugr.getGroupid() );
+						}
+						
+						UserCourse uc = new UserCourse(String.valueOf( w.getId() ),
+													   w.getGender(),
+													   w.getWorkid(),
+													   w.getName(),
+													   CardPassUtil.decrypt( w.getPassword() ),
+													   String.valueOf( ugr == null ? "-1" : ug.getId() ),
+													   ugr == null ? "无分组" : ug.getName(),
+													   "4",
+													   "",
+													   "",
+													   w.getTelephone(),
+													   w.getEmail(),
+													   "not",
+													   w.getPhoto(),
+													   ""
+													   );
+						allUserList.add( uc );
+					}
+				}
+			}
 		}
+		
+		int s1 = studentService.getSumOfStudent();
+		int t1 = teacherService.getSumOfTeacher();
+		int w1 = workerService.getSumOfWorker();
+		
+		sum1 = String.valueOf(s1);
+		sum2 = String.valueOf(t1);
+		sum3 = String.valueOf(w1);
+		sum = String.valueOf(s1 + t1 + w1);
 		
 		return SUCCESS;
 	}
