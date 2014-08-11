@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 机房型号管理 $resource.str("messageinbox.title")</title>
+<title>机房型号管理 - 北京电影学院摄影系 </title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -39,7 +38,7 @@
               <div class="title pull-left">型号管理</div>
 			  <div class="tips">在此页面下管理机房设备/资源型号。设备/资源型号包含每种设备或资源的基本信息，如名称、图片、资料介绍等等。</div>
               <div class="filter category-filter">
-                <select id="select-categories" name="computercategoryid" style="width:130px" class="select2" onchange="getComputermodelById(this[selectedIndex].value);">
+                <select id="select-categories" name="computercategoryid" style="width:130px" class="select2 select-white" onchange="getComputermodelById(this[selectedIndex].value);">
 					<option value="0" data-foo="fa">全部分类</option>
 #set($computercategoryListSize = $computercategoryList.size() - 1)
 ##判断数据是否为空
@@ -127,19 +126,11 @@
 
       </div>
       <!--equip-wrap end-->
-
-	  
-	  
-	  
-	  
-	  
 	  
      #set($currentWebpage ="computermodelFullManage.vm")
 	 #parse("computer/includeComputerManageSidebar.vm")
       <!--sidebar end-->
-	  
-	  
-	  
+
 
 </section>
 
@@ -269,9 +260,7 @@
           </select>
         </div>
       </div>
-	  
-	  
-	  
+
 	  	  
 	       <div class="form-group">
         <label for="inputHourrentprice" class="col-xs-3 control-label">单位价格/小时</label>

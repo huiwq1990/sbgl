@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 机房预约审核 $textmap.test</title>
+<title>机房预约审核 - 北京电影学院摄影系</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -27,14 +27,7 @@
            
       <div class="control-bar clearfix"><!--control-bar start-->
         <div class="title pull-left">审核预约</div>     
-		<!--        
-		<div class="pagination pull-right">
-          <ul>
-            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="上一个"><i class="icon-chevron-left"></i></a></li>
-            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="下一个"><i class="icon-chevron-right"></i></a></li>
-          </ul>
-        </div>   
-		-->
+
       </div><!--control-bar end-->
               
       <div class="row">
@@ -55,11 +48,9 @@
                   </div>
                   <div class="caption">
                       #set($curstatus = $computerorderFull.computerorderstatus)
-                      #parse("include/includeComputerorderStatus.vm")
+                      #parse("include/includeComputerorderStatusForAdmin.vm")
                       <hr>
-						<!--
-                      <strong>审核人可能进行的操作:</strong><br>  -->
-					
+
 						        <div class="orderstatus">
                       #if($computerorderFull.computerorderstatus != $ComputerorderStatusAduitPass)
                       <a class="btn btn-primary" onclick="auditOrder( $computerorderFull.computerorderid ,$!ComputerorderStatusAduitPass)" href="#" role="button">审核通过</a>
@@ -94,7 +85,7 @@
     <h3 id="myRejectLabel">驳回预约</h3>
   </div>
   <div class="modal-body">
-      <p>您确定要驳回XXX的预约申请吗？确定驳回预约申请，请在下方填写驳回原因，系统会将告知申请者。</p>
+      <p>您确定要驳回该预约申请吗？确定驳回预约申请，请在下方填写驳回原因，系统会将告知申请者。</p>
       <form class="form-horizontal" role="form">
         <div class="form-group">
           <label for="inputRejectReason" class="col-xs-3 control-label">驳回原因</label>
@@ -117,7 +108,7 @@
     <h3 id="myDeleteLabel">删除预约</h3>
   </div>
   <div class="modal-body">
-      <p>您确定要删除XXX的预约申请吗？删除预约申请后系统将会通知申请人该条预约申请已被删除，但申请人无法得知删除原因。</p>
+      <p>您确定要删除该预约申请吗？删除预约申请后系统将会通知申请人该条预约申请已被删除，但申请人无法得知删除原因。</p>
       <p>如申请者因提交的设备无法满足需要重新申请预约，建议使用驳回功能。</p>
   </div>
   <div class="modal-footer">
@@ -134,7 +125,6 @@
 <script src="${jsDomain}/select2.js"></script>
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
-<script src="${jsDomain}/jquery.jqpagination.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
 
 <script>

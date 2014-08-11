@@ -1746,7 +1746,7 @@ border-bottom: 2px solid #427FED !important;
 
 
 
-/* BS3 头部临时兼容（等框架全部迁移至bs3） ================================================= */
+/* BS3 头部临时兼容（等框架全部迁移至bs3）================================================= */
 #global-header #account-wrap {
 	margin: 15px 20px 0 0;
 }
@@ -2080,7 +2080,7 @@ border-bottom: 2px solid #427FED !important;
 
 
 
-/* BS3 按钮（等框架全部迁移至bs3） ================================================= */
+/* BS3 按钮（等框架全部迁移至bs3）================================================= */
 .btn-primary:hover {
   text-shadow: 0 1px rgba(0, 0, 0, .3);
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
@@ -2147,7 +2147,7 @@ fieldset[disabled] .btn-primary.active {
 
 
 
-/* 用户初始化 ================================================= */
+/* 用户初始化================================================= */
 #initUser.init-wizard ul { list-style: none outside none; }
 #initUser.init-wizard ul li {
 	position: relative;

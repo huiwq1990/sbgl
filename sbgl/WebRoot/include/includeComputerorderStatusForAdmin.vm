@@ -1,0 +1,13 @@
+#if($curstatus == $ComputerorderStatusAduitPass)
+已审核通过。
+#elseif($curstatus ==$ComputerorderStatusAduitReject)
+申请已被驳回，见详细中的驳回说明。您可以选择审核通过或者删除该预约申请。
+#elseif($curstatus ==$ComputerorderStatusAduitDel)
+该预约申请已被删除。
+#elseif($curstatus ==$ComputerorderStatusAduitWait)
+等待您的审核，请尽快完成该预约申请的审核！
+#elseif($curstatus ==$ComputerorderStatusWaitApply)
+该用户尚未提交他的预约申请。
+#else 
+错误！
+#end

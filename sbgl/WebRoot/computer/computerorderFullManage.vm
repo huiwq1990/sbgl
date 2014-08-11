@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 机房订单管理</title>
+<title>机房订单管理 - 北京电影学院摄影系</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -93,9 +93,10 @@
                     <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
                     <th class="id">预约号</th>
                     <th class="user">预约人</th>
+					<th class="categories">预约类型</th>
                     <th class="title">标题</th>
                     <th class="status">状态</th>
-                    <th class="categories">预约类型</th>
+                    
                     <th class="remark">备注</th>
                   </tr>
                 </thead>
@@ -111,8 +112,9 @@
 			  <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!temp.computerorderid"></td>
                     <td>$!temp.computerorderserialnumber<!--<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a>--></td>
-                    <td>$!temp.createusername</td>
-					
+					<td>$!temp.createusername</td>
+					 #set($currentcomputerorderordertype = $temp.computerorderordertype)
+					<td>#parse("include/includeComputerorderType.vm")</td>
                     <td><a href="${webbaseurl}/toAuditComputerorderPage.${strutsaction}?computerorderId=$!temp.computerorderid" target="_blank">$!temp.computerordertitle</a></td>
                      #if($!temp.computerorderstatus == $ComputerorderStatusAduitPass)
 						<td>审核通过</td>
@@ -127,30 +129,13 @@
 					 #end
 					 
 					 
-					 #set($currentcomputerorderordertype = $temp.computerorderordertype)
-					<td>#parse("include/includeComputerorderType.vm")</td>
-					 <!--
-					 #if($!temp.computerorderordertype == $ClassOrder)
-                    <td>课程</td>   
-					#else 
-							<td>个人</td>
-					 #end
--->
+
+
                     <td>$!temp.computerorderremark</td>
                   </tr>
 #end
 #end					
-	<!--
-                  <tr>
-                    <td><input class="chk" type="checkbox" name="chk-list" value="1"></td>
-                    <td>2145322<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
-                    <td>姓名</td>
-                    <td><a href="机房预约审核.html">XXX的机房预约（XX月XX日、XX日……）机房预约标题</a></td>
-                    <td>待审核</td>
-                    <td>个人</td>                    
-                    <td>预约申请人的备注信息</td>
-                  </tr>
-              -->
+
                 </tbody>
               </table>
 				
