@@ -1,4 +1,5 @@
 #set($user = $request.getSession().getAttribute("loginUser"))
+#set($lan = $request.getSession().getAttribute("languagetype"))
 <!DOCTYPE html>
 <html>
 <head>
@@ -91,10 +92,11 @@
 <script src="${jsDomain}/bootstrap-datepicker.js"></script>
 <script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
 <script src="${jsDomain}/xdate.js"></script>
-<script src="${jsDomain}/computer/computerorder.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 
 <script>
+	$("select.select2").val("$lan");
+	
 	$("body").on("click", "button.btn-primary", function() {
 		var pageLan = $("#inputLanguage").val();
 		console.log("=============== pageLan = " + pageLan);
