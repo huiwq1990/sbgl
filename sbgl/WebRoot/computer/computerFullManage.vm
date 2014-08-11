@@ -34,7 +34,7 @@
               <div class="title pull-left">机房管理</div>
 			  <div class="tips">在此页面下管理机房信息，如机房设备和资源的添加、修改、删除及维护等。</div>
               <div class="filter category-filter">
-                <select id="select-categories" style="width:130px" class="select2"  onchange="getComputerByComputermodelId(this[selectedIndex].value);">
+                <select id="select-categories" style="width:130px" class="select2 select-white"  onchange="getComputerByComputermodelId(this[selectedIndex].value);">
                  <option value="0;0" data-foo="fa">全部分类</option>
   
 #foreach($categoryfull in ${computercategoryFullList})

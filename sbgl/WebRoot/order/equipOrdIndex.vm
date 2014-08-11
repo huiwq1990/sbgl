@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 预约</title>
+<title>${textmap.myorder_page_title}</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -45,8 +45,8 @@
           
           <div class="col3 container">
             <div class="control-bar clearfix">
-              <div class="title pull-left">进行中的预约</div>
-              <a class="btn btn-primary pull-right" href="#selectRentType" role="button" data-toggle="modal">创建预约</a>
+              <div class="title pull-left">${textmap.underwayorder_title}</div>
+              <a class="btn btn-primary pull-right" href="#selectRentType" role="button" data-toggle="modal">${textmap.createorder}</a>
             </div>
             <div class="row">
       			 #foreach($row in $equipmenborrowFullList)		
@@ -96,7 +96,7 @@
             
             <hr class="hr-block" />
             <div class="control-bar clearfix">
-              <div class="title pull-left">已完成</div>
+              <div class="title pull-left">${textmap.finishorder_title}</div>
             </div>
             <div class="row thumbnails">
       			#foreach($row2 in $equipmenborrowFull2List)		
