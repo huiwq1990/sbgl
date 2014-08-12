@@ -97,6 +97,12 @@ public class FileUploadAction  extends ActionSupport {
 			System.out.println("保存机器模型的图片");
 			equipmentImagePath = PropertyUtil.readValue("/system.properties", "computerImagePath");
 		}
+		//检测保存路径是否村子啊不存在创建一个
+		File saveDir = new File(equipmentImagePath);
+		if( ! saveDir.exists() && ! saveDir .isDirectory() ) {
+			System.out.println("目录：" + equipmentImagePath + "不存在，进行创建...");
+			saveDir .mkdir();
+		}
 		
 		//String root = ServletActionContext.getRequest().getRealPath("/equipImage");
 		File deskFile = new File(equipmentImagePath, savedFileName);
@@ -160,11 +166,11 @@ public class FileUploadAction  extends ActionSupport {
 		if( "computermodelimg".equals(imgType) ) {
 			log.info("保存机器模型的图片");
 			
-			imagePath = root + "/" + PropertyUtil.readValue("/system.properties", "computerImagePath");
+			imagePath = root + PropertyUtil.readValue("/system.properties", "computerImagePath");
 			
 			destinationFileName = String.valueOf(Calendar.getInstance().getTimeInMillis()) ;
 		} else if("equip".equals(imgType)) { //保存型号图片
-			imagePath = root + "/" + PropertyUtil.readValue("/system.properties", "equipmentImagePath");
+			imagePath = root + PropertyUtil.readValue("/system.properties", "equipmentImagePath");
 			destinationFileName = String.valueOf(Calendar.getInstance().getTimeInMillis()) ;
 		}
 		
@@ -181,6 +187,12 @@ public class FileUploadAction  extends ActionSupport {
 		InputStream is;
 		try {
 			is = new FileInputStream(file);
+			//检测保存路径是否村子啊不存在创建一个
+			File saveDir = new File(imagePath);
+			if( ! saveDir.exists() && ! file .isDirectory() ) {
+				System.out.println("目录：" + imagePath + "不存在，进行创建...");
+				saveDir .mkdir();
+			}
 			//String root = ServletActionContext.getRequest().getRealPath("/equipImage");
 			File deskFile = new File(imagePath, destinationFileName);
 			OutputStream os = new FileOutputStream(deskFile);
