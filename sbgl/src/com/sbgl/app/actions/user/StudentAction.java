@@ -54,6 +54,8 @@ public class StudentAction extends ActionSupport implements SessionAware {
 	private Map<String, Object> session;
 	private String tag;     //返回执行结果 0-成功 1-失败
 	private String message; //返回信息
+	
+	private final int pageSize = 20;
 
 	@Override
 	public void setSession(Map<String, Object> session) {
@@ -279,16 +281,16 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		int allSize = allList.size();
 		if(allList == null || allSize == 0) {
 			totalPage = "1";
-		} else if(allSize % 10 != 0 && allSize > 10) {
-			totalPage = String.valueOf( allSize / 10 + 1 );
-		} else if(allSize % 10 != 0 && allSize < 10) {
+		} else if(allSize % pageSize != 0 && allSize > pageSize) {
+			totalPage = String.valueOf( allSize / pageSize + 1 );
+		} else if(allSize % pageSize != 0 && allSize < pageSize) {
 			totalPage = "1";
 		} else {
-			totalPage = String.valueOf( allSize / 10 );
+			totalPage = String.valueOf( allSize / pageSize );
 		}
 		if(curPage == "0" || curPage == "" || curPage == null) {
 			curPage = "1";
-		} else if(Integer.valueOf(curPage) > (allSize / 10)) {
+		} else if(Integer.valueOf(curPage) > (allSize / pageSize)) {
 			curPage = totalPage;
 		} else if("-1".equals(curPage)) {
 			curPage = totalPage;
@@ -297,9 +299,9 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		//根据前台页面请求页码返回数据
 		if(curPage != null && curPage != "") {
 			int startIndex = Integer.valueOf( curPage.trim() ) - 1;
-			int endIndex = (startIndex + 1) * 10 > allSize ? allSize : (startIndex + 1) * 10;
+			int endIndex = (startIndex + 1) * pageSize > allSize ? allSize : (startIndex + 1) * pageSize;
 			
-			allList = allList.subList(startIndex*10, endIndex);
+			allList = allList.subList(startIndex*pageSize, endIndex);
 			if(allSize > 0) {
 				Usergrouprelation ugr = null;
 				Usergroup ug = null;
