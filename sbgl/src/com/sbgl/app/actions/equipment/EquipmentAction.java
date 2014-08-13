@@ -607,7 +607,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				emc.setId( String.valueOf( equipment.getEquipmentid() ) );
 				emc.setName( String.valueOf( equipment.getEquipmentname() ) );
 				
-				Equipmentclassification cf = equipService.getEquipmentclassificationById( equipment.getClassificationid() );
+				Equipmentclassification cf = equipService.getEquipmentclassificationByComid( equipment.getClassificationid() );
 				emc.setcId( String.valueOf( cf == null ? -1 : cf.getClassificationid() ) );
 				emc.setcName( cf == null ? "未分类" : cf.getName() );
 				emc.setMemo( equipment.getEquipmentdetail() );
@@ -675,7 +675,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				emc.setId( String.valueOf( equipment.getComid() ) );		//根据需求改为联合主键，不再使用单个中文主键
 				emc.setName( String.valueOf( equipment.getEquipmentname() ) );
 				
-				Equipmentclassification cf = equipService.getEquipmentclassificationById( equipment.getClassificationid() );
+				Equipmentclassification cf = equipService.getEquipmentclassificationByComid( equipment.getClassificationid() );
 				emc.setcId( String.valueOf( cf == null ? -1 : cf.getClassificationid() ) );
 				emc.setcName( cf == null ? "未分类" : cf.getName() );
 				emc.setMemo( equipment.getEquipmentdetail() );
@@ -1073,8 +1073,9 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				}
 			}
 		}*/
-		List<HQLOption> hqlOptionList =  new ArrayList<HQLOption>();
+		List<HQLOption> hqlOptionList = null;
 		if(classificationId != null && !classificationId.equals("0")) {
+			hqlOptionList = new ArrayList<HQLOption>();
 			List<Equipment> modelList = equipService.getEquipsByClassification( Integer.valueOf( classificationId ) );
 			StringBuffer sb = new StringBuffer();
 			if(modelList != null && modelList.size() > 0) {
@@ -1138,7 +1139,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		}
 		Page page = new Page( (Integer.valueOf(crtDetailPage)-1)*10, 10 );
 		QueryResult result = null;
-		if(hqlOptionList.size() == 0) {
+		if(hqlOptionList == null) {
 			result = equipService.getEquipDetailByPageWithOptions(null, page);
 		} else {
 			result = equipService.getEquipDetailByPageWithOptions(hqlOptionList, page);
@@ -1146,19 +1147,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		if(result != null) {
 			tempList = (List<Equipmentdetail>) result.getResultList();
 			
-//			if("0".equals(selectedState)) {
-//				normalSum = String.valueOf( result.getTotalResultNum() );
-//			} else if("1".equals(selectedState)) {
-//				loanSum = String.valueOf( result.getTotalResultNum() );
-//			} else if("2".equals(selectedState)) {
-//				maintSum = String.valueOf( result.getTotalResultNum() );
-//			} else if("3".equals(selectedState)) {
-//				repairSum = String.valueOf( result.getTotalResultNum() );
-//			} else if("4".equals(selectedState)) {
-//				lostSum = String.valueOf( result.getTotalResultNum() );
-//			} else if("5".equals(selectedState)) {
-//				recycleSum = String.valueOf( result.getTotalResultNum() );
-//			}
 			if(result.getTotalResultNum() == 0) {
 				totalDetailPages = "1";
 			} else if(result.getTotalResultNum() % 10 != 0 && result.getTotalResultNum() > 10) {
@@ -1205,16 +1193,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					
 				}
 			}
-//			if(equipdetail.getClassificationid() != -1) { //该设备有分类
-//				Equipmentclassification ecf = equipService.getEquipmentclassificationById( equipdetail.getClassificationid() );
-//				if(ecf != null) {
-//					ec.setClassId(  String.valueOf( ecf.getClassificationid() ) );
-//					ec.setClassName( ecf.getName() );
-//				}
-//			} else {
-//				ec.setClassId(  String.valueOf( -1 ) );
-//				ec.setClassName( "未分类" );
-//			}
 			ec.setState( String.valueOf( equipdetail.getStatus() ) );
 			if(equipdetail.getSysremark() != null && equipdetail.getUsermark() != null) {
 				ec.setMemo( equipdetail.getSysremark() + " " + equipdetail.getUsermark());
@@ -1240,30 +1218,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			
 			equipDetailCourse.add( ec );
 		}
-		//进行分页操作
-		/*if(equipDetailCourse != null) {
-			if(equipDetailCourse.size() == 0) {
-				totalDetailPages = "1";
-			} else if(equipDetailCourse.size() % 10 != 0 && equipDetailCourse.size() > 10) {
-				totalDetailPages = String.valueOf( equipDetailCourse.size() / 10 + 1 );
-			} else if(equipDetailCourse.size() % 10 != 0 && equipDetailCourse.size() < 10) {
-				totalDetailPages = "1";
-			} else {
-				totalDetailPages = String.valueOf( equipDetailCourse.size() / 10 );
-			}
-			if(crtDetailPage == "0" || crtDetailPage == "" || crtDetailPage == null) {
-				crtDetailPage = "1";
-			}
-			
-			if(crtDetailPage != null && crtDetailPage != "") {
-				int startIndex = Integer.valueOf( crtDetailPage.trim() ) - 1;
-				int endIndex = (startIndex + 1) * 10 > equipDetailCourse.size() ? equipDetailCourse.size() : (startIndex + 1) * 10;
-				equipDetailCourse = equipDetailCourse.subList(startIndex*10, endIndex);
-			}
-			
-		} else {
-			totalDetailPages = "1";
-		}*/
 		return SUCCESS;
 	}
 	
@@ -1319,7 +1273,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			if("0".equals( ec.getLantype() )) {
 				if(ec.getParentid() == 0) {
 					ClassficationCourse cc = new ClassficationCourse();
-					cc.setId( String.valueOf( ec.getClassificationid() ) );
+					cc.setId( String.valueOf( ec.getComid() ) );		//改为联合主键
 					cc.setName( ec.getName() );
 					cc.setpId( "0" );
 					cc.setIsParent( "1" );
@@ -1330,7 +1284,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 						for (Equipmentclassification ec2 : tempList) {
 							if("0".equals( ec2.getLantype() )) {
 								ClassficationCourse cc2 = new ClassficationCourse();
-								cc2.setId( String.valueOf( ec2.getClassificationid() ) );
+								cc2.setId( String.valueOf( ec2.getComid() ) );		//改为联合主键
 								cc2.setName( ec2.getName() );
 								cc2.setpId( String.valueOf( ec2.getParentid() ) );
 								cc2.setIsParent( "0" );

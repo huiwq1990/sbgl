@@ -668,8 +668,7 @@ public class EquipServiceImpl implements EquipService {
 	@Override
 	public Equipmentclassification getEquipmentclassificationByEquipmentModel( Integer equipmentModelId ) {
 		Equipment equipment = baseDao.getEntityById(Equipment.class, equipmentModelId);
-		Equipmentclassification equipmentclassification = baseDao.getEntityById(Equipmentclassification.class, equipment.getClassificationid());
-		return equipmentclassification;
+		return this.getEquipmentclassificationByComid( equipment.getClassificationid() );
 	}
 
 	@Override
@@ -892,6 +891,21 @@ public class EquipServiceImpl implements EquipService {
 			return euqipList.get( 0 );
 		}
 		return null;
+	}
+
+	@Override
+	public Equipmentclassification getEquipmentclassificationByComid(
+			Integer comid) {
+		List<Equipmentclassification> resultList = baseDao.getEntityByIntProperty(Equipmentclassification.class.getName(), "comid", comid);
+		if(resultList != null) {
+			if( "0".equals( resultList.get(0).getLantype() ) ) {
+				return resultList.get(0);
+			} else {
+				return resultList.get(1);
+			}
+		} else {
+			return null;
+		}
 	}
 	
 	
