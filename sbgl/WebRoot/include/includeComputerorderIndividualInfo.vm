@@ -25,12 +25,12 @@
 					
                       
 					<li class="media">
-                      <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
+                      <div class="pull-left">
                         <img src="$imgtool.url("user","$!computerorderFull.audituserpicpath")" width="28" height="28" class="img-rounded">
 							<!--src="$imgtool.url("user","$!computerorderFull.audituserpicpath")" -->
-                      </a>
+                      </div>
                       <div class="media-body">
-                        <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">$!computerorderFull.auditusername</a></h5></div>
+                        <div class="media-heading"><h5>$!computerorderFull.auditusername</h5></div>
                         <p>$!{textmap.computerorderview_detail_orderrejectreason}：$!computerorderFull.computerorderrejectreason</p>
                       </div>
                     </li>

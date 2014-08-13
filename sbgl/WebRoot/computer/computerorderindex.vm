@@ -197,18 +197,5 @@
   </div>
 </div>
 
-<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
-  <img src="img/cover-img.jpg" class="cover" alt="封面照片" />
-  <div class="cover-layout"></div>
-  <div class="avatar"><img src="img/photo.jpg" width="80" height="80" class="img-circle"></div>
-  <div class="user-wrap">
-    <div class="user-name"><a href="#">用户名</a></div>
-    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
-    <div class="user-info">职务等信息</div>
-    <div class="user-info">地点</div>
-  </div>
-  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
-</div>
-
 </body>
 </html>

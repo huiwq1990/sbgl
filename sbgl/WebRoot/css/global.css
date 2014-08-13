@@ -2146,6 +2146,14 @@ fieldset[disabled] .btn-primary.active {
 
 
 
+/* 用户登录 ================================================= */
+.form-signin input {
+	position: relative;
+}
+.form-signin input:focus {
+	z-index: 2;
+}
+.form-signin #inputPassword { top: -1px; }
 
 /* 用户初始化================================================= */
 #initUser.init-wizard ul { list-style: none outside none; }

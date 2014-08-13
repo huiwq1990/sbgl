@@ -23,7 +23,11 @@
 		<li class="active"><a href="#">${textmap.subsitenavi_computerorderfinish}</a></li>
 	#end
 	
-	
+	#if($currentPageType == "orderfinish" )
+		<li class="divider"></li>
+		<li class="active"><a href="#">${textmap.subsitenavi_computerorderfinish}</a></li>
+	#end
+		
 	#if($currentPageType == "computerorderview" )
 		<li class="divider"></li>
 		<li class="active"><a href="#">${textmap.subsitenavi_computerorderview}</a></li>
