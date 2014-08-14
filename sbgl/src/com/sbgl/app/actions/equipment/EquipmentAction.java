@@ -301,17 +301,19 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		try {
 			Equipmentclassification ec = equipService.getEquipmentclassificationById( this.classficationId );
 			if(ec != null && ec.getParentid() == 0) {
-				List<Equipmentclassification> childList = equipService.getAllChildEquipmentclassificationsByParentId( ec.getClassificationid() );
+				List<Equipmentclassification> childList = equipService.getAllChildEquipmentclassificationsByParentId( ec.getComid() );
 				if(childList != null) {
 					for (Equipmentclassification e : childList) {
-						List<Equipment> equipList = equipService.getEquipsByClassification( e.getClassificationid() );
-						if(equipList != null) {
-							for (Equipment equipment : equipList) {
-								equipment.setClassificationid( Integer.valueOf(-1) );
-								equipService.alterEquipInfo( equipment, "1" );
+						if("0".equals(e.getLantype())) {
+							List<Equipment> equipList = equipService.getEquipsByClassification( e.getComid() );
+							if(equipList != null) {
+								for (Equipment equipment : equipList) {
+									equipment.setClassificationid( Integer.valueOf(-1) );
+									equipService.alterEquipInfo( equipment, "1" );
+								}
 							}
+							equipService.deleteEquipmentclassification( e.getClassificationid() );
 						}
-						equipService.deleteEquipmentclassification( e.getClassificationid() );
 					}
 				}
 				
@@ -1048,31 +1050,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		List<Equipmentdetail> tempList = null;
 		int _0 = 0, _1 = 0, _2 = 0, _3 = 0, _4 = 0, _5 = 0, _t = 0;
 		
-		//如果界面按分类筛选器材
-		/*if(seletedClassId != null && !classificationId.equals("0")) {
-			tempList = new ArrayList<Equipmentdetail>();
-			List<Equipment> modelList = equipService.getEquipsByClassification( Integer.valueOf( seletedClassId ) );
-			if(modelList != null) {
-				List<Equipmentdetail> partList = null;
-				for (Equipment e : modelList) {
-					partList = equipService.getAllEquipmentdetailByEquipInfo( e.getEquipmentid() );
-					if(partList != null) {
-						tempList.addAll( partList );
-					}
-				}
-			}
-		} else {
-			tempList = equipService.getAllEquipmentdetail();
-		}*/
-		
-		//如果界面按器材状态筛选
-		/*if(selectedState != null && !"-1".equals( selectedState ) && tempList.size() > 0) {
-			for (int i=0; i<tempList.size(); i++) {
-				if(!tempList.get(i).getStatus().equals( selectedState )) {
-					tempList.remove( i );
-				}
-			}
-		}*/
 		List<HQLOption> hqlOptionList = new ArrayList<HQLOption>();
 		if(classificationId != null && !classificationId.equals("0")) {
 			List<Equipment> modelList = equipService.getEquipsByClassification( Integer.valueOf( classificationId ) );
@@ -1372,7 +1349,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			for (Equipmentclassification classfication : equipList) {
 				if( "0".equals( classfication.getLantype() ) ) {
 					ClassficationCourse cc = new ClassficationCourse();
-					cc.setId( String.valueOf( classfication.getComid() ) );
+					cc.setId( String.valueOf( classfication.getClassificationid() ) );
 					cc.setName( classfication.getName() );
 					if( classfication.getParentid() == 0 ) {
 						cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification( classfication.getComid(), true ) ) );
