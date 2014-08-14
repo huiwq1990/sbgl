@@ -342,8 +342,6 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 					}
 				}
 			}
-		} else if( hqlOptionList != null && hqlOptionList.size() == 0 ) {
-			queryString += " and 1=2";
 		}
 		
 		final String hql = queryString;

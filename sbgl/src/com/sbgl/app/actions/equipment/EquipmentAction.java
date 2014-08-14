@@ -676,7 +676,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				emc.setName( String.valueOf( equipment.getEquipmentname() ) );
 				
 				Equipmentclassification cf = equipService.getEquipmentclassificationByComid( equipment.getClassificationid() );
-				emc.setcId( String.valueOf( cf == null ? -1 : cf.getClassificationid() ) );
+				emc.setcId( String.valueOf( cf == null ? -1 : cf.getComid() ) );
 				emc.setcName( cf == null ? "未分类" : cf.getName() );
 				emc.setMemo( equipment.getEquipmentdetail() );
 				emc.setImgName( equipment.getImgname() );
@@ -1073,9 +1073,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				}
 			}
 		}*/
-		List<HQLOption> hqlOptionList = null;
+		List<HQLOption> hqlOptionList = new ArrayList<HQLOption>();
 		if(classificationId != null && !classificationId.equals("0")) {
-			hqlOptionList = new ArrayList<HQLOption>();
 			List<Equipment> modelList = equipService.getEquipsByClassification( Integer.valueOf( classificationId ) );
 			StringBuffer sb = new StringBuffer();
 			if(modelList != null && modelList.size() > 0) {
@@ -1083,6 +1082,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					sb.append( e.getComid() + "," );
 				}
 				hqlOptionList.add( new HQLOption<String>("equipmentid", sb.toString(), SBGLConsistent.HQL_OPTION_IN, SBGLConsistent.HQL_VALUE_INT, SBGLConsistent.HQL_OPTION_AD) );
+			} else {
+				hqlOptionList.add( new HQLOption<String>("equipmentid", "-111", SBGLConsistent.HQL_OPTION_IN, SBGLConsistent.HQL_VALUE_INT, SBGLConsistent.HQL_OPTION_AD) );
 			}
 			QueryResult tempResult = equipService.getEquipDetailByPageWithOptions(hqlOptionList, new Page(0, 10000));
 			if(tempResult != null && tempResult.getTotalResultNum() > 0) {
@@ -1139,11 +1140,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		}
 		Page page = new Page( (Integer.valueOf(crtDetailPage)-1)*10, 10 );
 		QueryResult result = null;
-		if(hqlOptionList == null) {
-			result = equipService.getEquipDetailByPageWithOptions(null, page);
-		} else {
-			result = equipService.getEquipDetailByPageWithOptions(hqlOptionList, page);
-		}
+		result = equipService.getEquipDetailByPageWithOptions(hqlOptionList, page);
 		if(result != null) {
 			tempList = (List<Equipmentdetail>) result.getResultList();
 			
@@ -1180,7 +1177,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					if( e.getClassificationid() != null && e.getClassificationid() != -1 ) {
 						Equipmentclassification ecf = equipService.getEquipmentclassificationByEquipmentModel( e.getEquipmentid() );
 						if(ecf != null) {
-							ec.setClassId(  String.valueOf( ecf.getClassificationid() ) );
+							ec.setClassId(  String.valueOf( ecf.getComid() ) );
 							ec.setClassName( ecf.getName() );
 						} else {
 							ec.setClassId(  String.valueOf( -1 ) );
@@ -1279,7 +1276,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					cc.setIsParent( "1" );
 					classForEquipAdd.add( cc );
 					
-					List<Equipmentclassification> tempList = equipService.getAllChildEquipmentclassificationsByParentId( ec.getClassificationid() );
+					List<Equipmentclassification> tempList = equipService.getAllChildEquipmentclassificationsByParentId( ec.getComid() );
 					if(tempList != null) {
 						for (Equipmentclassification ec2 : tempList) {
 							if("0".equals( ec2.getLantype() )) {
@@ -1367,7 +1364,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					String name = equipmentclassification.getName();
 					Integer parentId = equipmentclassification.getParentid();
 					if( parentId == 0 ) {
-						idNameMap.put(equipmentclassification.getClassificationid(), name);
+						idNameMap.put(equipmentclassification.getComid(), name);
 					}
 				}
 			}
@@ -1375,14 +1372,14 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			for (Equipmentclassification classfication : equipList) {
 				if( "0".equals( classfication.getLantype() ) ) {
 					ClassficationCourse cc = new ClassficationCourse();
-					cc.setId( String.valueOf( classfication.getClassificationid() ) );
+					cc.setId( String.valueOf( classfication.getComid() ) );
 					cc.setName( classfication.getName() );
 					if( classfication.getParentid() == 0 ) {
-						cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification( classfication.getClassificationid(), true ) ) );
-						cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification( classfication.getClassificationid(), true ) ) );
+						cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification( classfication.getComid(), true ) ) );
+						cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification( classfication.getComid(), true ) ) );
 					} else {
-						cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification( classfication.getClassificationid(), false ) ) );
-						cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification( classfication.getClassificationid(), false ) ) );
+						cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification( classfication.getComid(), false ) ) );
+						cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification( classfication.getComid(), false ) ) );
 					}
 					cc.setpId( String.valueOf( classfication.getParentid() ) );
 					cc.setpName( idNameMap.get( classfication.getParentid() ) == null ? "无" : idNameMap.get( classfication.getParentid() ) );
@@ -1390,7 +1387,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					tempCourse.add( cc );
 					
 					if(classfication.getParentid() == 0) {
-						allParent.add( new ParentClassIdName( classfication.getClassificationid(), classfication.getName() ) );
+						allParent.add( new ParentClassIdName( classfication.getComid(), classfication.getName() ) );
 					}
 				}
 			}
