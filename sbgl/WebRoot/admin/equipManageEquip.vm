@@ -255,6 +255,11 @@
 			alert("金额输入格式错误！");
 			return;
 		}
+		
+		if(ci == "0") {
+			alert("请选择分类！");
+			return;
+		}
 		/*
 		console.log("detailNum " + detailNum);
 		console.log("state" + state);
