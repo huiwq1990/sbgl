@@ -11,7 +11,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#"><img src="img/logo.png" alt="北京电影学院摄影系"></a>
+        <a class="navbar-brand" href="${webbaseurl}/index.${strutsaction}"><img src="img/logo.png" alt="${textmap.globalheader_logo_alt}" title="${textmap.globalheader_logo_alt}"></a>
       </div>
       <div class="collapse navbar-collapse" id="global-header-collapse">
         <ul class="nav navbar-nav">
@@ -47,7 +47,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">$!user.name</span> <img src="${userImagePath}/$!user.photo" width="48" height="48" class="img-circle"> <b class="caret"></b></a>
             <div class="dropdown-menu" role="menu">
               <div class="media">
-                <a class="pull-left" href="#">
+                <a class="pull-left" href="${webbaseurl}/indexInfo.${strutsaction}">
                   <img src="${userImagePath}/$!user.photo" width="96" height="96" class="img-rounded">
                 </a>
                 <div class="media-body">

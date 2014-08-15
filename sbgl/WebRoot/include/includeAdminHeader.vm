@@ -4,17 +4,8 @@
 	
     <div class="site-nav">
       <div class="dropdown">
-        <a class="pos dropdown-toggle" data-hover="dropdown" href="${webbaseurl}/adminIndex.${strutsaction}"><i class="icon-home"></i> 管理中心 <i class="icon-chevron-right"></i></a>
-       <!--
-		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-          <li><a href="http://google.com"><i class="icon-home"></i> 首页</a></li>
-          <li class="divider"></li>
-          <li><a href="#anotherAction">个人主页</a></li>
-          <li><a href="#">人脉</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-        </ul>
-		-->
+        <div class="pos"><i class="icon-dashboard"></i> 管理中心 <i class="icon-chevron-right"></i></div>
+
       </div>
     </div>
 	
