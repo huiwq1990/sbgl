@@ -49,13 +49,6 @@
     </div>
   </form>
 </div>
-<footer class="container">
-  <div class="navbar navbar-fixed-bottom">
-    <div class="posted-by pull-right">
-      <span class="author text-shadow">作者：<strong>XXXX</strong></span><span class="avatar"><img src="img/photo.jpg" width="25" height="25"></span>
-    </div> 
-  </div>
-</footer>
 <iframe name="submit" width="0" height="0" />
 
 </body>

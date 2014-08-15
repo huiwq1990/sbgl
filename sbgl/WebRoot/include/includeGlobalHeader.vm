@@ -1,6 +1,54 @@
   #set($user = $request.getSession().getAttribute("loginUser"))
   #set($languagetype = $request.getSession().getAttribute("languagetype"))
 
+  
+  <nav id="global-header" class="navbar navbar-default navbar-fixed-top animated helper-top" role="navigation"><!-- #global-header -->
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#global-header-collapse">
+          <span class="sr-only">导航开关</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="img/logo.png" alt="北京电影学院摄影系"></a>
+      </div>
+      <div class="collapse navbar-collapse" id="global-header-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="${webbaseurl}/index.${strutsaction}"><i class="icon-home"></i> ${textmap.sitenavi_home}</a></li>
+		  <li><a href="${webbaseurl}/indexInfo.${strutsaction}">${textmap.sitenavi_myspace}</a></li>
+          <li><a href="${webbaseurl}/viewMyComputerorderList.${strutsaction}">${textmap.sitenavi_myorder}</a></li>
+        </ul>
+		<!--
+        <form class="navbar-form navbar-left" role="search">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="搜索用户、话题讨论">
+          </div>
+          <button type="submit" class="btn btn-primary"><i class="icon-search"></i></button>
+        </form>
+		-->
+        <ul id="account-wrap" class="nav navbar-nav navbar-right">
+          <li id="account" class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">$!user.name</span> <img src="${userImagePath}/$!user.photo" width="48" height="48" class="img-circle"> <b class="caret"></b></a>
+            <div class="dropdown-menu" role="menu">
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img src="${userImagePath}/$!user.photo" width="96" height="96" class="img-rounded">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><h5>$!user.name</h5></div>
+                  <div class="info">2012级研究生 - 影像视觉效果研究方向</div>
+                  <div class="setting"><a href="${webbaseurl}/account.${strutsaction}">${textmap.globalheader_account_setting}</a> - <a href="${webbaseurl}/indexInfo.${strutsaction}">${textmap.globalheader_view_my_profile}</a></div>
+                  <a href="${webbaseurl}/doLogout.${strutsaction}" class="admin-logout btn btn-link" action-type="logout" role="button">${textmap.globalheader_logout}</a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  
   <div id="global-header">
     <div id="logo"><a class="brand" href="${webbaseurl}/index.${strutsaction}"><img src="img/logo.png" alt="${textmap.globalheader_logo_alt}"></a></div>
     <div id="hdc-wrap">
