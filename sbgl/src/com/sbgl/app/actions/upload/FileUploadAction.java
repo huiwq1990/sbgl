@@ -7,30 +7,20 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Properties;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.sbgl.app.actions.computer.ManageComputerorder;
+
 import com.sbgl.app.actions.util.JsonActionUtil;
-import com.sbgl.app.entity.Equipment;
-import com.sbgl.app.entity.Equipmentclassification;
-import com.sbgl.app.entity.Equipmentdetail;
+
 import com.sbgl.app.services.common.CommonService;
 import com.sbgl.app.services.equipment.EquipService;
 import com.sbgl.util.PropertyUtil;
@@ -208,6 +198,7 @@ public class FileUploadAction  extends ActionSupport {
 			returnInfo = destinationFileName;
 			log.info("上传成功");
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
+			this.returnStr = "";
 			return SUCCESS;
 			
 		} catch (FileNotFoundException e) {
@@ -218,7 +209,7 @@ public class FileUploadAction  extends ActionSupport {
 			e.printStackTrace();
 		}
 		
-		
+		System.out.println("ssssss");
 		
 		returnInfo = "系统错误";
 		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
@@ -471,6 +462,7 @@ public class FileUploadAction  extends ActionSupport {
 		return SUCCESS;
 	}
 	*/
+	
 	public File getFile() {
 		return file;
 	}

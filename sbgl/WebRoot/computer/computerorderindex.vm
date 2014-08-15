@@ -21,6 +21,8 @@
 	#parse("include/includeGlobalHeader.vm")
 	
   <div class="nav-wrap clearfix">
+	
+	#set($currentposition= ${textmap.myorderposition})
 	#parse("include/includeSiteNavi.vm")	
 		
 	#set($currentPageType="computerorderSpace")

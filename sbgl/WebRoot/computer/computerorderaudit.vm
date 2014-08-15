@@ -65,7 +65,7 @@
 				          </div>
                 </div>
                 <div class="thumbnail">
-                  #parse("include/includeComputerorderIndividualInfo.vm")
+                  #parse("include/includeComputerorderIndividualInfoAdmin.vm")
                 </div><!--end thumbnail-->
             </div>
       </div>

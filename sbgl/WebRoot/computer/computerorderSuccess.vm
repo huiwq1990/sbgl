@@ -21,6 +21,7 @@
   
   <div class="nav-wrap clearfix">
 	
+	#set($currentposition= ${textmap.myorderposition})
 	#parse("include/includeSiteNavi.vm")
 	
 	#set($currentPageType="orderfinish")
