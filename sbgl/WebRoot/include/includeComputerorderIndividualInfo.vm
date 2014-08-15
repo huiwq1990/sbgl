@@ -11,9 +11,10 @@
                       #set($currentcomputerorderordertype=$computerorderFull.computerorderordertype)
                       <div class="rent-contact">$!{textmap.computerorderview_detail_ordertype} #parse("include/includeComputerorderType.vm")</div>
 					            <div class="rent-contact">$!{textmap.computerorderview_detail_orderuserphone} $!{user.telephone}</div>
-					 #if($computerorderFull.computerorderremark)
+					 #if($computerorderFull.computerorderremark && $computerorderFull.computerorderremark.length()>0)
                       <div class="rent-remark"><i class="icon-pencil"></i> $!computerorderFull.computerorderremark</div>
-					  #end
+					 #end
+					 
                     </div>
                     #if($curstatus == $ComputerorderStatusAduitReject)
                     <hr>
