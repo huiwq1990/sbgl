@@ -1,6 +1,6 @@
     <div class="site-nav">
       <div class="dropdown">
-        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> ${currentposition} <i class="icon-chevron-right"></i></a>
+        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> ${currentpositiontext} <i class="icon-chevron-right"></i></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
           <li><a href="${webbaseurl}/index.${strutsaction}"><i class="icon-home"></i> ${textmap.sitenavi_home}</a></li>
           <li class="divider"></li>

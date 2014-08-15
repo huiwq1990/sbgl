@@ -1,4 +1,6 @@
 #set($user = $request.getSession().getAttribute("loginUser"))
+#set($currentposition= "myorder")
+#set($currentpositiontext= ${textmap.myorderposition})	
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,8 +23,7 @@
 	#parse("include/includeGlobalHeader.vm")
   
   <div class="nav-wrap clearfix">
-	
-	#set($currentposition= ${textmap.myorderposition})
+
 	#parse("include/includeSiteNavi.vm")
 	
 	<div class="sub-nav">
