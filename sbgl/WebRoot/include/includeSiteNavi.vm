@@ -1,12 +1,13 @@
     <div class="site-nav">
       <div class="dropdown">
-        <a class="pos dropdown-toggle" data-hover="dropdown" href="#"><i class="icon-home"></i> ${currentpositiontext} <i class="icon-chevron-right"></i></a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+        <div class="pos" data-hover="dropdown" href="#"><i class="icon-home"></i> ${currentpositiontext} <i class="icon-chevron-right"></i></div>
+<!--
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
           <li><a href="${webbaseurl}/index.${strutsaction}"><i class="icon-home"></i> ${textmap.sitenavi_home}</a></li>
           <li class="divider"></li>
           <li><a href="${webbaseurl}/indexInfo.${strutsaction}">${textmap.sitenavi_myspace}</a></li>
           <li><a href="${webbaseurl}/viewMyComputerorderList.${strutsaction}">${textmap.sitenavi_myorder}</a></li>
-          <!-- <li><a href="${webbaseurl}/toMessageInbox.${strutsaction}">站内信</a></li> -->
+          <li><a href="${webbaseurl}/toMessageInbox.${strutsaction}">站内信</a></li>
           <li class="divider"></li>
           <li><a href="${webbaseurl}/account.${strutsaction}">${textmap.sitenavi_setandhelp}</a></li>
       #set($user =  $request.getSession().getAttribute("loginUser"))
@@ -14,5 +15,6 @@
           <li><a href="${webbaseurl}/adminIndex.${strutsaction}">${textmap.sitenavi_manager}</a></li>
 		  #end
         </ul>
+		-->
       </div>
     </div>

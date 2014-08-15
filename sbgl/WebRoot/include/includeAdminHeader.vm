@@ -57,40 +57,33 @@
 		><a href="${webbaseurl}/manageComputerorderFull.${strutsaction}">机房</a></li>
 
       </ul>
-    </div>    
-    <ul class="account-wrap nav nav-pills pull-right">
-          <!--
-		  <li class="notice dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-bell icon-large"></i><span class="n-num label label-important">3</span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">消息1</a></li>
-              <li><a href="#">消息2</a></li>
-            </ul>
-          </li>     
-		  -->
-          <li class="social dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">$!user.name</span><img src="${userImagePath}/$!user.photo" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
-				
-            <div class="dropdown-menu">
+    </div>   
+
+        <ul id="account-wrap" class="nav navbar-nav navbar-right">
+		  <li><a href="${webbaseurl}/index.${strutsaction}" ><span class="username">返回前台</span></a></li>
+          <li id="account" class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">$!user.name</span> <img src="${userImagePath}/$!user.photo" width="32" height="32" class="img-circle"> <b class="caret"></b></a>
+            <div class="dropdown-menu" role="menu">
               <div class="media">
                 <a class="pull-left" href="#">
                   <img src="${userImagePath}/$!user.photo" width="96" height="96" class="img-rounded">
                 </a>
                 <div class="media-body">
-					<!--
-                  <div class="media-heading"><h5><a href="#">$!user.name</a></h5></div>
-                  <div class="info">2012级研究生 - 影像视觉效果研究方向</div>-->
-                  <div class="setting"><a href="${webbaseurl}/account.${strutsaction}">账户设置</a></div>
-                  <!--<button class="btn btn-primary" type="button">查看个人主页</button>-->
-					<a href="${webbaseurl}/doLogout.${strutsaction}" class="admin-logout btn btn-link" action-type="adminLogout" role="button">退出管理</a>
+                  <div class="media-heading"><h5>$!user.name</h5></div>
+                  <!--<div class="info">2012级研究生 - 影像视觉效果研究方向</div>-->
+                  <div class="setting"><a href="${webbaseurl}/account.${strutsaction}">${textmap.globalheader_account_setting}</a> - <a href="${webbaseurl}/indexInfo.${strutsaction}">${textmap.globalheader_view_my_profile}</a></div>
                 </div>
               </div>
-            </div>      
+			  <div class="panel-footer clear-fix">
+                #set($user =  $request.getSession().getAttribute("loginUser"))
+			    #if($user.privilege == 1)
+                  <a href="${webbaseurl}/adminIndex.${strutsaction}" class="btn btn-primary">${textmap.sitenavi_manager}</a>
+		        #end
+				  <a href="${webbaseurl}/doLogout.${strutsaction}" class="admin-logout btn pull-right" action-type="logout" role="button">${textmap.globalheader_logout}</a>
+			  </div>
+            </div>
           </li>
-		  
-		  <li> <a href="${webbaseurl}/index.${strutsaction}" ><span class="username">返回首页</span></a>
-			</li>
-    </ul>
+        </ul>
   </div>
 	
 
