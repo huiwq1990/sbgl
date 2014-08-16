@@ -63,7 +63,7 @@
               <div class="page pull-right clearfix">
                 <ul class="page-index nav nav-pills pull-left">
                   <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!page.pageNo/$total页 <b class="caret"></b></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第$!page.pageNo/$!total页 <b class="caret"></b></a>
 					<input type="hidden" name="currpage" id="currpage" value="$!page.pageNo" >
 					<input type="hidden" name="totalpage" id="totalpage" value="$!page.totalpage" >
                     <ul class="dropdown-menu" role="menu">
@@ -106,25 +106,25 @@
         		#foreach($row in $!equipmenborrowFullList)	
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!row.borrowid"></td>
-                    <td>$row.borrowid</td>
-                    <td>$row.userName</td>
+                    <td>$!row.borrowid</td>
+                    <td>$!row.userName</td>
         			#if($!row.status==2)
-        			<td><a href="${webbaseurl}/equipmentExaming.do?borrowId=$row.borrowid" >$row.title</a></td>
+        			<td><a href="${webbaseurl}/equipmentExaming.do?borrowId=$row.borrowid" >$!row.title</a></td>
                     <td>待审核</td>
         			#elseif($!row.status==4)
-        			<td><a href="${webbaseurl}/orderalibrary.do?borrowId=$row.borrowid" >$row.title</a></td>
+        			<td><a href="${webbaseurl}/orderalibrary.do?borrowId=$row.borrowid" >$!row.title</a></td>
                     <td>待出库</td>  
         			#elseif($!row.status==5||$!row.status==6)
-        			<td><a href="${webbaseurl}/orderstorage.do?borrowId=$row.borrowid" >$row.title</a></td>
+        			<td><a href="${webbaseurl}/orderstorage.do?borrowId=$row.borrowid" >$!row.title</a></td>
                     <td>待入库</td> 
         			#elseif($!row.status==1||$!row.status==3)
-        			<td><a href="#">$row.title</a></td>
+        			<td><a href="#">$!row.title</a></td>
                     <td>待提交</td> 
         			#elseif($!row.status==7)
-        			<td><a href="#" >$row.title</a></td>
+        			<td><a href="#" >$!row.title</a></td>
                     <td>待赔偿</td> 
         			#elseif($!row.status==8)
-        			<td><a href="#" >$row.title</a></td>
+        			<td><a href="#" >$!row.title</a></td>
                     <td>已完成</td> 
         			#end          
         			#if($!row.category==1)
@@ -132,7 +132,7 @@
         			#elseif($!row.category==2)
                     <td>教学</td>  
         			#end                  
-                    <td>$row.remark</td>
+                    <td>$!row.remark</td>
                   </tr>
         		#end
                 </tbody>

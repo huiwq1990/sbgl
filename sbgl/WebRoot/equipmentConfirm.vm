@@ -68,11 +68,11 @@
             <ul class="media-list">
 				#foreach($row2 in $!equipmentList)	
                   <li class="media">
-                    <a class="pull-left" data-toggle="modal" href="#equip-detail" data-type="equipdetail" data-id="$!row2.equipmentid"  role="button">
+                    <a class="pull-left" data-toggle="modal" href="#equip-detail" data-type="equipdetail" data-id="$!row2.comId"  role="button">
                       <img src="$!{equipmentImagePath}/$!row2.imgNameSaved" width="46" height="46" class="img-rounded">
                     </a>
                     <div class="media-body">
-                      <div class="media-heading"><h5><a data-toggle="modal" href="#equip-detail" data-type="equipdetail" data-id="$!row2.equipmentid" role="button">$!row2.equipmentname</a></h5><span>&times; $!row2.applynumber</span></div>
+                      <div class="media-heading"><h5><a data-toggle="modal" href="#equip-detail" data-type="equipdetail" data-id="$!row2.comId" role="button">$!row2.equipmentname</a></h5><span>&times; $!row2.applynumber</span></div>
                       <p>$!row2.categoryName<p>
                     </div>
                   </li>

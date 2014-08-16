@@ -130,7 +130,7 @@ public class OrderMainServiceImpl implements OrderMainService {
 			baseDao.saveEntity(equipmenBorrow);
 	}
 	
-	public Integer subOrder(String equIds,String equNums,String fromDate,String endDate,Integer borrowId,Loginuser user) throws Exception{ 
+	public Integer subOrder(String equIds,String equNums,String fromDate,String endDate,Integer borrowId,Loginuser user,String lantype) throws Exception{ 
 		Equipmenborrow equipmenborrow = new Equipmenborrow();
 		String temp1[] = equIds.split(",");
 		String temp2[] = equNums.split(",");
@@ -147,7 +147,7 @@ public class OrderMainServiceImpl implements OrderMainService {
 					equipmenborrow.setReturntime(DateUtil.parseDate(endDate));
 				}
 				Listdetail listdetail = new Listdetail();
-				EquipmentFull equipmentFull = orderMainDao.findEquipmentById(Integer.parseInt(temp1[i]),fromDate,endDate);
+				EquipmentFull equipmentFull = orderMainDao.findEquipmentById(Integer.parseInt(temp1[i]),fromDate,endDate,lantype);
 				if(equipmentFull!=null&&equipmentFull.getBorrownum()!=null&&equipmentFull.getBorrownum()>=Integer.parseInt(temp2[i])){
 					listdetail.setBorrowlistid(equipmenborrow.getBorrowid());
 					listdetail.setListdetailid(baseDao.getCode("ListDetail"));
@@ -197,15 +197,15 @@ public class OrderMainServiceImpl implements OrderMainService {
 		return orderMainDao.findEquipmentByClss2(fromDate,endDate,lantype,courseruleid);
 	}
 
-	public EquipmentFull findEquipmentById(Integer equipmentId,String fromDate,String endDate) {
+	public EquipmentFull findEquipmentById(Integer equipmentId,String fromDate,String endDate,String lantype) {
 		// TODO Auto-generated method stub
-		return orderMainDao.findEquipmentById(equipmentId,fromDate,endDate);
+		return orderMainDao.findEquipmentById(equipmentId,fromDate,endDate,lantype);
 	}
 
 
-	public String findEquipmentByBorrowId(Integer borrowId,String fromDate,String endDate) {
+	public String findEquipmentByBorrowId(Integer borrowId,String fromDate,String endDate,String lantype) {
 		// TODO Auto-generated method stub
-		return orderMainDao.findEquipmentByBorrowId(borrowId,fromDate,endDate);
+		return orderMainDao.findEquipmentByBorrowId(borrowId,fromDate,endDate,lantype);
 	}
 	
 	

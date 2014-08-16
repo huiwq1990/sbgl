@@ -11,11 +11,11 @@ public interface OrderFinishService {
 	//根据id查找订单
 	public EquipmenborrowFull findEquipmenborrow(Integer borrowId);
 	//根据id查找订单，获得订单设备详情
-	public List<EquipmentFull> findListBorrow(Integer borrowId);
+	public List<EquipmentFull> findListBorrow(Integer borrowId,String lantype);
 	//提交订单备注
-    public boolean finishorder(Integer borrowId,String equtitle,String equremark) throws Exception;
+    public boolean finishorder(Integer borrowId,String equtitle,String equremark,String lantype) throws Exception;
     //获得设备详情
-	public EquipmentFull findEquipmentById(Integer equipmentId);
+	public EquipmentFull findEquipmentById(Integer equipmentId,String lantype);
 	//删除订单
 	public boolean deleteorder(Integer borrowId);
 	//提交订单审核 

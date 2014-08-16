@@ -56,7 +56,7 @@
                   <div class="col-3">                  
                       <div class="thumbnail">
                         <div class="hd clearfix">
-                          <h4 class="pull-left"><a class="lk" href="${webbaseurl}/equipOrderContent.do?borrowId=$!row.borrowid">$!row.title</a></h4>
+                          <h4 class="pull-left"><a class="lk" href="${webbaseurl}/equipOrderContent.do?borrowId=$!row.borrowid">#if(!$row.title) ${textmap.order_tosubmitorders} #else $!row.title #end</a></h4>
                         </div>
                         <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> ${textmap.order_equipment}<br/>#if($!row.category==1)
 							${textmap.order_personalappointment}
@@ -66,8 +66,12 @@
                         <div class="caption">
                           <div class="rent-info">
                             <div class="rent-num">${textmap.order_reservationno} ：$!row.borrowid</div>
+							#if($!row.borrowtime&&$!row.borrowtime!="")
                             <div class="rent-time"><i class="icon-time"></i> $!date.format("yyyy-MM-dd ", $!row.borrowtime)  ${textmap.order_to} $!date.format("yyyy-MM-dd ", $!row.returntime)</div>
-                            <div class="rent-remark"><i class="icon-pencil"></i>$!row.remark</div>
+                            #end
+							#if($!row.remark&&$!row.remark!="")
+							<div class="rent-remark"><i class="icon-pencil"></i>$!row.remark</div>
+							#end
                           </div>
                           <hr />
                           <div class="rent-status clearfix">
@@ -117,8 +121,12 @@
                         <div class="caption">
                           <div class="rent-info">
                             <div class="rent-num">${textmap.order_reservationno} ：$!row2.borrowid</div>
+							#if($!row2.borrowtime&&$!row2.borrowtime!="")
                             <div class="rent-time"><i class="icon-time"></i> $date.format("yyyy-MM-dd ", $!row2.borrowtime)  - $date.format("yyyy-MM-dd ", $!row2.returntime)</div>
-                            <div class="rent-remark"><i class="icon-pencil"></i>$!row2.remark</div>
+							#end
+							#if($!row2.remark&&$!row2.remark!="")
+							<div class="rent-remark"><i class="icon-pencil"></i>$!row2.remark</div>
+							#end
                           </div>
 					<!--
                           <hr />

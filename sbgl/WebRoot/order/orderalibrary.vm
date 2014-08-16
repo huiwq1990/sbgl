@@ -63,7 +63,7 @@
                   </div>
 				  #foreach($row in $!equipmentclassificationList)	
                   <div class="group group-hover">
-                    <div class="group-hd p-lr-20" data-parent-category-id="$row.classificationid">
+                    <div class="group-hd p-lr-20" data-parent-category-id="$row.comid">
 						#set($cnum = 0)
 						#foreach($row2 in $!equipmentMap.get($row.classificationid))	
 							 #set($cnum = $cnum+1)
@@ -74,7 +74,7 @@
                     <ul class="group-body media-list collapse in" id="grp-1">
 					  #foreach($row2 in $!equipmentMap.get($row.classificationid))					
 						#foreach($i in [1 .. $!row2.applynumber])
-                          <li class="media" data-model-id="$!row2.equipmentid" data-id="" data-is-select="false">
+                          <li class="media" data-model-id="$!row2.comId" data-id="" data-is-select="false">
                             <div class="is-select pull-right"><i class="icon-check-empty icon-large"></i></div>
                             <div class="media-body">
                               <div class="media-heading">
@@ -294,7 +294,7 @@ var jsonData = {
 				{
 				"equipName":"$!row4.equipmentname",
 				"equipId":"$!row5",
-				"modelId":"$!row4.equipmentid",
+				"modelId":"$!row4.comId",
 				"parentCategoryId":"$!row4.classificationid",
 				"parentCategoryName":"$row.name",
 				"categoryId":"子类Id1",

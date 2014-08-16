@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.services.order.OrderExamService;
@@ -44,30 +45,46 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 	
 //	进入查看订单确认页面
 	public String equipmentConfirm(){
-		equipmentList = orderFinishService.findListBorrow(borrowId);
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
+		equipmentList = orderFinishService.findListBorrow(borrowId,lantype);
 		equipmenborrowFull = orderFinishService.findEquipmenborrow(borrowId);
 		return SUCCESS;
 	}
 	
 	//	进入查看订单审核页面
 	public String equipmentExaming(){
-		equipmentList = orderFinishService.findListBorrow(borrowId);
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
+		equipmentList = orderFinishService.findListBorrow(borrowId,lantype);
 		equipmenborrowFull = orderFinishService.findEquipmenborrow(borrowId);
 		return SUCCESS;
 	}
 	
 	//进入设备出库页面
 	public String orderalibrary(){
-		equipmentclassificationList = orderExamService.findclassList(borrowId);
-		equipmentMap = orderExamService.findMapBorrow(borrowId,1);
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
+		equipmentclassificationList = orderExamService.findclassList(borrowId,lantype);
+		equipmentMap = orderExamService.findMapBorrow(borrowId,1,lantype);
 		equipmenborrowFull = orderFinishService.findEquipmenborrow(borrowId);
 		return SUCCESS;
 	}
 	
 	//进入设备入库页面
 	public String orderstorage(){
-		equipmentclassificationList = orderExamService.findclassList(borrowId);
-		equipmentMap = orderExamService.findMapBorrow(borrowId,2);
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
+		equipmentclassificationList = orderExamService.findclassList(borrowId,lantype);
+		equipmentMap = orderExamService.findMapBorrow(borrowId,2,lantype);
 		equipmenborrowFull = orderFinishService.findEquipmenborrow(borrowId);
 		return SUCCESS;
 	}

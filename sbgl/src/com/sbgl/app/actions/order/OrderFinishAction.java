@@ -2,28 +2,31 @@ package com.sbgl.app.actions.order;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.entity.Equipmenborrow;
 import com.sbgl.app.services.order.OrderFinishService;
 import com.sbgl.common.DataError;
 
 @Scope("prototype") 
 @Controller("OrderFinishAction")
-public class OrderFinishAction  extends ActionSupport {
+public class OrderFinishAction  extends ActionSupport  implements SessionAware {
 	private static final Log log = LogFactory.getLog(OrderMainAction.class);
 	
 	@Resource
 	private OrderFinishService orderFinishService;
 	
-	
+	private Map<String, Object> session;
 	
 	private List<EquipmentFull> equipmentList;
 	private Integer borrowId;
@@ -43,16 +46,24 @@ public class OrderFinishAction  extends ActionSupport {
 	
 	//进入查看订单确认页面
 	public String equipmentConfirm(){
-		equipmentList = orderFinishService.findListBorrow(borrowId);
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
+		equipmentList = orderFinishService.findListBorrow(borrowId,lantype);
 		equipmenborrowFull = orderFinishService.findEquipmenborrow(borrowId);
 		return SUCCESS;
 	}
 	
 	//提交订单备注
 	public String finishorder(){
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
 		try{
 			boolean flag = false;
-			flag = orderFinishService.finishorder(borrowId, equtitle, equremark);
+			flag = orderFinishService.finishorder(borrowId, equtitle, equremark,lantype);
 			if(flag){
 				tag = "1";
 			}else{
@@ -86,12 +97,20 @@ public class OrderFinishAction  extends ActionSupport {
 	}
 
 	public String equipConfirmContent(){
-		equipmentFull = orderFinishService.findEquipmentById(equipmentId);
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
+		equipmentFull = orderFinishService.findEquipmentById(equipmentId,lantype);
 		return SUCCESS;
 	}
 	
 	public String equipOrderContent(){
-		equipmentList = orderFinishService.findListBorrow(borrowId);
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
+		equipmentList = orderFinishService.findListBorrow(borrowId,lantype);
 		equipmenborrowFull = orderFinishService.findEquipmenborrow(borrowId);
 		return SUCCESS;
 	}
@@ -194,6 +213,9 @@ public class OrderFinishAction  extends ActionSupport {
 		this.equipmentId = equipmentId;
 	}
 
-
+	public void setSession(Map<String, Object> session) {
+		// TODO Auto-generated method stub
+	    this.session = session;
+	}
 	
 }

@@ -91,11 +91,11 @@ public class OrderAdminServiceImpl implements  OrderAdminService{
 
 	@Override
 	public Map<Integer, List<EquipmentFull>> fingclassequipMap(
-			List<Equipmentclassification> eclist,Integer courseruleid) {
+			List<Equipmentclassification> eclist,Integer courseruleid,String lantype) {
 		// TODO Auto-generated method stub
 		Map<Integer, List<EquipmentFull>> map = new HashMap<Integer, List<EquipmentFull>>();
 		for(Equipmentclassification equipmentclassification:eclist){
-			List<EquipmentFull> equipmentFullList =  orderMainDao.findEquipmentByClss2(equipmentclassification.getClassificationid(),courseruleid);
+			List<EquipmentFull> equipmentFullList =  orderMainDao.findEquipmentByClss2(equipmentclassification.getClassificationid(),courseruleid,lantype);
 			map.put(equipmentclassification.getClassificationid(), equipmentFullList);
 		}
 		return map;

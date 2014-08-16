@@ -51,15 +51,15 @@ public class OrderExamServiceImpl implements OrderExamService {
 	}
 
 	@Override
-	public List<Equipmentclassification> findclassList(Integer borrowId) {
+	public List<Equipmentclassification> findclassList(Integer borrowId,String lantype) {
 		// TODO Auto-generated method stub	
-		return orderFinishDao.findclassList(borrowId); 
+		return orderFinishDao.findclassList(borrowId,lantype); 
 	}
 
 	@Override
-	public Map<Integer, List<EquipmentFull>> findMapBorrow(Integer borrowId,Integer type) {
+	public Map<Integer, List<EquipmentFull>> findMapBorrow(Integer borrowId,Integer type,String lantype) {
 		// TODO Auto-generated method stub
-		return orderFinishDao.findMapBorrow(borrowId,type);
+		return orderFinishDao.findMapBorrow(borrowId,type,lantype);
 	}
 
 	@Override

@@ -1,6 +1,6 @@
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-    <h3 id="myModalLabel">设备详情</h3>
+    <h3 id="myModalLabel">$!{textmap.order_equipinfo}</h3>
   </div>
   <div class="modal-body">
     <div class="media">
@@ -9,11 +9,11 @@
       </div>
       <div class="media-body">
         <dl class="dl-horizontal">
-          <dt>型号</dt>
+          <dt>$!{textmap.order_model}</dt>
           <dd>$!equipmentFull.equipmentname</dd>
-          <dt>所属分类</dt>
+          <dt>$!{textmap.order_category}</dt>
           <dd>$!equipmentFull.categoryName</dd>
-          <dt>预约数量</dt>
+          <dt>$!{textmap.order_numberofreservations}</dt>
           <dd>
             <div class="select-num">
               <select class="select2 form-control select-white" id="inputEquipStatus" style="width: 80px;">
@@ -27,18 +27,18 @@
               </select>
             </div>
           </dd>
-          <dt>介绍</dt>
+          <dt>$!{textmap.order_equipintroduction}</dt>
           <dd>$!equipmentFull.equipmentdetail</dd>
         </dl>
       </div>
     </div>
-    <div class="equip-chart-title">近期可预约数量</div>
+    <div class="equip-chart-title">$!{textmap.order_reservationnumber}</div>
     <div class="equip-chart-warp scrollable" style="width: 628px; overflow-x: auto">  
       <div id="equip-chart" style="width:100%; height:150px;"></div>
     </div>
   </div>
   <div class="modal-footer">
-    <a class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</a>
-    <a class="btn btn-primary" data-type="addEquip" data-id="$!equipmentFull.equipmentid" data-name="$!equipmentFull.equipmentname" data-num="$!equipmentFull.borrownum" href="javascript:;">添 加</a>
+    <a class="btn btn-white" data-dismiss="modal" aria-hidden="true">$!{textmap.order_cancel}</a>
+    <a class="btn btn-primary" data-type="addEquip" data-id="$!equipmentFull.equipmentid" data-name="$!equipmentFull.equipmentname" data-num="$!equipmentFull.borrownum" href="javascript:;">$!{textmap.order_add}</a>
   </div>
 	<script src="js/bfa2.js"></script>
