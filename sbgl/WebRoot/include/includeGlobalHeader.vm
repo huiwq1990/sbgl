@@ -43,6 +43,10 @@
         </form>
 		-->
         <ul id="account-wrap" class="nav navbar-nav navbar-right">
+		#set($user =  $request.getSession().getAttribute("loginUser"))
+		#if($user.privilege == 1)
+		  <li id="account" class="dropdown"><a href="${webbaseurl}/adminIndex.${strutsaction}">${textmap.sitenavi_manager}</a></li>
+		#end
           <li id="account" class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="username">$!user.name</span> <img src="${userImagePath}/$!user.photo" width="48" height="48" class="img-circle"> <b class="caret"></b></a>
             <div class="dropdown-menu" role="menu">
@@ -53,14 +57,11 @@
                 <div class="media-body">
                   <div class="media-heading"><h5>$!user.name</h5></div>
                   <!--<div class="info">2012级研究生 - 影像视觉效果研究方向</div>-->
-                  <div class="setting"><a href="${webbaseurl}/account.${strutsaction}">${textmap.globalheader_account_setting}</a> - <a href="${webbaseurl}/indexInfo.${strutsaction}">${textmap.globalheader_view_my_profile}</a></div>
+                  <div class="setting"><a href="${webbaseurl}/account.${strutsaction}">${textmap.globalheader_account_setting}</a></div>
                 </div>
               </div>
-			  <div class="panel-footer clear-fix">
-                #set($user =  $request.getSession().getAttribute("loginUser"))
-			    #if($user.privilege == 1)
-                  <a href="${webbaseurl}/adminIndex.${strutsaction}" class="btn btn-primary">${textmap.sitenavi_manager}</a>
-		        #end
+			  <div class="panel-footer clearfix">
+				  <a href="${webbaseurl}/indexInfo.${strutsaction}" class="btn btn-primary">${textmap.globalheader_view_my_profile}</a>
 				  <a href="${webbaseurl}/doLogout.${strutsaction}" class="admin-logout btn pull-right" action-type="logout" role="button">${textmap.globalheader_logout}</a>
 			  </div>
             </div>

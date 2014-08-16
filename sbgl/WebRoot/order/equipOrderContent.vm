@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>设备预约 - 北京电影学院摄影系</title>
+<title>${textmap.order_detail_title}</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -35,7 +35,7 @@
   <div class="nav-wrap clearfix">
     #parse("include/includeSiteNavi.vm")
 	
-		#set($currentPageType="equorderSpace")
+		#set($currentPageType="orderDetail")
 		#parse("include/includeOrderspaceSubNavi.vm")
   </div>
 </header><!--/#header-wrap-->
@@ -46,23 +46,24 @@
     <div class="container">
       <div class="row">
         <div class="control-bar col-md-12">
-          <div class="title">$!equipmenborrowFull.title<span class="label label-important"> 
+          <div class="title">$!equipmenborrowFull.title <span class="label label-important"> 
 					#if($!equipmenborrowFull.category==1)
-					个人预约
+					${textmap.ordertype_personal}
 					#elseif($!equipmenborrowFull.category==1)
-					教学预约#end</span></div>
+					${textmap.ordertype_course_assignment}
+					#end</span></div>
         </div>      
         <div class="col-md-7">                  
           <div class="thumbnail">
             <div class="hd clearfix">
-              <h3 class="pull-left">设备单</h3>
+              <h3 class="pull-left">${textmap.order_order_list}</h3>
 			  #set($anum = 0)
 			  #set($bnum = 0)
 			  #foreach($row in $!equipmentList)	
 				 #set($anum = $anum+1)
 				 #set($bnum = $bnum+$!row.applynumber)
 			  #end
-              <div class="pull-right">共$!anum 种设备， $!bnum 个设备</div>
+              <div class="pull-right">${textmap.order_total} $!anum ${textmap.order_kindofeuip} $!bnum ${textmap.order_adevice}</div>
             </div>
             <ul class="media-list">
               #foreach($row2 in $!equipmentList)	
@@ -82,26 +83,28 @@
         <div class="col-md-5">
           <div class="thumbnail">
             <div class="hd">
-              <h3>状态</h3>
+              <h3>${textmap.order_status_title}</h3>
             </div>
             <div class="caption">
               <div class="status">
 				  #if($!equipmenborrowFull.status==1)
-					等待提交预约申请。
+					${textmap.orderstatus_wait_submit_detail}
 				  #elseif($!equipmenborrowFull.status==2)
-					等待审核。
+					${textmap.orderstatus_confirming_detail}
 				  #elseif($!equipmenborrowFull.status==3)
-					预约被驳回，需修改后重新提交预约。
+					${textmap.orderstatus_reject_detail}
 				  #elseif($!equipmenborrowFull.status==4)
-					审核通过，请于规定时间领取相关设备。
+					${textmap.orderstatus_passed_detail_equipment}
 				  #elseif($!equipmenborrowFull.status==5)
-					请于规定时间归还相关设备。
+					${textmap.orderstatus_return_within_time_detail_equipment}
 				  #elseif($!equipmenborrowFull.status==6)
-					已超期，请尽快归还相关设备。
+					${textmap.orderstatus_has_extended_detail_equipment}
 				  #elseif($!equipmenborrowFull.status==7)
-					部分设备受损，请尽快根据相关规定处理受损设备。
+					${textmap.orderstatus_part_damaged_detail_equipment}
 				  #elseif($!equipmenborrowFull.status==8)
-					已完成。
+					${textmap.orderstatus_completed}
+				#elseif($!equipmenborrowFull.status==9)
+					${textmap.orderstatus_wait_submit_course_assignment_detail}
 				  #end
                 </div>
                 <hr />
@@ -113,14 +116,14 @@
           </div>
           <div class="thumbnail">
             <div class="hd">
-              <h3>详情</h3>
+              <h3>${textmap.detail_title}</h3>
             </div>
             <div class="caption">
               <div class="rent-detail">
-                <span class="rent-user"><strong>申请者：<a rel="popover" class="lk" href="#">$!equipmenborrowFull.userName</a></strong></span>
-                <span class="rent-num"><strong> - 预约号：$!equipmenborrowFull.borrowid</strong></span>
+                <span class="rent-user"><strong>${textmap.detail_Applicant}：$!equipmenborrowFull.userName</strong></span>
+                <span class="rent-num"><strong> - ${textmap.order_No}：$!equipmenborrowFull.borrowid</strong></span>
 				#if($!equipmenborrowFull.teacherid)
-                <div class="rent-teacher">关联教师：<a rel="popover" href="#">$!equipmenborrowFull.teacherName</a></div>
+                <div class="rent-teacher">${textmap.order_teacher}：$!equipmenborrowFull.teacherName</div>
 				#end
                 <div class="rent-time"><i class="icon-time"></i>$!date.format("yyyy年MM月dd日", $!equipmenborrowFull.borrowtime)  - $!date.format("yyyy年MM月dd日", $!equipmenborrowFull.returntime)</div>
                 <div class="rent-remark"><i class="icon-pencil"></i> $!equipmenborrowFull.remark</div>
@@ -130,11 +133,11 @@
             <ul class="media-list">
 			#if($!equipmenborrowFull.teacherid)
               <li class="media">
-                <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
+                <div class="pull-left">
                   <img src="img/photo.jpg" width="28" height="28" class="img-rounded">
-                </a>
+                </div>
                 <div class="media-body">
-                  <div class="media-heading"><h5><a rel="popover" href="#">$!equipmenborrowFull.teacherName</a></h5><span class="post-time" title="详细时间">$!date.format("yyyy年MM月dd日", $!equipmenborrowFull.createtime)</span></div>
+                  <div class="media-heading"><h5>$!equipmenborrowFull.teacherName</h5><span class="post-time">$!date.format("yyyy-MM-dd", $!equipmenborrowFull.createtime)</span></div>
                   <a href="#" class="lk" title="查看详细说明" rel="tooltip">$!equipmenborrowFull.msgtitle</a>
                 </div>
               </li>
@@ -198,18 +201,6 @@
   </div>
 </div>
 
-<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
-  <img src="img/cover-img.jpg" class="cover" alt="封面照片" />
-  <div class="cover-layout"></div>
-  <div class="avatar"><img src="img/photo.jpg" width="80" height="80" class="img-circle"></div>
-  <div class="user-wrap">
-    <div class="user-name"><a href="#">用户名</a></div>
-    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
-    <div class="user-info">职务等信息</div>
-    <div class="user-info">地点</div>
-  </div>
-  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
-</div>
 <script>
 	$("body").on("click", "a[data-type|=deleteorder]", function() {
 		var myData = $(this).data();

@@ -87,36 +87,43 @@
             <div class="thumbnail">
               <div class="hd clearfix">
                 <h3 class="pull-left">$!{textmap.index_equip_underwayorder}</h3>
-                <a href="${webbaseurl}/equipOrdIndex.${strutsaction}" class="more lk pull-right">$!{textmap.index_equip_viewall}</a>
+                <a href="${webbaseurl}/equipOrdIndex.${strutsaction}" class="more lk pull-right">$!{textmap.viewall}</a>
               </div>
               <ul class="media-list">
 				#foreach($row in $equipmenborrowFullList)		
                 <li class="media">
                   <div class="media-body">
-                    <div class="media-heading"><h5><a #if($!row.status==9) href="${webbaseurl}/equipmentBooking.do?borrowId=$!row.borrowid" #else href="${webbaseurl}/equipOrderContent.do?borrowId=$!row.borrowid" #end>$!row.title</a></h5><span>#if($!row.status==1)
-								$!{textmap.index_equipstatus1}
+                    <div class="media-heading">
+						<h5><a #if($!row.status==9) href="${webbaseurl}/equipmentBooking.do?borrowId=$!row.borrowid" #else href="${webbaseurl}/equipOrderContent.do?borrowId=$!row.borrowid" #end>$!row.title</a></h5>
+						<span>							  
+							  #if($!row.status==1)
+								$!{textmap.orderstatus_wait_submit}
 							  #elseif($!row.status==2)
-								$!{textmap.index_equipstatus2}
+								$!{textmap.orderstatus_confirming}
 							  #elseif($!row.status==3)
-								$!{textmap.index_equipstatus3}
+								$!{textmap.orderstatus_reject}
 							  #elseif($!row.status==4)
-								$!{textmap.index_equipstatus4}
+								$!{textmap.orderstatus_passed_equipment}
 							  #elseif($!row.status==5)
-								$!{textmap.index_equipstatus5}
+								$!{textmap.orderstatus_return_within_time_detail_equipment}
 							  #elseif($!row.status==6)
-								$!{textmap.index_equipstatus6}
+								$!{textmap.orderstatus_has_extended_detail_equipment}
 							  #elseif($!row.status==7)
-							$!{textmap.index_equipstatus7}
+								$!{textmap.orderstatus_part_damaged_detail_equipment}
 							  #elseif($!row.status==8)
-								$!{textmap.index_equipstatus8}
+								$!{textmap.orderstatus_completed}
 							  #elseif($!row.status==9)
-								$!{textmap.index_equipstatus9}
-							  #end</span></div>
-                    <span class="tag label label-important">#if($!row.category==1)
-							$!{textmap.index_equip_ordertype1}
-						  #elseif($!row.category==2)
-							$!{textmap.index_equip_ordertype2}
-						  #end</span>                  
+								$!{textmap.orderstatus_wait_submit_course_assignment}
+							  #end
+						</span>
+					</div>
+                    <span class="tag label label-important">
+						#if($!row.category==1)
+							$!{textmap.ordertype_personal}
+						#elseif($!row.category==2)
+							$!{textmap.ordertype_course_assignment}
+						#end
+					</span>                  
                   </div>
                 </li>
 				#end 
@@ -126,7 +133,7 @@
             <div class="thumbnail">
               <div class="hd clearfix">
                 <h3 class="pull-left">$!{textmap.index_pc_underway_title}</h3>
-                <a href="${webbaseurl}/viewMineComputerorderList.${strutsaction}" class="more lk pull-right">$!{textmap.index_pc_order_viewall}</a>
+                <a href="${webbaseurl}/viewMineComputerorderList.${strutsaction}" class="more lk pull-right">$!{textmap.viewall}</a>
               </div>
               <ul class="media-list">
 				#foreach($order in $computerorderEntityList)
@@ -157,12 +164,11 @@
 						</h5>
 						
 						<span>
-							$!{textmap.index_pc_order_waitapply}
-							<!--<a href="${webbaseurl}/toComputerClassorderPage.${strutsaction}?computerhomeworkid=$order.computerhomeworkid">开始预约</a>-->
+							$!{textmap.orderstatus_wait_submit_course_assignment}
 						</span>
 	                </div>
                     <span class="tag label label-important">
-					$!{textmap.index_pc_order_type_class}
+					$!{textmap.ordertype_course_assignment}
 					</span>                  
                   </div>
                 </li>
@@ -186,27 +192,7 @@
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
-<script src="${jsDomain}/bootstrap-datepicker.js"></script>
-<script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
-<script src="${jsDomain}/xdate.js"></script>
-<script src="${jsDomain}/computer/computerorder.js"></script>
 
-
-<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
-  <img src="img/cover-img.jpg" class="cover" alt="封面照片" />
-  <div class="cover-layout"></div>
-  <div class="avatar"><img src="img/photo.jpg" width="80" height="80" class="img-circle"></div>
-  <div class="user-wrap">
-    <div class="user-name"><a href="#">用户名</a></div>
-    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
-    <div class="user-info">职务等信息</div>
-    <div class="user-info">地点</div>
-  </div>
-  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
-</div>
-
-</script>
 </body>
 </html>
