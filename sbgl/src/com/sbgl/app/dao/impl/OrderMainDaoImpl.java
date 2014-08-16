@@ -255,7 +255,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	    		}
 	    	}
 	    sql+= ")tempaa where tempaa.comId=a.comId) as borrownum from Equipment a  "
-			+ " where a.lanType = '"+lantype+"' and a.Equipmentname like '%"+search+"%' and  a.classificationid in (select classificationid from Equipmentclassification where parentid='"+classificationid+"' union select classificationid from Equipmentclassification where classificationid='"+classificationid+"') group by a.comid ";
+			+ " where a.lanType = '"+lantype+"' and a.Equipmentname like '%"+search+"%' and  a.classificationid in (select classificationid from Equipmentclassification where parentid='"+classificationid+"' and lanType = '"+lantype+"' union select classificationid from Equipmentclassification where comid='"+classificationid+"'  and lanType = '"+lantype+"') group by a.comid ";
 		final String sql1 = sql;
 		List<EquipmentFull> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
@@ -284,7 +284,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	    		}
 	    	}
 	    sql+= ")tempaa where tempaa.comId=a.comId) as borrownum ,d.applynumber from Equipment a  left outer join orderCourseRuleDetail d on d.courseRuleId= '"+courseruleid+"' and d.comId = a.comId  "
-			+ " where d.comid != '' and a.lanType = '"+lantype+"' and a.Equipmentname like '%"+search+"%' and  a.classificationid in (select classificationid from Equipmentclassification where parentid='"+classificationid+"' union select classificationid from Equipmentclassification where classificationid='"+classificationid+"') group by a.comid ";
+			+ " where d.comid != '' and a.lanType = '"+lantype+"' and a.Equipmentname like '%"+search+"%' and  a.classificationid in (select classificationid from Equipmentclassification where parentid='"+classificationid+"' and lanType = '"+lantype+"' union select classificationid from Equipmentclassification where comid='"+classificationid+"' and lanType = '"+lantype+"') group by a.comid ";
 		final String sql1 = sql;
 		List<EquipmentFull> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
@@ -729,6 +729,23 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		if(equipmentList!=null&&!equipmentList.isEmpty()){
 			return equipmentList;
 		}	
+		return null;
+	}
+
+
+	public Equipmentclassification findEquipmentclassification(
+			Integer classificationid, String lantype) {
+		// TODO Auto-generated method stub
+		final String sql = "select * from Equipmentclassification where comid = '"+classificationid+"' and lanType = '"+lantype+"' ";
+		List<Equipmentclassification> list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql).addEntity(Equipmentclassification.class);
+				return query.list();
+			}
+		});	
+		if(list!=null&&!list.isEmpty()){
+			return list.get(0);
+		}
 		return null;
 	}
 

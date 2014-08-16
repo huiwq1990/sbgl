@@ -69,4 +69,6 @@ public interface OrderMainDao {
 	public List<EquipmentFull> findEquipmentByGroup(String lantype,Integer courseRuleId);
 	//获取设备组中设备信息
 	public List<EquipmentFull> equipmentGroupOrder(Integer equipmentId,String fromDate,String endDate,String lantype);
+	//根据分类语音和联合主键获取分类
+	public Equipmentclassification findEquipmentclassification(Integer classificationid,String lantype);
 }

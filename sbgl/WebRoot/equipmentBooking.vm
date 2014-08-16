@@ -65,7 +65,7 @@
               <ul class="nav nav-pills pull-right">
                 #foreach($row2 in $!classification2List)		
 					#if($velocityCount=='1')<li id="cl20" class="active classification2" ><a href="javascript:;" data-type="classAjax" data-id="0" data-classtype="2" data-parentid="$!class1Id">$!{textmap.order_all}</a></li>#end
-        			<li id="cl2$!row2.classificationid" class="classification2"><a href="javascript:;" data-type="classAjax" data-id="$!row2.classificationid" data-classtype="2" data-parentid="$!class1Id">$!row2.name</a></li>
+        			<li id="cl2$!row2.classificationid" class="classification2"><a href="javascript:;" data-type="classAjax" data-id="$!row2.comid" data-classtype="2" data-parentid="$!class1Id">$!row2.name</a></li>
         		#end
               </ul>
             </div>

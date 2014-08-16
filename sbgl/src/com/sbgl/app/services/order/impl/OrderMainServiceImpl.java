@@ -184,7 +184,7 @@ public class OrderMainServiceImpl implements OrderMainService {
 	}
 	
 	public Equipmentclassification findEquipmentclassification(Integer classificationid,String lantype){
-		return baseDao.getEntityById(Equipmentclassification.class, classificationid);
+		return orderMainDao.findEquipmentclassification(classificationid, lantype);
 	}
 
 
