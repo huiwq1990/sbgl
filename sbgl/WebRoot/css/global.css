@@ -299,7 +299,6 @@ i { font-size: 14px; }
 #header-wrap {
 	height: 125px;
 	position: relative;
-	z-index: 800;
 }
 #main-wrap {
 	position: relative;
@@ -1589,7 +1588,7 @@ a.list-group-item.active:focus .list-group-item-text {
 #user-list { padding: 0 10px; }
 #user-list li.media {
 	float: left;
-	width: 31.44444444%;
+	width: 31.3999999%;
 	height: 50px;
 	padding: 1px;
 	margin: 5px;
@@ -1692,6 +1691,7 @@ border-bottom: 2px solid #427FED !important;
 
 /* BS3 头部临时兼容（等框架全部迁移至bs3）================================================= */
 #global-header .navbar-brand { padding: 8px 15px; }
+#global-header .dropdown-menu { z-index: 2000; }
 #global-header #account-wrap {
 	margin: 15px 20px 0 0;
 }

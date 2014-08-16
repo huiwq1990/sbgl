@@ -11,8 +11,6 @@
 	#end	
 	><a href="${webbaseurl}/viewMineComputerorderList.${strutsaction}">${textmap.subsitenavi_pc_order}</a></li>
 	
-
-
 	#if($currentPageType == "createorder" )
 		<li class="divider"></li>
 		<li class="active"><a href="#">${textmap.subsitenavi_createorder}</a></li>
@@ -28,77 +26,15 @@
 		<li class="active"><a href="#">${textmap.subsitenavi_computerorderfinish}</a></li>
 	#end
 		
-	#if($currentPageType == "computerorderview" )
-		<li class="divider"></li>
-		<li class="active"><a href="#">${textmap.subsitenavi_computerorderview}</a></li>
-	#end
-	
-   #if($currentPageType == "computerclassorderview" )
-		<li class="divider"></li>
-		<li class="active"><a href="#">${textmap.subsitenavi_computerclassorderview}</a></li>
-	#end
-	
 	#if($currentPageType == "equorderSpace" )
 		<li class="divider"></li>
 		<li class="active"><a href="#">${textmap.subsitenavi_equorderSpace}</a></li>
 	#end
 	
-	#if($currentPageType == "equsunorderSpace" )
+	#if($currentPageType == "orderDetail" )
 		<li class="divider"></li>
-		<li class="active"><a href="#">${textmap.subsitenavi_equsunorderSpace}</a></li>
+		<li class="active"><a href="#">${textmap.subsitenavi_order_detail}</a></li>
 	#end
 	
   </ul>
 </div>
-	
-<!--
-
-<div class="sub-nav">
-  <ul class="nav nav-tabs nav-tabs-google">
-    <li
-	#if($currentPageType == "equorderSpace"|| $currentPageType == "equsunorderSpace" || $currentPageType == "equorderSpace2")
-		 class="active"      
-	#end><a href="${webbaseurl}/equipOrdIndex.${strutsaction}">器材预约</a></li>
-	
-    <li
-	#if($currentPageType == "computerorderSpace" )
-		 class="active"      
-	#end	
-	><a href="${webbaseurl}/viewMineComputerorderList.${strutsaction}">机房预约</a></li>
-	
-
-
-	#if($currentPageType == "createorder" )
-		<li class="divider"></li>
-		<li class="active"><a href="#">预约提交</a></li>
-	#end	
-	
-	#if($currentPageType == "computerorderfinish" )
-		<li class="divider"></li>
-		<li class="active"><a href="#">预约完成</a></li>
-	#end
-	
-	
-	#if($currentPageType == "computerorderview" )
-		<li class="divider"></li>
-		<li class="active"><a href="#">预约详情</a></li>
-	#end
-	
-   #if($currentPageType == "computerclassorderview" )
-		<li class="divider"></li>
-		<li class="active"><a href="#">机房课程预约详情</a></li>
-	#end
-	
-	#if($currentPageType == "equorderSpace" )
-		<li class="divider"></li>
-		<li class="active"><a href="#">预约详情</a></li>
-	#end
-	
-	#if($currentPageType == "equsunorderSpace" )
-		<li class="divider"></li>
-		<li class="active"><a href="#">预约详情</a></li>
-	#end
-	
-  </ul>
-</div>
--->

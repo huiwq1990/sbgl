@@ -145,21 +145,21 @@
   </div>
   <div class="modal-body">
       <div class="row control-bar">
-        <div class="select-user-group col-md-5">
+        <div class="select-user-group col-md-6">
             <select id="clazz-list" class="select2 select-white" style="width: 100%;">
 				<option value="-1">全部</option>
             </select>
         </div>
-        <div class="search-user col-md-7">
+        <!--<div class="search-user col-md-7">
           <form class="form-group inner-search-icon">
             <input type="text" class="form-control" placeholder="按姓名搜索">
             <span class="icon-search"></span>
           </form>
+        </div>-->
+		<div class="control-bar">
+            <button class="btn btn-white" action-type="selectAllUser">全 选</button>
+            <button class="btn btn-primary" action-type="cancelSelectAllUser" style="display: none">取消全选</button>
         </div>
-      </div>
-      <div class="control-bar">
-        <button class="btn btn-white" action-type="selectAllUser">全 选</button>
-        <button class="btn btn-primary" action-type="cancelSelectAllUser" style="display: none">取消全选</button>
       </div>
       <div id="user-list" class="row">
         <ul class="media-list">

@@ -60,8 +60,8 @@
                 <div class="step-pane active" id="step1">
                   <h4>欢迎 Welcome，<span>$!user.name</span>！</h4>
                   <div class="tips">
-                    <p>这是您首次登录本系统，为了方便您日后的使用，我们将花费您1分钟左右的时间来完善您的账号信息。<br>
-                    This is the first time you login our system, in order to use our system conveniently in the future, we will spend about 1 minute of your time to complete your account information.</p>
+                    <p>这是您首次登录本系统，我们将花费您1分钟左右的时间来完善您的账号信息。<br>
+                    This is the first time you login our system, we will spend about 1 minute of your time to complete your account information.</p>
                   </div>
                 </div>
                 <div class="step-pane" id="step2">
@@ -71,13 +71,13 @@
                   </div>
                   <div class="form-group">
                     <label for="inputPassword1" class="col-sm-2 control-label">密码</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-4">
                       <input type="password" class="form-control" id="inputPassword1" placeholder="Password">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputPassword2" class="col-sm-2 control-label">确认密码</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-4">
                       <input type="password" class="form-control" id="inputPassword2" placeholder="Confirm password">
                     </div>
                   </div>
@@ -89,13 +89,13 @@
                   </div>
                   <div class="form-group">
                     <label for="inputPhoneNumber" class="col-sm-2 control-label">联系电话（手机）</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-4">
                       <input type="text" class="form-control" id="inputPhoneNumber" placeholder="Mobile Phone Number">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="inputEmail" class="col-sm-2 control-label">电子邮箱</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-4">
                       <input type="email" class="form-control" id="inputEmail" placeholder="Email">
                     </div>
                   </div>
@@ -107,7 +107,7 @@
                   </div>
                   <div class="form-group">
                     <label for="inlineLangOptions" class="col-sm-2 control-label">语言（Language）</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-5">
                       <label class="radio-inline">
                         <input type="radio" name="inlineLangOptions" id="inlineLang1" value="0" checked> 中文
                       </label>
@@ -120,8 +120,8 @@
                 <div class="step-pane" id="step5">
                   <div class="tips">
                     <h4><i class="icon-ok icon-2x text-success"></i> 非常感谢，账号设置已完成。Thank you, Account setup is complete.</h4>
-                    <p>温馨提示：账号密码及语言使用偏好可以在系统界面右上角的用户账号 - 账号设置或左侧导航栏中的设置与帮助中修改。<br>
-                    Tips: the account password and language preferences can be changed in the User Account - Account Settings, the top right corner of the system interface, or in the left navigation bar Setting and Help.</p>
+                    <p>温馨提示：账号密码及语言使用偏好可以在系统界面右上角的账号 - 账号设置或左侧导航栏中的设置与帮助中修改。<br>
+                    Tips: the account password and language preferences can be changed in the Account - Account Settings, the top right corner of the system interface, or in the left navigation bar Setting and Help.</p>
                   </div>
                 </div>
               </div>
