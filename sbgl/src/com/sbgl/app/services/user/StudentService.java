@@ -20,4 +20,6 @@ public interface StudentService {
 	public Integer getSumOfStudent();
 	//根据学号获取学生信息
 	public Student getStudentByCode(String stuCode);
+	//获取全部学生信息用于界面显示
+	public List<Object[]> getAllStuShowList();
 }

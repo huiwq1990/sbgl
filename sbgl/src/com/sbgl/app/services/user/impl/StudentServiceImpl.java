@@ -1,11 +1,17 @@
 package com.sbgl.app.services.user.impl;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.springframework.context.annotation.Scope;
+import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Service;
 
 import com.sbgl.app.dao.BaseDao;
@@ -111,6 +117,28 @@ public class StudentServiceImpl implements StudentService {
 	public Student getStudentByCode(String stuCode) {
 		List<Student> resultList = baseDao.getEntityByProperty(Student.class.getName(), "studentid", stuCode);
 		return resultList != null ? resultList.get(0) : null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> getAllStuShowList() {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("select 1 as role, s.id, s.gender, s.studentid, s.name, s.password, s.classid, s.telephone, s.email, s.couldborrow, s.photo,");
+		sb.append("g.id as gid, g.name as gname, c.classname ");
+		sb.append("from student as s ");
+		sb.append("left join usergrouprelation as r on s.id = r.userid ");
+		sb.append("left join usergroup as g on r.groupid = g.id ");
+		sb.append("left join clazz as c on c.classid = s.classid");
+		
+		HibernateTemplate tmpl = baseDao.getHibernateTemplate();  
+		return tmpl.execute(new HibernateCallback<List<Object[]>>() {  
+		    @Override  
+		    public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
+		        SQLQuery query = session.createSQLQuery( sb.toString() );  
+		        
+		        return (List<Object[]>) query.list();  
+		    }  
+		});
 	}
 
 }

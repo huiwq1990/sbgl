@@ -1,11 +1,17 @@
 package com.sbgl.app.services.user.impl;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.springframework.context.annotation.Scope;
+import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Service;
 
 import com.sbgl.app.dao.BaseDao;
@@ -109,5 +115,26 @@ public class TeacherServiceImpl implements TeacherService {
 	public Teacher getTeacherByCode(String teaCode) {
 		List<Teacher> resultList = baseDao.getEntityByProperty(Teacher.class.getName(), "teacherid", teaCode);
 		return resultList != null ? resultList.get(0) : null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> getAllTeaShowList() {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("select 2 as role, t.id, t.gender, t.teacherid, t.name, t.password, t.telephone, t.email, t.photo,");
+		sb.append("g.id as gid, g.name as gname ");
+		sb.append("from teacher as t ");
+		sb.append("left join usergrouprelation as r on t.id = r.userid ");
+		sb.append("left join usergroup as g on r.groupid = g.id");
+		
+		HibernateTemplate tmpl = baseDao.getHibernateTemplate();  
+		return tmpl.execute(new HibernateCallback<List<Object[]>>() {  
+			@Override  
+		    public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
+		        SQLQuery query = session.createSQLQuery( sb.toString() );  
+		        
+		        return (List<Object[]>) query.list();  
+		    }  
+		});
 	}
 }

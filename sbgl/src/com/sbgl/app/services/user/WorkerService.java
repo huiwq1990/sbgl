@@ -1,6 +1,7 @@
 package com.sbgl.app.services.user;
 
 import java.util.List;
+
 import com.sbgl.app.entity.Worker;
 
 public interface WorkerService {
@@ -18,4 +19,6 @@ public interface WorkerService {
 	public Worker getWorkerById(int workerId);
 	//获取其他用户总数
 	public Integer getSumOfWorker();
+	//获取全部学生信息用于界面显示
+	public List<Object[]> getAllWkrShowList();
 }

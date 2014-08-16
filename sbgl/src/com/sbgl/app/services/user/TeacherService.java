@@ -21,4 +21,6 @@ public interface TeacherService {
 	public Integer getSumOfTeacher();
 	//根据教工号获取教师
 	public Teacher getTeacherByCode(String teaCode);
+	//获取全部教师信息用于界面显示
+	public List<Object[]> getAllTeaShowList();
 }
