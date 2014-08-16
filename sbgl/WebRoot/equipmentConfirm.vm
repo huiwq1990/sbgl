@@ -1,3 +1,6 @@
+#set($currentposition= "myorder")
+#set($currentpositiontext= ${textmap.myorderposition})	
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,7 +51,7 @@
     <div class="container">            
       <div class="row">
         <div class="control-bar col-md-12">
-          <div class="title">$!{textmap.order_bookingconfirmation}</div>
+          <div class="title">$!{textmap.confirm_order_information_title}</div>
         </div>      
         <div class="col-md-7">                  
           <div class="thumbnail">
@@ -60,7 +63,7 @@
 				 #set($bnum = $bnum+$!row.applynumber)
 			  #end
               <h3 class="pull-left">$!{textmap.order_reservation}</h3>
-              <div class="pull-right">$!{textmap.order_total} $!anum $!{textmap.order_kindofeuip}， $!bnum $!{textmap.order_adevice}</div>
+              <div class="pull-right">$!{textmap.order_total} $!anum $!{textmap.order_kindofeuip} $!bnum $!{textmap.order_adevice}</div>
             </div>
             <ul class="media-list">
 				#foreach($row2 in $!equipmentList)	
@@ -80,43 +83,30 @@
         <div class="col-md-5">
           <div class="thumbnail">
             <div class="hd">
-              <h3>$!{textmap.order_applicant}</h3>
+              <h3>$!{textmap.detail_title}</h3>
             </div>
             <div class="caption">
-              <span class="rent-user">$!{textmap.order_details}：<a rel="popover" class="lk" href="#">$!equipmenborrowFull.userName</a></span>
+              <span class="rent-user">$!{textmap.detail_Applicant}：<a rel="popover" class="lk" href="#">$!equipmenborrowFull.userName</a></span>
 			  #if($!equipmenborrowFull.category==1)
-				<div class="rent-type">$!{textmap.order_reservationtype}：$!{textmap.order_personalappointment}</div>
+				<div class="rent-type">$!{textmap.detail_ordertype}：$!{textmap.ordertype_personal}</div>
 			  #elseif($!equipmenborrowFull.category==2)
-				<div class="rent-type">$!{textmap.order_reservationtype}：$!{textmap.order_teachingappointment}</div>
+				<div class="rent-type">$!{textmap.detail_ordertype}：$!{textmap.ordertype_course_assignment}</div>
 			  #end
               <div class="rent-time">$!{textmap.order_appointmenttime}：$!date.format("yyyy-MM-dd ", $!equipmenborrowFull.borrowtime)  $!{textmap.order_to} $!date.format("yyyy-MM-dd ", $!equipmenborrowFull.returntime)</div>
 			  #if($!equipmenborrowFull.category==2)
 				<div class="rent-teacher">$!{textmap.order_correlationteacher}：<a rel="popover" class="lk" href="#">$!equipmenborrowFull.teacherName</a></div>
 			  #end
-              <hr />
             </div>
-			<!--
-            <ul class="media-list">
-              <li class="media">
-                <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
-                  <img src="img/photo.jpg" width="28" height="28" class="img-rounded">
-                </a>
-                <div class="media-body">
-                  <div class="media-heading"><h5><a rel="popover" href="#">教师名</a></h5><span class="post-time" title="详细时间">下午4:53</span></div>
-                  <a href="#" class="lk" title="查看详细说明" rel="tooltip">数字摄影技术第11周设备申请(只显示关联教师发的要求标题)</a>
-                </div>
-              </li>
-            </ul>
-			
+		
             <hr />
-			-->
-            <div class="hd"><h3>$!{textmap.order_title}<small>（$!{textmap.order_optional}）</small></h3></div>
-            <div class="caption"><input id="equtitle" type="text" class="form-control" placeholder="$!{textmap.order_yearxx}"></div>
-            <div class="hd"><h3>$!{textmap.order_remark} <small>$!{textmap.order_needtonote}</small></h3></div>
-            <div class="caption"><textarea id="equremark" class="form-control" rows="3" placeholder="$!{textmap.order_bookingnote}"></textarea></div>
+
+            <div class="hd"><h3>$!{textmap.detail_ordertitle}<small>（$!{textmap.detail_ordertitle_small}）</small></h3></div>
+            <div class="caption"><input id="equtitle" type="text" class="form-control" placeholder="$!{textmap.detail_ordertitle_placeholder}"></div>
+            <div class="hd"><h3>$!{textmap.detail_orderremark} <small>$!{textmap.detail_orderremark_small}</small></h3></div>
+            <div class="caption"><textarea id="equremark" class="form-control" rows="3" placeholder="$!{textmap.detail_orderremark_placeholder}"></textarea></div>
             <div class="form-actions actions">  
-              <button type="button" data-type="selectorder" class="btn btn-white btn-prev">$!{textmap.order_modification}</button>
-              <button type="button" data-type="finishorder" class="btn btn-primary btn-next">$!{textmap.order_submit}</button>
+              <button type="button" data-type="selectorder" class="btn btn-white btn-prev">$!{textmap.detail_modify}</button>
+              <button type="button" data-type="finishorder" class="btn btn-primary btn-next">$!{textmap.detail_submit}</button>
             </div>
           </div>               
         </div>                  

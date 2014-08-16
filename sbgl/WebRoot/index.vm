@@ -1,4 +1,6 @@
-  #set($user =    $request.getSession().getAttribute("loginUser"))
+#set($user =  $request.getSession().getAttribute("loginUser"))
+#set($currentposition= "home")
+#set($currentpositiontext= ${textmap.homeposition})	
   <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +25,7 @@
 		#parse("include/includeGlobalHeader.vm")
   
   <div class="nav-wrap clearfix">	
+
 	#parse("include/includeSiteNavi.vm")	
 	##set($currentPageType="createorder")
 	##parse("include/includeOrderspaceSubNavi.vm") 

@@ -301,17 +301,19 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		try {
 			Equipmentclassification ec = equipService.getEquipmentclassificationById( this.classficationId );
 			if(ec != null && ec.getParentid() == 0) {
-				List<Equipmentclassification> childList = equipService.getAllChildEquipmentclassificationsByParentId( ec.getClassificationid() );
+				List<Equipmentclassification> childList = equipService.getAllChildEquipmentclassificationsByParentId( ec.getComid() );
 				if(childList != null) {
 					for (Equipmentclassification e : childList) {
-						List<Equipment> equipList = equipService.getEquipsByClassification( e.getClassificationid() );
-						if(equipList != null) {
-							for (Equipment equipment : equipList) {
-								equipment.setClassificationid( Integer.valueOf(-1) );
-								equipService.alterEquipInfo( equipment, "1" );
+						if("0".equals(e.getLantype())) {
+							List<Equipment> equipList = equipService.getEquipsByClassification( e.getComid() );
+							if(equipList != null) {
+								for (Equipment equipment : equipList) {
+									equipment.setClassificationid( Integer.valueOf(-1) );
+									equipService.alterEquipInfo( equipment, "1" );
+								}
 							}
+							equipService.deleteEquipmentclassification( e.getClassificationid() );
 						}
-						equipService.deleteEquipmentclassification( e.getClassificationid() );
 					}
 				}
 				
@@ -607,7 +609,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				emc.setId( String.valueOf( equipment.getEquipmentid() ) );
 				emc.setName( String.valueOf( equipment.getEquipmentname() ) );
 				
-				Equipmentclassification cf = equipService.getEquipmentclassificationById( equipment.getClassificationid() );
+				Equipmentclassification cf = equipService.getEquipmentclassificationByComid( equipment.getClassificationid() );
 				emc.setcId( String.valueOf( cf == null ? -1 : cf.getClassificationid() ) );
 				emc.setcName( cf == null ? "未分类" : cf.getName() );
 				emc.setMemo( equipment.getEquipmentdetail() );
@@ -675,8 +677,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				emc.setId( String.valueOf( equipment.getComid() ) );		//根据需求改为联合主键，不再使用单个中文主键
 				emc.setName( String.valueOf( equipment.getEquipmentname() ) );
 				
-				Equipmentclassification cf = equipService.getEquipmentclassificationById( equipment.getClassificationid() );
-				emc.setcId( String.valueOf( cf == null ? -1 : cf.getClassificationid() ) );
+				Equipmentclassification cf = equipService.getEquipmentclassificationByComid( equipment.getClassificationid() );
+				emc.setcId( String.valueOf( cf == null ? -1 : cf.getComid() ) );
 				emc.setcName( cf == null ? "未分类" : cf.getName() );
 				emc.setMemo( equipment.getEquipmentdetail() );
 				emc.setImgName( equipment.getImgname() );
@@ -1048,32 +1050,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		List<Equipmentdetail> tempList = null;
 		int _0 = 0, _1 = 0, _2 = 0, _3 = 0, _4 = 0, _5 = 0, _t = 0;
 		
-		//如果界面按分类筛选器材
-		/*if(seletedClassId != null && !classificationId.equals("0")) {
-			tempList = new ArrayList<Equipmentdetail>();
-			List<Equipment> modelList = equipService.getEquipsByClassification( Integer.valueOf( seletedClassId ) );
-			if(modelList != null) {
-				List<Equipmentdetail> partList = null;
-				for (Equipment e : modelList) {
-					partList = equipService.getAllEquipmentdetailByEquipInfo( e.getEquipmentid() );
-					if(partList != null) {
-						tempList.addAll( partList );
-					}
-				}
-			}
-		} else {
-			tempList = equipService.getAllEquipmentdetail();
-		}*/
-		
-		//如果界面按器材状态筛选
-		/*if(selectedState != null && !"-1".equals( selectedState ) && tempList.size() > 0) {
-			for (int i=0; i<tempList.size(); i++) {
-				if(!tempList.get(i).getStatus().equals( selectedState )) {
-					tempList.remove( i );
-				}
-			}
-		}*/
-		List<HQLOption> hqlOptionList =  new ArrayList<HQLOption>();
+		List<HQLOption> hqlOptionList = new ArrayList<HQLOption>();
 		if(classificationId != null && !classificationId.equals("0")) {
 			List<Equipment> modelList = equipService.getEquipsByClassification( Integer.valueOf( classificationId ) );
 			StringBuffer sb = new StringBuffer();
@@ -1082,6 +1059,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					sb.append( e.getComid() + "," );
 				}
 				hqlOptionList.add( new HQLOption<String>("equipmentid", sb.toString(), SBGLConsistent.HQL_OPTION_IN, SBGLConsistent.HQL_VALUE_INT, SBGLConsistent.HQL_OPTION_AD) );
+			} else {
+				hqlOptionList.add( new HQLOption<String>("equipmentid", "-111", SBGLConsistent.HQL_OPTION_IN, SBGLConsistent.HQL_VALUE_INT, SBGLConsistent.HQL_OPTION_AD) );
 			}
 			QueryResult tempResult = equipService.getEquipDetailByPageWithOptions(hqlOptionList, new Page(0, 10000));
 			if(tempResult != null && tempResult.getTotalResultNum() > 0) {
@@ -1138,27 +1117,10 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		}
 		Page page = new Page( (Integer.valueOf(crtDetailPage)-1)*10, 10 );
 		QueryResult result = null;
-		if(hqlOptionList.size() == 0) {
-			result = equipService.getEquipDetailByPageWithOptions(null, page);
-		} else {
-			result = equipService.getEquipDetailByPageWithOptions(hqlOptionList, page);
-		}
+		result = equipService.getEquipDetailByPageWithOptions(hqlOptionList, page);
 		if(result != null) {
 			tempList = (List<Equipmentdetail>) result.getResultList();
 			
-//			if("0".equals(selectedState)) {
-//				normalSum = String.valueOf( result.getTotalResultNum() );
-//			} else if("1".equals(selectedState)) {
-//				loanSum = String.valueOf( result.getTotalResultNum() );
-//			} else if("2".equals(selectedState)) {
-//				maintSum = String.valueOf( result.getTotalResultNum() );
-//			} else if("3".equals(selectedState)) {
-//				repairSum = String.valueOf( result.getTotalResultNum() );
-//			} else if("4".equals(selectedState)) {
-//				lostSum = String.valueOf( result.getTotalResultNum() );
-//			} else if("5".equals(selectedState)) {
-//				recycleSum = String.valueOf( result.getTotalResultNum() );
-//			}
 			if(result.getTotalResultNum() == 0) {
 				totalDetailPages = "1";
 			} else if(result.getTotalResultNum() % 10 != 0 && result.getTotalResultNum() > 10) {
@@ -1192,7 +1154,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					if( e.getClassificationid() != null && e.getClassificationid() != -1 ) {
 						Equipmentclassification ecf = equipService.getEquipmentclassificationByEquipmentModel( e.getEquipmentid() );
 						if(ecf != null) {
-							ec.setClassId(  String.valueOf( ecf.getClassificationid() ) );
+							ec.setClassId(  String.valueOf( ecf.getComid() ) );
 							ec.setClassName( ecf.getName() );
 						} else {
 							ec.setClassId(  String.valueOf( -1 ) );
@@ -1205,16 +1167,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					
 				}
 			}
-//			if(equipdetail.getClassificationid() != -1) { //该设备有分类
-//				Equipmentclassification ecf = equipService.getEquipmentclassificationById( equipdetail.getClassificationid() );
-//				if(ecf != null) {
-//					ec.setClassId(  String.valueOf( ecf.getClassificationid() ) );
-//					ec.setClassName( ecf.getName() );
-//				}
-//			} else {
-//				ec.setClassId(  String.valueOf( -1 ) );
-//				ec.setClassName( "未分类" );
-//			}
 			ec.setState( String.valueOf( equipdetail.getStatus() ) );
 			if(equipdetail.getSysremark() != null && equipdetail.getUsermark() != null) {
 				ec.setMemo( equipdetail.getSysremark() + " " + equipdetail.getUsermark());
@@ -1240,30 +1192,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			
 			equipDetailCourse.add( ec );
 		}
-		//进行分页操作
-		/*if(equipDetailCourse != null) {
-			if(equipDetailCourse.size() == 0) {
-				totalDetailPages = "1";
-			} else if(equipDetailCourse.size() % 10 != 0 && equipDetailCourse.size() > 10) {
-				totalDetailPages = String.valueOf( equipDetailCourse.size() / 10 + 1 );
-			} else if(equipDetailCourse.size() % 10 != 0 && equipDetailCourse.size() < 10) {
-				totalDetailPages = "1";
-			} else {
-				totalDetailPages = String.valueOf( equipDetailCourse.size() / 10 );
-			}
-			if(crtDetailPage == "0" || crtDetailPage == "" || crtDetailPage == null) {
-				crtDetailPage = "1";
-			}
-			
-			if(crtDetailPage != null && crtDetailPage != "") {
-				int startIndex = Integer.valueOf( crtDetailPage.trim() ) - 1;
-				int endIndex = (startIndex + 1) * 10 > equipDetailCourse.size() ? equipDetailCourse.size() : (startIndex + 1) * 10;
-				equipDetailCourse = equipDetailCourse.subList(startIndex*10, endIndex);
-			}
-			
-		} else {
-			totalDetailPages = "1";
-		}*/
 		return SUCCESS;
 	}
 	
@@ -1319,18 +1247,18 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			if("0".equals( ec.getLantype() )) {
 				if(ec.getParentid() == 0) {
 					ClassficationCourse cc = new ClassficationCourse();
-					cc.setId( String.valueOf( ec.getClassificationid() ) );
+					cc.setId( String.valueOf( ec.getComid() ) );		//改为联合主键
 					cc.setName( ec.getName() );
 					cc.setpId( "0" );
 					cc.setIsParent( "1" );
 					classForEquipAdd.add( cc );
 					
-					List<Equipmentclassification> tempList = equipService.getAllChildEquipmentclassificationsByParentId( ec.getClassificationid() );
+					List<Equipmentclassification> tempList = equipService.getAllChildEquipmentclassificationsByParentId( ec.getComid() );
 					if(tempList != null) {
 						for (Equipmentclassification ec2 : tempList) {
 							if("0".equals( ec2.getLantype() )) {
 								ClassficationCourse cc2 = new ClassficationCourse();
-								cc2.setId( String.valueOf( ec2.getClassificationid() ) );
+								cc2.setId( String.valueOf( ec2.getComid() ) );		//改为联合主键
 								cc2.setName( ec2.getName() );
 								cc2.setpId( String.valueOf( ec2.getParentid() ) );
 								cc2.setIsParent( "0" );
@@ -1413,7 +1341,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					String name = equipmentclassification.getName();
 					Integer parentId = equipmentclassification.getParentid();
 					if( parentId == 0 ) {
-						idNameMap.put(equipmentclassification.getClassificationid(), name);
+						idNameMap.put(equipmentclassification.getComid(), name);
 					}
 				}
 			}
@@ -1424,11 +1352,11 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					cc.setId( String.valueOf( classfication.getClassificationid() ) );
 					cc.setName( classfication.getName() );
 					if( classfication.getParentid() == 0 ) {
-						cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification( classfication.getClassificationid(), true ) ) );
-						cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification( classfication.getClassificationid(), true ) ) );
+						cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification( classfication.getComid(), true ) ) );
+						cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification( classfication.getComid(), true ) ) );
 					} else {
-						cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification( classfication.getClassificationid(), false ) ) );
-						cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification( classfication.getClassificationid(), false ) ) );
+						cc.setModelCount( String.valueOf( equipService.getCountOfEquipByClassification( classfication.getComid(), false ) ) );
+						cc.setEquipCount( String.valueOf( equipService.getCountOfEquipdetailByClassification( classfication.getComid(), false ) ) );
 					}
 					cc.setpId( String.valueOf( classfication.getParentid() ) );
 					cc.setpName( idNameMap.get( classfication.getParentid() ) == null ? "无" : idNameMap.get( classfication.getParentid() ) );
@@ -1436,7 +1364,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					tempCourse.add( cc );
 					
 					if(classfication.getParentid() == 0) {
-						allParent.add( new ParentClassIdName( classfication.getClassificationid(), classfication.getName() ) );
+						allParent.add( new ParentClassIdName( classfication.getComid(), classfication.getName() ) );
 					}
 				}
 			}

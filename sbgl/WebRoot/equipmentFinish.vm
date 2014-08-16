@@ -1,8 +1,11 @@
+#set($currentposition= "myorder")
+#set($currentpositiontext= ${textmap.myorderposition})	
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 设备预约</title>
+<title>$!{textmap.ordersuccess_title}</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -28,10 +31,9 @@
 <body>
 <header id="header-wrap"><!--header-wrap-->
 	#parse("include/includeGlobalHeader.vm")
- 
   <div class="nav-wrap clearfix">
-    #parse("include/includeSiteNavi.vm")
-	#set($currentPageType="equorderSpace1")
+	#parse("include/includeSiteNavi.vm")
+	#set($currentPageType="computerorderfinish")
 	#parse("include/includeOrderspaceSubNavi.vm")
   </div>
 </header><!--/#header-wrap-->
@@ -41,13 +43,13 @@
   <div id="main-content" class="clearfix">
     <div class="container">            
       <div class="row">
-        <div class="hero-unit clearfix">
+        <div class="hero-unit media">
           <i class="icon-ok-sign pull-left"></i>
-          <div class="pull-left">
-            <h1> 预约成功</h1>
-            <p>您的预约申请已成功提交，出单号为<code>$!{borrowId}</code>，请耐心等待审核。</p>
-            <p>审核通过后系统将会通知您，请在规定时间内到XXXX领取器材，并按时归还。</p>
-            <p><a class="btn btn-primary btn-large" href="${webbaseurl}/equipOrdIndex.do">我的预约</a></p>
+          <div class="media-body">
+            <h1>$!{textmap.ordersuccess_submitted_successfully}</h1>
+            <p>$!{textmap.ordersuccess_detail_1}<code>$!{borrowId}</code>$!{textmap.ordersuccess_detail_2}</p>
+            <p>$!{textmap.ordersuccess_equipment}</p>
+            <p><a class="btn btn-large btn-link" href="${webbaseurl}/equipOrdIndex.do"><i class="icon-angle-right icon-large"></i> $!{textmap.ordersuccess_myorder}</a></p>
           </div>
         </div>                                    
       </div>

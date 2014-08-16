@@ -1,8 +1,11 @@
+#set($user = $request.getSession().getAttribute("loginUser"))
+#set($currentposition= "myorder")
+#set($currentpositiontext= ${textmap.myorderposition})	
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>$!{textmap.computerordersuccess_title}</title>
+<title>$!{textmap.ordersuccess_title}</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -23,7 +26,7 @@
 	
 	#parse("include/includeSiteNavi.vm")
 	
-	#set($currentPageType="computerorderfinish")
+	#set($currentPageType="orderfinish")
 	#parse("include/includeOrderspaceSubNavi.vm")
 	
   </div>
@@ -35,13 +38,13 @@
   <div id="main-content" class="clearfix">
     <div class="container">            
       <div class="row">
-        <div class="hero-unit clearfix">
+        <div class="hero-unit media">
           <i class="icon-ok-sign pull-left"></i>
-          <div class="pull-left">
-            <h1>$!{textmap.computerordersuccess_h1}</h1>
-            <p>$!{textmap.computerordersuccess_p1}<code>${computerorderSerialnumber}</code>$!{textmap.computerordersuccess_p2}</p>
-            <p>$!{textmap.computerordersuccess_p3}</p>
-            <p><a class="btn btn-primary btn-large" href="${webbaseurl}/viewMineComputerorderList.${strutsaction}">${textmap.computerordersuccess_myorder}</a></p>
+          <div class="media-body">
+            <h1>$!{textmap.ordersuccess_submitted_successfully}</h1>
+            <p>$!{textmap.ordersuccess_detail_1}<code>${computerorderSerialnumber}</code>$!{textmap.ordersuccess_detail_2}</p>
+            <p>$!{textmap.ordersuccess_post}</p>
+            <p><a class="btn btn-large btn-link" href="${webbaseurl}/viewMineComputerorderList.${strutsaction}"><i class="icon-angle-right icon-large"></i> ${textmap.ordersuccess_myorder}</a></p>
           
 			
 		  </div>
@@ -61,49 +64,6 @@
 <script src="${jsDomain}/select2.js"></script>
 <script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
-
-<!-- Modal -->
-<div id="equip-detail" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-    <h3 id="myModalLabel">设备详情</h3>
-  </div>
-  <div class="modal-body">
-    <p>这里是设备详细页，不包含设备每天最大可预约数量</p>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">关 闭</button>
-  </div>
-</div>
-
-<div id="reject" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-    <h3 id="myModalLabel">操作</h3>
-  </div>
-  <div class="modal-body">
-    <p>这里是驳回操作相关提示说明</p>
-    <input class="input-block-level" type="text" placeholder="在此输入驳回理由">
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary">提交驳回</button>
-  </div>
-</div>
-
-<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
-  <img src="img/cover-img.jpg" class="cover" alt="封面照片" />
-  <div class="cover-layout"></div>
-  <div class="avatar"><img src="img/photo.jpg" width="80" height="80" class="img-circle"></div>
-  <div class="user-wrap">
-    <div class="user-name"><a href="#">用户名</a></div>
-    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
-    <div class="user-info">职务等信息</div>
-    <div class="user-info">地点</div>
-  </div>
-  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
-</div>
-
 
 </body>
 </html>

@@ -1,57 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>出错了 - 北京电影学院摄影系</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="">
-<meta name="author" content="">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
-<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
-
-#parse("include/includePageCompatibility.vm")
-
-</head>
-
-<body>
-<header id="header-wrap"><!--header-wrap-->
-
-	#parse("include/includeGlobalHeader.vm")
-  
-  <div class="nav-wrap clearfix">	
-	#parse("include/includeSiteNavi.vm")	
-	#set($currentPageType="createorder")
-	#parse("include/includeOrderspaceSubNavi.vm") 
-  </div>
-  
-</header><!--/#header-wrap-->
-
-<section id="main-wrap"><!--main-wrap-->
-  
-  <div id="main-content" class="clearfix"><!--main-content start--> 
-          <div class="container" id="post-equip">
-            <div class="row">
-				<div class="hero-unit clearfix">
-				  <i class="icon-warning-sign pull-left"></i>
-				  <div class="pull-left">
-				    <h1>${textmap.error_message_title}</h1>
-				    <p>$actionMsg</p>
-				  </div>
-				</div>
-          </div>
-  </div>
-  <!---main-content end-->
-</section>
-
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-<script src="${jsDomain}/jquery.js"></script>
-<script src="${jsDomain}/loader.min.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
-<script src="${jsDomain}/bfa.js"></script>
-</body>
-</html>
+<div class="post-list-warp"><!--post-list-warp start-->  
+    <div class="post-list">              
+		<div class="hero-unit clearfix">
+		  <i class="icon-warning-sign pull-left"></i>
+		  <div class="pull-left">
+		    <h1>${textmap.error_message_title}</h1>
+		    <p>$actionMsg</p>
+		  </div>
+		</div>
+    </div>
+</div>

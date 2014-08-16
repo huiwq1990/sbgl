@@ -1,4 +1,6 @@
 #set($user = $request.getSession().getAttribute("loginUser"))
+#set($currentposition= "myorder")
+#set($currentpositiontext= ${textmap.myorderposition})	
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +23,7 @@
 	#parse("include/includeGlobalHeader.vm")
   
   <div class="nav-wrap clearfix">
-	
+
 	#parse("include/includeSiteNavi.vm")
 	
 	<div class="sub-nav">
@@ -321,7 +323,7 @@ $(window).load(function(){
 					//$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框
 					location.href = "${webbaseurl}/toComputerorderConfirmPage.${strutsaction}?computerordertype=$computerordertype&orderInfoStr="+orderInfoStr+"&computerorderid=$!computerorderid&computerhomeworkid=0&reorder=$!reorder";
 				}else{
-					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});					
 					$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
 				}
 			}		  	  

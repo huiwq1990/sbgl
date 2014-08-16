@@ -324,44 +324,8 @@ i { font-size: 14px; }
 	left: 200px;
 	right: 200px;
 }
-#hdc-wrap .search-wrap {
-	position: relative;
-	display: block;
-	max-width: 650px;
-}
-#hdc-wrap .search-wrap .form-search { position: relative; display: block; width: 100%;}
-#hdc-wrap .search-wrap .form-search .ipt-wrap {
-	position: absolute;
-	left: 0;
-	right: 90px;
-}
-#hdc-wrap .search-wrap .form-search .btn{
-	position: absolute;
-	right: 0;
-	margin-left: 10px;
-	width: 80px;
-	display: block;
-}
-#global-header .account-wrap { margin: 15px 20px 0 0; }
-#global-header.account-wrap .notice {	margin: 8px 20px 0 12px; position: relative; }
-.account-wrap .notice .n-num{ position: absolute; top:-4px; right: 4px;}
-.account-wrap .social .caret { margin-top: 20px; }
-.account-wrap .social .username { margin-right: 18px; }
-.account-wrap .media { padding: 20px; width: 320px; }
-.account-wrap .media .info { line-height: 16px;}
-.account-wrap .media-heading { margin: 0; }
-.account-wrap .media-heading h5{ line-height: 16px;}
-.account-wrap .media > .pull-left { margin-right: 20px; }
-.account-wrap .setting { margin: 3px 0 7px 0;}
-.account-wrap .setting a { color: #36C; }
 
-#header-wrap .nav-pills > .social > a {
-	padding: 0px;
-	color: #666;
-}
-#header-wrap .nav-pills > .social > a:hover {
-	background: none;
-}
+
 
 #header-nav-bar { position: fixed; z-index: 100; top: 80px; height: 45px; width: 100%; background-color: #f5f5f5;}
 #header-nav-bar .site-positon { position: fixed; z-index: 101; }
@@ -1397,10 +1361,18 @@ a.list-group-item.active:focus .list-group-item-text {
 #admin #header-wrap { height: 45px; }
 #admin .site-nav .dropdown-menu { top: -1px !important; }
 #admin .nav-wrap { position: fixed !important; top: 0 !important; }
-#admin .account-wrap { position: fixed; right: 0; padding-right: 20px; z-index: 1001; text-align: left; }
-#admin .account-wrap a { outline: none; }
-#admin .account-wrap .social { margin-top: 8px; }
-#admin .account-wrap .social .caret { margin-top: 12px; }
+#admin #account-wrap { position: fixed; right: 0; height: 45px; padding: 0 20px 0 0; z-index: 1001; text-align: left; }
+#admin #account-wrap li { margin-left: 18px; }
+#admin #account-wrap li > a { padding-top: 12px; padding-bottom: 12px; color: #666; }
+#admin #account-wrap li > a:hover { background-color: transparent; background: none; }
+#admin #account-wrap #account > a { padding-top: 8px; padding-bottom: 4px; }
+#admin #account-wrap #account .username { margin-right: 18px; }
+#admin #account-wrap #account .caret { margin-top: 12px; }
+#admin #account-wrap #account .media {
+	padding: 20px;
+	width: 320px;
+}
+#admin #account-wrap #account .dropdown-menu { padding: 0; }
 #admin #main-wrap {
 	padding: 30px 30px 0;
 	background-color: #FFF;
@@ -1638,34 +1610,6 @@ a.list-group-item.active:focus .list-group-item-text {
 
 
 
-
-
-
-
-
-#global-header .account-wrap { margin: 15px 20px 0 0; }
-.account-wrap .notice {	margin: 8px 20px 0 12px; position: relative; }
-.account-wrap .notice .n-num{ position: absolute; top:-4px; right: 4px;}
-.account-wrap .social .caret { margin-top: 20px; }
-.account-wrap .social .username { margin-right: 18px; }
-.account-wrap .media { padding: 20px; width: 320px; }
-
-.account-wrap .media .info { line-height: 16px;}
-.account-wrap .media-heading { margin: 0; }
-.account-wrap .media-heading h5{ line-height: 16px;}
-.account-wrap .media > .pull-left { margin-right: 20px; }
-.account-wrap .setting { margin: 3px 0 7px 0;}
-.account-wrap .setting a { color: #36C; }
-
-
-#header-wrap .nav-pills > .social > a {
-	padding: 0px;
-	color: #666;
-}
-#header-wrap .nav-pills > .social > a:hover {
-	background: none;
-}
-
 .nav-wrap { position: fixed; z-index: 100; top: 80px; height: 45px; width: 100%; background-color: #f5f5f5;}
 .site-nav { position: fixed; z-index: 101; }
 .site-nav .dropdown-menu {
@@ -1747,6 +1691,7 @@ border-bottom: 2px solid #427FED !important;
 
 
 /* BS3 头部临时兼容（等框架全部迁移至bs3）================================================= */
+#global-header .navbar-brand { padding: 8px 15px; }
 #global-header #account-wrap {
 	margin: 15px 20px 0 0;
 }
@@ -1765,6 +1710,7 @@ border-bottom: 2px solid #427FED !important;
 	padding: 20px;
 	width: 320px;
 }
+#global-header #account .dropdown-menu { padding: 0; }
 #global-header #notify {
 	margin: 3px 20px 0 12px;
 	position: relative;
@@ -1777,10 +1723,12 @@ border-bottom: 2px solid #427FED !important;
 	top: 0;
 	right: 4px;
 }
-#global-header .nav {
-	margin: 14px 10px 0 20px;
+#global-header .nav { margin: 18px 10px 0 20px; }
+#global-header .nav > li > a { font-size:16px; font-weight: normal; color: #111; }
+#global-header .nav > li > a:focus, #global-header .nav > li > a:hover {
+	color: #777;
+	text-decoration: none;
 }
-
 #global-header .navbar-form {
 	margin-top: 18px;
 	max-width:  300px;
@@ -2146,6 +2094,14 @@ fieldset[disabled] .btn-primary.active {
 
 
 
+/* 用户登录 ================================================= */
+.form-signin input {
+	position: relative;
+}
+.form-signin input:focus {
+	z-index: 2;
+}
+.form-signin #inputPassword { top: -1px; }
 
 /* 用户初始化================================================= */
 #initUser.init-wizard ul { list-style: none outside none; }

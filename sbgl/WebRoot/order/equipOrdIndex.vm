@@ -1,3 +1,6 @@
+#set($currentposition= "myorder")
+#set($currentpositiontext= ${textmap.myorderposition})	
+
 <!DOCTYPE html>
 <html>
 <head>

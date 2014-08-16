@@ -1,3 +1,7 @@
+#set($user = $request.getSession().getAttribute("loginUser"))
+#set($currentposition= "myorder")
+#set($currentpositiontext= ${textmap.myorderposition})	
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +25,7 @@
 	#parse("include/includeGlobalHeader.vm")
 	
   <div class="nav-wrap clearfix">
+
 	#parse("include/includeSiteNavi.vm")	
 		
 	#set($currentPageType="computerorderSpace")
@@ -65,8 +70,9 @@
                             <div class="rent-num">$!{textmap.computerorderindex_ordernum}：$!temp.computerorderserialnumber</div>
 							
                             <div class="rent-time"><i class="icon-time"></i>$date.format("yyyy-MM-dd",$!temp.computerordercreatetime)</div>
-                            <div class="rent-remark"><i class="icon-pencil">$!temp.computerorderremark</i></div>
-                          
+                            #if($temp.computerorderremark && $temp.computerorderremark.length()>0)
+							<div class="rent-remark"><i class="icon-pencil">$!temp.computerorderremark</i></div>
+							#end
 						  </div>
                           <hr />
 						  #if($!temp.computerorderstatus == $ComputerorderStatusAduitWait)
@@ -102,7 +108,9 @@
                           <div class="rent-info">
                            
                             <div class="rent-time"><i class="icon-time"></i>  </div>
+							
                             <div class="rent-remark"><i class="icon-pencil"></i> $temp.computerhomeworkcontent</div>
+							
                           </div>
                           <hr />
 						  
@@ -150,8 +158,10 @@
                             
 							   <div class="rent-num">$!{textmap.computerorderindex_ordernum}：$!temp.computerorderserialnumber</div>							
                             <div class="rent-time"><i class="icon-time"></i>$date.format("yyyy-MM-dd",$!temp.computerordercreatetime)</div>
+							
+							#if($temp.computerorderremark && $temp.computerorderremark.length()>0)
                             <div class="rent-remark"><i class="icon-pencil">$!temp.computerorderremark</i></div>
-                          
+							#end
 						  
 						  </div>
                         </div>
@@ -195,19 +205,6 @@
   <div class="modal-footer">
     <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
   </div>
-</div>
-
-<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
-  <img src="img/cover-img.jpg" class="cover" alt="封面照片" />
-  <div class="cover-layout"></div>
-  <div class="avatar"><img src="img/photo.jpg" width="80" height="80" class="img-circle"></div>
-  <div class="user-wrap">
-    <div class="user-name"><a href="#">用户名</a></div>
-    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
-    <div class="user-info">职务等信息</div>
-    <div class="user-info">地点</div>
-  </div>
-  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
 </div>
 
 </body>

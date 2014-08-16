@@ -15,10 +15,8 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.actions.user.template.UserCourse;
 import com.sbgl.app.entity.Clazz;
 import com.sbgl.app.entity.Student;
-import com.sbgl.app.entity.Teacher;
 import com.sbgl.app.entity.Usergroup;
 import com.sbgl.app.entity.Usergrouprelation;
-import com.sbgl.app.entity.Worker;
 import com.sbgl.app.services.user.ClazzService;
 import com.sbgl.app.services.user.GroupService;
 import com.sbgl.app.services.user.StudentService;
@@ -253,25 +251,25 @@ public class StudentAction extends ActionSupport implements SessionAware {
 		
 		allUserList = new ArrayList<UserCourse>();
 		
-		List<Object> allList = new ArrayList<Object>();
-		List<Student> sList = null;
-		List<Teacher> tList = null;
-		List<Worker> wList = null;
+		List<Object[]> allList = new ArrayList<Object[]>();
+		List<Object[]> sList = null;
+		List<Object[]> tList = null;
+		List<Object[]> wList = null;
 		
 		if("0".equals(type) || "1".equals(type)) {
-			sList = studentService.getAllStudent();
+			sList = studentService.getAllStuShowList();
 			if(sList != null) {
 				allList.addAll(sList);
 			}
 		}
 		if("0".equals(type) || "2".equals(type)) {
-			tList = teacherService.getAllTeacher();
+			tList = teacherService.getAllTeaShowList();
 			if(tList != null) {
 				allList.addAll(tList);
 			}
 		}
 		if( "0".equals(type) || "4".equals(type) ) {
-			wList = workerService.getAllWorker();
+			wList = workerService.getAllWkrShowList();
 			if(wList != null) {
 				allList.addAll(wList);
 			}
@@ -303,84 +301,46 @@ public class StudentAction extends ActionSupport implements SessionAware {
 			
 			allList = allList.subList(startIndex*pageSize, endIndex);
 			if(allSize > 0) {
-				Usergrouprelation ugr = null;
-				Usergroup ug = null;
-				Clazz clazz = null;
-				Student s = null;
-				Teacher t = null;
-				Worker w = null;
+				Object[] data = null;
+				Integer roleType = null;
+				
 				for (Object o : allList) {
-					if(o instanceof Student) {
-						s = (Student) o;
-						ugr = userGroupRelationService.getRelationByType( s.getId() );
-						if(ugr != null) {
-							ug = groupService.getUserGroupByid( ugr.getGroupid() );
-						}
-						if(s.getClassid() != -1) {
-							clazz = clazzService.getClazzById( s.getClassid() );
-						}
-						
-						UserCourse uc = new UserCourse(String.valueOf( s.getId() ),
-													   s.getGender(),
-													   s.getStudentid(),
-													   s.getName(),
-													   CardPassUtil.decrypt( s.getPassword() ),
-													   String.valueOf( ugr == null ? "-1" : ug.getId() ),
-													   ugr == null ? "无分组" : ug.getName(),
-													   "1",
-													   String.valueOf( s.getClassid() ),
-													   s.getClassid() == -1 ? "无班级" : clazz.getClassname(),
-													   s.getTelephone(),
-													   s.getEmail(),
-													   s.getCouldborrow(),
-													   s.getPhoto(),
+					data = (Object[]) o;
+					roleType = Integer.valueOf( data[0].toString() );
+					if(1 == roleType) {
+						UserCourse uc = new UserCourse(	String.valueOf(data[1]),
+														String.valueOf(data[2]),
+														String.valueOf(data[3]),
+														String.valueOf(data[4]),
+														CardPassUtil.decrypt( String.valueOf(data[5]) ),
+														data[11] == null ? "-1" : String.valueOf(data[11]),
+														data[12] == null ? "无分组" : String.valueOf(data[12]),
+														"1",
+														String.valueOf(data[6]),
+														"-1".equals(data[6]) || data[13] == null ? "无班级" : String.valueOf(data[13]),
+														String.valueOf(data[7]),
+														String.valueOf(data[8]),
+														String.valueOf(data[9]),
+														String.valueOf(data[10]),
 													   ""
 													   );
 						allUserList.add( uc );
-					} else if(o instanceof Teacher) {
-						t = (Teacher) o;
-						if(ugr != null) {
-							ug = groupService.getUserGroupByid( ugr.getGroupid() );
-						}
-						
-						UserCourse uc = new UserCourse(String.valueOf( t.getId() ),
-													   t.getGender(),
-													   t.getTeacherid(),
-													   t.getName(),
-													   CardPassUtil.decrypt( t.getPassword() ),
-													   String.valueOf( ugr == null ? "-1" : ug.getId() ),
-													   ugr == null ? "无分组" : ug.getName(),
-													   "2",
-													   "",
-													   "",
-													   t.getTelephone(),
-													   t.getEmail(),
-													   "not",
-													   t.getPhoto(),
-													   ""
-													   );
-						allUserList.add( uc );
-					} else if(o instanceof Worker) {
-						w = (Worker) o;
-						if(ugr != null) {
-							ug = groupService.getUserGroupByid( ugr.getGroupid() );
-						}
-						
-						UserCourse uc = new UserCourse(String.valueOf( w.getId() ),
-													   w.getGender(),
-													   w.getWorkid(),
-													   w.getName(),
-													   CardPassUtil.decrypt( w.getPassword() ),
-													   String.valueOf( ugr == null ? "-1" : ug.getId() ),
-													   ugr == null ? "无分组" : ug.getName(),
-													   "4",
-													   "",
-													   "",
-													   w.getTelephone(),
-													   w.getEmail(),
-													   "not",
-													   w.getPhoto(),
-													   ""
+					} else if(2 == roleType || 4 == roleType) {
+						UserCourse uc = new UserCourse(	String.valueOf(data[1]),
+														String.valueOf(data[2]),
+														String.valueOf(data[3]),
+														String.valueOf(data[4]),
+														CardPassUtil.decrypt( String.valueOf(data[5]) ),
+														data[9] == null ? "-1" : String.valueOf(data[9]),
+														data[10] == null ? "无分组" : String.valueOf(data[10]),
+														roleType.toString(),
+														"",
+														"",
+														String.valueOf(data[6]),
+														String.valueOf(data[7]),
+														"not",
+														String.valueOf(data[8]),
+														""
 													   );
 						allUserList.add( uc );
 					}

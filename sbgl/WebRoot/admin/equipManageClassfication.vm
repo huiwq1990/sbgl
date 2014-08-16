@@ -385,7 +385,7 @@
 	})
 	
 	$("body").on("click", "a[action-type|=delClass]", function() {
-		console.log("**********************" + currentPageNo);
+		console.log("**********************" + idsForDel);
 		var postData = {
 			classIds: idsForDel,
 			currentPage: currentPageNo
@@ -422,7 +422,7 @@
 						}
 					})
 				} else {
-					var n = noty({text: data.msg, timeout: 2500, type: 'error'});
+					var n = noty({text: "系统错误，请联系管理员！", timeout: 2500, type: 'error'});
 				}
 				
 	        },  

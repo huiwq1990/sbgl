@@ -267,7 +267,7 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
 		List<T> resultList = null;
 		String queryString = "from " + entityClass.getName() + " as m where 1=1";
 		
-		if(hqlOptionList != null) {
+		if(hqlOptionList != null && hqlOptionList.size() > 0) {
 			for(HQLOption option : hqlOptionList) {
 				if(option.getType() == SBGLConsistent.HQL_VALUE_STR) {  //字符串
 					switch( option.getOption() ) {
