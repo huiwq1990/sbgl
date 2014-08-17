@@ -45,11 +45,11 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 		return null;
 	}
 	
-	public List<EquipmentFull> findListBorrow(Integer borrowId) {
+	public List<EquipmentFull> findListBorrow(Integer borrowId,String lantype) {
 		// TODO Auto-generated method stub
-		final String sql = " select a.*,b.applynumber,c.name as categoryName from Equipment a left outer join ListDetail b on a.equipmentid = b.equipmentid "
-			+ " left outer join EquipmentClassification c on c.classificationid=a.classificationid "
-			+ " where b.borrowlistid='"+borrowId+"' ";
+		final String sql = " select a.*,b.applynumber,c.name as categoryName from Equipment a left outer join ListDetail b on a.comid = b.equipmentid "
+			+ " left outer join EquipmentClassification c on c.classificationid=a.comid and c.lantype='"+lantype+"' "
+			+ " where b.borrowlistid='"+borrowId+"'  and a.lantype='"+lantype+"' ";
 		List<EquipmentFull> equipmentFullList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(sql);
@@ -63,11 +63,11 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 		return null;
 	}
 	
-	public EquipmentFull findEquipmentById(Integer equipmentId) {
+	public EquipmentFull findEquipmentById(Integer equipmentId,String lantype) {
 		// TODO Auto-generated method stub
 		final String sql = " select a.Equipmentid,a.Equipmentname,c.name as categoryName,a.imgNameSaved,a.equipmentdetail from Equipment a  "
-	    	+ " left outer join EquipmentClassification c on a.classificationid = c.classificationid "
-			+ " where a.equipmentid ='"+equipmentId+"' ";
+	    	+ " left outer join EquipmentClassification c on a.classificationid = c.comId  and c.lantype='"+lantype+"' "
+			+ " where a.comid ='"+equipmentId+"' and a.lantype='"+lantype+"' ";
 		List<EquipmentFull> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(sql);
@@ -82,10 +82,10 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 	}
 
 	@Override
-	public List<Equipmentclassification> findclassList(Integer borrowId) {
+	public List<Equipmentclassification> findclassList(Integer borrowId,String lantype) {
 		// TODO Auto-generated method stub
-		final String sql = " select distinct a.* from EquipmentClassification a left outer join Equipment b on a.classificationid = b.classificationid " +
-				" left outer join ListDetail c on b.equipmentid=c.equipmentid where c.borrowlistid='"+borrowId+"' ";
+		final String sql = " select distinct a.* from EquipmentClassification a left outer join Equipment b on a.comid = b.classificationid  and b.lantype='"+lantype+"'  " +
+				" left outer join ListDetail c on b.comid=c.equipmentid where c.borrowlistid='"+borrowId+"' and a.lantype='"+lantype+"' ";
 		List<Equipmentclassification> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(sql).addEntity(Equipmentclassification.class); 
@@ -99,11 +99,11 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 	}
 
 	@Override
-	public Map<Integer, List<EquipmentFull>> findMapBorrow(Integer borrowId,Integer type) {
+	public Map<Integer, List<EquipmentFull>> findMapBorrow(Integer borrowId,Integer type,String lantype) {
 		// TODO Auto-generated method stub
 		Map<Integer, List<EquipmentFull>> map = new HashMap<Integer, List<EquipmentFull>>();
-		final String sql = " select distinct a.* from EquipmentClassification a left outer join Equipment b on a.classificationid = b.classificationid " +
-		" left outer join ListDetail c on b.equipmentid=c.equipmentid where c.borrowlistid='"+borrowId+"' ";
+		final String sql = " select distinct a.* from EquipmentClassification a left outer join Equipment b on a.comid  = b.classificationid  and b.lantype='"+lantype+"' " +
+		" left outer join ListDetail c on b.comid=c.equipmentid where c.borrowlistid='"+borrowId+"' and a.lantype='"+lantype+"'  ";
 		List<Equipmentclassification> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(sql).addEntity(Equipmentclassification.class); 
@@ -112,9 +112,9 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 		});	
 		if(equipmentList!=null&&!equipmentList.isEmpty()){
 			for(Equipmentclassification equipmentclassification:equipmentList){
-				String sql1 = " select a.*,b.applynumber,c.name as categoryName,b.listdetailid from Equipment a left outer join ListDetail b on a.equipmentid = b.equipmentid "
-					+ " left outer join EquipmentClassification c on c.classificationid=a.classificationid "
-					+ " where b.borrowlistid='"+borrowId+"' and c.classificationid='"+equipmentclassification.getClassificationid()+"' ";
+				String sql1 = " select a.*,b.applynumber,c.name as categoryName,b.listdetailid from Equipment a left outer join ListDetail b on a.comid = b.equipmentid and a.lantype='"+lantype+"' "
+					+ " left outer join EquipmentClassification c on c.comid=a.classificationid and c.lantype='"+lantype+"' "
+					+ " where b.borrowlistid='"+borrowId+"' and c.comid='"+equipmentclassification.getComid()+"' and a.lantype='"+lantype+"' ";
 				final String sql2 = sql1;
 				List<EquipmentFull> list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 					public Object doInHibernate(Session session) throws HibernateException{
@@ -185,5 +185,6 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 		}
 		return null;
 	}
+
 
 }

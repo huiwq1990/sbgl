@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.dao.BaseDao;
@@ -37,15 +38,19 @@ public class OrderFinishServiceImpl  implements OrderFinishService  {
 	} 
 
 	
-	public List<EquipmentFull> findListBorrow(Integer borrowId) {
+	public List<EquipmentFull> findListBorrow(Integer borrowId,String lantype) {
 		// TODO Auto-generated method stub
-		return orderFinishDao.findListBorrow(borrowId);
+		return orderFinishDao.findListBorrow(borrowId,lantype);
 	}
 	
-	public boolean finishorder(Integer borrowId,String equtitle,String equremark) throws Exception{
+	public boolean finishorder(Integer borrowId,String equtitle,String equremark,String lantype) throws Exception{
 		Equipmenborrow equipmenborrow = baseDao.getEntityById(Equipmenborrow.class, borrowId);
 		if(equtitle==null||equtitle.equals("")){
-			equipmenborrow.setTitle(DateUtil.getChineseTime(equipmenborrow.getBorrowtime())+"-设备预约");
+			if(lantype.equals(CommonConfig.languagechStr)){
+				equipmenborrow.setTitle(DateUtil.getChineseTime(equipmenborrow.getBorrowtime())+"-设备预约");
+			}else{
+				equipmenborrow.setTitle(DateUtil.getEnglishTime(equipmenborrow.getBorrowtime())+"-Equipment Booking");	
+			}
 		}else{
 			equipmenborrow.setTitle(equtitle);
 		}
@@ -55,9 +60,9 @@ public class OrderFinishServiceImpl  implements OrderFinishService  {
 		return true;
 	}
 	
-	public EquipmentFull findEquipmentById(Integer equipmentId) {
+	public EquipmentFull findEquipmentById(Integer equipmentId,String lantype) {
 		// TODO Auto-generated method stub
-		return orderFinishDao.findEquipmentById(equipmentId);
+		return orderFinishDao.findEquipmentById(equipmentId,lantype);
 	}
 
 

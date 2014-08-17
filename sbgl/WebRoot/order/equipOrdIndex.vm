@@ -49,14 +49,14 @@
           <div class="col3 container">
             <div class="control-bar clearfix">
               <div class="title pull-left">${textmap.underwayorder_title}</div>
-              <a class="btn btn-primary pull-right" href="#selectRentType" role="button" data-toggle="modal">${textmap.createorder}</a>
+              <a class="btn btn-primary pull-right" href="${webbaseurl}/equipmentBooking.do?orderCate=1">${textmap.createorder}</a>
             </div>
             <div class="row">
       			 #foreach($row in $equipmenborrowFullList)		
                   <div class="col-3">                  
                       <div class="thumbnail">
                         <div class="hd clearfix">
-                          <h4 class="pull-left"><a class="lk" href="${webbaseurl}/equipOrderContent.do?borrowId=$!row.borrowid">$!row.title</a></h4>
+                          <h4 class="pull-left"><a class="lk" href="${webbaseurl}/equipOrderContent.do?borrowId=$!row.borrowid">#if(!$row.title) ${textmap.order_tosubmitorders} #else $!row.title #end</a></h4>
                         </div>
                         <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> ${textmap.order_equipment}<br/>#if($!row.category==1)
 							${textmap.order_personalappointment}
@@ -66,33 +66,38 @@
                         <div class="caption">
                           <div class="rent-info">
                             <div class="rent-num">${textmap.order_reservationno} ：$!row.borrowid</div>
+							#if($!row.borrowtime&&$!row.borrowtime!="")
                             <div class="rent-time"><i class="icon-time"></i> $!date.format("yyyy-MM-dd ", $!row.borrowtime)  ${textmap.order_to} $!date.format("yyyy-MM-dd ", $!row.returntime)</div>
-                            <div class="rent-remark"><i class="icon-pencil"></i>$!row.remark</div>
+                            #end
+							#if($!row.remark&&$!row.remark!="")
+							<div class="rent-remark"><i class="icon-pencil"></i>$!row.remark</div>
+							#end
                           </div>
                           <hr />
                           <div class="rent-status clearfix">
-                            <div class="status pull-left"><span class="label label-info">${textmap.order_status}</span>#if($!row.status==1)
-								${textmap.order_waitingforthesub}
+                            <div class="status pull-left">
+							  #if($!row.status==1)
+								<span class="label label-info">${textmap.order_status}</span> ${textmap.orderstatus_wait_submit}
 							  #elseif($!row.status==2)
-								${textmap.order_waitforaudit}
+								<span class="label label-info">${textmap.order_status}</span> ${textmap.orderstatus_confirming}
 							  #elseif($!row.status==3)
-								${textmap.order_theappointmentwasrejected}					
+								<span class="label label-warning">${textmap.order_status}</span> ${textmap.orderstatus_reject}					
 							  #elseif($!row.status==4)
-								${textmap.order_throughtheaudit}						
+								<span class="label label-success">${textmap.order_status}</span> ${textmap.orderstatus_passed_equipment}						
 							  #elseif($!row.status==5)
-								${textmap.order_pleasereturnto}					
+								<span class="label label-warning">${textmap.order_status}</span> ${textmap.orderstatus_return_within_time_equipment}					
 							  #elseif($!row.status==6)
-								${textmap.order_hasbeenextended}
+								<span class="label label-warning">${textmap.order_status}</span> ${textmap.orderstatus_has_extended_equipment}
 							  #elseif($!row.status==7)
-								${textmap.order_partoftheequipment}								
+								<span class="label label-important">${textmap.order_status}</span> ${textmap.orderstatus_part_damaged_equipment}								
 							  #elseif($!row.status==8)
-								${textmap.finishorder_title}
+								<span class="label label-success">${textmap.order_status}</span> ${textmap.orderstatus_completed}
 							  #elseif($!row.status==9)
-								${textmap.order_publishingtask}							
+								<span class="label label-info">${textmap.order_status}</span> ${textmap.orderstatus_wait_submit_course_assignment}							
 							  #end</div>
                           </div>
                         </div>
-##                      </div>                  
+                      </div>                  
                   </div>
                   #end 
             </div>
@@ -116,31 +121,39 @@
                         <div class="caption">
                           <div class="rent-info">
                             <div class="rent-num">${textmap.order_reservationno} ：$!row2.borrowid</div>
+							#if($!row2.borrowtime&&$!row2.borrowtime!="")
                             <div class="rent-time"><i class="icon-time"></i> $date.format("yyyy-MM-dd ", $!row2.borrowtime)  - $date.format("yyyy-MM-dd ", $!row2.returntime)</div>
-                            <div class="rent-remark"><i class="icon-pencil"></i>$!row2.remark</div>
+							#end
+							#if($!row2.remark&&$!row2.remark!="")
+							<div class="rent-remark"><i class="icon-pencil"></i>$!row2.remark</div>
+							#end
                           </div>
+					<!--
                           <hr />
                           <div class="rent-status clearfix">
-                            <div class="status pull-left"><span class="label label-info">${textmap.order_status}</span>#if($!row2.status==1)
-								${textmap.order_waitingforthesub}
+                            <div class="status pull-left">
+							  #if($!row2.status==1)
+								<span class="label label-info">${textmap.order_status}</span> ${textmap.orderstatus_wait_submit}
 							  #elseif($!row2.status==2)
-								${textmap.order_waitforaudit}
+								<span class="label label-info">${textmap.order_status}</span> ${textmap.orderstatus_confirming}
 							  #elseif($!row2.status==3)
-								${textmap.order_theappointmentwasrejected}
+								<span class="label label-warning">${textmap.order_status}</span> ${textmap.orderstatus_reject}
 							  #elseif($!row2.status==4)
-								${textmap.order_throughtheaudit}
+								<span class="label label-success">${textmap.order_status}</span> ${textmap.orderstatus_passed_equipment}
 							  #elseif($!row2.status==5)
-								${textmap.order_pleasereturnto}	
+								<span class="label label-warning">${textmap.order_status}</span> ${textmap.orderstatus_return_within_time_equipment}
 							  #elseif($!row2.status==6)
-								${textmap.order_hasbeenextended}
+								<span class="label label-warning">${textmap.order_status}</span> ${textmap.orderstatus_has_extended_equipment}
 							  #elseif($!row.status==7)
-								${textmap.order_partoftheequipment}	
+								<span class="label label-important">${textmap.order_status}</span> ${textmap.orderstatus_part_damaged_equipment}	
 							  #elseif($!row2.status==8)
-								${textmap.finishorder_title}
+								<span class="label label-success">${textmap.order_status}</span> ${textmap.orderstatus_completed}
 							  #elseif($!row2.status==9)
-								${textmap.order_publishingtask}							
-							  #end</div>
+								<span class="label label-info">${textmap.order_status}</span> ${textmap.orderstatus_wait_submit_course_assignment_detail}						
+							  #end
+							  </div>
                           </div>
+						  -->
                         </div>
                       </div>                  
                   </div>
@@ -157,39 +170,9 @@
     <!-- Placed at the end of the document so the pages load faster -->
 <script src="js/jquery.js"></script>
 <script src="js/loader.min.js"></script>
-<script src="js/bootstrap-hover-dropdown.min.js"></script>
 <script src="js/select2.js"></script>
 <script src="js/bfa.js"></script>
 
-<!-- Modal -->
-<div id="selectRentType" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="selectRentTypeLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-    <h3 id="myModalLabel">选择</h3>
-  </div>
-  <div class="modal-body">
-    <div class="text-center clearfix">
-      <a class="btn btn-white btn-large btn-type pull-left" href="${webbaseurl}/equipmentBooking.do?orderCate=1"><h4><i class="icon-camera-retro icon-2x"></i></h4><h3>设备预约</h3></a>
-      <a class="btn btn-white btn-large btn-type pull-right" href="${webbaseurl}/toComputerIndividualorderPage.action"><h4><i class="icon-desktop icon-2x"></i></h4><h3>机房预约</h3></a>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-  </div>
-</div>
-
-<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
-  <img src="img/cover-img.jpg" class="cover" alt="封面照片" />
-  <div class="cover-layout"></div>
-  <div class="avatar"><img src="img/photo.jpg" width="80" height="80" class="img-circle"></div>
-  <div class="user-wrap">
-    <div class="user-name"><a href="#">用户名</a></div>
-    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
-    <div class="user-info">职务等信息</div>
-    <div class="user-info">地点</div>
-  </div>
-  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
-</div>
 
 </body>
 </html>

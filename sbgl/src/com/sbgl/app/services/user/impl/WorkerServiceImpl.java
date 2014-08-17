@@ -1,11 +1,17 @@
 package com.sbgl.app.services.user.impl;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.springframework.context.annotation.Scope;
+import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Service;
 
 import com.sbgl.app.dao.BaseDao;
@@ -103,6 +109,27 @@ public class WorkerServiceImpl implements WorkerService {
 			return resultList.size();
 		}
 		return 0;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> getAllWkrShowList() {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("select 4 as role, w.id, w.gender, w.workid, w.name, w.password, w.telephone, w.email, w.photo,");
+		sb.append("g.id as gid, g.name as gname ");
+		sb.append("from worker as w ");
+		sb.append("left join usergrouprelation as r on w.id = r.userid ");
+		sb.append("left join usergroup as g on r.groupid = g.id");
+		
+		HibernateTemplate tmpl = baseDao.getHibernateTemplate();  
+		return tmpl.execute(new HibernateCallback<List<Object[]>>() {  
+			@Override  
+		    public List<Object[]> doInHibernate(Session session) throws HibernateException, SQLException {
+		        SQLQuery query = session.createSQLQuery( sb.toString() );  
+		        
+		        return (List<Object[]>) query.list();  
+		    }  
+		});
 	}
 
 }

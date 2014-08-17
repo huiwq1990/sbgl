@@ -12,9 +12,9 @@ public interface OrderExamService {
 	//审核订单
 	public boolean examorder(Integer borrowId,Integer examstate,String examcontent,Loginuser user);
 	//获得订单设备的分类
-	public List<Equipmentclassification> findclassList(Integer borrowId);
+	public List<Equipmentclassification> findclassList(Integer borrowId,String lantype);
 	//获得商品详情信息，根据分类获得
-	public Map<Integer,List<EquipmentFull>> findMapBorrow(Integer borrowId,Integer type);
+	public Map<Integer,List<EquipmentFull>> findMapBorrow(Integer borrowId,Integer type,String lantype);
 	//出库
 	public boolean alibraryorder(Integer borrowId,String ids,Loginuser user);
 	//入库

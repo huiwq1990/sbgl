@@ -39,15 +39,15 @@ public interface OrderMainService {
 	//下订单
 	public void saveOrder(String orderStr,Equipmenborrow equipmenBorrow);
 	//获得设备详情
-	public EquipmentFull findEquipmentById(Integer equipmentId,String fromDate,String endDate);
+	public EquipmentFull findEquipmentById(Integer equipmentId,String fromDate,String endDate,String lantype);
 	//获得分类详情
 	public Equipmentclassification findEquipmentclassification(Integer classificationid,String lantype);
 	//获得每天剩余数量（根据设备号）
 	public String findDayNum(Integer equipmentId,String fromDate,String endDate,String lantype);
 	//提交订单
-	public Integer subOrder(String equIds,String equNums,String fromDate,String endDate,Integer borrowId,Loginuser user) throws Exception;
+	public Integer subOrder(String equIds,String equNums,String fromDate,String endDate,Integer borrowId,Loginuser user,String lantype) throws Exception;
 	//根据订单查找选择的商品
-	public String findEquipmentByBorrowId(Integer borrowId,String fromDate,String endDate);
+	public String findEquipmentByBorrowId(Integer borrowId,String fromDate,String endDate,String lantype);
 	//根据订单查找选择的商品(课程预约)
 	public String findEquipmentByBorrowId(Integer borrowId,String fromDate,String endDate,Integer courseRuleId);
 	//找未完成的账单

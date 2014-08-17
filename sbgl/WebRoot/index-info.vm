@@ -78,7 +78,7 @@
 				#else
 					<dd id="g">$!{textmap.baseinfo_sex_female}</dd>
 				#end
-				 #if($!classBelongTo != "-1")
+				 #if($!classBelongTo != "-1" && $user.roletype == "1")
                     <dt>$!{textmap.baseinfo_class}</dt>
                     <dd>$!classBelongTo</dd>
 				 #end

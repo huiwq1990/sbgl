@@ -127,7 +127,6 @@
 					eSelectNum = $(this).parent().find("select").select2("val");
 				}
 				if(eCate==-2){
-					alert("group")
 					var fromDate = $("#fromDate").val();
 					var endDate = $("#endDate").val();
 					$.ajax({
@@ -136,11 +135,8 @@
 						data: {equipmentId:eId,fromDate:fromDate,endDate:endDate},
 						dataType: 'json',
 						success: function(data){
-							alert("success")
 							jQuery.each(data.equipmentList, function(i,item){
-								alert("-1")
 								if ($("#rent-list #" + item.equipmentid).length > 0) {
-									alert(0)
 									var curVal = $("#rent-list #" + item.equipmentid).children(".spinner").spinner('value');
 									var tempnum = parseInt(item.num) + parseInt(curVal) - item.borrownum;
 									if(tempnum>0){
@@ -151,7 +147,6 @@
 										$("#rent-list #" + item.equipmentid).children(".spinner").spinner('value', parseInt(item.num)+parseInt(curVal));
 									}
 								}else{
-									alert(1)
 									var html = 
 										'<div class="row" id="' + item.equipmentid + '">' + 
 											'<div class="item-name">' + item.equipmentname + '</div>' +

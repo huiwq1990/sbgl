@@ -45,10 +45,12 @@ public class RoomReservationAction extends ActionSupport {
 		
 		List<Student> stuList = studentService.getAllStudent();
 		StuInClassDto dto = null;
-		if( allClazz != null ) {
-			for (Clazz c : allClazz) {
-				if( stuList != null ) {
-					for (Student stu : stuList) {
+		boolean flag = true;
+		if( stuList != null ) {
+			for (Student stu : stuList) {
+				flag = true;
+				if( allClazz != null ) {
+					for (Clazz c : allClazz) {
 						dto = new StuInClassDto();
 						if( stu.getClassid().equals( c.getClassid() ) ) {
 							dto.setClassId( c.getClassid() );
@@ -58,15 +60,18 @@ public class RoomReservationAction extends ActionSupport {
 							dto.setName( stu.getName() );
 							dto.setPhoto( stu.getPhoto() );
 							dtoList.add( dto );
-						} else {
-							dto.setClassId( -1 );
-							dto.setClassName( "无班级" );
-							dto.setStudentid( stu.getStudentid() );
-							dto.setId( stu.getId() );
-							dto.setName( stu.getName() );
-							dto.setPhoto( stu.getPhoto() );
-							dtoList.add( dto );
+							flag = false;
+							break;
 						}
+					}
+					if(flag) {
+						dto.setClassId( -1 );
+						dto.setClassName( "无班级" );
+						dto.setStudentid( stu.getStudentid() );
+						dto.setId( stu.getId() );
+						dto.setName( stu.getName() );
+						dto.setPhoto( stu.getPhoto() );
+						dtoList.add( dto );
 					}
 				}
 			}

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>$!{textmap.computerorderview_title}</title>
+<title>$!{textmap.order_detail_title}</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -27,7 +27,7 @@
 	#set($currentposition= ${textmap.myorderposition})
 	#parse("include/includeSiteNavi.vm")
 	
-	#set($currentPageType="computerorderview")
+	#set($currentPageType="orderDetail")
 	#parse("include/includeOrderspaceSubNavi.vm")
 	
   </div>
@@ -37,19 +37,7 @@
   <div id="main-content" class="clearfix">
       <!--equip-wrap start-->          
           <div class="container">     
-		<!--control-bar start-->
-		<!--
-      <div class="control-bar clearfix">
-        <div class="title pull-left">审核预约</div>     
-        <div class="pagination pull-right">
-          <ul>
-            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="上一个"><i class="icon-chevron-left"></i></a></li>
-            <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="下一个"><i class="icon-chevron-right"></i></a></li>
-          </ul>
-        </div>       
-      </div>
-	    -->
-	  <!--control-bar end-->
+
 	
 	  
       <div class="row">
