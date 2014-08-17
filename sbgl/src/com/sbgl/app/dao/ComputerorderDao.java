@@ -35,5 +35,9 @@ public List<Computerorder> selectComputerorderByCondition(String condition);
 
 	List<ComputerorderFull> selFullByStatus(int orderstatus);
 
+
+
+	int countRow(String hql);
+
  
 }

@@ -209,7 +209,7 @@ public class FileUploadAction  extends ActionSupport {
 			e.printStackTrace();
 		}
 		
-		System.out.println("ssssss");
+//		System.out.println("ssssss");
 		
 		returnInfo = "系统错误";
 		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
