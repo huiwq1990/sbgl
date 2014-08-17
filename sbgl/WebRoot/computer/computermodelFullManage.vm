@@ -289,7 +289,7 @@
               <i class="icon-plus"></i>
               <span>添加图片</span>
               <input id="inputModelPic" type="file" name="file" action-type="showFileNameForAdd" multiple>
-				
+				<input id="inputPicpath" type="hidden" />
           </span>
 		  <span id="imgFileForAdd"></span>
 		  <span id="inputModelPicSpan"></span>
@@ -569,7 +569,7 @@
 
 	//上传图片
 	$("#inputModelPic").fileupload({
-    	url: "${webbaseurl}/uploadImageFile.${strutsaction}",
+    	url: "${webbaseurl}/uploadComputerImageFile.${strutsaction}",
         dataType: 'json',
 		formData :{	
 			'imgType':'computermodelimg'
@@ -579,13 +579,13 @@
 			//savedFileName = data.result.savedFileName;
 			
 			
-			var returnJson = jQuery.parseJSON(data.result.returnStr); 
+			var returnJson = jQuery.parseJSON(data.result); 
 			if(returnJson.flag == 1){
 				//var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});	
 				$("#inputModelPicSpan").html("图片上传成功");
-				uploadPicPath = returnJson.reason;
+				uploadPicPath = returnJson.data;
 				
-				$("#modifyPicpath").val(returnJson.reason);
+				$("#inputPicpath").val(returnJson.data);
 				//alert($("#modifyPicpath").val());
 				//$("#modifyPicpath").val(returnJson.reason);
 				
@@ -601,7 +601,7 @@
 	
 		//上传图片
 	$("#inputModelPicEdit").fileupload({
-    	url: "${webbaseurl}/uploadImageFile.${strutsaction}",
+    	url: "${webbaseurl}/uploadComputerImageFile.${strutsaction}",
         dataType: 'json',
 		formData :{	
 			'imgType':'computermodelimg'
@@ -609,14 +609,14 @@
         done: function (e, data) {
 			//localFileName = data.files[0].name;
 			//savedFileName = data.result.savedFileName;
+			alert(data.result);
 			
-			
-			var returnJson = jQuery.parseJSON(data.result.returnStr); 
+			var returnJson = jQuery.parseJSON(data.result); 
 			if(returnJson.flag == 1){
 				//var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});	
 				$("#inputModelPicSpanEdit").html("图片上传成功");
 				uploadPicPath = returnJson.reason;
-					$("#modifyPicpath").val(returnJson.reason);
+					$("#modifyPicpath").val(returnJson.data);
 				//alert($("#modifyPicpath").val());
 				//$(this).parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
 			}else{

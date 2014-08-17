@@ -10,7 +10,9 @@ import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.entity.Computerstatus;
 import com.sbgl.app.services.computer.ComputerService;
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.computer.ComputerActionUtil;
+import com.sbgl.app.actions.util.PageActionUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.dao.ComputerDao;
 import com.sbgl.app.dao.BaseDao;
@@ -268,14 +270,100 @@ public class ComputerServiceImpl implements ComputerService{
 		
 	}
 	
+	
+	 
+	
 //	根据id查询full类
 	@Override
 	public ComputerFull selectComputerFullById(Integer computerId){
 	
 		return computerDao.selectComputerFullById(computerId); 
 	}	
-	
-	
+
+	@Override
+	public void selFullByPage(int computercategorytype,int computermodeltype,int computerstatusid,Page page,int languge,List<ComputerFull> computerFullListCh,List<ComputerFull> computerFullListEn){
+
+		String countsql = " where a.languagetype="+CommonConfig.languagech;
+		String sqlch =" where a.languagetype="+CommonConfig.languagech+" and b.languagetype="+CommonConfig.languagech;
+		String sqlen= " where a.languagetype="+CommonConfig.languageen+" and b.languagetype="+CommonConfig.languageen;
+		
+		//查询全部中文的
+		
+		//查询所有分类
+		if(computercategorytype==0){
+			
+		}
+		
+		//查询某一个Model下的PC
+		if(computercategorytype!=0 && computermodeltype!=0){
+			countsql +=  " and a.computermodelid="+computermodeltype;
+			sqlch = sqlch + " and a.computermodelid="+computermodeltype;
+			sqlen = sqlen +  " and a.computermodelid="+computermodeltype;
+		}
+		
+//		查询某一分类下的PC 先获取分类下面的模型
+		if(computercategorytype!=0 && computermodeltype==0){
+			List<Computermodel> tempComputermodelList = computermodelDao.selByModeltype(computercategorytype, CommonConfig.languagech);
+			String inStr = " (";
+			
+//			如果不存在分类不存在模型，设置一个空的模型id
+			if(tempComputermodelList==null || tempComputermodelList.size()<1){
+				inStr +=" -10,";
+			}else{
+				for(Computermodel c : tempComputermodelList){
+					inStr += c.getComputermodeltype()+",";
+				}
+			}
+			
+			
+			
+			inStr = inStr.substring(0,inStr.length()-1);
+			inStr += ") ";
+			countsql += " and a.computermodelid in "+inStr+" ";
+			sqlch = sqlch + " and a.computermodelid in "+inStr+" ";
+			sqlen = sqlen + " and a.computermodelid in "+inStr+" ";
+		}
+
+//		//查询sql,如果computermodeltype为0，查询全部
+//		if(computermodeltype == 0){
+//			countsql += " where a.languagetype="+ComputerConfig.languagech;
+//			sqlch = sqlch + " where a.languagetype="+ComputerConfig.languagech+" and b.languagetype="+ComputerConfig.languagech;
+//			sqlen = sqlen + " where a.languagetype="+ComputerConfig.languageen+" and b.languagetype="+ComputerConfig.languageen;
+//		}else{
+//			countsql =" where a.computermodelid="+computermodeltype;
+////			countsql = countsql + " where a.languagetype="+ComputerConfig.languagech+" and a.computercategoryid="+computercategoryid+"  order by a.computermodeltype,a.languagetype";
+//			sqlch = sqlch + " where a.languagetype="+ComputerConfig.languagech+" and b.languagetype="+ComputerConfig.languagech+" and a.computermodelid="+computermodeltype;
+//			sqlen = sqlen + " where a.languagetype="+ComputerConfig.languageen+" and b.languagetype="+ComputerConfig.languageen+" and a.computermodelid="+computermodeltype;
+//		}
+		
+		if(computerstatusid == 0){
+			
+		}else{
+//			if(computermodeltype != 0){
+//				countsql = countsql +" where ";
+//			}else{
+//				countsql = countsql +" and ";
+//			}
+			countsql = countsql + " and a.computerstatusid=" + computerstatusid;
+			sqlch = sqlch + " and a.computerstatusid=" + computerstatusid;
+			sqlen = sqlen + " and a.computerstatusid=" + computerstatusid;
+		}		
+		sqlch += " order by a.computertype,a.languagetype";
+		sqlen += " order by a.computertype,a.languagetype";
+		
+//		System.out.println(countsql);
+//		System.out.println(sqlch);
+//		System.out.println(sqlen);
+		
+		int totalcount = computerDao.countRow(countsql)/2;
+		
+		PageActionUtil.getPage(page ,totalcount, page.getPageNo());
+		computerFullListCh.clear();
+		computerFullListCh.addAll(computerDao.selectComputerFullByConditionAndPage(sqlch, page));
+		
+		computerFullListEn.clear();
+		computerFullListEn.addAll(computerDao.selectComputerFullByConditionAndPage(sqlen, page));
+	}
 	
 
 //  查询全部实体full
