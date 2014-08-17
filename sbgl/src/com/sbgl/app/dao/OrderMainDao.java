@@ -3,6 +3,7 @@ package com.sbgl.app.dao;
 import java.util.Date;
 import java.util.List;
 
+import com.sbgl.app.actions.equipment.template.EquipmentgroupFull;
 import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.actions.orderadmin.OrderCountFull;
@@ -71,4 +72,8 @@ public interface OrderMainDao {
 	public List<EquipmentFull> equipmentGroupOrder(Integer equipmentId,String fromDate,String endDate,String lantype);
 	//根据分类语音和联合主键获取分类
 	public Equipmentclassification findEquipmentclassification(Integer classificationid,String lantype);
+	//根据设备id详情
+	public EquipmentFull findEquipmentById(Integer comid,String lantype);
+	//根据设备组id详情
+	public EquipmentgroupFull findEquipmentgroupById(Integer comid,String lantype);
 }

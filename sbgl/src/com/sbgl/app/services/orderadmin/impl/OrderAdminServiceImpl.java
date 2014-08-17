@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sbgl.app.actions.equipment.template.EquipmentgroupFull;
 import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.actions.orderadmin.OrderCountFull;
@@ -95,8 +96,8 @@ public class OrderAdminServiceImpl implements  OrderAdminService{
 		// TODO Auto-generated method stub
 		Map<Integer, List<EquipmentFull>> map = new HashMap<Integer, List<EquipmentFull>>();
 		for(Equipmentclassification equipmentclassification:eclist){
-			List<EquipmentFull> equipmentFullList =  orderMainDao.findEquipmentByClss2(equipmentclassification.getClassificationid(),courseruleid,lantype);
-			map.put(equipmentclassification.getClassificationid(), equipmentFullList);
+			List<EquipmentFull> equipmentFullList =  orderMainDao.findEquipmentByClss2(equipmentclassification.getComid(),courseruleid,lantype);
+			map.put(equipmentclassification.getComid(), equipmentFullList);
 		}
 		return map;
 	}
@@ -104,7 +105,7 @@ public class OrderAdminServiceImpl implements  OrderAdminService{
 
 	@Override
 	public boolean addorderclassrule(Integer courseId, String ruleName,
-			String ids, Loginuser loginuser,Integer courseruleid) {
+			String ids, Loginuser loginuser,Integer courseruleid,Integer teacherId,String lantype) {
 		// TODO Auto-generated method stub
 		Ordercourserule ordercourserule = new Ordercourserule();
 		if(courseruleid!=null){
@@ -116,24 +117,24 @@ public class OrderAdminServiceImpl implements  OrderAdminService{
 		ordercourserule.setCourseid(courseId);
 		ordercourserule.setCourserulename(ruleName);
 		ordercourserule.setCreatetime(new Date());
-		ordercourserule.setTeacherid(loginuser.getId());
+		ordercourserule.setTeacherid(teacherId);
 		baseDao.updateEntity(ordercourserule);
 		String[] str = ids.split(",");
 		for(int i=0;i<str.length;i++){
 			String[] str2 = str[i].split("_");
-			Equipment equipment; 
-			Equipmentgroup equipmentgroup;
+			EquipmentFull equipment; 
+			EquipmentgroupFull equipmentgroup;
 			Ordercourseruledetail ordercourseruledetail = new Ordercourseruledetail();
 			if(str2[2].equals("1")){
-				equipment = baseDao.getEntityById(Equipment.class, Integer.parseInt(str2[0]));  
-				ordercourseruledetail.setComid(equipment.getComid());
-				ordercourseruledetail.setLantype(equipment.getLantype());
-				ordercourseruledetail.setEquipmentid(equipment.getEquipmentid());
+				equipment = orderMainDao.findEquipmentById(Integer.parseInt(str2[0]), lantype);  
+				ordercourseruledetail.setComid(equipment.getComId());
+				ordercourseruledetail.setLantype(equipment.getLanType());
+				ordercourseruledetail.setEquipmentid(equipment.getComId());
 			}else{
-				equipmentgroup = baseDao.getEntityById(Equipmentgroup.class, Integer.parseInt(str2[0]));  
+				equipmentgroup = orderMainDao.findEquipmentgroupById(Integer.parseInt(str2[0]), lantype);  
 				ordercourseruledetail.setComid(equipmentgroup.getComid());
 				ordercourseruledetail.setLantype(equipmentgroup.getLantype());
-				ordercourseruledetail.setEquipmentid(equipmentgroup.getEquipmentgroupid());
+				ordercourseruledetail.setEquipmentid(equipmentgroup.getComid());
 			}
 			ordercourseruledetail.setCourseruleid(ordercourserule.getCourseruleid());
 			ordercourseruledetail.setApplynumber(Integer.parseInt(str2[1]));

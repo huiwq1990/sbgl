@@ -33,7 +33,7 @@ public interface OrderAdminService {
 	//获得一级分类下的器材
 	public Map<Integer,List<EquipmentFull>> fingclassequipMap(List<Equipmentclassification> eclist,Integer courseruleid,String lantype);
 	//创建规则
-	public boolean addorderclassrule(Integer courseId,String ruleName,String ids,Loginuser loginuser,Integer courseruleid);
+	public boolean addorderclassrule(Integer courseId,String ruleName,String ids,Loginuser loginuser,Integer courseruleid,Integer teacherId,String lantype);
 	//批量删除预约
 	public boolean deleteBorrow(String[] ids);
 	//获得规则

@@ -25,6 +25,7 @@ import com.sbgl.app.common.computer.BorrowperiodUtil;
 import com.sbgl.app.entity.Borrowperiod;
 import com.sbgl.app.entity.Clazz;
 import com.sbgl.app.entity.ComputerorderdetailFull;
+import com.sbgl.app.entity.Course;
 import com.sbgl.app.entity.CourseFull;
 import com.sbgl.app.entity.Courseconfig;
 import com.sbgl.app.entity.Equipmentclassification;
@@ -218,7 +219,7 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 			lantype = "0";
 		}
 		classification1List = orderAdminService.findTopEquipmentclass(lantype);
-		classequipmap = orderAdminService.fingclassequipMap(classification1List,courseruleid);
+		classequipmap = orderAdminService.fingclassequipMap(classification1List,courseruleid,lantype);
 		courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+lantype);
 		equipmentgroupFullList = equipGroupService.findEquipmentGroup(courseruleid);
 		if(courseruleid!=null){
@@ -231,8 +232,13 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 	public String addorderclassrule(){
 		try{
 			boolean flag = false;
+			String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+			if(lantype==null||lantype.equals("")){
+				lantype = "0";
+			}
+			Course course = courseService.selectCourseById(courseId);
 			Loginuser loginuser = (Loginuser) session.get("loginUser");
-			flag = orderAdminService.addorderclassrule(courseId,ruleName,ids,loginuser,courseruleid);
+			flag = orderAdminService.addorderclassrule(courseId,ruleName,ids,loginuser,courseruleid,course.getTeacherid(),lantype);
 			if(flag){
 				tag = "1";
 			}else{

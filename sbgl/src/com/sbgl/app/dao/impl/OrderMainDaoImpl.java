@@ -12,6 +12,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.sbgl.app.actions.common.CommonConfig;
+import com.sbgl.app.actions.equipment.template.EquipmentgroupFull;
 import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.actions.orderadmin.OrderCountFull;
@@ -226,7 +227,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	
 	public List<EquipmentFull> findEquipmentByClss2(Integer classificationid,Integer courseruleid,String lantype) {
 		// TODO Auto-generated method stub
-		final String sql = " select a.*,b.applynumber from Equipment a left outer join orderCourseRuleDetail b on a.Equipmentid = b.Equipmentid and b.courseruleid="+courseruleid+" where a.lanType = '"+lantype+"' and (a.classificationid = '"+classificationid+"'" +
+		final String sql = " select a.*,b.applynumber from Equipment a left outer join orderCourseRuleDetail b on a.comid = b.Equipmentid and b.courseruleid="+courseruleid+" where a.lanType = '"+lantype+"' and (a.classificationid = '"+classificationid+"'" +
 			" or a.classificationid in (select comid from EquipmentClassification where parentid='"+classificationid+"') )";
 		try {
 			Query query =  this.getCurrentSession().createSQLQuery(sql);
@@ -406,9 +407,11 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 
 	
 	public EquipmenborrowFull findEquipmenborrow(Integer id){
-		final String sql = " select a.*,b.MsgTitle,b.Content,b.startdate,b.enddate,b.createtime,c.name as teacherName from EquipmenBorrow a" +
+		final String sql = " select a.*,b.MsgTitle,b.Content,b.startdate,b.enddate,b.createtime,c.name as teacherName from EquipmenBorrow a " +
 				" left outer join sendRuleToUser b on a.sendruleid = b.sendruleid " +
-				" left outer join loginuser c on a.teacherid = c.id where a.borrowid = '"+id+"' ";
+				" left outer join ordercourserule d on d.courseruleid = b.courseruleid " +
+				" left outer join loginuser c on d.teacherid = c.id" +
+				" where a.borrowid = '"+id+"' ";
 		List<EquipmenborrowFull> equipmenborrowtList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(sql);
@@ -740,6 +743,42 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		List<Equipmentclassification> list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(sql).addEntity(Equipmentclassification.class);
+				return query.list();
+			}
+		});	
+		if(list!=null&&!list.isEmpty()){
+			return list.get(0);
+		}
+		return null;
+	}
+
+
+	@Override
+	public EquipmentFull findEquipmentById(Integer comid, String lantype) {
+		// TODO Auto-generated method stub
+		final String sql = "select * from equipment where comid = '"+comid+"' and lanType = '"+lantype+"' ";
+		List<EquipmentFull> list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql);
+				query.setResultTransformer(new EscColumnToBean(EquipmentFull.class));
+				return query.list();
+			}
+		});	
+		if(list!=null&&!list.isEmpty()){
+			return list.get(0);
+		}
+		return null;
+	}
+
+
+	@Override
+	public EquipmentgroupFull findEquipmentgroupById(Integer comid, String lantype) {
+		// TODO Auto-generated method stub
+		final String sql = "select * from equipmentgroup where comid = '"+comid+"' and lanType = '"+lantype+"' ";
+		List<EquipmentgroupFull> list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql);
+				query.setResultTransformer(new EscColumnToBean(EquipmentgroupFull.class));
 				return query.list();
 			}
 		});	

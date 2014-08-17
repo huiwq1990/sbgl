@@ -9,7 +9,7 @@
         <select id="inputCourseName" class="select2 form-control select-white" data-placeholder="请选择课程" style="width: 100%;">
           <option></option>
 		  #foreach($row in $!courseFullList)	
-			<option value="$row.courseid" #if($!ordercourserule.courseid==$row.courseid) selected #end data-id="$!row.courseid" data-foo="fa">$row.coursename</option>
+			<option value="$row.courseid" #if($!ordercourserule.courseid==$!row.courseid) selected #end data-id="$!row.courseid" data-foo="fa">$!row.coursename - $!row.teacherloginusername</option>
     	  #end
         </select>
       </div>
@@ -23,27 +23,27 @@
     <div class="tabbable tabs-left">
       <ul class="nav nav-tabs">
 		#foreach($row in $classification1List)	
-        <li #if($velocityCount=='1') class="active" #end><a href="#$!row.classificationid" data-toggle="tab">$!row.name</a></li>
+        <li #if($velocityCount=='1') class="active" #end><a href="#$!row.comid" data-toggle="tab">$!row.name</a></li>
 		#end
 		 <li ><a href="#-2" data-toggle="tab">设备组</a></li>
       </ul>
       <div class="tab-content">
 		#foreach($row2 in $classification1List)	
-        <div #if($velocityCount=='1') class="tab-pane active" #else class="tab-pane"  #end id="$!row2.classificationid">
+        <div #if($velocityCount=='1') class="tab-pane active" #else class="tab-pane"  #end id="$!row2.comid">
           <div class="row model-list">
-			#foreach($row3 in $classequipmap.get($!row2.classificationid))
-            <div id="equdiv$!row3.equipmentid" class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="$!row3.equipmentid"  data-modeltype="1";  #if($!row3.applynumber) data-is-select="true"  #else  data-is-select="false" #end><i #if($!row3.applynumber)class="icon-check icon-large"  #else class="icon-check-empty icon-large"  #end></i>$!row3.equipmentname</div><input type="text" id="equ$!row3.equipmentid" value="$!row3.applynumber" class="col-sm-4 list-item" style="width:60px">
+			#foreach($row3 in $classequipmap.get($!row2.comid))
+            <div id="equdiv$!row3.comId" class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="$!row3.comId"  data-modeltype="1";  #if($!row3.applynumber) data-is-select="true"  #else  data-is-select="false" #end><i #if($!row3.applynumber)class="icon-check icon-large"  #else class="icon-check-empty icon-large"  #end></i>$!row3.equipmentname</div><input type="text" id="equ$!row3.comId" value="$!row3.applynumber" class="col-sm-4 list-item" style="width:60px">
 			#end
 		  </div>
         </div>
-		#end
+		#end	
 		<div  class="tab-pane" id="-2">
           <div class="row model-list">
 			#foreach($model in $equipmentgroupFullList)
-            <div id="equdiv$!model.equipmentgroupid" class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="$!model.equipmentgroupid" data-modeltype="2";  #if($!model.applynumber) data-is-select="true"  #else  data-is-select="false" #end  ><i #if($!model.applynumber)class="icon-check icon-large"  #else class="icon-check-empty icon-large"  #end ></i>$!model.equipmentname</div><input type="text" id="equ$!model.equipmentgroupid" value="$!model.applynumber" class="col-sm-4 list-item" style="width:60px">
+            <div id="equdiv$!model.comid" class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="$!model.comid" data-modeltype="2";  #if($!model.applynumber) data-is-select="true"  #else  data-is-select="false" #end  ><i #if($!model.applynumber)class="icon-check icon-large"  #else class="icon-check-empty icon-large"  #end ></i>$!model.equipmentname</div><input type="text" id="equ$!model.comid" value="$!model.applynumber" class="col-sm-4 list-item" style="width:60px">
 			#end
 		  </div>
-        </div>
+		  </div>
       </div>
     </div>
   </div>
