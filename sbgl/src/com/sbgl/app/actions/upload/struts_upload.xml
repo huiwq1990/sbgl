@@ -54,6 +54,13 @@
         	</result>
 		</action>
     
+    
+       <action name="uploadComputerImageFile" class="com.sbgl.app.actions.upload.FileUploadAction" method="uploadComputerImageFile">
+			<result type="json">
+				<param name="root">returnStr</param>
+			</result>
+		</action>
+    
     </package>
   
 </struts>

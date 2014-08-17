@@ -217,6 +217,111 @@ public class FileUploadAction  extends ActionSupport {
 	}
 	
 	
+	/**
+	 * 上传机器图片文件
+	 * @return
+	 * @throws Exception
+	 */
+	public String uploadComputerImageFile() {
+
+		log.info("上传文件");
+		if(file == null || file.getName() == null || fileFileName == null){
+			returnInfo = "上传的文件不存在";
+			log.error(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return SUCCESS;
+		}
+		log.info("文件信息");
+		log.info("源文件名称：" + fileFileName);
+		log.info("上传后文件名称：" + file.getName());
+		
+		String fileType = fileFileName.substring( fileFileName.indexOf('.') );
+		//拦截格式不正确的文件，仅允许保存图片格式
+		if(fileType == null){
+			returnInfo = "上传的文件格式不能为空";
+			log.error(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return SUCCESS;			
+		}
+	
+		if(!fileType.toLowerCase().equals(".jpg") && !fileType.toLowerCase().equals(".png") &&!fileType.toLowerCase().equals(".gif")) {
+			returnInfo = "上传的文件格式不允许";
+			log.error(returnInfo);
+			this.tag = "1";
+			this.msg = "请上传图片格式的文件！";
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return SUCCESS;
+		}
+		
+		String imagePath = "";
+		String destinationFileName = "";
+//		保存机器模型图片
+		String root = ServletActionContext.getServletContext().getRealPath("/");
+		if( "computermodelimg".equals(imgType) ) {
+			log.info("保存机器模型的图片");
+			
+			imagePath = root + PropertyUtil.readValue("/system.properties", "computerImagePath");
+			
+			destinationFileName = String.valueOf("computer"+Calendar.getInstance().getTimeInMillis()) ;
+		} else { //保存型号图片
+			returnInfo = "上传参数不对";
+			log.error(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return SUCCESS;		
+		}
+		
+		destinationFileName = destinationFileName+fileType;
+//		savedFileName = destinationFileName;
+		
+		if(imagePath.equals("") || destinationFileName.equals("")){
+			returnInfo = "无法获取保存的路径及文件名";
+			log.error(returnInfo);
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			return SUCCESS;
+		}
+		
+		InputStream is;
+		try {
+			is = new FileInputStream(file);
+			//检测保存路径是否村子啊不存在创建一个
+			File saveDir = new File(imagePath);
+			if( ! saveDir.exists() && ! file .isDirectory() ) {
+				System.out.println("目录：" + imagePath + "不存在，进行创建...");
+				saveDir.mkdir();
+			}
+			//String root = ServletActionContext.getRequest().getRealPath("/equipImage");
+			File deskFile = new File(imagePath, destinationFileName);
+			OutputStream os = new FileOutputStream(deskFile);
+			byte[] bytefer = new byte[1024];
+			int length = 0;
+			while ((length = is.read(bytefer)) != -1) {
+				os.write(bytefer, 0, length);
+			}
+			os.flush();
+			os.close();
+			is.close();
+			
+			returnInfo = "上传成功";
+			log.info("上传成功");
+			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo,destinationFileName);
+
+			return SUCCESS;
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+//		System.out.println("ssssss");
+		
+		returnInfo = "系统错误";
+		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+		return SUCCESS;
+	}
+	
 	
 	
 	public String uploadUserPhoto() throws Exception {

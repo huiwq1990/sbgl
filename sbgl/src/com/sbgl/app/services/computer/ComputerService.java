@@ -84,6 +84,11 @@ public interface ComputerService{
 
 	List<ComputerFull> selFullByModeltype(int modeltype, int language);
 
+	void selFullByPage(int computercategorytype, int computermodeltype,
+			int computerstatusid, Page page, int languge,
+			List<ComputerFull> computerFullListCh,
+			List<ComputerFull> computerFullListEn);
+
 
 	
 }
