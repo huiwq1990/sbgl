@@ -7,20 +7,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
-
 import com.sbgl.app.actions.util.JsonActionUtil;
-
 import com.sbgl.app.services.common.CommonService;
 import com.sbgl.app.services.equipment.EquipService;
 import com.sbgl.util.PropertyUtil;
@@ -45,8 +43,8 @@ public class FileUploadAction  extends ActionSupport {
 	private String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
 	private String returnInfo;
 	private String actionMsg; // Action间传递的消息参数
-	
-	
+	private Map<String, String> returnObj; //返回更为多的信息给前台页面
+
 	public String getMsg() {
 		return msg;
 	}
@@ -119,6 +117,7 @@ public class FileUploadAction  extends ActionSupport {
 	 * @throws Exception
 	 */
 	public String uploadImageFile() {
+		returnObj = new HashMap<String, String>();
 
 		log.info("上传文件");
 		if(file == null || file.getName() == null || fileFileName == null){
@@ -137,6 +136,8 @@ public class FileUploadAction  extends ActionSupport {
 			returnInfo = "上传的文件格式不能为空";
 			log.error(returnInfo);
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			returnObj.put("tag", "1");
+			returnObj.put("msg", returnInfo);
 			return SUCCESS;			
 		}
 	
@@ -146,6 +147,8 @@ public class FileUploadAction  extends ActionSupport {
 			this.tag = "1";
 			this.msg = "请上传图片格式的文件！";
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			returnObj.put("tag", "1");
+			returnObj.put("msg", returnInfo);
 			return SUCCESS;
 		}
 		
@@ -171,6 +174,8 @@ public class FileUploadAction  extends ActionSupport {
 			returnInfo = "无法获取保存的路径及文件名";
 			log.error(returnInfo);
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
+			returnObj.put("tag", "1");
+			returnObj.put("msg", returnInfo);
 			return SUCCESS;
 		}
 		
@@ -198,7 +203,9 @@ public class FileUploadAction  extends ActionSupport {
 			returnInfo = destinationFileName;
 			log.info("上传成功");
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
-			this.returnStr = "";
+			returnObj.put("tag", "0");
+			returnObj.put("savedFileName", savedFileName);
+			returnObj.put("msg", "上传成功");
 			return SUCCESS;
 			
 		} catch (FileNotFoundException e) {
@@ -325,6 +332,7 @@ public class FileUploadAction  extends ActionSupport {
 	
 	
 	public String uploadUserPhoto() throws Exception {
+		returnObj = new HashMap<String, String>();
 		String fileType = fileFileName.substring( fileFileName.indexOf('.') );
 		//拦截格式不正确的文件，仅允许保存图片格式
 //		System.out.println("++++++++++++++++++++++++++++++++++++" + fileType);
@@ -357,6 +365,10 @@ public class FileUploadAction  extends ActionSupport {
 		}
 		os.close();
 		is.close();
+		returnObj.put("tag", tag);
+		returnObj.put("savedFileName", savedFileName);
+		returnObj.put("msg", msg);
+		log.debug("上传用户头像结束，tag = " + tag + " savedFileName = " + savedFileName + " msg = " + msg);
 		return SUCCESS;
 	}
 	
@@ -669,6 +681,12 @@ public class FileUploadAction  extends ActionSupport {
 		this.msg = msg;
 	}
 	
-	
+	public Map<String, String> getReturnObj() {
+		return returnObj;
+	}
+
+	public void setReturnObj(Map<String, String> returnObj) {
+		this.returnObj = returnObj;
+	}
 	
 }
