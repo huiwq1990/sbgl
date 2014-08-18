@@ -164,7 +164,7 @@
 	
 	$("body").on("click", "a[action-type|=clearInput]", function() {
 		$("#inputGroupName").val("");
-		$("#inputTypeId").select2("val", 2);
+		$("#inputTypeId").select2("val", 1);
 	});
 	
 	$("body").on("click", "input[type='checkbox']", function() {

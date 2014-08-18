@@ -542,7 +542,7 @@
     	},
         done: function (e, data) {
 			//n.close();
-			console.log(n);
+			//console.log(n);
 			$("#modifyUser").removeAttr("disabled");
 			if(data.result.tag == 0) {
 				alert("图片上传完成！");
