@@ -590,7 +590,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	public List<EquipmentFull> findEquipmentByGroup(String lantype,
 			String search) {
 		// TODO Auto-generated method stub
-		String sql = " select a.comid as Equipmentid,a.Equipmentname,a.Brandid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved  ";
+		String sql = " select a.comid as Equipmentid,a.Equipmentname,a.Brandid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,a.comid  ";
 	    sql+= "  from EquipmentGroup a   "
 			+ " where a.lanType = '"+lantype+"' and a.equipmentname like '%"+search+"%' ";
 		final String sql1 = sql;
@@ -618,7 +618,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	@Override
 	public List<EquipmentFull> findEquipmentByGroup(String lantype) {
 		// TODO Auto-generated method stub
-		String sql = " select a.comid as Equipmentid,a.Equipmentname,a.Brandid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved  ";
+		String sql = " select a.comid as Equipmentid,a.Equipmentname,a.Brandid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,a.comid   ";
 	    sql+= "  from EquipmentGroup a   "
 			+ " where a.lanType = '"+lantype+"' ";
 		final String sql1 = sql;
@@ -647,7 +647,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	public List<EquipmentFull> findEquipmentByGroup(String lantype,
 			String serach, Integer courseRuleId) {
 		// TODO Auto-generated method stub
-		String sql = " select a.comid as Equipmentid,a.Equipmentname,a.Brandid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved  ";
+		String sql = " select a.comid as Equipmentid,a.Equipmentname,a.Brandid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,a.comid  ";
 	    sql+= "  from EquipmentGroup a  left outer join orderCourseRuleDetail d on d.courseRuleId= '"+courseRuleId+"' and d.comId = a.comId     "
 			+ " where a.lanType = '"+lantype+"' and a.equipmentname like '%"+serach+"%'  and d.comid != '' ";
 		final String sql1 = sql;
@@ -676,7 +676,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	public List<EquipmentFull> findEquipmentByGroup(String lantype,
 			Integer courseRuleId) {
 		// TODO Auto-generated method stub
-		String sql = " select a.comid as Equipmentid,a.Equipmentname,a.Brandid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved  ";
+		String sql = " select a.comid as Equipmentid,a.Equipmentname,a.Brandid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,a.comid  ";
 	    sql+= "  from EquipmentGroup a  left outer join orderCourseRuleDetail d on d.courseRuleId= '"+courseRuleId+"' and d.comId = a.comId   "
 			+ " where a.lanType = '"+lantype+"' and d.comid != '' ";
 		final String sql1 = sql;
@@ -707,7 +707,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		// TODO Auto-generated method stub
 		List<String> dateList = DateUtil.dateRegion(fromDate,endDate);
 		final Integer size = dateList.size();
-		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,(select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
+		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,a.comid,(select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
 		    for(int i=0;i<size;i++){
 	    		String dateTemp = dateList.get(i);
 	    		sql +="(select   sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa,b.comId from ListDetail b " 
