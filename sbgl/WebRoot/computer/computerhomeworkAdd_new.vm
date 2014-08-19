@@ -325,7 +325,7 @@ $('#inputSendTo').select2('data', preload_data );
                     var html = 
                               '<li data-id="' + user.id + '" data-name="' + user.name + '" class="media">' +
                                 '<div class="pull-left">' +
-                                  '<img src="' + "${userImagePath}/" + user.photo + '" width="46" height="46">'+
+                                  '<img src="' + (user.photo == "" ? "${imageDomain}/photo.jpg" : "${userImagePath}/" + user.photo) + '" width="46" height="46">'+
                                 '</div>' +
                                 '<div class="media-body">' +
                                   '<div class="media-heading">' + user.name + '</div>' +
@@ -423,7 +423,7 @@ $('#inputSendTo').select2('data', preload_data );
 				html = 
                       '<li data-id="' + user.id + '" data-name="' + user.name + '" class="media">' +
                         '<div class="pull-left">' +
-                          '<img src="' + "${userImagePath}/" + user.photo + '" width="46" height="46">'+
+                          '<img src="' + (user.photo == "" ? "${imageDomain}/photo.jpg" : "${userImagePath}/" + user.photo) + '" width="46" height="46">'+
                         '</div>' +
                         '<div class="media-body">' +
                           '<div class="media-heading">' + user.name + '</div>' +
@@ -435,7 +435,7 @@ $('#inputSendTo').select2('data', preload_data );
 				html = 
                       '<li data-id="' + user.id + '" data-name="' + user.name + '" class="media">' +
                         '<div class="pull-left">' +
-                          '<img src="' + "${userImagePath}/" + user.photo +'" width="46" height="46">'+
+                          '<img src="' + (user.photo == "" ? "${imageDomain}/photo.jpg" : "${userImagePath}/" + user.photo) +'" width="46" height="46">'+
                         '</div>' +
                         '<div class="media-body">' +
                           '<div class="media-heading">' + user.name + '</div>' +
