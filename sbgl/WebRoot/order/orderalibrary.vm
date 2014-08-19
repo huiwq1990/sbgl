@@ -65,14 +65,14 @@
                   <div class="group group-hover">
                     <div class="group-hd p-lr-20" data-parent-category-id="$row.comid">
 						#set($cnum = 0)
-						#foreach($row2 in $!equipmentMap.get($row.classificationid))	
+						#foreach($row2 in $!equipmentMap.get($row.comid))	
 							 #set($cnum = $cnum+1)
 						#end
                       <div class="group-name pull-left"><a data-toggle="collapse" href="#grp-1"><i class="icon-caret-down"> </i>$row.name ($!cnum 个)</a></div>
                       <div class="group-line"><hr></div>                      
                     </div>
                     <ul class="group-body media-list collapse in" id="grp-1">
-					  #foreach($row2 in $!equipmentMap.get($row.classificationid))					
+					  #foreach($row2 in $!equipmentMap.get($row.comid))					
 						#foreach($i in [1 .. $!row2.applynumber])
                           <li class="media" data-model-id="$!row2.comId" data-id="" data-is-select="false">
                             <div class="is-select pull-right"><i class="icon-check-empty icon-large"></i></div>
@@ -174,10 +174,10 @@ $(window).load(function(){
 	$("#inputEquipId").typeahead([
   {
 #foreach($row in $!equipmentclassificationList)
-#if($velocityCount!='1'), #end	
+#if($velocityCount!='1'),{ #end	
 	 name: '$!row.name',
 	 local: [
-		#foreach($row4 in $!equipmentMap.get($row.classificationid))	
+		#foreach($row4 in $!equipmentMap.get($row.comid))	
 			#foreach($row5 in $row4.equipDetailidlist)
 				#if($velocityCount!='1'), #end	
 				"$!row5"
@@ -288,14 +288,14 @@ $(window).load(function(){
 var jsonData = {
     	"equips": [  	
 #foreach($row in $!equipmentclassificationList)
-	#foreach($row4 in $!equipmentMap.get($row.classificationid))	
-		#foreach($row5 in $row4.equipDetailidlist)
-			#if($velocityCount!='1') ,  #end	
+	#if($velocityCount!='1') ,  #end	
+	#foreach($row4 in $!equipmentMap.get($row.comid))	
+		#foreach($row5 in $row4.equipDetailidlist)	
 				{
 				"equipName":"$!row4.equipmentname",
 				"equipId":"$!row5",
 				"modelId":"$!row4.comId",
-				"parentCategoryId":"$!row4.classificationid",
+				"parentCategoryId":"$!row.comid",
 				"parentCategoryName":"$row.name",
 				"categoryId":"子类Id1",
 				"categoryName":"子类名1",

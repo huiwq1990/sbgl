@@ -144,7 +144,7 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 							list.set(i, equipmentFull);
 						}	
 					}
-					map.put(equipmentclassification.getClassificationid(), list);
+					map.put(equipmentclassification.getComid(), list);
 				}
 			}
 			return map;
