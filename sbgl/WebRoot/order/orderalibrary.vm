@@ -178,6 +178,7 @@ $(window).load(function(){
 	 name: '$!row.name',
 	 local: [
 		#foreach($row4 in $!equipmentMap.get($row.comid))	
+			#if($velocityCount!='1'), #end
 			#foreach($row5 in $row4.equipDetailidlist)
 				#if($velocityCount!='1'), #end	
 				"$!row5"
@@ -289,8 +290,10 @@ var jsonData = {
     	"equips": [  	
 #foreach($row in $!equipmentclassificationList)
 	#if($velocityCount!='1') ,  #end	
-	#foreach($row4 in $!equipmentMap.get($row.comid))	
+	#foreach($row4 in $!equipmentMap.get($row.comid))
+	#if($velocityCount!='1') ,  #end	
 		#foreach($row5 in $row4.equipDetailidlist)	
+		#if($velocityCount!='1') ,  #end	
 				{
 				"equipName":"$!row4.equipmentname",
 				"equipId":"$!row5",
