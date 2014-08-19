@@ -177,12 +177,11 @@ $(window).load(function(){
 #if($velocityCount!='1'),{ #end	
 	 name: '$!row.name',
 	 local: [
-		#foreach($row4 in $!equipmentMap.get($row.comid))	
+		#foreach($row4 in $!equipmentMap.get($row.comid))
 			#foreach($row5 in $row4.equipDetailidlist)
-				#if($velocityCount!='1'), #end	
-				"$!row5"
+				"$!row5" , 
 			#end
-        #end],
+        #end ],
     header: '<strong>$!row.name</strong>'
   }
  #end	
@@ -288,7 +287,6 @@ $(window).load(function(){
 var jsonData = {
     	"equips": [  	
 #foreach($row in $!equipmentclassificationList)
-	#if($velocityCount!='1') ,  #end	
 	#foreach($row4 in $!equipmentMap.get($row.comid))	
 		#foreach($row5 in $row4.equipDetailidlist)	
 				{
@@ -299,7 +297,7 @@ var jsonData = {
 				"parentCategoryName":"$row.name",
 				"categoryId":"子类Id1",
 				"categoryName":"子类名1",
-				}
+				}, 
 			#end
         #end
  #end			
