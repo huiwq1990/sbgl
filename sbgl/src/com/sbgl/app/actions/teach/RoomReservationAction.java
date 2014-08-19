@@ -58,7 +58,7 @@ public class RoomReservationAction extends ActionSupport {
 							dto.setStudentid( stu.getStudentid() );
 							dto.setId( stu.getId() );
 							dto.setName( stu.getName() );
-							dto.setPhoto( stu.getPhoto() );
+							dto.setPhoto( stu.getPhoto() == null || "".equals(stu.getPhoto()) ? "photo.jpg" : stu.getPhoto() );
 							dtoList.add( dto );
 							flag = false;
 							break;
@@ -70,7 +70,7 @@ public class RoomReservationAction extends ActionSupport {
 						dto.setStudentid( stu.getStudentid() );
 						dto.setId( stu.getId() );
 						dto.setName( stu.getName() );
-						dto.setPhoto( stu.getPhoto() );
+						dto.setPhoto( stu.getPhoto() == null || "".equals(stu.getPhoto()) ? "photo.jpg" : stu.getPhoto() );
 						dtoList.add( dto );
 					}
 				}
