@@ -639,7 +639,7 @@ public class EquipServiceImpl implements EquipService {
 				for (Equipmentclassification c : childrenList) {
 					if( "0".equals( c.getLantype() ) ) {
 						modelList = baseDao.getEntityByIntProperty(Equipment.class.getName(), "classificationid", c.getComid());
-						if(modelList != null) {
+						if(modelList != null && modelList.size() > 0) {
 							final String modelCountSQL = "select count(1) from Equipmentdetail where equipmentid = " + modelList.get(0).getComid();
 							BigInteger EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
 								public Object doInHibernate(Session session) throws HibernateException{
@@ -657,7 +657,7 @@ public class EquipServiceImpl implements EquipService {
 			return totalSum;
 		} else {
 			modelList = baseDao.getEntityByIntProperty(Equipment.class.getName(), "classificationid", classificationId);
-			if(modelList != null) {
+			if(modelList != null && modelList.size() > 0) {
 				final String equipCountSQL = "select count(1) from Equipmentdetail  where equipmentid = " + modelList.get(0).getComid();
 				BigInteger EquipdetailSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
 					public Object doInHibernate(Session session) throws HibernateException{
