@@ -61,7 +61,7 @@
                 </div>
               </div>
 			  <div class="panel-footer clearfix">
-				  <a href="${webbaseurl}/indexInfo.${strutsaction}" class="btn btn-primary">${textmap.globalheader_view_my_profile}</a>
+				  <a href="${webbaseurl}/account.${strutsaction}" class="btn btn-primary">${textmap.globalheader_view_my_profile}</a>
 				  <a href="${webbaseurl}/doLogout.${strutsaction}" class="admin-logout btn pull-right" action-type="logout" role="button">${textmap.globalheader_logout}</a>
 			  </div>
             </div>
