@@ -19,6 +19,7 @@ import com.sbgl.app.dao.OrderFinishDao;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Listdetail;
 import com.sbgl.app.entity.Listequipdetail;
+import com.sbgl.app.entity.Loginuser;
 import com.sbgl.util.DateUtil;
 import com.sbgl.util.EscColumnToBean;
 
@@ -27,10 +28,11 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 	
 	public EquipmenborrowFull findEquipmenborrow(Integer borrowId){
 		
-		final String sql = " select a.*,b.name as userName,c.name as teacherName,d.name as examuserName,e.createtime,e.MsgTitle from EquipmenBorrow a left outer join loginUser b on a.userid = b.id "
-			+ " left outer join loginUser c on c.id=a.teacherid "
-			+ " left outer join loginUser d on d.id=a.examuser "
+		final String sql = " select f.teacherid,a.*,b.name as userName,c.name as teacherName,d.name as examuserName,e.createtime,e.MsgTitle from EquipmenBorrow a left outer join loginUser b on a.userid = b.id "
 			+ " left outer join  sendRuleToUser e on a.sendruleid = e.sendruleid "
+			+ " left outer join  ordercourserule f on f.courseruleid = e.courseruleid "		
+			+ " left outer join loginUser c on c.id=f.teacherid "
+			+ " left outer join loginUser d on d.id=a.examuser "
 			+ " where a.Borrowid='"+borrowId+"' ";
 		List<EquipmenborrowFull> equipmenborrowFullList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
@@ -177,6 +179,25 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 		List<Listequipdetail> list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(sql2).addEntity(Listequipdetail.class); 
+				return query.list();
+			}
+		});	
+		if(list!=null&&!list.isEmpty()){
+			return list.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public Loginuser userdetail(Integer userId) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+		String sql1 = " select a.* from loginuser a where a.id = '"+userId+"' ";
+		final String sql2 = sql1;
+		List<Loginuser> list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql2); 
+				query.setResultTransformer(new EscColumnToBean(Loginuser.class));
 				return query.list();
 			}
 		});	

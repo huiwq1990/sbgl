@@ -44,7 +44,6 @@
   <!--main-content start-->
   <div id="main-content" class="clearfix">
       <!--equip-wrap start-->
-   
           
           <div class="col3 container">
             <div class="control-bar clearfix">
@@ -52,7 +51,8 @@
               <a class="btn btn-primary pull-right" href="${webbaseurl}/equipmentBooking.do?orderCate=1">${textmap.createorder}</a>
             </div>
             <div class="row">
-      			 #foreach($row in $equipmenborrowFullList)		
+      			 #foreach($row in $equipmenborrowFullList)	
+					
                   <div class="col-3">                  
                       <div class="thumbnail">
                         <div class="hd clearfix">
@@ -83,7 +83,7 @@
 							  #elseif($!row.status==3)
 								<span class="label label-warning">${textmap.order_status}</span> ${textmap.orderstatus_reject}					
 							  #elseif($!row.status==4)
-								<span class="label label-success">${textmap.order_status}</span> ${textmap.orderstatus_passed_equipment}						
+								<span class="label label-success">${textmap.order_status}</span> ${textmap.orderstatus_passed_detail_equipment}						
 							  #elseif($!row.status==5)
 								<span class="label label-warning">${textmap.order_status}</span> ${textmap.orderstatus_return_within_time_equipment}					
 							  #elseif($!row.status==6)

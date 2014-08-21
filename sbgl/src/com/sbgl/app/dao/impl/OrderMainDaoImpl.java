@@ -467,7 +467,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 			ordertype="1','2";
 		}
 		if(dealtype.equals("0")){
-			dealtype="'1','2','3','4','5','6','7','8'";
+			dealtype="'2','3','4','5','6','7','8'";
 		}else if(dealtype.equals("1")){
 			dealtype="'2'";
 		}else if(dealtype.equals("2")){

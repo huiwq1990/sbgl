@@ -9,6 +9,7 @@ import com.sbgl.app.entity.Equipmenborrow;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Listdetail;
 import com.sbgl.app.entity.Listequipdetail;
+import com.sbgl.app.entity.Loginuser;
 
 public interface OrderFinishDao {
 	//根据id查找订单，获得订单设备详情
@@ -25,4 +26,6 @@ public interface OrderFinishDao {
 	public  Listdetail findListDetail(Integer borrowId,Integer comId);
 	//根据联合主键和订单主键获得
 	public  Listequipdetail findlistequipdetail(Integer borrowId,Integer comId);
+	//用户详情
+	public Loginuser userdetail(Integer userId);
 }

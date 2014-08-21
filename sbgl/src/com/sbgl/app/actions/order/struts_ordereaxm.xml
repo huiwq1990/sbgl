@@ -14,7 +14,7 @@
         <!-- 订单入库页面 -->
 	 	<action name="orderstorage" class="OrderExamAction" method="orderstorage">
         	<result name="success">/order/orderstorage.vm</result>
-        </action>
+        </action>     
     </package>
     <package name="OrderExamAjax" extends="json-default">	
     	<!-- 提交订单备注 -->

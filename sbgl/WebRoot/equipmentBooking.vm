@@ -73,29 +73,31 @@
               </ul>
             </div>
             <div class="row">
-      			#foreach($row3 in $!equipmentList)	
-                  <div class="w-200">                  
-                      <div class="thumbnail">
-                        <img width="168px" height="128px" class="e-pic" src="$!{equipmentImagePath}/$!row3.imgNameSaved">
-                        <div class="caption">
-                          <div class="title">
-							#if($class1Name!=$!{textmap.order_equipmengroup})<a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.comId" role="button">$!row3.equipmentname</a>
-						  #else <a class="lk" role="button">$!row3.equipmentname</a>
-						  #end</div>
-                          <p class="detail">#if($class1Name!=$!{textmap.order_equipmengroup})$!{textmap.order_canborrowupto}：$!row3.borrownum #else $!{textmap.order_canborrwouptochange} #end</p>
-                        </div>
-                        <div class="select-num">
-						 #if($class1Name!=$!{textmap.order_equipmengroup})
-                          <select class="select2 form-control select-white" id="inputEquipStatus">
-							 #foreach($i in [1 .. $!row3.borrownum])	
-								<option value="$i">$i</option>
-							 #end
-                          </select>
-						  #end                      
-						</div>                            
-                        <a class="btn btn-white add-btn" data-type="addEquip" data-id="$!row3.comId" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" data-cate="$!row3.classificationid" href="javascript:;">$!{textmap.order_add}</a>
-                      </div>                  
-                  </div>
+      			#foreach($row3 in $!equipmentList)
+					#if($!row3.borrownum>0)
+                      <div class="w-200">                  
+                          <div class="thumbnail">
+                            <img width="168px" height="128px" class="e-pic" src="$!{equipmentImagePath}/$!row3.imgNameSaved">
+                            <div class="caption">
+                              <div class="title">
+    							#if($class1Name!=$!{textmap.order_equipmengroup})<a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.comId" role="button">$!row3.equipmentname</a>
+    						  #else <a class="lk" role="button">$!row3.equipmentname</a>
+    						  #end</div>
+                              <p class="detail">#if($class1Name!=$!{textmap.order_equipmengroup})$!{textmap.order_canborrowupto}：$!row3.borrownum #else $!{textmap.order_canborrwouptochange} #end</p>
+                            </div>
+                            <div class="select-num">
+    						 #if($class1Name!=$!{textmap.order_equipmengroup})
+                              <select class="select2 form-control select-white" id="inputEquipStatus">
+    							 #foreach($i in [1 .. $!row3.borrownum])	
+    								<option value="$i">$i</option>
+    							 #end
+                              </select>
+    						  #end                      
+    						</div>                            
+                            <a class="btn btn-white add-btn" data-type="addEquip" data-id="$!row3.comId" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" data-cate="$!row3.classificationid" href="javascript:;">$!{textmap.order_add}</a>
+                          </div>                  
+                      </div>
+					  #end
                    #end
                
             </div>
