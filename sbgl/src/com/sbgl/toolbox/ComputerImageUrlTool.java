@@ -36,7 +36,7 @@ public class ComputerImageUrlTool {
 		if(webbaseurl==null){
 			return defaulturl+ "/computerImage"+"/default.jpg";
 		}
-//		System.out.println("webbaseurl" + webbaseurl);
+		System.out.println("webbaseurl" + webbaseurl);
 		if(pcname == null || pcname.trim().length()==0){
 			return webbaseurl + "/computerImage"+"/default.jpg";
 		}

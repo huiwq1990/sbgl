@@ -81,7 +81,7 @@
                     <div class="row panel-body">
                   
                         <div class="col-md-3">
-                          <img src="$pcimg.url($tempmodel.picpath)" class="img-responsive">
+                          <img src="$pcimg.url($!tempmodel.picpath)" class="img-responsive">
                         </div>
                         <div class="col-md-9">
                           <h3 class="equip-title">$!tempmodel.name</h3>
@@ -142,7 +142,7 @@
 				
 					#set($tableindex = $tempweektableindex*21 + $tempperiod*7 + $tempday)
 					<!--需要拼接td，使其根据用户权限显示最大可借数量-->
-					<td id="td${tempmodel.computermodeltype}_${tableindex}"	data-id="td${tempmodel.computermodeltype}_${tableindex}" class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-periodname="$tempBorrowperiod.peroidname" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name"  data-pcpicpath = "$tempmodel.picpath" 
+					<td id="td${tempmodel.computermodeltype}_${tableindex}"	data-id="td${tempmodel.computermodeltype}_${tableindex}" class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-periodname="$tempBorrowperiod.peroidname" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name"  data-pcpicpath="$tempmodel.picpath" 
 						#if($user.privilege == 1 && $availnum !=0)
 							data-max-num="$toalnum"> 
 							$toalnum($availnum)<br/><small>${textmap.computerindividualorderindex_orderable}</small>
