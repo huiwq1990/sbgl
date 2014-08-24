@@ -32,6 +32,10 @@ public class StudentServiceImpl implements StudentService {
 		student.setId( id );
 		student.setPassword( CardPassUtil.encrypt(student.getPassword()) );
 		student.setMakedate( new Date() );
+		//如果没有上传图片，则使用默认图片
+		if( student.getPhoto() == null || "".equals( student.getPhoto() ) ) {
+			student.setPhoto("photo.jpg");
+		}
 		
 		Userlogininfo info = new Userlogininfo();
 		info.setId( baseDao.getCode("loginInfoId") );

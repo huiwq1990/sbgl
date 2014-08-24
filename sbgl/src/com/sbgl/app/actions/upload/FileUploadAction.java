@@ -355,6 +355,12 @@ public class FileUploadAction  extends ActionSupport {
 		}
 		
 		InputStream is = new FileInputStream(file);
+		//检测保存路径是否村子啊不存在创建一个
+		File saveDir = new File(imagePath);
+		if( ! saveDir.exists() && ! file .isDirectory() ) {
+			System.out.println("目录：" + imagePath + "不存在，进行创建...");
+			saveDir.mkdir();
+		}
 		//String root = ServletActionContext.getRequest().getRealPath("/equipImage");
 		File deskFile = new File(imagePath, savedFileName);
 		OutputStream os = new FileOutputStream(deskFile);

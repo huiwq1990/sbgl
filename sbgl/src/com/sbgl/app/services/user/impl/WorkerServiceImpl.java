@@ -32,6 +32,10 @@ public class WorkerServiceImpl implements WorkerService {
 		worker.setId( id );
 		worker.setPassword( CardPassUtil.encrypt(worker.getPassword()) );
 		worker.setMakedate( new Date() );
+		//如果没有上传图片，则使用默认图片
+		if( worker.getPhoto() == null || "".equals( worker.getPhoto() ) ) {
+			worker.setPhoto("photo.jpg");
+		}
 		
 		Userlogininfo info = new Userlogininfo();
 		info.setId( baseDao.getCode("loginInfoId") );
