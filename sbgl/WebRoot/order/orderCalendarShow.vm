@@ -49,12 +49,12 @@
               </div>
               <div class="semester-filter pull-right">
                 <select id="select-categories" style="width:180px" class="select2 select-white"	onchange="toSelSemester(this[selectedIndex].value);">					
-					#foreach($cctemp in ${courseconfigList})	
+					#foreach($!cctemp in $!{courseconfigList})	
                   <option value="${cctemp.id}"
-					#if(${cctemp.id} == ${selsemesterid})
+					#if($!{cctemp.id} == $!{selsemesterid})
 						selected="selected"
 					#end
-					>${cctemp.schoolyear}第${cctemp.semester}学期</option>
+					>$!{cctemp.schoolyear}第$!{cctemp.semester}学期</option>
 					#end
                 </select>
               </div>
@@ -75,8 +75,13 @@
 					#foreach($week in [1..$totalweek])
                   <li 
 					#if($week == $selsemesterweek)
+					class="active"	
+					#elseif($selsemesterweek<=0&&$week==1)
+					class="active"		
+					#elseif($selsemesterweek>=$totalweek&&$week==$totalweek)
 					class="active"
 					#end 
+					
 					><a href="${webbaseurl}/orderCalendarShow.action?selsemesterweek=${week}&selsemesterid=${currentCourseconfig.id}" data-week="1">第${week}周</a></li>
                  #end            
                 </ul>
@@ -87,15 +92,15 @@
                 <thead>
                   <tr>
                     <th class="time-slot">时间</th>
-					#foreach($day in [0..6])
-                    <th>$showDayList.get($day)<br>$showDate.get($day)</th>
+					#foreach($!day in [0..6])
+                    <th>$!showDayList.get($day)<br>$!showDate.get($day)</th>
 					#end 
                   </tr>
                 </thead>
                 <tbody>
 					<tr id="tr-slot">	
 						<td class="time-slot">全天</td>
-						#foreach($day in [1..7])
+						#foreach($!day in [1..7])
 							#if (!$orderEquipmenborrowMap.get($day))
 							 <td data-week="$!{day} 0" >asd	</td>
 							#else		
@@ -113,7 +118,7 @@
     									#else
     									label-success
     									#end									
-										">${od.title}</span>
+										">$!{od.title}</span>
     							#end ## end orderdetaillist
     						 </td>
     						#end	

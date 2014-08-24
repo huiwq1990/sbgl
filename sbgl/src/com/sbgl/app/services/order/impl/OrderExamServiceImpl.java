@@ -121,6 +121,8 @@ public class OrderExamServiceImpl implements OrderExamService {
 		return true;
 	}
 
-
-
+	//用户详情
+	public Loginuser userdetail(Integer userId){
+		return orderFinishDao.userdetail(userId);
+	}
 }

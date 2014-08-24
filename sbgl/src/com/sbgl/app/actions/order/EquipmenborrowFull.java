@@ -37,6 +37,7 @@ public class EquipmenborrowFull extends DaoAbs {
 	private Date enddate;
 	private String msgtitle;
 	private String content;
+	private String teacherphoto;
 	public Integer getBorrowid() {
 		return borrowid;
 	}
@@ -216,6 +217,12 @@ public class EquipmenborrowFull extends DaoAbs {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public String getTeacherphoto() {
+		return teacherphoto;
+	}
+	public void setTeacherphoto(String teacherphoto) {
+		this.teacherphoto = teacherphoto;
 	}
 	
 }

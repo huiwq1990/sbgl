@@ -35,6 +35,10 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 	private String examcontent;
 	private String inputEquipContent;
 	private String ids;
+	private Loginuser userdetail;
+	private Loginuser userdetail2;
+	
+	private Integer userId;
 
 	
 	@Resource
@@ -62,6 +66,8 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 		}
 		equipmentList = orderFinishService.findListBorrow(borrowId,lantype);
 		equipmenborrowFull = orderFinishService.findEquipmenborrow(borrowId);
+		userdetail = orderExamService.userdetail(equipmenborrowFull.getTeacherid());
+		userdetail2 = orderExamService.userdetail(equipmenborrowFull.getUserid());
 		return SUCCESS;
 	}
 	
@@ -132,6 +138,15 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 		}
 		return SUCCESS;
 	}
+	
+	//用户详情
+	public String userdetail(){
+		userdetail = orderExamService.userdetail(userId);
+		return SUCCESS;
+	}
+	
+	
+	
 	
 	//设备出库
 	public String storageorder(){
@@ -247,6 +262,30 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 
 	public void setIds(String ids) {
 		this.ids = ids;
+	}
+
+	public Loginuser getUserdetail() {
+		return userdetail;
+	}
+
+	public void setUserdetail(Loginuser userdetail) {
+		this.userdetail = userdetail;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public Loginuser getUserdetail2() {
+		return userdetail2;
+	}
+
+	public void setUserdetail2(Loginuser userdetail2) {
+		this.userdetail2 = userdetail2;
 	}
 
 }

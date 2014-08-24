@@ -93,6 +93,7 @@ $(document).ready(function(){
 			}
 	  	}, 300);
 	});
+	
 
 	$('.spinner').spinner();
 

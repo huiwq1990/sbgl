@@ -334,7 +334,7 @@ $("body").on("click", "a[data-type|=deleteorder]", function() {
 				ids +=dataId+",";
 			});		
 		});
-		if(ids==","){
+		if(ids==","||ids==""){
 			alert("最少出库一个设备！");
 			return ;
 		}

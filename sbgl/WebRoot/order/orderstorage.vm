@@ -240,6 +240,10 @@ $("body").on("click", "a[data-type|=storageorder]", function() {
 			});		
 		});
 		ids = ids.substring(0,ids.length);
+		if(ids==","||ids==""){
+			alert("最少入库一个设备！");
+			return ;
+		}
 		$.ajax({
 			url: "storageorder.do",
 			type: 'POST',
