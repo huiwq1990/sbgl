@@ -44,6 +44,12 @@ public class EquipServiceImpl implements EquipService {
 		int id = baseDao.getCode("equipId");
 		equip.setEquipmentid( id );
 		equip.setMakedate( new Date() );
+		//如果没有上传图片，则使用默认图片
+		if( equip.getImgnamesaved() == null || "".equals( equip.getImgnamesaved() ) ) {
+			equip.setImgname("nopic.jpg");
+			equip.setImgnamesaved("nopic.jpg");
+		}
+		
 		try {
 			baseDao.saveEntity( equip );
 		} catch (RuntimeException re) {

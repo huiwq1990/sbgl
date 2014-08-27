@@ -34,7 +34,7 @@ public class TeacherServiceImpl implements TeacherService {
 		teacher.setMakedate( new Date() );
 		//如果没有上传图片，则使用默认图片
 		if( teacher.getPhoto() == null || "".equals( teacher.getPhoto() ) ) {
-			teacher.setPhoto("photo.jpg");
+			teacher.setPhoto("avatar.jpg");
 		}
 		
 		Userlogininfo info = new Userlogininfo();

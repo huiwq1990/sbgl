@@ -34,7 +34,7 @@ public class WorkerServiceImpl implements WorkerService {
 		worker.setMakedate( new Date() );
 		//如果没有上传图片，则使用默认图片
 		if( worker.getPhoto() == null || "".equals( worker.getPhoto() ) ) {
-			worker.setPhoto("photo.jpg");
+			worker.setPhoto("avatar.jpg");
 		}
 		
 		Userlogininfo info = new Userlogininfo();
