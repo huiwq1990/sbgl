@@ -28,7 +28,7 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 	
 	public EquipmenborrowFull findEquipmenborrow(Integer borrowId){
 		
-		final String sql = " select f.teacherid,a.*,b.name as userName,c.name as teacherName,d.name as examuserName,e.createtime,e.MsgTitle from EquipmenBorrow a left outer join loginUser b on a.userid = b.id "
+		final String sql = " select f.teacherid,a.*,b.name as userName,c.name as teacherName,d.name as examuserName,e.createtime,e.MsgTitle,c.photo as teacherPic,d.photo as examuserPic from EquipmenBorrow a left outer join loginUser b on a.userid = b.id "
 			+ " left outer join  sendRuleToUser e on a.sendruleid = e.sendruleid "
 			+ " left outer join  ordercourserule f on f.courseruleid = e.courseruleid "		
 			+ " left outer join loginUser c on c.id=f.teacherid "

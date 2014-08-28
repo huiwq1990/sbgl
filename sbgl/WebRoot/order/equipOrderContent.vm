@@ -135,10 +135,10 @@
               <hr />
             </div>                        
             <ul class="media-list">
-			#if($!equipmenborrowFull.teacherid)
+			#if($!equipmenborrowFull.teacherid) 
               <li class="media">
                 <div class="pull-left">
-                  <img src="img/photo.jpg" width="28" height="28" class="img-rounded">
+                  <img src="${userImagePath}/$!equipmenborrowFull.teacherPic" width="28" height="28" class="img-rounded">
                 </div>
                 <div class="media-body">
                   <div class="media-heading"><h5>$!equipmenborrowFull.teacherName</h5><span class="post-time">$!date.format("yyyy-MM-dd", $!equipmenborrowFull.createtime)</span></div>
@@ -149,7 +149,7 @@
 			#if($!equipmenborrowFull.examuser)
               <li class="media">
                 <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
-                  <img src="img/photo.jpg" width="28" height="28" class="img-rounded">
+                  <img src="${userImagePath}/$!equipmenborrowFull.examuserPic" width="28" height="28" class="img-rounded">
                 </a>
                 <div class="media-body">
                   <div class="media-heading"><h5><a rel="popover" href="#">$!equipmenborrowFull.examuserName</a></h5><span class="post-time" title="详细时间">$!date.format("yyyy-MM-dd hh:mm", $!equipmenborrowFull.examdate)</span></div>

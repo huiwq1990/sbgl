@@ -31,6 +31,8 @@ public class EquipmenborrowFull extends DaoAbs {
 	private String cateName;
 	private String statusName;
 	private String teacherName;
+	private String teacherPic;
+	private String examuserPic;
 	private String examuserName;
 	private Date createtime;
 	private Date startdate;
@@ -223,6 +225,18 @@ public class EquipmenborrowFull extends DaoAbs {
 	}
 	public void setTeacherphoto(String teacherphoto) {
 		this.teacherphoto = teacherphoto;
+	}
+	public String getTeacherPic() {
+		return teacherPic;
+	}
+	public void setTeacherPic(String teacherPic) {
+		this.teacherPic = teacherPic;
+	}
+	public String getExamuserPic() {
+		return examuserPic;
+	}
+	public void setExamuserPic(String examuserPic) {
+		this.examuserPic = examuserPic;
 	}
 	
 }
