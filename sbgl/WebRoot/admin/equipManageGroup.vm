@@ -39,13 +39,9 @@
         <div id="admin-content" class="clearfix">    
             <!--control-bar start-->
             <div class="control-bar clearfix">
-              <div class="title pull-left">型号管理</div>
-			  <div class="tips">在此页面下管理设备型号。设备型号包含每种设备的基本信息，如设备名、设备图片、设备资料介绍等等。</div>
-              <div class="filter category-filter">
-                <select id="select-categories" style="width:130px" class="select2">
-                  <option value="-2" data-foo="fa">设备组</option>
-                </select>
-              </div>
+              <div class="title pull-left">设备组管理</div>
+			  <div class="tips">在此页面下管理设备组信息。设备组号包含该种设备组的基本信息，如包含的设备型号、数量，设备组的描述和设备图片等。</div>
+
               <div class="operate-item pull-left">
                 <a href="#add-equip-basic-group" class="btn btn-primary" data-toggle="modal" action-type="clearInput"  role="button">添加基本设备组</a>
                 <a href="#" class="btn btn-white s-h" action-type="deleteModel"><i class="icon-trash"></i> 删除</a>
