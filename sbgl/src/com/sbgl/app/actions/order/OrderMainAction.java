@@ -70,20 +70,20 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 				endDate = DateUtil.addDay2(fromDate, 1);
 			}
 		}
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
 		Integer courseruleid = 0;
 		if(borrowId!=null&&!borrowId.equals("")){
 			equipmenborrowFull = orderMainService.findEquipmenborrow(borrowId);
 			orderCate = equipmenborrowFull.getCategory().toString();
 			courseruleid = equipmenborrowFull.getStatus();
-			listequips = orderMainService.findEquipmentByBorrowId(borrowId,fromDate,endDate); 
-		}
-		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
-		if(lantype==null||lantype.equals("")){
-			lantype = "0";
+			listequips = orderMainService.findEquipmentByBorrowId(borrowId,fromDate,endDate,lantype); 
 		}
 		classification1List = orderMainService.findTopEquipmentclass(lantype);
 		if(classification1List!=null){
-			class1Id = classification1List.get(0).getClassificationid();
+			class1Id = classification1List.get(0).getComid();
 			class1Name = classification1List.get(0).getName();
 		}
 		classification2List = orderMainService.findSecondEquipmentclass(lantype);
@@ -120,14 +120,16 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 				equipmenborrowFull = orderMainService.findEquipmenborrow(borrowId);
 				orderCate = equipmenborrowFull.getCategory().toString();
 				courseruleid = equipmenborrowFull.getStatus();
-				listequips = orderMainService.findEquipmentByBorrowId(borrowId,fromDate,endDate); 
+				listequips = orderMainService.findEquipmentByBorrowId(borrowId,fromDate,endDate,lantype); 
 			}
 			Equipmentclassification equipmentclassification = new Equipmentclassification();
 			equipmentclassification = orderMainService.findEquipmentclassification(parentClassId,lantype);
 			if(parentClassId==-2){
 				class1Name = "设备组";
 			}else{
-				class1Name = equipmentclassification.getName();
+				if(equipmentclassification!=null){
+					class1Name = equipmentclassification.getName();
+				}
 			}
 			classification2List = orderMainService.findSecondEquipmentclass(parentClassId,lantype);
 			if(serach!=null&&!serach.equals("")){
@@ -189,6 +191,10 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 			}
 		}
 		fromDate = DateUtil.date.format(DateUtil.addDay(DateUtil.parseDate(fromDate), -7));
+		String now = DateUtil.date.format(new Date());
+		if(DateUtil.parseDate(now).getTime()>DateUtil.parseDate(fromDate).getTime()){
+			fromDate = now;
+		}
 		endDate = DateUtil.date.format(DateUtil.addDay(DateUtil.parseDate(endDate), 7));
 		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
 		if(lantype==null||lantype.equals("")){
@@ -227,7 +233,11 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 				endDate = fromDate;
 			}
 		}
-		equipmentFull = orderMainService.findEquipmentById(equipmentId,fromDate,endDate);
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
+		equipmentFull = orderMainService.findEquipmentById(equipmentId,fromDate,endDate,lantype);
 		return SUCCESS;
 	}
 	
@@ -244,9 +254,13 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 				endDate = fromDate;
 			}
 		}
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
 		try{
 			Loginuser loginuser = (Loginuser) session.get("loginUser");
-			borrowId = orderMainService.subOrder(equIds, equNums, fromDate, endDate,borrowId,loginuser);
+			borrowId = orderMainService.subOrder(equIds, equNums, fromDate, endDate,borrowId,loginuser,lantype);
 			tag = "1";
 		}catch(DataError e){		
 			tag = "2";

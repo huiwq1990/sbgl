@@ -42,5 +42,7 @@ public List<Computer> selectComputerByCondition(String condition);
 
 	List<ComputerFull> selFullByModeltype(int modeltype, int language);
 
+	int countRow(String sql);
+
 
 }

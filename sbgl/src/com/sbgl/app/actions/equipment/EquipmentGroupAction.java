@@ -88,7 +88,7 @@ public class EquipmentGroupAction extends ActionSupport implements SessionAware 
 			page.setTotalpage(temp2+1);
 		}
 		classification1List = orderAdminService.findTopEquipmentclass(lantype);
-		classequipmap = orderAdminService.fingclassequipMap(classification1List,-1);
+		classequipmap = orderAdminService.fingclassequipMap(classification1List,-1,lantype);
 		return SUCCESS;
 	}
 	

@@ -29,15 +29,16 @@ public class ImageUrlTool {
 	public String url(String cate,String name){
 		
 		String webbaseurl = (String) request.getAttribute("webbaseurl");
-		System.out.println("webbaseurl" + webbaseurl);
+//		System.out.println("webbaseurl" + webbaseurl);
 		if(cate == null || cate.trim().length()==0){
 			return "";
 		}
 		if(name == null || name.trim().length()==0){
-			return "";
+			name="default.jpg";
 		}
 		
 		if(cate.equals("user")){
+			
 			return webbaseurl + "/userImage"+"/"+name;
 		}else if(cate.equals("pc")){
 			return webbaseurl + "/computerImage"+"/"+name;

@@ -42,7 +42,7 @@
     <div class="sub-nav">
       <ul class="nav nav-tabs nav-tabs-google">
         #foreach($row in $classification1List)		
-			<li id="cl1$!row.classificationid" #if($velocityCount=='1') class="active classification1" #else class="classification1" #end><a href="javascript:;" data-type="classAjax" data-id="$!row.classificationid" data-classtype="1" >$!row.name</a></li>
+			<li id="cl1$!row.comid" #if($velocityCount=='1') class="active classification1" #else class="classification1" #end><a href="javascript:;" data-type="classAjax" data-id="$!row.comid" data-classtype="1" >$!row.name</a></li>
 		#end
 		<li id="cl1-2" class="classification1"><a href="javascript:;" data-type="classAjax" data-id="-2" data-classtype="1" >$!{textmap.order_equipmengroup}</a></li>	
       </ul>
@@ -68,34 +68,36 @@
               <ul class="nav nav-pills pull-right">
                 #foreach($row2 in $!classification2List)		
 					#if($velocityCount=='1')<li id="cl20" class="active classification2" ><a href="javascript:;" data-type="classAjax" data-id="0" data-classtype="2" data-parentid="$!class1Id">$!{textmap.order_all}</a></li>#end
-        			<li id="cl2$!row2.classificationid" class="classification2"><a href="javascript:;" data-type="classAjax" data-id="$!row2.classificationid" data-classtype="2" data-parentid="$!class1Id">$!row2.name</a></li>
+        			<li id="cl2$!row2.comid" class="classification2"><a href="javascript:;" data-type="classAjax" data-id="$!row2.comid" data-classtype="2" data-parentid="$!class1Id">$!row2.name</a></li>
         		#end
               </ul>
             </div>
             <div class="row">
-      			#foreach($row3 in $!equipmentList)	
-                  <div class="w-200">                  
-                      <div class="thumbnail">
-                        <img width="168px" height="128px" class="e-pic" src="$!{equipmentImagePath}/$!row3.imgNameSaved">
-                        <div class="caption">
-                          <div class="title">
-							#if($class1Name!=$!{textmap.order_equipmengroup})<a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.equipmentid" role="button">$!row3.equipmentname</a>
-						  #else <a class="lk" role="button">$!row3.equipmentname</a>
-						  #end</div>
-                          <p class="detail">#if($class1Name!=$!{textmap.order_equipmengroup})$!{textmap.order_canborrowupto}：$!row3.borrownum #else $!{textmap.order_canborrwouptochange} #end</p>
-                        </div>
-                        <div class="select-num">
-						 #if($class1Name!=$!{textmap.order_equipmengroup})
-                          <select class="select2 form-control select-white" id="inputEquipStatus">
-							 #foreach($i in [1 .. $!row3.borrownum])	
-								<option value="$i">$i</option>
-							 #end
-                          </select>
-						  #end                      
-						</div>                            
-                        <a class="btn btn-white add-btn" data-type="addEquip" data-id="$!row3.equipmentid" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" data-cate="$!row3.classificationid" href="javascript:;">$!{textmap.order_add}</a>
-                      </div>                  
-                  </div>
+      			#foreach($row3 in $!equipmentList)
+					#if($!row3.borrownum>0)
+                      <div class="w-200">                  
+                          <div class="thumbnail">
+                            <img width="168px" height="128px" class="e-pic" src="$!{equipmentImagePath}/$!row3.imgNameSaved">
+                            <div class="caption">
+                              <div class="title">
+    							#if($class1Name!=$!{textmap.order_equipmengroup})<a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.comId" role="button">$!row3.equipmentname</a>
+    						  #else <a class="lk" role="button">$!row3.equipmentname</a>
+    						  #end</div>
+                              <p class="detail">#if($class1Name!=$!{textmap.order_equipmengroup})$!{textmap.order_canborrowupto}：$!row3.borrownum #else $!{textmap.order_canborrwouptochange} #end</p>
+                            </div>
+                            <div class="select-num">
+    						 #if($class1Name!=$!{textmap.order_equipmengroup})
+                              <select class="select2 form-control select-white" id="inputEquipStatus">
+    							 #foreach($i in [1 .. $!row3.borrownum])	
+    								<option value="$i">$i</option>
+    							 #end
+                              </select>
+    						  #end                      
+    						</div>                            
+                            <a class="btn btn-white add-btn" data-type="addEquip" data-id="$!row3.comId" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" data-cate="$!row3.classificationid" href="javascript:;">$!{textmap.order_add}</a>
+                          </div>                  
+                      </div>
+					  #end
                    #end
                
             </div>
@@ -120,13 +122,14 @@
               <p>$!{textmap.order_youis} <strong>$!{textmap.order_teachingappointment}</strong>$!{textmap.order_following}<strong>$!equipmenborrowFull.teacherName</strong>$!{textmap.order_relevantrequirements}</p>
               <div class="media">
                 <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
-                  <img src="img/photo.jpg" width="46" height="46" class="img-rounded">
+                  <img src="${userImagePath}/$!user.photo" width="46" height="46" class="img-rounded">
                 </a>
                 <div class="media-body">
                   <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">$!equipmenborrowFull.teacherName</a></h5><span>$!date.format("yyyy-MM-dd ", $!equipmenborrowFull.createtime)</span></div>
                   <div class="media-content">
                     <h5>$!equipmenborrowFull.msgtitle</h5>
                     <p>$!equipmenborrowFull.msgtitle $!{textmap.order_specificrequirements}：</p>
+					<p>$!date.format("yyyy-MM-dd ", $!equipmenborrowFull.startdate) - $!date.format("yyyy-MM-dd ", $!equipmenborrowFull.enddate)</p>
                     $!equipmenborrowFull.content
                   </div>
                 </div>
@@ -232,7 +235,7 @@
   </div>
   <div class="modal-footer">
     <a class="btn btn-white" data-dismiss="modal" aria-hidden="true">$!{textmap.order_cancel}</a>
-    <a class="btn btn-primary" data-type="addEquip" data-id="$!equipmentFull.equipmentid" data-name="$!equipmentFull.equipmentname" data-num="$!equipmentFull.borrownum" data-cate="$!parentClassId" href="javascript:;">$!{textmap.order_add}</a>
+    <a class="btn btn-primary" data-type="addEquip" data-id="$!equipmentFull.comId" data-name="$!equipmentFull.equipmentname" data-num="$!equipmentFull.borrownum" data-cate="$!parentClassId" href="javascript:;">$!{textmap.order_add}</a>
   </div>
 </div>
 
@@ -451,9 +454,7 @@ $(window).load(function(){
     			   }
     			   $("#serachtext").val(serach);
     			},error:function(a, b, c){
-    				alert("a"+XMLHttpRequest);
-    				alert("b"+textStatus);
-    				alert("c"+errorThrown);
+    				
     				
     			}	
     		});
@@ -516,9 +517,7 @@ $(window).load(function(){
 			   		$("#cl2"+cId).addClass('active');
 			   }
 			},error:function(XMLHttpRequest, textStatus, errorThrown){
-				alert("a"+XMLHttpRequest);
-				alert("b"+textStatus);
-				alert("c"+errorThrown);
+				
 				
 			}	  
 		});

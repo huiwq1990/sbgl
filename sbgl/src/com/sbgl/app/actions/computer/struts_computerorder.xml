@@ -81,6 +81,7 @@
 		<action name="toAuditComputerorderPage" class="ManageComputerorder" method="toAuditComputerorderPage">
         	<result name="success">/computer/computerorderaudit.vm</result>
         	<result name="usernotlogin">/computer/errorpage.vm</result> 
+        	<result name="404">/404.vm</result> 
         	<result name="error">/error.vm</result> 
         </action>
 

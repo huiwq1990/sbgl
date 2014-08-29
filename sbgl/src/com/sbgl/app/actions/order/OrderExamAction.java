@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.services.order.OrderExamService;
@@ -34,6 +35,10 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 	private String examcontent;
 	private String inputEquipContent;
 	private String ids;
+	private Loginuser userdetail;
+	private Loginuser userdetail2;
+	
+	private Integer userId;
 
 	
 	@Resource
@@ -44,30 +49,48 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 	
 //	进入查看订单确认页面
 	public String equipmentConfirm(){
-		equipmentList = orderFinishService.findListBorrow(borrowId);
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
+		equipmentList = orderFinishService.findListBorrow(borrowId,lantype);
 		equipmenborrowFull = orderFinishService.findEquipmenborrow(borrowId);
 		return SUCCESS;
 	}
 	
 	//	进入查看订单审核页面
 	public String equipmentExaming(){
-		equipmentList = orderFinishService.findListBorrow(borrowId);
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
+		equipmentList = orderFinishService.findListBorrow(borrowId,lantype);
 		equipmenborrowFull = orderFinishService.findEquipmenborrow(borrowId);
+		userdetail = orderExamService.userdetail(equipmenborrowFull.getTeacherid());
+		userdetail2 = orderExamService.userdetail(equipmenborrowFull.getUserid());
 		return SUCCESS;
 	}
 	
 	//进入设备出库页面
 	public String orderalibrary(){
-		equipmentclassificationList = orderExamService.findclassList(borrowId);
-		equipmentMap = orderExamService.findMapBorrow(borrowId,1);
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
+		equipmentclassificationList = orderExamService.findclassList(borrowId,lantype);
+		equipmentMap = orderExamService.findMapBorrow(borrowId,1,lantype);
 		equipmenborrowFull = orderFinishService.findEquipmenborrow(borrowId);
 		return SUCCESS;
 	}
 	
 	//进入设备入库页面
 	public String orderstorage(){
-		equipmentclassificationList = orderExamService.findclassList(borrowId);
-		equipmentMap = orderExamService.findMapBorrow(borrowId,2);
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
+		equipmentclassificationList = orderExamService.findclassList(borrowId,lantype);
+		equipmentMap = orderExamService.findMapBorrow(borrowId,2,lantype);
 		equipmenborrowFull = orderFinishService.findEquipmenborrow(borrowId);
 		return SUCCESS;
 	}
@@ -115,6 +138,15 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 		}
 		return SUCCESS;
 	}
+	
+	//用户详情
+	public String userdetail(){
+		userdetail = orderExamService.userdetail(userId);
+		return SUCCESS;
+	}
+	
+	
+	
 	
 	//设备出库
 	public String storageorder(){
@@ -230,6 +262,30 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 
 	public void setIds(String ids) {
 		this.ids = ids;
+	}
+
+	public Loginuser getUserdetail() {
+		return userdetail;
+	}
+
+	public void setUserdetail(Loginuser userdetail) {
+		this.userdetail = userdetail;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public Loginuser getUserdetail2() {
+		return userdetail2;
+	}
+
+	public void setUserdetail2(Loginuser userdetail2) {
+		this.userdetail2 = userdetail2;
 	}
 
 }

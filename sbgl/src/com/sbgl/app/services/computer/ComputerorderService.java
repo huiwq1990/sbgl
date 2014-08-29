@@ -54,6 +54,7 @@ public interface ComputerorderService{
 	
 	
 	// 查询实体full        
+	@Deprecated
         public List<ComputerorderFull>  selectComputerorderFullByConditionAndPage(String condition,final Page page);
 
 		int execSql(String sql);
@@ -85,6 +86,10 @@ public interface ComputerorderService{
 		List<ComputerorderFull> selFullByStatus(int uid, int orderstatus);
 
 		List<ComputerorderFull> selFullByStatus(int orderstatus);
+
+
+		List<ComputerorderFull> selByStatusAndPage(int computerorderStatus,
+				Page page);
 		
 	
 //根据关联查询实体	

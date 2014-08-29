@@ -244,9 +244,9 @@
 			alert("库存条码必须输入数字！");
 			return;
 		}
-		var ret1 = regex.test(assetNumber);
-		if(ret1 == false) {
-			alert("资产编号必须输入数字！");
+		//var ret1 = regex.test(assetNumber);
+		if(assetNumber == "") {
+			alert("资产编号不能为空！");
 			return;
 		}
 		var regex2 = /^[0-9]+(.[0-9]+)?$/;

@@ -44,7 +44,6 @@
   <!--main-content start-->
   <div id="main-content" class="clearfix">
       <!--equip-wrap start-->
-   
           
           <div class="col3 container">
             <div class="control-bar clearfix">
@@ -52,11 +51,12 @@
               <a class="btn btn-primary pull-right" href="${webbaseurl}/equipmentBooking.do?orderCate=1">${textmap.createorder}</a>
             </div>
             <div class="row">
-      			 #foreach($row in $equipmenborrowFullList)		
+      			 #foreach($row in $equipmenborrowFullList)	
+					
                   <div class="col-3">                  
                       <div class="thumbnail">
                         <div class="hd clearfix">
-                          <h4 class="pull-left"><a class="lk" href="${webbaseurl}/equipOrderContent.do?borrowId=$!row.borrowid">$!row.title</a></h4>
+                          <h4 class="pull-left"><a class="lk" href="${webbaseurl}/equipOrderContent.do?borrowId=$!row.borrowid">#if(!$row.title) ${textmap.order_tosubmitorders} #else $!row.title #end</a></h4>
                         </div>
                         <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> ${textmap.order_equipment}<br/>#if($!row.category==1)
 							${textmap.order_personalappointment}
@@ -66,8 +66,12 @@
                         <div class="caption">
                           <div class="rent-info">
                             <div class="rent-num">${textmap.order_reservationno} ：$!row.borrowid</div>
+							#if($!row.borrowtime&&$!row.borrowtime!="")
                             <div class="rent-time"><i class="icon-time"></i> $!date.format("yyyy-MM-dd ", $!row.borrowtime)  ${textmap.order_to} $!date.format("yyyy-MM-dd ", $!row.returntime)</div>
-                            <div class="rent-remark"><i class="icon-pencil"></i>$!row.remark</div>
+                            #end
+							#if($!row.remark&&$!row.remark!="")
+							<div class="rent-remark"><i class="icon-pencil"></i>$!row.remark</div>
+							#end
                           </div>
                           <hr />
                           <div class="rent-status clearfix">
@@ -79,7 +83,7 @@
 							  #elseif($!row.status==3)
 								<span class="label label-warning">${textmap.order_status}</span> ${textmap.orderstatus_reject}					
 							  #elseif($!row.status==4)
-								<span class="label label-success">${textmap.order_status}</span> ${textmap.orderstatus_passed_equipment}						
+								<span class="label label-success">${textmap.order_status}</span> ${textmap.orderstatus_passed_detail_equipment}						
 							  #elseif($!row.status==5)
 								<span class="label label-warning">${textmap.order_status}</span> ${textmap.orderstatus_return_within_time_equipment}					
 							  #elseif($!row.status==6)
@@ -117,8 +121,12 @@
                         <div class="caption">
                           <div class="rent-info">
                             <div class="rent-num">${textmap.order_reservationno} ：$!row2.borrowid</div>
+							#if($!row2.borrowtime&&$!row2.borrowtime!="")
                             <div class="rent-time"><i class="icon-time"></i> $date.format("yyyy-MM-dd ", $!row2.borrowtime)  - $date.format("yyyy-MM-dd ", $!row2.returntime)</div>
-                            <div class="rent-remark"><i class="icon-pencil"></i>$!row2.remark</div>
+							#end
+							#if($!row2.remark&&$!row2.remark!="")
+							<div class="rent-remark"><i class="icon-pencil"></i>$!row2.remark</div>
+							#end
                           </div>
 					<!--
                           <hr />

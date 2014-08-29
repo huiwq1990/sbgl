@@ -464,85 +464,12 @@ public class ManageComputerAction extends BaseAction{
 	public String manageComputerFull(){
 		log.info("exec action method:manageComputerFull");	
 		
-		String countsql = " where a.languagetype="+CommonConfig.languagech;
-		String sqlch =" where a.languagetype="+CommonConfig.languagech+" and b.languagetype="+CommonConfig.languagech;
-		String sqlen= " where a.languagetype="+CommonConfig.languageen+" and b.languagetype="+CommonConfig.languageen;
-		
-		//查询全部中文的
-		
-		//查询所有分类
-		if(computercategorytype==0){
-			
-		}
-		
-		//查询某一个Model下的PC
-		if(computercategorytype!=0 && computermodeltype!=0){
-			countsql +=  " and a.computermodelid="+computermodeltype;
-			sqlch = sqlch + " and a.computermodelid="+computermodeltype;
-			sqlen = sqlen +  " and a.computermodelid="+computermodeltype;
-		}
-		
-//		查询某一分类下的PC 先获取分类下面的模型
-		if(computercategorytype!=0 && computermodeltype==0){
-			List<Computermodel> tempComputermodelList = computermodelService.selectComputermodelByCondition(" where a.computercategoryid="+computercategorytype +" and a.languagetype="+CommonConfig.languagech);
-			
-			String inStr = " (";
-			
-//			如果不存在分类不存在模型，设置一个空的模型id
-			if(tempComputermodelList==null || tempComputermodelList.size()<1){
-				inStr +=" -10,";
-			}else{
-				for(Computermodel c : tempComputermodelList){
-					inStr += c.getComputermodeltype()+",";
-				}
-			}
-			
-			
-			
-			inStr = inStr.substring(0,inStr.length()-1);
-			inStr += ") ";
-			countsql += " and a.computermodelid in "+inStr+" ";
-			sqlch = sqlch + " and a.computermodelid in "+inStr+" ";
-			sqlen = sqlen + " and a.computermodelid in "+inStr+" ";
-		}
-
-//		//查询sql,如果computermodeltype为0，查询全部
-//		if(computermodeltype == 0){
-//			countsql += " where a.languagetype="+ComputerConfig.languagech;
-//			sqlch = sqlch + " where a.languagetype="+ComputerConfig.languagech+" and b.languagetype="+ComputerConfig.languagech;
-//			sqlen = sqlen + " where a.languagetype="+ComputerConfig.languageen+" and b.languagetype="+ComputerConfig.languageen;
-//		}else{
-//			countsql =" where a.computermodelid="+computermodeltype;
-////			countsql = countsql + " where a.languagetype="+ComputerConfig.languagech+" and a.computercategoryid="+computercategoryid+"  order by a.computermodeltype,a.languagetype";
-//			sqlch = sqlch + " where a.languagetype="+ComputerConfig.languagech+" and b.languagetype="+ComputerConfig.languagech+" and a.computermodelid="+computermodeltype;
-//			sqlen = sqlen + " where a.languagetype="+ComputerConfig.languageen+" and b.languagetype="+ComputerConfig.languageen+" and a.computermodelid="+computermodeltype;
-//		}
-		
-		if(computerstatusid == 0){
-			
-		}else{
-//			if(computermodeltype != 0){
-//				countsql = countsql +" where ";
-//			}else{
-//				countsql = countsql +" and ";
-//			}
-			countsql = countsql + " and a.computerstatusid=" + computerstatusid;
-			sqlch = sqlch + " and a.computerstatusid=" + computerstatusid;
-			sqlen = sqlen + " and a.computerstatusid=" + computerstatusid;
-		}		
-		sqlch += " order by a.computertype,a.languagetype";
-		sqlen += " order by a.computertype,a.languagetype";
-		
-		System.out.println(countsql);
-		System.out.println(sqlch);
-		System.out.println(sqlen);
-		
-		//设置总数量，查询中文的
-		this.totalcount = computerService.selectComputerByCondition(countsql).size();
-		page = PageActionUtil.getPage(totalcount, pageNo);
+		page.setPageNo(pageNo);
+		computerService.selFullByPage(computercategorytype, computermodeltype, computerstatusid, page, CommonConfig.languagech, computerFullListCh, computerFullListEn);
+		totalcount = page.getTotalCount();
 		pageNo = page.getPageNo();
 		
-		computerFullListCh = computerService.selectComputerFullByConditionAndPage(sqlch, page);
+//		computerFullListCh = computerService.selectComputerFullByConditionAndPage(sqlch, page);
 //		computerFullListEn = computerService.selectComputerFullByConditionAndPage(sqlen, page);
 //		System.out.println(computerFullListCh.size()+" " + computerFullListEn.size());
 		
@@ -554,6 +481,7 @@ public class ManageComputerAction extends BaseAction{
 		for(ComputercategoryFull full : computercategoryFullList){
 			ctypeList.add(full.getComputercategorycomputercategorytype());
 		}
+		
 		computermodelByComputercategoryId = computermodelService.getCategoryModelMap(ctypeList, CommonConfig.languagech);
 		
 		

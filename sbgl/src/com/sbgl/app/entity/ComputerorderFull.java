@@ -29,6 +29,7 @@ public class ComputerorderFull extends DaoAbs implements java.io.Serializable {
 			private String audituserroletype;
 			private String audituserprivilege;
 			private String audituserpassword;
+			private String audituserphoto;
 			private Integer computerhomeworkid;
 			private String computerhomeworkname;
 			private Integer computerhomeworkcomputerorderclassruleid;
@@ -225,6 +226,12 @@ public class ComputerorderFull extends DaoAbs implements java.io.Serializable {
 		}
 		public Date getComputerhomeworkcreatetime(){		
 			return this.computerhomeworkcreatetime;
+		}
+		public String getAudituserphoto() {
+			return audituserphoto;
+		}
+		public void setAudituserphoto(String audituserphoto) {
+			this.audituserphoto = audituserphoto;
 		}
 		
 	

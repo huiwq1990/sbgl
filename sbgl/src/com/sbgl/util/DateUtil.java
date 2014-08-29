@@ -435,6 +435,18 @@ public class DateUtil {
 		}
 		return null;
 	}
+   
+    public static String getEnglishTime(Date date) {
+		try {
+			String a = "";
+			DateFormat df1 = new SimpleDateFormat("MMM-dd'th', yyyy",Locale.ENGLISH); 
+			a = df1.format(date);
+			return a;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+		}
+		return null;
+	}
 	
 	public static void main(String[] args) {
 		System.out.println(DateUtil.currentDate());

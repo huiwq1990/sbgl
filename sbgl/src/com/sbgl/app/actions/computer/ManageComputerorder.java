@@ -207,7 +207,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		computerorderFull = computerorderService.selectComputerorderFullById(computerorderId);
 		if(computerorderFull == null){
 			actionMsg = "访问的订单不存在";
-			return ComputerConfig.usernotloginreturnstr;
+			return "404";
 		}
 		
 //		String sql = " where a.computerorderid = "+computerorderId  + " and c.languagetype="+ComputerConfig.languagech ;

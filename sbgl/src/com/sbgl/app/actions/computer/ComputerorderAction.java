@@ -229,25 +229,12 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 	//管理 PC预约
 	public String manageComputerorderFull(){
 		log.info("exec action method:manageComputerorderFull");			
-		
-//		装载数据
-		String sql = " ";	
-		if(computerorderStatus==ComputerorderInfo.ComputerorderStatusAduitAll){
-			sql = " where a.ordertype !="+ComputerorderInfo.ClassScheduleOrder+" and a.status !="+ ComputerorderInfo.ComputerorderStatusAduitDel;
-		}else{
-			sql = " where a.ordertype !="+ComputerorderInfo.ClassScheduleOrder+" and a.status="+computerorderStatus+" ";
-		}
-		
-		sql += " order by a.createtime desc";
-			
-		//设置总数量
-		this.totalcount = computerorderService.selectComputerorderFullByCondition(sql).size();
-		page = PageActionUtil.getPage(totalcount, pageNo);
-		pageNo = page.getPageNo();
-		
-		computerorderFullList  = computerorderService.selectComputerorderFullByConditionAndPage(sql, page);
 
-		
+		page.setPageNo(pageNo);
+		computerorderFullList  = computerorderService.selByStatusAndPage(computerorderStatus, page);
+		this.totalcount = page.getTotalCount();
+		pageNo = page.getPageNo();
+//		log.info("当前页："+page.getPageNo()+";总数量："+page.getTotalCount());
 		if(computerorderFullList == null){
 			computerorderFullList = new ArrayList<ComputerorderFull>();
 		}

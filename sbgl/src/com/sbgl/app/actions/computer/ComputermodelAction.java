@@ -161,7 +161,8 @@ public class ComputermodelAction extends BaseAction implements ModelDriven<Compu
 			computermodel.setAvailableborrowcountnumber(0);
 			computermodel.setComputercount(0);
 			computermodel.setCreateuserid(uid);
-			computermodel.setPicpath("default.jpg");
+			if(computermodel.getPicpath()==null | computermodel.getPicpath().trim().equals(""))
+				computermodel.setPicpath("default.jpg");
 //			System.out.println(computermodel.getHourrentprice());
 			Computermodel modelCh = new Computermodel();
 			Computermodel modelEn = new Computermodel();

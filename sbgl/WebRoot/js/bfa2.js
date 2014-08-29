@@ -127,7 +127,6 @@
 					eSelectNum = $(this).parent().find("select").select2("val");
 				}
 				if(eCate==-2){
-					alert("group")
 					var fromDate = $("#fromDate").val();
 					var endDate = $("#endDate").val();
 					$.ajax({
@@ -136,11 +135,8 @@
 						data: {equipmentId:eId,fromDate:fromDate,endDate:endDate},
 						dataType: 'json',
 						success: function(data){
-							alert("success")
 							jQuery.each(data.equipmentList, function(i,item){
-								alert("-1")
-								if ($("#rent-list #" + item.equipmentid).length > 0) {
-									alert(0)
+								if ($("#rent-list #" + item.comId).length > 0) {
 									var curVal = $("#rent-list #" + item.equipmentid).children(".spinner").spinner('value');
 									var tempnum = parseInt(item.num) + parseInt(curVal) - item.borrownum;
 									if(tempnum>0){
@@ -151,16 +147,15 @@
 										$("#rent-list #" + item.equipmentid).children(".spinner").spinner('value', parseInt(item.num)+parseInt(curVal));
 									}
 								}else{
-									alert(1)
 									var html = 
-										'<div class="row" id="' + item.equipmentid + '">' + 
+										'<div class="row" id="' + item.comId + '">' + 
 											'<div class="item-name">' + item.equipmentname + '</div>' +
 											'<div class="item-ctrl spinner input-group">' +
 												'<span class="input-group-btn">' + 
 													'<button type="button" class="btn btn-link spinner-down"><i class="icon-minus"></i></button>' + 
 												'</span>' +
 												'<input type="text" name="equNum" class="spinner-input form-control">' + 
-												'<input type="hidden" name="equId" value="'+item.equipmentid+'">' + 
+												'<input type="hidden" name="equId" value="'+item.comId+'">' + 
 												'<span class="input-group-btn">' + 
 													'<button type="button" class="btn btn-link spinner-up"><i class="icon-plus"></i></button>' +
 												'</span>' + 
@@ -170,16 +165,16 @@
 											'</div>' + 
 										'</div>';
 									$("#rent-list").append(html);
-									var spinner = $("#rent-list #" + eId).children(".spinner").spinner({max: item.borrownum});		// 设置设备最大可预约数量
+									var spinner = $("#rent-list #" + item.comId).children(".spinner").spinner({max: item.borrownum});		// 设置设备最大可预约数量
 
 									var overMaxNum = 0;
 									if(item.num>item.borrownum){
 										var overMaxNum = item.num - item.borrownum;
 										console.log(".spinner-up, 设备组要求"+item.equipmentname+"设备数量超出！,超出： " + overMaxNum);
 										alert("设备组要求"+item.equipmentname+"设备数量超出！,超出： " + overMaxNum);
-										$("#rent-list #" + item.equipmentid).children(".spinner").spinner('value', item.borrownum);
+										$("#rent-list #" + item.comId).children(".spinner").spinner('value', item.borrownum);
 									}else{
-										$("#rent-list #" + item.equipmentid).children(".spinner").spinner('value', item.num);
+										$("#rent-list #" + item.comId).children(".spinner").spinner('value', item.num);
 									}
 									$("#rent-list .spinner").on("changed", $(this), function(event) {		// 处理达到最大预约数量时的消息提示
 										var _this = $(this);
@@ -196,7 +191,7 @@
 													reWizardHeight();	
 												}
 												overMaxNum++;
-												$("#rent-list #" + item.equipmentid).children(".spinner").spinner("setMin", item.borrownum);		// 设置设备最小可预约数量为最大数，使其减少还需数量
+												$("#rent-list #" + item.comId).children(".spinner").spinner("setMin", item.borrownum);		// 设置设备最小可预约数量为最大数，使其减少还需数量
 												console.log(".spinner-up, 已达最大可预约数量！,超出： " + overMaxNum);
 												$(_this).next(".item-need-more").find(".need-num").html(overMaxNum);								
 												console.log(".spinner-up, 已达最大可预约数量！,超出： " + overMaxNum);
@@ -205,7 +200,7 @@
 												overMaxNum--;
 												if (overMaxNum <= 0) {
 													overMaxNum = 1;
-													$("#rent-list #" + item.equipmentid).children(".spinner").spinner("setMin", 0);		// 设置设备最小可预约数量为0	
+													$("#rent-list #" + item.comId).children(".spinner").spinner("setMin", 0);		// 设置设备最小可预约数量为0	
 													$(_this).next(".item-need-more").remove();
 													reWizardHeight();
 													console.log("set min 0, 超出： " + overMaxNum);

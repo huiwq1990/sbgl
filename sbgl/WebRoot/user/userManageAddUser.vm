@@ -358,18 +358,21 @@
 				if(data.groupType == "1") {
 					$("#inputStuClass").attr("disabled", false);
 					$("#inputStuCould").attr("disabled", false);
+					$(".form-group").eq(7).show();
 					isStu = true;
         			isTea = false;
         			isWkr = false;
 				} else if(data.groupType == "2") {
 					$("#inputStuClass").attr("disabled", true);
 					$("#inputStuCould").attr("disabled", true);
+					$(".form-group").eq(7).hide();
 					isStu = false;
         			isTea = true;
         			isWkr = false;
 				} else if(data.groupType == "4") {
 					$("#inputStuClass").attr("disabled", true);
 					$("#inputStuCould").attr("disabled", true);
+					$(".form-group").eq(7).show();
 					isStu = false;
         			isTea = false;
         			isWkr = true;

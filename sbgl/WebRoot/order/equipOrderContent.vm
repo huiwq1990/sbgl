@@ -49,7 +49,7 @@
           <div class="title">$!equipmenborrowFull.title <span class="label label-important"> 
 					#if($!equipmenborrowFull.category==1)
 					${textmap.ordertype_personal}
-					#elseif($!equipmenborrowFull.category==1)
+					#elseif($!equipmenborrowFull.category==2)
 					${textmap.ordertype_course_assignment}
 					#end</span></div>
         </div>      
@@ -68,11 +68,11 @@
             <ul class="media-list">
               #foreach($row2 in $!equipmentList)	
                   <li class="media">
-                    <a class="pull-left" data-toggle="modal" href="#equip-detail" data-type="equipdetail" data-id="$!row2.equipmentid"  role="button">
+                    <a class="pull-left" data-toggle="modal" href="#equip-detail" data-type="equipdetail" data-id="$!row2.comId"  role="button">
                       <img src="$!{equipmentImagePath}/$!row2.imgNameSaved" width="46" height="46" class="img-rounded">
                     </a>
                     <div class="media-body">
-                      <div class="media-heading"><h5><a data-toggle="modal" href="#equip-detail" data-type="equipdetail" data-id="$!row2.equipmentid" role="button">$!row2.equipmentname</a></h5><span>&times; $!row2.applynumber</span></div>
+                      <div class="media-heading"><h5><a data-toggle="modal" href="#equip-detail" data-type="equipdetail" data-id="$!row2.comId" role="button">$!row2.equipmentname</a></h5><span>&times; $!row2.applynumber</span></div>
                       <p>$!row2.categoryName<p>
                     </div>
                   </li>
@@ -109,9 +109,9 @@
                 </div>
                 <hr />
 				#if($!equipmenborrowFull.status==1||$!equipmenborrowFull.status==3)
-                <a class="btn btn-primary" data-type="subexamorder" data-id="$!equipmenborrowFull.borrowid"  href="javascript:;">开始预约</a>
+                <a class="btn btn-primary" data-type="subexamorder" data-id="$!equipmenborrowFull.borrowid"  href="javascript:;">${textmap.order_appointmentstart}</a>
 				#end
-                <a class="btn btn-white" data-type="deleteorder" data-id="$!equipmenborrowFull.borrowid" href="javascript:;">删 除</a> 
+                <a class="btn btn-white" data-type="deleteorder" data-id="$!equipmenborrowFull.borrowid" href="javascript:;">${textmap.order_del}</a> 
             </div>
           </div>
           <div class="thumbnail">
@@ -125,16 +125,20 @@
 				#if($!equipmenborrowFull.teacherid)
                 <div class="rent-teacher">${textmap.order_teacher}：$!equipmenborrowFull.teacherName</div>
 				#end
-                <div class="rent-time"><i class="icon-time"></i>$!date.format("yyyy年MM月dd日", $!equipmenborrowFull.borrowtime)  - $!date.format("yyyy年MM月dd日", $!equipmenborrowFull.returntime)</div>
+                #if($equipmenborrowFull.borrowtime&&$equipmenborrowFull.borrowtime!="")
+				<div class="rent-time"><i class="icon-time"></i>$!date.format("yyyy-MM-dd", $!equipmenborrowFull.borrowtime)  - $!date.format("yyyy-MM-dd", $!equipmenborrowFull.returntime)</div>
+				#end
+                #if($equipmenborrowFull.remark&&$equipmenborrowFull.remark!="")	
                 <div class="rent-remark"><i class="icon-pencil"></i> $!equipmenborrowFull.remark</div>
+				#end
               </div>
               <hr />
             </div>                        
             <ul class="media-list">
-			#if($!equipmenborrowFull.teacherid)
+			#if($!equipmenborrowFull.teacherid) 
               <li class="media">
                 <div class="pull-left">
-                  <img src="img/photo.jpg" width="28" height="28" class="img-rounded">
+                  <img src="${userImagePath}/$!equipmenborrowFull.teacherPic" width="28" height="28" class="img-rounded">
                 </div>
                 <div class="media-body">
                   <div class="media-heading"><h5>$!equipmenborrowFull.teacherName</h5><span class="post-time">$!date.format("yyyy-MM-dd", $!equipmenborrowFull.createtime)</span></div>
@@ -145,7 +149,7 @@
 			#if($!equipmenborrowFull.examuser)
               <li class="media">
                 <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
-                  <img src="img/photo.jpg" width="28" height="28" class="img-rounded">
+                  <img src="${userImagePath}/$!equipmenborrowFull.examuserPic" width="28" height="28" class="img-rounded">
                 </a>
                 <div class="media-body">
                   <div class="media-heading"><h5><a rel="popover" href="#">$!equipmenborrowFull.examuserName</a></h5><span class="post-time" title="详细时间">$!date.format("yyyy-MM-dd hh:mm", $!equipmenborrowFull.examdate)</span></div>
@@ -176,28 +180,28 @@
 <div id="equip-detail" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-    <h3 id="myModalLabel">设备详情</h3>
+    <h3 id="myModalLabel">${textmap.order_equipinfo}</h3>
   </div>
   <div class="modal-body">
-    <p>这里是设备详细页，不包含设备每天最大可预约数量</p>
+    <p>${textmap.order_thedetailpage}</p>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">关 闭</button>
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">${textmap.order_close}</button>
   </div>
 </div>
 
 <div id="reject" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-    <h3 id="myModalLabel">操作</h3>
+    <h3 id="myModalLabel">${textmap.order_operation}</h3>
   </div>
   <div class="modal-body">
-    <p>这里是驳回操作相关提示说明</p>
+    <p>${textmap.order_hereistoreject}</p>
     <input class="input-block-level" type="text" placeholder="在此输入驳回理由">
   </div>
   <div class="modal-footer">
-    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-    <button class="btn btn-primary">提交驳回</button>
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">${textmap.order_cancel}</button>
+    <button class="btn btn-primary">${textmap.order_submit}</button>
   </div>
 </div>
 

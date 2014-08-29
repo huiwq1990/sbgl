@@ -34,6 +34,11 @@ public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
 	
 	private final String basicComputerSql = "From Computer  as a ";
 	
+	@Override
+	public int countRow(String sql){
+		return getHibernateTemplate().find(this.basicComputerSql+" "+sql).size();
+	}
+	
 	
 	@Override
 	public List<Computer> selByModeltype(int modeltype, int language) {

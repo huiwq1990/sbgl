@@ -22,10 +22,9 @@ public class OrderAdminDaoImpl extends HibernateDaoSupport implements OrderAdmin
 			Page page) {
 		// TODO Auto-generated method stub
 		
-		String sql2 = " select a.*,b.name as teacherName,c.name as courseName from orderCourseRule a left outer join LoginUser b on teacherid=b.id " +
-				" left outer join Course c on c.id=a.courseId  ";
+		String sql2 = " select a.*,b.name as teacherName,(select name from Course where languagetype=0  and   id in (select id from Course where coursetype in (select coursetype from Course where id = a.courseId))) as courseName from orderCourseRule a left outer join LoginUser b on teacherid=b.id ";
 		if(courseId!=0){
-			sql2+=" where a.courseId in ('"+courseId+"')";
+			sql2+=" where a.courseId in (select id from Course where coursetype in (select coursetype from Course where id = '"+courseId+"'))";
 		}
 		sql2+= " limit "+(((page.getPageNo()-1)*page.getPageSize()))+","+page.getPageSize();
 		final String sql = sql2;
@@ -47,7 +46,7 @@ public class OrderAdminDaoImpl extends HibernateDaoSupport implements OrderAdmin
 		// TODO Auto-generated method stub
 		String sql2 = " select (select count(*) from orderCourseRule a ";
 		if(courseId!=0){
-			sql2+=" where a.courseId in ('"+courseId+"')";
+			sql2+=" where a.courseId in (select id from Course where coursetype in (select coursetype from Course where id = '"+courseId+"'))";
 		}
 		sql2+=" ) as orderCount1 from dual  ";
 		final String sql = sql2;

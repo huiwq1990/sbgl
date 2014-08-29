@@ -44,6 +44,12 @@ public class EquipServiceImpl implements EquipService {
 		int id = baseDao.getCode("equipId");
 		equip.setEquipmentid( id );
 		equip.setMakedate( new Date() );
+		//如果没有上传图片，则使用默认图片
+		if( equip.getImgnamesaved() == null || "".equals( equip.getImgnamesaved() ) ) {
+			equip.setImgname("nopic.jpg");
+			equip.setImgnamesaved("nopic.jpg");
+		}
+		
 		try {
 			baseDao.saveEntity( equip );
 		} catch (RuntimeException re) {
@@ -599,7 +605,7 @@ public class EquipServiceImpl implements EquipService {
 			if( childrenList != null && childrenList.size() > 0 ) {
 				for (Equipmentclassification c : childrenList) {
 					if("0".equals(c.getLantype())) {
-						final String modelCountSQL = "select count(1) from Equipment where lantype = '0' and classificationid = " + c.getComid();
+						final String modelCountSQL = "select count(1) from equipment where lantype = '0' and classificationid = " + c.getComid();
 						BigInteger EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
 							public Object doInHibernate(Session session) throws HibernateException{
 								Query query = session.createSQLQuery(modelCountSQL);
@@ -614,7 +620,7 @@ public class EquipServiceImpl implements EquipService {
 			}
 			return totalSum;
 		} else {
-			final String modelCountSQL = "select count(1) from Equipment where lantype = '0' and classificationid = " + classificationId;
+			final String modelCountSQL = "select count(1) from equipment where lantype = '0' and classificationid = " + classificationId;
 			BigInteger EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
 				public Object doInHibernate(Session session) throws HibernateException{
 					Query query = session.createSQLQuery(modelCountSQL);
@@ -639,8 +645,8 @@ public class EquipServiceImpl implements EquipService {
 				for (Equipmentclassification c : childrenList) {
 					if( "0".equals( c.getLantype() ) ) {
 						modelList = baseDao.getEntityByIntProperty(Equipment.class.getName(), "classificationid", c.getComid());
-						if(modelList != null) {
-							final String modelCountSQL = "select count(1) from Equipmentdetail where equipmentid = " + modelList.get(0).getComid();
+						if(modelList != null && modelList.size() > 0) {
+							final String modelCountSQL = "select count(1) from equipmentdetail where equipmentid = " + modelList.get(0).getComid();
 							BigInteger EquipSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
 								public Object doInHibernate(Session session) throws HibernateException{
 									Query query = session.createSQLQuery(modelCountSQL);
@@ -657,8 +663,8 @@ public class EquipServiceImpl implements EquipService {
 			return totalSum;
 		} else {
 			modelList = baseDao.getEntityByIntProperty(Equipment.class.getName(), "classificationid", classificationId);
-			if(modelList != null) {
-				final String equipCountSQL = "select count(1) from Equipmentdetail  where equipmentid = " + modelList.get(0).getComid();
+			if(modelList != null && modelList.size() > 0) {
+				final String equipCountSQL = "select count(1) from equipmentdetail  where equipmentid = " + modelList.get(0).getComid();
 				BigInteger EquipdetailSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
 					public Object doInHibernate(Session session) throws HibernateException{
 						Query query = session.createSQLQuery(equipCountSQL);
