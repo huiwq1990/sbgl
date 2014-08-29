@@ -122,7 +122,7 @@
     <h3 id="myModalLabel">修改</h3>
   </div>
   <div class="modal-body">
-    <p>这里是修改用户相关信息。</p>
+    <p>修改用户相关信息。</p>
     <form class="form-horizontal" role="form">
 	  <div class="form-group">
         <label for="modifyStock" class="col-xs-3 control-label">编号</label>
@@ -139,7 +139,7 @@
       <div class="form-group">
         <label for="modifyEquipCategory" class="col-xs-3 control-label">性别</label>
         <div class="col-xs-7">
-          <select class="select2 form-control" id="inputStuSex">
+          <select class="select2 select-white form-control" id="inputStuSex">
 			<option value="0">男</option>
 			<option value="1">女</option>
 		  </select>
@@ -154,7 +154,7 @@
       <div class="form-group">
         <label for="modifyEDescribe" class="col-xs-3 control-label">用户组</label>
         <div class="col-xs-7">
-          <select class="select2 form-control" id="inputUserGroup">
+          <select class="select2 select-white form-control" id="inputUserGroup">
 		  <optgroup label="学生">
 			#foreach($item in $allGroupList)
 			  #if($!item.type == "1")
@@ -179,19 +179,21 @@
 		  </select>
         </div>
       </div>
+	  <!--
 	   <div class="form-group">
-        <label for="modifyEquipCategory" class="col-xs-3 control-label">可否借阅</label>
+        <label for="modifyEquipCategory" class="col-xs-3 control-label">可否预约</label>
         <div class="col-xs-7">
-          <select class="select2 form-control" id="inputStuCould">
+          <select class="select2 select-white form-control" id="inputStuCould">
 			<option value="0">是</option>
 			<option value="1">否</option>
 		  </select>
         </div>
       </div>
+	  -->
 	  <div class="form-group">
         <label for="modifyStock" class="col-xs-3 control-label">班级</label>
         <div class="col-xs-7">
-          <select class="select2 form-control" id="inputStuClass">
+          <select class="select2 select-white form-control" id="inputStuClass">
 		  <option value=-1>无</option>
     		#foreach($clazz in $clazzList)
     			<option value=$!clazz.classid>$!clazz.classname</option>
@@ -200,13 +202,13 @@
         </div>
       </div>
 	  <div class="form-group">
-        <label for="modifyEquipCategory" class="col-xs-3 control-label">电话</label>
+        <label for="inputTel" class="col-xs-3 control-label">电话</label>
         <div class="col-xs-7">
           <input type="text" class="form-control" id="inputTel" placeholder="联系电话或手机">
         </div>
       </div>
 	  <div class="form-group">
-        <label for="modifyEquipCategory" class="col-xs-3 control-label">邮箱</label>
+        <label for="inputMail" class="col-xs-3 control-label">邮箱</label>
         <div class="col-xs-7">
           <input type="text" class="form-control" id="inputMail" placeholder="常用邮箱地址">
         </div>
@@ -234,7 +236,6 @@
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 <script src="${jsDomain}/fileUpload/vendor/jquery.ui.widget.js"></script>
@@ -314,8 +315,8 @@
 				var val = $(this).prop("value");
 				var id = val.split(";")[0];
 				var type = val.split(";")[1];
-				console.log(id+"$$$$$$$$");
-				console.log(type+"********");
+				//console.log(id+"$$$$$$$$");
+				//console.log(type+"********");
 				
 				if(type == 1) {
 					idsForDel1 += id + "_";
@@ -324,9 +325,9 @@
 				} else if(type == 4) {
 					idsForDel3 += id + "_";
 				}
-				console.log(idsForDel1+"1********");
-				console.log(idsForDel2+"2********");
-				console.log(idsForDel3+"3********");
+				//console.log(idsForDel1+"1********");
+				//console.log(idsForDel2+"2********");
+				//console.log(idsForDel3+"3********");
 			}
 		});
 	});
@@ -407,8 +408,8 @@
     		var userClazz = $("#inputStuClass").val();
     		var userTel = $("#inputTel").val();
     		var userMail = $("#inputMail").val();
-    		var userCould = $("#inputStuCould").val();
-			
+    		//var userCould = $("#inputStuCould").val();
+			var userCould = 0;
 			
 			if(savedFileName == "") {
 				savedFileName = alterPhoto;

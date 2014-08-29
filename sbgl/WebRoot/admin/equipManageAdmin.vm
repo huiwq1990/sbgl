@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 设备管理</title>
+<title>设备管理 - 北京电影学院摄影系</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -32,7 +32,7 @@
               <div class="title pull-left">设备管理</div>
 			  <div class="tips">在此页面下管理设备信息，如设备的添加、修改、删除及维护等。</div>
               <div class="filter category-filter">
-                <select id="select-categories" style="width:130px" class="select2">
+                <select id="select-categories" style="width:130px" class="select2 select-white">
                   <option value="0" data-foo="fa">全部分类</option>
                   <!--<option value="-2" data-foo="fa">未知分类</option>-->
                   <option value="-1" data-foo="fa">未分类</option>
