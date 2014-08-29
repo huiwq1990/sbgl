@@ -30,14 +30,9 @@
 		#foreach($row2 in $classification1List)	
         <div #if($velocityCount=='1') class="tab-pane active" #else class="tab-pane"  #end id="$!row2.comid">
           <div class="row model-list">
-<<<<<<< HEAD
-			#foreach($row3 in $classequipmap.get($!row2.classificationid))
-            <div id="equdiv$!row3.equipmentid" class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="$!row3.equipmentid"  data-modeltype="1";  #if($!row3.applynumber) data-is-select="true"  #else  data-is-select="false" #end><i #if($!row3.applynumber)class="icon-check icon-large"  #else class="icon-check-empty icon-large"  #end></i>$!row3.equipmentname</div>
-			<div class="col-sm-2"><input type="text" id="equ$!row3.equipmentid" value="$!row3.applynumber" class="form-control" placeholder="数量"></div>
-=======
 			#foreach($row3 in $classequipmap.get($!row2.comid))
-            <div id="equdiv$!row3.comId" class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="$!row3.comId"  data-modeltype="1";  #if($!row3.applynumber) data-is-select="true"  #else  data-is-select="false" #end><i #if($!row3.applynumber)class="icon-check icon-large"  #else class="icon-check-empty icon-large"  #end></i>$!row3.equipmentname</div><input type="text" id="equ$!row3.comId" value="$!row3.applynumber" class="col-sm-4 list-item" style="width:60px">
->>>>>>> origin/master
+            <div id="equdiv$!row3.comId" class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="$!row3.comId"  data-modeltype="1";  #if($!row3.applynumber) data-is-select="true"  #else  data-is-select="false" #end><i #if($!row3.applynumber)class="icon-check icon-large"  #else class="icon-check-empty icon-large"  #end></i>$!row3.equipmentname</div>
+			<div class="col-sm-2"><input type="text" id="equ$!row3.comId" value="$!row3.applynumber" class="form-control" placeholder="数量"></div>
 			#end
 		  </div>
         </div>
@@ -45,12 +40,8 @@
 		<div  class="tab-pane" id="-2">
           <div class="row model-list">
 			#foreach($model in $equipmentgroupFullList)
-<<<<<<< HEAD
-            <div id="equdiv$!model.equipmentgroupid" class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="$!model.equipmentgroupid" data-modeltype="2";  #if($!model.applynumber) data-is-select="true"  #else  data-is-select="false" #end  ><i #if($!model.applynumber)class="icon-check icon-large"  #else class="icon-check-empty icon-large"  #end ></i>$!model.equipmentname</div>
-			<div class="col-sm-2"><input type="text" id="equ$!model.equipmentgroupid" value="$!model.applynumber" class="form-control" placeholder="数量"></div>
-=======
-            <div id="equdiv$!model.comid" class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="$!model.comid" data-modeltype="2";  #if($!model.applynumber) data-is-select="true"  #else  data-is-select="false" #end  ><i #if($!model.applynumber)class="icon-check icon-large"  #else class="icon-check-empty icon-large"  #end ></i>$!model.equipmentname</div><input type="text" id="equ$!model.comid" value="$!model.applynumber" class="col-sm-4 list-item" style="width:60px">
->>>>>>> origin/master
+            <div id="equdiv$!model.comid" class="col-sm-4 list-item" data-p-cat-id="1" data-cat-id="1" data-model-id="$!model.comid" data-modeltype="2";  #if($!model.applynumber) data-is-select="true"  #else  data-is-select="false" #end  ><i #if($!model.applynumber)class="icon-check icon-large"  #else class="icon-check-empty icon-large"  #end ></i>$!model.equipmentname</div>
+			<div class="col-sm-2"><input type="text" id="equ$!model.comid" value="$!model.applynumber" class="form-control" placeholder="数量"></div>
 			#end
 		  </div>
 		  </div>
