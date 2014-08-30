@@ -56,7 +56,7 @@
                 <td>$row2.courseName</td>
                 <td>$row2.courserulename</td>
                 <td>$row2.teacherName</td>
-                <td><a href="">修改</a> <a href="">删除</a></td>
+                <td><a href="#createEquipRule" data-type="equipclassrule" data-ruleid="$row2.courseruleid" data-toggle="modal" >修改</a> <a href="#" data-pageno="$!page.pageNo"  data-type="delequipclassrule" data-ruleid="$row2.courseruleid">删除</a></td>
               </tr>
 			#end
             </tbody>

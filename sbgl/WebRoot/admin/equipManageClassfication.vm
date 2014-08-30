@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 设备管理</title>
+<title>分类管理 - 北京电影学院摄影系</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -108,7 +108,7 @@
         </div>
       </div>
 	  <div class="form-group">
-        <label for="inputCategoryName" class="col-xs-3 control-label">英文分类名称</label>
+        <label for="inputCategoryNameEN" class="col-xs-3 control-label">英文分类名称</label>
         <div class="col-xs-7">
           <input type="text" class="form-control" id="inputCategoryNameEN" placeholder="eg: Camera">
         </div>
@@ -146,7 +146,7 @@
         </div>
       </div>
 	  <div class="form-group">
-        <label for="modifyCategoryName" class="col-xs-3 control-label">英文分类名称</label>
+        <label for="modifyCategoryNameEN" class="col-xs-3 control-label">英文分类名称</label>
         <div class="col-xs-7">
           <input type="text" class="form-control" id="modifyCategoryNameEN" placeholder="输入新的分类名称">
         </div>
@@ -176,15 +176,8 @@
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
-<!--[if lt IE 10]>
-  <script src="../js/jquery.placeholder.js"></script>
-  <script>
-  $('input, textarea').placeholder();
-  </script>
-<![endif]-->
 
 <script>
     var classData = {};  		//全部分类信息

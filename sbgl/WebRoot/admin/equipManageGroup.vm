@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 设备管理</title>
+<title>设备组管理 - 北京电影学院摄影系</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -76,10 +76,9 @@
                 <thead>
                   <tr>
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-                    <th class="name">设备名称(型号)</th>
-                    <th class="categories">分类</th>
+                    <th class="name">器材组名称</th>
+					<th class="describe">描述</th>
                     <th class="stock">合作器材公司</th>
-                    <th class="describe">描述</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -87,9 +86,8 @@
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!model.comid"></td>
                     <td>$!model.equipmentname</td>
-					<td>设备组</td>
+					<td>$!model.equipmentdetail</td>
 					<td>#if($!model.branId == "1")双塔影视#end</td>
-                    <td>$!model.equipmentdetail</td>
                   </tr>
                 #end  
                 </tbody>
@@ -112,7 +110,7 @@
     <h3 id="myModalLabel">添加基本器材组</h3>
   </div>
   <div class="modal-body">
-    <p>这里是添加器材型号相关说明。</p>
+    <p>在这里添加基本器材组，基本组名称、描述，所包含的器材及其对应数量等信息。</p>
     <form class="form-horizontal" role="form" id="groupform">
       <div class="form-group">
         <label for="inputModelName" class="col-xs-3 control-label">型号名</label>
@@ -131,7 +129,8 @@
           <label for="inputBasicEquipId-1" class="col-xs-3 control-label">添加相关器材</label>
           <!-- 这里for中的-1可以指代基本器材的ID号，区分每行基本设备，for与下面input中id对应，同理下面的数量 -->
           <div class="col-xs-4">
-            <select class="select2 select-white form-control inputBasicEquipId" name="inputBasicEquipId" id="inputBasicEquipId-1">
+            <select class="select2 select-white form-control inputBasicEquipId" name="inputBasicEquipId" id="inputBasicEquipId-1" data-placeholder="请选择相关器材">
+				<option></option>
 				#foreach($row2 in $classification1List)	
               <optgroup label="$!row2.name">
 			  	#foreach($row3 in $classequipmap.get($!row2.comid))
@@ -162,7 +161,7 @@
       </div>
 
       <div class="form-group">
-        <label for="inputPic" class="col-xs-3 control-label">图片</label>
+        <label for="inputEPic" class="col-xs-3 control-label">图片</label>
         <div class="col-xs-7">
           <span class="btn btn-white file-input-button">
               <i class="icon-plus"></i>
@@ -175,7 +174,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="inputStock" class="col-xs-3 control-label">合作器材公司</label>
+        <label for="inputStock1" class="col-xs-3 control-label">合作器材公司</label>
         <div class="col-xs-7">
           <label class="checkbox-inline">
             <input type="checkbox" id="inputStock1" name="brandid" value="1" checked> 双塔影视
@@ -196,19 +195,12 @@
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 <script src="${jsDomain}/fileUpload/vendor/jquery.ui.widget.js"></script>
 <script src="${jsDomain}/fileUpload/jquery.iframe-transport.js"></script>
 <script src="${jsDomain}/jquery.fileupload.js"></script>
 
-<!--[if lt IE 10]>
-  <script src="./js/jquery.placeholder.js"></script>
-  <script>
-  $('input, textarea').placeholder();
-  </script>
-<![endif]-->
 
 <script>
 	
@@ -302,9 +294,10 @@
 		$("#EquidGroupspan-"+num).addClass("icon-minus");
 		groupnum++;
 		var html = '<div class="form-group" id="EquipIdGroup-'+groupnum+'">' +
-          '<label for="inputBasicEquipId-1" class="col-xs-3 control-label">添加相关器材</label>' +
+          '<label for="inputBasicEquipId-1" class="col-xs-3 control-label"></label>' +
           '<div class="col-xs-4">' +
-            '<select class="select2 select-white form-control"  name="inputBasicEquipId" id="inputBasicEquipId-'+groupnum+'" >' +
+            '<select class="select2 select-white form-control"  name="inputBasicEquipId" id="inputBasicEquipId-'+groupnum+'" data-placeholder="请选择相关器材">' +
+			  '<option></option>' +
 			  #foreach($row2 in $classification1List)	
               '<optgroup label="$!row2.name">'+
 			  	#foreach($row3 in $classequipmap.get($!row2.classificationid))

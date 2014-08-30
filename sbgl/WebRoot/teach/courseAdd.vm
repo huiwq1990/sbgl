@@ -29,7 +29,7 @@
             <!--control-bar start-->
             <div class="control-bar clearfix">
               <div class="title pull-left">添加课程</div>
-              <div class="tips">在此页面下添加新的课程信息</div>
+              <div class="tips">在此页面下添加新的课程信息:课程的中文名称和英文名称，任课教师及课程类别。课程类别读取的是在用户-用户组管理中的设置，所在组分类为学生。</div>
             </div><!--control-bar end-->
             <div class="panel panel-default">
               <div class="panel-body">
