@@ -97,8 +97,8 @@ public interface EquipService {
 	public Boolean isExistThisClassification(String classificationName);
 	//获取联合主键
 	public Integer getClassificationComId();
-	//查询中文分类根据联合主键
-	public Equipmentclassification getEquipmentclassificationByComid(Integer comid); 
+	//查询分类根据联合主键
+	public List<Equipmentclassification> getEquipmentclassificationByComid(Integer comid); 
 	
 	//添加品类信息
 	public Integer addCategory(Category category);

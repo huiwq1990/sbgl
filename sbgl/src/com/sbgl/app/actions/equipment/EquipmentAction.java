@@ -609,9 +609,21 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				emc.setId( String.valueOf( equipment.getEquipmentid() ) );
 				emc.setName( String.valueOf( equipment.getEquipmentname() ) );
 				
-				Equipmentclassification cf = equipService.getEquipmentclassificationByComid( equipment.getClassificationid() );
-				emc.setcId( String.valueOf( cf == null ? -1 : cf.getClassificationid() ) );
-				emc.setcName( cf == null ? "未分类" : cf.getName() );
+				List<Equipmentclassification> cfList = equipService.getEquipmentclassificationByComid( equipment.getClassificationid() );
+				if(cfList != null) {
+					if( "0".equals( cfList.get(0).getLantype() ) ) {
+						emc.setcId( cfList.get(0).getComid().toString() );
+						emc.setcName( cfList.get(0).getName() );
+						emc.setcNameEN( cfList.get(1).getName() );
+					} else {
+						emc.setcId( cfList.get(1).getComid().toString() );
+						emc.setcName( cfList.get(1).getName() );
+						emc.setcNameEN( cfList.get(0).getName() );
+					}
+				} else {
+					emc.setcId( "-1" );
+					emc.setcName( "未分类" );
+				}
 				emc.setMemo( equipment.getEquipmentdetail() );
 				emc.setComId( String.valueOf( equipment.getComid() ) );
 				emc.setImgName( equipment.getImgname() );
@@ -677,9 +689,19 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				emc.setId( String.valueOf( equipment.getComid() ) );		//根据需求改为联合主键，不再使用单个中文主键
 				emc.setName( String.valueOf( equipment.getEquipmentname() ) );
 				
-				Equipmentclassification cf = equipService.getEquipmentclassificationByComid( equipment.getClassificationid() );
-				emc.setcId( String.valueOf( cf == null ? -1 : cf.getComid() ) );
-				emc.setcName( cf == null ? "未分类" : cf.getName() );
+				List<Equipmentclassification> cfList = equipService.getEquipmentclassificationByComid( equipment.getClassificationid() );
+				if(cfList != null) {
+					if( "0".equals( cfList.get(0).getLantype() ) ) {
+						emc.setcId( cfList.get(0).getComid().toString() );
+						emc.setcName( cfList.get(0).getName() );
+					} else {
+						emc.setcId( cfList.get(1).getComid().toString() );
+						emc.setcName( cfList.get(1).getName() );
+					}
+				} else {
+					emc.setcId( "-1" );
+					emc.setcName( "未分类" );
+				}
 				emc.setMemo( equipment.getEquipmentdetail() );
 				emc.setImgName( equipment.getImgname() );
 				emc.setBranId( String.valueOf( equipment.getBrandid() ) );
