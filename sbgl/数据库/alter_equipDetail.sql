@@ -1,0 +1,1 @@
+ALTER TABLE `sbgl`.`equipmentdetail` CHANGE COLUMN `storenumber` `storenumber` VARCHAR(50) NULL DEFAULT NULL  , CHANGE COLUMN `assetnumber` `assetnumber` VARCHAR(50) NULL DEFAULT NULL  ;

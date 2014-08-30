@@ -876,8 +876,8 @@ public class EquipServiceImpl implements EquipService {
 	}
 
 	@Override
-	public boolean isExistEquipDetial(int assetNumber) {
-		return baseDao.isExist(Equipmentdetail.class, "assetnumber", String.valueOf(assetNumber));
+	public boolean isExistEquipDetial(String assetNumber) {
+		return baseDao.isExist(Equipmentdetail.class, "assetnumber", assetNumber);
 	}
 
 	@Override
