@@ -152,7 +152,7 @@
           <label for="modifyEquipCategory" class="col-xs-3 control-label">分类</label>
           <div class="col-xs-7">
             <select class="select2 select-white form-control" id="modifyEquipCategory">
-              <option value="-1" data-foo="fa">选择分类</option>
+              <option value="0" data-foo="fa">选择 </option>
               #foreach($clazz in $classForEquipAdd)
 				#if($!clazz.isParent == '1')
 					<optgroup label="$!clazz.name">
@@ -509,7 +509,7 @@
         							$("#admin-wrap").html(data);
 									$("#select-categories").select2("val", cid);
 				
-									$(".active").removeClass("active");
+									$(".status-filter .active").removeClass("active");
 				
 									$("#"+selectedState).addClass("active");
         						},
@@ -564,7 +564,7 @@
 							$("#admin-wrap").html(data);
 							$("#select-categories").select2("val", cid);
 				
-            				$(".active").removeClass("active");
+            				$(".status-filter .active").removeClass("active");
             				
             				$("#"+selectedState).addClass("active");
 						},
@@ -635,7 +635,7 @@
 				$("#admin-wrap").html(data);
 				$("#select-categories").select2("val", cid);
 				
-				$(".active").removeClass("active");
+				$(".status-filter .active").removeClass("active");
 				
 				$("#"+selectedState).addClass("active");
 			},
@@ -703,7 +703,7 @@
 			success: function(data,textStatus,jq) {
 				$("#admin-wrap").html(data);
 				$("#select-categories").select2("val", cid);
-				$(".active").removeClass("active");
+				$(".status-filter .active").removeClass("active");
 				$("#"+selectedState).addClass("active");
 			},
 			error: function(data,textStatus,jq) {
@@ -736,7 +736,7 @@
 			success: function(data,textStatus,jq) {
 				$("#admin-wrap").html(data);
 				$("#select-categories").select2("val", cid);
-				$(".active").removeClass("active");
+				$(".status-filter .active").removeClass("active");
 				$("#"+selectedState).addClass("active");
 			},
 			error: function(data,textStatus,jq) {
@@ -797,7 +797,7 @@
 			success: function(data,textStatus,jq) {
 				$("#admin-wrap").html(data);
 				$("#select-categories").select2("val", cid);
-				$(".active").removeClass("active");
+				$(".status-filter .active").removeClass("active");
 				$("#"+selectedState).addClass("active");
 			},
 			error: function(data,textStatus,jq) {
@@ -810,7 +810,7 @@
 		var cid = $("#select-categories").val();
 		currentPageNo = 1;
 		
-		$(".active").removeClass("active");
+		$(".status-filter .active").removeClass("active");
 		$("#-1").addClass("active");
 		selectedState = -1
 		
@@ -836,7 +836,7 @@
 				$("#admin-wrap").html(data);
 				$("#select-categories").select2("val", cid);
 				
-				$(".active").removeClass("active");
+				$(".status-filter .active").removeClass("active");
 				
 				$("#"+selectedState).addClass("active");
 				
@@ -860,7 +860,7 @@
 	});
 	//筛选器材状态
 	$("body").on("click", "li[action-type|=active]", function() {
-		$(".active").removeClass("active");
+		$(".status-filter .active").removeClass("active");
 		$(this).addClass("active");
 		
 		selectedState =$(this).attr("id");
@@ -890,7 +890,7 @@
 				$("#admin-wrap").html(data);
 				$("#select-categories").select2("val", cid);
 				
-				$(".active").removeClass("active");
+				$(".status-filter .active").removeClass("active");
 				
 				$("#"+selectedState).addClass("active");
 				
