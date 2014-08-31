@@ -21,6 +21,7 @@ public class Worker extends com.sbgl.app.dao.DaoAbs implements
 	private String password;
 	private Date makedate;
 	private Date modifydate;
+	private String couldborrow;
 
 	// Constructors
 
@@ -129,6 +130,14 @@ public class Worker extends com.sbgl.app.dao.DaoAbs implements
 
 	public void setModifydate(Date modifydate) {
 		this.modifydate = modifydate;
+	}
+	
+	public String getCouldborrow() {
+		return couldborrow;
+	}
+
+	public void setCouldborrow(String couldborrow) {
+		this.couldborrow = couldborrow;
 	}
 
 }

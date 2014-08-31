@@ -68,6 +68,7 @@ public class WorkerServiceImpl implements WorkerService {
 		storeWorker.setTelephone( worker.getTelephone() );
 		storeWorker.setWorkid( worker.getWorkid() );
 		storeWorker.setModifydate( new Date() );
+		storeWorker.setCouldborrow( worker.getCouldborrow() );
 		
 		try {
 			baseDao.updateEntity( storeWorker );

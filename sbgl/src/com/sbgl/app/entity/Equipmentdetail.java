@@ -30,9 +30,9 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 	private String storageposition;
 	private String lantype;
 	private Integer comid;
-	private Integer storenumber;
+	private String storenumber;
 	private String equipserial;
-	private Integer assetnumber;
+	private String assetnumber;
 	private Integer classificationid;
 
 	// Constructors
@@ -53,8 +53,8 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 			Date manufacturedate, Date acquiredate, String manufacturer,
 			String supplyer, Float worth, String usemanagedept, String manager,
 			String storageplace, String storageposition, String lantype,
-			Integer comid, Integer storenumber, String equipserial,
-			Integer assetnumber, Integer classificationid) {
+			Integer comid, String storenumber, String equipserial,
+			String assetnumber, Integer classificationid) {
 		this.equipdetailid = equipdetailid;
 		this.equipmentid = equipmentid;
 		this.status = status;
@@ -234,11 +234,11 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.comid = comid;
 	}
 
-	public Integer getStorenumber() {
+	public String getStorenumber() {
 		return this.storenumber;
 	}
 
-	public void setStorenumber(Integer storenumber) {
+	public void setStorenumber(String storenumber) {
 		this.storenumber = storenumber;
 	}
 
@@ -250,11 +250,11 @@ public class Equipmentdetail extends com.sbgl.app.dao.DaoAbs implements
 		this.equipserial = equipserial;
 	}
 
-	public Integer getAssetnumber() {
+	public String getAssetnumber() {
 		return this.assetnumber;
 	}
 
-	public void setAssetnumber(Integer assetnumber) {
+	public void setAssetnumber(String assetnumber) {
 		this.assetnumber = assetnumber;
 	}
 

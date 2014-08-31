@@ -165,12 +165,7 @@
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
-<script src="${jsDomain}/bootstrap-datepicker.js"></script>
-<script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
-<script src="${jsDomain}/xdate.js"></script>
-<script src="${jsDomain}/computer/computerorder.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 
 <script>

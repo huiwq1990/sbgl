@@ -69,7 +69,7 @@
                 </div>              
               </div>
               <ul class="status-filter nav nav-pills pull-right">
-                <li class="active" action-type="active" id="-1" data-state="-1"><a href="#">全部(<span id="sum">$!totalDetailSum</span>)（无不显示）</a></li>
+                <li class="active" action-type="active" id="-1" data-state="-1"><a href="#">全部(<span id="sum">$!totalDetailSum</span>)</a></li>
                 <li action-type="active" id="0" data-state="0"><a href="#">正常(<span id="sum0">$!normalSum</span>)</a></li>
                 <li action-type="active" id="1" data-state="1"><a href="#">借出(<span id="sum1">$!loanSum</span>)</a></li>
                 <li action-type="active" id="2" data-state="2"><a href="#">维护(<span id="sum2">$!maintSum</span>)</a></li>
@@ -84,14 +84,14 @@
                 <thead>
                   <tr>
                     <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-                    <th class="id">资产编号</th>
-                    <th class="status">机身编号</th>
-                    <th class="id">型号</th>
-                    <th class="id">分类名称</th>
+					<th class="name">型号</th>
+					<th class="category">分类名称</th>
 					<th class="status">状态</th>
-                    <th class="id">使用/管理部门</th>
-                    <th class="status">管理人</th>
-                    <th class="id">存放地点</th>
+                    <th class="num">资产编号</th>
+                    <th class="num">机身编号</th>
+                    <th>使用/管理部门</th>
+                    <th>管理人</th>
+                    <th>存放地点</th>
                     <th class="remark">备注</th>
                   </tr>
                 </thead>
@@ -99,23 +99,25 @@
 				  #foreach($equipDetail in $equipDetailCourse)
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!equipDetail.id"></td>
-                    <td>$!equipDetail.assetNumber<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="alterDetailFillIn" data-id="$!equipDetail.id" data-code="$!equipDetail.code" data-mid="$!equipDetail.modelId" data-state="$!equipDetail.state" data-memo="$!equipDetail.memo" data-mDate="$!equipDetail.mDate" data-aDate="$!equipDetail.aDate" data-manufacturer="$!equipDetail.manufacturer" data-supplyer="$!equipDetail.supplyer" data-worth="$!equipDetail.worth" data-useManageDept="$!equipDetail.useManageDept" data-manager="$!equipDetail.manager" data-storagePlace="$!equipDetail.storagePlace" data-storagePosition="$!equipDetail.storagePosition" data-storenumber="$!equipDetail.storenumber" data-equipserial="$!equipDetail.equipserial" data-assetNumber="$!equipDetail.assetNumber" data-classId="$!equipDetail.classId">修改</a></td>
-                    <td>$!equipDetail.equipserial</td>
-					<td>$!equipDetail.modelName</td>
-					<td>$!equipDetail.className</td>
+					<td>$!equipDetail.modelName <a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="alterDetailFillIn" data-id="$!equipDetail.id" data-code="$!equipDetail.code" data-mid="$!equipDetail.modelId" data-state="$!equipDetail.state" data-memo="$!equipDetail.memo" data-mDate="$!equipDetail.mDate" data-aDate="$!equipDetail.aDate" data-manufacturer="$!equipDetail.manufacturer" data-supplyer="$!equipDetail.supplyer" data-worth="$!equipDetail.worth" data-useManageDept="$!equipDetail.useManageDept" data-manager="$!equipDetail.manager" data-storagePlace="$!equipDetail.storagePlace" data-storagePosition="$!equipDetail.storagePosition" data-storenumber="$!equipDetail.storenumber" data-equipserial="$!equipDetail.equipserial" data-assetNumber="$!equipDetail.assetNumber" data-classId="$!equipDetail.classId">修改</a></td>
+                    <td>$!equipDetail.className</td>
+					<td>
 					#if($!equipDetail.state == 0)
-						<td>正常</td>
+						正常
 					#elseif($!equipDetail.state == 1)
-						<td>借出</td>
+						借出
 					#elseif($!equipDetail.state == 2)
-						<td>维护</td>
+						维护
 					#elseif($!equipDetail.state == 3)
-						<td>维修</td>
+						维修
 					#elseif($!equipDetail.state == 4)
-						<td>遗失</td>
+						遗失
 					#elseif($!equipDetail.state == 5)
-						<td>回收站</td>
+						回收站
 					#end
+					</td>
+					<td>$!equipDetail.assetNumber</td>
+                    <td>$!equipDetail.equipserial</td>
                     <td>$!equipDetail.useManageDept</td>
                     <td>$!equipDetail.manager</td>
                     <td>$!equipDetail.storagePlace</td>
@@ -144,8 +146,38 @@
   </div>
   
   <div class="modal-body">
-      <p>修改设备。</p>
+      <p>修改器材信息。</p>
       <form class="form-horizontal" role="form">
+		<div class="form-group">
+          <label for="modifyEquipCategory" class="col-xs-3 control-label">分类</label>
+          <div class="col-xs-7">
+            <select class="select2 select-white form-control" id="modifyEquipCategory">
+              <option value="-1" data-foo="fa">选择分类</option>
+              #foreach($clazz in $classForEquipAdd)
+				#if($!clazz.isParent == '1')
+					<optgroup label="$!clazz.name">
+				#else
+					<option value="$!clazz.id">$!clazz.name</option>
+				#end
+			 #end
+            </select>
+          </div>
+        </div>
+        <div class="form-group" id="modelForSelect">
+          <label for="modifyEquipModelId" class="col-xs-3 control-label">名称(型号)</label>
+          <div class="col-xs-7">
+            <select class="select2 select-white form-control" id="modifyEquipModelId">
+			  <option value="-1">*</option>
+			  #foreach($equip in $equipCourse)
+			    #if($!equip.showClass == '1')
+				  <optgroup label="$!equip.cName">
+			    #else
+				  <option value="$!equip.id">$!equip.name</option>
+			    #end
+			  #end
+            </select>
+          </div>
+        </div>
         <div class="form-group">
           <label for="modifyEquipId" class="col-xs-3 control-label">资产编号</label>
           <div class="col-xs-7">
@@ -218,36 +250,6 @@
             <input type="text" class="form-control" id="storagePosition" placeholder="存放位置">
           </div>
         </div>
-		<div class="form-group">
-          <label for="modifyEquipCategory" class="col-xs-3 control-label">分类</label>
-          <div class="col-xs-7">
-            <select class="select2 select-white form-control" id="modifyEquipCategory">
-              <option value="0" data-foo="fa">全部</option>
-              #foreach($clazz in $classForEquipAdd)
-				#if($!clazz.isParent == '1')
-					<optgroup label="$!clazz.name">
-				#else
-					<option value="$!clazz.id">$!clazz.name</option>
-				#end
-			 #end
-            </select>
-          </div>
-        </div>
-        <div class="form-group" id="modelForSelect">
-          <label for="modifyEquipModelId" class="col-xs-3 control-label">所属设备型号</label>
-          <div class="col-xs-7">
-            <select class="select2 select-white form-control" id="modifyEquipModelId">
-			  <option value="-1">*</option>
-			  #foreach($equip in $equipCourse)
-			    #if($!equip.showClass == '1')
-				  <optgroup label="$!equip.cName">
-			    #else
-				  <option value="$!equip.id">$!equip.name</option>
-			    #end
-			  #end
-            </select>
-          </div>
-        </div>
         <div class="form-group">
           <label for="modifyEquipStatus" class="col-xs-3 control-label">状态</label>
           <div class="col-xs-7">
@@ -275,18 +277,6 @@
   </div>
 </div>
 
-<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
-  <img src="${imageDomain}/cover-img.jpg" class="cover" alt="封面照片">
-  <div class="cover-layout"></div>
-  <div class="avatar"><img src="${imageDomain}/photo.jpg" width="80" height="80" class="img-circle"></div>
-  <div class="user-wrap">
-    <div class="user-name"><a href="#">用户名</a></div>
-    <div class="user-info" title="这里是一句话简介,这里是一句话简介,这里是一句话简介,这里是一句话简介">这里是一句话简介，这里是一句话简介，这里是一句话简介</div>
-    <div class="user-info">职务等信息</div>
-    <div class="user-info">地点</div>
-  </div>
-  <div class="contact-wrap"><a href="#" title="发消息"><i class="icon-envelope"></i></a></div>
-</div>
 
     <!-- Le javascript
     ================================================== -->
@@ -294,7 +284,6 @@
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 <!--[if lt IE 10]>
@@ -451,12 +440,12 @@
 			
 			var regex = /^[0-9]*$/;
     		var ret = regex.test(sn);
-    		if(ret == false) {
-    			alert("库存条码必须输入数字！");
+    		if(sn == '' || sn == undefined || sn == null) {
+    			alert("库存条码不能为空！");
     			return;
     		}
     		//var ret1 = regex.test(an);
-    		if(an == "") {
+    		if(an == '' || an == undefined || an == null) {
     			alert("资产编号不能为空！");
     			return;
     		}

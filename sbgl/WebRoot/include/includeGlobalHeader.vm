@@ -1,5 +1,6 @@
   #set($user = $request.getSession().getAttribute("loginUser"))
   #set($languagetype = $request.getSession().getAttribute("languagetype"))
+  #set($stuClass =  $request.getSession().getAttribute("stuClass"))
 
   
   <nav id="global-header" class="navbar navbar-default navbar-fixed-top animated helper-top" role="navigation"><!-- #global-header -->
@@ -52,7 +53,9 @@
                 </a>
                 <div class="media-body">
                   <div class="media-heading"><h5>$!user.name</h5></div>
-                  <!--<div class="info">2012级研究生 - 影像视觉效果研究方向</div>-->
+                  #if($!user.roletype == "1" )
+        			 <div class="info">$!stuClass</div>      
+				  #end
                   <div class="setting"><a href="${webbaseurl}/account.${strutsaction}">${textmap.globalheader_account_setting}</a></div>
                 </div>
               </div>
