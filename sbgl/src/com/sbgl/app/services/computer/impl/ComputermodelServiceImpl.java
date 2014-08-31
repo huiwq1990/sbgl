@@ -340,13 +340,16 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 	@Override
 	public int delByType(Integer modeltype) {
 		// TODO Auto-generated method stub
-		return computermodelDao.deleteEntity(modeltype);
+		return computermodelDao.delByType(modeltype);
 	}
 
 	@Override
 	public int delByType(List<Integer> modeltypeList) {
 		// TODO Auto-generated method stub
-		return 0;
+		for(int modeltype : modeltypeList){
+			computermodelDao.delByType(modeltype);
+		}
+		return 1;
 	}
 	
 

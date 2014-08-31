@@ -262,38 +262,14 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		if(userid < 0){		
 			actionMsg = "用户未登录";
 			return ComputerConfig.usernotloginreturnstr;
-		}
-		
-/*
-//		进行中的预约是：状态未审核的预约
-		String selunderwayordersql = "  where a.createuserid="+userid + " and a.status in("+ComputerorderInfo.ComputerorderStatusAduitWait+","+ComputerorderInfo.ComputerorderStatusAduitReject+") order by a.createtime desc";
-		computerorderFullUnderwayList = computerorderService.selectComputerorderFullByCondition(selunderwayordersql);
-		
-//		根据作业接收者，查询新的课程预约
-		computerhomeworkreceiverList = computerhomeworkreceiverService.selectComputerhomeworkreceiverByUserAndOrder(userid, ComputerConfig.computerhomeworknotorder);
-		String newhomeworksql="";
-		for(int i=0; i<computerhomeworkreceiverList.size();i++){
-			if( (computerhomeworkreceiverList.get(i).getHavefinish()==null) || (computerhomeworkreceiverList.get(i).getHavefinish() !=1)){
-					newhomeworksql += computerhomeworkreceiverList.get(i).getComputerhomeworkid()+",";
-			}
-		}
-		if(newhomeworksql.length() > 1){
-			newhomeworksql = newhomeworksql.substring(0,newhomeworksql.length()-1);
-			newhomeworksql = " where a.id in (" +newhomeworksql+") "  + " order by computerhomeworkcreatetime desc ";
-			newComputerhomeworkFullList = computerhomeworkService.selectComputerhomeworkFullByCondition(newhomeworksql);
-		}
-		
-		computerorderEntityList = ComputerorderActionUtil.setUnderwayComputerorder(computerorderFullUnderwayList, newComputerhomeworkFullList);
-*/
-		
+		}		
+	
 		computerorderEntityList = computerorderService.getUnderwayComputerorder(userid);
 		
 //		预约完成的订单
-//		String selfinordersql = "  where a.createuserid="+userid + " and a.status ="+ComputerorderInfo.ComputerorderStatusAduitPass+" order by a.createtime desc";
-//		computerorderFullFinishList = computerorderService.selectComputerorderFullByCondition(selfinordersql);
-		computerorderFullFinishList = computerorderService.selFullByStatus(userid, ComputerorderInfo.ComputerorderStatusAduitPass);
-//		System.out.println(computerorderFullUnderwayList.size());
-//		String sql = " where a.computerorderid = "+computerorderId  + " and c.languagetype="+ComputerConfig.languagech ;
+//		computerorderFullFinishList = computerorderService.selFullByStatus(userid, ComputerorderInfo.ComputerorderStatusAduitPass);
+		computerorderFullFinishList = computerorderService.selFinishedComputerorder(userid);
+		
 		if(computerorderFullUnderwayList==null){
 			computerorderFullUnderwayList = new ArrayList<ComputerorderFull>();
 		}
@@ -828,8 +804,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 
 //		如果是重新预约，则是知道预约id的
 		if(reorder == 1){
-			computerorder.setId(computerorderid);
-			
+			computerorder.setId(computerorderid);			
 		}
 
 	

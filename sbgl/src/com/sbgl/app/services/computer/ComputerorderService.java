@@ -90,6 +90,10 @@ public interface ComputerorderService{
 
 		List<ComputerorderFull> selByStatusAndPage(int computerorderStatus,
 				Page page);
+
+	
+
+		List<ComputerorderFull> selFinishedComputerorder(int userid);
 		
 	
 //根据关联查询实体	

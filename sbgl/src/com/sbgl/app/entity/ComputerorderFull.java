@@ -12,6 +12,9 @@ public class ComputerorderFull extends DaoAbs implements java.io.Serializable {
 			private String computerordertitle;
 			private Integer computerorderordertype;
 			private Date computerordercreatetime;
+			
+			private Date computerorderorderstarttime;
+			private Date computerorderorderendtime;
 			private String computerorderremark;
 			private String computerorderrejectreason;
 			private Integer computerordercomputerhomeworkid;
@@ -232,6 +235,18 @@ public class ComputerorderFull extends DaoAbs implements java.io.Serializable {
 		}
 		public void setAudituserphoto(String audituserphoto) {
 			this.audituserphoto = audituserphoto;
+		}
+		public Date getComputerorderorderstarttime() {
+			return computerorderorderstarttime;
+		}
+		public void setComputerorderorderstarttime(Date computerorderorderstarttime) {
+			this.computerorderorderstarttime = computerorderorderstarttime;
+		}
+		public Date getComputerorderorderendtime() {
+			return computerorderorderendtime;
+		}
+		public void setComputerorderorderendtime(Date computerorderorderendtime) {
+			this.computerorderorderendtime = computerorderorderendtime;
 		}
 		
 	

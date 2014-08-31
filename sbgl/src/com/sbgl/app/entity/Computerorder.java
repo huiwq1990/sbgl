@@ -22,6 +22,8 @@ public class Computerorder extends com.sbgl.app.dao.DaoAbs implements
 	private Integer computerhomeworkid;
 	private Integer audituserid;
 	private Integer status;
+	private Date orderstarttime;
+	private Date orderendtime;
 
 	// Constructors
 
@@ -141,5 +143,22 @@ public class Computerorder extends com.sbgl.app.dao.DaoAbs implements
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+
+	public Date getOrderstarttime() {
+		return orderstarttime;
+	}
+
+	public void setOrderstarttime(Date orderstarttime) {
+		this.orderstarttime = orderstarttime;
+	}
+
+	public Date getOrderendtime() {
+		return orderendtime;
+	}
+
+	public void setOrderendtime(Date orderendtime) {
+		this.orderendtime = orderendtime;
+	}
+	
 
 }

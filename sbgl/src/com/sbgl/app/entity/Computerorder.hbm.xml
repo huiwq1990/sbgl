@@ -25,6 +25,13 @@
         <property name="createtime" type="java.util.Date">
             <column name="createtime"  />
         </property>
+                <property name="orderstarttime" type="java.util.Date">
+            <column name="orderstarttime"  />
+        </property>
+                <property name="orderendtime" type="java.util.Date">
+            <column name="orderendtime"  />
+        </property>
+        
         <property name="remark" type="java.lang.String">
             <column name="remark" length="2000" />
         </property>

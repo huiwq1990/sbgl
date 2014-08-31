@@ -1,5 +1,6 @@
 package com.sbgl.app.actions.computer;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -119,6 +120,8 @@ public class ComputerorderActionUtil {
 				ComputerorderEntity co = new ComputerorderEntity();
 				co.setType(1);
 				co.setCreatetime(h.getComputerordercreatetime());
+				co.setStarttime(h.getComputerorderorderstarttime());
+				co.setEndtime(h.getComputerorderorderendtime());
 				try {
 					BeanUtils.copyProperties(co, h);
 				} catch (IllegalAccessException e) {
@@ -136,6 +139,8 @@ public class ComputerorderActionUtil {
 				ComputerorderEntity co = new ComputerorderEntity();
 				co.setType(2);
 				co.setCreatetime(h.getComputerhomeworkcreatetime());
+				co.setStarttime(h.getComputerorderclassruleorderstarttime());
+				co.setEndtime(h.getComputerorderclassruleorderendtime());
 				try {
 					BeanUtils.copyProperties(co, h);
 				} catch (IllegalAccessException e) {
@@ -149,8 +154,11 @@ public class ComputerorderActionUtil {
 			}
 		}
 		
+//		排序
+//		Collections.sort(computerorderEntityList,new ComputerorderEntityComparator());  
 		return computerorderEntityList;
 	}
+	
 	
 	
 }

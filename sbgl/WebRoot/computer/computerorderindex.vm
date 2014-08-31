@@ -52,9 +52,10 @@
 #set($computerorderFullListRegion = [0..$computerorderFullListSize])
 ##取出所有的属性名称
 #foreach($tempKey in $computerorderFullListRegion)
-			#set($temp = $computerorderEntityList.get($tempKey))				
-           #set($curstatus = $temp.computerorderstatus)
+		#set($temp = $computerorderEntityList.get($tempKey))				
+           
 			#if($temp.type==1)      
+				#set($curstatus = $temp.computerorderstatus)
 			<div class="col-3">                  
                       <div class="thumbnail">
                         <div class="hd clearfix">
@@ -69,7 +70,7 @@
                           <div class="rent-info">
                             <div class="rent-num">$!{textmap.computerorderindex_ordernum}：$!temp.computerorderserialnumber</div>
 							
-                            <div class="rent-time"><i class="icon-time"></i> $date.format("yyyy-MM-dd",$!temp.computerordercreatetime)</div>
+                            <div class="rent-time"><i class="icon-time"></i>$!date.format("yyyy-MM-dd",$!temp.computerorderorderstarttime)   $!date.format("yyyy-MM-dd",$!temp.computerorderorderendtime)</div>
                             #if($temp.computerorderremark && $temp.computerorderremark.length()>0)
 							<div class="rent-remark"><i class="icon-pencil"> $!temp.computerorderremark</i></div>
 							#end
@@ -93,7 +94,9 @@
                         </div>
                       </div>                  
                   </div>
+			##end 真正订单	  
 			#else
+			##作业预约	
 				<div class="col-3">                  
                       <div class="thumbnail">
                         <div class="hd clearfix">
@@ -107,7 +110,9 @@
 						<div class="caption">
                           <div class="rent-info">
 							 <div class="rent-time"><i class="icon-time"></i> $date.format("yyyy-MM-dd",$!temp.computerorderclassruleorderstarttime) $date.format("yyyy-MM-dd",$!temp.computerorderclassruleorderendtime)</div>
-                             <div class="rent-remark"><i class="icon-pencil"></i> $temp.computerhomeworkcontent</div>							
+                             #if($temp.computerhomeworkcontent && $temp.computerhomeworkcontent.length()>0)
+							 <div class="rent-remark"><i class="icon-pencil"></i> $temp.computerhomeworkcontent</div>	
+							 #end
                           </div>
                           <hr />
 						  
@@ -154,7 +159,7 @@
                           <div class="rent-info">
                             
 							   <div class="rent-num">$!{textmap.computerorderindex_ordernum}：$!temp.computerorderserialnumber</div>							
-                            <div class="rent-time"><i class="icon-time"></i> $date.format("yyyy-MM-dd",$!temp.computerordercreatetime)</div>
+                            <div class="rent-time"><i class="icon-time"></i>$!date.format("yyyy-MM-dd",$!temp.computerorderorderstarttime) $!date.format("yyyy-MM-dd",$!temp.computerorderorderendtime)</div>
 							
 							#if($temp.computerorderremark && $temp.computerorderremark.length()>0)
                             <div class="rent-remark"><i class="icon-pencil"> $!temp.computerorderremark</i></div>

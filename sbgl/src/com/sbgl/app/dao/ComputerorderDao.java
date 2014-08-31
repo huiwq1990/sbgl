@@ -29,7 +29,7 @@ public List<Computerorder> selectComputerorderByCondition(String condition);
 
 	Computerorder selectById(int computerorderid);
 
-	List<ComputerorderFull> setUnderwayComputerorder(int uid);
+	List<ComputerorderFull> selUnderwayComputerorder(int uid);
 
 	List<ComputerorderFull> selFullByStatus(int uid, int orderstatus);
 
@@ -38,6 +38,8 @@ public List<Computerorder> selectComputerorderByCondition(String condition);
 
 
 	int countRow(String hql);
+
+	List<ComputerorderFull> selFinished(int uid);
 
  
 }

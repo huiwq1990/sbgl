@@ -14,8 +14,8 @@ public class ComputerorderEntityComparator  implements Comparator{
 		ComputerorderEntity a = (ComputerorderEntity)o1;
 		ComputerorderEntity b = (ComputerorderEntity)o2;
 		
-		Date aD = a.getCreatetime();
-		Date bD = b.getCreatetime();
+		Date aD = a.getStarttime();
+		Date bD = b.getStarttime();
 		if(aD.after(bD)){
 			return -1;
 		}

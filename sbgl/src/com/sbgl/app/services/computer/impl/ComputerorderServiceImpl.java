@@ -1,6 +1,7 @@
 package com.sbgl.app.services.computer.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -111,9 +112,20 @@ public class ComputerorderServiceImpl implements ComputerorderService {
 
 		computerorder.setTitle(tempcomputerorder.getTitle());
 		computerorder.setRemark(tempcomputerorder.getRemark());
+		
+//		根据订单详情设置订单开始时间、结束时间
+		List<Date> list=new ArrayList<Date>();  
+		for(Computerorderdetail cod : computerorderdetailList){
+			list.add(cod.getBorrowday());  
+		}
+		DateComparator c=new DateComparator();  
+	    Collections.sort(list,c);
+	    computerorder.setOrderstarttime(list.get(0));
+	    computerorder.setOrderendtime(list.get(list.size()-1));
+	    
 		// 保存订单信息 如果是驳回预约，则是更新
 		if (reorder == 1) {
-			// temp.setId(computerorderid);
+			//驳回的订单只是更新，id不变
 			baseDao.updateEntity(computerorder);
 		} else {
 			computerorder.setId(baseDao.getCode("Computerorder"));
@@ -125,9 +137,7 @@ public class ComputerorderServiceImpl implements ComputerorderService {
 
 		// 如果是重新预约，需要删除原有的预约
 		if (reorder == 1) {
-			String delSql = " delete from computerorderdetail where computerorderid = "
-					+ computerorder.getId();
-			baseDao.createSQL(delSql);
+			computerorderdetailDao.delByComputerorderid(computerorder.getId());
 		}
 
 		// computerorderdetailList =
@@ -298,7 +308,7 @@ public class ComputerorderServiceImpl implements ComputerorderService {
 	public List<ComputerorderEntity> getUnderwayComputerorder(int userid) {
 		// 进行中的预约是：状态未审核的预约、驳回的
 		List<ComputerorderFull> computerorderFullUnderwayList = computerorderDao
-				.setUnderwayComputerorder(userid);
+				.selUnderwayComputerorder(userid);
 
 		// 根据作业接收者，查询新的课程预约
 		List<Computerhomeworkreceiver> computerhomeworkreceiverList = computerhomeworkreceiverDao
@@ -309,8 +319,6 @@ public class ComputerorderServiceImpl implements ComputerorderService {
 		}
 		List<Integer> idList = new ArrayList<Integer>();
 		for (int i = 0; i < computerhomeworkreceiverList.size(); i++) {
-			// newhomeworksql +=
-			// computerhomeworkreceiverList.get(i).getComputerhomeworkid()+",";
 			idList.add(computerhomeworkreceiverList.get(i)
 					.getComputerhomeworkid());
 		}
@@ -323,12 +331,16 @@ public class ComputerorderServiceImpl implements ComputerorderService {
 						newComputerhomeworkFullList);
 		return computerorderEntityList;
 	}
+	
+	@Override
+	public List<ComputerorderFull> selFinishedComputerorder(int userid) {
+		return computerorderDao.selFinished(userid);
+	}
 
 	// 根据id删除实体
 	@Override
 	public int deleteComputerorder(Integer computerorderId) {
-		String sql = "delete from Computerorder where id=" + computerorderId;
-		baseDao.createSQL(sql);
+		computerorderDao.delById(computerorderId);
 		return 1;
 	}
 

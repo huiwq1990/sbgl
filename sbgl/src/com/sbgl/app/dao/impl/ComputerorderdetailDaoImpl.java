@@ -114,7 +114,7 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	 */
 	@Override
 	public void delByComputerorderid(int computerorderid){
-		String sql = " delete Computerorderdetail where computerorderid = "+computerorderid;
+		String sql = " delete computerorderdetail where computerorderid = "+computerorderid;
 		try {
 			Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
 	         Query query = session.createSQLQuery(sql);

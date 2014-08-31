@@ -376,69 +376,8 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 			return SUCCESS;
 	}
 	
-	/**
-	
-	编辑实体 action的方法，首先获取entity的信息，返回到编辑页面
-	
-	*/
-	public String editComputerorder(){
-		log.info(logprefix + "editComputerorder");
-			
-		try {
-			//实体的id可以为0
-			if(computerorder.getId() != null && computerorder.getId() >= 0){				
-				Computerorder temComputerorder = computerorderService.selectComputerorderById(computerorder.getId());
-				if(temComputerorder != null){
-					BeanUtils.copyProperties(computerorderModel,temComputerorder);	
-					//actionMsg = getText("selectComputerorderByIdSuccess");
-					return SUCCESS;
-				}				
-			}		
-			return "PageNotExist";
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerorderAction的方法：selectComputerorderById错误"+e);
-		}
 
-
-		return "error";
-	}
 	
-
-	/**
-	编辑实体Full action的方法，首先获取entityfull的信息，返回到编辑页面
-	
-	*/
-	public String editComputerorderFull(){
-		
-		log.info(logprefix + "viewComputerorder");
-		
-		try {
-			if(computerorder.getId() != null && computerorder.getId() > 0){				
-				ComputerorderFull temComputerorderFull = computerorderService.selectComputerorderFullById(computerorder.getId());
-				BeanUtils.copyProperties(computerorderFull,temComputerorderFull);	
-				actionMsg = getText("selectComputerorderByIdSuccess");
-			}else{
-				actionMsg = getText("selectComputerorderByIdFail");
-				System.out.println(actionMsg);
-			}			
-			return SUCCESS;
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-			log.error("类ComputerorderAction的方法：selectComputerorderFullById错误"+e);
-		}
-		
-		return "error";
-	}
-
 	
 	// 查看实体 根据对象Id查询
 	public String viewComputerorder(){

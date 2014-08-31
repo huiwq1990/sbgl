@@ -312,13 +312,11 @@ public class OrderComputerAction  extends BaseAction {
 			HashMap<Integer,ArrayList<Integer>> periodDay = new HashMap<Integer,ArrayList<Integer>>();
 			availableBorrowModelMap.put(model.getComputermodeltype(),periodDay);
 			
-			for(Borrowperiod bp : borrowperiodList){
-			
+			for(Borrowperiod bp : borrowperiodList){			
 				ArrayList<Integer> dayList = new ArrayList<Integer>();
 				for(int tempday=0; tempday < computeroderadvanceorderday; tempday++){				
 					dayList.add(0);					
-				}
-				
+				}				
 				periodDay.put(bp.getPeriodnum(), dayList);
 				
 			}
@@ -339,8 +337,7 @@ public class OrderComputerAction  extends BaseAction {
 			for(Computermodel tempmodel : computermodelList){
 				for(Borrowperiod tempBorrowperiod : borrowperiodList){
 					for(int tempday=computeroderadvanceorderday; tempday < showComputeroderadvanceorderday; tempday++){
-						availableBorrowModelMap.get(tempmodel.getComputermodeltype()).get(tempBorrowperiod.getPeriodnum()).add(0);
-						
+						availableBorrowModelMap.get(tempmodel.getComputermodeltype()).get(tempBorrowperiod.getPeriodnum()).add(0);						
 					}	
 				}
 			}
@@ -349,7 +346,7 @@ public class OrderComputerAction  extends BaseAction {
 
 		
 //		对availableBorrowModelMap复制
-		for(Map.Entry<Integer,HashMap<Integer,ArrayList<Integer>>> entry : availableBorrowModelMap.entrySet()){			
+		for(Map.Entry<Integer,HashMap<Integer,ArrayList<Integer>>> entry : availableBorrowModelMap.entrySet()){		
 			HashMap<Integer,ArrayList<Integer>> newHash = new HashMap<Integer,ArrayList<Integer>>();
 			for(Map.Entry<Integer,ArrayList<Integer>> e2 : entry.getValue().entrySet()){
 				ArrayList<Integer> list = new ArrayList<Integer>();
@@ -361,7 +358,7 @@ public class OrderComputerAction  extends BaseAction {
 			totalBorrowModelMap.put(entry.getKey(), newHash);		      
 		}   
 		
-		System.out.println(availableBorrowModelMap.size());
+//		System.out.println(availableBorrowModelMap.size());
 		
 		/*for(int tempmodelindex=0;tempmodelindex<computermodelList.size();tempmodelindex++){
 			Computermodel tempmodel =  computermodelList.get(tempmodelindex);

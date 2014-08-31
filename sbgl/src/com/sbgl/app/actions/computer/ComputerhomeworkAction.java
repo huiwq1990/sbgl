@@ -13,6 +13,7 @@ import net.sf.json.JSONObject;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -120,10 +121,10 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 
 //	改进的Homework添加
 	private String receiverids;//接收者
-	private Integer classid;
+	private String classid;
 	private Date orderstarttime;
 	private Date orderendtime;
-	private Integer availableordertime;
+	private String availableordertime;
 //	规则允许借的pc
 	private String allowborrowpcids;
 	
@@ -276,12 +277,37 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 	*/
 	public boolean checkAddForm(){
 		if(receiverids == null || receiverids.length() == 0){
-			returnInfo = "接收人不能为空";
+			returnInfo = "请添加接收人";
 			return false;
 		}
 		
+		if(classid==null || StringUtils.isNumeric(classid)==false){
+			returnInfo = "请选择课程";
+			return false;
+		}
+		
+		
+		if(computerhomework.getName()==null || computerhomework.getName().trim().equals("")){
+			returnInfo = "请填写作业标题";
+			return false;
+		}
+		if(orderstarttime==null){
+			returnInfo = "请选择预约开始时间";
+			return false;
+		}
+		if(orderendtime==null){
+			returnInfo = "请选择预约结束时间";
+			return false;
+		}
+		
+		
+		if(availableordertime==null || StringUtils.isNumeric(availableordertime)==false){
+			returnInfo = "请选择可借用最大时间段";
+			return false;
+		}
+				
 		if(allowborrowpcids == null || allowborrowpcids.length() == 0){
-			returnInfo = "预约器材不能为空";
+			returnInfo = "请选择可预约的器材";
 			return false;
 		}
 		
@@ -303,8 +329,8 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 			
 //			添加规则
 			Computerorderclassrule tempRule = new Computerorderclassrule();
-			tempRule.setClassid(classid);
-			tempRule.setAvailableordertime(availableordertime);
+			tempRule.setClassid(Integer.valueOf(classid));
+			tempRule.setAvailableordertime(Integer.valueOf(availableordertime));
 			tempRule.setOrderstarttime(orderstarttime);
 			tempRule.setOrderendtime(orderendtime);
 			
@@ -1085,16 +1111,15 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 
 
 
-	public Integer getClassid() {
+
+	public String getClassid() {
 		return classid;
 	}
 
 
-
-	public void setClassid(Integer classid) {
+	public void setClassid(String classid) {
 		this.classid = classid;
 	}
-
 
 
 	public Date getOrderstarttime() {
@@ -1121,16 +1146,16 @@ public class ComputerhomeworkAction extends BaseAction implements ModelDriven<Co
 
 
 
-	public Integer getAvailableordertime() {
+
+
+	public String getAvailableordertime() {
 		return availableordertime;
 	}
 
 
-
-	public void setAvailableordertime(Integer availableordertime) {
+	public void setAvailableordertime(String availableordertime) {
 		this.availableordertime = availableordertime;
 	}
-
 
 
 	public String getAllowborrowpcids() {

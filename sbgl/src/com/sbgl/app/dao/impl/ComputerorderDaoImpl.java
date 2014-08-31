@@ -30,7 +30,8 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements
 
 	private static final Log log = LogFactory
 			.getLog(ComputerorderDaoImpl.class);
-	private final String basicComputerorderFullSql = "select a.id as computerorderid, a.serialnumber as computerorderserialnumber, a.createuserid as computerordercreateuserid, a.title as computerordertitle, a.ordertype as computerorderordertype, a.createtime as computerordercreatetime, a.remark as computerorderremark, a.rejectreason as computerorderrejectreason, a.computerhomeworkid as computerordercomputerhomeworkid, a.audituserid as computerorderaudituserid, a.status as computerorderstatus, b.id as createuserid, b.userId as createuseruserid, b.name as createusername, b.roletype as createuserroletype, b.privilege as createuserprivilege, b.password as createuserpassword, c.id as audituserid, c.userId as audituseruserid, c.name as auditusername, c.roletype as audituserroletype, c.privilege as audituserprivilege, c.password as audituserpassword, c.photo as audituserphoto, d.id as computerhomeworkid, d.name as computerhomeworkname, d.computerorderclassruleid as computerhomeworkcomputerorderclassruleid, d.content as computerhomeworkcontent, d.createuserid as computerhomeworkcreateuserid, d.attachment as computerhomeworkattachment, d.status as computerhomeworkstatus, d.createtime as computerhomeworkcreatetime from Computerorder a  left join Loginuser b on a.createuserid=b.id left join Loginuser c on a.audituserid=c.id left join Computerhomework d on a.computerhomeworkid=d.id ";
+	private final String basicComputerorderFullSql = "select a.id as computerorderid, a.serialnumber as computerorderserialnumber, a.createuserid as computerordercreateuserid, a.title as computerordertitle, a.ordertype as computerorderordertype, a.createtime as computerordercreatetime, a.orderstarttime as computerorderorderstarttime,a.orderendtime as computerorderorderendtime, a.remark as computerorderremark, a.rejectreason as computerorderrejectreason, a.computerhomeworkid as computerordercomputerhomeworkid, a.audituserid as computerorderaudituserid, a.status as computerorderstatus," +
+			" b.id as createuserid, b.userId as createuseruserid, b.name as createusername, b.roletype as createuserroletype, b.privilege as createuserprivilege, b.password as createuserpassword, c.id as audituserid, c.userId as audituseruserid, c.name as auditusername, c.roletype as audituserroletype, c.privilege as audituserprivilege, c.password as audituserpassword, c.photo as audituserphoto, d.id as computerhomeworkid, d.name as computerhomeworkname, d.computerorderclassruleid as computerhomeworkcomputerorderclassruleid, d.content as computerhomeworkcontent, d.createuserid as computerhomeworkcreateuserid, d.attachment as computerhomeworkattachment, d.status as computerhomeworkstatus, d.createtime as computerhomeworkcreatetime from Computerorder a  left join Loginuser b on a.createuserid=b.id left join Loginuser c on a.audituserid=c.id left join Computerhomework d on a.computerhomeworkid=d.id ";
 
 	private final String basicComputerorderSql = "From Computerorder as a ";
 
@@ -68,6 +69,8 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements
 		}
 	}
 
+
+	
 	/**
 	 * 获取订单信息
 	 * 
@@ -96,17 +99,49 @@ public class ComputerorderDaoImpl extends HibernateDaoSupport implements
 	 * @param uid
 	 * @return
 	 */
+//	@Override
+//	public List<ComputerorderFull> selUnderwayComputerorder(int uid) {
+//		String selunderwayordersql = "  where a.createuserid=" + uid
+//				+ " and a.status in("
+//				+ ComputerorderInfo.ComputerorderStatusAduitWait + ","
+//				+ ComputerorderInfo.ComputerorderStatusAduitReject
+//				+ ") order by a.orderstarttime,a.createtime desc";
+//		List<ComputerorderFull> computerorderFullUnderwayList = selectComputerorderFullByCondition(selunderwayordersql);
+//		return computerorderFullUnderwayList;
+//
+//	}	
 	@Override
-	public List<ComputerorderFull> setUnderwayComputerorder(int uid) {
+	public List<ComputerorderFull> selUnderwayComputerorder(int uid) {
+		String dateStr= DateUtil.dateFormat(DateUtil.currentDate(), DateUtil.dateformatstr1);
 		String selunderwayordersql = "  where a.createuserid=" + uid
 				+ " and a.status in("
 				+ ComputerorderInfo.ComputerorderStatusAduitWait + ","
-				+ ComputerorderInfo.ComputerorderStatusAduitReject
-				+ ") order by a.createtime desc";
+				+ ComputerorderInfo.ComputerorderStatusAduitReject+ ","
+				+ ComputerorderInfo.ComputerorderStatusAduitPass+ ")"
+				+" and a.orderendtime >= '"+dateStr+"' ";
+				//+ " order by a.orderstarttime,a.createtime desc";
 		List<ComputerorderFull> computerorderFullUnderwayList = selectComputerorderFullByCondition(selunderwayordersql);
 		return computerorderFullUnderwayList;
 
 	}
+	
+	/**
+	 * 查询已完成的订单
+	 */
+	@Override
+	public List<ComputerorderFull> selFinished(int uid) {
+		String dateStr= DateUtil.dateFormat(DateUtil.currentDate(), DateUtil.dateformatstr1);
+		String sql = "  where a.createuserid=" + uid
+				+ " and a.status in("
+				+ ComputerorderInfo.ComputerorderStatusAduitWait + ","
+				+ ComputerorderInfo.ComputerorderStatusAduitReject+ ","
+				+ ComputerorderInfo.ComputerorderStatusAduitPass+ ")"
+				+" and a.orderendtime <= '"+dateStr+"' "
+				+ " order by a.orderstarttime,a.createtime desc";
+		List<ComputerorderFull> computerorderFullUnderwayList = selectComputerorderFullByCondition(sql);
+		return computerorderFullUnderwayList;
+
+	}	
 
 	@Override
 	public List<ComputerorderFull> selFullByStatus(int orderstatus) {

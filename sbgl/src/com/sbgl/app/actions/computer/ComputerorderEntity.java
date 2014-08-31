@@ -6,6 +6,8 @@ public class ComputerorderEntity {
 	
 	private Integer type;
 	private Date createtime;
+	private Date starttime;
+	private Date endtime;
 	
 	private Integer computerorderid;
 	private String computerorderserialnumber;
@@ -13,6 +15,8 @@ public class ComputerorderEntity {
 	private String computerordertitle;
 	private Integer computerorderordertype;
 	private Date computerordercreatetime;
+	private Date computerorderorderstarttime;
+	private Date computerorderorderendtime;
 	private String computerorderremark;
 	private String computerorderrejectreason;
 	private Integer computerordercomputerhomeworkid;
@@ -51,6 +55,22 @@ public class ComputerorderEntity {
 	private Integer computerorderclassrulecreateuserid;
 	private Date computerorderclassrulecreatetime;
 	private Integer computerorderclassrulestatus;
+	
+	
+	
+	
+	public Date getComputerorderorderstarttime() {
+		return computerorderorderstarttime;
+	}
+	public void setComputerorderorderstarttime(Date computerorderorderstarttime) {
+		this.computerorderorderstarttime = computerorderorderstarttime;
+	}
+	public Date getComputerorderorderendtime() {
+		return computerorderorderendtime;
+	}
+	public void setComputerorderorderendtime(Date computerorderorderendtime) {
+		this.computerorderorderendtime = computerorderorderendtime;
+	}
 	public Integer getType() {
 		return type;
 	}
@@ -317,6 +337,18 @@ public class ComputerorderEntity {
 	}
 	public void setComputerorderclassrulestatus(Integer computerorderclassrulestatus) {
 		this.computerorderclassrulestatus = computerorderclassrulestatus;
+	}
+	public Date getStarttime() {
+		return starttime;
+	}
+	public void setStarttime(Date starttime) {
+		this.starttime = starttime;
+	}
+	public Date getEndtime() {
+		return endtime;
+	}
+	public void setEndtime(Date endtime) {
+		this.endtime = endtime;
 	}
 	
 	
