@@ -71,23 +71,7 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 		return deleteComputermodel(computermodel.getId());
 	}*/
 
-	@Override
-	public int deleteComputermodelByTyp(Integer computermodeltype){
-		String sql = "delete from Computermodel where computermodeltype="+computermodeltype;
-		baseDao.createSQL(sql);
-		return 1;
-	}
-	
-	
-	@Override
-	public int deleteComputermodelByType(List<Integer> typeList){
-		
-		for(Integer type : typeList){
-			String sql = "delete from Computermodel where computermodeltype="+type;
-			baseDao.createSQL(sql);
-		}
-		return 1;
-	}
+
 	/**
 	 * 获取分类-模型map
 	 */
@@ -160,17 +144,8 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 	 * 根据类型查询模型
 	*/
 	@Override
-	public List<Computermodel> selByCategoryType(int categoryType,int language){
-		String sqlch = " where a.status >=0 " +
-						  " and a.languagetype="+language+
-						  " and a.computercategoryid = "+categoryType+
-						  " order by a.computermodeltype,a.languagetype";		
-		ArrayList<Computermodel> list  = (ArrayList<Computermodel>) computermodelDao.selectComputermodelByCondition(sqlch );
-		if(list == null){
-			list = new ArrayList<Computermodel>();
-		}
-		
-		return list;
+	public List<Computermodel> selByCategoryType(int categoryType,int language){		
+		return computermodelDao.selByCategorytype(categoryType, language);
 	}
 	@Override
 	public List<Computermodel> selByCategoryType(List<Integer> categoryTypeList,int language){
@@ -202,10 +177,8 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 	/**
 	 * 根据模型类型查询
 	 */
-	public List<Computermodel> selByModeltype(int modeltype,int language){
-		
-		return computermodelDao.selByModeltype(modeltype, language);
-		
+	public List<Computermodel> selByModeltype(int modeltype,int language){		
+		return computermodelDao.selByModeltype(modeltype, language);		
 	}
 //	public 
 	
@@ -296,27 +269,18 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 //		page.setTotalCount(baseDao.getRowCount(Computermodel.class));
 		return computermodelDao.selectComputermodelFullByPage(page);
 	}
+
 	
 	//根据computercategoryid 查询实体
 	@Override
-	public List<Computermodel> selectComputermodelByComputercategoryId(Integer computercategoryid ) {
-		List<Computermodel> computermodelList = new ArrayList<Computermodel>();
-		String id = String.valueOf(computercategoryid );
-		computermodelList = baseDao.getEntityByProperty("Computermodel", "computercategoryid ", id);
-		return computermodelList;
+	public List<Computermodel> selByCategorytype(Integer computercategorytype,int language ) {
+		return computermodelDao.selByCategorytype(computercategorytype,language);		
+	}
+	@Override
+	public List<ComputermodelFull> selFullByCategorytype(Integer computercategorytype,int language ) {
+		return computermodelDao.selFullByCategorytype(computercategorytype,language);		
 	}
 	
-	//根据computercategoryid 查询实体
-	@Override
-	public List<Computermodel> selectComputermodelByComputercategoryId(Integer computercategoryid,int language ) {
-		return computermodelDao.selectComputermodelByCondition(" where a.languagetype="+language+" and computercategoryid="+computercategoryid+" ");
-		
-	}
-	//根据computercategoryid 查询实体full
-	@Override
-	public List<ComputermodelFull> selectComputermodelFullByComputercategoryId(Integer computercategoryid ) {
-		return computermodelDao.selectComputermodelFullByComputercategoryId(computercategoryid );
-	}
 	
 	@Override
 	 public boolean isComputermodelNameExist(String name){
@@ -372,13 +336,19 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 	public List<ComputermodelFull> selectComputermodelFullByConditionAndPage(String conditionSql,Page page){
 		return computermodelDao.selectComputermodelFullByConditionAndPage(conditionSql, page);
 	}
-	
+
 	@Override
-	public int execSql(String sql) {
-//		String sql = "delete from Computerorderdetail " + condition;
-		baseDao.createSQL(sql);
-		return 1;
-		
+	public int delByType(Integer modeltype) {
+		// TODO Auto-generated method stub
+		return computermodelDao.deleteEntity(modeltype);
 	}
 
+	@Override
+	public int delByType(List<Integer> modeltypeList) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+
+	
 }

@@ -7,6 +7,7 @@ public class EquipModelCourse {
 	private String nameEN;
 	private String cId;
 	private String cName;
+	private String cNameEN;
 	private String branId;
 	private String memo;
 	private String memoEN;
@@ -100,4 +101,11 @@ public class EquipModelCourse {
 	public void setRentValue(String rentValue) {
 		this.rentValue = rentValue;
 	}
+	public String getcNameEN() {
+		return cNameEN;
+	}
+	public void setcNameEN(String cNameEN) {
+		this.cNameEN = cNameEN;
+	}
+	
 }

@@ -640,6 +640,7 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 	
 
 	public String viewCoursescheduleByWeek(){
+		log.info("viewCoursescheduleByWeek");
 		try{
 			
 			int aid = this.getCurrentAdminId();
@@ -658,7 +659,10 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 			}
 			
 
-			setComputermodelByCategoryid();
+			computercategoryList  = computercategoryService.sel(CommonConfig.languagech);
+//			将模型与分类关联
+			computermodelByComputercategoryId = computermodelService.getCategoryModelMapByCategoryList(computercategoryList, CommonConfig.languagech);
+		
 			
 //			课程组信息
 			usergroupList = groupService.getUserGroupByType(CommonConfig.usergroupstudentid);		
@@ -737,19 +741,7 @@ public class CoursescheduleAction extends BaseAction implements ModelDriven<Cour
 //	public void 
 	
 	
-//	构建
-	public void setComputermodelByCategoryid(){
-//		courseconfig.get
-//		查询computer分类模型信息
-		String categorySqlch = " where a.languagetype=0 order by a.computercategorytype,a.languagetype";	
-		computercategoryList  = computercategoryService.selectComputercategoryByCondition(categorySqlch);					
-		String modelSqlch = " where a.languagetype=0  ";	
-		computermodelList  = computermodelService.selectComputermodelByCondition(modelSqlch);	
-		System.out.println(computercategoryList.size());
-//		构建分类模型的map
-		computermodelByComputercategoryId = ComputerActionUtil.categoryModelMap(computercategoryList, computermodelList);
-	}
-	
+
 
 	//del entityfull Ajax
 	public String deleteCoursescheduleAjax( ){

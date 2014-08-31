@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>用户管理 - 北京电影学院摄影系</title>
+<title>班级管理 - 北京电影学院摄影系</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -25,29 +25,13 @@
         <div id="admin-content" class="clearfix">    
             <!--control-bar start-->
             <div class="control-bar clearfix">
-              <div class="title pull-left">用户组</div>
-              <div class="tips">在此页面下管理用户组信息，如用户组的添加、修改、删除等。</div>
+              <div class="title pull-left">班级管理</div>
+              <div class="tips">在此页面下管理班级信息，如班级的添加、修改、删除等。</div>
               <div class="operate-item pull-left">
-                <a href="#add-user-group" class="btn btn-primary" data-toggle="modal" role="button" action-type="clearInput">新建班级</a>
+                <a href="#add-user-group" class="btn btn-primary" data-toggle="modal" role="button" action-type="clearInput">创建班级</a>
                 <a href="#" class="btn btn-white s-h" action-type="delClazz"><i class="icon-trash"></i> 删除</a>
               </div>
-              <!--<div class="page pull-right clearfix">
-                <ul class="page-index nav nav-pills pull-left">
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第1/3页 <b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#">最新</a></li>
-                      <li><a href="#">最旧</a></li>
-                    </ul>
-                  </li>              
-                </ul>
-                <div class="pagination pull-right">
-                  <ul>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-left"></i></a></li>
-                    <li><a href="#" rel="tooltip" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-right"></i></a></li>
-                  </ul>
-                </div>              
-              </div>-->
+
               <ul class="status-filter nav nav-pills pull-right">
                 <li class="classsel active" id="-1" action-type="selectGroup" data-id="-1"><a href="#">全部($sum)</a></li>
 				#foreach($group in $stuGroupList)
@@ -60,17 +44,15 @@
                 <thead>
                   <tr>
                     <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-                    <th class="id">编号</th>
-                    <th class="group-name">班级名称</th>
-                    <th class="group-type">班级类型</th>
+                    <th class="name">班级名称</th>
+                    <th class="category">班级类型</th>
                   </tr>
                 </thead>
                 <tbody>
 				  #foreach($clazz in $allShowClazzList)
                   <tr>
 					<td><input class="chk" type="checkbox" name="chk-list" value="$!clazz.classid"></td>
-                    <td>$!clazz.classid<a class="btn btn-white btn-mini" action-type="beforeModify" data-id="$!clazz.classid" data-name="$!clazz.classname" data-typeid="$!clazz.classtype" data-toggle="modal" href="#modify-user-group" role="button">修改</a></td>
-                    <td>$!clazz.classname</td>
+                    <td>$!clazz.classname<a class="btn btn-white btn-mini" action-type="beforeModify" data-id="$!clazz.classid" data-name="$!clazz.classname" data-typeid="$!clazz.classtype" data-toggle="modal" href="#modify-user-group" role="button">修改</a></td>
 					<td>$!clazz.typeName</td>
 				  </tr>
 				  #end
@@ -91,10 +73,10 @@
 <div id="add-user-group" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-    <h3 id="myModalLabel">新建用户组</h3>
+    <h3 id="myModalLabel">创建班级</h3>
   </div>
   <div class="modal-body">
-    <p>根据用户组类型新建用户组。</p>
+    <p>创建班级信息。</p>
     <form class="form-horizontal" role="form">
       <div class="form-group">
         <label for="inputUserGroupName" class="col-xs-3 control-label">班级名称</label>
@@ -122,10 +104,10 @@
 <div id="modify-user-group" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
-    <h3 id="myModalLabel">修改用户组</h3>
+    <h3 id="myModalLabel">修改班级</h3>
   </div>
   <div class="modal-body">
-    <p>修改用户组名称或其对应类别。</p>
+    <p>修改班级信息。</p>
     <form class="form-horizontal" role="form">
       <div class="form-group">
         <label for="modifyUserGroupName" class="col-xs-3 control-label">班级名称</label>

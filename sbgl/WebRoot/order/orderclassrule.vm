@@ -2,24 +2,20 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 器材管理</title>
+<title>课程预约规则 - 北京电影学院摄影系</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+#parse("include/includePageCompatibility.vm")
+
 #set($total = $!page.totalpage )
 #if($total == 0)
 	#set($total=1)
 #end
-<!--[if lt IE 9]>
-  <script src="../js/html5shiv.js"></script>
-  <script src="../js/respond.min.js"></script>
-<![endif]-->
-<!--[if IE 7]>
-<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
-<![endif]-->
+
 <script>
 	var cid="$!courseId";
 	var pno="$!page.pageNo";
@@ -44,7 +40,7 @@
               <div class="title pull-left">课程预约规则</div>
 			  <div class="tips">在此页面下管理课程预约规则，如规则的添加、修改、删除及维护等。</div>
               <div class="filter category-filter">
-                <select id="select-categories" style="width:130px" class="select2">
+                <select id="select-categories" style="width:130px" class="select2 select-white">
                   <option value="0" data-foo="fa" data-type="classrule" data-id="0" >全部课程</option>
 				  #foreach($row in $!courseFullList)	
                   <option value="$row.courseid" data-type="classrule" data-id="$!row.courseid" data-foo="fa">$row.coursename</option>
@@ -54,6 +50,7 @@
               
               <div class="operate-item pull-left">
                 <a href="#createEquipRule" class="btn btn-primary"  data-type="equipclassrule" data-toggle="modal" role="button">创建规则</a>
+				<a href="#" class="btn btn-white s-h" action-type=""><i class="icon-trash"></i> 删除</a>
               </div>
 
               <div class="page pull-right clearfix">
@@ -138,14 +135,8 @@
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa2.js"></script>
-<!--[if lt IE 10]>
-  <script src="../js/jquery.placeholder.js"></script>
-  <script>
-  $('input, textarea').placeholder();
-  </script>
-<![endif]-->
+<script src="${jsDomain}/jquery.noty.js"></script>
 
 <script>	
 	
@@ -163,12 +154,12 @@
 	$('body').on('click', ('#createEquipRule #submit'), function () {
 		var courseId = $('#inputCourseName').select2('val');
 		if (courseId == ''||courseId == null) {	
-			alert("课程不能为空!");
+			var n = noty({text: '课程不能为空!', timeout: 2000, type: 'error'});
 			return;
 		}
 		var ruleName = $('#inputRuleName').val();
-		if (ruleName == ''||ruleName == null) {	
-			alert("规则名称不能为空!"); 
+		if (ruleName == ''||ruleName == null) {	 
+			var n = noty({text: '规则名称不能为空!', timeout: 2000, type: 'error'});
 			return;
 		}
 		//alert(courseId + ',' + ruleName);
@@ -180,12 +171,12 @@
 				var equtype = myData.modeltype;
 				var equnum = $("#equ"+equid).val();
 				if(isNaN($("#equ"+equid).val())){
-					alert("请填入数字！");
+					var n = noty({text: '请填入数字！', timeout: 2000, type: 'error'});
 					ids="";
 					return;
 				}
 				if(equnum==""){
-					alert("设备数量不能为空");
+					var n = noty({text: '设备数量不能为空!', timeout: 2000, type: 'error'});
 					ids="";
 					return;
 				}
@@ -206,8 +197,9 @@
 			success: function(data){
 				//刷新数据
 			   if(data.tag=='1'){
-			   		alert("创建规则成功！");
+					var n = noty({text: '课程预约规则创建成功！', timeout: 2000, type: 'success'});
 					var courseid = $("#select-categories").val();	
+					$('.modal').modal('toggle');
             		$.ajax({
             			url: "orderclassrule2.do",
             			type: 'POST',
@@ -219,7 +211,7 @@
             			}	  
             		});
 			   }else{
-			   		alert(data.message);
+					var n = noty({text: data.message, timeout: 2000, type: 'error'});
 			   }
 			}	  
 		});
@@ -242,8 +234,8 @@
 			dataType: 'html',
 			success: function(data){
 				//刷新数据
-				alert("删除成功！");
-			   $("#admin-wrap").html(data);
+				var n = noty({text: '删除规则成功！', timeout: 2000, type: 'success'});
+			    $("#admin-wrap").html(data);
 			}
 		});
 	});

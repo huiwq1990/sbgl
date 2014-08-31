@@ -90,7 +90,10 @@
 				
 					#set($tableindex = $tempweektableindex*21 + $tempperiod*7 + $tempday)
 					<!--需要拼接td，使其根据用户权限显示最大可借数量-->
-					<td id="td${tempmodel.computermodeltype}_${tableindex}"	data-id="td${tempmodel.computermodeltype}_${tableindex}" class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-periodname="$tempBorrowperiod.peroidname" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name"  data-pcpicpath = "$tempmodel.picpath" 
+						##如果可借数量不为0，设置<td 需要补全
+						#if($availnum!=0)
+						<td id="td${tempmodel.computermodeltype}_${tableindex}"	data-id="td${tempmodel.computermodeltype}_${tableindex}" class="bookable" data-index="$tableindex" data-pcid="$tempmodel.computermodeltype" data-date="$trueDateList.get($tempday)" data-periodname="$tempBorrowperiod.peroidname" data-slot="$tempBorrowperiod.periodnum" data-pcname = "$tempmodel.name"  data-pcpicpath="$tempmodel.picpath" 
+						#end
 						#if($user.privilege == 1 && $availnum !=0)
 							data-max-num="$toalnum"> 
 							$toalnum($availnum)<br/><small>${textmap.computerindividualorderindex_orderable}</small>
@@ -98,7 +101,7 @@
 								data-max-num="$availnum"> 
 								$availnum<br/><small>${textmap.computerindividualorderindex_orderable}</small>
 						#else
-							>
+							<td>
 						#end <!--end if user.privilege-->
 					</td><!--end td-->
 				       

@@ -64,14 +64,14 @@
         <property name="comid" type="java.lang.Integer">
             <column name="comid" />
         </property>
-        <property name="storenumber" type="java.lang.Integer">
-            <column name="storenumber" />
+        <property name="storenumber" type="java.lang.String">
+            <column name="storenumber" length="50" />
         </property>
         <property name="equipserial" type="java.lang.String">
             <column name="equipserial" length="50" />
         </property>
-        <property name="assetnumber" type="java.lang.Integer">
-            <column name="assetnumber" />
+        <property name="assetnumber" type="java.lang.String">
+            <column name="assetnumber" length="50" />
         </property>
         <property name="classificationid" type="java.lang.Integer">
             <column name="classificationid" />

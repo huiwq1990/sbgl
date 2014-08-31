@@ -20,18 +20,10 @@ public List<Computer> selectComputerByCondition(String condition);
 			 public List<ComputerFull>  selectComputerFullByConditionAndPage(String conditionSql,final Page page);
 	
 	public ComputerFull selectComputerFullById(Integer computerId);
-		
-	public List<ComputerFull> selectComputerFullAll();
+
 		
 //  分页查询 实体full
 	public List<ComputerFull> selectComputerFullByPage(Page page);
-
-
-
-	//根据关联查询实体 
-	public List<Computer> selectComputerByComputermodelId(Integer computermodelid );
-
-	public List<ComputerFull> selectComputerFullByComputermodelId(Integer computermodelid );
 
 	List<Computer> selByModeltype(List<Integer> modeltypeList, int language);
 
@@ -43,6 +35,8 @@ public List<Computer> selectComputerByCondition(String condition);
 	List<ComputerFull> selFullByModeltype(int modeltype, int language);
 
 	int countRow(String sql);
+
+	int countFullRow(String sql);
 
 
 }

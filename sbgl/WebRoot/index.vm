@@ -105,11 +105,11 @@
 							  #elseif($!row.status==4)
 								$!{textmap.orderstatus_passed_equipment}
 							  #elseif($!row.status==5)
-								$!{textmap.orderstatus_return_within_time_detail_equipment}
+								$!{textmap.orderstatus_return_within_time_equipment}
 							  #elseif($!row.status==6)
-								$!{textmap.orderstatus_has_extended_detail_equipment}
+								$!{textmap.orderstatus_has_extended_equipment}
 							  #elseif($!row.status==7)
-								$!{textmap.orderstatus_part_damaged_detail_equipment}
+								$!{textmap.orderstatus_part_damaged_equipment}
 							  #elseif($!row.status==8)
 								$!{textmap.orderstatus_completed}
 							  #elseif($!row.status==9)

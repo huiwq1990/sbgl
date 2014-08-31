@@ -27,7 +27,7 @@
             <!--control-bar start-->
             <div class="control-bar clearfix">
               <div class="title pull-left">添加用户</div>
-              <div class="tips">在此页面下添加新的用户。</div>
+              <div class="tips">在此页面下添加新的用户，用户的邮箱、联系、头像信息可选填。</div>
             </div><!--control-bar end-->
             <div class="panel panel-default">
               <div class="panel-body">
@@ -45,12 +45,14 @@
                     </div>
                   </div>
 				  <div class="form-group">
-                    <label for="inputStuSex" class="col-lg-2 control-label">性别</label>
+                    <label for="inputGender" class="col-lg-2 control-label">性别</label>
                     <div class="col-lg-4">
-                      <select class="select2 form-control" id="inputStuSex">
-            			<option value="0">男</option>
-            			<option value="1">女</option>
-            		  </select>
+					  <label class="radio-inline">
+                        <input type="radio" name="inputGender" id="gender-male" value="0" checked>男
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="inputGender" id="gender-female" value="1">女
+                      </label>
                     </div>
                   </div>
 				  <div class="form-group">
@@ -68,7 +70,7 @@
                   <div class="form-group">
                     <label for="inputUserGroup" class="col-lg-2 control-label">用户组</label>
                     <div class="col-lg-4">
-                      <select class="select2 form-control" id="inputUserGroup">
+                      <select class="select2 select-white form-control" id="inputUserGroup">
 						<optgroup label="学生">
 						#foreach($item in $allGroupList)
 						  #if($!item.type == 1)
@@ -93,19 +95,23 @@
                       </select>
                     </div>
                   </div>
+				<!--  
 				  <div class="form-group">
-                    <label for="modifyEquipCategory" class="col-lg-2 control-label">可否借阅</label>
+                    <label for="inputIsCould" class="col-lg-2 control-label">可否预约</label>
                     <div class="col-lg-4">
-                      <select class="select2 form-control" id="inputStuCould">
-            			<option value="0">是</option>
-            			<option value="1">否</option>
-            		  </select>
+					  <label class="radio-inline">
+                        <input type="radio" name="inputIsCould" id="isCould-yes" value="0" checked>是
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="inputIsCould" id="isCould-no" value="1">否
+                      </label>
                     </div>
                   </div>
+				-->
                   <div class="form-group">
                     <label for="inputStuClass" class="col-lg-2 control-label">班级</label>
                     <div class="col-lg-4">
-                      <select class="select2 form-control" id="inputStuClass">
+                      <select class="select2 select-white form-control" id="inputStuClass">
 						#foreach($clazz in $clazzList)
 							<option value=$!clazz.classid>$!clazz.classname</option>
 						#end
@@ -113,9 +119,9 @@
                     </div>
                   </div>
 				  <div class="form-group">
-                    <label for="modifyEquipCategory" class="col-lg-2 control-label">电话</label>
+                    <label for="inputTel" class="col-lg-2 control-label">电话</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" id="inputTel" placeholder="联系电话或手机">
+                      <input type="text" class="form-control" id="inputTel" placeholder="联系电话(手机)">
                     </div>
                   </div>
 				  <div class="form-group">
@@ -158,7 +164,6 @@
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 <script src="${jsDomain}/fileUpload/vendor/jquery.ui.widget.js"></script>
@@ -191,15 +196,15 @@
 		var _this = $(this);
 		var userCode = $("#inputStuNum").val();
 		var userName = $("#inputTrueName").val();
-		var userSex = $("#inputStuSex").val();
+		var inputGender = $('input[name="inputGender"]:checked').val();
 		var userPass = $("#inputPassword1").val();
 		var repeatPass = $("#inputPassword2").val();
 		var userGroup = $("#inputUserGroup").val();
 		var userClazz = $("#inputStuClass").val();
 		var userTel = $("#inputTel").val();
 		var userMail = $("#inputMail").val();
-		var userCould = $("#inputStuCould").val();
-		
+		//var userCould = $('input[name="inputIsCould"]:checked').val();
+		var userCould = 1;
 		
 		if(userCode == "") {
 			alert("编号不能为空!");
@@ -241,7 +246,7 @@
 			postData = {
     			"student.studentid": userCode,
     			"student.name": userName,
-    			"student.gender": userSex,
+    			"student.gender": inputGender,
     			"student.telephone": userTel,
     			"student.email": userMail,
     			"student.photo": savedFileName,
@@ -256,7 +261,7 @@
     		postData = {
     			"teacher.teacherid": userCode,
     			"teacher.name": userName,
-    			"teacher.gender": userSex,
+    			"teacher.gender": inputGender,
     			"teacher.telephone": userTel,
     			"teacher.email": userMail,
     			"teacher.photo": savedFileName,
@@ -269,7 +274,7 @@
 			postData = {
     			"worker.workid": userCode,
     			"worker.name": userName,
-    			"worker.gender": userSex,
+    			"worker.gender": inputGender,
     			"worker.telephone": userTel,
     			"worker.email": userMail,
     			"worker.photo": savedFileName,
@@ -296,7 +301,7 @@
 					
 					$("#inputStuNum").val("");
                     $("#inputTrueName").val("");
-                    $("#inputStuSex").select2("val", 0);
+                    $("#inputGender").select2("val", 0);
                     $("#inputPassword1").val("");
                     $("#inputPassword2").val("");
                     //$("#inputUserGroup").select2("val", 0);
@@ -343,7 +348,6 @@
 	//监听分类下拉菜单
 	$("body").on("change", "#inputUserGroup", function() {
 		var gId = $("#inputUserGroup").val();
-		console.log(gId);
 		var postData = {
     		"groupId": gId
     	};
@@ -357,27 +361,27 @@
 				//alert(data.groupType);
 				if(data.groupType == "1") {
 					$("#inputStuClass").attr("disabled", false);
-					$("#inputStuCould").attr("disabled", false);
-					$(".form-group").eq(7).show();
+					//$("#inputStuCould").attr("disabled", false);
+					//$(".form-group").eq(7).show();
 					isStu = true;
         			isTea = false;
         			isWkr = false;
 				} else if(data.groupType == "2") {
 					$("#inputStuClass").attr("disabled", true);
-					$("#inputStuCould").attr("disabled", true);
-					$(".form-group").eq(7).hide();
+					//$("#inputStuCould").attr("disabled", true);
+					//$(".form-group").eq(7).hide();
 					isStu = false;
         			isTea = true;
         			isWkr = false;
 				} else if(data.groupType == "4") {
 					$("#inputStuClass").attr("disabled", true);
-					$("#inputStuCould").attr("disabled", true);
-					$(".form-group").eq(7).show();
+					//$("#inputStuCould").attr("disabled", true);
+					//$(".form-group").eq(7).show();
 					isStu = false;
         			isTea = false;
         			isWkr = true;
 				}
-				console.log(isStu + isTea + isWkr);
+				//console.log(isStu + isTea + isWkr);
 			},
 			error: function(data,textStatus,jq) {
 				alert("刷新界面失败!");
@@ -386,6 +390,5 @@
 	});
 </script>
 
-</script>
 </body>
 </html>

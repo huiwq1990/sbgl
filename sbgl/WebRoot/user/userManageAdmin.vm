@@ -41,30 +41,6 @@
                 <a href="${webbaseurl}/userManageAdminAdd.do" class="btn btn-primary">添加管理员</a>
                 <a href="#" class="btn btn-white s-h" action-type="delUser"><i class="icon-trash"></i> 删除</a>
               </div>
-
-              <!--<div class="page pull-right clearfix">
-                <ul class="page-index nav nav-pills pull-left">
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">第<span id="cp">$!curPage</span>/<span id="tp">$!totalPage</span>页 <b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu">
-                      <li><a href="#" action-type="goFirst">最新</a></li>
-                      <li><a href="#" action-type="goLast">最旧</a></li>
-                    </ul>
-                  </li>              
-                </ul>
-                <div class="pagination pull-right">
-                  <ul>
-                    <li><a href="#" rel="tooltip" action-type="backPage" data-placement="bottom" data-original-title="较旧"><i class="icon-chevron-left"></i></a></li>
-                    <li><a href="#" rel="tooltip" action-type="nextPage" data-placement="bottom" data-original-title="较新"><i class="icon-chevron-right"></i></a></li>
-                  </ul>
-                </div>              
-              </div>
-              <ul class="status-filter nav nav-pills pull-right">
-                <li class="active" action-type="active" id="0"><a href="#">全部(<span id="totalSum">$!sum</span>)</a></li>
-                <li action-type="active" id="2"><a href="#">学生(<span id="sSum">$!sum1</span>)</a></li>
-                <li action-type="active" id="6"><a href="#">教师(<span id="tSum">$!sum2</span>)</a></li>
-                <li action-type="active" id="-1"><a href="#">其他(<span id="wSum">$!sum3</span>)</a></li>
-              </ul>-->
             </div><!--control-bar end-->
             <div class="panel panel-default">              
               <table class="table table-hover">
@@ -127,12 +103,12 @@
     <h3 id="myModalLabel">修改</h3>
   </div>
   <div class="modal-body">
-    <p>这里是修改管理员关信息。</p>
+    <p>修改管理员关信息。</p>
     <form class="form-horizontal" role="form">
 	  <div class="form-group">
         <label for="inputStuClass" class="col-xs-3 control-label">管理组</label>
         <div class="col-xs-7">
-          <select class="select2 form-control" id="inputPrivilege">
+          <select class="select2 select-white form-control" id="inputPrivilege">
 			<option value=0>无</option>
 			<option value=1>系统管理员</option>
 			<option value=2>系秘</option>

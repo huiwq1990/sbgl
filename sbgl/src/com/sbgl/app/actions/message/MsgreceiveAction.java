@@ -48,6 +48,9 @@ public class MsgreceiveAction extends BaseAction implements ModelDriven<Msgrecei
 	private String logprefix = "exec action method:";
 	
 	private String msgreceiveIdsForDel;
+
+
+	private ReturnJson returnJson;
 	
 //  manage Msgreceive
  	public String manageMsgreceive(){

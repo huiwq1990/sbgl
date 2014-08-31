@@ -103,13 +103,14 @@ public class LoginAction extends ActionSupport {
 				loginUser2 = loginService.findUser(loginuser);
 			}
 			
-			if(loginUser2 != null){
+			if(loginUser2 != null) {
 				CookiesUtil.addLoginCookie("uid", String.valueOf(loginUser2.getId()));
 				CookiesUtil.addLoginCookie("userpass", loginUser2.getPassword());
 				CookiesUtil.addLoginCookie(CommonConfig.cookieuserid, String.valueOf(loginUser2.getUserid()));
 				
 				Boolean isAdmin = managerService.isExistManagerCode( loginUser2.getUserid() );
 				Userlogininfo loginInfo = loginInfoService.getLoinInfoByUserId( loginUser2.getId() );
+				
 				if(isAdmin) {
 					loginType = "admin";
 					loginUser2.setPrivilege("1");
@@ -124,11 +125,14 @@ public class LoginAction extends ActionSupport {
 					loginInfo.setIsfirstlogin("true");
 					loginInfo.setLastlogintime( new Date() );
 					loginInfo.setLogincount(1);
-					loginInfo.setRemark(null);
 					loginInfo.setPagelanguage("0");
 					loginInfoService.addUserLoinInfo(loginInfo);
 				}
-				
+				if( "1".equals( loginUser2.getRoletype() ) ) {	//如果是学生的话，在remark中记录班级信息
+					Student stu = studentService.getStudentById( loginUser2.getId() );
+					Clazz clazz = clazzService.getClazzById( stu.getClassid() );
+					session.setAttribute( "stuClass",  clazz.getClassname() );
+				}
 				if( "true".equals( loginInfo.getIsfirstlogin() ) ) {
 					loginType = "firstLogin";
 					session.setAttribute("isFirst", true);

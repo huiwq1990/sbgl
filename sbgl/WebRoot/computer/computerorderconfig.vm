@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>配置机房预约 - 北京电影学院摄影系</title>
+<title>预约设置 - 北京电影学院摄影系</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -32,7 +32,7 @@
       <div id="admin-wrap">
         <div id="admin-content" class="clearfix">            
             <div class="control-bar clearfix"><!--control-bar start-->
-              <div class="title pull-left">预约设置 $!actionMsg</div>
+              <div class="title pull-left">预约设置</div>
 			  <div class="tips">在此页面下管理课程预约规则，如规则的添加、修改、删除及维护等。</div>
             </div><!--control-bar end-->
             <div class="panel panel-default">
@@ -91,7 +91,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="inputMaxDay" class="col-lg-2 control-label">最大预约天数</label>
+                    <label for="maxorderday" class="col-lg-2 control-label">最大预约天数</label>
                     <div class="col-lg-4">
                       <input type="text" class="form-control" name = "maxorderday" id="maxorderday" value="$!computerorderconfig.maxorderday">
                     </div>

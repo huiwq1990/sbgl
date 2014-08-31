@@ -22,25 +22,12 @@ public interface ComputerService{
 //	根据id查询实体类		
 	public Computer selectComputerById(Integer computerId);
 
-//  查询全部实体
-	public List<Computer> selectComputerAll();
-	
-//	根据id查询full类
-	public ComputerFull selectComputerFullById(Integer computerId);
 
-//  查询全部full
-	public List<ComputerFull> selectComputerFullAll();
-		
-//  查询数量
-	public int countComputerRow();
 //  分页查询
 	public List<Computer> selectComputerByPage(Page page);
 	public List<ComputerFull> selectComputerFullByPage(Page page);
-	
-//根据关联查询实体	
-	public List<Computer> selectComputerByComputermodelId(Integer computermodelid );
-//根据关联查询实体full	
-	public List<ComputerFull> selectComputerFullByComputermodelId(Integer computermodelid );
+
+
 
 	void updateComputermodelTo(int originalComputermodelid,
 			int toComputermodelid);
@@ -88,6 +75,8 @@ public interface ComputerService{
 			int computerstatusid, Page page, int languge,
 			List<ComputerFull> computerFullListCh,
 			List<ComputerFull> computerFullListEn);
+
+	List<Computer> selectComputerByComputermodelId(Integer computermodelid);
 
 
 	

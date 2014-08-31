@@ -157,6 +157,7 @@ public class ComputerhomeworkDaoImpl extends HibernateDaoSupport implements Comp
         }
 	}
 
+
 //  根据实体id查询实体full	
 	@Override
 	public ComputerhomeworkFull selectComputerhomeworkFullById(Integer computerhomeworkId) {

@@ -84,8 +84,8 @@
                 </div>
                 <div class="step-pane" id="step3">
                   <div class="tips">
-                    <p>填写您的联系方式。该联系方式将作为您租赁器材等的联系凭证，务必真实并能联系到您！<br>
-                    Fill in your contact information. The contact will serve as a required information of your lease equipment, must be true and can contact you!</p>
+                    <p>填写您的联系方式。该联系方式将作为您租赁器材等的联系凭证，务必真实有效！<br>
+                    Fill in your contact information. The contact will serve as a required information of your lease equipment, must be real and effective!</p>
                   </div>
                   <div class="form-group">
                     <label for="inputPhoneNumber" class="col-sm-2 control-label">联系电话（手机）</label>
@@ -145,7 +145,6 @@
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
-<script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 
 <script>

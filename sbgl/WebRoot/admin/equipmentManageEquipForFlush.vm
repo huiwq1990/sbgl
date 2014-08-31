@@ -1,8 +1,7 @@
-<label for="inputEquipModelId" class="col-lg-2 control-label">所属设备型号</label>
+<label for="inputEquipModelId" class="col-lg-2 control-label">名称(型号)</label>
 <div class="col-lg-4">
-  <select class="select2 select-white form-control" id="inputEquipModelId">
-	<optgroup label="所有型号">
-	<option value="-1">请选择型号</option>
+  <select class="select2 select-white form-control" id="inputEquipModelId" data-placeholder="请选择该器材的型号">
+	<option></option>
 	#foreach($equip in $equipCourse)
 		#if($!equip.showClass == '1')
 			<optgroup label="$!equip.cName">

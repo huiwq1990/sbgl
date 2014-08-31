@@ -39,6 +39,10 @@ public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
 		return getHibernateTemplate().find(this.basicComputerSql+" "+sql).size();
 	}
 	
+	@Override
+	public int countFullRow(String sql){
+		return getHibernateTemplate().find(this.basicComputerFullSql+" "+sql).size();
+	}
 	
 	@Override
 	public List<Computer> selByModeltype(int modeltype, int language) {
@@ -212,26 +216,7 @@ public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
 		return null;
 	}
 	
-//	查询全部实体full
-	@Override
-	public List<ComputerFull> selectComputerFullAll() {
-		final String  sql = basicComputerFullSql;
-		
-		List<ComputerFull> computerFullList = getHibernateTemplate()
-				.executeFind(new HibernateCallback() {
-					public Object doInHibernate(Session session)
-							throws HibernateException {
-						Query query = session.createSQLQuery(sql);
-						query.setResultTransformer(new EscColumnToBean(
-								ComputerFull.class));
-						return query.list();
-					}
-				});
-		if (computerFullList != null && !computerFullList.isEmpty()) {			
-			return computerFullList;
-		}
-		return null;
-	}
+
 //  分页查询 实体full
 	public List<ComputerFull> selectComputerFullByPage(final Page page){
 		final String  sql = basicComputerFullSql;
@@ -253,20 +238,8 @@ public class ComputerDaoImpl extends HibernateDaoSupport implements ComputerDao{
 		}
 		return null;
 	}
-	
-//  根据关联查询实体full
 
-	//根据关联查询实体 
-	public List<Computer> selectComputerByComputermodelId(Integer computermodelid ){
-	
-		return null;
-	}
-  
 
-	public List<ComputerFull> selectComputerFullByComputermodelId(Integer computermodelid ){
 	
-		return null;
-	}
 
- 
 }

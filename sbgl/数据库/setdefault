@@ -1,1 +1,1 @@
-UPDATE computermodel SET picpath = 'default.jpg'  WHERE picpath is null
+UPDATE computermodel SET picpath = 'nopic.jpg'  WHERE picpath is null or picpath='default.jpg'

@@ -56,14 +56,14 @@
                 <thead>
                   <tr>
                     <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-                    <th class="id">资产编号</th>
-                    <th class="status">机身编号</th>
-                    <th class="id">型号</th>
-                    <th class="id">分类名称</th>
+					<th class="name">型号</th>
+					<th class="category">分类名称</th>
 					<th class="status">状态</th>
-                    <th class="id">使用/管理部门</th>
-                    <th class="status">管理人</th>
-                    <th class="id">存放地点</th>
+                    <th class="num">资产编号</th>
+                    <th class="num">机身编号</th>
+                    <th>使用/管理部门</th>
+                    <th>管理人</th>
+                    <th>存放地点</th>
                     <th class="remark">备注</th>
                   </tr>
                 </thead>
@@ -71,23 +71,25 @@
 				  #foreach($equipDetail in $equipDetailCourse)
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!equipDetail.id"></td>
-                    <td>$!equipDetail.assetNumber<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="alterDetailFillIn" data-id="$!equipDetail.id" data-code="$!equipDetail.code" data-mid="$!equipDetail.modelId" data-state="$!equipDetail.state" data-memo="$!equipDetail.memo" data-mDate="$!equipDetail.mDate" data-aDate="$!equipDetail.aDate" data-manufacturer="$!equipDetail.manufacturer" data-supplyer="$!equipDetail.supplyer" data-worth="$!equipDetail.worth" data-useManageDept="$!equipDetail.useManageDept" data-manager="$!equipDetail.manager" data-storagePlace="$!equipDetail.storagePlace" data-storagePosition="$!equipDetail.storagePosition" data-storenumber="$!equipDetail.storenumber" data-equipserial="$!equipDetail.equipserial" data-assetNumber="$!equipDetail.assetNumber" data-classId="$!equipDetail.classId" data-mid="$!equipDetail.modelId" data-state="$!equipDetail.state" data-memo="$!equipDetail.memo" data-mDate="$!equipDetail.mDate" data-aDate="$!equipDetail.aDate" data-manufacturer="$!equipDetail.manufacturer" data-supplyer="$!equipDetail.supplyer" data-worth="$!equipDetail.worth" data-useManageDept="$!equipDetail.useManageDept" data-manager="$!equipDetail.manager" data-storagePlace="$!equipDetail.storagePlace" data-storagePosition="$!equipDetail.storagePosition" data-storenumber="$!equipDetail.storenumber" data-equipserial="$!equipDetail.equipserial" data-assetNumber="$!equipDetail.assetNumber" data-classId="$!equipDetail.classId">修改</a></td>
-                    <td>$!equipDetail.equipserial</td>
-					<td>$!equipDetail.modelName</td>
-					<td>$!equipDetail.className</td>
+					<td>$!equipDetail.modelName <a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button" action-type="alterDetailFillIn" data-id="$!equipDetail.id" data-code="$!equipDetail.code" data-mid="$!equipDetail.modelId" data-state="$!equipDetail.state" data-memo="$!equipDetail.memo" data-mDate="$!equipDetail.mDate" data-aDate="$!equipDetail.aDate" data-manufacturer="$!equipDetail.manufacturer" data-supplyer="$!equipDetail.supplyer" data-worth="$!equipDetail.worth" data-useManageDept="$!equipDetail.useManageDept" data-manager="$!equipDetail.manager" data-storagePlace="$!equipDetail.storagePlace" data-storagePosition="$!equipDetail.storagePosition" data-storenumber="$!equipDetail.storenumber" data-equipserial="$!equipDetail.equipserial" data-assetNumber="$!equipDetail.assetNumber" data-classId="$!equipDetail.classId">修改</a></td>
+                    <td>$!equipDetail.className</td>
+					<td>
 					#if($!equipDetail.state == 0)
-						<td>正常</td>
+						正常
 					#elseif($!equipDetail.state == 1)
-						<td>借出</td>
+						借出
 					#elseif($!equipDetail.state == 2)
-						<td>维护</td>
+						维护
 					#elseif($!equipDetail.state == 3)
-						<td>维修</td>
+						维修
 					#elseif($!equipDetail.state == 4)
-						<td>遗失</td>
+						遗失
 					#elseif($!equipDetail.state == 5)
-						<td>回收站</td>
+						回收站
 					#end
+					</td>
+					<td>$!equipDetail.assetNumber</td>
+                    <td>$!equipDetail.equipserial</td>
                     <td>$!equipDetail.useManageDept</td>
                     <td>$!equipDetail.manager</td>
                     <td>$!equipDetail.storagePlace</td>

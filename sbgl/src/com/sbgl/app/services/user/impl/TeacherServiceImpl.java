@@ -69,6 +69,7 @@ public class TeacherServiceImpl implements TeacherService {
 		storeTeacher.setTelephone( teacher.getTelephone() );
 		storeTeacher.setEmail( teacher.getEmail() );
 		storeTeacher.setModifydate( new Date() );
+		storeTeacher.setCouldborrow( teacher.getCouldborrow() );
 		
 		try {
 			baseDao.updateEntity( storeTeacher );

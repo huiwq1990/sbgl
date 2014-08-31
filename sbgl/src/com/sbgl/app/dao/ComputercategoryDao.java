@@ -26,16 +26,11 @@ public List<Computercategory> selectComputercategoryByCondition(String condition
 //  分页查询 实体full
 	public List<ComputercategoryFull> selectComputercategoryFullByPage(Page page);
 
-
-
-	//根据关联查询实体 
-	public List<Computercategory> selectComputercategoryByComputercategoryId(Integer parentcomputercategoryid );
-
-	public List<ComputercategoryFull> selectComputercategoryFullByComputercategoryId(Integer parentcomputercategoryid );
-
-
-
 	int countRow(String condition);
+
+	List<Computercategory> sel(Integer language);
+
+	List<ComputercategoryFull> selFull(Integer language);
 
  
 }

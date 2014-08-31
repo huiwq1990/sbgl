@@ -39,12 +39,7 @@ public interface ComputercategoryService{
 	public List<Computercategory> selectComputercategoryByPage(Page page);
 	public List<ComputercategoryFull> selectComputercategoryFullByPage(Page page);
 	
-//根据关联查询实体	
-	public List<Computercategory> selectComputercategoryByComputercategoryId(Integer parentcomputercategoryid );
-//根据关联查询实体full	
-	public List<ComputercategoryFull> selectComputercategoryFullByComputercategoryId(Integer parentcomputercategoryid );
 
-		
 
 ////查询所有的父级分类
 //public List<Computercategory> selectParentComputercategory() ;
@@ -91,6 +86,9 @@ List<ComputercategoryFull> selFullByPage(Page page, Integer language);
 List<Computercategory> sel(Integer language);
 
 List<ComputercategoryFull> selFull(Integer language);
+
+List<Computercategory> selectComputercategoryByComputercategoryId(
+		Integer parentcomputercategoryid);
 
 
 

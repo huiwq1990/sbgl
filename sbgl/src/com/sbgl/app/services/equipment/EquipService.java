@@ -63,7 +63,7 @@ public interface EquipService {
 	//根据条件进行分页查询
 	public QueryResult getEquipDetailByPageWithOptions(List<HQLOption> hqlOptionList, Page page); 
 	//查询是否该器材已经存在
-	public boolean isExistEquipDetial(int assetNumber);
+	public boolean isExistEquipDetial(String assetNumber);
 	//获取联合主键
 	public Integer getEquipDetailComId();
 	
@@ -97,8 +97,8 @@ public interface EquipService {
 	public Boolean isExistThisClassification(String classificationName);
 	//获取联合主键
 	public Integer getClassificationComId();
-	//查询中文分类根据联合主键
-	public Equipmentclassification getEquipmentclassificationByComid(Integer comid); 
+	//查询分类根据联合主键
+	public List<Equipmentclassification> getEquipmentclassificationByComid(Integer comid); 
 	
 	//添加品类信息
 	public Integer addCategory(Category category);
