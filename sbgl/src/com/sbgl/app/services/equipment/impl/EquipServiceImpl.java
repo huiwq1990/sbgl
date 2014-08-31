@@ -472,7 +472,7 @@ public class EquipServiceImpl implements EquipService {
 				ee = equipList.get(1);
 				if( e.getEquipmentnum() != null ) {  //总的器材数量
 					e.setEquipmentnum( e.getEquipmentnum() - 1 );
-					e.setEquipmentnum( e.getEquipmentnum() - 1 );
+					ee.setEquipmentnum( ee.getEquipmentnum() - 1 );
 				}
 				
 				if( "0".equals( d.getStatus() ) || "1".equals( d.getStatus() ) ) {  //细分器材状态数量
