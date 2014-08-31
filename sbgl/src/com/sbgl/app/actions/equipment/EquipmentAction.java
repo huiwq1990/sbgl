@@ -630,6 +630,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				emc.setBranId( String.valueOf( equipment.getBrandid() ) );
 				emc.setRentId( String.valueOf( equipment.getRentunit() ) );
 				emc.setRentValue( String.valueOf( equipment.getRentvalue() ) );
+				emc.setTotalNum( equipment.getEquipmentnum() == null ? "0" : String.valueOf(equipment.getEquipmentnum()) );
+				emc.setRentNum( equipment.getActivenum() == null ? "0" : String.valueOf(equipment.getActivenum()) );
 				
 				allModelCourse.add( emc );
 			}

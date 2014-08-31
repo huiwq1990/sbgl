@@ -16,6 +16,8 @@ public class EquipModelCourse {
 	private String comId;
 	private String rentId;
 	private String rentValue;
+	private String totalNum;
+	private String rentNum;
 	
 	public String getId() {
 		return id;
@@ -106,6 +108,18 @@ public class EquipModelCourse {
 	}
 	public void setcNameEN(String cNameEN) {
 		this.cNameEN = cNameEN;
+	}
+	public String getTotalNum() {
+		return totalNum;
+	}
+	public void setTotalNum(String totalNum) {
+		this.totalNum = totalNum;
+	}
+	public String getRentNum() {
+		return rentNum;
+	}
+	public void setRentNum(String rentNum) {
+		this.rentNum = rentNum;
 	}
 	
 }
