@@ -126,7 +126,7 @@
       </div>
       <div id="basic-equip-list">
         <div class="form-group" id="EquipIdGroup-1">
-          <label for="inputBasicEquipId-1" class="col-xs-3 control-label">添加相关器材</label>
+          <label for="inputBasicEquipId-1" class="col-xs-3 control-label">相关器材</label>
           <!-- 这里for中的-1可以指代基本器材的ID号，区分每行基本设备，for与下面input中id对应，同理下面的数量 -->
           <div class="col-xs-4">
             <select class="select2 select-white form-control inputBasicEquipId" name="inputBasicEquipId" id="inputBasicEquipId-1" data-placeholder="请选择相关器材">
@@ -294,7 +294,7 @@
 		$("#EquidGroupspan-"+num).addClass("icon-minus");
 		groupnum++;
 		var html = '<div class="form-group" id="EquipIdGroup-'+groupnum+'">' +
-          '<label for="inputBasicEquipId-1" class="col-xs-3 control-label"></label>' +
+          '<label for="inputBasicEquipId-'+groupnum+'" class="col-xs-3 control-label">相关器材</label>' +
           '<div class="col-xs-4">' +
             '<select class="select2 select-white form-control"  name="inputBasicEquipId" id="inputBasicEquipId-'+groupnum+'" data-placeholder="请选择相关器材">' +
 			  '<option></option>' +
