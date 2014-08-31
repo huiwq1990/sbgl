@@ -311,8 +311,8 @@
             '<select class="select2 select-white form-control"  name="inputBasicEquipId" id="inputBasicEquipId-'+groupnum+'" >' +
 			  #foreach($row2 in $classification1List)	
               '<optgroup label="$!row2.name">'+
-			  	#foreach($row3 in $classequipmap.get($!row2.classificationid))
-                '<option value="$!row3.equipmentid">$!row3.equipmentname</option>' +
+			  	#foreach($row3 in $classequipmap.get($!row2.comid))
+                '<option value="$!row3.comId">$!row3.equipmentname</option>' +
 				#end
               '</optgroup>' +
 			  #end

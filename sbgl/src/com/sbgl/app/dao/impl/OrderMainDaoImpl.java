@@ -590,7 +590,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	public List<EquipmentFull> findEquipmentByGroup(String lantype,
 			String search) {
 		// TODO Auto-generated method stub
-		String sql = " select a.comid as Equipmentid,a.Equipmentname,a.Brandid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,a.comid  ";
+		String sql = " select a.comid as Equipmentid,a.Equipmentname,a.Brandid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,a.comid,  ";
 	    sql+= "  from EquipmentGroup a   "
 			+ " where a.lanType = '"+lantype+"' and a.equipmentname like '%"+search+"%' ";
 		final String sql1 = sql;

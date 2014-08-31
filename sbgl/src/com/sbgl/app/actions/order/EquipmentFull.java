@@ -38,6 +38,7 @@ public class EquipmentFull extends DaoAbs {
 	private List<String> equipDetailidlist;
 	private Integer borrownumber;
 	private Integer num;
+	private String intoduce;
 	
 	
 	public Integer getActivenum() {
@@ -226,6 +227,12 @@ public class EquipmentFull extends DaoAbs {
 	}
 	public void setRentunit(Integer rentunit) {
 		this.rentunit = rentunit;
+	}
+	public String getIntoduce() {
+		return intoduce;
+	}
+	public void setIntoduce(String intoduce) {
+		this.intoduce = intoduce;
 	}
 	
 
