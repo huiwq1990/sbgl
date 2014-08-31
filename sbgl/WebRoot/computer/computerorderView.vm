@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>$!{textmap.order_detail_title}</title>
+<title>$!{textmap.ordcomputerorderview_title}</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -67,10 +67,10 @@
             						#elseif($!computerorderFull.computerorderordertype==1)  
             							<a class="btn btn-primary" action-type="" action-data="" href="${webbaseurl}\toComputerIndividualorder.${strutsaction}?computerorderid=$!computerorderFull.computerorderid&reorder=1">$!{textmap.computerorderview_indivorder_reject_tip}</a>
             						#else
-            							$!{textmap.computerorderstatus_audit_error}
-            							#end
+            							$!{textmap.computerorderview_goto_reorder}
             						#end
-                       </div>
+            		#end
+                 </div>
                 </div>
                 <div class="thumbnail">
 					 #parse("include/includeComputerorderIndividualInfo.vm")

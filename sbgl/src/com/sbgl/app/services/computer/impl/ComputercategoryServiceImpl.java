@@ -134,15 +134,13 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 	 */
 	@Override
 	public List<Computercategory> sel(Integer language) {
-		return computercategoryDao.selectComputercategoryByCondition("where a.languagetype="+language +" and a.status >= 0 ");
+		return computercategoryDao.sel(language);
 	}
 	
 	@Override
 	public List<ComputercategoryFull> selFull(Integer language) {
-		String sql =   "where a.languagetype="+language +
-//						" and b.languagetype="+language +
-						" and a.status >= 0 ";
-		return computercategoryDao.selectComputercategoryFullByCondition(sql);
+
+		return computercategoryDao.selFull(language);
 	}
 	
 	/**
@@ -236,11 +234,7 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
 		computercategoryList = baseDao.getEntityByProperty("Computercategory", "parentcomputercategoryid ", id);
 		return computercategoryList;
 	}
-	//根据parentcomputercategoryid 查询实体full
-	@Override
-	public List<ComputercategoryFull> selectComputercategoryFullByComputercategoryId(Integer parentcomputercategoryid ) {
-		return computercategoryDao.selectComputercategoryFullByComputercategoryId(parentcomputercategoryid );
-	}
+
 
 //	@Override
 //	public List<Computercategory> selectParentComputercategory() {
@@ -290,6 +284,8 @@ public class ComputercategoryServiceImpl implements ComputercategoryService{
         public List<ComputercategoryFull>  selectComputercategoryFullByConditionAndPage(String condition,final Page page) {
 			return computercategoryDao.selectComputercategoryFullByConditionAndPage(condition, page);
 		}
+
+
 	
 	
 }

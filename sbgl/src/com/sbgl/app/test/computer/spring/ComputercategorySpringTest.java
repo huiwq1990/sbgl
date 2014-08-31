@@ -301,16 +301,5 @@ public class ComputercategorySpringTest {
 		
 		
 		
-		public static void selectComputercategoryi18n(){
-			
-			ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
-			
-			ComputercategoryService computercategoryService = (ComputercategoryService)cxt.getBean("computercategoryService");
-//			Page page = new Page(1,3);
 
-			List<Computercategoryi18n> objList  =  computercategoryService.selectComputercategoryi18nByCondition("");
-			for(int i = 0; i < objList.size(); i++){
-				System.out.println("id="+objList.get(i).getNamech());
-			}
-		}
 }

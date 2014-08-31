@@ -205,10 +205,9 @@ public class OrderComputerAction  extends BaseAction {
 		if(selComputercategory ==0){
 			//设置默认选择的分类
 			selComputercategory = computercategoryList.get(0).getComputercategorytype();
-			computermodelList = computermodelService.selectComputermodelByComputercategoryId(selComputercategory, currentlanguagetype);			
-		}else{
-			computermodelList = computermodelService.selectComputermodelByComputercategoryId(selComputercategory, currentlanguagetype);
 		}
+		computermodelList = computermodelService.selByCategoryType(selComputercategory, currentlanguagetype);			
+		
 		
 //		设置可借出的pc model type, 由于需要查询模型对应的订单，
 //		如果没有模型，这直接返回界面

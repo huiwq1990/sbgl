@@ -367,16 +367,31 @@
 				if(returnJson.flag == 1){
 					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});		
 					refreshComputermodelTable();
-					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框					
+					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+					clearAddForm();
 				}else{
 					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});					
-					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+					//_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
 				}
+				
 			}//end success		  	  
 		});
 	})
 	//end add 分类	
 	
+	
+		//清空添加表单
+	function clearAddForm(){
+	
+		$('#inputModelName').val("");			
+		$('#inputDescribe').val("");
+		$('#inputModelNameEn').val("");
+		$('#inputDescribeEn').val("");
+		$('#inputHourrentprice').val("");
+		$("#inputModelPicSpan").val("");
+		$('#inputCategoryId').select2("val",0);
+	}
+	//end clearAddForm
 	
 	//选择修改按钮，填充修改弹出框
 	$("body").on("click", "a[action-type|=editComputermodelFillIn]", function() {
@@ -437,8 +452,8 @@
 					refreshComputermodelTable();
 					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框					
 				}else{
-					var n = noty({text: returnJson.reason, timeout: 2500, type: 'success'});					
-					_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
+					var n = noty({text: returnJson.reason, timeout: 2500, type: 'error'});					
+					//_this.parents('.modal').modal('toggle');		// 提交成功，关闭模态对话框		
 				}
 			}		  	  
 		});
@@ -628,6 +643,11 @@
         }
     });
 	
+	
+	
+	
+	
+
 	
 </script>
 </body>

@@ -100,9 +100,7 @@ public class ComputermodelAction extends BaseAction implements ModelDriven<Compu
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn, returnInfo);
 
 			return false;
-		}
-		
-		
+		}		
 		if(computermodel.getComputercategoryid()<=0){
 			this.returnInfo = "请选择模型分类";
 			log.info(returnInfo);
@@ -161,8 +159,8 @@ public class ComputermodelAction extends BaseAction implements ModelDriven<Compu
 			computermodel.setAvailableborrowcountnumber(0);
 			computermodel.setComputercount(0);
 			computermodel.setCreateuserid(uid);
-			if(computermodel.getPicpath()==null | computermodel.getPicpath().trim().equals(""))
-				computermodel.setPicpath("default.jpg");
+			if(computermodel.getPicpath()==null || computermodel.getPicpath().trim().equals(""))
+				computermodel.setPicpath(ComputerConfig.ComputerPicDefaultName);
 //			System.out.println(computermodel.getHourrentprice());
 			Computermodel modelCh = new Computermodel();
 			Computermodel modelEn = new Computermodel();
@@ -242,7 +240,8 @@ public class ComputermodelAction extends BaseAction implements ModelDriven<Compu
 			
 
 			for(Integer type : delTypeList){
-				computermodelList = computermodelService.selectComputermodelByCondition(" where computermodeltype = "+type + " and languagetype = "+CommonConfig.languagech);	
+//				computermodelList = computermodelService.selectComputermodelByCondition(" where computermodeltype = "+type + " and languagetype = "+CommonConfig.languagech);
+				computermodelList = computermodelService.selByModeltype(type, CommonConfig.languagech);
 //				删除的id不存在
 				if(computermodelList==null || computermodelList.size() == 0){
 					returnInfo = "删除ID为"+type+"的模型不存在";
@@ -251,8 +250,9 @@ public class ComputermodelAction extends BaseAction implements ModelDriven<Compu
 					return SUCCESS;
 				}
 
-				computerList = computerService.selectComputerByCondition(" where computermodelid= "+type+ " and languagetype = "+CommonConfig.languagech);	
-
+//				computerList = computerService.selectComputerByCondition(" where computermodelid= "+type+ " and languagetype = "+CommonConfig.languagech);	
+				computerList = computerService.selByModeltype(type, CommonConfig.languagech);
+				
 //				当模型下面的设备为空时，才可以删除
 				if(computerList==null || computerList.size() ==0){
 					
@@ -270,7 +270,7 @@ public class ComputermodelAction extends BaseAction implements ModelDriven<Compu
 			}
 			
 //			通过验证，删除数据
-			computermodelService.deleteComputermodelByType(delTypeList);
+			computermodelService.delByType(delTypeList);
 			
 			this.returnInfo = "删除型号成功";
 			log.info(returnInfo);
@@ -343,10 +343,10 @@ public class ComputermodelAction extends BaseAction implements ModelDriven<Compu
 	//ajax 修改
 	public String updateComputermodelAjax(){
 		log.info(logprefix + "updateComputermodelAjax,id="+computermodel.getId());
-//		boolean pass = checkUpdateComputermodel();
-//		if(!pass){
-//			return SUCCESS;
-//		}
+		boolean pass = checkComputermodel();//和添加公用检查方法
+		if(!pass){
+			return SUCCESS;
+		}
 		Integer uid = this.getCurrentUserId();
 		if(uid < 0){
 			this.returnInfo = "用户未登录";

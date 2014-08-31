@@ -51,7 +51,7 @@ public class ComputermodelSpringTest {
 		List<Computermodel> computermodelList = computermodelService.selectComputermodelAll();
 		if (computermodelList != null) {
 			for (int i = 0; i < computermodelList.size(); i++) {
-				computermodelService.deleteComputermodel(computermodelList.get(i).getId());
+//				computermodelService.deleteComputermodel(computermodelList.get(i).getId());
 			}
 		}
 
@@ -90,7 +90,7 @@ public class ComputermodelSpringTest {
 		List<Computermodel> computermodelList = computermodelService.selectComputermodelAll();
 		if (computermodelList != null) {
 			for (int i = 0; i < computermodelList.size(); i++) {
-				computermodelService.deleteComputermodel(computermodelList.get(i).getId());
+//				computermodelService.deleteComputermodel(computermodelList.get(i).getId());
 			}
 		}
 		
@@ -218,7 +218,7 @@ public class ComputermodelSpringTest {
 		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
 		ComputermodelService computermodelService =(ComputermodelService)cxt.getBean("computermodelService");
 		
-		computermodelService.deleteComputermodel(id);
+//		computermodelService.deleteComputermodelByTyp(id);
 
 	}
 	

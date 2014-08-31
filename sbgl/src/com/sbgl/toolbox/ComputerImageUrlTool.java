@@ -6,6 +6,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.tools.view.context.ViewContext;
 
 import com.sbgl.app.actions.common.CommonConfig;
+import com.sbgl.app.common.computer.ComputerConfig;
 
 public class ComputerImageUrlTool {
 	
@@ -33,13 +34,14 @@ public class ComputerImageUrlTool {
 		}
 		
 		String webbaseurl = (String) request.getAttribute("webbaseurl");
-		if(webbaseurl==null){
-			return defaulturl+ "/computerImage"+"/default.jpg";
+		String computerPath = (String)request.getAttribute("computerImagePath");
+		if(webbaseurl==null || webbaseurl.trim().length()==0 || computerPath == null || computerPath.trim().length()==0){
+			return defaulturl+ "/upload/computerImage/"+ComputerConfig.ComputerPicDefaultName;
 		}
-		System.out.println("webbaseurl" + webbaseurl);
+		//System.out.println("webbaseurl" + webbaseurl);
 		if(pcname == null || pcname.trim().length()==0){
-			return webbaseurl + "/computerImage"+"/default.jpg";
+			return webbaseurl + "/"+computerPath+"/"+ComputerConfig.ComputerPicDefaultName;
 		}
-		return webbaseurl + "/computerImage"+"/"+pcname;
+		return webbaseurl + "/"+computerPath+"/"+pcname;
 	}
 }

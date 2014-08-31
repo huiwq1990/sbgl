@@ -41,11 +41,6 @@ public interface ComputermodelService{
 	public List<Computermodel> selectComputermodelByPage(Page page);
 	public List<ComputermodelFull> selectComputermodelFullByPage(Page page);
 	
-//根据关联查询实体	
-	public List<Computermodel> selectComputermodelByComputercategoryId(Integer computercategoryid );
-//根据关联查询实体full	
-	public List<ComputermodelFull> selectComputermodelFullByComputercategoryId(Integer computercategoryid );
-
 	void updateCategoryComputermodel(int computercategoryid);
 
 	boolean isComputermodelNameExist(String name);
@@ -59,7 +54,7 @@ public interface ComputermodelService{
 	List<Computermodel> selectComputermodelByConditionAndPage(
 			String conditionSql, Page page);
 
-	int deleteComputermodelByTyp(Integer computermodeltype);
+
 
 	List<Computermodel> selectComputermodelByCondition(String conditionSql);
 
@@ -69,14 +64,11 @@ public interface ComputermodelService{
 	List<ComputermodelFull> selectComputermodelFullByCondition(
 			String conditionSql);
 
-	int execSql(String sql);
 
-	int deleteComputermodelByType(List<Integer> typeList);
 
 	void updateComputermodel(Computermodel ch, Computermodel en);
 
-	List<Computermodel> selectComputermodelByComputercategoryId(
-			Integer computercategoryid, int language);
+
 
 	List<Computermodel> selectComputermodelAll(int language);
 
@@ -101,6 +93,17 @@ public interface ComputermodelService{
 	List<Computermodel> selByModeltype(int modeltype, int language);
 
 	
+	
+	
+	int delByType(Integer modeltype);
+	int delByType(List<Integer> modeltypeList);
+//	int deleteComputermodelByType(List<Integer> typeList);
+
+
+	List<Computermodel> selByCategorytype(Integer computercategorytype,
+			int language);
+	List<ComputermodelFull> selFullByCategorytype(Integer computercategorytype,
+			int language);
 		
 	
 	

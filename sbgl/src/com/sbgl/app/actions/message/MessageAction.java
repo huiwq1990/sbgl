@@ -81,14 +81,7 @@ public class MessageAction extends BaseAction implements ModelDriven<Message>{
 	private String messagereceiverids;
 	private ReturnJson returnJson = new ReturnJson();
 
-	public int checkUserLogin(){
-		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
-		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
-		if(uidStr==null || uidStr.trim().equals("0") || uidStr.trim().equals("")){
-			return -1;
-		}
-		return Integer.valueOf(uidStr);
-	}
+
 
 	
 	public void buildReturnStr(int flag,String errorStr){
@@ -157,9 +150,8 @@ public class MessageAction extends BaseAction implements ModelDriven<Message>{
 	public String addMessageAjax(){	
 		log.info("Add Entity Ajax Manner");
 		
-		Integer uid = checkUserLogin();
-		log.info("login user id "+ uid);
-		if(uid < 0){
+
+		if(checkUserLogin() ==false){
 			returnInfo = "用户未登录";
 			buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
 			return SUCCESS;
@@ -169,6 +161,7 @@ public class MessageAction extends BaseAction implements ModelDriven<Message>{
 			return SUCCESS;
 		}
 	
+		int uid = this.getCurrentUserId();
 		
 		try {
 			Message temp = new Message();
@@ -219,9 +212,8 @@ public class MessageAction extends BaseAction implements ModelDriven<Message>{
 	public String replyMessageAjax(){
 		log.info("回复消息："+message.getContent()+";回复的消息的ID："+message.getReplyid());
 		
-		Integer uid = checkUserLogin();
-		log.info("login user id "+ uid);
-		if(uid < 0){
+		int uid = this.getCurrentUserId();
+		if(checkUserLogin() ==false){
 			returnInfo = "用户未登录";
 			buildReturnStr(ComputerConfig.ajaxerrorreturn,returnInfo);
 			return SUCCESS;
@@ -473,10 +465,9 @@ public class MessageAction extends BaseAction implements ModelDriven<Message>{
 	 * @return
 	 */
 	public String toMessageInboxNextPage() {
-		log.info("");
-		Integer uid = checkUserLogin();
-		log.info("login user id "+ uid);
-		if(uid < 0){
+
+		int uid = this.getCurrentUserId();
+		if(checkUserLogin() ==false){
 			actionMsg = "用户未登录";
 			log.error(actionMsg);
 			return ComputerConfig.usernotloginreturnstr;
@@ -527,9 +518,8 @@ public class MessageAction extends BaseAction implements ModelDriven<Message>{
 	 * 消息发件箱
 	 */
 	public String toMessageSendbox() {
-		Integer uid = checkUserLogin();
-		log.info("login user id "+ uid);
-		if(uid < 0){
+		int uid = this.getCurrentUserId();
+		if(checkUserLogin() ==false){
 			actionMsg = "用户未登录";
 			log.error(actionMsg);
 			return ComputerConfig.usernotloginreturnstr;
@@ -578,10 +568,8 @@ public class MessageAction extends BaseAction implements ModelDriven<Message>{
 	 * @return
 	 */
 	public String toMessageSendboxNextPage() {
-		log.info("");
-		Integer uid = checkUserLogin();
-		log.info("login user id "+ uid);
-		if(uid < 0){
+		int uid = this.getCurrentUserId();
+		if(checkUserLogin() ==false){
 			actionMsg = "用户未登录";
 			log.error(actionMsg);
 			return ComputerConfig.usernotloginreturnstr;
@@ -605,9 +593,8 @@ public class MessageAction extends BaseAction implements ModelDriven<Message>{
 	 * 消息回收站
 	 */
 	public String toMessageTrash() {
-		Integer uid = checkUserLogin();
-		log.info("login user id "+ uid);
-		if(uid < 0){
+		int uid = this.getCurrentUserId();
+		if(checkUserLogin() ==false){
 			actionMsg = "用户未登录";
 			log.error(actionMsg);
 			return ComputerConfig.usernotloginreturnstr;

@@ -56,9 +56,21 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
 		}
 		
 		return list;
+	}	
+	@Override
+	public List<ComputermodelFull> selFullByCategorytype(int categoryType,int language){
+		String sqlch = " where a.status >=0 " +
+						  " and a.languagetype="+language+
+						  " and a.computercategoryid = "+categoryType+
+						  " order by a.computermodeltype,a.languagetype";		
+		ArrayList<ComputermodelFull> list  = (ArrayList<ComputermodelFull>) selectComputermodelFullByCondition(sqlch );
+		if(list == null){
+			list = new ArrayList<ComputermodelFull>();
+		}
+		
+		return list;
 	}
-	
-	
+
 	/**
 	 * 根据模型类型查询模型
 	 * 
@@ -77,14 +89,7 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
 		return list;
 	}
 	
-	/**
-	 * 根据modeltype删除model,设置status为-1
-	 */
-//	@Override
-//	public void delByType(int modeltype){
-//		String sql = "update Computermodel as tb set tb.computercategoryid = -1 where tb.computercategoryid =  " + computercategoryid;
-//		baseDao.createSQL(sql);		
-//	}
+
 	
 	@Override
 	public int countRow(String condition) {
@@ -221,22 +226,7 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
 	
 	
 	
-//  删除实体
-	public int deleteEntity(Integer computermodelId) {
-		// TODO Auto-generated method stub		
-//		log.debug("正在删除");
-        try {
-        	String hqlString="update Computermodel as tb set tb.status = 0 where tb.id = " +computermodelId; 
-        	Query query = this.getHibernateTemplate().getSessionFactory().getCurrentSession().createQuery(hqlString);    	   	
-        	int ret=query.executeUpdate();
 
-            log.debug("删除:"+ret);
-            return ret;
-        } catch (RuntimeException re) {
-            log.error("删除失败", re);
-            throw re;
-        }
-	}
 
 //  根据实体id查询实体full	
 	@Override
@@ -302,20 +292,43 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
 		}
 		return null;
 	}
-	
-//  根据关联查询实体full
 
-	//根据关联查询实体 
-	public List<Computermodel> selectComputermodelByComputercategoryId(Integer computercategoryid ){
-	
-		return null;
-	}
-  
-
-	public List<ComputermodelFull> selectComputermodelFullByComputercategoryId(Integer computercategoryid ){
-	
-		return null;
-	}
 
  
+//  删除实体
+	public int deleteEntity(Integer computermodelId) {
+		// TODO Auto-generated method stub		
+//		log.debug("正在删除");
+        try {
+        	String hqlString="update Computermodel as tb set tb.status = -1 where tb.id = " +computermodelId; 
+        	Query query = this.getHibernateTemplate().getSessionFactory().getCurrentSession().createQuery(hqlString);    	   	
+        	int ret=query.executeUpdate();
+
+            log.debug("删除:"+ret);
+            return ret;
+        } catch (RuntimeException re) {
+            log.error("删除失败", re);
+            throw re;
+        }
+	}
+	
+	@Override
+	public int delByType(Integer modeltype){
+
+			String sql = "delete from Computermodel where computermodeltype="+modeltype;
+			 this.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(sql).executeUpdate();
+
+		return 1;
+	}
+	
+	@Override
+	public int delByType(List<Integer> modeltypeList){
+		
+		for(Integer type : modeltypeList){
+			String sql = "delete from Computermodel where computermodeltype="+type;
+			 this.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(sql).executeUpdate();
+		}
+		return 1;
+	}
+
 }

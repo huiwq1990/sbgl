@@ -2,6 +2,9 @@ package com.sbgl.app.common.computer;
 
 public class ComputerConfig {
 	
+	//默认图片名称
+	public final static String ComputerPicDefaultName = "nopic.jpg";
+	
 //	模块名称
 	public final static String ComputerModelName = "computer";
 	

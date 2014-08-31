@@ -31,18 +31,18 @@ public List<Computermodel> selectComputermodelByCondition(String condition);
 
 
 
-	//根据关联查询实体 
-	public List<Computermodel> selectComputermodelByComputercategoryId(Integer computercategoryid );
-
-	public List<ComputermodelFull> selectComputermodelFullByComputercategoryId(Integer computercategoryid );
 
 	int countRow(String condition);
 
 	List<Computermodel> selByCategorytype(int categoryType, int language);
 
-	List<Computermodel> selByModeltype(int categoryType, int language);
+	List<Computermodel> selByModeltype(int modeltype, int language);
 
+	int delByType(List<Integer> modeltypeList);
 
+	int delByType(Integer modeltype);
+
+	List<ComputermodelFull> selFullByCategorytype(int categoryType, int language);
 
  
 }

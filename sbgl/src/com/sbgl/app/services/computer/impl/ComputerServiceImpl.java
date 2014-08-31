@@ -262,23 +262,7 @@ public class ComputerServiceImpl implements ComputerService{
 	public Computer selectComputerById(Integer computerId){		
 		return baseDao.getEntityById(Computer.class, computerId);
 	}
-	
-	@Override
-	public List<Computer> selectComputerAll(){
-			
-		return baseDao.getAllEntity(Computer.class);
-		
-	}
-	
-	
-	 
-	
-//	根据id查询full类
-	@Override
-	public ComputerFull selectComputerFullById(Integer computerId){
-	
-		return computerDao.selectComputerFullById(computerId); 
-	}	
+
 
 	@Override
 	public void selFullByPage(int computercategorytype,int computermodeltype,int computerstatusid,Page page,int languge,List<ComputerFull> computerFullListCh,List<ComputerFull> computerFullListEn){
@@ -301,9 +285,9 @@ public class ComputerServiceImpl implements ComputerService{
 			sqlen = sqlen +  " and a.computermodelid="+computermodeltype;
 		}
 		
-//		查询某一分类下的PC 先获取分类下面的模型
+//		查询某一分类下的PC,先获取分类下面的模型
 		if(computercategorytype!=0 && computermodeltype==0){
-			List<Computermodel> tempComputermodelList = computermodelDao.selByModeltype(computercategorytype, CommonConfig.languagech);
+			List<Computermodel> tempComputermodelList = computermodelDao.selByCategorytype(computercategorytype, CommonConfig.languagech);
 			String inStr = " (";
 			
 //			如果不存在分类不存在模型，设置一个空的模型id
@@ -314,8 +298,6 @@ public class ComputerServiceImpl implements ComputerService{
 					inStr += c.getComputermodeltype()+",";
 				}
 			}
-			
-			
 			
 			inStr = inStr.substring(0,inStr.length()-1);
 			inStr += ") ";
@@ -351,12 +333,12 @@ public class ComputerServiceImpl implements ComputerService{
 		sqlch += " order by a.computertype,a.languagetype";
 		sqlen += " order by a.computertype,a.languagetype";
 		
-//		System.out.println(countsql);
+		System.out.println(countsql);
 //		System.out.println(sqlch);
 //		System.out.println(sqlen);
 		
-		int totalcount = computerDao.countRow(countsql)/2;
-		
+		int totalcount = computerDao.countRow(countsql);
+//		System.out.println();
 		PageActionUtil.getPage(page ,totalcount, page.getPageNo());
 		computerFullListCh.clear();
 		computerFullListCh.addAll(computerDao.selectComputerFullByConditionAndPage(sqlch, page));
@@ -366,17 +348,6 @@ public class ComputerServiceImpl implements ComputerService{
 	}
 	
 
-//  查询全部实体full
-	@Override
-	public List<ComputerFull> selectComputerFullAll() {
-		// TODO Auto-generated method stub
-		return computerDao.selectComputerFullAll();
-	}
-	
-	
-	public int countComputerRow(){
-		return baseDao.getRowCount(Computer.class);
-	}
 		
 //  分页查询
 	public List<Computer> selectComputerByPage(Page page){	
@@ -426,11 +397,7 @@ public class ComputerServiceImpl implements ComputerService{
 		computerList = baseDao.getEntityByProperty("Computer", "computermodelid ", id);
 		return computerList;
 	}
-	//根据computermodelid 查询实体full
-	@Override
-	public List<ComputerFull> selectComputerFullByComputermodelId(Integer computermodelid ) {
-		return computerDao.selectComputerFullByComputermodelId(computermodelid );
-	}
+
 	/**
 	 * 更改属于某一型号的所有机器
 	 * @param name

@@ -60,12 +60,22 @@
                   <div class="form-group">
                     <label for="inputCourseType" class="col-lg-2 control-label">课程类别</label>
                     <div class="col-lg-4">
-					
-					#foreach($temp in $userGroupList)
+
+#set($listSize = $userGroupList.size() - 1)
+#if($listSize>=0)
+#set($listRegion = [0..$listSize])
+##取出所有的属性名称
+#foreach($tempKey in $listRegion)
+#set($temp = $userGroupList.get($tempKey))
                       <label class="radio-inline">
-                        <input type="radio" name="course_type" id="courseType${temp.id}" value="${temp.id}" checked="">$temp.name
+                        <input type="radio" name="course_type" id="courseType${temp.id}" value="${temp.id}" 
+							#if($tempKey==0)
+							checked="true"
+							#end
+							>$temp.name
                       </label>
-					#end
+#end ##end foreach
+#end ##end if
 					
 					<!--
                       <label class="radio-inline">
@@ -113,7 +123,9 @@
 <script src="${jsDomain}/jquery.jqpagination.js"></script>
 
 
+	
 <script>        
+	
 
 	//add computer
 	$("body").on("click", "button[action-type|=addCourseButton]", function() {
@@ -165,7 +177,7 @@
 							$('#input_add_course_name').val("");
 							$('#input_add_course_nameen').val("");
 							$('#input_add_course_teacherid').select2("val","0");
-						
+						//符合name=course_type的input中第一个的checked值设置为true
  						$("input[name=course_type]").eq(0).attr("checked",true);
 					
         }

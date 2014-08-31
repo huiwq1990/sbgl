@@ -47,6 +47,20 @@ public class ComputercategoryDaoImpl extends HibernateDaoSupport implements Comp
 		
 	}
 	
+	
+	@Override
+	public List<Computercategory> sel(Integer language) {
+		return selectComputercategoryByCondition("where a.languagetype="+language +" and a.status >= 0 ");
+	}
+	
+	@Override
+	public List<ComputercategoryFull> selFull(Integer language) {
+		String sql =   "where a.languagetype="+language +
+//						" and b.languagetype="+language +
+						" and a.status >= 0 ";
+		return selectComputercategoryFullByCondition(sql);
+	}
+	
 	// 根据条件查询查询实体
 	@Override
 	public List<Computercategory> selectComputercategoryByCondition(String condition) {
@@ -208,19 +222,5 @@ public class ComputercategoryDaoImpl extends HibernateDaoSupport implements Comp
 		return null;
 	}
 	
-//  根据关联查询实体full
-
-	//根据关联查询实体 
-	public List<Computercategory> selectComputercategoryByComputercategoryId(Integer parentcomputercategoryid ){
-	
-		return null;
-	}
-  
-
-	public List<ComputercategoryFull> selectComputercategoryFullByComputercategoryId(Integer parentcomputercategoryid ){
-	
-		return null;
-	}
-
  
 }

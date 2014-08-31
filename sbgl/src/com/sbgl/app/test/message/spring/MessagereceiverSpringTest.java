@@ -239,18 +239,18 @@ public class MessagereceiverSpringTest {
 	}
 	
 	public static void selectMessagereceiverFullAll(){
-		
-		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
-		
-		MessagereceiverService messagereceiverService = (MessagereceiverService)cxt.getBean("messagereceiverService");
-		List<MessagereceiverFull> objList  = messagereceiverService.selectMessagereceiverFullAll();
-		if(objList == null){
-			System.out.println("objList is null");
-			return;
-		}
-		for(int i = 0; i < objList.size(); i++){
-	//		System.out.println("id="+objList.get(i).getId());
-		}
+//		
+//		ApplicationContext cxt=new FileSystemXmlApplicationContext(SpringUtil.getAppPath());
+//		
+//		MessagereceiverService messagereceiverService = (MessagereceiverService)cxt.getBean("messagereceiverService");
+//		List<MessagereceiverFull> objList  = messagereceiverService.selectMessagereceiverFullAll();
+//		if(objList == null){
+//			System.out.println("objList is null");
+//			return;
+//		}
+//		for(int i = 0; i < objList.size(); i++){
+//	//		System.out.println("id="+objList.get(i).getId());
+//		}
 	}
 
 //	分页查询	
