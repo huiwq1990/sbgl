@@ -67,7 +67,7 @@
 				<br><small>$!model.cNameEN</small>
 			</td>
 			<td>#if($!model.branId == "1")双塔影视#end</td>
-            <td>$!model.memo</td>
+            <td>$!model.memo<br><small>$!model.memoEN</small></td>
 		  #end
           </tr>
         #end  
