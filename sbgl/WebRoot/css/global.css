@@ -709,7 +709,7 @@ border-bottom: 2px solid #427FED !important;
 	height: 100%; 
 	padding: 0 20px 70px 20px;
 }
-.wizard ul, .wizard ol { margin: 0; }
+.wizard ul.steps { margin: 0; }
 .wizard form { margin: 0; height: 100%; }
 .wizard .title { margin-top: 20px; line-height: 25px; }
 .wizard .form-actions { position: absolute; bottom: 0; left: 0; right: 0; height: 70px;  margin: 0; z-index: 100; }
@@ -726,7 +726,7 @@ border-bottom: 2px solid #427FED !important;
 .wizard .step-pane.active {
 	display: block;
 }
-
+.wizard .step-content ol, .wizard .step-content ul{ margin: 0 0 10px 20px; }
 
 /* 预约 ================================================= */
 #rent-bar { 

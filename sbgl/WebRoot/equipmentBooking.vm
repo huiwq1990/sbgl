@@ -116,10 +116,10 @@
           <div class="step-content">
             <div class="step-pane active" id="step1">
               <p>$!{textmap.order_welcomeapp}</p>
-			   #if($!orderCate==1)
-              <p>$!{textmap.order_youis} <strong>$!{textmap.order_personalappointment}</strong></p>
-        	  #elseif($!orderCate==2)
-              <p>$!{textmap.order_youis} <strong>$!{textmap.order_teachingappointment}</strong>$!{textmap.order_following}<strong>$!equipmenborrowFull.teacherName</strong>$!{textmap.order_relevantrequirements}</p>
+			#if($!orderCate==1)
+              <p>$!{textmap.order_youis}<strong>$!{textmap.order_personalappointment}</strong></p>
+        	#elseif($!orderCate==2)
+              <p>$!{textmap.order_youis}<strong>$!{textmap.order_teachingappointment}</strong>$!{textmap.order_relevantrequirements}</p>
               <div class="media">
                 <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
                   <img src="${userImagePath}/$!user.photo" width="46" height="46" class="img-rounded">
@@ -128,13 +128,12 @@
                   <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">$!equipmenborrowFull.teacherName</a></h5><span>$!date.format("yyyy-MM-dd ", $!equipmenborrowFull.createtime)</span></div>
                   <div class="media-content">
                     <h5>$!equipmenborrowFull.msgtitle</h5>
-                    <p>$!equipmenborrowFull.msgtitle $!{textmap.order_specificrequirements}：</p>
-					<p>$!date.format("yyyy-MM-dd ", $!equipmenborrowFull.startdate) - $!date.format("yyyy-MM-dd ", $!equipmenborrowFull.enddate)</p>
-                    $!equipmenborrowFull.content
+                    <div class="">$!equipmenborrowFull.content</div>
+					<p>$!{textmap.order_finishTimeWithIn} $!date.format("yyyy-MM-dd ", $!equipmenborrowFull.startdate) $!{textmap.order_timeTo} $!date.format("yyyy-MM-dd ", $!equipmenborrowFull.enddate)</p>
                   </div>
                 </div>
               </div>
-			   #end  
+			#end  
             </div>
             <div class="step-pane" id="step2">              
               <div class="rent-time">
@@ -248,7 +247,6 @@
 <script src="js/jquery.js"></script>
 <script src="js/loader.js"></script>
 <script src="js/select2.js"></script>
-<script src="js/bootstrap-hover-dropdown.min.js"></script>
 <script src="js/bootstrap-datepicker.js"></script>
 <script src="js/locales/bootstrap-datepicker.zh-CN.js"></script>
 <script src="js/bfa2.js"></script>
