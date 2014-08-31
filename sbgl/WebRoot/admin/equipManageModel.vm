@@ -100,7 +100,7 @@
 					<td>$!model.totalNum</td>
 					<td>$!model.rentNum</td>
 					<td>#if($!model.branId == "1")双塔影视#end</td>
-                    <td>$!model.memo</td>
+                    <td>$!model.memo<br><small>$!model.memoEN</td>
 				  #end
                   </tr>
                 #end  
