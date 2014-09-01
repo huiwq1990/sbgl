@@ -352,7 +352,6 @@
         alterCan = myData.can;
         alterPhoto = myData.pic;
 		
-		
 		if(alterGroupType == "1") {
 			isStu = true;
 			isTea = false;
@@ -546,11 +545,11 @@
 			//console.log(n);
 			$("#modifyUser").removeAttr("disabled");
 			if(data.result.tag == 0) {
-				alert("图片上传完成！");
+				n = noty({text: "图片上传成功！", timeout: 1000, type: 'success'});
 				savedFileName = data.result.savedFileName;
 			} else if(data.result.tag == 1) {
 				alert(data.result.msg);
-				savedFileName = "";
+				savedFileName = "avatar.jpg";
 			} else {
 				alert("上传图片失败！");
 			}
