@@ -71,7 +71,10 @@
 				  #foreach($clazz in $allClassCourse)
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!clazz.id"></td>
-                    <td>$!clazz.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button" action-type="modifyClass" data-id="$!clazz.id" data-pId="$!clazz.pId" data-name="$!clazz.name" data-pName="$!clazz.pName" data-idEN="$!clazz.idEN" data-nameEN="$!clazz.nameEN" data-comId="$!clazz.comId">修改</a></td>
+                    <td>
+						$!clazz.name<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-equip-category" role="button" action-type="modifyClass" data-id="$!clazz.id" data-pId="$!clazz.pId" data-name="$!clazz.name" data-pName="$!clazz.pName" data-idEN="$!clazz.idEN" data-nameEN="$!clazz.nameEN" data-comId="$!clazz.comId">修改</a>
+                        <br/><small>$!clazz.nameEN</small>
+					</td>
                     <td>$!clazz.pName</td>
                     <td>$!clazz.modelCount</td>
                     <td>$!clazz.equipCount</td>
