@@ -1,6 +1,7 @@
 #set($user =  $request.getSession().getAttribute("loginUser"))
 #set($currentposition= "home")
 #set($currentpositiontext= ${textmap.homeposition})	
+#set($stuClass =  $request.getSession().getAttribute("stuClass"))
   <!DOCTYPE html>
 <html>
 <head>
@@ -42,6 +43,9 @@
         </div>
         <div id="user-profile-info" class="media-body">
            <h4 class="profile-name media-heading">$!user.name</h4>
+		   #if($!stuClass != '')
+		   <h5>$!stuClass</h5>
+		   #end
 		  <!--
           <div class="profile-more-info">2012级研究生 - 影像视觉效果研究方向</div>-->
         </div>
