@@ -13,6 +13,7 @@ public class EquipModelCourse {
 	private String memoEN;
 	private String showClass;
 	private String imgName;
+	private String imgNameSaved;
 	private String comId;
 	private String rentId;
 	private String rentValue;
@@ -120,6 +121,12 @@ public class EquipModelCourse {
 	}
 	public void setRentNum(String rentNum) {
 		this.rentNum = rentNum;
+	}
+	public String getImgNameSaved() {
+		return imgNameSaved;
+	}
+	public void setImgNameSaved(String imgNameSaved) {
+		this.imgNameSaved = imgNameSaved;
 	}
 	
 }

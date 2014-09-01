@@ -61,7 +61,7 @@
             <td><input class="chk" type="checkbox" name="chk-list" value="$!model.id"></td>
             <td>
 				$!model.name
-				<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-idEN="$!model.idEN" data-name="$!model.name" data-nameEN="$!model.nameEN" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo" data-memoEN="$!model.memoEN" data-imgname="$!model.imgName" data-brandid="$!model.branId" data-rent="$!model.rentValue" data-rentunit="$!model.rentId">修改</a>
+				<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-idEN="$!model.idEN" data-name="$!model.name" data-nameEN="$!model.nameEN" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo" data-memoEN="$!model.memoEN" data-imgname="$!model.imgName" data-imgnamesaved="$!model.imgNameSaved" data-brandid="$!model.branId" data-rent="$!model.rentValue" data-rentunit="$!model.rentId">修改</a>
 				<br><small>$!model.nameEN</small>
 			</td>
 			<td>

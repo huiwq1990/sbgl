@@ -627,6 +627,7 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				emc.setMemo( equipment.getEquipmentdetail() );
 				emc.setComId( String.valueOf( equipment.getComid() ) );
 				emc.setImgName( equipment.getImgname() );
+				emc.setImgNameSaved( equipment.getImgnamesaved() );
 				emc.setBranId( String.valueOf( equipment.getBrandid() ) );
 				emc.setRentId( String.valueOf( equipment.getRentunit() ) );
 				emc.setRentValue( String.valueOf( equipment.getRentvalue() ) );

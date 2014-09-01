@@ -90,7 +90,7 @@
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!model.id"></td>
                     <td>
 						$!model.name
-						<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-idEN="$!model.idEN" data-name="$!model.name" data-nameEN="$!model.nameEN" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo" data-memoEN="$!model.memoEN" data-imgname="$!model.imgName" data-brandid="$!model.branId" data-rent="$!model.rentValue" data-rentunit="$!model.rentId">修改</a>
+						<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-model" role="button" action-type="alterModelFillIn" data-id="$!model.id" data-idEN="$!model.idEN" data-name="$!model.name" data-nameEN="$!model.nameEN" data-cid="$!model.cId" data-cname="$!model.cName" data-memo="$!model.memo" data-memoEN="$!model.memoEN" data-imgname="$!model.imgName" data-imgnamesaved="$!model.imgNameSaved" data-brandid="$!model.branId" data-rent="$!model.rentValue" data-rentunit="$!model.rentId">修改</a>
 						<br><small>$!model.nameEN</small>
 					</td>
 					<td>
@@ -357,8 +357,8 @@
 		$("#inputEModelNameEN").val("");
 		$("#inputEDescribe").val("");
 		$("#inputEDescribeEN").val("");
-		localFileName = "";
-		savedFileName = "";
+		localFileName = "nopic.jpg";
+		savedFileName = "nopic.jpg";
 		$("#imgFileForAdd").html("");
 		$("#inputEPic").prop('disabled', false);
 	});
@@ -423,7 +423,6 @@
 				alert("型号名不能为空！");
 				return;
 			}
-			
 			
 			if(clazzId == -1 || clazzId == "") {
 				alert("分类不能为空，若无分类可选请先在分类管理中建立分类！");
@@ -528,21 +527,17 @@
     			}
 				actionUrl = "${webbaseurl}/altEquipModel.do";
 			}
-			//imgFile = $("#modifyEPic").val();
 		}
 		
 		if(actionUrl==""){
 			return;
 		}
 		
-		
-		
 		jQuery.ajax({  
 		    url:actionUrl,  
 		    type:"post",
 		    data:postData,
 		    success:function(data,textStatus,jq){  
-		    	console.log(data);
 				if(data.tag == "0") {
 					var n = noty({text: data.msg, timeout: 2500, type: 'success'});
 					equipmentid = data.equipmentid;
@@ -565,7 +560,7 @@
 							$("#select-categories").select2("val", cid);
 						},
 						error: function(data,textStatus,jq) {
-							alert("刷新界面失败!");
+							var n = noty({text:"刷新界面失败!", timeout: 2500, type: 'error'});
 						}
 					})
 				} else {
@@ -600,9 +595,13 @@
 		rentForAlter = myData.rent;
 		
 		equipmentid = myData.id;
+		if(myData.imgnamesaved != '') {
+			savedFileName = myData.imgnamesaved;
+		}
+		if(myData.imgname != '') {
+			localFileName = myData.imgname;
+		}
 		
-		localFileName = "";
-		savedFileName = "";
 		$("#imgFileForAlter").html(myData.imgname);
 		$("#inputEPic").prop('disabled', false);
 		$("#modifyEPic").prop('disabled', false);
@@ -852,43 +851,8 @@
 			}
 		});
 	});
-	/************************************************************************************
-	$("body").on("change", "input[action-type|=showFileNameForAdd]", function() {
-		var file = $("#inputEPic").val();
-		$("#imgFileForAdd").html(file);
-		$("#inputEPic").prop('disabled', true);
-	});
 	
-	$("body").on("change", "input[action-type|=showFileNameForAlter]", function() {
-		var file = $("#modifyEPic").val();
-		$("#imgFileForAlter").html(file);
-		$("#modifyEPic").prop('disabled', true);
-	});
-	*************************************************************************************/
 	//上传图片
-	$("#inputEPic").fileupload({
-    	url: "${webbaseurl}/uploadImageFile.do",
-        dataType: 'json',
-		change: function (e, data) {
-        	$("#submitBtnForAdd").attr("disabled", "disabled");
-    	},
-        done: function (e, data) {
-			$("#submitBtnForAdd").removeAttr("disabled");
-            console.log(data);
-			if(data.result.tag == 0) {
-				localFileName = data.files[0].name;
-				savedFileName = data.result.savedFileName;
-				$("#imgFileForAdd").html(localFileName);
-				$("#inputEPic").prop('disabled', true);
-			} else if(data.result.tag == 1) {
-				alert("上传图片失败！");
-				localFileName = "";
-				savedFileName = "";
-			}
-            //alert(data.result.savedFileName);
-        }
-    });
-	
     $('#modifyEPic').fileupload({
     	url: "${webbaseurl}/uploadImageFile.do",
         dataType: 'json',
@@ -897,20 +861,18 @@
     	},
         done: function (e, data) {
 			$("#submitBtnForAlter").removeAttr("disabled");
-            console.log(data);
 			if(data.result.tag == 0) {
 				localFileName = data.files[0].name;
 				savedFileName = data.result.savedFileName;
 				$("#imgFileForAlter").html(localFileName);
 				$("#modifyEPic").prop('disabled', true);
 			} else if(data.result.tag == 1) {
-				alert(data.result.msg);
-				localFileName = "";
-				savedFileName = "";
+				alert("图片上传失败!");
+				localFileName = "nopic.jpg";
+				savedFileName = "nopic.jpg";
 			} else {
 				alert("上传图片失败！");
 			}
-            //alert(data.result.message);
         }
     });
 	
@@ -930,10 +892,9 @@
 				$("#inputEPic").prop('disabled', true);
 			} else if(data.result.tag == 1) {
 				alert("上传图片失败！");
-				localFileName = "";
-				savedFileName = "";
+				localFileName = "nopic.jpg";
+				savedFileName = "nopic.jpg";
 			}
-            //alert(data.result.savedFileName);
         }
     });
 	
