@@ -204,7 +204,7 @@
 		var userTel = $("#inputTel").val();
 		var userMail = $("#inputMail").val();
 		//var userCould = $('input[name="inputIsCould"]:checked').val();
-		var userCould = 1;
+		var userCould = 0;	//默认可预约
 		
 		if(userCode == "") {
 			alert("编号不能为空!");
@@ -266,6 +266,7 @@
     			"teacher.email": userMail,
     			"teacher.photo": savedFileName,
     			"teacher.password": userPass,
+				"teacher.couldborrow": userCould,
 				"group.id": userGroup,
 				"group.type": 2
     		};
@@ -279,6 +280,7 @@
     			"worker.email": userMail,
     			"worker.photo": savedFileName,
     			"worker.password": userPass,
+				"worker.couldborrow": userCould,
 				"group.id": userGroup,
 				"group.type": 4
     		};
