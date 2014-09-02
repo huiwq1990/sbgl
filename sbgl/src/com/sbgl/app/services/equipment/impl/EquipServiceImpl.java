@@ -671,7 +671,7 @@ public class EquipServiceImpl implements EquipService {
 			if(modelList != null && modelList.size() > 0) {
 				for (Equipment model : modelList) {
 					if( "0".equals( model.getLantype() ) ) {
-						final String equipCountSQL = "select count(1) from equipmentdetail  where equipmentid = " + modelList.get(0).getComid();
+						final String equipCountSQL = "select count(1) from equipmentdetail  where equipmentid = " + model.getComid();
 						BigInteger EquipdetailSum = baseDao.getHibernateTemplate().execute(new HibernateCallback(){
 							public Object doInHibernate(Session session) throws HibernateException{
 								Query query = session.createSQLQuery(equipCountSQL);
