@@ -211,10 +211,6 @@
 		$("#modifyGroupName").val(alterGroupName);
 		$("#modifyTypeId").select2("val", alterGroupType);
 		
-		console.log(alterGroupId);
-		console.log(alterGroupName);
-		console.log(alterGroupType);
-		
 	});
 	
 	$('.modal').on('click', ('button.btn-primary'), function () {
@@ -236,7 +232,7 @@
     			actionUrl = "${webbaseurl}/addUserGroup.do";
     			tip = "添加用户组成功！";
     		} else {
-    			alert("组名称不能为空！");
+				n = noty({text: "组名称不能为空！", timeout: 2500, type: 'error'});
 				return;
     		}
 	    }
@@ -245,11 +241,8 @@
 	        var newGroupName = $("#modifyGroupName").val() == "" ? alterGroupName : $("#modifyGroupName").val();
 	        var newGroupType = $("#modifyTypeId").val();
 			
-			//alert(newGroupName);
-			//alert(newGroupType);
-    		
     		if(alterGroupName == newGroupName && newGroupType == alterGroupType) {
-    			alert("并未做修改！");
+				n = noty({text: "并未做修改！", timeout: 2500, type: 'error'});
 				return;
     		} else {
     			postData = {
@@ -278,7 +271,6 @@
 	});
 	
 	$("body").on("click", "a[action-type|=delUserGroup]", function() {
-		//alert(idsForDel);
 		var postData = {
 			groupIds: idsForDel,
 		}

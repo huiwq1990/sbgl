@@ -114,9 +114,7 @@
 		    type: "post",
 		    data: postData,
 		    success:function(data,textStatus,jq){  
-				//alert(data.tag);
 				if(data.tag == "0") {
-					//alert(data.msg);
 					n = noty({text: data.msg, timeout: 2500, type: 'success'});
 					
 				} else {

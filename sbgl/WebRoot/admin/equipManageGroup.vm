@@ -252,11 +252,10 @@
 				$("#imgGroupRealName").val(savedFileName);
 				$("#inputEPic").prop('disabled', true);
 			} else if(data.result.tag == 1) {
-				alert("上传图片失败！");
+				n = noty({text: "上传图片失败！", timeout: 2500, type: 'error'});
 				localFileName = "";
 				savedFileName = "";
 			}
-            //alert(data.result.savedFileName);
         }
     });
 	
@@ -275,13 +274,12 @@
 				$("#imgFileForAlter").html(localFileName);
 				$("#modifyEPic").prop('disabled', true);
 			} else if(data.result.tag == 1) {
-				alert(data.result.msg);
+				n = noty({text: data.result.msg, timeout: 2500, type: 'error'});
 				localFileName = "";
 				savedFileName = "";
 			} else {
-				alert("上传图片失败！");
+				n = noty({text: "上传图片失败！", timeout: 2500, type: 'error'});
 			}
-            //alert(data.result.message);
         }
     });
 	

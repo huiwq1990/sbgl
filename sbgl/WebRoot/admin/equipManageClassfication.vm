@@ -290,7 +290,7 @@
     			actionUrl = "${webbaseurl}/addClassification.do";
     			
     		} else {
-    			alert("中文分类名称不能为空！");
+				n = noty({text: "中文分类名称不能为空！", timeout: 2500, type: 'error'});
 				return;
     		}
 	    }
@@ -301,7 +301,7 @@
     		var parentClassId = $("#modifyFaCategoryId").val();
     		var userId=cookie.Get("uid");
     		if(alterClassName == newClassName && parentClassId == parentId && alterClassNameEN == newClassNameEN) {
-    			alert("并未做修改！");
+				n = noty({text: "并未做修改！", timeout: 2500, type: 'error'});
 				return;
     		} else {
     			postData = {
@@ -342,11 +342,11 @@
 							$("#admin-wrap").html(data);
 						},
 						error: function(data,textStatus,jq) {
-							alert("刷新界面失败!");
+							n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 						}
 					})
     			} else {
-    			    alert(data.msg);
+					n = noty({text: "后台错误!", timeout: 2500, type: 'error'});
     			}
 	        },  
 		    error:function(data,textStatus,jq){
@@ -364,8 +364,6 @@
 		alterClassNameEN = myData.nameen;
 		parentId = myData.pid;
 		comId = myData.comid;
-		
-		console.log(parentId);
 		
 		if(myData.pid == 0) {
 			$("#modifyFaCategoryId").attr("disabled", true);
@@ -414,7 +412,7 @@
 							
 						},
 						error: function(data,textStatus,jq) {
-							alert("刷新界面失败!");
+							n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 						}
 					})
 				} else {
@@ -465,7 +463,7 @@
 				$("#admin-wrap").html(data);
 			},
 			error: function(data,textStatus,jq) {
-				alert("刷新界面失败!");
+				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 			}
 		})
 	})
@@ -495,7 +493,7 @@
 				$("#admin-wrap").html(data);
 			},
 			error: function(data,textStatus,jq) {
-				alert("刷新界面失败!");
+				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 			}
 		})
 	})
@@ -514,7 +512,7 @@
 				$("#admin-wrap").html(data);
 			},
 			error: function(data,textStatus,jq) {
-				alert("刷新界面失败!");
+				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 			}
 		})
 	})
@@ -536,7 +534,7 @@
 				$("#admin-wrap").html(data);
 			},
 			error: function(data,textStatus,jq) {
-				alert("刷新界面失败!");
+				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 			}
 		})
 	})

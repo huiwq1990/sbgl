@@ -210,8 +210,6 @@
 		var _this = $(this);
 		var gender = $("input[name|=inputGender]:checked").val();
 		
-		//alert(roleType);
-		
 		var postData = {
 			"userId": $!user.id,
 			"newGender": gender,
@@ -224,8 +222,6 @@
 		    data: postData,
 		    success:function(data,textStatus,jq){  
 				oldGender = gender;
-				//alert(data.tag);
-		    	//console.log(data);
 				if(data.tag == "0") {
 					if(gender == 0) {
 						$("#g").html("$!{textmap.baseinfo_sex_male}");
@@ -266,13 +262,11 @@
 		    success:function(data,textStatus,jq){  
 				oldEmail = email;
 				oldTel = tel;
-				//alert(data.tag);
 		    	console.log(data);
 				if(data.tag == "0") {
 					$("#e").html(email);
 					$("#p").html(tel);
 					
-					//alert(data.msg);
 					n = noty({text: data.msg, timeout: 2500, type: 'success'});
 		    		_this.parents('.modal').modal('toggle');
 				} else {

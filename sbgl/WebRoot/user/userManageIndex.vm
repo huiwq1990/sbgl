@@ -415,31 +415,31 @@
 			}
 			
 			if(userCode == "") {
-    			alert("编号不能为空!");
+				n = noty({text: "编号不能为空!", timeout: 2500, type: 'error'});
     			return;
     		}
     		if(userName == "") {
-    			alert("姓名不能为空!");
+				n = noty({text: "姓名不能为空!", timeout: 2500, type: 'error'});
     			return;
     		}
     		
     		var regex = /^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,3}|[0-9]{1,3})(\]?)$/;
     		var ret1 = regex.test(userMail);
     		if(userMail != "" && ret1 == false) {
-    			alert("邮箱地址格式错误！");
+				n = noty({text: "邮箱地址格式错误！", timeout: 2500, type: 'error'});
     			return;
     		}
     		
     		var regex2 = /(^[0-9]+-)?[0-9]+$/;
     		var ret3 = regex2.test(userTel);
     		if(userTel != "" && ret3 == false) {
-    			alert("请输入正确的联系方式！");
+				n = noty({text: "请输入正确的联系方式！", timeout: 2500, type: 'error'});
     			return;
     		}
 		
 		
     		if((userCode == alterUserCode && alterUserName == userName && alterUserPass == userPass && alterClazzId == userClazz && alterTel == userTel && alterMail == userMail && alterCan == userCould && alterGroupType == 2)) {
-    			alert("并未做修改！");
+				n = noty({text: "并未做修改！", timeout: 2500, type: 'error'});
 				return;
     		} else {
 				if(isStu) {
@@ -523,7 +523,7 @@
         				//console.log("****" + curPage);
         			},
         			error: function(data,textStatus,jq) {
-        				alert("刷新界面失败!");
+        				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
         			}
         		});
 	        },  
@@ -541,19 +541,16 @@
         	n = noty({text: "请等待头像上传完成！", timeout: 1000, type: 'success'});
     	},
         done: function (e, data) {
-			//n.close();
-			//console.log(n);
 			$("#modifyUser").removeAttr("disabled");
 			if(data.result.tag == 0) {
 				n = noty({text: "图片上传成功！", timeout: 1000, type: 'success'});
 				savedFileName = data.result.savedFileName;
 			} else if(data.result.tag == 1) {
-				alert(data.result.msg);
+				n = noty({text: data.result.msg, timeout: 2500, type: 'error'});
 				savedFileName = "avatar.jpg";
 			} else {
-				alert("上传图片失败！");
+				n = noty({text: "上传图片失败！", timeout: 2500, type: 'error'});
 			}
-            //alert(data.result.message);
         }
     });
 	
@@ -571,7 +568,6 @@
 			type: "post",
 			data: postData,
 			success: function(data,textStatus,jq) {
-				//alert(data.groupType);
 				if(data.groupType == "1") {
 					$("#inputStuClass").attr("disabled", false);
 					$("#inputStuCould").attr("disabled", false);
@@ -593,13 +589,12 @@
 				}
 			},
 			error: function(data,textStatus,jq) {
-				alert("刷新界面失败!");
+				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 			}
 		});
 	});
 	
 	$("body").on("click", "a[action-type|=delUser]", function() {
-		//alert(idsForDel);
 		var actionUrl = "";
 		var tip = "";
 		/*
@@ -638,8 +633,6 @@
             			"type": selectedType,
             			"curPage": -1
             		};
-            		//alert(selectedType);
-            		//alert(curPage);
             		jQuery.ajax({
             			url: "${webbaseurl}/flushIndex.do",  
             			type: "post",
@@ -654,7 +647,7 @@
             				curPage = $("#cp").html();
             			},
             			error: function(data,textStatus,jq) {
-            				alert("刷新界面失败!");
+            				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
             			}
             		});
     				
@@ -680,8 +673,6 @@
             			"type": selectedType,
             			"curPage": -1
             		};
-            		//alert(selectedType);
-            		//alert(curPage);
             		jQuery.ajax({
             			url: "${webbaseurl}/flushIndex.do",  
             			type: "post",
@@ -696,7 +687,7 @@
             				curPage = $("#cp").html();
             			},
             			error: function(data,textStatus,jq) {
-            				alert("刷新界面失败!");
+            				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
             			}
             		});
     				
@@ -723,8 +714,6 @@
             			"type": selectedType,
             			"curPage": -1
             		};
-            		//alert(selectedType);
-            		//alert(curPage);
             		jQuery.ajax({
             			url: "${webbaseurl}/flushIndex.do",  
             			type: "post",
@@ -739,7 +728,7 @@
             				curPage = $("#cp").html();
             			},
             			error: function(data,textStatus,jq) {
-            				alert("刷新界面失败!");
+            				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
             			}
             		});
     				
@@ -757,8 +746,6 @@
 	$("body").on("click", "li[action-type|=active]", function() {
 		selectedType = $(this).attr("id");
 		
-		//alert(selectedType);
-				
 		curPage = 1;
 		
 		var postData = {
@@ -778,26 +765,21 @@
 				
 				totalPage = $("#tp").html();
 				curPage = $("#cp").html();
-        		
-				//console.log("****" + curPage);
 			},
 			error: function(data,textStatus,jq) {
-				alert("刷新界面失败!");
+				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 			}
 		});
 	});
 	
 	//向前一页翻页
 	$("body").on("click", "a[action-type|=backPage]", function() {
-		//alert(curPage);
-		//alert(totalPage);
 		if(curPage - 1 <= 0 ) {
 			curPage = 1;
 			return;
 		} else {
 			curPage--;
 		}
-		//alert(currentPageNo);
 		var postData = {
 			"type": selectedType,
 			"curPage": curPage
@@ -817,21 +799,18 @@
 				curPage = $("#cp").html();
 			},
 			error: function(data,textStatus,jq) {
-				alert("刷新界面失败!");
+				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 			}
 		});
 	});
 	//向后一页翻页
 	$("body").on("click", "a[action-type|=nextPage]", function() {
-		//alert(curPage);
-		//alert(totalPage);
 		if(parseInt(curPage) + 1 > totalPage ) {
 			curPage = totalPage;
 			return;
 		} else {
 			curPage++;
 		}
-		//alert(currentPageNo);
 		var postData = {
 			"type": selectedType,
 			"curPage": curPage
@@ -851,7 +830,7 @@
 				curPage = $("#cp").html();
 			},
 			error: function(data,textStatus,jq) {
-				alert("刷新界面失败!");
+				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 			}
 		});
 	});
@@ -878,7 +857,7 @@
 				curPage = $("#cp").html();
 			},
 			error: function(data,textStatus,jq) {
-				alert("刷新界面失败!");
+				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 			}
 		});
 	});
@@ -905,7 +884,7 @@
 				curPage = $("#cp").html();
 			},
 			error: function(data,textStatus,jq) {
-				alert("刷新界面失败!");
+				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 			}
 		});
 	});

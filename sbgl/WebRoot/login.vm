@@ -6,10 +6,10 @@
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/todc-bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/jquery.noty.js"></script>
 <script >
 	function afterSubmit(flag,content){
-		//console.log(flag);
-		//alert(content);
 		if(flag != "fail"){
 			if(content == "firstLogin") {
 				location.href="./firstSetup.action";
@@ -20,7 +20,7 @@
 			}
 			
 		}else{
-			alert("登陆失败："+content);
+			n = noty({text: "登陆失败："+content, timeout: 2500, type: 'error'});
 		}
 	}
 </script>

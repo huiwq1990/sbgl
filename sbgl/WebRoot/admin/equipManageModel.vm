@@ -420,19 +420,19 @@
 			}
 			
 			if(modelName == "") {
-				alert("型号名不能为空！");
+				n = noty({text: "型号名不能为空！", timeout: 2500, type: 'error'});
 				return;
 			}
 			
 			if(clazzId == -1 || clazzId == "") {
-				alert("分类不能为空，若无分类可选请先在分类管理中建立分类！");
+				n = noty({text: "分类不能为空，若无分类可选请先在分类管理中建立分类！", timeout: 2500, type: 'error'});
 				return;
 			}
 			
 			var regex2 = /^[0-9]+(.[0-9]+)?$/;
 			var ret4 = regex2.test(rent);
     		if(ret4 == false && rent != "") {
-    			alert("租金输入格式错误！");
+				n = noty({text: "租金输入格式错误！", timeout: 2500, type: 'error'});
     			return;
     		}
 			
@@ -464,7 +464,7 @@
     			
     			actionUrl = "${webbaseurl}/addEquipModel.do";
 			} else {
-				alert("型号名称不能为空！");
+				n = noty({text: "型号名称不能为空！", timeout: 2500, type: 'error'});
 				return;
 			}
 		}
@@ -484,24 +484,24 @@
 			}
 			
 			if(ename == "") {
-				alert("型号名不能为空！");
+				n = noty({text: "型号名不能为空！", timeout: 2500, type: 'error'});
 				return;
 			}
 			
 			if(cidInput == -1 || cidInput == "") {
-				alert("分类不能为空，若无分类可选请先在分类管理中建立分类");
+				n = noty({text: "分类不能为空，若无分类可选请先在分类管理中建立分类", timeout: 2500, type: 'error'});
 				return;
 			}
 			
 			var regex2 = /^[0-9]+(.[0-9]+)?$/;
 			var ret4 = regex2.test(rent);
     		if(ret4 == false && rent != "") {
-    			alert("租金输入格式错误！");
+				n = noty({text: "租金输入格式错误！", timeout: 2500, type: 'error'});
     			return;
     		}
 			
 			if(ename == modelNameForAlter && modelCIdForAlter == cidInput && modelMemoForAlter == memo && localFileName == "" && modelBrandIdForAlter == brandId && enameEN == modelNameForAlterEN && modelMemoForAlterEN == memoEN && rentForAlter == rent && rentUnitForAlter == rentUnit) {
-    			alert("并未做修改或等待图片上传完毕！");
+    			n = noty({text: "并未做修改或等待图片上传完毕！", timeout: 2500, type: 'error'});
 				return;
     		} else {
 				postData = {
@@ -661,7 +661,7 @@
             				}
 						},
 						error: function(data,textStatus,jq) {
-							alert("刷新界面失败!");
+							n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 						}
 					})
 				} else {
@@ -705,7 +705,7 @@
 				$("#select-categories").select2("val", cid);
 			},
 			error: function(data,textStatus,jq) {
-				alert("刷新界面失败!");
+				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 			}
 		});
 	});
@@ -744,7 +744,7 @@
 				$("#select-categories").select2("val", cid);
 			},
 			error: function(data,textStatus,jq) {
-				alert("刷新界面失败!");
+				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 			}
 		});
 	});
@@ -773,7 +773,7 @@
 				$("#select-categories").select2("val", cid);
 			},
 			error: function(data,textStatus,jq) {
-				alert("刷新界面失败!");
+				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 			}
 		});
 	});
@@ -806,7 +806,7 @@
 				$("#select-categories").select2("val", cid);
 			},
 			error: function(data,textStatus,jq) {
-				alert("刷新界面失败!");
+				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 			}
 		});
 	});
@@ -844,10 +844,9 @@
 				if(currentPageNo == 0) {
 					currentPageNo = 1;
 				}
-				console.log("****" + currentPageNo);
 			},
 			error: function(data,textStatus,jq) {
-				alert("刷新界面失败!");
+				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 			}
 		});
 	});
@@ -867,11 +866,11 @@
 				$("#imgFileForAlter").html(localFileName);
 				$("#modifyEPic").prop('disabled', true);
 			} else if(data.result.tag == 1) {
-				alert("图片上传失败!");
+				n = noty({text: "图片上传失败!", timeout: 2500, type: 'error'});
 				localFileName = "nopic.jpg";
 				savedFileName = "nopic.jpg";
 			} else {
-				alert("上传图片失败！");
+				n = noty({text: "图片上传失败!", timeout: 2500, type: 'error'});
 			}
         }
     });
@@ -891,7 +890,7 @@
 				$("#imgFileForAdd").html(localFileName);
 				$("#inputEPic").prop('disabled', true);
 			} else if(data.result.tag == 1) {
-				alert("上传图片失败！");
+				n = noty({text: "图片上传失败!", timeout: 2500, type: 'error'});
 				localFileName = "nopic.jpg";
 				savedFileName = "nopic.jpg";
 			}
@@ -944,8 +943,8 @@
 			dataType: 'json',
 			success: function(jsondata){
 				if(jsondata.tag=="1") {
+					n = noty({text: "增加成功！", timeout: 2500, type: 'success'});
 					
-					alert("增加成功！");
 					_this.parents('.modal').modal('toggle');
 					 
 					var cid = $("#select-categories").val();
@@ -956,7 +955,7 @@
             		};
 					
 				} else {
-					alert("数据异常，增加失败！");
+					n = noty({text: "数据异常，增加失败！", timeout: 2500, type: 'error'});
 				}
 			}	  
 		});

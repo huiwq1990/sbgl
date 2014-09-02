@@ -240,16 +240,16 @@
 			}
 			
 			if(userCode == "") {
-    			alert("编号不能为空!");
+				n = noty({text: "编号不能为空!", timeout: 2500, type: 'error'});
     			return;
     		}
     		if(userName == "") {
-    			alert("姓名不能为空!");
+				n = noty({text: "姓名不能为空!", timeout: 2500, type: 'error'});
     			return;
     		}
     		
     		if(userCode == alterUserCode && alterUserName == userName && alterUserPass == userPass && alterPrivilege == userPrivilege && alterTel == userTel && alterMail == userMail && alterGroupId == userGroup && savedFileName == alterPhoto) {
-    			alert("并未做修改！");
+				n = noty({text: "并未做修改！", timeout: 2500, type: 'error'});
 				return;
     		} else {
 				postData = {
@@ -285,7 +285,6 @@
 	
 	
 	$("body").on("click", "a[action-type|=delUser]", function() {
-		//alert(idsForDel);
 		if(idsForDel != "") {
 			postData = {
 				managerIds: idsForDel

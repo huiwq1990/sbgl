@@ -230,40 +230,33 @@
 		var regex = /^[0-9]*$/;
 		var ret = regex.test(storenumber);
 		if(storenumber == '' || storenumber == undefined || storenumber == null) {
-			alert("库存条码不能为空！");
+			n = noty({text: "库存条码不能为空！", timeout: 2500, type: 'error'});
 			return;
 		}
 		//var ret1 = regex.test(assetNumber);
 		if(assetNumber == '' || assetNumber == undefined || assetNumber == null) {
-			alert("资产编号不能为空！");
+			n = noty({text: "资产编号不能为空！", timeout: 2500, type: 'error'});
 			return;
 		}
 		var regex2 = /^[0-9]+(.[0-9]+)?$/;
 		var ret3 = regex2.test(worth);
 		if(ret3 == false && worth != "") {
-			alert("金额输入格式错误！");
+			n = noty({text: "金额输入格式错误！", timeout: 2500, type: 'error'});
 			return;
 		}
 		
 		if(ci == "") {
-			alert("请选择分类！");
+			n = noty({text: "请选择分类！", timeout: 2500, type: 'error'});
 			return;
 		}
-		/*
-		console.log("detailNum " + detailNum);
-		console.log("state" + state);
-		console.log("modelId" + modelId);
-		console.log("memo" + memo);
-		console.log("administrationid" + cookie.Get("uid"));
-		*/
 		
 		if(assetNumber == "") {
-			alert("资产编号不能为空!");
+			n = noty({text: "资产编号不能为空!", timeout: 2500, type: 'error'});
 			return;
 		}
 		
 		if(modelId == -1 || modelId == "") {
-			alert("必须选择所属设备型号，若无型号请先在型号管理中创建!");
+			n = noty({text: "必须选择所属设备型号，若无型号请先在型号管理中创建!", timeout: 2500, type: 'error'});
 			return;
 		}
 		
@@ -292,7 +285,6 @@
 		    type: "post",
 		    data: postData,
 		    success:function(data,textStatus,jq){  
-		    	console.log(data);
 				if(data.tag == "0") {
 					n = noty({text: data.msg, timeout: 2500, type: 'success'});
 		    		_this.parents('.modal').modal('toggle');
@@ -326,7 +318,6 @@
 	//监听分类下拉菜单
 	$("body").on("change", "#inputEquipCategory", function() {
 		var cid = $("#inputEquipCategory").val();
-		console.log(cid);
 		var postData = {
     		"seletedClassId": cid
     	};
@@ -341,11 +332,11 @@
 				//$("#inputEquipCategory").select2("val", cid);
 			},
 			error: function(data,textStatus,jq) {
-				alert("刷新界面失败!");
+				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 			}
 		});
 	});
-	
+	/*
 	$('#uploadExcel').fileupload({
     	url: "${webbaseurl}/uploadExcelFile.do",
         dataType: 'json',
@@ -353,19 +344,16 @@
         	n = noty({text: "请等待数据添加完成！", type: 'success'});
     	},
         done: function (e, data) {
-			 n.close();
-            //console.log(data);
 			if(data.result.tag == 0) {
-				alert("数据已经添加到数据库中！");
+				n = noty({text: "数据已经添加到数据库中！", timeout: 2500, type: 'success'});
 			} else if(data.result.tag == 1) {
-				alert(data.result.msg);
+				n = noty({text: data.result.msg, timeout: 2500, type: 'error'});
 			} else {
-				alert("上传Excel失败！");
+				n = noty({text: "上传Excel失败！", timeout: 2500, type: 'error'});
 			}
-            //alert(data.result.message);
         }
     });
-	
+	*/
 </script>
 </body>
 </html>

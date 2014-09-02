@@ -218,8 +218,6 @@
 		$("#modifyUserGroupName").val(alterClazzName);
 		$("#modifyUserGroupType").select2("val", alterClazzType);
 		
-		//console.log(alterClazzId);
-		//console.log(alterClazzName);
 	});
 	
 	$('.modal').on('click', ('button.btn-primary'), function () {
@@ -231,8 +229,6 @@
 	    if(_this.attr('action-type') == 'addClazz') {
 	        var className = $("#inputUserGroupName").val();
 	        var classtype = $("#inputUserGroupType").val();
-    		//alert(className);
-    		//alert(classtype);
     		if(className != "") {
     			postData = {
     				"clazz.classname": className,
@@ -242,17 +238,17 @@
     			actionUrl = "${webbaseurl}/addAClazz.do";
     			tip = "添加班级成功！";
     		} else {
-    			alert("班级名称不能为空！");
+				n = noty({text: "班级名称不能为空！", timeout: 2500, type: 'error'});
 				return;
     		}
 	    }
 		
 		if(_this.attr('action-type') == 'modifyClazz') {
-	        var newClazzName = $("#modifyUserGroupName").val() == "" ? alterClassName : $("#modifyUserGroupName").val();
+	        var newClazzName = $("#modifyUserGroupName").val() == "" ? alterClazzName : $("#modifyUserGroupName").val();
 			var newClazzType = $("#modifyUserGroupType").val();
     		
     		if(alterClazzName == newClazzName && alterClazzType == newClazzType) {
-    			alert("并未做修改！");
+				n = noty({text: "并未做修改！", timeout: 2500, type: 'error'});
 				return;
     		} else {
     			postData = {
@@ -282,7 +278,6 @@
 	});
 	
 	$("body").on("click", "a[action-type|=delClazz]", function() {
-		//alert(idsForDel);
 		var postData = {
 			clazzIds: idsForDel,
 		}
@@ -330,7 +325,7 @@
 				
 			},
 			error: function(data,textStatus,jq) {
-				alert("刷新界面失败!");
+				n = noty({text: "刷新界面失败!", timeout: 2500, type: 'error'});
 			}
 		});
 	});
