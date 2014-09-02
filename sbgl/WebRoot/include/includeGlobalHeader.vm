@@ -33,7 +33,7 @@
 				class="active"
 			#end
 
-			><a href="${webbaseurl}/viewMyComputerorderList.${strutsaction}">${textmap.sitenavi_myorder}</a></li>
+			><a href="${webbaseurl}/equipOrdIndex.${strutsaction}">${textmap.sitenavi_myorder}</a></li>
         </ul>
 		<!--
         <form class="navbar-form navbar-left" role="search">

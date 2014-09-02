@@ -10,13 +10,7 @@
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
-<!--[if lt IE 9]>
-  <script src="../js/html5shiv.js"></script>
-  <script src="../js/respond.min.js"></script>
-<![endif]-->
-<!--[if IE 7]>
-<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
-<![endif]-->
+#parse("include/includePageCompatibility.vm")
 </head>
 
 <body id="admin">
@@ -102,32 +96,39 @@
 						<div class="rent-remark"><i class="icon-pencil"></i> $!equipmenborrowFull.remark</div>
 						#end
                       </div>
+					  #if($!equipmenborrowFull.teacherid)
                       <hr />
-                    </div>                      
-                  <ul class="media-list">
+					  #end
+					  #if($!equipmenborrowFull.examuser)
+					  <hr />
+					  #end
+                    </div>
                     #if($!equipmenborrowFull.teacherid)
-                      <li class="media">
-                        <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
+                    <ul class="media-list">
+					  <li class="media">
+                        <div class="pull-left">
                           <img src="${userImagePath}/$!userdetail2.photo" width="28" height="28" class="img-rounded">
-                        </a>
+                        </div>
                         <div class="media-body">
                           <div class="media-heading"><h5><a rel="popover" data-type="userdetail" data-id="$!equipmenborrowFull.teacherid" href="#">$!equipmenborrowFull.teacherName</a></h5><span class="post-time" title="详细时间">$!date.format("yyyy年MM月dd日", $!equipmenborrowFull.createtime)</span></div>
                           <a href="#" class="lk" title="查看详细说明" rel="tooltip">$!equipmenborrowFull.msgtitle</a>
                         </div>
                       </li>
+					</ul>
         			#end
         			#if($!equipmenborrowFull.examuser)
+					<ul class="media-list">
                       <li class="media">
-                        <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
+                        <div class="pull-left">
                           <img src="${userImagePath}/$!userdetail2.photo" width="28" height="28" class="img-rounded">
-                        </a>
+                        </div>
                         <div class="media-body">
                           <div class="media-heading"><h5><a rel="popover" href="#">$!equipmenborrowFull.examuserName</a></h5><span class="post-time" title="详细时间">$!date.format("yyyy-MM-dd hh:mm", $!equipmenborrowFull.examdate)</span></div>
                           <p>$!equipmenborrowFull.teachersuggest</p>
                         </div>
                       </li>
-        			 #end 
-                  </ul>                                            
+					 </ul>
+        			 #end                                             
                 </div>               
             </div>                    
       </div>
@@ -141,7 +142,7 @@
     <h3 id="myRejectLabel">驳回预约</h3>
   </div>
   <div class="modal-body">
-      <p>您确定要驳回XXX的预约申请吗？确定驳回预约申请，请在下方填写驳回原因，系统会将告知申请者。</p>
+      <p>您确定要驳回该预约申请吗？确定驳回预约申请，请在下方填写驳回原因，系统会将告知申请者。</p>
       <form class="form-horizontal" role="form">
         <div class="form-group">
           <label for="inputRejectReason" class="col-xs-3 control-label">驳回原因</label>
@@ -162,7 +163,7 @@
     <h3 id="myDeleteLabel">删除预约</h3>
   </div>
   <div class="modal-body">
-      <p>您确定要删除XXX的预约申请吗？删除预约申请后系统将会通知申请人该条预约申请已被删除，但申请人无法得知删除原因。</p>
+      <p>您确定要删除该预约申请吗？删除预约申请后系统将会通知申请人该条预约申请已被删除，但申请人无法得知删除原因。</p>
       <p>如申请者因提交的设备无法满足需要重新申请预约，建议使用驳回功能。</p>
   </div>
   <div class="modal-footer">
@@ -171,25 +172,7 @@
   </div>
 </div>
 
-<div id="popover_user_wrapper" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
-  <div class="cover-layout"></div>
-  <div class="avatar"><img src="${userImagePath}/$!userdetail.photo" width="80" height="80" class="img-circle"></div>
-  <div class="user-wrap">
-    <div class="user-name"><a href="#">$!userdetail.name</a></div>
-    <div class="user-info">$!userdetail.telephone</div>
-  </div>
-  <div class="contact-wrap"><a href="$!userdetail.email" title="发消息"><i class="icon-envelope"></i></a></div>
-</div>
 
-<div id="popover_user_wrapper2" style="display: none" onmouseover="$(this).mouseleave(function() {$(this).hide(); });">
-  <div class="cover-layout"></div>
-  <div class="avatar"><img src="${userImagePath}/$!userdetail2.photo" width="80" height="80" class="img-circle"></div>
-  <div class="user-wrap">
-    <div class="user-name"><a href="#">$!userdetail2.name</a></div>
-    <div class="user-info">$!userdetail2.telephone</div>
-  </div>
-  <div class="contact-wrap"><a href="$!userdetail2.email" title="发消息"><i class="icon-envelope"></i></a></div>
-</div>
 
     <!-- Le javascript
     ================================================== -->
@@ -197,34 +180,9 @@
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
 <script>
 
-
-	$('a[rel=popover2]').popover({
-		trigger: "manual",
-		html: true,
-		placement: 'bottom',
-		content: function() {
-			  return $('#popover_user_wrapper2').html();
-		}	
-	}).on("click", function(e) {
-		e.preventDefault();
-	}).on("mouseenter", function() {
-		var _this = this;
-		$(this).popover("show");
-		$(this).siblings(".popover").on("mouseleave", function() {
-			$(_this).popover('hide');
-		});
-	}).on("mouseleave", function() {
-		var _this = this;
-		setTimeout(function() {
-			if (!$(".popover:hover").length) {
-		  		$(_this).popover("hide");
-			}
-	  	}, 300);
-	});
 
 
 	$("body").on("click", "button[data-type|=deleteorder]", function() {
@@ -294,11 +252,6 @@
 	
 	
 </script>
-<!--[if lt IE 10]>
-  <script src="../js/jquery.placeholder.js"></script>
-  <script>
-  $('input, textarea').placeholder();
-  </script>
-<![endif]-->
+
 </body>
 </html>

@@ -44,10 +44,8 @@
         <div id="user-profile-info" class="media-body">
            <h4 class="profile-name media-heading">$!user.name</h4>
 		   #if($!stuClass != '')
-		   <h5>$!stuClass</h5>
+		   <div class="profile-more-info">$!stuClass</div>
 		   #end
-		  <!--
-          <div class="profile-more-info">2012级研究生 - 影像视觉效果研究方向</div>-->
         </div>
       </div>
     </div>
@@ -99,35 +97,35 @@
                   <div class="media-body">
                     <div class="media-heading">
 						<h5><a #if($!row.status==9) href="${webbaseurl}/equipmentBooking.do?borrowId=$!row.borrowid" #else href="${webbaseurl}/equipOrderContent.do?borrowId=$!row.borrowid" #end>$!row.title</a></h5>
-						<span>							  
-							  #if($!row.status==1)
-								$!{textmap.orderstatus_wait_submit}
-							  #elseif($!row.status==2)
-								$!{textmap.orderstatus_confirming}
-							  #elseif($!row.status==3)
-								$!{textmap.orderstatus_reject}
-							  #elseif($!row.status==4)
-								$!{textmap.orderstatus_passed_equipment}
-							  #elseif($!row.status==5)
-								$!{textmap.orderstatus_return_within_time_equipment}
-							  #elseif($!row.status==6)
-								$!{textmap.orderstatus_has_extended_equipment}
-							  #elseif($!row.status==7)
-								$!{textmap.orderstatus_part_damaged_equipment}
-							  #elseif($!row.status==8)
-								$!{textmap.orderstatus_completed}
-							  #elseif($!row.status==9)
-								$!{textmap.orderstatus_wait_submit_course_assignment}
-							  #end
-						</span>
+                        <span class="tag label label-important">
+    						#if($!row.category==1)
+    							$!{textmap.ordertype_personal}
+    						#elseif($!row.category==2)
+    							$!{textmap.ordertype_course_assignment}
+    						#end
+    					</span>
 					</div>
-                    <span class="tag label label-important">
-						#if($!row.category==1)
-							$!{textmap.ordertype_personal}
-						#elseif($!row.category==2)
-							$!{textmap.ordertype_course_assignment}
-						#end
-					</span>                  
+					<div class="status">							  
+						  #if($!row.status==1)
+							$!{textmap.orderstatus_wait_submit}
+						  #elseif($!row.status==2)
+							$!{textmap.orderstatus_confirming}
+						  #elseif($!row.status==3)
+							$!{textmap.orderstatus_reject}
+						  #elseif($!row.status==4)
+							$!{textmap.orderstatus_passed}
+						  #elseif($!row.status==5)
+							$!{textmap.orderstatus_return_within_time_equipment}
+						  #elseif($!row.status==6)
+							$!{textmap.orderstatus_has_extended_equipment}
+						  #elseif($!row.status==7)
+							$!{textmap.orderstatus_part_damaged_equipment}
+						  #elseif($!row.status==8)
+							$!{textmap.orderstatus_completed}
+						  #elseif($!row.status==9)
+							$!{textmap.orderstatus_wait_submit_course_assignment}
+						  #end
+					</div>                
                   </div>
                 </li>
 				#end 
@@ -147,16 +145,15 @@
                   <div class="media-body">
                     <div class="media-heading"><h5>
 						<a href="${webbaseurl}/viewComputerorder.${strutsaction}?computerorderId=$order.computerorderid">$order.computerordertitle</a></h5>
-						<span>
-							#set($curstatus = $order.computerorderstatus)
-							#parse("include/includeComputerorderStatusIndex.vm")
-						</span>
+                        <span class="tag label label-important">
+    					#set($currentcomputerorderordertype = $order.computerorderordertype)
+    					#parse("include/includeComputerorderType.vm")
+    					</span> 
 					</div>
-					
-                    <span class="tag label label-important">
-					#set($currentcomputerorderordertype = $order.computerorderordertype)
-					#parse("include/includeComputerorderType.vm")
-					</span>                  
+					<div class="status">
+						#set($curstatus = $order.computerorderstatus)
+						#parse("include/includeComputerorderStatusIndex.vm")
+					</div>
                   </div>
                 </li>
 				#else

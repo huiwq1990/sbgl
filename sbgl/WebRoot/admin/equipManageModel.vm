@@ -77,10 +77,10 @@
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
                     <th class="name">设备名称(型号)</th>
                     <th class="categories">分类</th>
-					<th class="categories">器材总数</th>
-					<th class="categories">可借总数</th>
-                    <th class="stock">合作器材公司</th>
                     <th class="describe">描述</th>
+                    <th class="stock">合作器材公司</th>
+					<th class="num">器材总数</th>
+					<th class="num">可借总数</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -97,10 +97,10 @@
 						$!model.cName
 						<br><small>$!model.cNameEN</small>
 					</td>
+                    <td>$!model.memo<br><small>$!model.memoEN</td>
+					<td>#if($!model.branId == "1")双塔影视#end</td>
 					<td>$!model.totalNum</td>
 					<td>$!model.rentNum</td>
-					<td>#if($!model.branId == "1")双塔影视#end</td>
-                    <td>$!model.memo<br><small>$!model.memoEN</td>
 				  #end
                   </tr>
                 #end  

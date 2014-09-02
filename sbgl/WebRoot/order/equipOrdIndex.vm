@@ -13,19 +13,7 @@
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="css/global.css" rel="stylesheet" type="text/css" />
 
-<!--[if lt IE 10]>
-  <script src="js/jquery.placeholder.js"></script>
-  <script>
-  $('input, textarea').placeholder();
-  </script>
-<![endif]-->
-<!--[if lt IE 9]>
-  <script src="js/html5shiv.js"></script>
-  <script src="js/respond.min.js"></script>
-<![endif]-->
-<!--[if IE 7]>
-<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
-<![endif]-->
+#parse("include/includePageCompatibility.vm")
 </head>
 
 <body>
@@ -59,9 +47,9 @@
                           <h4 class="pull-left"><a class="lk" href="${webbaseurl}/equipOrderContent.do?borrowId=$!row.borrowid">#if(!$row.title) ${textmap.order_tosubmitorders} #else $!row.title #end</a></h4>
                         </div>
                         <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i> ${textmap.order_equipment}<br/>#if($!row.category==1)
-							${textmap.order_personalappointment}
+							${textmap.ordertype_personal}
 						  #elseif($!row.category==2)
-							${textmap.order_teachingappointment}
+							${textmap.ordertype_course_assignment}
 						  #end</div>
                         <div class="caption">
                           <div class="rent-info">
@@ -83,7 +71,7 @@
 							  #elseif($!row.status==3)
 								<span class="label label-warning">${textmap.order_status}</span> ${textmap.orderstatus_reject}					
 							  #elseif($!row.status==4)
-								<span class="label label-success">${textmap.order_status}</span> ${textmap.orderstatus_passed_detail_equipment}						
+								<span class="label label-success">${textmap.order_status}</span> ${textmap.orderstatus_passed}						
 							  #elseif($!row.status==5)
 								<span class="label label-warning">${textmap.order_status}</span> ${textmap.orderstatus_return_within_time_equipment}					
 							  #elseif($!row.status==6)
@@ -139,7 +127,7 @@
 							  #elseif($!row2.status==3)
 								<span class="label label-warning">${textmap.order_status}</span> ${textmap.orderstatus_reject}
 							  #elseif($!row2.status==4)
-								<span class="label label-success">${textmap.order_status}</span> ${textmap.orderstatus_passed_equipment}
+								<span class="label label-success">${textmap.order_status}</span> ${textmap.orderstatus_passed}
 							  #elseif($!row2.status==5)
 								<span class="label label-warning">${textmap.order_status}</span> ${textmap.orderstatus_return_within_time_equipment}
 							  #elseif($!row2.status==6)

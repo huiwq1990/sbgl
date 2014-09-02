@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>北京电影学院摄影系 - 设备管理</title>
+<title>器材预约管理 - 北京电影学院摄影系</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -10,13 +10,7 @@
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
 
-<!--[if lt IE 9]>
-  <script src="../js/html5shiv.js"></script>
-  <script src="../js/respond.min.js"></script>
-<![endif]-->
-<!--[if IE 7]>
-<link rel="stylesheet" href="css/font-awesome-ie7.min.css">
-<![endif]-->
+#parse("include/includePageCompatibility.vm")
 
 #set($total = $!page.totalpage )
 #if($total == 0)
@@ -109,13 +103,13 @@
                     <td>$!row.borrowid</td>
                     <td>$!row.userName</td>
         			#if($!row.status==2)
-        			<td><a href="${webbaseurl}/equipmentExaming.do?borrowId=$row.borrowid" >$!row.title</a></td>
+        			<td><a href="${webbaseurl}/equipmentExaming.do?borrowId=$row.borrowid" target="_blank">$!row.title</a></td>
                     <td>待审核</td>
         			#elseif($!row.status==4)
-        			<td><a href="${webbaseurl}/orderalibrary.do?borrowId=$row.borrowid" >$!row.title</a></td>
+        			<td><a href="${webbaseurl}/orderalibrary.do?borrowId=$row.borrowid" target="_blank">$!row.title</a></td>
                     <td>待出库</td>  
         			#elseif($!row.status==5||$!row.status==6)
-        			<td><a href="${webbaseurl}/orderstorage.do?borrowId=$row.borrowid" >$!row.title</a></td>
+        			<td><a href="${webbaseurl}/orderstorage.do?borrowId=$row.borrowid" target="_blank">$!row.title</a></td>
                     <td>待入库</td> 
         			#elseif($!row.status==1||$!row.status==3)
         			<td><a href="#">$!row.title</a></td>
@@ -163,7 +157,6 @@
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa2.js"></script>
 <script >
 	$("body").on("click", "input[type='checkbox']", function() {
@@ -280,11 +273,6 @@
 		});
 	});
 </script>
-<!--[if lt IE 10]>
-  <script src="../js/jquery.placeholder.js"></script>
-  <script>
-  $('input, textarea').placeholder();
-  </script>
-<![endif]-->
+
 </body>
 </html>

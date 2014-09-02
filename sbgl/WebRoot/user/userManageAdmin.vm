@@ -28,15 +28,6 @@
             <div class="control-bar clearfix">
               <div class="title pull-left">管理员管理</div>
               <div class="tips">在此页面下管理管理员信息，如用管理员添加、修改、删除。</div>
-              <!-- <div class="filter user-group-filter">
-                <ul class="nav nav-tabs nav-tabs-google">
-                  <li><a href="#">其他</a></li>
-                  <li><a href="#">教师</a></li>
-                  <li><a href="#">学生</a></li>
-                  <li class="active"><a href="#">全部</a></li>
-                  
-                </ul>
-              </div> -->
               <div class="operate-item pull-left">
                 <a href="${webbaseurl}/userManageAdminAdd.do" class="btn btn-primary">添加管理员</a>
                 <a href="#" class="btn btn-white s-h" action-type="delUser"><i class="icon-trash"></i> 删除</a>
@@ -47,7 +38,7 @@
                 <thead>
                   <tr>
                     <th class="chk-column"><input id="chk-all" class="chk" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-                    <th class="name">编号</th>
+                    <th class="id">编号</th>
                     <th class="username">用户名</th>
                     <th class="user-group">用户组</th>
                     <th class="user-group">管理组</th>
@@ -103,10 +94,10 @@
     <h3 id="myModalLabel">修改</h3>
   </div>
   <div class="modal-body">
-    <p>修改管理员关信息。</p>
+    <p>修改管理员关所在的管理组。</p>
     <form class="form-horizontal" role="form">
 	  <div class="form-group">
-        <label for="inputStuClass" class="col-xs-3 control-label">管理组</label>
+        <label for="inputPrivilege" class="col-xs-3 control-label">管理组</label>
         <div class="col-xs-7">
           <select class="select2 select-white form-control" id="inputPrivilege">
 			<option value=1>系统管理员</option>
@@ -129,12 +120,8 @@
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
-<script src="${jsDomain}/fileUpload/vendor/jquery.ui.widget.js"></script>
-<script src="${jsDomain}/fileUpload/jquery.iframe-transport.js"></script>
-<script src="${jsDomain}/jquery.fileupload.js"></script>
 
 <script>
 	var alterUserId;		//修改用户id
@@ -296,29 +283,6 @@
 		});
 	});
 	
-	$('#modifyPhoto').fileupload({
-    	url: "${webbaseurl}/uploadUserPhoto.do",
-        dataType: 'json',
-		change: function (e, data) {
-			$("#modifyUser").attr("disabled", "disabled");
-        	n = noty({text: "请等待头像上传完成！", timeout: 1000, type: 'success'});
-    	},
-        done: function (e, data) {
-			//n.close();
-			console.log(n);
-			$("#modifyUser").removeAttr("disabled");
-			if(data.result.tag == 0) {
-				alert("图片上传完成！");
-				savedFileName = data.result.savedFileName;
-			} else if(data.result.tag == 1) {
-				alert(data.result.msg);
-				savedFileName = "";
-			} else {
-				alert("上传图片失败！");
-			}
-            //alert(data.result.message);
-        }
-    });
 	
 	$("body").on("click", "a[action-type|=delUser]", function() {
 		//alert(idsForDel);
