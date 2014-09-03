@@ -13,6 +13,7 @@
           <dd>$!equipmentFull.equipmentname</dd>
           <dt>$!{textmap.order_category}</dt>
           <dd>$!equipmentFull.categoryName</dd>
+		  <!--
           <dt>$!{textmap.order_numberofreservations}</dt>
           <dd>
             <div class="select-num">
@@ -27,6 +28,7 @@
               </select>
             </div>
           </dd>
+		  -->
           <dt>$!{textmap.order_equipintroduction}</dt>
           <dd>$!equipmentFull.equipmentdetail</dd>
         </dl>
