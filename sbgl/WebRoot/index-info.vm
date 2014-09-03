@@ -41,8 +41,9 @@
         </div>
         <div id="user-profile-info" class="media-body">
           <h4 class="profile-name media-heading">$!user.name</h4>
-		  <!--
-          <div class="profile-more-info">2012级研究生 - 影像视觉效果研究方向</div>-->
+		  #if($!stuClass != '')
+		   <div class="profile-more-info">$!stuClass</div>
+		  #end
         </div>
 		
       </div>

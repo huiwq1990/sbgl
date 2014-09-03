@@ -66,12 +66,12 @@
             </div>
           </li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
-            #set($user =  $request.getSession().getAttribute("loginUser"))
+        #set($user =  $request.getSession().getAttribute("loginUser"))
         #if($user.privilege == 1)
+        <ul class="nav navbar-nav navbar-right">
           <li><a href="${webbaseurl}/adminIndex.${strutsaction}"><i class="icon-dashboard"></i> ${textmap.sitenavi_manager}</a></li>
-        #end
         </ul>
+        #end
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
