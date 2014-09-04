@@ -252,7 +252,7 @@ public class FileUploadAction  extends ActionSupport {
 		}
 	
 		if(!fileType.toLowerCase().equals(".jpg") && !fileType.toLowerCase().equals(".png") &&!fileType.toLowerCase().equals(".gif")) {
-			returnInfo = "上传的文件格式不允许";
+			returnInfo = "上传的文件格式不允许，允许类型：jpg，png，gif。";
 			log.error(returnInfo);
 			this.tag = "1";
 			this.msg = "请上传图片格式的文件！";
