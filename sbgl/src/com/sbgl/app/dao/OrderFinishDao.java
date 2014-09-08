@@ -28,4 +28,6 @@ public interface OrderFinishDao {
 	public  Listequipdetail findlistequipdetail(Integer borrowId,Integer comId);
 	//用户详情
 	public Loginuser userdetail(Integer userId);
+	//判断归还时间到期是否归还
+	public void delay();
 }

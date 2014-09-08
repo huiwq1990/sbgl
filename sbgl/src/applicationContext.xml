@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:aop="http://www.springframework.org/schema/aop"	
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd  http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"
 	default-lazy-init="true" default-autowire="byName"> 
 	
@@ -47,6 +47,7 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
+
 	 
     <tx:advice id="txAdvice" transaction-manager="dbcpTxManager">
         <tx:attributes>
@@ -72,4 +73,25 @@
 	<context:component-scan base-package="com.sbgl.app.actions" use-default-filters="false" >  
 		<context:include-filter expression="org.springframework.stereotype.Controller" type="annotation"/> 
 	</context:component-scan>  
+	
+	
+	<!-- delay -->
+	<bean id="taskcj" class="com.sbgl.app.actions.order.OrderTask">
+	</bean>
+	<bean id="delayTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject"><ref bean="taskcj"/></property>
+		<property name="targetMethod"><value>run</value></property>
+	</bean>
+	<bean id="delayTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail"><ref bean="delayTask"/></property>
+		<property name="cronExpression"><value>0 0 2 * * ?</value></property>
+	</bean>
+    <bean id="startQuertz" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+           <list>
+           		 <!-- 索引 -->
+                 <ref bean="delayTaskTrigger"/>               
+           </list>
+        </property>
+     </bean>
 </beans>

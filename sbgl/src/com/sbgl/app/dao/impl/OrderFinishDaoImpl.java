@@ -49,7 +49,7 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 	
 	public List<EquipmentFull> findListBorrow(Integer borrowId,String lantype) {
 		// TODO Auto-generated method stub
-		final String sql = " select a.*,b.applynumber,c.name as categoryName from Equipment a left outer join ListDetail b on a.comid = b.equipmentid "
+		final String sql = " select a.*,b.applynumber,c.name as categoryName,b.borrownumber from Equipment a left outer join ListDetail b on a.comid = b.equipmentid "
 			+ " left outer join EquipmentClassification c on c.classificationid=a.comid and c.lantype='"+lantype+"' "
 			+ " where b.borrowlistid='"+borrowId+"'  and a.lantype='"+lantype+"' ";
 		List<EquipmentFull> equipmentFullList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
@@ -205,6 +205,15 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 			return list.get(0);
 		}
 		return null;
+	}
+
+	@Override
+	public void delay() {
+		// TODO Auto-generated method stub
+		String sql = " update listdetail a inner join equipmenborrow b on a.borrowlistid = b.borrowid and b.status not in (1,3) " +
+				" set a.ifdelay = 'Y' where now() > a.returntime and (a.borrownumber > 0 or (a.borrownumber is null and a.applynumber > 0)) and a.ifdelay = 'N' ";
+		Query query = this.getSessionFactory().getCurrentSession().createSQLQuery(sql);
+		query.executeUpdate();
 	}
 
 

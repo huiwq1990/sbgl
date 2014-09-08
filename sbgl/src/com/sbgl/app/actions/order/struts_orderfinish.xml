@@ -16,7 +16,8 @@
         </action>
         <!-- 进入设备预约详情页面 -->
 	 	<action name="equipOrderContent" class="OrderFinishAction" method="equipOrderContent">
-        	<result name="success">/order/equipOrderContent.vm</result>
+        	<result name="success">/order/equipOrderContent.vm</result>        	
+        	<result name="404">/404.vm</result>
         </action>
     </package>
     <package name="orderFinishAjax" extends="json-default">	

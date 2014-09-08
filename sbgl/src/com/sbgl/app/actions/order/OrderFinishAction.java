@@ -112,6 +112,9 @@ public class OrderFinishAction  extends ActionSupport  implements SessionAware {
 		}
 		equipmentList = orderFinishService.findListBorrow(borrowId,lantype);
 		equipmenborrowFull = orderFinishService.findEquipmenborrow(borrowId);
+		if(equipmenborrowFull==null){
+			return "404";
+		}
 		return SUCCESS;
 	}
 	//提交订单审核

@@ -82,4 +82,11 @@ public class OrderFinishServiceImpl  implements OrderFinishService  {
 		return true;
 	}
 
+
+	@Override
+	public void delay() {
+		// TODO Auto-generated method stub
+		orderFinishDao.delay();
+	}
+
 }

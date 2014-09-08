@@ -53,7 +53,7 @@
 		});
 			
 		$(window).load(function(){
-
+			
 			
 		
 			$('body').tooltip({
@@ -112,6 +112,8 @@
 					$("#rent-bar > #rent-list-wrap").show();
 				}
 			});
+			
+			
 			/* 添加设备按钮 */
 			$("body").on("click", "a[data-type|=addEquip]", function() {
 				var myData = $(this).data();
@@ -121,7 +123,8 @@
 				var eCate = myData.cate; //如果cate是-2则为设备组
 				var eSelectNum = 0;
 				if(maxNum == 0) {
-					eSelectNum = 0;
+					alert("设备数量为0无法添加");
+					return;
 				} else {
 					eSelectNum = 1;
 				}

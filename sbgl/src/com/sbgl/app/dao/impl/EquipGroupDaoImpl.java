@@ -21,13 +21,28 @@ public class EquipGroupDaoImpl extends HibernateDaoSupport implements EquipGroup
 	@Override
 	public List<EquipmentgroupFull> findEquipmentGroup(Page page) {
 		// TODO Auto-generated method stub
-		final String sql = " select a.* from EquipmentGroup a where a.lanType = '"+CommonConfig.languagechStr+"'" +
+		final String sql = " select a.*,b.equipmentname as equipmentnameeng from EquipmentGroup a left join EquipmentGroup b on a.comid = b.comid and b.lanType='"+CommonConfig.languageenStr+"' where a.lanType = '"+CommonConfig.languagechStr+"'  " +
 			" limit "+(((page.getPageNo()-1)*page.getPageSize()))+","+page.getPageSize();
 		try {
 			Query query =  this.getCurrentSession().createSQLQuery(sql);
 			query.setResultTransformer(new EscColumnToBean(EquipmentgroupFull.class));
 			List<EquipmentgroupFull> equipmentgroupFullList =query.list();
 			if(equipmentgroupFullList!=null&&!equipmentgroupFullList.isEmpty()){
+				for(EquipmentgroupFull equipmentgroupFull:equipmentgroupFullList){
+					String sql1 = "select CONCAT(a.equipmentname,'-',b.num) from equipment a inner join groupofequipment b on a.comid = b.equipmentid  where b.equipmentgroupid="+equipmentgroupFull.getComid()+" and a.lantype = 0";
+					Query query2 =  this.getCurrentSession().createSQLQuery(sql1);
+					List<String> list =query2.list();
+					StringBuffer str = new StringBuffer();
+					int size = list.size();
+					for(int i=0;i<size;i++){
+						String temp = list.get(i);
+						if(i!=0){
+							str.append("<br>");
+						}
+						str.append(temp);
+					}
+					equipmentgroupFull.setIntro(str.toString());
+				}
 				return equipmentgroupFullList; 
 			}
 		}catch(Exception e){

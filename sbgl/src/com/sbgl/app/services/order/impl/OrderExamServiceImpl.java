@@ -73,24 +73,26 @@ public class OrderExamServiceImpl implements OrderExamService {
 		equipmenborrow.setBorrowtime(new Date());
 		baseDao.updateEntity(equipmenborrow);		
 		for(int i=0;i<strs.length;i++){
-			Equipmentdetail equipmentdetail = baseDao.getEntityById(Equipmentdetail.class, Integer.parseInt(strs[i]));
-			Listdetail listdetail = new Listdetail();
-			listdetail =  orderFinishDao.findListDetail(borrowId,Integer.parseInt(strs[i]));
-			if(listdetail.getBorrownumber()==null||listdetail.getBorrownumber()==0){
-				listdetail.setBorrownumber(1);
-			}else{
-				listdetail.setBorrownumber(listdetail.getBorrownumber()+1);
+			if(strs[i]!=null&&!"".equals(strs[i])){
+				Equipmentdetail equipmentdetail = baseDao.getEntityById(Equipmentdetail.class, Integer.parseInt(strs[i]));
+				Listdetail listdetail = new Listdetail();
+				listdetail =  orderFinishDao.findListDetail(borrowId,Integer.parseInt(strs[i]));
+				if(listdetail.getBorrownumber()==null||listdetail.getBorrownumber()==0){
+					listdetail.setBorrownumber(1);
+				}else{
+					listdetail.setBorrownumber(listdetail.getBorrownumber()+1);
+				}
+				listdetail.setBorrowtime(equipmenborrow.getBorrowtime());
+				baseDao.updateEntity(listdetail);
+				Listequipdetail listequipdetail =  new Listequipdetail();
+				listequipdetail.setBorrowlistid(borrowId);
+				listequipdetail.setListequipdetailid(baseDao.getCode("Listequipdetail")); 
+				listequipdetail.setEquipdetailid(Integer.parseInt(strs[i]));
+				listequipdetail.setEquipmentid(equipmentdetail.getEquipmentid());
+				listequipdetail.setEquipstatus("0");
+				listequipdetail.setListdetailid(listdetail.getListdetailid());	
+				baseDao.saveEntity(listequipdetail);
 			}
-			listdetail.setBorrowtime(equipmenborrow.getBorrowtime());
-			baseDao.updateEntity(listdetail);
-			Listequipdetail listequipdetail =  new Listequipdetail();
-			listequipdetail.setBorrowlistid(borrowId);
-			listequipdetail.setListequipdetailid(baseDao.getCode("Listequipdetail")); 
-			listequipdetail.setEquipdetailid(Integer.parseInt(strs[i]));
-			listequipdetail.setEquipmentid(equipmentdetail.getEquipmentid());
-			listequipdetail.setEquipstatus("0");
-			listequipdetail.setListdetailid(listdetail.getListdetailid());	
-			baseDao.saveEntity(listequipdetail);
 		}	
 		return true;
 	}
