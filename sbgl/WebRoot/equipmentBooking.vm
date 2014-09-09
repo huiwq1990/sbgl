@@ -92,7 +92,7 @@
 						</div>
                         -->
 						<div class="add-btn">
-                          <a class="btn btn-white add-btn" data-type="addEquip" data-id="$!row3.comId" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" data-cate="$!row3.classificationid" href="javascript:;">$!{textmap.order_add}</a>
+                          <a class="btn btn-white btn-block" data-type="addEquip" data-id="$!row3.comId" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" data-cate="$!row3.classificationid" href="javascript:;">$!{textmap.order_add}</a>
 						</div>
                       </div>                  
                   </div>
