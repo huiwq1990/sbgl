@@ -327,7 +327,7 @@ $(function () {
 					'</div>';
 					
 				if ($("#rent-list #" + eId).length > 0) {
-					var str = "设备" + eName + "已添加！";
+					var str = "$!{textmap.order_equment}" + eName + "$!{textmap.order_beenadded}！";
 					var n = noty({text: str, timeout: 1000});
 				} else {
 					$("#rent-list").append(html);
@@ -336,7 +336,7 @@ $(function () {
 					$("#rent-list .spinner").on("click", ".spinner-up",function(){  // 处理达到最大预约数量时的消息提示
 						var curVal = $(this).spinner("value");
 						if(curVal >= maxNum) {
-							var str = eName + "已达最大可借数量!";
+							var str = eName + "$!{textmap.order_maximum}!";
 							var n = noty({text: str, timeout: 1500});					
 						}
 					});
@@ -431,7 +431,8 @@ $(function () {
 			   		$("#cl2"+cId).addClass('active');
 			   }
 			},error:function(){
-				alert("没有找到设备！");
+			
+				alert("$!{textmap.order_notfound}！");
 			}	  
 		});
 	});
@@ -486,7 +487,7 @@ $(function () {
 			   }
 			   $("#serachtext").val(serach);
 			},error:function(){
-				alert("没有找到设备！");
+				alert("$!{textmap.order_notfound}！");
 			}
 		});
 	});
@@ -514,7 +515,7 @@ $(function () {
 			   }
 			   $("#serachtext").val(serach);
 			},error:function(){
-				alert("没有找到设备！");
+				alert("$!{textmap.order_notfound}！");
 			}
 		});
 	});

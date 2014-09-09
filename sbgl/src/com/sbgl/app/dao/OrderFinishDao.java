@@ -28,6 +28,10 @@ public interface OrderFinishDao {
 	public  Listequipdetail findlistequipdetail(Integer borrowId,Integer comId);
 	//用户详情
 	public Loginuser userdetail(Integer userId);
+	//根据订单号获取订单详情
+	public List<Listdetail> quarylistdetails(Integer borrowId);
+	//根据订单号获取订单详情
+	public boolean ifborrow(Integer equipmentId,String fromDate,String endDate,Integer borrownum);
 	//判断归还时间到期是否归还
 	public void delay();
 }

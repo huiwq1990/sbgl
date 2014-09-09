@@ -326,6 +326,7 @@
 	});
 	
 	$("body").on("click", "button[action-type|=addGroup]", function() {	
+		var _this= $(this);
 		$.ajax({
 			url: "${webbaseurl}/addEquipmentGroup.do",
 			type: 'POST',
@@ -333,7 +334,6 @@
 			dataType: 'json',
 			success: function(jsondata){
 				if(jsondata.tag=="1") {		
-					$(this).parents('.modal').modal('toggle');
 					alert("增加成功！");
 					jQuery.ajax({  
             		    url:"${webbaseurl}/equipManageGroupContent.do",  
@@ -352,6 +352,7 @@
 				} else {
 					alert("数据异常，增加失败！");
 				}
+				_this.parents('.modal').modal('toggle');
 			}	  
 		});
 	});

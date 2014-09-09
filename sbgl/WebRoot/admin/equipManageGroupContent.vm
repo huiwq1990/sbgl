@@ -4,9 +4,6 @@
               <div class="title pull-left">型号管理</div>
 			  <div class="tips">在此页面下管理设备型号。设备型号包含每种设备的基本信息，如设备名、设备图片、设备资料介绍等等。</div>
               <div class="filter category-filter">
-                <select id="select-categories" style="width:130px" class="select2">
-                  <option value="-2" data-foo="fa">设备组</option>
-                </select>
               </div>
               <div class="operate-item pull-left">
                 <a href="#add-equip-basic-group" class="btn btn-primary" data-toggle="modal" role="button">添加基本设备组</a>

@@ -73,6 +73,9 @@ public class OrderFinishAction  extends ActionSupport  implements SessionAware {
 		}catch(Exception e){
 			tag = "2";
 			message = "提交订单失败";
+			if(e.getMessage().equals("设备数量不足")){
+				message = "设备数量不足";
+			}
 			log.error(e);
 		}
 		return SUCCESS;

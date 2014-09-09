@@ -144,7 +144,7 @@ public class OrderMainServiceImpl implements OrderMainService {
 			for(int i=0;i<temp1.length;i++){
 				if(i==0){
 					equipmenborrow.setBorrowtime(DateUtil.parseDate(fromDate));
-					equipmenborrow.setReturntime(DateUtil.parseDate(endDate));
+					equipmenborrow.setReturntime(DateUtil.endDay(DateUtil.parseDate(endDate)));
 				}
 				Listdetail listdetail = new Listdetail();
 				EquipmentFull equipmentFull = orderMainDao.findEquipmentById(Integer.parseInt(temp1[i]),fromDate,endDate,lantype);
@@ -156,7 +156,7 @@ public class OrderMainServiceImpl implements OrderMainService {
 					listdetail.setLantype(equipmentFull.getLanType());
 					listdetail.setComid(equipmentFull.getComId());
 					listdetail.setBorrowtime(DateUtil.parseDate(fromDate));
-					listdetail.setReturntime(DateUtil.parseDate(endDate)); 
+					listdetail.setReturntime(DateUtil.endDay(DateUtil.parseDate(endDate))); 
 					listdetail.setIfdelay("N");
 					baseDao.saveEntity(listdetail);
 				}else{
