@@ -580,7 +580,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 //		装载时间段的信息,界面上用于显示
 		periodList = BorrowperiodUtil.getBorrowperiodList(this.getCurrentLanguage());
 		periodMap = BorrowperiodUtil.getBorrowperiodMap(this.getCurrentLanguage());
-
+		System.out.println(orderInfoStr);
 		if(confirmOrderInfo(orderInfoStr) == false){
 //		if(session==null || !session.containsKey("computerordertype") || !session.containsKey("computerorderdetailFullList")){
 			actionMsg = this.getMsg("computerorderconfirm_orderinfoerror");
