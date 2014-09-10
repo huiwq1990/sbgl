@@ -265,6 +265,14 @@ public class DateUtil {
 		return calendar.getTime();
 	}
 	
+	public static Date endDay(Date inDate) {
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(inDate);	
+		calendar.add(Calendar.DATE, 1);
+		calendar.add(Calendar.MILLISECOND, -1000);
+		return calendar.getTime();
+	}
+	
 	/**
 	 * 
 	 * @param startDate

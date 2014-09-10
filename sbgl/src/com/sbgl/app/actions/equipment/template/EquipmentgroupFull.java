@@ -20,6 +20,9 @@ public class EquipmentgroupFull extends DaoAbs  {
 	private String imgnamesaved;
 	private String imgname;
 	private Integer applynumber;
+	private String equipmentnameeng;
+	private String intro;
+	
 	
 	public Integer getEquipmentgroupid() {
 		return equipmentgroupid;
@@ -110,5 +113,17 @@ public class EquipmentgroupFull extends DaoAbs  {
 	}
 	public void setApplynumber(Integer applynumber) {
 		this.applynumber = applynumber;
+	}
+	public String getEquipmentnameeng() {
+		return equipmentnameeng;
+	}
+	public void setEquipmentnameeng(String equipmentnameeng) {
+		this.equipmentnameeng = equipmentnameeng;
+	}
+	public String getIntro() {
+		return intro;
+	}
+	public void setIntro(String intro) {
+		this.intro = intro;
 	}
 }

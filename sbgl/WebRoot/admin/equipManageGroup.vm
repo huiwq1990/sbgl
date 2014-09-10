@@ -78,6 +78,7 @@
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
                     <th class="name">器材组名称</th>
 					<th class="describe">描述</th>
+					<th class="describe">设备详情</th>
                     <th class="stock">合作器材公司</th>
                   </tr>
                 </thead>
@@ -85,8 +86,9 @@
 				#foreach($model in $equipmentgroupFullList)
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!model.comid"></td>
-                    <td>$!model.equipmentname</td>
+                    <td>$!model.equipmentname<br>$!model.equipmentnameeng</td>
 					<td>$!model.equipmentdetail</td>
+					<td>$!model.intro</td>
 					<td>#if($!model.branId == "1")双塔影视#end</td>
                   </tr>
                 #end  
@@ -324,14 +326,14 @@
 	});
 	
 	$("body").on("click", "button[action-type|=addGroup]", function() {	
+		var _this= $(this);
 		$.ajax({
 			url: "${webbaseurl}/addEquipmentGroup.do",
 			type: 'POST',
 			data: $('#groupform').serialize(),
 			dataType: 'json',
 			success: function(jsondata){
-				if(jsondata.tag=="1") {
-					
+				if(jsondata.tag=="1") {		
 					alert("增加成功！");
 					jQuery.ajax({  
             		    url:"${webbaseurl}/equipManageGroupContent.do",  
@@ -350,6 +352,7 @@
 				} else {
 					alert("数据异常，增加失败！");
 				}
+				_this.parents('.modal').modal('toggle');
 			}	  
 		});
 	});

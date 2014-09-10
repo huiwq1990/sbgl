@@ -55,7 +55,7 @@
                     #set($anum = 0)
         			  #set($bnum = 0)
         			  #foreach($row in $!equipmentclassificationList)
-						#foreach($row4 in $!equipmentMap.get($row.classificationid))	
+						#foreach($row4 in $!equipmentMap.get($row.comid))	
 							 #set($bnum = $bnum+1)
 						#end
         				 #set($anum = $anum+1)
@@ -66,7 +66,7 @@
                   <div class="group group-hover">
                     <div class="group-hd p-lr-20">
 						#set($cnum = 0)
-						#foreach($row2 in $!equipmentMap.get($row.classificationid))	
+						#foreach($row2 in $!equipmentMap.get($row.comid))	
 							 #set($cnum = $cnum+1)
 						#end
                       <div class="group-name pull-left"><a data-toggle="collapse" href="#grp-1"><i class="icon-caret-down"> </i> $row.name ($!cnum 个)</a></div>
@@ -79,7 +79,7 @@
                       <div class="group-line"><hr></div>                      
                     </div>
                     <ul class="group-body media-list collapse in" id="grp-1">
-					#foreach($row2 in $!equipmentMap.get($row.classificationid))	
+					#foreach($row2 in $!equipmentMap.get($row.comid))	
 					  #foreach($row3 in $row2.equipDetailidlist)
                       <li class="media" data-id="$row3"   data-model-id="$!row2.comId" data-is-select="false">
                         <div class="stock-in-status is-select pull-right">
@@ -108,14 +108,6 @@
                     <h3>操作</h3>
                   </div>
                   <div class="caption">
-                      <p class="status">输入器材编号后单击“提交”按钮，完成全部器材的清点后单击“入库”按钮完成器材入库操作。<br>如遇器材损坏、丢失等情况需进一步填写相关信息。</p>
-                      <div role="form" class="form-inline">
-                        <div class="form-group">
-                          <label class="sr-only" for="inputEquipId">器材编号</label>
-                          <input type="email" class="form-control" id="inputEquipId" placeholder="输入器材编号">
-                        </div>
-                        <button type="submit" class="btn btn-white">提 交</button>
-                      </div>
                       <hr>
                       <a class="btn btn-primary" data-type="storageorder" data-id="$!equipmenborrowFull.borrowid" href="#">入 库</a>
                   </div>
@@ -131,8 +123,10 @@
                       #if($!equipmenborrowFull.teacherid)
                         <div class="rent-teacher">关联教师：<a rel="popover" href="#">$!equipmenborrowFull.teacherName</a></div>
         			#end
-                      <div class="rent-time"><i class="icon-time"></i>$date.format("yyyy年MM月dd日", $!equipmenborrowFull.borrowtime)  - $date.format("yyyy年MM月dd日", $!equipmenborrowFull.returntime)</div>
-                      <div class="rent-remark"><i class="icon-pencil"></i>  $!equipmenborrowFull.remark</div>
+                      <div class="rent-time"><i class="icon-time"></i>$date.format("yyyy年MM月dd日", $!equipmenborrowFull.borrowtime)  - $date.format("yyyy年MM月dd日", $!equipmenborrowFull.returntime)</div>				  
+					  #if(!$!equipmenborrowFull.remark&&$!equipmenborrowFull.remark!="")
+					  <div class="rent-remark"><i class="icon-pencil"></i>  $!equipmenborrowFull.remark</div>
+					  #end
                     </div>
                   </div>
                 </div>

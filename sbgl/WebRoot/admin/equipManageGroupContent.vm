@@ -4,9 +4,6 @@
               <div class="title pull-left">型号管理</div>
 			  <div class="tips">在此页面下管理设备型号。设备型号包含每种设备的基本信息，如设备名、设备图片、设备资料介绍等等。</div>
               <div class="filter category-filter">
-                <select id="select-categories" style="width:130px" class="select2">
-                  <option value="-2" data-foo="fa">设备组</option>
-                </select>
               </div>
               <div class="operate-item pull-left">
                 <a href="#add-equip-basic-group" class="btn btn-primary" data-toggle="modal" role="button">添加基本设备组</a>
@@ -43,23 +40,23 @@
             <div class="panel panel-default" id="modelDataDomain">
             
               <table class="table table-hover">
-                <thead>
+                 <thead>
                   <tr>
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
-                    <th class="name">设备名称(型号)</th>
-                    <th class="categories">分类</th>
+                    <th class="name">器材组名称</th>
+					<th class="describe">描述</th>
+					<th class="describe">设备详情</th>
                     <th class="stock">合作器材公司</th>
-                    <th class="describe">描述</th>
                   </tr>
                 </thead>
                 <tbody>
 				#foreach($model in $equipmentgroupFullList)
                   <tr>
                     <td><input class="chk" type="checkbox" name="chk-list" value="$!model.comid"></td>
-                    <td>$!model.equipmentname</td>
-					<td>设备组</td>
+                    <td>$!model.equipmentname<br>$!model.equipmentnameeng</td>
+					<td>$!model.equipmentdetail</td>
+					<td>$!model.intro</td>
 					<td>#if($!model.branId == "1")双塔影视#end</td>
-                    <td>$!model.equipmentdetail</td>
                   </tr>
                 #end  
                 </tbody>

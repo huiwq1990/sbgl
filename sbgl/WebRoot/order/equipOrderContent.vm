@@ -61,7 +61,11 @@
 			  #set($bnum = 0)
 			  #foreach($row in $!equipmentList)	
 				 #set($anum = $anum+1)
-				 #set($bnum = $bnum+$!row.applynumber)
+				 #if($!row.borrownumber&&$!row.borrownumber>0)
+					#set($bnum = $bnum+$!row.borrownumber)
+				 #else
+					#set($bnum = $bnum+$!row.applynumber)
+				 #end
 			  #end
               <div class="pull-right">${textmap.order_total} $!anum ${textmap.order_kindofeuip} $!bnum ${textmap.order_adevice}</div>
             </div>
@@ -72,7 +76,7 @@
                       <img src="$!{equipmentImagePath}/$!row2.imgNameSaved" width="46" height="46" class="img-rounded">
                     </a>
                     <div class="media-body">
-                      <div class="media-heading"><h5><a data-toggle="modal" href="#equip-detail" data-type="equipdetail" data-id="$!row2.comId" role="button">$!row2.equipmentname</a></h5><span>&times; $!row2.applynumber</span></div>
+                      <div class="media-heading"><h5><a data-toggle="modal" href="#equip-detail" data-type="equipdetail" data-id="$!row2.comId" role="button">$!row2.equipmentname</a></h5><span>&times; #if($!row2.borrownumber&&$!row2.borrownumber>0) $!row2.borrownumber #else $!row2.applynumber #end</span></div>
                       <p>$!row2.categoryName<p>
                     </div>
                   </li>
@@ -109,9 +113,11 @@
                 </div>
                 <hr />
 				#if($!equipmenborrowFull.status==1||$!equipmenborrowFull.status==3)
-                <a class="btn btn-primary" data-type="subexamorder" data-id="$!equipmenborrowFull.borrowid"  href="javascript:;">${textmap.order_appointmentstart}</a>
+                <a class="btn btn-primary" data-type="selectorder" data-id="$!equipmenborrowFull.borrowid"  href="javascript:;">${textmap.detail_modify}</a>
 				#end
+				#if($!equipmenborrowFull.status==1||$!equipmenborrowFull.status==3||$!equipmenborrowFull.status==2)
                 <a class="btn btn-white" data-type="deleteorder" data-id="$!equipmenborrowFull.borrowid" href="javascript:;">${textmap.order_del}</a> 
+				#end
             </div>
           </div>
           <div class="thumbnail">
@@ -215,6 +221,13 @@
 				}
 			}	  
 		});
+	});
+	$("body").on("click", "a[data-type|=selectorder]", function() {
+		var myData = $(this).data();
+    	var borrowId =  myData.id;
+    	var fromdate = '$date.format("yyyy-MM-dd ", $!equipmenborrowFull.borrowtime)';
+    	var enddate = '$date.format("yyyy-MM-dd ", $!equipmenborrowFull.returntime)';
+		location.href="equipmentBooking.do?borrowId="+borrowId+"&fromDate="+fromdate+"&endDate="+enddate;
 	});
 </script>
 

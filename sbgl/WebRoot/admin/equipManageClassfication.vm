@@ -346,7 +346,7 @@
 						}
 					})
     			} else {
-					n = noty({text: "后台错误!", timeout: 2500, type: 'error'});
+					n = noty({text: data.msg, timeout: 2500, type: 'error'});
     			}
 	        },  
 		    error:function(data,textStatus,jq){

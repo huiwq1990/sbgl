@@ -1,5 +1,6 @@
 package com.sbgl.app.dao.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.dao.OrderFinishDao;
@@ -49,7 +51,7 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 	
 	public List<EquipmentFull> findListBorrow(Integer borrowId,String lantype) {
 		// TODO Auto-generated method stub
-		final String sql = " select a.*,b.applynumber,c.name as categoryName from Equipment a left outer join ListDetail b on a.comid = b.equipmentid "
+		final String sql = " select a.*,b.applynumber,c.name as categoryName,b.borrownumber from Equipment a left outer join ListDetail b on a.comid = b.equipmentid "
 			+ " left outer join EquipmentClassification c on c.classificationid=a.comid and c.lantype='"+lantype+"' "
 			+ " where b.borrowlistid='"+borrowId+"'  and a.lantype='"+lantype+"' ";
 		List<EquipmentFull> equipmentFullList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
@@ -205,6 +207,62 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 			return list.get(0);
 		}
 		return null;
+	}
+
+	@Override
+	public void delay() {
+		// TODO Auto-generated method stub
+		String sql = " update listdetail a inner join equipmenborrow b on a.borrowlistid = b.borrowid and b.status not in (1,3) " +
+				" set a.ifdelay = 'Y' where now() > a.returntime and (a.borrownumber > 0 or (a.borrownumber is null and a.applynumber > 0)) and a.ifdelay = 'N' ";
+		Query query = this.getSessionFactory().getCurrentSession().createSQLQuery(sql);
+		query.executeUpdate();
+	}
+
+	@Override
+	public List<Listdetail> quarylistdetails(Integer borrowId) {
+		// TODO Auto-generated method stub
+		String sql1 = " select a.* from listdetail a where a.borrowlistid = '"+borrowId+"' ";
+		final String sql2 = sql1;
+		List<Listdetail> list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql2); 
+				query.setResultTransformer(new EscColumnToBean(Listdetail.class));
+				return query.list();
+			}
+		});	
+		if(list!=null&&!list.isEmpty()){
+			return list;
+		}
+		return null;
+	}
+
+	@Override
+	public boolean ifborrow(Integer equipmentId, String fromDate, String endDate,Integer borrownum) {
+		// TODO Auto-generated method stub
+		List<String> dateList = DateUtil.dateRegion(fromDate,endDate);
+		final Integer size = dateList.size();
+	    String sql = " select  " ;
+	    	for(int i=0;i<size;i++){
+	    		String dateTemp = dateList.get(i);
+	    		sql +="ifnull((select  a.activenum-sum(ifnull(ifnull(b.borrownumber,b.applynumber),0))),0) as aaa from ListDetail b left outer join Equipment a on b.comId=a.comId " 
+	    	    	+ " inner join equipmenborrow c on b.borrowlistid=c.borrowid and c.status not in (1,3)  "
+	    			+ " where a.comid='"+equipmentId+"' and a.lantype='"+CommonConfig.languagechStr+"' and (('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y')) group by a.comId  "  ;  
+	    	}
+		final String sql1 = sql;
+		List<BigDecimal> list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql1);
+				return query.list();
+			}
+		});	
+		if(list!=null&&!list.isEmpty()){
+			for(BigDecimal num :list){
+				if(num.intValue()<borrownum){
+					return false;
+				}
+			}
+		}	
+		return true;
 	}
 
 

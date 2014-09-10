@@ -318,11 +318,18 @@ $("body").on("click", "a[data-type|=deleteorder]", function() {
 				ids +=dataId+",";
 			});		
 		});
-		if(ids==","||ids==""){
+		ids = ids.substring(0,ids.length);
+		var ids2 = ids.split(',');
+		var flag=1;
+		for(var i=0;i<ids2.length;i++){
+			if(ids2[i]!=null&&ids2[i]!=""){
+				flag = 2;
+			}
+		}
+		if(flag==1){
 			alert("最少出库一个设备！");
 			return ;
 		}
-		ids = ids.substring(0,ids.length);
 		$.ajax({
 			url: "alibraryorder.do",
 			type: 'POST',
