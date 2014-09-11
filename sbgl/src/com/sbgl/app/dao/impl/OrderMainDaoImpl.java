@@ -97,6 +97,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		    for(int i=0;i<size;i++){
 	    		String dateTemp = dateList.get(i);
 	    		sql +="(select   sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa,b.comId from ListDetail b " 
+	    	    	+ " inner join equipmenborrow c on b.borrowlistid=c.borrowid and c.status not in (1,3)  "
 	    			+ " where  ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comId )  "  ;  
 	    		if(i!=size-1){
 	    			sql += " union ";
@@ -435,7 +436,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 
 	public List<EquipmenborrowFull> findFinishOrder(Integer userId) {
 		// TODO Auto-generated method stub
-		final String sql = " select a.* from EquipmenBorrow a where a.status in ('8') and a.userId='"+userId+"' ";
+		final String sql = " select a.* from EquipmenBorrow a where a.status in ('8') and a.userId='"+userId+"'  order by a.borrowtime desc ";
 		List<EquipmenborrowFull> equipmenborrowtList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(sql);
@@ -452,7 +453,8 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 
 	public List<EquipmenborrowFull> findUnderWayOrder(Integer userId) {
 		// TODO Auto-generated method stub
-		final String sql = " select case when a.status='9' then b.MsgTitle else a.title end title,a.*  from EquipmenBorrow a left outer join sendruletouser b on a.Sendruleid = b.Sendruleid where a.status !=8 and a.userid ='"+userId+"'  ";
+		final String sql = " select case when a.status='9' then b.MsgTitle else a.title end title,a.*  from EquipmenBorrow a left outer join sendruletouser b on a.Sendruleid = b.Sendruleid" +
+				" where a.status !=8 and a.userid ='"+userId+"' order by a.borrowtime desc ";
 		List<EquipmenborrowFull> equipmenborrowtList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(sql);
@@ -486,7 +488,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 			dealtype="'8'";
 		}
 		final String sql = " select a.*,b.name as userName from EquipmenBorrow a left outer join LoginUser b on a.userid=b.id " +
-				" where a.category in ('"+ordertype+"') and a.status in ("+dealtype+") limit "+(((page.getPageNo()-1)*page.getPageSize()))+","+page.getPageSize();
+				" where a.category in ('"+ordertype+"') and a.status in ("+dealtype+") order by a.borrowtime desc limit "+(((page.getPageNo()-1)*page.getPageSize()))+","+page.getPageSize();
 		try {
 			Query query =  this.getCurrentSession().createSQLQuery(sql);
 			query.setResultTransformer(new EscColumnToBean(EquipmenborrowFull.class));

@@ -24,6 +24,15 @@
 	var fromdate = "$!{fromDate}";
 	var enddate = "$!{endDate}";
 	var borrowId = "$!{borrowId}";
+	var order_equipmentgroupre = "$!{textmap.order_equipmentgroupre}";
+	var order_numberofdevicesbeyond = "$!{textmap.order_numberofdevicesbeyond}";
+	var order_equment = "$!{textmap.order_equment}";
+	var order_beenadded = "$!{textmap.order_beenadded}！";
+	var order_maximum = "$!{textmap.order_maximum}!";
+	var order_fillouttheappointment = "$!{textmap.order_fillouttheappointment}";
+	var order_forthenumber = "$!{textmap.order_forthenumber}";
+	
+	
 </script>
 </head>
 

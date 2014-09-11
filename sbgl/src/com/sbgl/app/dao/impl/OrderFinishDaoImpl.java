@@ -241,13 +241,19 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 		// TODO Auto-generated method stub
 		List<String> dateList = DateUtil.dateRegion(fromDate,endDate);
 		final Integer size = dateList.size();
-	    String sql = " select  " ;
-	    	for(int i=0;i<size;i++){
-	    		String dateTemp = dateList.get(i);
-	    		sql +="ifnull((select  a.activenum-sum(ifnull(ifnull(b.borrownumber,b.applynumber),0))),0) as aaa from ListDetail b left outer join Equipment a on b.comId=a.comId " 
-	    	    	+ " inner join equipmenborrow c on b.borrowlistid=c.borrowid and c.status not in (1,3)  "
-	    			+ " where a.comid='"+equipmentId+"' and a.lantype='"+CommonConfig.languagechStr+"' and (('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y')) group by a.comId  "  ;  
-	    	}
+		String sql = " select (select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
+	    for(int i=0;i<size;i++){
+    		String dateTemp = dateList.get(i);
+    		sql +="(select sum(ifnull(ifnull(b.borrownumber,b.applynumber),0))  as aaa,b.comId from ListDetail b " 
+    	    	+ " inner join equipmenborrow c on b.borrowlistid=c.borrowid and c.status not in (1,3)  "
+    			+ " where  ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comId )  "  ;  
+    		if(i!=size-1){
+    			sql += " union ";
+    		}
+    	}
+	    sql+= ")tempaa where tempaa.comId=a.comId) as borrownum from Equipment a  "
+			+ " where a.lanType = '"+CommonConfig.languagechStr+"' and a.comid='"+equipmentId+"'  ";
+		
 		final String sql1 = sql;
 		List<BigDecimal> list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
