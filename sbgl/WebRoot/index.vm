@@ -1,4 +1,4 @@
-#set($user =  $request.getSession().getAttribute("loginUser"))
+#set($user = $request.getSession().getAttribute("loginUser"))
 #set($currentposition= "home")
 #set($currentpositiontext= ${textmap.homeposition})	
 #set($stuClass =  $request.getSession().getAttribute("stuClass"))

@@ -54,6 +54,7 @@ import com.sbgl.app.entity.Computerstatus;
 import com.sbgl.app.entity.ComputerstatusFull;
 import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.entity.User;
+import com.sbgl.app.exception.ServiceDataCodeError;
 import com.sbgl.app.services.computer.ComputerhomeworkService;
 import com.sbgl.app.services.computer.ComputerhomeworkreceiverService;
 import com.sbgl.app.services.computer.ComputermodelService;
@@ -405,7 +406,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 
 //			管理员进行预约
 			if(computerordertype == ComputerorderInfo.IndividualOrder && this.isAdmin()){
-				boolean pass = validOrderForm(config);
+//				boolean pass = validOrderForm(config);
 
 //				if(!pass){
 //					returnInfo = "预约数量不能满足";
@@ -666,7 +667,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	}
 	
 //	验证表单数据是否满足
-	public boolean validOrderForm(Computerorderconfig config){
+	public boolean validOrderForm(Computerorderconfig config) throws Exception{
 		Date currentDate = DateUtil.currentDate();
 		int currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(currentDate);
 //		可以预约 n天之内的PC,结束日期是最大预约天数减一
@@ -682,7 +683,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	}
 	
 //	验证表单数据是否满足
-	public boolean validClassOrderForm(int computerhomeworkid){
+	public boolean validClassOrderForm(int computerhomeworkid) throws Exception{
 		
 		System.out.println("curcomputerhomeworkid"+curcomputerhomeworkid);
 		
@@ -784,6 +785,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 				return SUCCESS;
 			}
 		}else if(computerordertype == ComputerorderInfo.ClassOrder){
+//			捕获异常
 			boolean pass = validClassOrderForm(computerorder.getComputerhomeworkid());
 
 			if(!pass){
@@ -829,6 +831,10 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
+		}catch(ServiceDataCodeError e){
+			returnInfo = getMsg(e.getMessage());
+			returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn,returnInfo);
+			return SUCCESS;
 		}catch(Exception e){
 			e.printStackTrace();
 			log.error("addComputerorderAjax错误"+e);
@@ -842,7 +848,9 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	
 	
 //管理员抢占机房
-	public void adminForceGet(Computerorderconfig config){
+	public void adminForceGet(Computerorderconfig config) throws Exception{
+		
+		
 		Date currentDate = DateUtil.currentDate();
 		int currentPeriod = BorrowperiodUtil.getBorrowTimePeriod(currentDate);
 //		可以预约 n天之内的PC,结束日期是最大预约天数减一

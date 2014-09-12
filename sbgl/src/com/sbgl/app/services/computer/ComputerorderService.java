@@ -70,7 +70,7 @@ public interface ComputerorderService{
 				Date currentDate, int currentPeriod, Date endDate,
 				int endPeriod, int currentLanguage,
 				List<Borrowperiod> borrowperiodList,
-				int computeroderadvanceorderday);
+				int computeroderadvanceorderday) throws Exception;
 
 		int deleteComputerorder(List<Integer> orderidList) throws DataError;
 
@@ -79,7 +79,7 @@ public interface ComputerorderService{
 				Date currentDate, int currentPeriod, Date endDate,
 				int endPeriod, int currentLanguage,
 				List<Borrowperiod> borrowperiodList,
-				int computeroderadvanceorderday);
+				int computeroderadvanceorderday) throws Exception;
 
 		List<ComputerorderEntity> getUnderwayComputerorder(int userid);
 

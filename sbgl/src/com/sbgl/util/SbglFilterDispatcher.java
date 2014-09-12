@@ -27,6 +27,7 @@ public class SbglFilterDispatcher extends FilterDispatcher {
 	    private static String computerImagePath = PropertyUtil.readValue("/system.properties", "computerImagePath");
 	    private static String strutsaction = PropertyUtil.readValue("/system.properties", "strutsaction");
 	    private static String userImagePath = PropertyUtil.readValue("/system.properties", "userImagePath");
+	    private static String userImageUrl = PropertyUtil.readValue("/system.properties", "userImageUrl");
 	    private static String computerImageUrl = PropertyUtil.readValue("/system.properties", "computerImageUrl");
 	    ActionContext cnaplicaction = ActionContext.getContext();
 	@Override
@@ -55,6 +56,8 @@ public class SbglFilterDispatcher extends FilterDispatcher {
 		request.setAttribute("equipmentImagePath", equipmentImagePath);
 		request.setAttribute("computerImagePath", computerImagePath);
 		request.setAttribute("userImagePath", userImagePath);
+		
+		request.setAttribute("userImageUrl", userImageUrl);
 		request.setAttribute("computerImageUrl", computerImageUrl);
 		request.setAttribute("strutsaction", strutsaction);
 		String lan = (String) request.getSession().getAttribute(CommonConfig.sessionLanguagetype);

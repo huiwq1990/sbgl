@@ -56,7 +56,8 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
 		}
 		
 		return list;
-	}	
+	}
+	
 	@Override
 	public List<ComputermodelFull> selFullByCategorytype(int categoryType,int language){
 		String sqlch = " where a.status >=0 " +
@@ -89,7 +90,32 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
 		return list;
 	}
 	
-
+	/**
+	 * 根据模型类型查询模型
+	 * 
+	*/
+	@Override
+	public List<Computermodel> selByModeltypeList(List<Integer> modeltypeList,int language){
+		if(modeltypeList==null || modeltypeList.size()==0){
+			return new ArrayList<Computermodel>();
+		}
+		
+		String insql=" ( -100 ";
+		for(Integer type : modeltypeList){
+			insql+=","+type;
+		}
+		insql+=")";
+		String sqlch = " where a.status >=0 " +
+						  " and a.languagetype="+language+
+						  " and a.computermodeltype in "+insql+
+						  " order by a.computermodeltype,a.languagetype";		
+		ArrayList<Computermodel> list  = (ArrayList<Computermodel>) selectComputermodelByCondition(sqlch );
+		if(list == null){
+			list = new ArrayList<Computermodel>();
+		}
+		
+		return list;
+	}
 	
 	@Override
 	public int countRow(String condition) {

@@ -83,6 +83,10 @@ public List<Computerorderdetail> selectComputerorderdetailByCondition(String con
 
 	int getOrderTime(int orderid);
 
+	List<Computerorderdetail> selectValidComputerorderdetailFromStartToEndByModel(
+			Date startDate, int startPeriod, Date endDate, int endPeriod,
+			List<Integer> modeltypeList);
+
 
 
  

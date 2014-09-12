@@ -69,12 +69,12 @@ public interface ComputerorderdetailService{
 
 	int execSql(String sql);
 
-	List<Computerorderdetail> selectBookedComputerorderdetailFromStartToEnd(
-			String startDay, int startPeriod, String endDay, int endPeriod);
-
-	List<Computerorderdetail> selectBookedComputerorderdetailByModeltypeFromStartToEnd(
-			String startDay, int startPeriod, String endDay, int endPeriod,
-			String modeltypes);
+//	List<Computerorderdetail> selectBookedComputerorderdetailFromStartToEnd(
+//			String startDay, int startPeriod, String endDay, int endPeriod);
+//
+//	List<Computerorderdetail> selectBookedComputerorderdetailByModeltypeFromStartToEnd(
+//			String startDay, int startPeriod, String endDay, int endPeriod,
+//			String modeltypes);
 
 	List<Computerorderdetail> selectValidComputerorderdetailFromStartToEnd(
 			Date startDate, int startPeriod, Date endDate, int endPeriod);

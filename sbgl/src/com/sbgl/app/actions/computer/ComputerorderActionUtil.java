@@ -93,15 +93,31 @@ public class ComputerorderActionUtil {
 		
 		for(Computerorderdetail od : haveOrderedValidComputerorderdetailList){
 			int between = DateUtil.daysBetween(currentDate,od.getBorrowday());
-			System.out.println("model: "+od.getComputermodelid()+"; day: "+od.getBorrowday()+"; period: "+od.getBorrowperiod());
-			int newcount = availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).get(between) - od.getBorrownumber();
+//			System.out.println("model: "+od.getComputermodelid()+"; day: "+od.getBorrowday()+"; period: "+od.getBorrowperiod());
+			if(!availableBorrowModelMap.containsKey(od.getComputermodelid()) || !availableBorrowModelMap.get(od.getComputermodelid()).containsKey(od.getBorrowperiod()) ){
+				return false;
+			}
+			
+			List<Integer> modelDayAvailList = availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod());
+
+			int newcount =modelDayAvailList.get(between) - od.getBorrownumber();
 			availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).set(between, newcount);
 		}
 		
 		for(Computerorderdetail od : newOrderComputerorderdetailList){
 			int between = DateUtil.daysBetween(currentDate,od.getBorrowday());
 //			log.info("model: "+od.getComputermodelid()+"; day: "+od.getBorrowday()+"; period: "+od.getBorrowperiod());
-			int newcount = availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).get(between) - od.getBorrownumber();
+			
+			if(!availableBorrowModelMap.containsKey(od.getComputermodelid()) || !availableBorrowModelMap.get(od.getComputermodelid()).containsKey(od.getBorrowperiod()) ){
+				return false;
+			}
+			
+			List<Integer> modelDayAvailList = availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod());
+			if(modelDayAvailList==null || modelDayAvailList.size()==0 || (modelDayAvailList.size()-1)<between){
+				return false;
+			}
+			
+			int newcount = modelDayAvailList.get(between) - od.getBorrownumber();
 			if(newcount < 0){
 				return false;
 			}

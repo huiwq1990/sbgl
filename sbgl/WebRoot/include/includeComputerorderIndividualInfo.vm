@@ -27,7 +27,7 @@
                       
 					<li class="media">
                       <div class="pull-left">
-                        <img src="$imgtool.url("user","$!computerorderFull.audituserphoto")" width="28" height="28" class="img-rounded">
+                        <img src="${userImageUrl}/$!{computerorderFull.audituserphoto}" width="28" height="28" class="img-rounded">
 							<!--src="$imgtool.url("user","$!computerorderFull.audituserpicpath")" -->
                       </div>
                       <div class="media-body">

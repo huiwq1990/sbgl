@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import com.sbgl.app.entity.Borrowperiod;
@@ -15,6 +16,8 @@ import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
+import com.sbgl.app.exception.ServiceDataCodeError;
+import com.sbgl.app.exception.ServiceDataError;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.computer.ComputerorderActionUtil;
@@ -189,37 +192,48 @@ public class ComputerorderServiceImpl implements ComputerorderService {
 			List<Computerorderdetail> newOrderComputerorderdetailList,
 			Date currentDate, int currentPeriod, Date endDate, int endPeriod,
 			int currentLanguage, List<Borrowperiod> borrowperiodList,
-			int computeroderadvanceorderday) {
+			int computeroderadvanceorderday) throws Exception {
 
-		// 查找所有的模型
-		List<Computermodel> computermodelList = new ArrayList<Computermodel>();
-		String getAllComputermodelTypeSql = " where a.languagetype="
-				+ CommonConfig.languagech + " ";
-		computermodelList = computermodelDao
-				.selectComputermodelByCondition(getAllComputermodelTypeSql);
+		List<Integer> modeltypeList = new ArrayList<Integer>();
+		for (Computerorderdetail cod : newOrderComputerorderdetailList){
+			modeltypeList.add(cod.getComputermodelid());
+		}
+		// 预约的模型信息
+		List<Computermodel> computermodelList = computermodelDao.selByModeltypeList(modeltypeList, CommonConfig.languagech);
 
-		// 根据模型构建 模型、时间段、日期的map
 		HashMap<Integer, HashMap<Integer, ArrayList<Integer>>> availableBorrowModelMap = ComputerorderActionUtil
-				.computermodelPeriodDayInfo(computermodelList, currentPeriod,
-						borrowperiodList, computeroderadvanceorderday);
-		// 获取已经预约的表单
-		List<Computerorderdetail> haveOrderedValidComputerorderdetailList = computerorderdetailDao
-				.selectValidComputerorderdetailFromStartToEnd(currentDate,
-						currentPeriod, endDate, endPeriod);
-		// 剩余的数量
-		for (Computerorderdetail od : haveOrderedValidComputerorderdetailList) {
+		.computermodelPeriodDayInfo(computermodelList, currentPeriod,
+				borrowperiodList, computeroderadvanceorderday);
+		
+		for (Computerorderdetail od : newOrderComputerorderdetailList) {
 			int between = DateUtil.daysBetween(currentDate, od.getBorrowday());
-			System.out.println("model: " + od.getComputermodelid() + "; day: "
-					+ od.getBorrowday() + "; period: " + od.getBorrowperiod());
+			if(od.getBorrownumber() > availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).get(between) ){
+				throw new ServiceDataError("computerclassorder_ordernumexceedmaxnum");
+			}				
+		}
+
+		//获取已经预约的、模型预约模型的表单详情
+		List<Computerorderdetail> haveOrderedValidComputerorderdetailList = computerorderdetailDao
+		.selectValidComputerorderdetailFromStartToEndByModel(currentDate,
+				currentPeriod, endDate, endPeriod,modeltypeList);
+		
+		// 剩余的数量
+		for (Computerorderdetail od : haveOrderedValidComputerorderdetailList){
+			int between = DateUtil.daysBetween(currentDate, od.getBorrowday());
+//			System.out.println("model: " + od.getComputermodelid() + "; day: "
+//					+ od.getBorrowday() + "; period: " + od.getBorrowperiod());
 			int newcount = availableBorrowModelMap.get(od.getComputermodelid())
 					.get(od.getBorrowperiod()).get(between)
 					- od.getBorrownumber();
 			availableBorrowModelMap.get(od.getComputermodelid())
 					.get(od.getBorrowperiod()).set(between, newcount);
 		}
+		
+		
 		// 查找要删除的订单详情
 		List<Computerorderdetail> delComputerorderdetailList = new ArrayList<Computerorderdetail>();
 		for (Computerorderdetail od : newOrderComputerorderdetailList) {
+
 			int between = DateUtil.daysBetween(currentDate, od.getBorrowday());
 			log.info("需要抢占机房: " + od.getComputermodelid() + "; day: "
 					+ od.getBorrowday() + "; period: " + od.getBorrowperiod());
@@ -270,30 +284,42 @@ public class ComputerorderServiceImpl implements ComputerorderService {
 
 	/**
 	 * 验证表单中的预约数量能否满足
+	 * @throws Exception 
 	 */
 	@Override
 	public boolean vaildComputerorderForm(
 			List<Computerorderdetail> newOrderComputerorderdetailList,
 			Date currentDate, int currentPeriod, Date endDate, int endPeriod,
 			int currentLanguage, List<Borrowperiod> borrowperiodList,
-			int computeroderadvanceorderday) {
-
-		// 查找所有的模型
-		List<Computermodel> computermodelList = new ArrayList<Computermodel>();
-		String getAllComputermodelTypeSql = " where a.languagetype="
-				+ CommonConfig.languagech + " ";
-		computermodelList = computermodelDao
-				.selectComputermodelByCondition(getAllComputermodelTypeSql);
+			int computeroderadvanceorderday) throws Exception {
+		
+		List<Integer> modeltypeList = new ArrayList<Integer>();
+		for (Computerorderdetail cod : newOrderComputerorderdetailList){
+			modeltypeList.add(cod.getComputermodelid());
+		}
+		// 预约的模型信息
+		List<Computermodel> computermodelList = computermodelDao.selByModeltypeList(modeltypeList, CommonConfig.languagech);
 
 		// 根据模型构建 模型、时间段、日期的map
 		HashMap<Integer, HashMap<Integer, ArrayList<Integer>>> availableBorrowModelMap = ComputerorderActionUtil
 				.computermodelPeriodDayInfo(computermodelList, currentPeriod,
 						borrowperiodList, computeroderadvanceorderday);
-
-		// 获取已经预约的表单
+		
+		for (Computerorderdetail od : newOrderComputerorderdetailList) {
+			int between = DateUtil.daysBetween(currentDate, od.getBorrowday());
+			if(between <0){
+				throw new ServiceDataCodeError("computerclassorder_orderdateisbeforecurrentdate");
+			}
+//			System.out.println(od.getComputermodelid() + " "+between);
+			if(od.getBorrownumber() > availableBorrowModelMap.get(od.getComputermodelid()).get(od.getBorrowperiod()).get(between) ){
+				throw new ServiceDataCodeError("computerclassorder_ordernumexceedmaxnum");
+			}				
+		}
+		
+		// 获取已经预约的表单，并且模型是预约的模型
 		List<Computerorderdetail> haveOrderedValidComputerorderdetailList = computerorderdetailDao
-				.selectValidComputerorderdetailFromStartToEnd(currentDate,
-						currentPeriod, endDate, endPeriod);
+				.selectValidComputerorderdetailFromStartToEndByModel(currentDate,
+						currentPeriod, endDate, endPeriod,modeltypeList);
 
 		return ComputerorderActionUtil.checkVaildComputerorderForm(
 				availableBorrowModelMap,

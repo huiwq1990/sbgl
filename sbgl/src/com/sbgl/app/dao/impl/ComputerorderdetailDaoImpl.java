@@ -114,7 +114,7 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	 */
 	@Override
 	public void delByComputerorderid(int computerorderid){
-		String sql = " delete computerorderdetail where computerorderid = "+computerorderid;
+		String sql = " delete from computerorderdetail where computerorderid = "+computerorderid;
 		try {
 			Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
 	         Query query = session.createSQLQuery(sql);
@@ -242,6 +242,17 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 
     }
     
+    @Override
+	public List<Computerorderdetail> selectValidComputerorderdetailFromStartToEndByModel(Date startDate, int startPeriod, Date endDate, int endPeriod,List<Integer> modeltypeList){
+    	
+        String insql="  -100 ";
+    	for(Integer type : modeltypeList){
+    		insql+=","+type;
+    	}   	
+        
+    	return this.selectValidComputerorderdetailFromStartToEndByModel(startDate, startPeriod, endDate, endPeriod, insql);
+    }
+    
     
     /**
      * 
@@ -274,6 +285,8 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
             return selectComputerorderdetailFullByCondition(cond);
 
     }
+    
+    
     
     /**
      * 查询有效的订单，即状态为待审核及审核通过的
