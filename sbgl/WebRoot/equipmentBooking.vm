@@ -407,15 +407,15 @@ $(function () {
 			   $(".classification2").removeClass('active');
 			   if(ctype=='1'){
 			   		$("#cl1"+parentid).addClass('active');	
-			   		$("#cl20").addClass('active');			
+			   		$("#cl20").addClass('active');
 			   }else{	  
 			   		$("#cl1"+parentid).addClass('active');
 			   		$("#cl2"+cId).addClass('active');
 			   }
 			},error:function(){
-			
-				alert("$!{textmap.order_notfound}！");
-			}	  
+				var n = noty({text: '$!{textmap.order_notfound}！', timeout: 2500, type: 'error'});	
+				//alert("$!{textmap.order_notfound}！");
+			}
 		});
 	});
 	
@@ -434,13 +434,12 @@ $(function () {
 			   $(".classification2").removeClass('active');
 			   if(ctype=='1'){
 			   		$("#cl1"+parentid).addClass('active');	
-			   		$("#cl20").addClass('active');			
+			   		$("#cl20").addClass('active');	
 			   }else{	  
 			   		$("#cl1"+parentid).addClass('active');
 			   		$("#cl2"+cId).addClass('active');
 			   }
 			},error:function(XMLHttpRequest, textStatus, errorThrown){
-				
 				
 			}	  
 		});
@@ -461,15 +460,16 @@ $(function () {
 			   $(".classification1").removeClass('active');
 			   $(".classification2").removeClass('active');
 			   if(ctype=='1'){
-			   		$("#cl1"+parentid).addClass('active');	
-			   		$("#cl20").addClass('active');			
+			   		$("#cl1"+parentid).addClass('active');
+			   		$("#cl20").addClass('active');
 			   }else{	  
 			   		$("#cl1"+parentid).addClass('active');
 			   		$("#cl2"+cId).addClass('active');
 			   }
 			   $("#serachtext").val(serach);
 			},error:function(){
-				alert("$!{textmap.order_notfound}！");
+				//alert("$!{textmap.order_notfound}！");
+				var n = noty({text: '$!{textmap.order_notfound}！', timeout: 2500, type: 'error'});	
 			}
 		});
 	});
@@ -497,7 +497,8 @@ $(function () {
 			   }
 			   $("#serachtext").val(serach);
 			},error:function(){
-				alert("$!{textmap.order_notfound}！");
+				//alert("$!{textmap.order_notfound}！");
+				var n = noty({text: '$!{textmap.order_notfound}！', timeout: 2500, type: 'error'});	
 			}
 		});
 	});
