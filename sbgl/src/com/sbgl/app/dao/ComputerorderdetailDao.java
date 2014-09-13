@@ -29,18 +29,6 @@ public List<Computerorderdetail> selectComputerorderdetailByCondition(String con
 	public List<ComputerorderdetailFull> selectComputerorderdetailFullByPage(Page page);
 
 
-
-	//根据关联查询实体 
-	public List<Computerorderdetail> selectComputerorderdetailByComputerorderId(Integer computerorderid );
-	//根据关联查询实体 
-	public List<Computerorderdetail> selectComputerorderdetailByComputermodelId(Integer computermodelid );
-	//根据关联查询实体 
-	public List<Computerorderdetail> selectComputerorderdetailByComputerId(Integer computerid );
-
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerorderId(Integer computerorderid );
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputermodelId(Integer computermodelid );
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerId(Integer computerid );
-
 	int deleteComputerorderdetailByCondition(String condition);
 
 	public List<Computerorderdetail> selectValidComputerorderdetailFromStartToEnd(
@@ -86,6 +74,8 @@ public List<Computerorderdetail> selectComputerorderdetailByCondition(String con
 	List<Computerorderdetail> selectValidComputerorderdetailFromStartToEndByModel(
 			Date startDate, int startPeriod, Date endDate, int endPeriod,
 			List<Integer> modeltypeList);
+
+	void delById(List<Integer> idList);
 
 
 

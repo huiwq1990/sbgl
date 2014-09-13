@@ -268,11 +268,13 @@ public class ComputerorderServiceImpl implements ComputerorderService {
 			// newcount);
 		}
 
+		
+		List<Integer> orderdetailIdList = new ArrayList<Integer>();
 		for (Computerorderdetail odDel : delComputerorderdetailList) {
-			log.info("delComputerorderdetailList: " + odDel.getId());
-			baseDao.deleteEntity(odDel);
-			// computerorderdetailDao.delById(odDel.getId());
+			orderdetailIdList.add(odDel.getId());
 		}
+		computerorderdetailDao.delById(orderdetailIdList);
+		// computerorderdetailDao.delById(odDel.getId());
 
 		return delComputerorderdetailList;
 

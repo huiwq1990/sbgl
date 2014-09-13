@@ -322,39 +322,67 @@ public class ComputermodelDaoImpl extends HibernateDaoSupport implements Compute
 
  
 //  删除实体
-	public int deleteEntity(Integer computermodelId) {
-		// TODO Auto-generated method stub		
-//		log.debug("正在删除");
-        try {
-        	String hqlString="update Computermodel as tb set tb.status = -1 where tb.id = " +computermodelId; 
-        	Query query = this.getHibernateTemplate().getSessionFactory().getCurrentSession().createQuery(hqlString);    	   	
-        	int ret=query.executeUpdate();
-
-            log.debug("删除:"+ret);
-            return ret;
-        } catch (RuntimeException re) {
-            log.error("删除失败", re);
-            throw re;
-        }
-	}
+//	public int deleteEntity(Integer computermodelId) {
+//        try {
+//        	String hqlString="update Computermodel as tb set tb.status = -1 where tb.id = " +computermodelId; 
+//        	Query query = this.getHibernateTemplate().getSessionFactory().getCurrentSession().createQuery(hqlString);    	   	
+//        	int ret=query.executeUpdate();
+//
+//            log.debug("删除:"+ret);
+//            return ret;
+//        } catch (RuntimeException re) {
+//            log.error("删除失败", re);
+//            throw re;
+//        }
+//	}
 	
-	@Override
-	public int delByType(Integer modeltype){
+	public int delByType(Integer modeltype) {
+		try {
+			String hqlString = "update Computermodel as tb set tb.status = -1 where tb.computermodeltype = "
+					+ modeltype;
+			Query query = this.getHibernateTemplate().getSessionFactory()
+					.getCurrentSession().createQuery(hqlString);
+			int ret = query.executeUpdate();
 
-			String sql = "delete from Computermodel where computermodeltype="+modeltype;
-			 this.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(sql).executeUpdate();
-
-		return 1;
+			log.debug("删除:" + ret);
+			return ret;
+		} catch (RuntimeException re) {
+			log.error("删除失败", re);
+			throw re;
+		}
 	}
 	
 	@Override
 	public int delByType(List<Integer> modeltypeList){
-		
-		for(Integer type : modeltypeList){
-			String sql = "delete from Computermodel where computermodeltype="+type;
-			 this.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(sql).executeUpdate();
+		String sqlStr = "(-100";
+		for(int type : modeltypeList){
+			sqlStr +=","+type;
 		}
+		sqlStr+=")";
+		try {
+			String hqlString = "update Computermodel as tb set tb.status = -1 where tb.computermodeltype in "
+					+ sqlStr;
+			Query query = this.getHibernateTemplate().getSessionFactory()
+					.getCurrentSession().createQuery(hqlString);
+			int ret = query.executeUpdate();
+
+			log.debug("删除:" + ret);
+			return ret;
+		} catch (RuntimeException re) {
+			log.error("删除失败", re);
+			throw re;
+		}
+	}
+	
+	@Override
+	public int realDelByType(Integer modeltype){
+		
+			String sql = "delete from Computermodel where computermodeltype="+modeltype;
+			this.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(sql).executeUpdate();
+
 		return 1;
 	}
+	
+
 
 }

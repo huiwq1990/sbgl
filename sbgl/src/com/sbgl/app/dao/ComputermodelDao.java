@@ -12,9 +12,7 @@ import com.sbgl.util.*;
 
 public interface ComputermodelDao{
 
-	
-//删除实体
-	public int deleteEntity(Integer computermodelId);
+
 
 public List<Computermodel> selectComputermodelByCondition(String condition);
 	 public List<Computermodel>  selectComputermodelByConditionAndPage(String conditionSql,final Page page) ;
@@ -38,14 +36,19 @@ public List<Computermodel> selectComputermodelByCondition(String condition);
 
 	List<Computermodel> selByModeltype(int modeltype, int language);
 
-	int delByType(List<Integer> modeltypeList);
+	
+	
+	//删除实体
 
+	int delByType(List<Integer> modeltypeList);
 	int delByType(Integer modeltype);
+	
 
 	List<ComputermodelFull> selFullByCategorytype(int categoryType, int language);
 
 	List<Computermodel> selByModeltypeList(List<Integer> modeltypeList,
 			int language);
+	int realDelByType(Integer modeltype);
 
  
 }

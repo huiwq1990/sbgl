@@ -66,6 +66,44 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	*/
 	
 	/**
+	 * 根据id删除订单详情
+	 * @param 
+	 */
+	@Override
+	public void delById(int id){
+		try {
+			this.getHibernateTemplate().delete("Computerorderdetail", id);
+		} catch (RuntimeException re) {
+	        log.error("查询失败", re);           
+	        throw re;
+	            
+	   }
+	}
+	
+	@Override
+	public void delById(List<Integer> idList){
+		if(idList == null || idList.size()==0){
+			return;
+		}
+		String sqlStr = "(-100";		
+		for(Integer id : idList){
+			sqlStr+=","+id;
+		}
+		sqlStr+=")";
+		String sql = " delete from Computerorderdetail where id in "+sqlStr;
+		try {
+			Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
+	         Query query = session.createSQLQuery(sql);
+			 query.executeUpdate();
+		} catch (RuntimeException re) {
+	        log.error("查询失败", re);           
+	        throw re;	            
+	   }
+	}
+	
+	
+	
+	/**
 	 * 彻底删除某一时间段的课程预约
 	 * @param computerorderid
 	 */
@@ -78,8 +116,7 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 			 query.executeUpdate();
 		} catch (RuntimeException re) {
 	        log.error("查询失败", re);           
-	        throw re;
-	            
+	        throw re;	            
 	   }
 	}
 	
@@ -104,10 +141,6 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	   }
 	}
 	
-	
-
-	
-
 	/**
 	 * 彻底删除订单详情信息
 	 * @param computerorderid
@@ -126,21 +159,7 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 	   }
 	}
 	
-	/**
-	 * 根据id删除订单详情
-	 * @param 
-	 */
-	@Override
-	public void delById(int id){
-		
-		try {
-			this.getHibernateTemplate().delete("Computerorderdetail", id);
-		} catch (RuntimeException re) {
-	        log.error("查询失败", re);           
-	        throw re;
-	            
-	   }
-	}
+
 	
 	/**
 	 * 根据订单号查询订单详情
@@ -495,36 +514,6 @@ public class ComputerorderdetailDaoImpl extends HibernateDaoSupport implements C
 		return null;
 	}
 	
-//  根据关联查询实体full
-
-	//根据关联查询实体 
-	public List<Computerorderdetail> selectComputerorderdetailByComputerorderId(Integer computerorderid ){
-	
-		return null;
-	}
-	public List<Computerorderdetail> selectComputerorderdetailByComputermodelId(Integer computermodelid ){
-	
-		return null;
-	}
-	public List<Computerorderdetail> selectComputerorderdetailByComputerId(Integer computerid ){
-	
-		return null;
-	}
-  
-
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerorderId(Integer computerorderid ){
-	
-		return null;
-	}
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputermodelId(Integer computermodelid ){
-	
-		return null;
-	}
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerId(Integer computerid ){
-	
-		return null;
-	}
-
 
  
 }

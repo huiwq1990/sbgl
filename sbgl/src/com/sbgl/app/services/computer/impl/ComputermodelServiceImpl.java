@@ -345,11 +345,10 @@ public class ComputermodelServiceImpl implements ComputermodelService{
 
 	@Override
 	public int delByType(List<Integer> modeltypeList) {
-		// TODO Auto-generated method stub
-		for(int modeltype : modeltypeList){
-			computermodelDao.delByType(modeltype);
+		if(modeltypeList==null || modeltypeList.size()==0){
+			return 1;
 		}
-		return 1;
+		return computermodelDao.delByType(modeltypeList);
 	}
 	
 
