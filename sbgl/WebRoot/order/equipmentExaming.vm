@@ -188,7 +188,7 @@
 	$("body").on("click", "button[data-type|=deleteorder]", function() {
 		var myData = $(this).data();
 		cId = myData.id;
-		jquery.ajax({
+		$.ajax({
 			url: "deleteorder.do",
 			type: 'POST',
 			data: {borrowId:cId},
@@ -212,7 +212,7 @@
 		$.ajax({
 			url: "examorder.do",
 			type: 'POST',
-			data: {borrowId:cId,examstate:examstate},
+			data: {borrowId:cId,examstate:examstate,examcontent:examcontent},
 			dataType: 'json',
 			success: function(data){
 				if(data.tag==1){
@@ -234,7 +234,7 @@
 		$.ajax({
 			url: "examorder.do",
 			type: 'POST',
-			data: {borrowId:cId,examstate:examstate},
+			data: {borrowId:cId,examstate:examstate,examcontent:examcontent},
 			dataType: 'json',
 			success: function(data){
 				if(data.tag==1){

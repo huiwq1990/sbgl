@@ -96,7 +96,7 @@
 				var dateCheckin = $("#rent-bar .wizard .input-daterange .checkin").datepicker("getDate");
 				var dateCheckout = $("#rent-bar .wizard .input-daterange .checkout").datepicker("getDate");
 				if (dateCheckin == "Invalid Date" || dateCheckout == "Invalid Date" ) {
-					alert("$!{textmap.order_fillouttheappointment}");  
+					alert(order_fillouttheappointment);  
 				} else {
 					$("#rent-bar").animate({
 						"right": "0%",
@@ -123,7 +123,7 @@
 				var eCate = myData.cate; //如果cate是-2则为设备组
 				var eSelectNum = 0;
 				if(maxNum == 0) {
-					alert("$!{textmap.order_forthenumber}");
+					alert(order_forthenumber);
 					return;
 				} else {
 					eSelectNum = 1;
@@ -143,7 +143,7 @@
 									var tempnum = parseInt(item.num) + parseInt(curVal) - item.borrownum;
 									if(tempnum>0){
 										//console.log(".spinner-up, 设备组要求"+item.equipmentname+"设备数量超出！,超出： " + tempnum);
-										alert("$!{textmap.order_equipmentgroupre}"+item.equipmentname+"$!{textmap.order_numberofdevicesbeyond} " + tempnum);
+										alert(order_equipmentgroupre+item.equipmentname+order_numberofdevicesbeyond + tempnum);
 										$("#rent-list #" + item.equipmentid).children(".spinner").spinner('value', item.borrownum);
 									}else{
 										$("#rent-list #" + item.equipmentid).children(".spinner").spinner('value', parseInt(item.num)+parseInt(curVal));
@@ -173,7 +173,7 @@
 									if(item.num>item.borrownum){
 										var overMaxNum = item.num - item.borrownum;
 										//console.log(".spinner-up, 设备组要求"+item.equipmentname+"设备数量超出！,超出： " + overMaxNum);
-										alert("$!{textmap.order_equipmentgroupre}"+item.equipmentname+"$!{textmap.order_numberofdevicesbeyond} " + overMaxNum);
+										alert(order_equipmentgroupre+item.equipmentname+order_numberofdevicesbeyond + overMaxNum);
 										$("#rent-list #" + item.comId).children(".spinner").spinner('value', item.borrownum);
 									}else{
 										$("#rent-list #" + item.comId).children(".spinner").spinner('value', item.num);
@@ -183,7 +183,7 @@
 										var curVal = $(this).spinner("value");
 
 										if(curVal >= item.borrownum) {
-											var str = item.equipmentname + "$!{textmap.order_maximum}!";
+											var str = item.equipmentname + order_maximum;
 											var n = noty({text: str, timeout: 1500});	
 										}
 									});
@@ -220,7 +220,7 @@
 						'</div>';
 						
 					if ($("#rent-list #" + eId).length > 0) {
-						var str = "$!{textmap.order_equment}" + eName + "$!{textmap.order_beenadded}！";
+						var str = order_equment + eName + order_beenadded;
 						var n = noty({text: str, timeout: 1000});
 					} else {
 						$("#rent-list").append(html);
@@ -229,7 +229,7 @@
 						$("#rent-list .spinner").on("click", ".spinner-up",function(){  // 处理达到最大预约数量时的消息提示
 							var curVal = $(this).spinner("value");
 							if(curVal >= maxNum) {
-								var str = eName + "$!{textmap.order_maximum}!";
+								var str = eName + order_maximum;
 								var n = noty({text: str, timeout: 1500});					
 							}
 						});
