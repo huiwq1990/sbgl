@@ -31,8 +31,9 @@
 	var order_maximum = "$!{textmap.order_maximum}!";
 	var order_fillouttheappointment = "$!{textmap.order_fillouttheappointment}";
 	var order_forthenumber = "$!{textmap.order_forthenumber}";
-	
-	
+	var order_yourappointment = "$!{textmap.order_yourappointment}"; 
+	var order_number = "$!{textmap.order_number}"; 
+	var order_referencenumber = "$!{textmap.order_referencenumber}"; 
 </script>
 </head>
 
@@ -258,11 +259,11 @@ $(function () {
 	
 	Highcharts.setOptions({
 		lang: {
-			months: ['一月', '二月', '三月', '四月', '五月', '六月', 
-				'七月', '八月', '九月', '十月', '十一月', '十二月'],
-			shortMonths: ['1月', '2月', '3月', '4月', '5月', '6月', 
-				'7月', '8月', '9月', '10月', '11月', '12月'],
-			weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+			months: ['$!{textmap.order_january}', '$!{textmap.order_february}', '$!{textmap.order_march}', '$!{textmap.order_april}', '$!{textmap.order_may}', '$!{textmap.order_june}', 
+				'$!{textmap.order_july}', '$!{textmap.order_august}', '$!{textmap.order_september}', '$!{textmap.order_october}', '$!{textmap.order_november}', '$!{textmap.order_december}'],
+			shortMonths: ['$!{textmap.order_january}', '$!{textmap.order_february}', '$!{textmap.order_march}', '$!{textmap.order_april}', '$!{textmap.order_may}', '$!{textmap.order_june}', 
+				'$!{textmap.order_july}', '$!{textmap.order_august}', '$!{textmap.order_september}', '$!{textmap.order_october}', '$!{textmap.order_november}', '$!{textmap.order_december}'],
+			weekdays: ['$!{textmap.order_sunday}', '$!{textmap.order_monday}', '$!{textmap.order_tuesday}', '$!{textmap.order_wednesday}', '$!{textmap.order_thursday}', '$!{textmap.order_friday}', '$!{textmap.order_saturday}'],
 		},
 		exporting:{
                     enabled:false
@@ -571,14 +572,14 @@ $(function () {
 					        xAxis: {
 					            type: 'datetime',
 								dateTimeLabelFormats: {
-					                day: '%b%e日'
+					                day: '%b%e$!{textmap.order_day}'
 					            },
 								plotBands: [{ // Light air
 									from: new Date(fromDate).getTime(),
 					                to: new Date(endDate).getTime(),
 									color: 'rgba(68, 170, 213, 0.1)',
 									label: {
-										text: '您的预约时间',
+										text: order_yourappointment,
 										style: {
 											color: '#606060'
 										}
@@ -587,13 +588,13 @@ $(function () {
 					        },
 					        yAxis: {
 					            title: {
-					                text: '数量'
+					                text: order_number
 					            },
 								min: 0,
 								allowDecimals: false
 					        },
 					        series: [{
-					            name: '参考数量',
+					            name: order_referencenumber,
 								pointInterval: 24 * 3600 * 1000, // 一天
 								pointStart: fromDate2,
 					            data: tempb, 
