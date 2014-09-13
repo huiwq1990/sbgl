@@ -96,7 +96,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,a.comId,(select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
 		    for(int i=0;i<size;i++){
 	    		String dateTemp = dateList.get(i);
-	    		sql +="(select   sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa,b.comId from ListDetail b " 
+	    		sql +="(select     case when c.status in (2,4) then sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) else sum(ifnull(b.borrownumber,0)) end  as aaa,b.comId from ListDetail b " 
 	    	    	+ " inner join equipmenborrow c on b.borrowlistid=c.borrowid and c.status not in (1,3)  "
 	    			+ " where  ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comId )  "  ;  
 	    		if(i!=size-1){
@@ -128,7 +128,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,a.comId,(select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
 		    for(int i=0;i<size;i++){
 	    		String dateTemp = dateList.get(i);
-	    		sql +="(select sum(ifnull(ifnull(b.borrownumber,b.applynumber),0))  as aaa,b.comId from ListDetail b " 
+	    		sql +="(select   case when c.status in (2,4) then sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) else sum(ifnull(b.borrownumber,0)) end   as aaa,b.comId from ListDetail b " 
 	    	    	+ " inner join equipmenborrow c on b.borrowlistid=c.borrowid and c.status not in (1,3)  "
 	    			+ " where  ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comId )  "  ;  
 	    		if(i!=size-1){
@@ -168,7 +168,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,a.comId,(select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
 		    for(int i=0;i<size;i++){
 		    	String dateTemp = dateList.get(i);
-	    		sql +="(select  sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa,b.comId from ListDetail b " 
+	    		sql +="(select    case when c.status in (2,4) then sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) else sum(ifnull(b.borrownumber,0)) end  as aaa,b.comId from ListDetail b " 
 	    	    	+ " inner join equipmenborrow c on b.borrowlistid=c.borrowid and c.status not in (1,3)  "
 	    			+ " where ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comId )  "  ;  
 	    		if(i!=size-1){
@@ -198,7 +198,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,a.comId,(select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
 		    for(int i=0;i<size;i++){
 		    	String dateTemp = dateList.get(i);
-	    		sql +="(select  sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa,b.comId from ListDetail b " 
+	    		sql +="(select    case when c.status in (2,4) then sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) else sum(ifnull(b.borrownumber,0)) end  as aaa,b.comId from ListDetail b " 
 	    	    	+ " inner join equipmenborrow c on b.borrowlistid=c.borrowid and c.status not in (1,3)  "
 	    			+ " where ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comId )  "  ;  
 	    		if(i!=size-1){
@@ -253,7 +253,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,a.comId,(select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
 		    for(int i=0;i<size;i++){
 		    	String dateTemp = dateList.get(i);
-	    		sql +="(select  sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa,b.comId from ListDetail b " 
+	    		sql +="(select   case when c.status in (2,4) then sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) else sum(ifnull(b.borrownumber,0)) end  as aaa,b.comId from ListDetail b " 
 	    	    	+ " inner join equipmenborrow c on b.borrowlistid=c.borrowid and c.status not in (1,3)  "
 	    			+ " where ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comId )  "  ;  
 	    		if(i!=size-1){
@@ -283,7 +283,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,a.comId,(select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
 		    for(int i=0;i<size;i++){
 		    	String dateTemp = dateList.get(i);
-	    		sql +="(select  sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa,b.comId from ListDetail b " 
+	    		sql +="(select    case when c.status in (2,4) then sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) else sum(ifnull(b.borrownumber,0)) end  as aaa,b.comId from ListDetail b " 
 	    	    	+ " inner join equipmenborrow c on b.borrowlistid=c.borrowid and c.status not in (1,3)  "
 	    			+ " where ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comId )  "  ;  
 	    		if(i!=size-1){
@@ -321,7 +321,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	    String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.comid,a.lantype,a.imgNameSaved,(select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
 	    	for(int i=0;i<size;i++){
 	    		String dateTemp = dateList.get(i);
-	    		sql +="(select   sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa,b.comId from ListDetail b " 
+	    		sql +="(select   case when c.status in (2,4) then sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) else sum(ifnull(b.borrownumber,0)) end as aaa,b.comId from ListDetail b " 
 	    	    	+ " inner join equipmenborrow c on b.borrowlistid=c.borrowid and c.status not in (1,3)  "
 	    			+ " where ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comId )  "  ;  
 	    		if(i!=size-1){
@@ -352,7 +352,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 	    String sql = " select  CONCAT(" ;
 	    	for(int i=0;i<size;i++){
 	    		String dateTemp = dateList.get(i);
-	    		sql +="ifnull((select  a.activenum-sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa from ListDetail b left outer join Equipment a on b.comId=a.comId " 
+	    		sql +="ifnull((select  case when c.status in (2,4) then a.activenum-sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) else a.activenum-sum(ifnull(b.borrownumber,0)) end as aaa from ListDetail b left outer join Equipment a on b.comId=a.comId " 
 	    	    	+ " inner join equipmenborrow c on b.borrowlistid=c.borrowid and c.status not in (1,3)  "
 	    			+ " where a.comid='"+equipmentId+"' and a.lantype='"+lantype+"' and (('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y')) group by a.comId),(select activenum from Equipment where comid='"+equipmentId+"' and lantype = '"+lantype+"'))  "  ;  
 	    		if(i!=size-1){
@@ -382,7 +382,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		String sql = " select CONCAT(a.comid,'^',a.applynumber,'^',b.equipmentname,'^',(select ifnull(b.activenum,0)-ifnull(max(tempaa.aaa),0) from( " ;
 	    	for(int i=0;i<size;i++){
 	    		String dateTemp = dateList.get(i);
-	    		sql +="(select   sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa,b.equipmentid from ListDetail b " 
+	    		sql +="(select   case when c.status in (2,4) then sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) else sum(ifnull(b.borrownumber,0)) end as aaa,b.equipmentid from ListDetail b " 
 	    	    	+ " inner join equipmenborrow c on b.borrowlistid=c.borrowid and c.status not in (1,3)  "
 	    			+ " where ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comid )  "  ;  
 	    		if(i!=size-1){
@@ -615,7 +615,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 			int size = equipmentList.size();
 			for(int i = 0; i<size; i++){
 				EquipmentFull equipmentFull = equipmentList.get(i);
-				String sql2 = "select CONCAT(a.equipmentname,'-',b.num) from equipment a inner join groupofequipment b on a.comid = b.equipmentid  where b.equipmentgroupid="+equipmentFull.getComId()+" and a.lantype = 0";
+				String sql2 = "select CONCAT(a.equipmentname,'-',b.num) from equipment a inner join groupofequipment b on a.comid = b.equipmentid  where b.equipmentgroupid="+equipmentFull.getComId()+" and a.lantype =  '"+lantype+"'";
 				Query query2 =  this.getCurrentSession().createSQLQuery(sql2);
 				List<String> list =query2.list();
 				StringBuffer str = new StringBuffer();
@@ -656,7 +656,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 			int size = equipmentList.size();
 			for(int i = 0; i<size; i++){
 				EquipmentFull equipmentFull = equipmentList.get(i);
-				String sql2 = "select CONCAT(a.equipmentname,'-',b.num) from equipment a inner join groupofequipment b on a.comid = b.equipmentid  where b.equipmentgroupid="+equipmentFull.getComId()+" and a.lantype = 0";
+				String sql2 = "select CONCAT(a.equipmentname,'-',b.num) from equipment a inner join groupofequipment b on a.comid = b.equipmentid  where b.equipmentgroupid="+equipmentFull.getComId()+" and a.lantype =  '"+lantype+"'";
 				Query query2 =  this.getCurrentSession().createSQLQuery(sql2);
 				List<String> list =query2.list();
 				StringBuffer str = new StringBuffer();
@@ -698,7 +698,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 			int size = equipmentList.size();
 			for(int i = 0; i<size; i++){
 				EquipmentFull equipmentFull = equipmentList.get(i);
-				String sql2 = "select CONCAT(a.equipmentname,'-',b.num) from equipment a inner join groupofequipment b on a.comid = b.equipmentid  where b.equipmentgroupid="+equipmentFull.getComId()+" and a.lantype = 0";
+				String sql2 = "select CONCAT(a.equipmentname,'-',b.num) from equipment a inner join groupofequipment b on a.comid = b.equipmentid  where b.equipmentgroupid="+equipmentFull.getComId()+" and a.lantype =  '"+lantype+"'";
 				Query query2 =  this.getCurrentSession().createSQLQuery(sql2);
 				List<String> list =query2.list();
 				StringBuffer str = new StringBuffer();
@@ -740,7 +740,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 			int size = equipmentList.size();
 			for(int i = 0; i<size; i++){
 				EquipmentFull equipmentFull = equipmentList.get(i);
-				String sql2 = "select CONCAT(a.equipmentname,'-',b.num) from equipment a inner join groupofequipment b on a.comid = b.equipmentid  where b.equipmentgroupid="+equipmentFull.getComId()+" and a.lantype = 0";
+				String sql2 = "select CONCAT(a.equipmentname,'-',b.num) from equipment a inner join groupofequipment b on a.comid = b.equipmentid  where b.equipmentgroupid="+equipmentFull.getComId()+" and a.lantype =  '"+lantype+"'";
 				Query query2 =  this.getCurrentSession().createSQLQuery(sql2);
 				List<String> list =query2.list();
 				StringBuffer str = new StringBuffer();
@@ -772,7 +772,7 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		String sql = " select a.Equipmentid,a.Equipmentname,a.Brandid,a.Classificationid,a.Administrationid,a.Makedate,a.Modifydate,a.Equipmentnum,a.Activenum,a.Maintainnum,a.Repairnum,a.Losednum,a.Recyclingnum,a.Equipmentdetail,a.Category,a.Remark,a.imgNameSaved,a.comid,(select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
 		    for(int i=0;i<size;i++){
 	    		String dateTemp = dateList.get(i);
-	    		sql +="(select   sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) as aaa,b.comId from ListDetail b " 
+	    		sql +="(select  case when c.status in (2,4) then sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) else sum(ifnull(b.borrownumber,0)) end  as aaa,b.comId from ListDetail b " 
 	    	    	+ " inner join equipmenborrow c on b.borrowlistid=c.borrowid and c.status not in (1,3)  "
 	    			+ " where  ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comId )  "  ;  
 	    		if(i!=size-1){

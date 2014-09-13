@@ -26,10 +26,10 @@
                         <img width="168px" height="128px" class="e-pic" src="$!{equipmentImagePath}/$!row3.imgNameSaved">
                         <div class="caption">
                           <div class="title">
-							#if($class1Name!=$!{textmap.order_equipmengroup})<a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.comId" role="button">$!row3.equipmentname</a>
+							#if($class1Name!='设备组')<a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.comId" role="button">$!row3.equipmentname</a>
 						  #else <a class="lk" role="button">$!row3.equipmentname</a>
 						  #end</div>
-                          <p class="detail">#if($class1Name!=$!{textmap.order_equipmengroup})$!{textmap.order_canborrowupto}：#if($!row3.borrownum) $!row3.borrownum #else 0 #end #else $!row3.intoduce #end</p>
+                          <p class="detail">#if($class1Name!='设备组')$!{textmap.order_canborrowupto}：#if($!row3.borrownum) $!row3.borrownum #else 0 #end #else $!row3.intoduce #end</p>
                         </div>
                         <div class="add-btn">
                           <a class="btn btn-white btn-block" data-type="addEquip" data-id="$!row3.comId" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" data-cate="$!parentClassId" href="javascript:;">$!{textmap.order_add}</a>

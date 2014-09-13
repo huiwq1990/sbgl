@@ -58,47 +58,51 @@
 						#foreach($row4 in $!equipmentMap.get($row.comid))	
 							 #set($bnum = $bnum+1)
 						#end
+						#if($!equipmentMap.get($row.comid))
         				 #set($anum = $anum+1)
+						#end
         			  #end
                       <div class="pull-right">共$!anum 种设备， $!bnum 个设备</div>
                   </div>
 				  #foreach($row in $!equipmentclassificationList)	
-                  <div class="group group-hover">
-                    <div class="group-hd p-lr-20">
-						#set($cnum = 0)
-						#foreach($row2 in $!equipmentMap.get($row.comid))	
-							 #set($cnum = $cnum+1)
-						#end
-                      <div class="group-name pull-left"><a data-toggle="collapse" href="#grp-1"><i class="icon-caret-down"> </i> $row.name ($!cnum 个)</a></div>
-                      <div class="group-status pull-right">
-                        <span class="label">其它</span>
-                        <span class="label label-important">损坏</span>
-                        <span class="label label-warning">遗失</span>
-                        <span class="label label-success">入库</span>
-                      </div>
-                      <div class="group-line"><hr></div>                      
-                    </div>
-                    <ul class="group-body media-list collapse in" id="grp-1">
-					#foreach($row2 in $!equipmentMap.get($row.comid))	
-					  #foreach($row3 in $row2.equipDetailidlist)
-                      <li class="media" data-id="$row3"   data-model-id="$!row2.comId" data-is-select="false">
-                        <div class="stock-in-status is-select pull-right">
-                          <i class="icon-check-empty icon-large stock-other"></i>
-                          <i class="icon-check-empty icon-large stock-damaged"></i>
-                          <i class="icon-check-empty icon-large stock-lost"></i>
-                          <i class="icon-check-empty icon-large stock-success"></i>
+					#if($!equipmentMap.get($row.comid))
+                      <div class="group group-hover">
+                        <div class="group-hd p-lr-20">
+    						#set($cnum = 0)
+    						#foreach($row2 in $!equipmentMap.get($row.comid))	
+    							 #set($cnum = $cnum+1)
+    						#end
+                          <div class="group-name pull-left"><a data-toggle="collapse" href="#grp-1"><i class="icon-caret-down"> </i> $row.name ($!cnum 个)</a></div>
+                          <div class="group-status pull-right">
+                            <span class="label">其它</span>
+                            <span class="label label-important">损坏</span>
+                            <span class="label label-warning">遗失</span>
+                            <span class="label label-success">入库</span>
+                          </div>
+                          <div class="group-line"><hr></div>                      
                         </div>
-                        <div class="media-body">
-                          <div class="media-heading">
-                            <h5>$!row2.equipmentname</h5>
-                            <span>编号：<strong>$row3</strong></span>
-                          </div>                          
-                        </div>
-                      </li>
-					  #end
-					#end
-                    </ul>
-                  </div>  
+                        <ul class="group-body media-list collapse in" id="grp-1">
+    					#foreach($row2 in $!equipmentMap.get($row.comid))	
+    					  #foreach($row3 in $row2.equipDetailidlist)
+                          <li class="media" data-id="$row3"   data-model-id="$!row2.comId" data-is-select="false">
+                            <div class="stock-in-status is-select pull-right">
+                              <i class="icon-check-empty icon-large stock-other"></i>
+                              <i class="icon-check-empty icon-large stock-damaged"></i>
+                              <i class="icon-check-empty icon-large stock-lost"></i>
+                              <i class="icon-check-empty icon-large stock-success"></i>
+                            </div>
+                            <div class="media-body">
+                              <div class="media-heading">
+                                <h5>$!row2.equipmentname</h5>
+                                <span>编号：<strong>$row3</strong></span>
+                              </div>                          
+                            </div>
+                          </li>
+    					  #end
+    					#end
+                        </ul>
+                      </div> 
+					 #end
 				  #end  
                 </div>                  
             </div>
