@@ -89,17 +89,6 @@
 						  #end</div>
                           <p class="detail">#if($class1Name!=$!{textmap.order_equipmengroup})$!{textmap.order_canborrowupto}：#if($!row3.borrownum) $!row3.borrownum #else 0 #end #else $!row3.intoduce #end</p>
                         </div>
-						<!--
-                        <div class="select-num">
-						 #if($class1Name!=$!{textmap.order_equipmengroup})
-                          <select class="select2 form-control select-white" id="inputEquipStatus">
-							 #foreach($i in [1 .. $!row3.borrownum])	
-								<option value="$i">$i</option>
-							 #end
-                          </select>
-						  #end                      
-						</div>
-                        -->
 						<div class="add-btn">
                           <a class="btn btn-white btn-block" data-type="addEquip" data-id="$!row3.comId" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" data-cate="$!row3.classificationid" href="javascript:;">$!{textmap.order_add}</a>
 						</div>
@@ -215,22 +204,6 @@
           <dd>$!equipmentFull.equipmentname</dd>
           <dt>$!{textmap.order_category}</dt>
           <dd>$!equipmentFull.categoryName</dd>
-		  <!--
-          <dt>$!{textmap.order_numberofreservations}</dt>
-          <dd>
-            <div class="select-num">
-              <select class="select2 form-control select-white" id="inputEquipStatus" style="width: 80px;">
-				#if($!equipmentFull.borrownum)  				
-					#foreach($i in [1 .. $!equipmentFull.borrownum])	
-    					<option value="$i">$i</option>
-    				#end			
-				#else
-					<option value="0">0</option>
-				#end
-              </select>
-            </div>
-          </dd>
-		  -->
           <dt>$!{textmap.order_equipintroduction}</dt>
           <dd>$!equipmentFull.equipmentdetail</dd>
         </dl>

@@ -13,22 +13,6 @@
           <dd>$!equipmentFull.equipmentname</dd>
           <dt>$!{textmap.order_category}</dt>
           <dd>$!equipmentFull.categoryName</dd>
-		  <!--
-          <dt>$!{textmap.order_numberofreservations}</dt>
-          <dd>
-            <div class="select-num">
-              <select class="select2 form-control select-white" id="inputEquipStatus" style="width: 80px;">
-				#if($!equipmentFull.borrownum)  				
-					#foreach($i in [1 .. $!equipmentFull.borrownum])	
-    					<option value="$i">$i</option>
-    				#end			
-				#else
-					<option value="0">0</option>
-				#end
-              </select>
-            </div>
-          </dd>
-		  -->
           <dt>$!{textmap.order_equipintroduction}</dt>
           <dd>$!equipmentFull.equipmentdetail</dd>
         </dl>

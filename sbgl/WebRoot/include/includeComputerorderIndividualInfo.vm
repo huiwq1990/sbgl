@@ -6,11 +6,13 @@
         
 				  <div class="caption">
                     <div class="rent-detail">
-                      <span class="rent-user"><strong>$!{textmap.computerorderview_detail_orderuser}: $!{user.name}</strong></span> - <span class="rent-num"><strong> $!{textmap.computerorderview_detail_ordernum}：$!computerorderFull.computerorderserialnumber</strong></span>
-                      
+                      <div class="rent-main-detail">
+						<span class="rent-user"><strong>$!{textmap.computerorderview_detail_orderuser}: $!{user.name}</strong></span> - 
+						<span class="rent-num"><strong> $!{textmap.computerorderview_detail_ordernum}：$!computerorderFull.computerorderserialnumber</strong></span>
+					  </div>
                       #set($currentcomputerorderordertype=$computerorderFull.computerorderordertype)
-                      <div class="rent-contact">$!{textmap.computerorderview_detail_ordertype} #parse("include/includeComputerorderType.vm")</div>
-					            <div class="rent-contact">$!{textmap.computerorderview_detail_orderuserphone} $!{user.telephone}</div>
+                      <div class="rent-type">$!{textmap.computerorderview_detail_ordertype} #parse("include/includeComputerorderType.vm")</div>
+					  <div class="rent-contact">$!{textmap.computerorderview_detail_orderuserphone} $!{user.telephone}</div>
 					 #if($computerorderFull.computerorderremark && $computerorderFull.computerorderremark.length()>0)
                       <div class="rent-remark"><i class="icon-pencil"></i> $!computerorderFull.computerorderremark</div>
 					 #end

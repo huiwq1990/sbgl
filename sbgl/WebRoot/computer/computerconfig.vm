@@ -122,9 +122,9 @@
                   </div>
                   -->
                   <div class="form-group">
-                    <label for="inputMaxDay" class="col-lg-2 control-label">最大预约天数</label>
+                    <label for="maxorderday" class="col-lg-2 control-label">最大预约天数</label>
                     <div class="col-lg-4">
-                      <input type="text" class="form-control" name = "maxorderday" id="maxorderday" value="$maxorderday">
+                      <input type="text" class="form-control" name="maxorderday" id="maxorderday" value="$maxorderday">
                     </div>
                   </div>
                   <div class="form-group">
@@ -161,11 +161,7 @@
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
-<script src="${jsDomain}/bootstrap-datepicker.js"></script>
-<script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
-<script src="${jsDomain}/xdate.js"></script>
 <script src="${jsDomain}/computer/computerutil.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 
@@ -217,12 +213,5 @@
 
 </script>
 
-
-<!--[if lt IE 10]>
-  <script src="${jsDomain}/jquery.placeholder.js"></script>
-  <script>
-  $('input, textarea').placeholder();
-  </script>
-<![endif]-->
 </body>
 </html>
