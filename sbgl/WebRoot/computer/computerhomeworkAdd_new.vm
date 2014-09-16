@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>添加机房课程 - 北京电影学院摄影系</title>
+<title>布置新教学任务 - 北京电影学院摄影系</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -158,7 +158,7 @@
         </div>-->
 		<div class="control-bar">
             <button class="btn btn-white" action-type="selectAllUser">全 选</button>
-            <button class="btn btn-primary" action-type="cancelSelectAllUser" style="display: none">取消全选</button>
+            <button class="btn btn-white" action-type="cancelSelectAllUser" style="display: none">取消全选</button>
         </div>
       </div>
       <div id="user-list" class="row">
@@ -187,7 +187,6 @@
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 <script src="${jsDomain}/editor/kindeditor-min.js"></script>

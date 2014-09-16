@@ -102,9 +102,9 @@
                           <h4 class="pull-left"><a class="lk" href="${webbaseurl}/equipOrderContent.do?borrowId=$!row2.borrowid">$!row2.title</a></h4>
                         </div>
                         <div class="t-r rent-type label label-important"><i class="icon-camera-retro icon-large"></i>  ${textmap.order_equipment}<br/>#if($!row2.category==1)
-							${textmap.order_personalappointment}
+							${textmap.ordertype_personal}
 						  #elseif($!row2.category==2)
-							${textmap.order_teachingappointment}
+							${textmap.ordertype_course_assignment}
 						  #end</div>
                         <div class="caption">
                           <div class="rent-info">

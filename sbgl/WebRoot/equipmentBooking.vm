@@ -261,8 +261,8 @@ $(function () {
 		lang: {
 			months: ['$!{textmap.order_january}', '$!{textmap.order_february}', '$!{textmap.order_march}', '$!{textmap.order_april}', '$!{textmap.order_may}', '$!{textmap.order_june}', 
 				'$!{textmap.order_july}', '$!{textmap.order_august}', '$!{textmap.order_september}', '$!{textmap.order_october}', '$!{textmap.order_november}', '$!{textmap.order_december}'],
-			shortMonths: ['$!{textmap.order_january}', '$!{textmap.order_february}', '$!{textmap.order_march}', '$!{textmap.order_april}', '$!{textmap.order_may}', '$!{textmap.order_june}', 
-				'$!{textmap.order_july}', '$!{textmap.order_august}', '$!{textmap.order_september}', '$!{textmap.order_october}', '$!{textmap.order_november}', '$!{textmap.order_december}'],
+			shortMonths: ['$!{textmap.order_january_s}', '$!{textmap.order_february_s}', '$!{textmap.order_march_s}', '$!{textmap.order_april_s}', '$!{textmap.order_may_s}', '$!{textmap.order_june_s}', 
+				'$!{textmap.order_july_s}', '$!{textmap.order_august_s}', '$!{textmap.order_september_s}', '$!{textmap.order_october_s}', '$!{textmap.order_november_s}', '$!{textmap.order_december_s}'],
 			weekdays: ['$!{textmap.order_sunday}', '$!{textmap.order_monday}', '$!{textmap.order_tuesday}', '$!{textmap.order_wednesday}', '$!{textmap.order_thursday}', '$!{textmap.order_friday}', '$!{textmap.order_saturday}'],
 		},
 		exporting:{
@@ -533,7 +533,8 @@ $(function () {
 				if(data.tag==1){
 					location.href="equipmentConfirm.do?borrowId="+data.borrowId;
 				}else{
-					alert(data.message);
+					//alert(data.message);
+					noty({text: data.message, timeout: 2500, type: 'error'});
 					return;
 				}
 			}	  
@@ -562,6 +563,12 @@ $(function () {
 						var tempb = aadddww.daynums;
 						var fromDate2 = new Date(aadddww.fromDate).getTime();	
 						var endDate2 = new Date(aadddww.endDate).getTime();
+						var dayFormat;
+						if ('${textmap.datepicker_language}' === 'zh-CN') {
+							dayFormat = '%b%e日';
+						} else {
+							dayFormat = '%e. %b';
+						}
 					   $('#equip-chart').highcharts({
 					        chart: {
 					            type: 'line'
@@ -572,7 +579,7 @@ $(function () {
 					        xAxis: {
 					            type: 'datetime',
 								dateTimeLabelFormats: {
-					                day: '%b%e$!{textmap.order_day}'
+					                day: dayFormat
 					            },
 								plotBands: [{ // Light air
 									from: new Date(fromDate).getTime(),
