@@ -26,6 +26,7 @@ public class EquipmenborrowFull extends DaoAbs {
 	private Date examdate;
 	private Integer sendruleid;
 	private Integer courseruleid;
+	private String borrowallid;
 	
 	private String userName;
 	private String cateName;
@@ -237,6 +238,12 @@ public class EquipmenborrowFull extends DaoAbs {
 	}
 	public void setExamuserPic(String examuserPic) {
 		this.examuserPic = examuserPic;
+	}
+	public String getBorrowallid() {
+		return borrowallid;
+	}
+	public void setBorrowallid(String borrowallid) {
+		this.borrowallid = borrowallid;
 	}
 	
 }

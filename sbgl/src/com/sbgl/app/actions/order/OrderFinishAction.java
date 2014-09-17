@@ -38,9 +38,11 @@ public class OrderFinishAction  extends ActionSupport  implements SessionAware {
 	private String equtitle;
 	private String equremark;
 	private Integer equipmentId;
+	private String borrowallId;
 	
 	//进入完成订单页面
 	public String equipmentFinish(){	
+		borrowallId = orderFinishService.queryBorrowallId(borrowId);
 		return SUCCESS;
 	}
 	
@@ -68,13 +70,25 @@ public class OrderFinishAction  extends ActionSupport  implements SessionAware {
 				tag = "1";
 			}else{
 				tag = "2";
-				message = "提交订单失败";
+				if(CommonConfig.sessionLanguagetype.equals(lantype)){
+					message = "提交订单失败";
+				}else{
+					message = "Submit order failure";
+				}
 			}
 		}catch(Exception e){
 			tag = "2";
-			message = "提交订单失败";
+			if(CommonConfig.sessionLanguagetype.equals(lantype)){
+				message = "提交订单失败";
+			}else{
+				message = "Submit order failure";
+			}
 			if(e.getMessage().equals("设备数量不足")){
-				message = "设备数量不足";
+				if(CommonConfig.sessionLanguagetype.equals(lantype)){
+					message = "设备数量不足";
+				}else{
+					message = "lazy weight";
+				}
 			}
 			log.error(e);
 		}
@@ -95,6 +109,12 @@ public class OrderFinishAction  extends ActionSupport  implements SessionAware {
 			tag = "2";
 			message = "订单删除失败";
 			log.error(e);
+		}
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(CommonConfig.sessionLanguagetype.equals(lantype)){
+			message = "订单删除失败";
+		}else{
+			message = "Failed to delete the order";
 		}
 		return SUCCESS;
 	}
@@ -135,6 +155,12 @@ public class OrderFinishAction  extends ActionSupport  implements SessionAware {
 			tag = "2";
 			message = "订单删除失败";
 			log.error(e);
+		}
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(CommonConfig.sessionLanguagetype.equals(lantype)){
+			message = "订单删除失败";
+		}else{
+			message = "Failed to delete the order";
 		}
 		return SUCCESS;
 	}
@@ -222,6 +248,14 @@ public class OrderFinishAction  extends ActionSupport  implements SessionAware {
 	public void setSession(Map<String, Object> session) {
 		// TODO Auto-generated method stub
 	    this.session = session;
+	}
+
+	public String getBorrowallId() {
+		return borrowallId;
+	}
+
+	public void setBorrowallId(String borrowallId) {
+		this.borrowallId = borrowallId;
 	}
 	
 }

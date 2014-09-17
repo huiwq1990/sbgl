@@ -246,7 +246,8 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 		String sql = " select (select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
 	    for(int i=0;i<size;i++){
     		String dateTemp = dateList.get(i);
-    		sql +="(select sum(ifnull(ifnull(b.borrownumber,b.applynumber),0))  as aaa,b.comId from ListDetail b " 
+    		sql +="(select case when c.status in (2, 4) then sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) else "
+                + " sum(ifnull(b.borrownumber, 0)) end as aaa,b.comId from ListDetail b " 
     	    	+ " inner join equipmenborrow c on b.borrowlistid=c.borrowid and c.status not in (1,3)  "
     			+ " where  ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comId )  "  ;  
     		if(i!=size-1){
@@ -271,6 +272,23 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 			}
 		}	
 		return true;
+	}
+
+	@Override
+	public String queryBorrowallId(Integer borrowId) {
+		// TODO Auto-generated method stub
+		final String sql = "select borrowallid from equipmenborrow where borrowid = "+borrowId;
+		List<EquipmenborrowFull> list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql);
+				query.setResultTransformer(new EscColumnToBean(EquipmenborrowFull.class));
+				return query.list();
+			}
+		});	
+		if(list!=null&&!list.isEmpty()){
+			return list.get(0).getBorrowallid();
+		}
+		return null;
 	}
 
 

@@ -119,7 +119,7 @@
               <div class="rent-detail">
                 <div class="rent-main-detail">
 					<span class="rent-user"><strong>${textmap.detail_Applicant}：$!equipmenborrowFull.userName</strong></span> - 
-                    <span class="rent-num"><strong>${textmap.order_No}：$!equipmenborrowFull.borrowid</strong></span>
+                    <span class="rent-num"><strong>${textmap.order_No}：#if($!equipmenborrowFull.borrowallid) $!equipmenborrowFull.borrowallid #else $!equipmenborrowFull.borrowid #end</strong></span>
 				</div>
 				<div class="rent-type">$!{textmap.computerorderview_detail_ordertype} #if($!equipmenborrowFull.category==1)${textmap.ordertype_personal}#elseif($!equipmenborrowFull.category==2)${textmap.ordertype_course_assignment}#end</div>
 				<div class="rent-contact">$!{textmap.computerorderview_detail_orderuserphone} $!{user.telephone}</div>
