@@ -66,14 +66,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		return returnJSON;
 	}
 	
-	//	public String getTag() {
-//		return tag;
-//	}
-//	
-//
-//	public String getMessage() {
-//		return message;
-//	}
 	/**
 	 * 添加分类信息
 	 */
@@ -94,7 +86,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 
 	public String addEquipmentclassification() {
 		
-//		System.out.println(((Loginuser)session.get("loginUser")).getName());
 		returnJSON = null;
 		returnJSON = new HashMap<String,Object>();
 		Boolean isExist = equipService.isExistThisClassification( equipClassforAdd.getName() );
@@ -212,7 +203,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				String name = equipmentclassification.getName();
 				Integer parentId = equipmentclassification.getParentid();
 				if( parentId != 0 && parentId != null ) {
-//					System.out.println("************  二级分类名：" + name);
 					List<String> nameList = allClass.get( idNameMap.get( parentId ) );
 					nameList.add( name );
 				}
@@ -241,16 +231,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	public Equipmentclassification getEquipClass() {
 		return equipClass;
 	}
-//  通过器材没有意义，应该通过该器材的型号来找齐其相应的分类
-//	public String getClassificationByEquipdetail() {
-//		try {
-//			equipClass = equipService.getEquipmentclassificationByEquipmentdetail( equipId );
-//			this.tag = "0";
-//		} catch (RuntimeException re) {
-//			this.tag = "1";
-//	    }
-//		return SUCCESS;
-//	}
 	/**
 	 * 获取全部分类信息进程单详情	 * 显示格式为：分类名称 -父级分类-型号数量-设备数量
 	 */
@@ -795,62 +775,17 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		Boolean isExist = equipService.isExistEquipDetial( equipmentdetail.getAssetnumber() );
 		
 		if(!isExist) {
-			/*int comId = equipService.getEquipDetailComId();
-			equipmentdetail.setComId( comId );
-			equipmentdetailEN.setComId( comId );*/
 			equipmentdetail.setManufacturedate( mDate );
 			equipmentdetail.setAcquiredate( aDate );
 			long returnCode = equipService.addEquipmentdetail( equipmentdetail );
-//			long returnCodeEN = equipService.addEquipmentdetail( equipmentdetailEN );
 			
 			if( returnCode != -1 ) {
-//				equipService.deleteEquipmentdetail( (int)returnCode );
 				this.tag = "1";
 				this.message = "添加设备失败！";
-//			} else if( returnCode == -1 && returnCodeEN != -1) {
-//				equipService.deleteEquipmentdetail( (int)returnCodeEN );
-//				this.tag = "1";
-//				this.message = "添加中文设备失败！";
-//				log.error("################ 保存设备失败！ ################");
-//			} else if( returnCode == -1 && returnCodeEN == -1) {
-//				this.tag = "1";
-//				this.message = "添加中文和英文设备失败！";
-//				log.error("################ 保存设备失败！ ################");
 			} else if( returnCode != -1 ) {
 				this.tag = "0";
 				this.message = "添加设备成功！";
 			}
-			
-//			if(equipmentdetail.getEquipmentid() != -1) {  //不是未知型号
-//				Equipment equip = equipService.getEquipmentById(  equipmentdetail.getEquipmentid() );
-//				
-//				String stateCodeStr = equipmentdetail.getStatus();
-//				Integer activeNum = equip.getActivenum() == null ? 0 : equip.getActivenum();
-//				Integer maintainNum = equip.getMaintainnum() == null ? 0 : equip.getMaintainnum();
-//				Integer repairNum = equip.getRepairnum() == null ? 0 : equip.getRepairnum();
-//				Integer losedNum = equip.getLosednum() == null ? 0 : equip.getLosednum();
-//				Integer recycleNum = equip.getRecyclingnum() == null ? 0 : equip.getRecyclingnum();
-//				
-//				if(stateCodeStr.equals("0")) {
-//					activeNum += 1;
-//				} else if(stateCodeStr.equals("1")) {
-//					//TODO 借出如何获取和存储借出数量
-//				} else if(stateCodeStr.equals("2")) {
-//					maintainNum += 1;
-//				} else if(stateCodeStr.equals("3")) {
-//					repairNum += 1;
-//				} else if(stateCodeStr.equals("4")) {
-//					losedNum += 1;
-//				} else if(stateCodeStr.equals("5")) {
-//					recycleNum += 1;
-//				}
-//				equip.setActivenum( activeNum );
-//				equip.setMaintainnum( maintainNum );
-//				equip.setRepairnum( repairNum );
-//				equip.setLosednum( losedNum );
-//				equip.setRecyclingnum( recycleNum );
-//				equipService.alterEquipInfo( equip );
-//			}
 			
 			
 			if( returnCode != -1 ) {
@@ -935,37 +870,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		String[] ids = equipdetailIds.split("_");
 		for (String id : ids) {
 			Integer oneId = Integer.valueOf( id );
-//			
-//			Equipmentdetail ed = equipService.getEquipmentdetail( oneId );
-//			if(ed.getEquipmentid() != -1) {  //不是未知型号
-//				Equipment equip = equipService.getEquipmentById( ed.getEquipmentid() );
-//				Integer activeNum = equip.getActivenum() == null ? 0 : equip.getActivenum();
-//				Integer maintainNum = equip.getMaintainnum() == null ? 0 : equip.getMaintainnum();
-//				Integer repairNum = equip.getRepairnum() == null ? 0 : equip.getRepairnum();
-//				Integer losedNum = equip.getLosednum() == null ? 0 : equip.getLosednum();
-//				Integer recycleNum = equip.getRecyclingnum() == null ? 0 : equip.getRecyclingnum();
-//				
-//				String stateCodeStr = ed.getStatus();
-//				if(stateCodeStr.equals("0")) {
-//					activeNum -= 1;
-//				} else if(stateCodeStr.equals("1")) {
-//					//TODO 借出如何获取和存储借出数量
-//				} else if(stateCodeStr.equals("2")) {
-//					maintainNum -= 1;
-//				} else if(stateCodeStr.equals("3")) {
-//					repairNum -= 1;
-//				} else if(stateCodeStr.equals("4")) {
-//					losedNum -= 1;
-//				} else if(stateCodeStr.equals("5")) {
-//					recycleNum -= 1;
-//				}
-//				equip.setActivenum( activeNum );
-//				equip.setMaintainnum( maintainNum );
-//				equip.setRepairnum( repairNum );
-//				equip.setLosednum( losedNum );
-//				equip.setRecyclingnum( recycleNum );
-//				equipService.alterEquipInfo( equip );
-//			}
 			
 			if( equipService.deleteEquipmentdetail( oneId ) ) {
 				this.tag = "0";
@@ -1157,7 +1061,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			}
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String rentUnit[] = null;
 		for (Equipmentdetail equipdetail : tempList) {
 			EquipCourse ec = new EquipCourse();
 			ec.setId( String.valueOf( equipdetail.getEquipdetailid() ) );
@@ -1166,16 +1069,12 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				
 				ec.setModelId( String.valueOf( -1 ) );
 				ec.setModelName( "*" );
-//				ec.setClassId( String.valueOf( -1 ) );
-//				ec.setClassName( "未知分类" );
-//				ec.setCode( String.valueOf( equipdetail.getEquipserial() ) );
 			} else {
 				Equipment e = equipService.getEquipByComidAndLanType( equipdetail.getEquipmentid(), "0" );
 			
 				if(e != null) {
 					ec.setModelId( String.valueOf( e.getComid() ) );	//根据需求改为联合主键，不再是中文型号的id
 					ec.setModelName( e.getEquipmentname() );
-//					ec.setCode( String.valueOf( equipdetail.getEquipserial() ) );
 					if( e.getClassificationid() != null && e.getClassificationid() != -1 ) {
 						Equipmentclassification ecf = equipService.getEquipmentclassificationByEquipmentModel( e.getEquipmentid() );
 						if(ecf != null) {
