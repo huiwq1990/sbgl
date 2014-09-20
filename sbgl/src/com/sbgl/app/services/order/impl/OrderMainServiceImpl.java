@@ -1,6 +1,7 @@
 package com.sbgl.app.services.order.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,7 +136,13 @@ public class OrderMainServiceImpl implements OrderMainService {
 		String temp1[] = equIds.split(",");
 		String temp2[] = equNums.split(",");
 		if(borrowId==null||borrowId.equals("")){
-			equipmenborrow.setBorrowid(baseDao.getCode("equipmenborrow"));			
+			equipmenborrow.setBorrowid(baseDao.getCode("equipmenborrow"));	
+			String date = DateUtil.getBorrowDay(new Date());
+			String tempid = baseDao.getCode("equipmenallborrow"+date).toString();
+			while(tempid.length()<4){
+				tempid = "0"+tempid;
+			}
+			equipmenborrow.setBorrowallid("EP"+date+tempid);
 		}else{
 			equipmenborrow = baseDao.getEntityById(Equipmenborrow.class, borrowId);
 			baseDao.deleteByProperty("Listdetail", "borrowlistid", borrowId);	

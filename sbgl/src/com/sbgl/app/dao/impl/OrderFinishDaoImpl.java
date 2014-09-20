@@ -52,8 +52,9 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 	public List<EquipmentFull> findListBorrow(Integer borrowId,String lantype) {
 		// TODO Auto-generated method stub
 		final String sql = " select a.*,b.applynumber,c.name as categoryName,b.borrownumber from Equipment a left outer join ListDetail b on a.comid = b.equipmentid "
+			+ " left outer join equipmenborrow d on d.borrowid = b.borrowlistid "
 			+ " left outer join EquipmentClassification c on c.classificationid=a.comid and c.lantype='"+lantype+"' "
-			+ " where b.borrowlistid='"+borrowId+"'  and a.lantype='"+lantype+"' ";
+			+ " where b.borrowlistid='"+borrowId+"'  and ((b.borrownumber is null and d.status in ('1','2','3','4')) or b.borrownumber is not null)  and a.lantype='"+lantype+"' ";
 		List<EquipmentFull> equipmentFullList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(sql);
@@ -107,7 +108,7 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 		// TODO Auto-generated method stub
 		Map<Integer, List<EquipmentFull>> map = new HashMap<Integer, List<EquipmentFull>>();
 		final String sql = " select distinct a.* from EquipmentClassification a left outer join Equipment b on a.comid  = b.classificationid  and b.lantype='"+lantype+"' " +
-		" left outer join ListDetail c on b.comid=c.equipmentid where c.borrowlistid='"+borrowId+"' and a.lantype='"+lantype+"'  ";
+		" left outer join ListDetail c on b.comid=c.equipmentid  left outer join equipmenborrow d on d.borrowid = c.borrowlistid where c.borrowlistid='"+borrowId+"'  and ((c.borrownumber is null and d.status in ('1','2','3','4')) or c.borrownumber is not null) and a.lantype='"+lantype+"'  ";
 		List<Equipmentclassification> equipmentList = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 			public Object doInHibernate(Session session) throws HibernateException{
 				Query query = session.createSQLQuery(sql).addEntity(Equipmentclassification.class); 
@@ -117,8 +118,9 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 		if(equipmentList!=null&&!equipmentList.isEmpty()){
 			for(Equipmentclassification equipmentclassification:equipmentList){
 				String sql1 = " select a.*,b.applynumber,c.name as categoryName,b.listdetailid from Equipment a left outer join ListDetail b on a.comid = b.equipmentid and a.lantype='"+lantype+"' "
+					+ " left outer join equipmenborrow d on d.borrowid = b.borrowlistid "	
 					+ " left outer join EquipmentClassification c on c.comid=a.classificationid and c.lantype='"+lantype+"' "
-					+ " where b.borrowlistid='"+borrowId+"' and c.comid='"+equipmentclassification.getComid()+"' and a.lantype='"+lantype+"' ";
+					+ " where b.borrowlistid='"+borrowId+"' and ((b.borrownumber is null and d.status in ('1','2','3','4')) or b.borrownumber is not null) and c.comid='"+equipmentclassification.getComid()+"' and a.lantype='"+lantype+"' ";
 				final String sql2 = sql1;
 				List<EquipmentFull> list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
 					public Object doInHibernate(Session session) throws HibernateException{
@@ -244,7 +246,8 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 		String sql = " select (select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
 	    for(int i=0;i<size;i++){
     		String dateTemp = dateList.get(i);
-    		sql +="(select sum(ifnull(ifnull(b.borrownumber,b.applynumber),0))  as aaa,b.comId from ListDetail b " 
+    		sql +="(select case when c.status in (2, 4) then sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) else "
+                + " sum(ifnull(b.borrownumber, 0)) end as aaa,b.comId from ListDetail b " 
     	    	+ " inner join equipmenborrow c on b.borrowlistid=c.borrowid and c.status not in (1,3)  "
     			+ " where  ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comId )  "  ;  
     		if(i!=size-1){
@@ -269,6 +272,23 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 			}
 		}	
 		return true;
+	}
+
+	@Override
+	public String queryBorrowallId(Integer borrowId) {
+		// TODO Auto-generated method stub
+		final String sql = "select borrowallid from equipmenborrow where borrowid = "+borrowId;
+		List<EquipmenborrowFull> list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql);
+				query.setResultTransformer(new EscColumnToBean(EquipmenborrowFull.class));
+				return query.list();
+			}
+		});	
+		if(list!=null&&!list.isEmpty()){
+			return list.get(0).getBorrowallid();
+		}
+		return null;
 	}
 
 

@@ -103,7 +103,7 @@ $(document).ready(function(){
 		//alert(globalSelectOrderListMap);
 		var bookingData = $(this).data();
 		var groupName = $(this).parents("table").data("tableName");
-		var startDate = new XDate();
+		//var startDate = new XDate();
 		//var timeStr = getBookingTime(bookingData, startDate);
 		var timeStr =  bookingData.date+ ' '+bookingData.periodname;
 		var maxNum = bookingData.maxNum;

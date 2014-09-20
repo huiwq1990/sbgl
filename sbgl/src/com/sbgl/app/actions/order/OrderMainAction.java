@@ -267,7 +267,11 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 			message = e.getMessage();
 		}catch(Exception e){
 			tag = "2";
-			message = "提交订单失败";
+			if(CommonConfig.sessionLanguagetype.equals(lantype)){
+				message = "提交订单失败";
+			}else{
+				message = "Submit order failure";
+			}
 			log.error(e);
 		}
 		return SUCCESS;

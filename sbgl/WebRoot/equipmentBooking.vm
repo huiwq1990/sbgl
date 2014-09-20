@@ -1,6 +1,3 @@
-#set($currentposition= "myorder")
-#set($currentpositiontext= ${textmap.myorderposition})	
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +9,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+#set($currentposition= "myorder")
+#set($currentpositiontext= ${textmap.myorderposition})
 
 #parse("include/includePageCompatibility.vm")
 <script>
@@ -31,8 +31,9 @@
 	var order_maximum = "$!{textmap.order_maximum}!";
 	var order_fillouttheappointment = "$!{textmap.order_fillouttheappointment}";
 	var order_forthenumber = "$!{textmap.order_forthenumber}";
-	
-	
+	var order_yourappointment = "$!{textmap.order_yourappointment}"; 
+	var order_number = "$!{textmap.order_number}"; 
+	var order_referencenumber = "$!{textmap.order_referencenumber}"; 
 </script>
 </head>
 
@@ -84,22 +85,11 @@
                         <img width="168px" height="128px" class="e-pic" src="$!{equipmentImagePath}/$!row3.imgNameSaved">
                         <div class="caption">
                           <div class="title">
-							#if($class1Name!=$!{textmap.order_equipmengroup})<a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.comId" role="button">$!row3.equipmentname</a>
+							#if($class1Name!='设备组')<a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.comId" role="button">$!row3.equipmentname</a>
 						  #else <a class="lk" role="button">$!row3.equipmentname</a>
 						  #end</div>
-                          <p class="detail">#if($class1Name!=$!{textmap.order_equipmengroup})$!{textmap.order_canborrowupto}：#if($!row3.borrownum) $!row3.borrownum #else 0 #end #else $!row3.intoduce #end</p>
+                          <p class="detail">#if($class1Name!='设备组')$!{textmap.order_canborrowupto}：#if($!row3.borrownum) $!row3.borrownum #else 0 #end #else $!row3.intoduce #end</p>
                         </div>
-						<!--
-                        <div class="select-num">
-						 #if($class1Name!=$!{textmap.order_equipmengroup})
-                          <select class="select2 form-control select-white" id="inputEquipStatus">
-							 #foreach($i in [1 .. $!row3.borrownum])	
-								<option value="$i">$i</option>
-							 #end
-                          </select>
-						  #end                      
-						</div>
-                        -->
 						<div class="add-btn">
                           <a class="btn btn-white btn-block" data-type="addEquip" data-id="$!row3.comId" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" data-cate="$!row3.classificationid" href="javascript:;">$!{textmap.order_add}</a>
 						</div>
@@ -215,22 +205,6 @@
           <dd>$!equipmentFull.equipmentname</dd>
           <dt>$!{textmap.order_category}</dt>
           <dd>$!equipmentFull.categoryName</dd>
-		  <!--
-          <dt>$!{textmap.order_numberofreservations}</dt>
-          <dd>
-            <div class="select-num">
-              <select class="select2 form-control select-white" id="inputEquipStatus" style="width: 80px;">
-				#if($!equipmentFull.borrownum)  				
-					#foreach($i in [1 .. $!equipmentFull.borrownum])	
-    					<option value="$i">$i</option>
-    				#end			
-				#else
-					<option value="0">0</option>
-				#end
-              </select>
-            </div>
-          </dd>
-		  -->
           <dt>$!{textmap.order_equipintroduction}</dt>
           <dd>$!equipmentFull.equipmentdetail</dd>
         </dl>
@@ -262,6 +236,148 @@
 <script src="js/highcharts.js"></script>
 <script src="js/jquery.noty.js"></script>
 <script>
+
+Array.prototype.remove = function(s) {     
+    for (var i = 0; i < this.length; i++) {     
+        if (s == this[i])     
+            this.splice(i, 1);     
+    }     
+}     
+    
+/**   
+ * Simple Map   
+ *    
+ *    
+ * var m = new Map();   
+ * m.put('key','value');   
+ * ...   
+ * var s = "";   
+ * m.each(function(key,value,index){   
+ *      s += index+":"+ key+"="+value+"/n";   
+ * });   
+ * alert(s);   
+ *    
+ * @author dewitt   
+ * @date 2008-05-24   
+ */    
+function Map() {     
+    /** 存放键的数组(遍历用到) */    
+    this.keys = new Array();     
+    /** 存放数据 */    
+    this.data = new Object();     
+         
+    /**   
+     * 放入一个键值对   
+     * @param {String} key   
+     * @param {Object} value   
+     */    
+    this.put = function(key, value) {     
+        if(this.data[key] == null){     
+            this.keys.push(key);     
+        }     
+        this.data[key] = value;     
+    };     
+         
+    /**   
+     * 获取某键对应的值   
+     * @param {String} key   
+     * @return {Object} value   
+     */    
+    this.get = function(key) {     
+        return this.data[key];     
+    };     
+         
+    /**   
+     * 删除一个键值对   
+     * @param {String} key   
+     */    
+    this.remove = function(key) {     
+        this.keys.remove(key);     
+        this.data[key] = null;     
+    };     
+         
+    /**   
+     * 遍历Map,执行处理函数   
+     *    
+     * @param {Function} 回调函数 function(key,value,index){..}   
+     */    
+    this.each = function(fn){     
+        if(typeof fn != 'function'){     
+            return;     
+        }     
+        var len = this.keys.length;     
+        for(var i=0;i<len;i++){     
+            var k = this.keys[i];     
+            fn(k,this.data[k],i);     
+        }     
+    };
+
+        /**   
+     * 遍历Map,执行处理函数   
+     *    
+     * @param {Function} 回调函数 function(key,value,index){..}   
+     */    
+    this.has = function(key){     
+        if(this.keys==null){
+          return false;
+        }
+        var len = this.keys.length;
+        for(var i=0;i<len;i++){     
+            var k = this.keys[i];     
+            if(k==key){
+              return true;
+            }
+        }  
+        return false;   
+    }; 
+
+
+         
+    /**   
+     * 获取键值数组(类似Java的entrySet())   
+     * @return 键值对象{key,value}的数组   
+     */    
+    this.entrys = function() {     
+        var len = this.keys.length;     
+        var entrys = new Array(len);     
+        for (var i = 0; i < len; i++) {     
+            entrys[i] = {     
+                key : this.keys[i],     
+                value : this.data[i]     
+            };     
+        }     
+        return entrys;     
+    };     
+         
+    /**   
+     * 判断Map是否为空   
+     */    
+    this.isEmpty = function() {     
+        return this.keys.length == 0;     
+    };     
+         
+    /**   
+     * 获取键值对数量   
+     */    
+    this.size = function(){     
+        return this.keys.length;     
+    };     
+         
+    /**   
+     * 重写toString    
+     */    
+    this.toString = function(){     
+        var s = "{";     
+        for(var i=0;i<this.keys.length;i++,s+=','){     
+            var k = this.keys[i];     
+            s += k+"="+this.data[k];     
+        }     
+        s+="}";     
+        return s;     
+    };     
+}    
+
+
 var nowTemp = new Date();	
 	var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 	$('.input-daterange').datepicker({
@@ -282,14 +398,14 @@ $('.input-daterange').datepicker({
 });
 
 $(function () {
-	
+
 	Highcharts.setOptions({
 		lang: {
-			months: ['一月', '二月', '三月', '四月', '五月', '六月', 
-				'七月', '八月', '九月', '十月', '十一月', '十二月'],
-			shortMonths: ['1月', '2月', '3月', '4月', '5月', '6月', 
-				'7月', '8月', '9月', '10月', '11月', '12月'],
-			weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+			months: ['$!{textmap.order_january}', '$!{textmap.order_february}', '$!{textmap.order_march}', '$!{textmap.order_april}', '$!{textmap.order_may}', '$!{textmap.order_june}', 
+				'$!{textmap.order_july}', '$!{textmap.order_august}', '$!{textmap.order_september}', '$!{textmap.order_october}', '$!{textmap.order_november}', '$!{textmap.order_december}'],
+			shortMonths: ['$!{textmap.order_january_s}', '$!{textmap.order_february_s}', '$!{textmap.order_march_s}', '$!{textmap.order_april_s}', '$!{textmap.order_may_s}', '$!{textmap.order_june_s}', 
+				'$!{textmap.order_july_s}', '$!{textmap.order_august_s}', '$!{textmap.order_september_s}', '$!{textmap.order_october_s}', '$!{textmap.order_november_s}', '$!{textmap.order_december_s}'],
+			weekdays: ['$!{textmap.order_sunday}', '$!{textmap.order_monday}', '$!{textmap.order_tuesday}', '$!{textmap.order_wednesday}', '$!{textmap.order_thursday}', '$!{textmap.order_friday}', '$!{textmap.order_saturday}'],
 		},
 		exporting:{
                     enabled:false
@@ -307,58 +423,7 @@ $(function () {
 		$("#endDate").val(enddate);
 	}   
 	
-	 if(listequips!=null){
-    	tempddd=listequips.split('|');
-    	for(var i=0;i<tempddd.length;i++){
-    		var tempasd = tempddd[i].split('^');
-    		if(tempasd!=null&&tempasd.length>0){
-    			var eId = tempasd[0];
-				var eName = tempasd[2];
-				var maxNum = tempasd[3];  // 设备最大可预约数量
-				var eSelectNum = tempasd[1];
-				
-				var html = 
-					'<div class="row" id="' + eId + '">' + 
-						'<div class="item-name">' + eName + '</div>' +
-						'<div class="item-ctrl spinner input-group">' +
-							'<span class="input-group-btn">' + 
-								'<button type="button" class="btn btn-link spinner-down"><i class="icon-minus"></i></button>' + 
-							'</span>' +
-							'<input type="text" name="equNum" class="spinner-input form-control">' + 
-							'<input type="hidden" name="equId" value="'+eId+'">' + 
-							'<span class="input-group-btn">' + 
-								'<button type="button" class="btn btn-link spinner-up"><i class="icon-plus"></i></button>' +
-							'</span>' + 
-							'<span class="input-group-btn">' + 
-								'<button type="button" class="btn btn-link close"><i class="icon-remove"></i></button>' + 
-							'</span>' + 
-						'</div>' + 
-					'</div>';
-					
-				if ($("#rent-list #" + eId).length > 0) {
-					var str = "$!{textmap.order_equment}" + eName + "$!{textmap.order_beenadded}！";
-					var n = noty({text: str, timeout: 1000});
-				} else {
-					$("#rent-list").append(html);
-					var spinner = $("#rent-list #" + eId).children(".spinner").spinner({max: maxNum});		// 设置设备最大可预约数量
-					$("#rent-list #" + eId).children(".spinner").spinner('value', eSelectNum);	//设置初始数量
-					$("#rent-list .spinner").on("click", ".spinner-up",function(){  // 处理达到最大预约数量时的消息提示
-						var curVal = $(this).spinner("value");
-						if(curVal >= maxNum) {
-							var str = eName + "$!{textmap.order_maximum}!";
-							var n = noty({text: str, timeout: 1500});					
-						}
-					});
-					
-					$("#rent-list .no-add").hide();
-					$("#rent-list-wrap .panel-body").height({
-						height: $("#rent-list").height() + 30
-					});
-				}
-				
-    		}
-    	}
-    }
+
 
 });
 
@@ -434,15 +499,15 @@ $(function () {
 			   $(".classification2").removeClass('active');
 			   if(ctype=='1'){
 			   		$("#cl1"+parentid).addClass('active');	
-			   		$("#cl20").addClass('active');			
+			   		$("#cl20").addClass('active');
 			   }else{	  
 			   		$("#cl1"+parentid).addClass('active');
 			   		$("#cl2"+cId).addClass('active');
 			   }
 			},error:function(){
-			
-				alert("$!{textmap.order_notfound}！");
-			}	  
+				var n = noty({text: '$!{textmap.order_notfound}！', timeout: 2500, type: 'error'});	
+				//alert("$!{textmap.order_notfound}！");
+			}
 		});
 	});
 	
@@ -461,13 +526,12 @@ $(function () {
 			   $(".classification2").removeClass('active');
 			   if(ctype=='1'){
 			   		$("#cl1"+parentid).addClass('active');	
-			   		$("#cl20").addClass('active');			
+			   		$("#cl20").addClass('active');	
 			   }else{	  
 			   		$("#cl1"+parentid).addClass('active');
 			   		$("#cl2"+cId).addClass('active');
 			   }
 			},error:function(XMLHttpRequest, textStatus, errorThrown){
-				
 				
 			}	  
 		});
@@ -488,15 +552,16 @@ $(function () {
 			   $(".classification1").removeClass('active');
 			   $(".classification2").removeClass('active');
 			   if(ctype=='1'){
-			   		$("#cl1"+parentid).addClass('active');	
-			   		$("#cl20").addClass('active');			
+			   		$("#cl1"+parentid).addClass('active');
+			   		$("#cl20").addClass('active');
 			   }else{	  
 			   		$("#cl1"+parentid).addClass('active');
 			   		$("#cl2"+cId).addClass('active');
 			   }
 			   $("#serachtext").val(serach);
 			},error:function(){
-				alert("$!{textmap.order_notfound}！");
+				//alert("$!{textmap.order_notfound}！");
+				var n = noty({text: '$!{textmap.order_notfound}！', timeout: 2500, type: 'error'});	
 			}
 		});
 	});
@@ -524,7 +589,8 @@ $(function () {
 			   }
 			   $("#serachtext").val(serach);
 			},error:function(){
-				alert("$!{textmap.order_notfound}！");
+				//alert("$!{textmap.order_notfound}！");
+				var n = noty({text: '$!{textmap.order_notfound}！', timeout: 2500, type: 'error'});	
 			}
 		});
 	});
@@ -533,22 +599,44 @@ $(function () {
 		var endDate = $("#endDate").val();
 		var equNum = "";
 		var equId = "";
-		$("input[name='equNum']").each(function(i){ 
-			var temp1 = $(this).val();
-			if(i==0){ 
-				equNum += temp1;
-			}else{
-				equNum += ","+temp1;
-			}
-		});
-		$("input[name='equId']").each(function(j){ 
-			var temp2 = $(this).val();
-			if(j==0){ 
-				equId += temp2;
-			}else{
-				equId += ","+temp2;
-			}
-		});
+    var m = new Map();
+
+    $('#rent-list .equip-item').each(function(index, equipItem) {
+      if ($(equipItem).children().hasClass('group-list')) {   // 如果当前是器材组
+        $(equipItem).find('.group-item').each(function(index, el) {   // 遍历器材组里的每一个器材
+          equId = $(el).data('id');
+          equNum = $(el).data("numInGroup");
+          if (m.has(equId)) {
+            equNum = equNum + m.get(equId);
+            m.put(equId, equNum);
+          } else {
+            m.put(equId, equNum);
+          }
+
+        });
+      } else {  // 如果是单个器材
+        equId = $(equipItem).data('id');
+        equNum = $(equipItem).children(".spinner").spinner('value');
+        if (m.has(equId)) {
+            equNum = equNum + m.get(equId);
+            m.put(equId, equNum);
+          } else {
+            m.put(equId, equNum);
+          }
+      }
+    });
+    equNum = '';
+    equId = '';
+    m.each(function(key, value, index){
+      if(index == 0){
+        equId += key;
+        equNum += value;
+      }else{
+        equId += ","+key;
+        equNum += ","+value;
+      }
+    });
+
 		$.ajax({
 			url: "subOrder.do",
 			type: 'POST',
@@ -558,10 +646,11 @@ $(function () {
 				if(data.tag==1){
 					location.href="equipmentConfirm.do?borrowId="+data.borrowId;
 				}else{
-					alert(data.message);
+					//alert(data.message);
+					noty({text: data.message, timeout: 2500, type: 'error'});
 					return;
 				}
-			}	  
+			}
 		});
 	});
 	
@@ -587,6 +676,12 @@ $(function () {
 						var tempb = aadddww.daynums;
 						var fromDate2 = new Date(aadddww.fromDate).getTime();	
 						var endDate2 = new Date(aadddww.endDate).getTime();
+						var dayFormat;
+						if ('${textmap.datepicker_language}' === 'zh-CN') {
+							dayFormat = '%b%e日';
+						} else {
+							dayFormat = '%e. %b';
+						}
 					   $('#equip-chart').highcharts({
 					        chart: {
 					            type: 'line'
@@ -597,14 +692,14 @@ $(function () {
 					        xAxis: {
 					            type: 'datetime',
 								dateTimeLabelFormats: {
-					                day: '%b%e日'
+					                day: dayFormat
 					            },
 								plotBands: [{ // Light air
 									from: new Date(fromDate).getTime(),
 					                to: new Date(endDate).getTime(),
 									color: 'rgba(68, 170, 213, 0.1)',
 									label: {
-										text: '您的预约时间',
+										text: order_yourappointment,
 										style: {
 											color: '#606060'
 										}
@@ -613,13 +708,13 @@ $(function () {
 					        },
 					        yAxis: {
 					            title: {
-					                text: '数量'
+					                text: order_number
 					            },
 								min: 0,
 								allowDecimals: false
 					        },
 					        series: [{
-					            name: '参考数量',
+					            name: order_referencenumber,
 								pointInterval: 24 * 3600 * 1000, // 一天
 								pointStart: fromDate2,
 					            data: tempb, 
@@ -650,5 +745,8 @@ $(function () {
 	
 	
 </script>
+
+
+
 </body>
 </html>

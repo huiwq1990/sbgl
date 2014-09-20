@@ -22,4 +22,6 @@ public interface OrderFinishService {
 	public boolean subexamorder(Integer borrowId);
 	//判断归还时间到期是否归还
 	public void delay();
+	//根据订单号，查询显示订单号
+	public String queryBorrowallId(Integer borrowId);
 }

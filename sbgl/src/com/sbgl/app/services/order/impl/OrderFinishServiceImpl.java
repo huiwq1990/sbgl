@@ -63,7 +63,7 @@ public class OrderFinishServiceImpl  implements OrderFinishService  {
 			if(lantype.equals(CommonConfig.languagechStr)){
 				equipmenborrow.setTitle(DateUtil.getChineseTime(equipmenborrow.getBorrowtime())+"-设备预约");
 			}else{
-				equipmenborrow.setTitle(DateUtil.getEnglishTime(equipmenborrow.getBorrowtime())+"-Equipment Booking");	
+				equipmenborrow.setTitle(DateUtil.getEnglishTime(equipmenborrow.getBorrowtime())+"-Equipment Reservation");	
 			}
 		}else{
 			equipmenborrow.setTitle(equtitle);
@@ -101,6 +101,13 @@ public class OrderFinishServiceImpl  implements OrderFinishService  {
 	public void delay() {
 		// TODO Auto-generated method stub
 		orderFinishDao.delay();
+	}
+
+
+	@Override
+	public String queryBorrowallId(Integer borrowId) {
+		// TODO Auto-generated method stub
+		return orderFinishDao.queryBorrowallId(borrowId); 
 	}
 
 }

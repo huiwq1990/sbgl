@@ -37,7 +37,7 @@
 
 	#foreach($tempcc in $computercategoryList)
 		<li	class="categoryitem  #if($selComputercategory == $!tempcc.computercategorytype)  active  #end " >
-			<a href="#" onclick="refreshModelList($!tempcc.computercategorytype)" >$!tempcc.name</a>
+			<a href="#" onclick="refreshModelList($!tempcc.computercategorytype)">$!tempcc.name</a>
 		</li>
 	#end
       </ul>
@@ -237,11 +237,7 @@
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
-<script src="${jsDomain}/bootstrap-datepicker.js"></script>
-<script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
-<script src="${jsDomain}/xdate.js"></script>
 <script src="${jsDomain}/computer/computerutil.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 
@@ -284,20 +280,6 @@ function getBookingTime(bookingData, startDate) {
 }
   
 $(window).load(function(){
-	XDate.locales['zh-CN'] = {
-		monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-		monthNamesShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-		dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-		dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六']
-	};
-	XDate.defaultLocale = 'zh-CN';
-	var startDate = new XDate();
-  
-	$('#datepicker').datepicker({
-		language: 'zh-CN',
-		format: 'yyyy-mm-dd',
-		todayHighlight: true,
-	});
 	$('.carousel').carousel({
 		interval: false
 	});
@@ -358,6 +340,7 @@ $(window).load(function(){
 
 //刷新数据
 function refreshModelList(selComputercategory){
+		var n = noty({text: '${textmap.noty_loading}', timeout: 20000});
 		jQuery.ajax({  
 		    url: '${webbaseurl}/toComputerIndividualorderPage.action',  
 		    type: "post",
@@ -367,11 +350,11 @@ function refreshModelList(selComputercategory){
 				},
 		    dataType: 'html',
 			success: function(data){
-			
 				$("#refreshModelList").html(data);
-				
-				
-			}//end jquery success 	  
+			},//end jquery success 
+			complete: function(XMLHttpRequest, textStatus){
+				$.noty.closeAll();    //HideLoading();
+            }
 		});	
 		
 		//alert(globalSelectOrderListMap);

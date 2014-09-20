@@ -67,5 +67,8 @@
         <property name="courseruleid" type="java.lang.Integer">
             <column name="courseruleid" />
         </property>
+        <property name="borrowallid" type="java.lang.String">
+            <column name="borrowallid" length="30" />
+        </property>
     </class>
 </hibernate-mapping>

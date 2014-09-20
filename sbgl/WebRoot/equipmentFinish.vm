@@ -47,7 +47,7 @@
           <i class="icon-ok-sign pull-left"></i>
           <div class="media-body">
             <h1>$!{textmap.ordersuccess_submitted_successfully}</h1>
-            <p>$!{textmap.ordersuccess_detail_1}<code>$!{borrowId}</code>$!{textmap.ordersuccess_detail_2}</p>
+            <p>$!{textmap.ordersuccess_detail_1}<code>#if($!{borrowallId}) $!{borrowallId} #else $!{borrowId} #end</code>$!{textmap.ordersuccess_detail_2}</p>
             <p>$!{textmap.ordersuccess_equipment}</p>
             <p><a class="btn btn-large btn-link" href="${webbaseurl}/equipOrdIndex.do"><i class="icon-angle-right icon-large"></i> $!{textmap.ordersuccess_myorder}</a></p>
           </div>

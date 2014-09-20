@@ -60,11 +60,12 @@ public class PrivilegeInterceptor extends AbstractInterceptor {
 					CookiesUtil.removeCookie("pageLan");
 					
 					return "login";
-				} else {
+				} 
+				/*else {
 					CookiesUtil.addLoginCookie("uid", String.valueOf(user.getId()));
 					CookiesUtil.addLoginCookie("userpass", user.getPassword());
 					CookiesUtil.addLoginCookie(CommonConfig.cookieuserid, String.valueOf(user.getUserid()));
-				}
+				}*/
 				
 				Userlogininfo loginInfo = loginInfoService.getLoinInfoByUserId( Integer.valueOf(uid) );
 				if(loginInfo == null) {

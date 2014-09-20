@@ -78,7 +78,7 @@
                     <th class="chk-column"><input class="chk" id="chk-all" type="checkbox" rel="tooltip" data-original-title="全选"></th>
                     <th class="name">器材组名称</th>
 					<th class="describe">描述</th>
-					<th class="describe">设备详情</th>
+					<th class="equip-list">设备详情</th>
                     <th class="stock">合作器材公司</th>
                   </tr>
                 </thead>
@@ -148,7 +148,7 @@
           </div>
           <button type="button" class="btn btn-white" data-groupid="1" action-type="addBasicEquip" id="EquidGroupBtn-1"><span id="EquidGroupspan-1" class="icon icon-plus"></span></button>
         </div>
-
+	  </div>
       <div class="form-group groupselafter" >
         <label for="inputDescribe" class="col-xs-3 control-label">描述</label>
         <div class="col-xs-7">
@@ -334,7 +334,7 @@
 			dataType: 'json',
 			success: function(jsondata){
 				if(jsondata.tag=="1") {		
-					alert("增加成功！");
+					noty({text: '增加成功！', timeout: 2500, type: 'success'});	
 					jQuery.ajax({  
             		    url:"${webbaseurl}/equipManageGroupContent.do",  
             		    type: 'POST',
@@ -350,7 +350,7 @@
             		});
 					
 				} else {
-					alert("数据异常，增加失败！");
+					noty({text: '数据异常，增加失败！', timeout: 2500, type: 'error'});	
 				}
 				_this.parents('.modal').modal('toggle');
 			}	  

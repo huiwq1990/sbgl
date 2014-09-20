@@ -70,9 +70,9 @@
                           <div class="rent-info">
                             <div class="rent-num">$!{textmap.computerorderindex_ordernum}：$!temp.computerorderserialnumber</div>
 							
-                            <div class="rent-time"><i class="icon-time"></i>$!date.format("yyyy-MM-dd",$!temp.computerorderorderstarttime)   $!date.format("yyyy-MM-dd",$!temp.computerorderorderendtime)</div>
+                            <div class="rent-time"><i class="icon-time"></i> $!date.format("yyyy-MM-dd",$!temp.computerorderorderstarttime) ${textmap.order_timeTo} $!date.format("yyyy-MM-dd",$!temp.computerorderorderendtime)</div>
                             #if($temp.computerorderremark && $temp.computerorderremark.length()>0)
-							<div class="rent-remark"><i class="icon-pencil"> $!temp.computerorderremark</i></div>
+							<div class="rent-remark" title="$!temp.computerorderremark"><i class="icon-pencil"></i> $!temp.computerorderremark</div>
 							#end
 						  </div>
                           <hr />

@@ -42,7 +42,7 @@
                     #set($anum = 0)
         			  #set($bnum = 0)
         			  #foreach($row in $!equipmentclassificationList)
-						#foreach($row4 in $!equipmentMap.get($row.classificationid))	
+						#foreach($row4 in $!equipmentMap.get($row.comid))	
 							 #set($bnum = $bnum+1)
 						#end
         				 #set($anum = $anum+1)

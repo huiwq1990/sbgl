@@ -199,6 +199,12 @@ public class OrderAdminServiceImpl implements  OrderAdminService{
 		for(int i=0;i<size;i++){
 			Equipmenborrow equipmenBorrow = new Equipmenborrow();
 			equipmenBorrow.setBorrowid(baseDao.getCode("equipmenborrow"));
+			String date = DateUtil.getBorrowDay(new Date());
+			String tempid = baseDao.getCode("equipmenallborrow"+date).toString();
+			while(tempid.length()<4){
+				tempid = "0"+tempid;
+			}
+			equipmenBorrow.setBorrowallid("ET"+date+tempid);
 			equipmenBorrow.setCategory(2);
 			equipmenBorrow.setUserid(Integer.parseInt(str[i]));
 			equipmenBorrow.setTeacherid(loginuser.getId());

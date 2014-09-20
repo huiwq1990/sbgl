@@ -323,6 +323,12 @@ public class DateUtil {
 		String tString = df.format(date);
 		return tString;
 	}
+	public static String getBorrowDay(Date date) {
+		String pattern = "yyyyMMdd";
+		SimpleDateFormat df = new SimpleDateFormat(pattern);
+		String tString = df.format(date);
+		return tString;
+	}
 	public static String getDateHour(Date date) {
 		String pattern = "HH";
 		SimpleDateFormat df = new SimpleDateFormat(pattern);
