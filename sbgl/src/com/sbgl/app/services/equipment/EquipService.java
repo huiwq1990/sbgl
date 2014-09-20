@@ -83,6 +83,8 @@ public interface EquipService {
 	public List<Equipmentclassification> getAllEquipmentclassifications();
 	//查询全部中文名称的器材分类
 	public List<Equipmentclassification> getAllCHEquipmentclassifications();
+	//查询全部中文名称的器材分类详细信息
+	public List<Object[]> getAllCHClassificationInfoList();
 	//查询某一一级分类下的所有二级器材分类
 	public List<Equipmentclassification> getAllChildEquipmentclassificationsByParentId(Integer equipmentclassificationId);
 	//查询分类下器材模型的数量
