@@ -4272,6 +4272,7 @@ define('fuelux/tree',['require','jquery'],function(require) {
  * Licensed under the MIT license.
  */
 
+
 define('fuelux/wizard',['require','jquery'],function (require) {
 
 	var $ = require('jquery');
