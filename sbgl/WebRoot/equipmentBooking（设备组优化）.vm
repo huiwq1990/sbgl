@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>$!{textmap.order_equipappintementtitle}</title>
+
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+#set($currentposition= "myorder")
+#set($currentpositiontext= ${textmap.myorderposition})
+
+#parse("include/includePageCompatibility.vm")
+<script>
+	var class1Id = "$!{class1Id}";
+	var cId =0;
+	var ctype=1;
+	var parentid=class1Id;
+	var ordertype=0;
+	var listequips = "$!{listequips}";
+	var fromdate = "$!{fromDate}";
+	var enddate = "$!{endDate}";
+	var borrowId = "$!{borrowId}";
+	var order_equipmentgroupre = "$!{textmap.order_equipmentgroupre}";
+	var order_numberofdevicesbeyond = "$!{textmap.order_numberofdevicesbeyond}";
+	var order_equment = "$!{textmap.order_equment}";
+	var order_beenadded = "$!{textmap.order_beenadded}！";
+	var order_maximum = "$!{textmap.order_maximum}!";
+	var order_fillouttheappointment = "$!{textmap.order_fillouttheappointment}";
+	var order_forthenumber = "$!{textmap.order_forthenumber}";
+	var order_yourappointment = "$!{textmap.order_yourappointment}"; 
+	var order_number = "$!{textmap.order_number}"; 
+	var order_referencenumber = "$!{textmap.order_referencenumber}"; 
+</script>
+</head>
+
+<body>
+<header id="header-wrap"><!--header-wrap-->
+  #parse("include/includeGlobalHeader.vm")
+  
+  <div class="nav-wrap clearfix">
+    #parse("include/includeSiteNavi.vm")
+    <div class="sub-nav">
+      <ul class="nav nav-tabs nav-tabs-google">
+        #foreach($row in $classification1List)		
+			<li id="cl1$!row.comid" #if($velocityCount=='1') class="active classification1" #else class="classification1" #end><a href="javascript:;" data-type="classAjax" data-id="$!row.comid" data-classtype="1" >$!row.name</a></li>
+		#end
+		<li id="cl1-2" class="classification1"><a href="javascript:;" data-type="classAjax" data-id="-2" data-classtype="1" >$!{textmap.order_equipmengroup}</a></li>	
+      </ul>
+    </div>
+  </div>
+
+</header><!--/#header-wrap-->
+<section id="main-wrap"><!--main-wrap-->
+  <!--main-content start-->
+  <div id="main-content" class="clearfix">
+      <!--equip-wrap start-->
+      <div id="equip-wrap">  
+        <div id="equip-list">        
+          <div class="w200 container">
+            <div class="control-bar clearfix">
+              <div class="title pull-left">$!{class1Name}
+		  
+			  </div>
+			  <!--
+              <form class="navbar-search pull-right">
+                <input id="serachtext" type="text" class="form-control" placeholder="$!{textmap.order_searchequipment}" >
+                <i data-type="classAjax" class="icon-search"></i>
+              </form>
+			  -->
+              <ul class="nav nav-pills pull-right">
+                #foreach($row2 in $!classification2List)		
+					#if($velocityCount=='1')<li id="cl20" class="active classification2" ><a href="javascript:;" data-type="classAjax" data-id="0" data-classtype="2" data-parentid="$!class1Id">$!{textmap.order_all}</a></li>#end
+        			<li id="cl2$!row2.comid" class="classification2"><a href="javascript:;" data-type="classAjax" data-id="$!row2.comid" data-classtype="2" data-parentid="$!class1Id">$!row2.name</a></li>
+        		#end
+              </ul>
+            </div>
+            <div class="row">
+      			#foreach($row3 in $!equipmentList)
+                  <div class="w-200">                  
+                      <div class="thumbnail">
+                        <img width="168px" height="128px" class="e-pic" src="$!{equipmentImagePath}/$!row3.imgNameSaved">
+                        <div class="caption">
+                          <div class="title">
+							#if($class1Name!='设备组')<a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.comId" role="button">$!row3.equipmentname</a>
+						  #else <a class="lk" role="button">$!row3.equipmentname</a>
+						  #end</div>
+                          <p class="detail">#if($class1Name!='设备组')$!{textmap.order_canborrowupto}：#if($!row3.borrownum) $!row3.borrownum #else 0 #end #else $!row3.intoduce #end</p>
+                        </div>
+						<div class="add-btn">
+                          <a class="btn btn-white btn-block" data-type="addEquip" data-id="$!row3.comId" data-name="$!row3.equipmentname" data-num="$!row3.borrownum" data-cate="$!row3.classificationid" href="javascript:;">$!{textmap.order_add}</a>
+						</div>
+                      </div>                  
+                  </div>
+                   #end
+               
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--equip-wrap end-->
+
+	  <!--rent start-->
+      <div id="rent-bar">  
+        <div class="wizard thumbnail">
+          <ul class="steps unstyled">
+            <li data-target="#step1" class="active"><h3>$!{textmap.order_welcome}</h3></li>
+            <li data-target="#step2"><h3>$!{textmap.order_makeanappointment} <small>$!{textmap.order_todaytheappointment} </small></h3></li>
+          </ul>
+          <div class="step-content">
+            <div class="step-pane active" id="step1">
+              <p>$!{textmap.order_welcomeapp}</p>
+			#if($!orderCate==1)
+              <p>$!{textmap.order_youis}<strong>$!{textmap.order_personalappointment}</strong></p>
+        	#elseif($!orderCate==2)
+              <p>$!{textmap.order_youis}<strong>$!{textmap.order_teachingappointment}</strong>$!{textmap.order_relevantrequirements}</p>
+              <div class="media">
+                <a rel="popover" class="pull-left" href="#" data-original-title="" title="">
+                  <img src="${userImagePath}/$!user.photo" width="46" height="46" class="img-rounded">
+                </a>
+                <div class="media-body">
+                  <div class="media-heading"><h5><a rel="popover" href="#" data-original-title="" title="">$!equipmenborrowFull.teacherName</a></h5><span>$!date.format("yyyy-MM-dd ", $!equipmenborrowFull.createtime)</span></div>
+                  <div class="media-content">
+                    <h5>$!equipmenborrowFull.msgtitle</h5>
+                    <div class="">$!equipmenborrowFull.content</div>
+					<p>$!{textmap.order_finishTimeWithIn} $!date.format("yyyy-MM-dd ", $!equipmenborrowFull.startdate) $!{textmap.order_timeTo} $!date.format("yyyy-MM-dd ", $!equipmenborrowFull.enddate)</p>
+                  </div>
+                </div>
+              </div>
+			#end  
+            </div>
+            <div class="step-pane" id="step2">              
+              <div class="rent-time">
+                <div class="row">                  
+                  <div class="input-daterange">
+                    <div class="col-xs-5">
+                      <input type="text" class="form-control checkin" name="start" placeholder="$!{textmap.order_startdate}">
+                    </div>
+                    <div class="col-xs-2">
+                      <span class="add-on">$!{textmap.order_to}</span>
+                    </div>
+                    <div class="col-xs-5">
+                      <input type="text" class="form-control checkout" name="end" placeholder="$!{textmap.order_returndate}">
+                    </div>
+                  </div>        
+                </div>
+              </div>          
+            </div>          
+          </div>
+          <div class="form-actions actions">  
+            <button type="button" class="btn btn-white btn-prev" disabled="disabled">$!{textmap.order_astep}</button>
+            <button type="button" class="btn btn-primary btn-next"  data-last="$!{textmap.order_appointmentstart}">$!{textmap.order_whatnext}</button>
+          </div>
+        </div>
+        <div class="rent-time panel panel-default">
+          <div class="row panel-body input-daterange">  
+            <div class="col-xs-4">
+              <input type="text" class="form-control checkin1" id="fromDate" name="start" value placeholder="$!{textmap.order_startdate}">
+            </div>
+            <div class="col-xs-1 col-no-padding">
+              <span class="add-on">$!{textmap.order_to}</span>
+            </div>
+            <div class="col-xs-4">
+              <input type="text" class="form-control checkout1" id="endDate"  name="end" value placeholder="$!{textmap.order_returndate}">
+            </div>
+            <div class="col-xs-3 col-no-padding">
+              <button type="button" data-type="classAjax"  class="btn btn-white">$!{textmap.order_research}</button>
+            </div>
+          </div>
+        </div>
+        <div id="rent-list-wrap" class="panel panel-default">
+          <div class="panel-heading"><h3>$!{textmap.order_reservation} <small>$!{textmap.order_selectthedevice}</small></h3></div>
+          <div class="panel-body">
+            <div id="rent-list">
+              <p class="no-add">$!{textmap.order_notaddedanyequipment}</p>
+            </div>
+          </div>
+          <div class="panel-footer text-right">
+            <button type="button" data-type="suborder"  class="btn btn-primary">$!{textmap.order_submit}</button>
+          </div>
+        </div>
+      </div>      
+      <!--rent start-->
+     
+  </div>
+  <!---main-content end-->
+</section>
+<!-- Modal -->
+<div id="equip-detail" class="modal hide fade" tabindex="-1" role="dialog">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="myModalLabel">$!{textmap.order_equipinfo}</h3>
+  </div>
+  <div class="modal-body">
+    <div class="media">
+      <div class="pull-left">
+        <img data-src="holder.js/140x140" class="img-equip" alt="140x140" style="width: 140px; height: 140px; " src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAACMCAYAAACuwEE+AAADHklEQVR4Xu3XQU7qYABGUZ2yLpbNmhgy1WDSiKTQXi2VkvOG8kl99z9p4f14PH68+afAzALvwMwsZfZVABgQUgFgUi5jYBhIBYBJuYyBYSAVACblMgaGgVQAmJTLGBgGUgFgUi5jYBhIBYBJuYyBYSAVACblMgaGgVQAmJTLGBgGUgFgUi5jYBhIBYBJuYyBYSAVACblMgaGgVQAmJTLGBgGUgFgUi5jYBhIBYBJuYyBYSAVACblMgaGgVQAmJTLGBgGUgFgUi5jYBhIBYBJuYyBYSAVACblMgaGgVQAmJTLGBgGUgFgUi5jYBhIBYBJuYyBYSAVACblMgaGgVQAmJTLGBgGUgFgUi5jYBhIBYBJuYyBYSAVACblMgaGgVQAmJTLGBgGUgFgUi5jYBhIBYBJuYyBYSAVACblMgaGgVQAmJTLePNgDofD1ynu9/vR0xx7ffjZ8Au3fnfsDde+3rMR3TSYy4MfO/Sx168PfArA5YGtfb1nw3L+ezYN5vwfuHXg55/vdru30+n04w70FzD/cb1nQwPMxSNtwHQJ7fpxtzZQYBYucO8zyvkxNXVHGXt97M40/NlLX2/hHA9/u5e+w1zXmwPo3mNn6pH02+s9/JQXvMDLgrl1R5hzx6l3mLEPxsOH8KnrLXiWq7zVpsHM+Xp875vS9dfqqc8wS19vlRNe+CKbBrNwC283owAwMyKZfBcAhoZUAJiUyxgYBlIBYFIuY2AYSAWASbmMgWEgFQAm5TIGhoFUAJiUyxgYBlIBYFIuY2AYSAWASbmMgWEgFQAm5TIGhoFUAJiUyxgYBlIBYFIuY2AYSAWASbmMgWEgFQAm5TIGhoFUAJiUyxgYBlIBYFIuY2AYSAWASbmMgWEgFQAm5TIGhoFUAJiUyxgYBlIBYFIuY2AYSAWASbmMgWEgFQAm5TIGhoFUAJiUyxgYBlIBYFIuY2AYSAWASbmMgWEgFQAm5TIGhoFUAJiUyxgYBlIBYFIuY2AYSAWASbmMgWEgFQAm5TIGhoFUAJiUyxgYBlIBYFIuY2AYSAWASbmMgWEgFQAm5TL+BPsW85cqjddyAAAAAElFTkSuQmCC">
+      </div>
+      <div class="media-body">
+        <dl class="dl-horizontal">
+          <dt>$!{textmap.order_model}</dt>
+          <dd>$!equipmentFull.equipmentname</dd>
+          <dt>$!{textmap.order_category}</dt>
+          <dd>$!equipmentFull.categoryName</dd>
+          <dt>$!{textmap.order_equipintroduction}</dt>
+          <dd>$!equipmentFull.equipmentdetail</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="equip-chart-title">$!{textmap.order_reservationnumber}</div>
+    <div class="equip-chart-warp scrollable" style="width: 628px; overflow-x: auto">  
+      <div id="equip-chart" style="width:100%; height:150px;"></div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="btn btn-white" data-dismiss="modal" aria-hidden="true">$!{textmap.order_cancel}</a>
+    <a class="btn btn-primary" data-type="addEquip" data-id="$!equipmentFull.comId" data-name="$!equipmentFull.equipmentname" data-num="$!equipmentFull.borrownum" data-cate="$!parentClassId" href="javascript:;">$!{textmap.order_add}</a>
+  </div>
+</div>
+
+<div class="modal-backdrop fade in"></div>
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+<script src="js/jquery.js"></script>
+<script src="js/loader.js"></script>
+<script src="js/select2.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
+<script src="js/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="js/bfa2.js"></script>
+<script src="js/highcharts.js"></script>
+<script src="js/jquery.noty.js"></script>
+<script>
+
+Array.prototype.remove = function(s) {     
+    for (var i = 0; i < this.length; i++) {     
+        if (s == this[i])     
+            this.splice(i, 1);     
+    }     
+}     
+    
+/**   
+ * Simple Map   
+ *    
+ *    
+ * var m = new Map();   
+ * m.put('key','value');   
+ * ...   
+ * var s = "";   
+ * m.each(function(key,value,index){   
+ *      s += index+":"+ key+"="+value+"/n";   
+ * });   
+ * alert(s);   
+ *    
+ * @author dewitt   
+ * @date 2008-05-24   
+ */    
+function Map() {     
+    /** 存放键的数组(遍历用到) */    
+    this.keys = new Array();     
+    /** 存放数据 */    
+    this.data = new Object();     
+         
+    /**   
+     * 放入一个键值对   
+     * @param {String} key   
+     * @param {Object} value   
+     */    
+    this.put = function(key, value) {     
+        if(this.data[key] == null){     
+            this.keys.push(key);     
+        }     
+        this.data[key] = value;     
+    };     
+         
+    /**   
+     * 获取某键对应的值   
+     * @param {String} key   
+     * @return {Object} value   
+     */    
+    this.get = function(key) {     
+        return this.data[key];     
+    };     
+         
+    /**   
+     * 删除一个键值对   
+     * @param {String} key   
+     */    
+    this.remove = function(key) {     
+        this.keys.remove(key);     
+        this.data[key] = null;     
+    };     
+         
+    /**   
+     * 遍历Map,执行处理函数   
+     *    
+     * @param {Function} 回调函数 function(key,value,index){..}   
+     */    
+    this.each = function(fn){     
+        if(typeof fn != 'function'){     
+            return;     
+        }     
+        var len = this.keys.length;     
+        for(var i=0;i<len;i++){     
+            var k = this.keys[i];     
+            fn(k,this.data[k],i);     
+        }     
+    };
+
+        /**   
+     * 遍历Map,执行处理函数   
+     *    
+     * @param {Function} 回调函数 function(key,value,index){..}   
+     */    
+    this.has = function(key){     
+        if(this.keys==null){
+          return false;
+        }
+        var len = this.keys.length;
+        for(var i=0;i<len;i++){     
+            var k = this.keys[i];     
+            if(k==key){
+              return true;
+            }
+        }  
+        return false;   
+    }; 
+
+
+         
+    /**   
+     * 获取键值数组(类似Java的entrySet())   
+     * @return 键值对象{key,value}的数组   
+     */    
+    this.entrys = function() {     
+        var len = this.keys.length;     
+        var entrys = new Array(len);     
+        for (var i = 0; i < len; i++) {     
+            entrys[i] = {     
+                key : this.keys[i],     
+                value : this.data[i]     
+            };     
+        }     
+        return entrys;     
+    };     
+         
+    /**   
+     * 判断Map是否为空   
+     */    
+    this.isEmpty = function() {     
+        return this.keys.length == 0;     
+    };     
+         
+    /**   
+     * 获取键值对数量   
+     */    
+    this.size = function(){     
+        return this.keys.length;     
+    };     
+         
+    /**   
+     * 重写toString    
+     */    
+    this.toString = function(){     
+        var s = "{";     
+        for(var i=0;i<this.keys.length;i++,s+=','){     
+            var k = this.keys[i];     
+            s += k+"="+this.data[k];     
+        }     
+        s+="}";     
+        return s;     
+    };     
+}    
+
+
+var nowTemp = new Date();	
+	var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+	$('.input-daterange').datepicker({
+		language: '${textmap.datepicker_language}',
+		format: 'yyyy-mm-dd',
+		todayHighlight: true,
+		autoclose: true,
+		startDate: now
+	});	 
+	var checkin = $('.checkin .checkin1').datepicker()
+		.on('changeDate', function(ev) {
+	  		$('.checkout')[0].focus();
+	});
+$('.input-daterange').datepicker({
+	language: '${textmap.datepicker_language}',
+	format: 'yyyy-mm-dd',
+	todayHighlight: true,
+});
+
+$(function () {
+
+	Highcharts.setOptions({
+		lang: {
+			months: ['$!{textmap.order_january}', '$!{textmap.order_february}', '$!{textmap.order_march}', '$!{textmap.order_april}', '$!{textmap.order_may}', '$!{textmap.order_june}', 
+				'$!{textmap.order_july}', '$!{textmap.order_august}', '$!{textmap.order_september}', '$!{textmap.order_october}', '$!{textmap.order_november}', '$!{textmap.order_december}'],
+			shortMonths: ['$!{textmap.order_january_s}', '$!{textmap.order_february_s}', '$!{textmap.order_march_s}', '$!{textmap.order_april_s}', '$!{textmap.order_may_s}', '$!{textmap.order_june_s}', 
+				'$!{textmap.order_july_s}', '$!{textmap.order_august_s}', '$!{textmap.order_september_s}', '$!{textmap.order_october_s}', '$!{textmap.order_november_s}', '$!{textmap.order_december_s}'],
+			weekdays: ['$!{textmap.order_sunday}', '$!{textmap.order_monday}', '$!{textmap.order_tuesday}', '$!{textmap.order_wednesday}', '$!{textmap.order_thursday}', '$!{textmap.order_friday}', '$!{textmap.order_saturday}'],
+		},
+		exporting:{
+                    enabled:false
+                },
+                credits: {
+                    enabled: false
+                }
+	});
+	
+	
+	if(fromdate!=null&&fromdate!=""){
+		$("#fromDate").val(fromdate);
+	}
+	if(enddate!=null&&enddate!=""){
+		$("#endDate").val(enddate);
+	}   
+	
+
+
+});
+
+    var cookie={ 
+  		//读取COOKIES,n为COOKIE名 
+   		Get:function(n){ 
+       		var re=new RegExp(n+'=([^;]*);?','gi');
+       	    var r=re.exec(document.cookie)||[];
+       	    return (r.length>1?r[1]:null)
+   		},show:function(){
+	  		var userName=cookie.Get("username");
+	  		if(userName!=null && userName!="" ){
+			//登录成功
+		 		document.getElementById("loginhtml").innerHTML =unescape(userName);
+		 	}
+	  	}
+	}
+	  
+	cookie.show();
+	
+	$("body").on("keydown", "input[id|=serachtext]", function(e) {
+        if(e.keyCode==13){
+            var fromDate = $("#fromDate").val();
+    		var endDate = $("#endDate").val();
+    		var serach = $("#serachtext").val();
+    		jQuery.ajax({
+    			url: "equipmentByClass.do",
+    			type: 'POST',
+    			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate,serach:serach,borrowId:borrowId},
+    			dataType: 'html',
+    			success: function(data){
+    				//刷新数据
+    			   $("#equip-wrap").html(data);
+    			   $(".classification1").removeClass('active');
+    			   $(".classification2").removeClass('active');
+    			   if(ctype=='1'){
+    			   		$("#cl1"+parentid).addClass('active');	
+    			   		$("#cl20").addClass('active');			
+    			   }else{	  
+    			   		$("#cl1"+parentid).addClass('active');
+    			   		$("#cl2"+cId).addClass('active');
+    			   }
+    			   $("#serachtext").val(serach);
+    			},error:function(a, b, c){
+    				
+    				
+    			}	
+    		});
+        }
+    }); 
+	
+	$("body").on("click", "a[data-type|=classAjax]", function() {
+		var fromDate = $("#fromDate").val();
+		var endDate = $("#endDate").val();
+		var myData = $(this).data();
+		cId = myData.id;
+		ctype=myData.classtype;
+		parentid=class1Id;
+		if(ctype=='1'){
+			parentid = cId;
+			class1Id = cId;
+			cId = 0;
+		}
+		$.ajax({
+			url: "equipmentByClass.do",
+			type: 'POST',
+			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate,borrowId:borrowId},
+			dataType: 'html',
+			success: function(data){
+				//刷新数据
+			   $("#equip-wrap").html(data);
+			   $(".classification1").removeClass('active');
+			   $(".classification2").removeClass('active');
+			   if(ctype=='1'){
+			   		$("#cl1"+parentid).addClass('active');	
+			   		$("#cl20").addClass('active');
+			   }else{	  
+			   		$("#cl1"+parentid).addClass('active');
+			   		$("#cl2"+cId).addClass('active');
+			   }
+			},error:function(){
+				var n = noty({text: '$!{textmap.order_notfound}！', timeout: 2500, type: 'error'});	
+				//alert("$!{textmap.order_notfound}！");
+			}
+		});
+	});
+	
+	$("body").on("click", "button[data-type|=classAjax]", function() {
+		var fromDate = $("#fromDate").val();
+		var endDate = $("#endDate").val();
+		$.ajax({
+			url: "equipmentByClass.do",
+			type: 'POST',
+			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate,borrowId:borrowId},
+			dataType: 'html',
+			success: function(data){
+				//刷新数据
+			   $("#equip-wrap").html(data);
+			   $(".classification1").removeClass('active');
+			   $(".classification2").removeClass('active');
+			   if(ctype=='1'){
+			   		$("#cl1"+parentid).addClass('active');	
+			   		$("#cl20").addClass('active');	
+			   }else{	  
+			   		$("#cl1"+parentid).addClass('active');
+			   		$("#cl2"+cId).addClass('active');
+			   }
+			},error:function(XMLHttpRequest, textStatus, errorThrown){
+				
+			}	  
+		});
+	});
+	
+	$("body").on("click", "i[data-type|=classAjax]", function() {
+		var fromDate = $("#fromDate").val();
+		var endDate = $("#endDate").val();
+		var serach = $("#serachtext").val();
+		$.ajax({
+			url: "equipmentByClass.do",
+			type: 'POST',
+			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate,serach:serach,borrowId:borrowId},
+			dataType: 'html',
+			success: function(data){
+				//刷新数据
+			   $("#equip-wrap").html(data);
+			   $(".classification1").removeClass('active');
+			   $(".classification2").removeClass('active');
+			   if(ctype=='1'){
+			   		$("#cl1"+parentid).addClass('active');
+			   		$("#cl20").addClass('active');
+			   }else{	  
+			   		$("#cl1"+parentid).addClass('active');
+			   		$("#cl2"+cId).addClass('active');
+			   }
+			   $("#serachtext").val(serach);
+			},error:function(){
+				//alert("$!{textmap.order_notfound}！");
+				var n = noty({text: '$!{textmap.order_notfound}！', timeout: 2500, type: 'error'});	
+			}
+		});
+	});
+	
+	$('#rent-bar .wizard').on('finished', function(e, data) {
+		var fromDate = $("#fromDate").val();
+		var endDate = $("#endDate").val();
+		var serach = $("#serachtext").val();
+		$.ajax({
+			url: "equipmentByClass.do",
+			type: 'POST',
+			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate,serach:serach,borrowId:borrowId},
+			dataType: 'html',
+			success: function(data){
+				//刷新数据
+			   $("#equip-wrap").html(data);
+			   $(".classification1").removeClass('active');
+			   $(".classification2").removeClass('active');
+			   if(ctype=='1'){
+			   		$("#cl1"+parentid).addClass('active');	
+			   		$("#cl20").addClass('active');			
+			   }else{	  
+			   		$("#cl1"+parentid).addClass('active');
+			   		$("#cl2"+cId).addClass('active');
+			   }
+			   $("#serachtext").val(serach);
+			},error:function(){
+				//alert("$!{textmap.order_notfound}！");
+				var n = noty({text: '$!{textmap.order_notfound}！', timeout: 2500, type: 'error'});	
+			}
+		});
+	});
+	$("body").on("click", "button[data-type|=suborder]", function() {
+		var fromDate = $("#fromDate").val();
+		var endDate = $("#endDate").val();
+		var equNum = "";
+		var equId = "";
+    var m = new Map();
+
+    $('#rent-list .equip-item').each(function(index, equipItem) {
+      if ($(equipItem).children().hasClass('group-list')) {   // 如果当前是器材组
+        $(equipItem).find('.group-item').each(function(index, el) {   // 遍历器材组里的每一个器材
+          equId = $(el).data('id');
+          equNum = $(el).data("numInGroup");
+          if (m.has(equId)) {
+            equNum = equNum + m.get(equId);
+            m.put(equId, equNum);
+          } else {
+            m.put(equId, equNum);
+          }
+
+        });
+      } else {  // 如果是单个器材
+        equId = $(equipItem).data('id');
+        equNum = $(equipItem).children(".spinner").spinner('value');
+        if (m.has(equId)) {
+            equNum = equNum + m.get(equId);
+            m.put(equId, equNum);
+          } else {
+            m.put(equId, equNum);
+          }
+      }
+    });
+    equNum = '';
+    equId = '';
+    m.each(function(key, value, index){
+      if(index == 0){
+        equId += key;
+        equNum += value;
+      }else{
+        equId += ","+key;
+        equNum += ","+value;
+      }
+    });
+
+		$.ajax({
+			url: "subOrder.do",
+			type: 'POST',
+			data: {equIds:equId,equNums:equNum,fromDate:fromDate,endDate:endDate,borrowId:borrowId},
+			dataType: 'json',
+			success: function(data){
+				if(data.tag==1){
+					location.href="equipmentConfirm.do?borrowId="+data.borrowId;
+				}else{
+					//alert(data.message);
+					noty({text: data.message, timeout: 2500, type: 'error'});
+					return;
+				}
+			}
+		});
+	});
+	
+	$("body").on("click", "a[data-type|=equipDetail]", function() {
+		var fromDate = $("#fromDate").val();
+		var endDate = $("#endDate").val();
+		var equipid = $(this).data("id");	
+		$.ajax({
+			url: "equipOrdDetail.do",
+			type: 'POST',
+			data: {equipmentId:equipid,fromDate:fromDate,endDate:endDate},
+			dataType: 'html',
+			success: function(data){
+				//刷新数据
+			   $("#equip-detail").html(data);   			   
+			   $.ajax({
+					url: "equipDetail.do",
+					type: 'POST',
+					data: {equipmentId:equipid,fromDate:fromDate,endDate:endDate},
+					dataType: 'json',
+					success: function(aadddww){
+						//刷新数据
+						var tempb = aadddww.daynums;
+						var fromDate2 = new Date(aadddww.fromDate).getTime();	
+						var endDate2 = new Date(aadddww.endDate).getTime();
+						var dayFormat;
+						if ('${textmap.datepicker_language}' === 'zh-CN') {
+							dayFormat = '%b%e日';
+						} else {
+							dayFormat = '%e. %b';
+						}
+					   $('#equip-chart').highcharts({
+					        chart: {
+					            type: 'line'
+					        },
+					        title: {
+					            text: ''
+					        },
+					        xAxis: {
+					            type: 'datetime',
+								dateTimeLabelFormats: {
+					                day: dayFormat
+					            },
+								plotBands: [{ // Light air
+									from: new Date(fromDate).getTime(),
+					                to: new Date(endDate).getTime(),
+									color: 'rgba(68, 170, 213, 0.1)',
+									label: {
+										text: order_yourappointment,
+										style: {
+											color: '#606060'
+										}
+									}
+								}], 
+					        },
+					        yAxis: {
+					            title: {
+					                text: order_number
+					            },
+								min: 0,
+								allowDecimals: false
+					        },
+					        series: [{
+					            name: order_referencenumber,
+								pointInterval: 24 * 3600 * 1000, // 一天
+								pointStart: fromDate2,
+					            data: tempb, 
+								marker: {
+							    	fillColor: 'white',
+							    	lineWidth: 2,
+							    	lineColor: Highcharts.getOptions().colors[0]
+								}
+					        }],
+							legend: {
+					            enabled: false
+					        },
+							plotOptions: {
+								line: {
+									dataLabels: {
+										enabled: true
+									}
+								}
+							}
+					    });
+					}	  
+				});
+			}	  
+		});
+	});
+	
+	
+	
+	
+</script>
+
+
+
+</body>
+</html>

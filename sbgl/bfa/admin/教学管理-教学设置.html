@@ -75,72 +75,107 @@
 <section id="main-wrap" class="clearfix"><!--main-wrap-->
       <!--admin-wrap start-->
       <div id="admin-wrap">
-        <div id="admin-content" class="clearfix">    
+        <div id="admin-content" class="clearfix">
             <!--control-bar start-->
             <div class="control-bar clearfix">
               <div class="title pull-left">设置教学计划</div>
               <div class="tips">在此页面下设置本学期的时间安排。</div>
+              <div class="operate-item pull-left">
+                <a href="#add-semester-info" class="btn btn-primary btn-lg" action-type="addSemesterInfo" data-toggle="modal" role="button">添加新学期信息</a>
+              </div>
             </div><!--control-bar end-->
-            <div class="panel panel-default">
-              <div class="panel-body">
-              
-                <form class="form-horizontal" role="form">
-                  <div class="form-group">
-                    <label for="inputSchoolYear" class="col-lg-2 control-label">学年</label>
-                    <div class="col-lg-2">
-                      <select class="select2 select-white form-control" id="inputSchoolYear">
-                        <option value="2013-2014">2013-2014</option>
-                        <option value="2014-2015">2014-2015</option>
-                      </select>
-                    </div>
+            <div class="control-bar clearfix">
+              <div class="title pull-left">本学期信息</div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <dl class="dl-horizontal">
+                      <dt>学年</dt>
+                      <dd>2014-2015学年</dd>
+                      <dt>学期</dt>
+                      <dd>1</dd>
+                      <dt>本学期时间</dt>
+                      <dd>2014年9月1日 至 2015年1月30日</dd>
+                      <dt>学期第一周第一天</dt>
+                      <dd>2014年9月22日</dd>
+                    </dl>
                   </div>
-                  <div class="form-group">
-                    <label for="inputSemester" class="col-lg-2 control-label">学期</label>
-                    <div class="col-lg-2">
-                      <select class="select2 select-white form-control" id="inputSemester">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="semester-time form-group">
-                    <label for="inputDataRange" class="col-lg-2 control-label">本学期时间</label>
-                    <div class="col-lg-7">
-                      <div class="input-daterange row">
-                        <div class="col-lg-3">
-                          <input type="text" class="form-control" id="inputDataRange" name="start" placeholder="学期第一天">
-                        </div>
-                        <div class="col-lg-1 col-no-padding">
-                          <span class="add-on">至</span>
-                        </div>
-                        <div class="col-lg-3">
-                          <input type="text" class="form-control" id="inputDataRange2" name="end" placeholder="学期最后一天">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputFirstDay" class="col-lg-2 control-label">第一周第一天</label>
-                    <div class="col-lg-7">
-                      <div class="input-daterange row">
-                        <div class="col-lg-3">
-                          <input type="text" class="form-control" id="inputFirstDay" placeholder="第1周第1天">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-lg-offset-2 col-lg-4">
-                      <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
-                      <button type="submit" class="btn btn-primary">保 存</button>
-                    </div>
-                  </div>
-                </form>
-              
+                </div>
               </div>
             </div>
-          </div>
+            <hr class="hr-block">
+            <div class="control-bar clearfix">
+              <div class="title pull-left">过往学期信息</div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <dl class="dl-horizontal">
+                      <dt>学年</dt>
+                      <dd>2014-2015学年</dd>
+                      <dt>学期</dt>
+                      <dd>1</dd>
+                      <dt>本学期时间</dt>
+                      <dd>2014年9月1日 至 2015年1月30日</dd>
+                      <dt>学期第一周第一天</dt>
+                      <dd>2014年9月22日</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <dl class="dl-horizontal">
+                      <dt>学年</dt>
+                      <dd>2014-2015学年</dd>
+                      <dt>学期</dt>
+                      <dd>1</dd>
+                      <dt>本学期时间</dt>
+                      <dd>2014年9月1日 至 2015年1月30日</dd>
+                      <dt>学期第一周第一天</dt>
+                      <dd>2014年9月22日</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <dl class="dl-horizontal">
+                      <dt>学年</dt>
+                      <dd>2014-2015学年</dd>
+                      <dt>学期</dt>
+                      <dd>1</dd>
+                      <dt>本学期时间</dt>
+                      <dd>2014年9月1日 至 2015年1月30日</dd>
+                      <dt>学期第一周第一天</dt>
+                      <dd>2014年9月22日</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <dl class="dl-horizontal">
+                      <dt>学年</dt>
+                      <dd>2014-2015学年</dd>
+                      <dt>学期</dt>
+                      <dd>1</dd>
+                      <dt>本学期时间</dt>
+                      <dd>2014年9月1日 至 2015年1月30日</dd>
+                      <dt>学期第一周第一天</dt>
+                      <dd>2014年9月22日</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- /admin-content end -->
 
       </div>
       <!--equip-wrap end-->
@@ -158,6 +193,77 @@
       <!--sidebar end-->
 
 </section>
+
+<div id="add-semester-info" class="modal hide fade" role="dialog" aria-labelledby="addSemesterInfo" aria-hidden="true" style="display: none; ">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="addSemesterInfo">添加新学期信息</h3>
+  </div>
+  <div class="modal-body">
+    <p>在这里添加新的学期基本信息。</p>
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label for="inputSchoolYear" class="col-xs-3 control-label">学年</label>
+        <div class="col-xs-7">
+          <select class="select2 select-white form-control" id="inputSchoolYear">
+            <option value="2013-2014">2013-2014</option>
+            <option value="2014-2015">2014-2015</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputSemester" class="col-xs-3 control-label">学期</label>
+        <div class="col-xs-7">
+          <select class="select2 select-white form-control" id="inputSemester">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+      </div>
+      <div class="semester-time form-group">
+        <label for="inputDataRange" class="col-xs-3 control-label">本学期时间</label>
+        <div class="col-xs-7">
+          <div class="input-daterange row">
+            <div class="col-xs-5">
+              <input type="text" class="form-control" id="inputDataRange" name="start" placeholder="学期第一天">
+            </div>
+            <div class="col-xs-2 col-no-padding">
+              <span class="add-on">至</span>
+            </div>
+            <div class="col-xs-5">
+              <input type="text" class="form-control" id="inputDataRange2" name="end" placeholder="学期最后一天">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputFirstDay" class="col-xs-3 control-label">学期第一周第一天</label>
+        <div class="col-xs-7">
+          <div class="input-daterange row">
+            <div class="col-xs-7">
+              <input type="text" class="form-control" id="inputFirstDay" placeholder="第1周第1天">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputSemesterNextsemesterdaybefore" class="col-xs-3 control-label">下学期前一天</label>
+        <div class="col-xs-7">
+          <div class="input-daterange row">
+            <div class="col-xs-7">
+              <input type="text" class="form-control" id="inputSemesterNextsemesterdaybefore" placeholder="下一个学期的前一天">       
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white" data-dismiss="modal" aria-hidden="true">取 消</button>
+    <button class="btn btn-primary" action-type="addGroup">确 定</button>
+  </div>
+</div>      
 
 
     <!-- javascript
