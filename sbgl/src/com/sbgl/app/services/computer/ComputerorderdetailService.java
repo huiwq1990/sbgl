@@ -57,10 +57,6 @@ public interface ComputerorderdetailService{
 	public List<Computerorderdetail> selectComputerorderdetailByComputerorderId(Integer computerorderid );
 	public List<Computerorderdetail> selectComputerorderdetailByComputermodelId(Integer computermodelid );
 	public List<Computerorderdetail> selectComputerorderdetailByComputerId(Integer computerid );
-//根据关联查询实体full	
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerorderId(Integer computerorderid );
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputermodelId(Integer computermodelid );
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerId(Integer computerid );
 
 	List<Computerorderdetail> selectComputerorderdetailAfterNow(
 			String currentDay, int currentPeriod);

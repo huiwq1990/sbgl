@@ -214,22 +214,7 @@ public class ComputerorderdetailServiceImpl implements ComputerorderdetailServic
 		computerorderdetailList = baseDao.getEntityByProperty("Computerorderdetail", "computerid ", id);
 		return computerorderdetailList;
 	}
-	//根据computerorderid 查询实体full
-	@Override
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerorderId(Integer computerorderid ) {
-		return computerorderdetailDao.selectComputerorderdetailFullByComputerorderId(computerorderid );
-	}
-	//根据computermodelid 查询实体full
-	@Override
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputermodelId(Integer computermodelid ) {
-		return computerorderdetailDao.selectComputerorderdetailFullByComputermodelId(computermodelid );
-	}
-	//根据computerid 查询实体full
-	@Override
-	public List<ComputerorderdetailFull> selectComputerorderdetailFullByComputerId(Integer computerid ) {
-		return computerorderdetailDao.selectComputerorderdetailFullByComputerId(computerid );
-	}
-	
+
 	
 	
 	  /**

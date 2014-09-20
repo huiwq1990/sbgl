@@ -219,7 +219,7 @@
 <script src="${jsDomain}/bootstrap-tabdrop.js"></script>
 
 <script>
-$('.tab-drop.nav-pills').tabdrop();
+//$('.tab-drop.nav-pills').tabdrop();
 
 /* ============ 课程安排 ============= */
 var semesterWeek = $!selweek;	// 学期第X周
