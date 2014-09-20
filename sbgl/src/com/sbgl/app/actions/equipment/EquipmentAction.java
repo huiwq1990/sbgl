@@ -583,27 +583,40 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			} else {
 				totalModelPages = String.valueOf( result.getTotalResultNum() / 10 );
 			}
-			
+			boolean flag = true;
 			for (Equipment equipment : (List<Equipment>)result.getResultList()) {
+				flag = true;
 				EquipModelCourse emc = new EquipModelCourse();
 				emc.setId( String.valueOf( equipment.getEquipmentid() ) );
 				emc.setName( String.valueOf( equipment.getEquipmentname() ) );
 				
-				List<Equipmentclassification> cfList = equipService.getEquipmentclassificationByComid( equipment.getClassificationid() );
-				if(cfList != null) {
-					if( "0".equals( cfList.get(0).getLantype() ) ) {
-						emc.setcId( cfList.get(0).getComid().toString() );
-						emc.setcName( cfList.get(0).getName() );
-						emc.setcNameEN( cfList.get(1).getName() );
-					} else {
-						emc.setcId( cfList.get(1).getComid().toString() );
-						emc.setcName( cfList.get(1).getName() );
-						emc.setcNameEN( cfList.get(0).getName() );
+				for (ClassficationCourse classCourse : classForEquipAdd) {
+					if( equipment.getClassificationid().toString().equals( classCourse.getId() ) ) {
+						emc.setcId( classCourse.getId() );
+						emc.setcName( classCourse.getName() );
+						flag = false;
+						break;
 					}
-				} else {
+				}
+				if(flag) {
 					emc.setcId( "-1" );
 					emc.setcName( "未分类" );
 				}
+//				List<Equipmentclassification> cfList = equipService.getEquipmentclassificationByComid( equipment.getClassificationid() );
+//				if(cfList != null) {
+//					if( "0".equals( cfList.get(0).getLantype() ) ) {
+//						emc.setcId( cfList.get(0).getComid().toString() );
+//						emc.setcName( cfList.get(0).getName() );
+//						emc.setcNameEN( cfList.get(1).getName() );
+//					} else {
+//						emc.setcId( cfList.get(1).getComid().toString() );
+//						emc.setcName( cfList.get(1).getName() );
+//						emc.setcNameEN( cfList.get(0).getName() );
+//					}
+//				} else {
+//					emc.setcId( "-1" );
+//					emc.setcName( "未分类" );
+//				}
 				emc.setMemo( equipment.getEquipmentdetail() );
 				emc.setComId( String.valueOf( equipment.getComid() ) );
 				emc.setImgName( equipment.getImgname() );
@@ -665,26 +678,39 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		} else {
 			allModel = equipService.getAllEquips();
 		}
-		
+		boolean flag = true;
 		for (Equipment equipment : allModel) {
+			flag = true;
 			if("0".equals( equipment.getLantype() )) {
 				EquipModelCourse emc = new EquipModelCourse();
 				emc.setId( String.valueOf( equipment.getComid() ) );		//根据需求改为联合主键，不再使用单个中文主键
 				emc.setName( String.valueOf( equipment.getEquipmentname() ) );
 				
-				List<Equipmentclassification> cfList = equipService.getEquipmentclassificationByComid( equipment.getClassificationid() );
-				if(cfList != null) {
-					if( "0".equals( cfList.get(0).getLantype() ) ) {
-						emc.setcId( cfList.get(0).getComid().toString() );
-						emc.setcName( cfList.get(0).getName() );
-					} else {
-						emc.setcId( cfList.get(1).getComid().toString() );
-						emc.setcName( cfList.get(1).getName() );
+				for (ClassficationCourse classCourse : classForEquipAdd) {
+					if( equipment.getClassificationid().toString().equals( classCourse.getId() ) ) {
+						emc.setcId( classCourse.getId() );
+						emc.setcName( classCourse.getName() );
+						flag = false;
+						break;
 					}
-				} else {
+				}
+				if(flag) {
 					emc.setcId( "-1" );
 					emc.setcName( "未分类" );
 				}
+//				List<Equipmentclassification> cfList = equipService.getEquipmentclassificationByComid( equipment.getClassificationid() );
+//				if(cfList != null) {
+//					if( "0".equals( cfList.get(0).getLantype() ) ) {
+//						emc.setcId( cfList.get(0).getComid().toString() );
+//						emc.setcName( cfList.get(0).getName() );
+//					} else {
+//						emc.setcId( cfList.get(1).getComid().toString() );
+//						emc.setcName( cfList.get(1).getName() );
+//					}
+//				} else {
+//					emc.setcId( "-1" );
+//					emc.setcName( "未分类" );
+//				}
 				emc.setMemo( equipment.getEquipmentdetail() );
 				emc.setImgName( equipment.getImgname() );
 				emc.setBranId( String.valueOf( equipment.getBrandid() ) );
@@ -1061,7 +1087,9 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 			}
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		boolean flag = true;
 		for (Equipmentdetail equipdetail : tempList) {
+			flag = true;
 			EquipCourse ec = new EquipCourse();
 			ec.setId( String.valueOf( equipdetail.getEquipdetailid() ) );
 			
@@ -1070,25 +1098,26 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 				ec.setModelId( String.valueOf( -1 ) );
 				ec.setModelName( "*" );
 			} else {
-				Equipment e = equipService.getEquipByComidAndLanType( equipdetail.getEquipmentid(), "0" );
-			
-				if(e != null) {
-					ec.setModelId( String.valueOf( e.getComid() ) );	//根据需求改为联合主键，不再是中文型号的id
-					ec.setModelName( e.getEquipmentname() );
-					if( e.getClassificationid() != null && e.getClassificationid() != -1 ) {
-						Equipmentclassification ecf = equipService.getEquipmentclassificationByEquipmentModel( e.getEquipmentid() );
-						if(ecf != null) {
-							ec.setClassId(  String.valueOf( ecf.getComid() ) );
-							ec.setClassName( ecf.getName() );
-						} else {
-							ec.setClassId(  String.valueOf( -1 ) );
-							ec.setClassName( "未分类" );
+				if( equipCourse.size() > 0 ) {
+					for (EquipModelCourse modelCourse : equipCourse) {
+						if(modelCourse.getId() == null) {
+							continue;
 						}
-					} else {
+						if( modelCourse.getId().equals( equipdetail.getEquipmentid().toString() ) ) {
+							ec.setModelId(  modelCourse.getId() );
+							ec.setModelName( modelCourse.getName() );
+							if( modelCourse.getcId() != null && !"-1".equals( modelCourse.getcId() ) ) {
+								ec.setClassId(  modelCourse.getcId() );
+								ec.setClassName( modelCourse.getcName() );
+								flag = false;
+								break;
+							}
+						}
+					}
+					if(flag) {
 						ec.setClassId(  String.valueOf( -1 ) );
 						ec.setClassName( "未分类" );
 					}
-					
 				}
 			}
 			ec.setState( String.valueOf( equipdetail.getStatus() ) );
@@ -1125,9 +1154,9 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	 */
 	//设备管理首页
 	public String gotoEquipManageAdmin() {
-		showAllEquipDetailCourse();
-		getAllModelForSelect(null);
 		doGetClassForEquipAdd();
+		getAllModelForSelect(null);
+		showAllEquipDetailCourse();
 		
 		return SUCCESS;
 	}
@@ -1166,29 +1195,25 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	}
 	
 	private void doGetClassForEquipAdd() {
-		List<Equipmentclassification> ecList = equipService.getAllCHEquipmentclassifications();  //获取全部中文名称的分类
-		for (Equipmentclassification ec : ecList) {
-			if("0".equals( ec.getLantype() )) {
-				if(ec.getParentid() == 0) {
-					ClassficationCourse cc = new ClassficationCourse();
-					cc.setId( String.valueOf( ec.getComid() ) );		//改为联合主键
-					cc.setName( ec.getName() );
-					cc.setpId( "0" );
-					cc.setIsParent( "1" );
-					classForEquipAdd.add( cc );
-					
-					List<Equipmentclassification> tempList = equipService.getAllChildEquipmentclassificationsByParentId( ec.getComid() );
-					if(tempList != null) {
-						for (Equipmentclassification ec2 : tempList) {
-							if("0".equals( ec2.getLantype() )) {
-								ClassficationCourse cc2 = new ClassficationCourse();
-								cc2.setId( String.valueOf( ec2.getComid() ) );		//改为联合主键
-								cc2.setName( ec2.getName() );
-								cc2.setpId( String.valueOf( ec2.getParentid() ) );
-								cc2.setIsParent( "0" );
-								classForEquipAdd.add( cc2 );
-							}
-						}
+		List<Object[]> ecList = equipService.getAllCHClassificationInfoList();  //获取全部中文名称的分类
+		ClassficationCourse cc = null;
+		for (Object[] ec : ecList) {
+			if( "0".equals( ec[2].toString() ) ) {
+				cc = new ClassficationCourse();
+				cc.setId( ec[0].toString() );
+				cc.setName( ec[1].toString() );
+				cc.setpId( ec[2].toString() );
+				cc.setIsParent( "1" );
+				classForEquipAdd.add( cc );
+				
+				for (Object[] ec2 : ecList) {
+					if( ec2[2].equals( ec[0]) ) {
+						cc = new ClassficationCourse();
+						cc.setId( ec2[0].toString() );
+						cc.setName( ec2[1].toString() );
+						cc.setpId(  ec2[2].toString() );
+						cc.setIsParent( "0" );
+						classForEquipAdd.add( cc );
 					}
 				}
 			}
@@ -1205,8 +1230,8 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 	}
 	
 	public String gotoEquipManageModel() {
-		getAllEquipInfoCourse();
 		doGetClassForEquipAdd();
+		getAllEquipInfoCourse();
 		doGetRentUnitForEquipAdd();
 		return SUCCESS;
 	}
