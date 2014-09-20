@@ -103,13 +103,13 @@
                     <td>$!row.borrowid</td>
                     <td>$!row.userName</td>
         			#if($!row.status==2)
-        			<td><a href="${webbaseurl}/equipmentExaming.do?borrowId=$row.borrowid" target="_blank">$!row.title</a></td>
+        			<td><a href="${webbaseurl}/equipmentExaming.do?borrowId=$row.borrowid" >$!row.title</a></td>
                     <td>待审核</td>
         			#elseif($!row.status==4)
-        			<td><a href="${webbaseurl}/orderalibrary.do?borrowId=$row.borrowid" target="_blank">$!row.title</a></td>
+        			<td><a href="${webbaseurl}/orderalibrary.do?borrowId=$row.borrowid" >$!row.title</a></td>
                     <td>待出库</td>  
         			#elseif($!row.status==5||$!row.status==6)
-        			<td><a href="${webbaseurl}/orderstorage.do?borrowId=$row.borrowid" target="_blank">$!row.title</a></td>
+        			<td><a href="${webbaseurl}/orderstorage.do?borrowId=$row.borrowid" >$!row.title</a></td>
                     <td>待入库</td> 
         			#elseif($!row.status==1||$!row.status==3)
         			<td><a href="#">$!row.title</a></td>

@@ -22,7 +22,7 @@ import com.sbgl.util.DateUtil;
 
 @Scope("prototype") 
 @Service("orderFinishService")
-@Transactional
+@Transactional(rollbackFor=Exception.class)
 public class OrderFinishServiceImpl  implements OrderFinishService  {
 
 	@Resource

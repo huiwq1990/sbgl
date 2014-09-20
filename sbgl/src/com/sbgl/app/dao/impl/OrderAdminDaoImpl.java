@@ -24,7 +24,7 @@ public class OrderAdminDaoImpl extends HibernateDaoSupport implements OrderAdmin
 		
 		String sql2 = " select a.*,b.name as teacherName,(select name from Course where languagetype=0  and   id in (select id from Course where coursetype in (select coursetype from Course where id = a.courseId))) as courseName from orderCourseRule a left outer join LoginUser b on teacherid=b.id ";
 		if(courseId!=0){
-			sql2+=" where a.courseId in (select id from Course where coursetype in (select coursetype from Course where id = '"+courseId+"'))";
+			sql2+=" where a.courseId in (select id from Course where coursetype = '"+courseId+"')";
 		}
 		sql2+= " limit "+(((page.getPageNo()-1)*page.getPageSize()))+","+page.getPageSize();
 		final String sql = sql2;

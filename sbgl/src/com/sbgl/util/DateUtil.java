@@ -273,6 +273,20 @@ public class DateUtil {
 		return calendar.getTime();
 	}
 	
+	public static String startDay(String inDate) {
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(parseDate(inDate));	
+		return datetime.format(calendar.getTime());
+	}
+	
+	public static String endDay(String inDate) {
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(parseDate(inDate));	
+		calendar.add(Calendar.DATE, 1);
+		calendar.add(Calendar.MILLISECOND, -1000);
+		return datetime.format(calendar.getTime());
+	}
+	
 	/**
 	 * 
 	 * @param startDate

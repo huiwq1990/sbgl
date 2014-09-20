@@ -138,64 +138,70 @@
 						dataType: 'json',
 						success: function(data){
 							jQuery.each(data.equipmentList, function(i,item){
-								if ($("#rent-list #" + item.comId).length > 0) {
-									var curVal = $("#rent-list #" + item.equipmentid).children(".spinner").spinner('value');
-									var tempnum = parseInt(item.num) + parseInt(curVal) - item.borrownum;
-									if(tempnum>0){
-										//console.log(".spinner-up, 设备组要求"+item.equipmentname+"设备数量超出！,超出： " + tempnum);
-										alert(order_equipmentgroupre+item.equipmentname+order_numberofdevicesbeyond + tempnum);
-										$("#rent-list #" + item.equipmentid).children(".spinner").spinner('value', item.borrownum);
-									}else{
-										$("#rent-list #" + item.equipmentid).children(".spinner").spinner('value', parseInt(item.num)+parseInt(curVal));
-									}
-								}else{
-									var html = 
-										'<div class="row" id="' + item.comId + '">' + 
-											'<div class="item-name">' + item.equipmentname + '</div>' +
-											'<div class="item-ctrl spinner input-group">' +
-												'<span class="input-group-btn">' + 
-													'<button type="button" class="btn btn-link spinner-down"><i class="icon-minus"></i></button>' + 
-												'</span>' +
-												'<input type="text" name="equNum" class="spinner-input form-control">' + 
-												'<input type="hidden" name="equId" value="'+item.comId+'">' + 
-												'<span class="input-group-btn">' + 
-													'<button type="button" class="btn btn-link spinner-up"><i class="icon-plus"></i></button>' +
-												'</span>' + 
-												'<span class="input-group-btn">' + 
-													'<button type="button" class="btn btn-link close"><i class="icon-remove"></i></button>' + 
-												'</span>' + 
-											'</div>' + 
-										'</div>';
-									$("#rent-list").append(html);
-									var spinner = $("#rent-list #" + item.comId).children(".spinner").spinner({max: item.borrownum});		// 设置设备最大可预约数量
-
-									var overMaxNum = 0;
-									if(item.num>item.borrownum){
-										var overMaxNum = item.num - item.borrownum;
-										//console.log(".spinner-up, 设备组要求"+item.equipmentname+"设备数量超出！,超出： " + overMaxNum);
-										alert(order_equipmentgroupre+item.equipmentname+order_numberofdevicesbeyond + overMaxNum);
-										$("#rent-list #" + item.comId).children(".spinner").spinner('value', item.borrownum);
-									}else{
-										$("#rent-list #" + item.comId).children(".spinner").spinner('value', item.num);
-									}
-									$("#rent-list .spinner").on("changed", $(this), function(event) {		// 处理达到最大预约数量时的消息提示
-										var _this = $(this);
-										var curVal = $(this).spinner("value");
-
-										if(curVal >= item.borrownum) {
-											var str = item.equipmentname + order_maximum;
-											var n = noty({text: str, timeout: 1500});	
+								if(item.num>0){
+									if ($("#rent-list #" + item.comId).length > 0) {
+										var curVal = $("#rent-list #" + item.equipmentid).children(".spinner").spinner('value');
+										var tempnum = parseInt(item.num) + parseInt(curVal) - item.borrownum;
+										if(tempnum>0){
+											//console.log(".spinner-up, 设备组要求"+item.equipmentname+"设备数量超出！,超出： " + tempnum);
+											alert(order_equipmentgroupre+item.equipmentname+order_numberofdevicesbeyond + tempnum);
+											$("#rent-list #" + item.equipmentid).children(".spinner").spinner('value', item.borrownum);
+										}else{
+											$("#rent-list #" + item.equipmentid).children(".spinner").spinner('value', parseInt(item.num)+parseInt(curVal));
 										}
-									});
-									if ($("#rent-list .row").length > 0) {
-										$("#rent-list .no-add").hide("fast", function() {
-											reWizardHeight();
-										});
-									} else {
-										$("#rent-list .no-add").show("fast", function() {
-											reWizardHeight();	
-										});
-									}  
+									}else{
+										if(item.borrownum>0){
+											var html = 
+												'<div class="row" id="' + item.comId + '">' + 
+													'<div class="item-name">' + item.equipmentname + '</div>' +
+													'<div class="item-ctrl spinner input-group">' +
+														'<span class="input-group-btn">' + 
+															'<button type="button" class="btn btn-link spinner-down"><i class="icon-minus"></i></button>' + 
+														'</span>' +
+														'<input type="text" name="equNum" class="spinner-input form-control">' + 
+														'<input type="hidden" name="equId" value="'+item.comId+'">' + 
+														'<span class="input-group-btn">' + 
+															'<button type="button" class="btn btn-link spinner-up"><i class="icon-plus"></i></button>' +
+														'</span>' + 
+														'<span class="input-group-btn">' + 
+															'<button type="button" class="btn btn-link close"><i class="icon-remove"></i></button>' + 
+														'</span>' + 
+													'</div>' + 
+												'</div>';
+											$("#rent-list").append(html);
+											var spinner = $("#rent-list #" + item.comId).children(".spinner").spinner({max: item.borrownum});		// 设置设备最大可预约数量
+		
+											var overMaxNum = 0;
+											if(item.num>item.borrownum){
+												var overMaxNum = item.num - item.borrownum;
+												//console.log(".spinner-up, 设备组要求"+item.equipmentname+"设备数量超出！,超出： " + overMaxNum);
+												alert(order_equipmentgroupre+item.equipmentname+order_numberofdevicesbeyond + overMaxNum);
+												if(item.borrownum>0){
+													$("#rent-list #" + item.comId).children(".spinner").spinner('value', item.borrownum);
+												}
+											}else{
+												$("#rent-list #" + item.comId).children(".spinner").spinner('value', item.num);
+											}
+											$("#rent-list .spinner").on("changed", $(this), function(event) {		// 处理达到最大预约数量时的消息提示
+												var _this = $(this);
+												var curVal = $(this).spinner("value");
+		
+												if(curVal >= item.borrownum) {
+													var str = item.equipmentname + order_maximum;
+													var n = noty({text: str, timeout: 1500});	
+												}
+											});
+											if ($("#rent-list .row").length > 0) {
+												$("#rent-list .no-add").hide("fast", function() {
+													reWizardHeight();
+												});
+											} else {
+												$("#rent-list .no-add").show("fast", function() {
+													reWizardHeight();	
+												});
+											}  
+										}
+									}
 								}
 							});  
 						}  

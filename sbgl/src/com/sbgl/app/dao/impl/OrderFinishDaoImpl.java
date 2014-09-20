@@ -22,6 +22,7 @@ import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Listdetail;
 import com.sbgl.app.entity.Listequipdetail;
 import com.sbgl.app.entity.Loginuser;
+import com.sbgl.common.DataError;
 import com.sbgl.util.DateUtil;
 import com.sbgl.util.EscColumnToBean;
 
@@ -30,7 +31,7 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 	
 	public EquipmenborrowFull findEquipmenborrow(Integer borrowId){
 		
-		final String sql = " select f.teacherid,a.*,b.name as userName,c.name as teacherName,d.name as examuserName,e.createtime,e.MsgTitle,c.photo as teacherPic,d.photo as examuserPic from EquipmenBorrow a left outer join loginUser b on a.userid = b.id "
+		final String sql = " select f.teacherid,a.*,b.name as userName,c.name as teacherName,d.name as examuserName,e.createtime,e.MsgTitle,e.content,c.photo as teacherPic,d.photo as examuserPic from EquipmenBorrow a left outer join loginUser b on a.userid = b.id "
 			+ " left outer join  sendRuleToUser e on a.sendruleid = e.sendruleid "
 			+ " left outer join  ordercourserule f on f.courseruleid = e.courseruleid "		
 			+ " left outer join loginUser c on c.id=f.teacherid "
@@ -243,13 +244,14 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 		// TODO Auto-generated method stub
 		List<String> dateList = DateUtil.dateRegion(fromDate,endDate);
 		final Integer size = dateList.size();
-		String sql = " select (select a.activenum-ifnull(max(tempaa.aaa),0) from( " ;
+		String sql = " select a.activenum-(select ifnull(max(tempaa.aaa),0) from( " ;
 	    for(int i=0;i<size;i++){
     		String dateTemp = dateList.get(i);
-    		sql +="(select case when c.status in (2, 4) then sum(ifnull(ifnull(b.borrownumber,b.applynumber),0)) else "
-                + " sum(ifnull(b.borrownumber, 0)) end as aaa,b.comId from ListDetail b " 
+    		String dateStart = DateUtil.startDay(dateTemp);
+    		String dateEnd = DateUtil.endDay(dateTemp);		
+    		sql +="(select sum( case when c.status in (2, 4) then ifnull(ifnull(b.borrownumber, b.applynumber), 0) else ifnull(b.borrownumber, 0) end) as aaa,b.comId from ListDetail b " 
     	    	+ " inner join equipmenborrow c on b.borrowlistid=c.borrowid and c.status not in (1,3)  "
-    			+ " where  ('"+dateTemp+"'<=b.returntime and '"+dateTemp+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comId )  "  ;  
+    			+ " where  ('"+dateStart+"'<=b.returntime and '"+dateEnd+"'>=b.borrowtime) or (b.ifdelay='Y') group by b.comId )  "  ;  
     		if(i!=size-1){
     			sql += " union ";
     		}
@@ -291,5 +293,29 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 		return null;
 	}
 
+	@Override
+	public void updateEquipmenNum(String type,Integer comid) throws Exception {
+		// TODO Auto-generated method stub
+		String str = "";
+		if("1".equals(type)){
+			str = "recyclingnum";
+		}else if("2".equals(type)){
+			str = "repairnum";
+		}else if("3".equals(type)){
+			str = "losednum";
+		}
+		String sql = "update Equipment set " + str + "=ifnull(" + str + ",0)+1,activenum=ifnull(activenum,0)-1 where comid = "+comid;
+		Query query =  this.getCurrentSession().createSQLQuery(sql);
+		int num = query.executeUpdate();
+		if(num<=0){
+			throw new DataError("设备信息修改失败");
+		}
+	}
+	
+	public  Session getCurrentSession(){
+        //TODO Auto-generated method stub
+		return this.getHibernateTemplate().getSessionFactory().getCurrentSession();
+		
+	}
 
 }

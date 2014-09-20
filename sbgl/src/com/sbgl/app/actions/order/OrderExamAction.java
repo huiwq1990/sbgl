@@ -17,6 +17,7 @@ import com.sbgl.app.entity.Equipmentclassification;
 import com.sbgl.app.entity.Loginuser;
 import com.sbgl.app.services.order.OrderExamService;
 import com.sbgl.app.services.order.OrderFinishService;
+import com.sbgl.common.DataError;
 
 @Scope("prototype") 
 @Controller("OrderExamAction")
@@ -60,7 +61,7 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 	
 	//	进入查看订单审核页面
 	public String equipmentExaming(){
-		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		String lantype = CommonConfig.languagechStr;
 		if(lantype==null||lantype.equals("")){
 			lantype = "0";
 		}
@@ -73,7 +74,7 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 	
 	//进入设备出库页面
 	public String orderalibrary(){
-		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		String lantype = CommonConfig.languagechStr;
 		if(lantype==null||lantype.equals("")){
 			lantype = "0";
 		}
@@ -85,7 +86,7 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 	
 	//进入设备入库页面
 	public String orderstorage(){
-		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		String lantype = CommonConfig.languagechStr;
 		if(lantype==null||lantype.equals("")){
 			lantype = "0";
 		}
@@ -160,6 +161,11 @@ public class OrderExamAction  extends ActionSupport  implements SessionAware{
 				tag = "2";
 				message = "订单入库失败";
 			}
+		}catch(DataError e){
+			tag = "2";
+			message = e.getMessage();
+			e.printStackTrace();
+			log.error(e);
 		}catch(Exception e){
 			tag = "2";
 			message = "订单入库失败";

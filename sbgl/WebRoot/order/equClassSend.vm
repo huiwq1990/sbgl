@@ -49,7 +49,7 @@
                           <option></option>
                           #foreach($course in $courseFullList)
 							<optgroup label="$!course.coursename">
-							#set( $tcfl = $courseruleMap.get($!course.courseid) )
+							#set( $tcfl = $courseruleMap.get($!course.coursecoursetype) )
 							#foreach($courseruleFull in  $tcfl )					
 								<option value="$courseruleFull.courseruleid" >$!course.coursename - $courseruleFull.courserulename</option>                                           
 							#end		

@@ -23,7 +23,7 @@ import com.sbgl.app.services.order.OrderExamService;
 
 @Scope("prototype") 
 @Service("orderExamService")
-@Transactional
+@Transactional(rollbackFor=Exception.class)
 public class OrderExamServiceImpl implements OrderExamService {
 
 	@Resource
@@ -98,7 +98,7 @@ public class OrderExamServiceImpl implements OrderExamService {
 	}
 
 	@Override
-	public boolean storageorder(Integer borrowId, String ids, Loginuser user) {
+	public boolean storageorder(Integer borrowId, String ids, Loginuser user) throws Exception { 
 		// TODO Auto-generated method stub
 		String[] strs1 =  ids.split(",");
 		Equipmenborrow equipmenborrow = baseDao.getEntityById(Equipmenborrow.class, borrowId);
@@ -114,8 +114,11 @@ public class OrderExamServiceImpl implements OrderExamService {
 				baseDao.updateEntity(listdetail);
 				Listequipdetail listequipdetail =  new Listequipdetail();
 				listequipdetail = orderFinishDao.findlistequipdetail(borrowId,Integer.parseInt(strs2[0]));
-				listequipdetail.setEquipstatus(strs2[1]);	
+				listequipdetail.setEquipstatus(strs2[1]);					
 				baseDao.updateEntity(listequipdetail);
+				if(strs2[1]!=null&&!"4".equals(strs2[1])){
+					orderFinishDao.updateEquipmenNum(strs2[1], listdetail.getEquipmentid());
+				}
 			}
 		}
 		equipmenborrow.setStatus(8);

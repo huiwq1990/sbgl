@@ -2,7 +2,7 @@
         <div id="equip-list">        
           <div class="w200 container">
             <div class="control-bar clearfix">
-              <div class="title pull-left">$!{class1Name}
+              <div class="title pull-left">#if($class1Name!='设备组')$!{class1Name}#else$!{textmap.order_equipmengroup}#end
 			  
 			  
 			  </div>

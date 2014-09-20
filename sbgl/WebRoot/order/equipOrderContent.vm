@@ -144,8 +144,9 @@
                   <img src="${userImagePath}/$!equipmenborrowFull.teacherPic" width="28" height="28" class="img-rounded">
                 </div>
                 <div class="media-body">
-                  <div class="media-heading"><h5>$!equipmenborrowFull.teacherName</h5><span class="post-time">$!date.format("yyyy-MM-dd", $!equipmenborrowFull.createtime)</span></div>
-                  <a href="#" class="lk" title="查看详细说明" rel="tooltip">$!equipmenborrowFull.msgtitle</a>
+                  <div class="media-heading"><h5>$!equipmenborrowFull.teacherName</h5><span class="post-time">$!date.format("yyyy-MM-dd hh", $!equipmenborrowFull.createtime)</span></div>
+                  ${textmap.order_ruletitle}：<br><a href="#" class="lk" rel="tooltip">$!equipmenborrowFull.msgtitle</a><br>
+				  ${textmap.order_rulecontent}：<br><a href="#" class="lk" rel="tooltip">$!equipmenborrowFull.content</a>
                 </div>
               </li>
 			#end
@@ -155,7 +156,7 @@
                   <img src="${userImagePath}/$!equipmenborrowFull.examuserPic" width="28" height="28" class="img-rounded">
                 </a>
                 <div class="media-body">
-                  <div class="media-heading"><h5><a rel="popover" href="#">$!equipmenborrowFull.examuserName</a></h5><span class="post-time" title="详细时间">$!date.format("yyyy-MM-dd hh:mm", $!equipmenborrowFull.examdate)</span></div>
+                  <div class="media-heading"><h5><a rel="popover" href="#">$!equipmenborrowFull.examuserName</a></h5><span class="post-time" title="详细时间">$!date.format("yyyy-MM-dd hh", $!equipmenborrowFull.examdate)</span></div>
                   <p>$!equipmenborrowFull.teachersuggest</p>
                 </div>
               </li>

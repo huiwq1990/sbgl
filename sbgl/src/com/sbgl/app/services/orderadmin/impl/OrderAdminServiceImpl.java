@@ -38,7 +38,7 @@ import com.sbgl.util.Page;
 
 @Scope("prototype") 
 @Service("orderAdminService")
-@Transactional
+@Transactional(rollbackFor=Exception.class)
 public class OrderAdminServiceImpl implements  OrderAdminService{
 
 	@Resource
@@ -172,8 +172,8 @@ public class OrderAdminServiceImpl implements  OrderAdminService{
 		for(int i=0;i<size;i++){
 			CourseFull Course = courseFullList.get(i);
 			ArrayList<Ordercourserule> list = new ArrayList<Ordercourserule>();
-			list = new ArrayList(baseDao.getEntityByProperty("Ordercourserule", "courseid", Course.getCourseid().toString()));
-			map.put(Course.getCourseid(), list);
+			list = new ArrayList(baseDao.getEntityByProperty("Ordercourserule", "courseid", Course.getCoursecoursetype().toString()));
+			map.put(Course.getCoursecoursetype(), list);
 		}
 		return map;
 	}

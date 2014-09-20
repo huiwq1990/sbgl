@@ -29,6 +29,7 @@ public class EquipmenborrowFull extends DaoAbs {
 	private String borrowallid;
 	
 	private String userName;
+	private String userPhone;
 	private String cateName;
 	private String statusName;
 	private String teacherName;
@@ -244,6 +245,12 @@ public class EquipmenborrowFull extends DaoAbs {
 	}
 	public void setBorrowallid(String borrowallid) {
 		this.borrowallid = borrowallid;
+	}
+	public String getUserPhone() {
+		return userPhone;
+	}
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
 	}
 	
 }

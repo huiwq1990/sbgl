@@ -214,10 +214,7 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 	}
 	
 	public String orderclassrule3(){
-		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
-		if(lantype==null||lantype.equals("")){
-			lantype = "0";
-		}
+		String lantype = "0";
 		classification1List = orderAdminService.findTopEquipmentclass(lantype);
 		classequipmap = orderAdminService.fingclassequipMap(classification1List,courseruleid,lantype);
 		courseFullList  = courseService.selectCourseFullByCondition(" where a.languagetype = "+lantype);
@@ -232,7 +229,7 @@ public class OrderAdminAction  extends ActionSupport  implements SessionAware {
 	public String addorderclassrule(){
 		try{
 			boolean flag = false;
-			String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+			String lantype = CommonConfig.languagechStr;
 			if(lantype==null||lantype.equals("")){
 				lantype = "0";
 			}

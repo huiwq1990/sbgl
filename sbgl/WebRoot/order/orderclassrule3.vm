@@ -9,7 +9,7 @@
         <select id="inputCourseName" class="select2 form-control select-white" data-placeholder="请选择课程" style="width: 100%;">
           <option></option>
 		  #foreach($row in $!courseFullList)	
-			<option value="$row.courseid" #if($!ordercourserule.courseid==$!row.courseid) selected #end data-id="$!row.courseid" data-foo="fa">$!row.coursename - $!row.teacherloginusername</option>
+			<option value="$row.coursecoursetype" #if($!ordercourserule.courseid==$!row.coursecoursetype) selected #end data-id="$!row.coursecoursetype" data-foo="fa">$!row.coursename - $!row.teacherloginusername</option>
     	  #end
         </select>
       </div>

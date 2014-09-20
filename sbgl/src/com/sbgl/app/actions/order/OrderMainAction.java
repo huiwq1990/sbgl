@@ -87,11 +87,12 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 			class1Name = classification1List.get(0).getName();
 		}
 		classification2List = orderMainService.findSecondEquipmentclass(lantype);
+		/*
 		if(courseruleid==9){
 			equipmentList = orderMainService.findEquipmentByClss2(fromDate,endDate,lantype,equipmenborrowFull.getCourseruleid());
 		}else{
 			equipmentList = orderMainService.findEquipmentByClss(fromDate,endDate,lantype);
-		}
+		}*/
 		if(orderCate==null||orderCate.equals("")){
 			orderCate="1";
 		}

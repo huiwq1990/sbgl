@@ -18,7 +18,7 @@ public interface OrderExamService {
 	//出库
 	public boolean alibraryorder(Integer borrowId,String ids,Loginuser user);
 	//入库
-	public boolean storageorder(Integer borrowId,String ids,Loginuser user);
+	public boolean storageorder(Integer borrowId,String ids,Loginuser user) throws Exception;
 	//用户详情
 	public Loginuser userdetail(Integer userId);
 	

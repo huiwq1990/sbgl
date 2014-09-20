@@ -52,7 +52,7 @@
 			#foreach($row2 in $!ordercourseruleFullList)	
               <tr>
                 <td><input class="chk" type="checkbox" name="chk-list" value="${velocityCount}"></td>
-                <td>${velocityCount}<a class="btn btn-white btn-mini" data-toggle="modal" href="#modify-status" role="button">修改</a></td>
+                <td>${velocityCount}</td>
                 <td>$row2.courseName</td>
                 <td>$row2.courserulename</td>
                 <td>$row2.teacherName</td>

@@ -36,4 +36,7 @@ public interface OrderFinishDao {
 	public void delay();
 	//根据订单号，查询显示订单号
 	public String queryBorrowallId(Integer borrowId);
+
+	//根据订单号，查询显示订单号
+	public void updateEquipmenNum(String type,Integer comid)  throws Exception;
 }

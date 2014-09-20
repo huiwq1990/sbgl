@@ -29,7 +29,7 @@ import com.sbgl.util.DateUtil;
 
 @Scope("prototype") 
 @Service("orderMainService")
-@Transactional
+@Transactional(rollbackFor=Exception.class)
 public class OrderMainServiceImpl implements OrderMainService {
 
 	@Resource
@@ -130,6 +130,7 @@ public class OrderMainServiceImpl implements OrderMainService {
 			}
 			baseDao.saveEntity(equipmenBorrow);
 	}
+	
 	
 	public Integer subOrder(String equIds,String equNums,String fromDate,String endDate,Integer borrowId,Loginuser user,String lantype) throws Exception{ 
 		Equipmenborrow equipmenborrow = new Equipmenborrow();
