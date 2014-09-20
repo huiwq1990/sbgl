@@ -1,3 +1,6 @@
+#set($currentposition= "myorder")
+#set($currentpositiontext= ${textmap.myorderposition})	
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +12,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
-
-#set($currentposition= "myorder")
-#set($currentpositiontext= ${textmap.myorderposition})
 
 #parse("include/includePageCompatibility.vm")
 <script>
@@ -236,148 +236,6 @@
 <script src="js/highcharts.js"></script>
 <script src="js/jquery.noty.js"></script>
 <script>
-
-Array.prototype.remove = function(s) {     
-    for (var i = 0; i < this.length; i++) {     
-        if (s == this[i])     
-            this.splice(i, 1);     
-    }     
-}     
-    
-/**   
- * Simple Map   
- *    
- *    
- * var m = new Map();   
- * m.put('key','value');   
- * ...   
- * var s = "";   
- * m.each(function(key,value,index){   
- *      s += index+":"+ key+"="+value+"/n";   
- * });   
- * alert(s);   
- *    
- * @author dewitt   
- * @date 2008-05-24   
- */    
-function Map() {     
-    /** 存放键的数组(遍历用到) */    
-    this.keys = new Array();     
-    /** 存放数据 */    
-    this.data = new Object();     
-         
-    /**   
-     * 放入一个键值对   
-     * @param {String} key   
-     * @param {Object} value   
-     */    
-    this.put = function(key, value) {     
-        if(this.data[key] == null){     
-            this.keys.push(key);     
-        }     
-        this.data[key] = value;     
-    };     
-         
-    /**   
-     * 获取某键对应的值   
-     * @param {String} key   
-     * @return {Object} value   
-     */    
-    this.get = function(key) {     
-        return this.data[key];     
-    };     
-         
-    /**   
-     * 删除一个键值对   
-     * @param {String} key   
-     */    
-    this.remove = function(key) {     
-        this.keys.remove(key);     
-        this.data[key] = null;     
-    };     
-         
-    /**   
-     * 遍历Map,执行处理函数   
-     *    
-     * @param {Function} 回调函数 function(key,value,index){..}   
-     */    
-    this.each = function(fn){     
-        if(typeof fn != 'function'){     
-            return;     
-        }     
-        var len = this.keys.length;     
-        for(var i=0;i<len;i++){     
-            var k = this.keys[i];     
-            fn(k,this.data[k],i);     
-        }     
-    };
-
-        /**   
-     * 遍历Map,执行处理函数   
-     *    
-     * @param {Function} 回调函数 function(key,value,index){..}   
-     */    
-    this.has = function(key){     
-        if(this.keys==null){
-          return false;
-        }
-        var len = this.keys.length;
-        for(var i=0;i<len;i++){     
-            var k = this.keys[i];     
-            if(k==key){
-              return true;
-            }
-        }  
-        return false;   
-    }; 
-
-
-         
-    /**   
-     * 获取键值数组(类似Java的entrySet())   
-     * @return 键值对象{key,value}的数组   
-     */    
-    this.entrys = function() {     
-        var len = this.keys.length;     
-        var entrys = new Array(len);     
-        for (var i = 0; i < len; i++) {     
-            entrys[i] = {     
-                key : this.keys[i],     
-                value : this.data[i]     
-            };     
-        }     
-        return entrys;     
-    };     
-         
-    /**   
-     * 判断Map是否为空   
-     */    
-    this.isEmpty = function() {     
-        return this.keys.length == 0;     
-    };     
-         
-    /**   
-     * 获取键值对数量   
-     */    
-    this.size = function(){     
-        return this.keys.length;     
-    };     
-         
-    /**   
-     * 重写toString    
-     */    
-    this.toString = function(){     
-        var s = "{";     
-        for(var i=0;i<this.keys.length;i++,s+=','){     
-            var k = this.keys[i];     
-            s += k+"="+this.data[k];     
-        }     
-        s+="}";     
-        return s;     
-    };     
-}    
-
-
 var nowTemp = new Date();	
 	var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 	$('.input-daterange').datepicker({
@@ -398,7 +256,7 @@ $('.input-daterange').datepicker({
 });
 
 $(function () {
-
+	
 	Highcharts.setOptions({
 		lang: {
 			months: ['$!{textmap.order_january}', '$!{textmap.order_february}', '$!{textmap.order_march}', '$!{textmap.order_april}', '$!{textmap.order_may}', '$!{textmap.order_june}', 
@@ -423,7 +281,58 @@ $(function () {
 		$("#endDate").val(enddate);
 	}   
 	
-
+	 if(listequips!=null){
+    	tempddd=listequips.split('|');
+    	for(var i=0;i<tempddd.length;i++){
+    		var tempasd = tempddd[i].split('^');
+    		if(tempasd!=null&&tempasd.length>0){
+    			var eId = tempasd[0];
+				var eName = tempasd[2];
+				var maxNum = tempasd[3];  // 设备最大可预约数量
+				var eSelectNum = tempasd[1];
+				
+				var html = 
+					'<div class="row" id="' + eId + '">' + 
+						'<div class="item-name">' + eName + '</div>' +
+						'<div class="item-ctrl spinner input-group">' +
+							'<span class="input-group-btn">' + 
+								'<button type="button" class="btn btn-link spinner-down"><i class="icon-minus"></i></button>' + 
+							'</span>' +
+							'<input type="text" name="equNum" class="spinner-input form-control">' + 
+							'<input type="hidden" name="equId" value="'+eId+'">' + 
+							'<span class="input-group-btn">' + 
+								'<button type="button" class="btn btn-link spinner-up"><i class="icon-plus"></i></button>' +
+							'</span>' + 
+							'<span class="input-group-btn">' + 
+								'<button type="button" class="btn btn-link close"><i class="icon-remove"></i></button>' + 
+							'</span>' + 
+						'</div>' + 
+					'</div>';
+					
+				if ($("#rent-list #" + eId).length > 0) {
+					var str = "$!{textmap.order_equment}" + eName + "$!{textmap.order_beenadded}！";
+					var n = noty({text: str, timeout: 1000});
+				} else {
+					$("#rent-list").append(html);
+					var spinner = $("#rent-list #" + eId).children(".spinner").spinner({max: maxNum});		// 设置设备最大可预约数量
+					$("#rent-list #" + eId).children(".spinner").spinner('value', eSelectNum);	//设置初始数量
+					$("#rent-list .spinner").on("click", ".spinner-up",function(){  // 处理达到最大预约数量时的消息提示
+						var curVal = $(this).spinner("value");
+						if(curVal >= maxNum) {
+							var str = eName + "$!{textmap.order_maximum}!";
+							var n = noty({text: str, timeout: 1500});					
+						}
+					});
+					
+					$("#rent-list .no-add").hide();
+					$("#rent-list-wrap .panel-body").height({
+						height: $("#rent-list").height() + 30
+					});
+				}
+				
+    		}
+    	}
+    }
 
 });
 
@@ -599,44 +508,22 @@ $(function () {
 		var endDate = $("#endDate").val();
 		var equNum = "";
 		var equId = "";
-    var m = new Map();
-
-    $('#rent-list .equip-item').each(function(index, equipItem) {
-      if ($(equipItem).children().hasClass('group-list')) {   // 如果当前是器材组
-        $(equipItem).find('.group-item').each(function(index, el) {   // 遍历器材组里的每一个器材
-          equId = $(el).data('id');
-          equNum = $(el).data("numInGroup");
-          if (m.has(equId)) {
-            equNum = equNum + m.get(equId);
-            m.put(equId, equNum);
-          } else {
-            m.put(equId, equNum);
-          }
-
-        });
-      } else {  // 如果是单个器材
-        equId = $(equipItem).data('id');
-        equNum = $(equipItem).children(".spinner").spinner('value');
-        if (m.has(equId)) {
-            equNum = equNum + m.get(equId);
-            m.put(equId, equNum);
-          } else {
-            m.put(equId, equNum);
-          }
-      }
-    });
-    equNum = '';
-    equId = '';
-    m.each(function(key, value, index){
-      if(index == 0){
-        equId += key;
-        equNum += value;
-      }else{
-        equId += ","+key;
-        equNum += ","+value;
-      }
-    });
-
+		$("input[name='equNum']").each(function(i){ 
+			var temp1 = $(this).val();
+			if(i==0){ 
+				equNum += temp1;
+			}else{
+				equNum += ","+temp1;
+			}
+		});
+		$("input[name='equId']").each(function(j){ 
+			var temp2 = $(this).val();
+			if(j==0){ 
+				equId += temp2;
+			}else{
+				equId += ","+temp2;
+			}
+		});
 		$.ajax({
 			url: "subOrder.do",
 			type: 'POST',
@@ -650,7 +537,7 @@ $(function () {
 					noty({text: data.message, timeout: 2500, type: 'error'});
 					return;
 				}
-			}
+			}	  
 		});
 	});
 	
@@ -745,8 +632,5 @@ $(function () {
 	
 	
 </script>
-
-
-
 </body>
 </html>
