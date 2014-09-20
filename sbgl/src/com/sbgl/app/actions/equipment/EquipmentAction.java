@@ -1246,16 +1246,17 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 		allParent.clear();
 		List<Equipmentclassification> equipList =  equipService.getAllEquipmentclassifications();
 		
-		if(equipList != null) {
-			classSum = String.valueOf( equipList.size()/2 );
-			if(equipList == null || equipList.size() == 0) {
+		if(equipList != null && equipList.size() > 0) {
+			int size = equipList.size();
+			classSum = String.valueOf( size/2 );
+			if(equipList == null || size == 0) {
 				totalPage = "1";
-			} else if(equipList.size()/2 % 10 != 0 && equipList.size()/2 > 10) {
-				totalPage = String.valueOf( equipList.size()/2 / 10 + 1 );
-			} else if(equipList.size()/2 % 10 != 0 && equipList.size()/2 < 10) {
+			} else if(size/2 % 10 != 0 && size/2 > 10) {
+				totalPage = String.valueOf( size/2 / 10 + 1 );
+			} else if(size/2 % 10 != 0 && size/2 < 10) {
 				totalPage = "1";
 			} else {
-				totalPage = String.valueOf( equipList.size()/2 / 10 );
+				totalPage = String.valueOf( size/2 / 10 );
 			}
 			if(currentPage == "0" || currentPage == "" || currentPage == null) {
 				currentPage = "1";
@@ -1269,6 +1270,14 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 					}
 				}
 			}
+			
+			//按照分页切割数据
+			if(currentPage != null && currentPage != "") {
+				int startIndex = Integer.valueOf( currentPage.trim() ) - 1;
+				int endIndex = (startIndex + 1) * 20 > size ? size : (startIndex + 1) * 20;
+				equipList = equipList.subList(startIndex*20, endIndex);
+			}
+			
 			List<ClassficationCourse> tempCourse = new ArrayList<ClassficationCourse>();
 			for (Equipmentclassification classfication : equipList) {
 				if( "0".equals( classfication.getLantype() ) ) {
@@ -1318,12 +1327,6 @@ public class EquipmentAction extends ActionSupport implements SessionAware {
 						allClassCourse.add( cc );
 					}
 				}
-			}
-			//根据前台页面请求页码返回数据
-			if(currentPage != null && currentPage != "") {
-				int startIndex = Integer.valueOf( currentPage.trim() ) - 1;
-				int endIndex = (startIndex + 1) * 10 > equipList.size()/2 ? equipList.size()/2 : (startIndex + 1) * 10;
-				allClassCourse = allClassCourse.subList(startIndex*10, endIndex);
 			}
 			
 		} else {
