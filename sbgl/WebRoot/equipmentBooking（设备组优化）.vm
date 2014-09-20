@@ -423,6 +423,58 @@ $(function () {
 		$("#endDate").val(enddate);
 	}   
 	
+	if(listequips!=null){
+    	tempddd=listequips.split('|');
+    	for(var i=0;i<tempddd.length;i++){
+    		var tempasd = tempddd[i].split('^');
+    		if(tempasd!=null&&tempasd.length>0){
+    			var eId = tempasd[0];
+				var eName = tempasd[2];
+				var maxNum = tempasd[3];  // 设备最大可预约数量
+				var eSelectNum = tempasd[1];
+				
+				var html = 
+					'<div class="row" id="' + eId + '">' + 
+						'<div class="item-name">' + eName + '</div>' +
+						'<div class="item-ctrl spinner input-group">' +
+							'<span class="input-group-btn">' + 
+								'<button type="button" class="btn btn-link spinner-down"><i class="icon-minus"></i></button>' + 
+							'</span>' +
+							'<input type="text" name="equNum" class="spinner-input form-control">' + 
+							'<input type="hidden" name="equId" value="'+eId+'">' + 
+							'<span class="input-group-btn">' + 
+								'<button type="button" class="btn btn-link spinner-up"><i class="icon-plus"></i></button>' +
+							'</span>' + 
+							'<span class="input-group-btn">' + 
+								'<button type="button" class="btn btn-link close"><i class="icon-remove"></i></button>' + 
+							'</span>' + 
+						'</div>' + 
+					'</div>';
+					
+				if ($("#rent-list #" + eId).length > 0) {
+					var str = "$!{textmap.order_equment}" + eName + "$!{textmap.order_beenadded}！";
+					var n = noty({text: str, timeout: 1000});
+				} else {
+					$("#rent-list").append(html);
+					var spinner = $("#rent-list #" + eId).children(".spinner").spinner({max: maxNum});		// 设置设备最大可预约数量
+					$("#rent-list #" + eId).children(".spinner").spinner('value', eSelectNum);	//设置初始数量
+					$("#rent-list .spinner").on("click", ".spinner-up",function(){  // 处理达到最大预约数量时的消息提示
+						var curVal = $(this).spinner("value");
+						if(curVal >= maxNum) {
+							var str = eName + "$!{textmap.order_maximum}!";
+							var n = noty({text: str, timeout: 1500});					
+						}
+					});
+					
+					$("#rent-list .no-add").hide();
+					$("#rent-list-wrap .panel-body").height({
+						height: $("#rent-list").height() + 30
+					});
+				}
+				
+    		}
+    	}
+    }
 
 
 });
