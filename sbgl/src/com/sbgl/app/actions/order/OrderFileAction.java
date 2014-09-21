@@ -59,7 +59,7 @@ public class OrderFileAction  extends ActionSupport  implements SessionAware {
 		try {  
 			EquipmenborrowFull equipmenborrowFull = orderMainService.findEquipmenborrow(borrowId);
 			Loginuser userdetail = orderExamService.userdetail(equipmenborrowFull.getUserid());
-			fileName = new String("租赁单.xlsx");   
+			fileName="LeaseOrder.xlsx";
 			inputPath = ServletActionContext.getRequest().getRealPath("/upload/");  
 			inputStream = new FileInputStream(inputPath+"/"+fileName);
 			XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
