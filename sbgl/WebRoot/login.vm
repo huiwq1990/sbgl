@@ -28,7 +28,7 @@
     <div class="form-group">
         <button type="submit" class="btn btn-primary input-block-level" id="loginBtn" data-loading-text="登录中..." autocomplete="off">登 录</button>
         <label class="checkbox keep-login">
-          <input type="checkbox"> <span class="text-shadow">保持一周登录<br>Keep a week login</span>
+          <input name="rember" type="checkbox" value="1"> <span class="text-shadow">保持一周登录<br>Keep a week login</span>
         </label>
     </div>
   </form>
