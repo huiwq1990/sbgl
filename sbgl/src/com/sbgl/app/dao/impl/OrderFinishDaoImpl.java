@@ -311,6 +311,25 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 			throw new DataError("设备信息修改失败");
 		}
 	}
+
+	//根据订单号，订单中设备信息(用于下载)
+	public List<EquipmentFull> queryEqumentBorrowallId(Integer borrowId,String lantype){
+		final String sql = "select b.worth,b.equipserial,b.storenumber,c.equipmentname from listequipdetail a " +
+				" left join equipmentdetail b on a.equipdetailid=b.equipdetailid " +
+				" inner join Equipment c on a.equipmentid = c.comid and c.lantype='"+lantype+"' where borrowlistid = "+borrowId;
+		List<EquipmentFull> list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql);
+				query.setResultTransformer(new EscColumnToBean(EquipmentFull.class));
+				return query.list();
+			}
+		});	
+		if(list!=null&&!list.isEmpty()){
+			return list;
+		}
+		return null;
+		
+	}
 	
 	public  Session getCurrentSession(){
         //TODO Auto-generated method stub
