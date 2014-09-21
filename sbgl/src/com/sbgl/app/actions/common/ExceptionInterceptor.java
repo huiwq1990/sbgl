@@ -3,6 +3,7 @@ package com.sbgl.app.actions.common;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
@@ -39,11 +40,12 @@ public class ExceptionInterceptor extends AbstractInterceptor {
 	@Override
 	public String intercept(ActionInvocation arg0) throws Exception {
 		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
 		session = request.getSession();
 		String url = request.getRequestURL().toString();
 		String uid = CookiesUtil.getCookie("uid");
 		String pageLan = CookiesUtil.getCookie("pageLan");
-//		System.out.println("============================" + uid);
+		String rember = CookiesUtil.getCookie("rember");
 		loginuser = (Loginuser)session.getAttribute(CommonConfig.sessionuser);
 //		System.out.println("++++++++++++++++++++++++++++" + loginuser!=null?loginuser.getUserid():"未找到");
 		Boolean isFirst = (Boolean) session.getAttribute("isFirst");
@@ -60,6 +62,7 @@ public class ExceptionInterceptor extends AbstractInterceptor {
 				CookiesUtil.removeCookie("userpass");
 				CookiesUtil.removeCookie("userid");
 				CookiesUtil.removeCookie("pageLan");
+				CookiesUtil.removeCookie("rember");
 				
 				return "login";
 			} else if( !CookiesUtil.getCookie("userpass").equals( loginuser.getPassword() ) ) {
@@ -67,6 +70,7 @@ public class ExceptionInterceptor extends AbstractInterceptor {
 				CookiesUtil.removeCookie("userpass");
 				CookiesUtil.removeCookie("userid");
 				CookiesUtil.removeCookie("pageLan");
+				CookiesUtil.removeCookie("rember");
 				
 				return "login";
 			}
@@ -80,6 +84,14 @@ public class ExceptionInterceptor extends AbstractInterceptor {
 			
 			session.setAttribute(CommonConfig.sessionuser, loginuser);
 			session.setAttribute(CommonConfig.sessionLanguagetype, pageLan);
+			//如果是要求过持续登录的
+			if( "1".equals(rember) && url.indexOf("login") != -1 ) {
+				if(isAdmin) {
+					response.sendRedirect("adminIndex.action");
+				} else {
+					response.sendRedirect("index.action");
+				}
+			}
 		}
 		
 		try {

@@ -39,6 +39,7 @@ public class LoginAction extends ActionSupport {
 	//	private static final Log log = LogFactory.getLog(LoginAction.class);
 	private HttpSession session;
 	private Loginuser loginuser;
+	private Integer rember;
 	
 	//显示用户基本信息用
 	private String userName;
@@ -154,11 +155,19 @@ public class LoginAction extends ActionSupport {
 				session.setAttribute(CommonConfig.sessionLanguagetype, loginInfo.getPagelanguage());
 				
 				CookiesUtil.addLoginCookie("pageLan", loginInfo.getPagelanguage());
+				//如果要求保持一周登录，写入保持状态cookie
+				if(rember != null && rember == 1) {
+					session.setAttribute("rember", 1);
+					CookiesUtil.addLoginCookie("rember", "1");
+				} else {
+					//不记录用户登录
+					session.setAttribute("rember", 0);
+					CookiesUtil.addLoginCookie("rember", "0");
+				}
 				
 			}
 			
 		}catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();			
 		}
 		Javascript(flag, loginType);
@@ -179,7 +188,6 @@ public class LoginAction extends ActionSupport {
 				tjavascriptWriter.wirteToParent("fail","用户名错误或密码错误！");
 			}
 		}catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();			
 		}
 	}
@@ -188,13 +196,24 @@ public class LoginAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		session = request.getSession();
 		
-		CookiesUtil.removeCookie("uid");
-		CookiesUtil.removeCookie("userpass");
-		CookiesUtil.removeCookie("userid");
-		CookiesUtil.removeCookie("pageLan");
+		Integer rember = (Integer) session.getAttribute("rember");
 		
-		session.removeAttribute("loginUser");
-		session.removeAttribute("stuClass");
+		if(rember != null && rember == 0) {
+			//不记录登录信息，全部清除
+			CookiesUtil.removeCookie("uid");
+			CookiesUtil.removeCookie("userpass");
+			CookiesUtil.removeCookie("userid");
+			CookiesUtil.removeCookie("pageLan");
+			CookiesUtil.removeCookie("rember");
+			
+			session.removeAttribute("loginUser");
+			session.removeAttribute("stuClass");
+			session.removeAttribute("rember");
+		} else {
+			session.removeAttribute("loginUser");
+			session.removeAttribute("stuClass");
+			session.removeAttribute("rember");
+		}
 		
 		return SUCCESS;
 	}
@@ -257,4 +276,14 @@ public class LoginAction extends ActionSupport {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+
+	public Integer getRember() {
+		return rember;
+	}
+
+	public void setRember(Integer rember) {
+		this.rember = rember;
+	}
+	
+	
 }

@@ -2,6 +2,7 @@ package com.sbgl.app.actions.common;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
@@ -32,7 +33,10 @@ public class PrivilegeInterceptor extends AbstractInterceptor {
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
 		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
 		session = request.getSession();
+		
+		String rember = CookiesUtil.getCookie("rember");
 		
 		String url = request.getRequestURL().toString();
 		int index1 = url.indexOf("firstSetup");
@@ -51,6 +55,7 @@ public class PrivilegeInterceptor extends AbstractInterceptor {
 					CookiesUtil.removeCookie("userpass");
 					CookiesUtil.removeCookie("userid");
 					CookiesUtil.removeCookie("pageLan");
+					CookiesUtil.removeCookie("rember");
 					
 					return "login";
 				} else if( !CookiesUtil.getCookie("userpass").equals( user.getPassword() ) ) {
@@ -58,6 +63,7 @@ public class PrivilegeInterceptor extends AbstractInterceptor {
 					CookiesUtil.removeCookie("userpass");
 					CookiesUtil.removeCookie("userid");
 					CookiesUtil.removeCookie("pageLan");
+					CookiesUtil.removeCookie("rember");
 					
 					return "login";
 				} 
@@ -78,30 +84,53 @@ public class PrivilegeInterceptor extends AbstractInterceptor {
 			} else {
 				return "login";
 			}
-		}
-		
-		Boolean isFirst = (Boolean) session.getAttribute("isFirst");
-		if(isFirst != null && isFirst) {
-			return "firstSetup";
-		}
-		
-		Boolean isAdmin = managerService.isExistManagerCode( user.getUserid() );
-		if(index1 != -1 || index2 != -1 || index3 != -1 || index4 != -1) {
+			Boolean isFirst = (Boolean) session.getAttribute("isFirst");
+			if(isFirst != null && isFirst) {
+				return "firstSetup";
+			}
+			Boolean isAdmin = managerService.isExistManagerCode( user.getUserid() );
 			if(isAdmin) {
 				user.setPrivilege("1");
-				session.setAttribute(CommonConfig.sessionuser, user);
 			} else {
 				user.setPrivilege("0");
-				session.setAttribute(CommonConfig.sessionuser, user);
 			}
-			return invocation.invoke();
+			session.setAttribute(CommonConfig.sessionuser, user);
+			if(index1 != -1 || index2 != -1 || index3 != -1 ) {
+				return invocation.invoke();
+			} else if(index4 != -1) {
+				//如果是要求过持续登录的
+				if( "1".equals(rember) ) {
+					if(isAdmin) {
+						response.sendRedirect("adminIndex.action");
+					} else {
+						response.sendRedirect("index.action");
+					}
+					return invocation.invoke();
+				}
+			}
 		}
+		Boolean isAdmin = managerService.isExistManagerCode( user.getUserid() );
 		if(isAdmin) {
 			user.setPrivilege("1");
-			session.setAttribute(CommonConfig.sessionuser, user);
+			//如果是要求过持续登录的
+			if( "1".equals(rember) && index4 != -1 ) {
+				if(isAdmin) {
+					response.sendRedirect("adminIndex.action");
+				} else {
+					response.sendRedirect("index.action");
+				}
+			}
 			return invocation.invoke();
 		} else {
 			user.setPrivilege("0");
+			//如果是要求过持续登录的
+			if( "1".equals(rember) && index4 != -1 ) {
+				if(isAdmin) {
+					response.sendRedirect("adminIndex.action");
+				} else {
+					response.sendRedirect("index.action");
+				}
+			}
 			session.setAttribute(CommonConfig.sessionuser, user);
 			return "noPrivilege";
 		}
