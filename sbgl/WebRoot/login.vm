@@ -8,6 +8,10 @@
 
 #parse("include/includePageCompatibility.vm")
 
+<style type="text/css">
+  #noty_topCenter_layout_container, #noty_topCenter_layout_container > li { width: 640px !important;}
+</style>
+
 </head>
 
 <body class="pos-absolute">
@@ -37,6 +41,22 @@
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 
+<!--[if lt IE 9]>
+<script>
+var str = "<div class='text-left'>" +
+            "<h3><strong>抱歉！Sorry！</strong></h3>" +
+              "<div>为了正常使用本网站，我们建议您更新到最新的现代浏览器（如最新版的IE浏览器、谷歌、火狐、Safari或Opera等浏览器，IE仅支持9及以上版本。如果您使用的是国产浏览器，请切换到非IE内核的模式下，它可能叫做“极速模式”）。<br><br><br>To get the best possible experience using our site we recommend that you upgrade to a modern web browser (IE 11, Chrome, Firefox Safari or Opera, IE only support 9+).</div>" +
+          "</div>";
+noty({
+    text: str,
+    type: 'error',
+    buttons: [
+      {addClass: 'btn btn-danger', text: '${textmap.lang_ok}', onClick: function($noty) { $noty.close(); }}
+    ]
+});  
+</script>
+<![endif]-->
+
 <script >
     $('#loginBtn').on('click', function () {
         $(this).button('loading')
@@ -59,8 +79,6 @@
 </script>
 
 <iframe name="submit" width="0" height="0" />
-
-
 
 </body>
 </html>
