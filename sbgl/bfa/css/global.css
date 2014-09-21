@@ -299,7 +299,6 @@ i { font-size: 14px; }
 #header-wrap {
 	height: 125px;
 	position: relative;
-	z-index: 800;
 }
 #main-wrap {
 	position: relative;
@@ -415,7 +414,7 @@ border-bottom: 2px solid #427FED !important;
 #equip-list .thumbnail { margin: 0 0 30px 0; height: 280px; overflow: visible; }
 #equip-list .thumbnail .title { font-family: arial, helvetica, sans-serif; font-size: 14px; font-weight: bold; margin-bottom: 6px; }
 #equip-list .thumbnail p { color: #737373; }
-#equip-list .thumbnail .add-btn { position: absolute; right: 14px; bottom: 10px; z-index: 100; }
+#equip-list .thumbnail .add-btn { position: absolute; left: 14px; right: 14px; bottom: 10px; z-index: 100; }
 #equip-list .thumbnail .select-num { position: absolute; left: 14px; bottom: 10px; width: 60px; z-index: 100; }
 #equip-list .select2-container .select2-choice span { margin-right: 8px; }
 .select-white .select2-choice { background: #FFF !important;  }
@@ -710,7 +709,7 @@ border-bottom: 2px solid #427FED !important;
 	height: 100%; 
 	padding: 0 20px 70px 20px;
 }
-.wizard ul, .wizard ol { margin: 0; }
+.wizard ul.steps { margin: 0; }
 .wizard form { margin: 0; height: 100%; }
 .wizard .title { margin-top: 20px; line-height: 25px; }
 .wizard .form-actions { position: absolute; bottom: 0; left: 0; right: 0; height: 70px;  margin: 0; z-index: 100; }
@@ -727,7 +726,7 @@ border-bottom: 2px solid #427FED !important;
 .wizard .step-pane.active {
 	display: block;
 }
-
+.wizard .step-content ol, .wizard .step-content ul{ margin: 0 0 10px 20px; }
 
 /* 预约 ================================================= */
 #rent-bar { 
@@ -750,6 +749,9 @@ border-bottom: 2px solid #427FED !important;
 #rent-bar > .rent-time.panel { margin-bottom: 10px; }
 
 #rent-list .item-name { float:left; padding-left:15px; width: 215px; height: 30px; line-height: 30px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#rent-list .item-ctrl { float:right; padding-right:15px; width: 115px; }
+#rent-list .item-ctrl-spinner { float:right; width: 85px; }
+#rent-list .item-ctrl-remove { float:right; margin-right:15px; width: 20px; }
 #rent-list .item-ctrl { float:right; padding-right:15px; width: 115px; }
 #rent-list .item-need-more { padding: 4px 55px 0 15px; text-align: right; clear: both; }
 #rent-list .input-group .btn,
@@ -779,21 +781,22 @@ border-bottom: 2px solid #427FED !important;
 .rent-status .status{ padding: 4px 0;}
 
 
-#equip-detail {
+#equip-detail, #equip-group-detail {
 	left: 50%;
 	width: 660px;
 	margin-left: -330px;
 }
 
-#equip-detail .dl-horizontal { margin-top: 0; }
-#equip-detail .dl-horizontal dt {
-	width: 80px;
-	text-align: left;
+#equip-detail .dl-horizontal, #equip-group-detail .dl-horizontal { margin-top: 0; }
+#equip-detail .dl-horizontal dt, #equip-group-detail .dl-horizontal dt { width: 80px; text-align: left; }
+#equip-detail .dl-horizontal dd, #equip-group-detail .dl-horizontal dd { margin-left: 100px; }
+#equip-group-detail .equip-group-contain-list .list-group-item > span { float: right; }
+#equip-group-detail .equip-group-contain-list .list-group-item {
+	padding: 10px 0;
+	margin-bottom: 0;
+	border: none;
 }
-#equip-detail .dl-horizontal dd {
-margin-left: 100px;
-}
-
+#equip-group-detail .equip-group-contain-list .list-group-item:first-child { padding-top: 0; }
 /* 预约 出库 ================================================= */
 .group-hover .media { padding: 8px 20px; margin: 0; }
 .group-hover .media:hover { background-color: #F5F9FC; }
@@ -904,6 +907,8 @@ transition: none;
 .group-hd .group-name { font-weight: bold; font-size: 14px; margin: 6px  10px 10px 0; }
 .group, .group-line { overflow: hidden; zoom: 1; }
 .group, .group-line hr { margin-top: 16px; }
+
+
 .control-bar { margin-bottom: 16px; }
 .control-bar .s-h { 
 	visibility: hidden;
@@ -933,7 +938,7 @@ transition: none;
 	font-size: 14px;
 	margin-bottom: 10px;
 }
-.control-bar .row .nav {margin-bottom: 0; }
+.control-bar .row .nav, .control-bar .nav {margin-bottom: 0; }
 .page-bar .pagination,
 .page-bar .page-index,
 .control-bar .pagination,
@@ -1589,7 +1594,7 @@ a.list-group-item.active:focus .list-group-item-text {
 #user-list { padding: 0 10px; }
 #user-list li.media {
 	float: left;
-	width: 31.44444444%;
+	width: 31.3999999%;
 	height: 50px;
 	padding: 1px;
 	margin: 5px;
@@ -1692,8 +1697,9 @@ border-bottom: 2px solid #427FED !important;
 
 /* BS3 头部临时兼容（等框架全部迁移至bs3）================================================= */
 #global-header .navbar-brand { padding: 8px 15px; }
+#global-header .dropdown-menu { z-index: 2000; }
 #global-header #account-wrap {
-	margin: 15px 20px 0 0;
+	margin: 16px 20px 0 0;
 }
 #global-header #account > a {
 	padding: 0px;
@@ -1701,7 +1707,7 @@ border-bottom: 2px solid #427FED !important;
 	font-weight: normal;
 }
 #global-header #account .username {
-	margin-right: 18px;
+	margin-right:18px;
 }
 #global-header #account .caret {
 	margin-top: 18px;

@@ -91,11 +91,7 @@
 <script src="${jsDomain}/jquery.js"></script>
 <script src="${jsDomain}/loader.min.js"></script>
 <script src="${jsDomain}/select2.js"></script>
-<script src="${jsDomain}/bootstrap-hover-dropdown.min.js"></script>
 <script src="${jsDomain}/bfa.js"></script>
-<script src="${jsDomain}/bootstrap-datepicker.js"></script>
-<script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
-<script src="${jsDomain}/xdate.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 
 <script>
@@ -103,7 +99,7 @@
 	
 	$("body").on("click", "button.btn-primary", function() {
 		var pageLan = $("#inputLanguage").val();
-		console.log("=============== pageLan = " + pageLan);
+		//console.log("=============== pageLan = " + pageLan);
 		var postData = {
 			"userId": $!user.id,
 			"pageLan": pageLan
@@ -115,10 +111,10 @@
 		    data: postData,
 		    success:function(data,textStatus,jq){  
 				if(data.tag == "0") {
-					n = noty({text: data.msg, timeout: 2500, type: 'success'});
+					noty({text: data.msg, timeout: 2500, type: 'success'});
 					
 				} else {
-					n = noty({text: data.msg, timeout: 2500, type: 'error'});
+					noty({text: data.msg, timeout: 2500, type: 'error'});
 				}
 	        },  
 		    error:function(data,textStatus,jq) {

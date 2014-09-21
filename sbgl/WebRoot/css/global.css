@@ -781,20 +781,22 @@ border-bottom: 2px solid #427FED !important;
 .rent-status .status{ padding: 4px 0;}
 
 
-#equip-detail {
+#equip-detail, #equip-group-detail {
 	left: 50%;
 	width: 660px;
 	margin-left: -330px;
 }
 
-#equip-detail .dl-horizontal { margin-top: 0; }
-#equip-detail .dl-horizontal dt {
-	width: 80px;
-	text-align: left;
+#equip-detail .dl-horizontal, #equip-group-detail .dl-horizontal { margin-top: 0; }
+#equip-detail .dl-horizontal dt, #equip-group-detail .dl-horizontal dt { width: 80px; text-align: left; }
+#equip-detail .dl-horizontal dd, #equip-group-detail .dl-horizontal dd { margin-left: 100px; }
+#equip-group-detail .equip-group-contain-list .list-group-item > span { float: right; }
+#equip-group-detail .equip-group-contain-list .list-group-item {
+	padding: 10px 0;
+	margin-bottom: 0;
+	border: none;
 }
-#equip-detail .dl-horizontal dd {
-margin-left: 100px;
-}
+#equip-group-detail .equip-group-contain-list .list-group-item:first-child { padding-top: 0; }
 
 /* 预约 出库 ================================================= */
 .group-hover .media { padding: 8px 20px; margin: 0; }
