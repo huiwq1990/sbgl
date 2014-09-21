@@ -43,6 +43,7 @@ public class EquipmentFull extends DaoAbs {
 	private String equipserial;
 	private String storenumber;
 	private Float worth;
+	private String equipmentengname;
 	
 	
 	public Integer getActivenum() {
@@ -255,6 +256,12 @@ public class EquipmentFull extends DaoAbs {
 	}
 	public void setStorenumber(String storenumber) {
 		this.storenumber = storenumber;
+	}
+	public String getEquipmentengname() {
+		return equipmentengname;
+	}
+	public void setEquipmentengname(String equipmentengname) {
+		this.equipmentengname = equipmentengname;
 	}
 	
 	

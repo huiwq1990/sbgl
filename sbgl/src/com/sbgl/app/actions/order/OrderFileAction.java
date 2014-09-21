@@ -15,9 +15,12 @@ import javax.annotation.Resource;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -88,28 +91,39 @@ public class OrderFileAction  extends ActionSupport  implements SessionAware {
             int rownum = 14;
             double sumprice = 0;
             int size = equipmentList.size();
-            DecimalFormat df = new DecimalFormat("#.00");
+            DecimalFormat df = new DecimalFormat("##,##0.00");
             XSSFRow row;   
             XSSFCell cell = null;   
+            XSSFCellStyle style = workbook.createCellStyle();
+            style.setAlignment(HorizontalAlignment.RIGHT);
+            style.setVerticalAlignment(XSSFCellStyle.VERTICAL_CENTER);   
             for(int i=0;i<size;i++){
             	EquipmentFull equipmentFull = equipmentList.get(i);
             	sheet.shiftRows(rownum+i, sheet.getLastRowNum(), 1,true,false);
             	row = sheet.createRow(rownum+i);  
-            	row.setHeight((short) 400);
-            	cell = row.createCell((short) 0);   
+            	row.setHeight((short) 800);
+            	cell = row.createCell((short) 0);
+            	XSSFCellStyle cellStyle = cell.getCellStyle();
+                cellStyle.setAlignment(HorizontalAlignment.LEFT);
+                cellStyle.setWrapText(true);
+                cell.setCellStyle(cellStyle);
                 cell.setCellValue(i+1);   
                 sheet.addMergedRegion(new CellRangeAddress(rownum+i, rownum+i, 1, 3));      
                 cell = row.createCell((short) 1); 
-                cell.setCellValue(equipmentFull.getEquipmentname());         
+                cell.setCellStyle(cellStyle);
+                cell.setCellValue(new XSSFRichTextString(equipmentFull.getEquipmentname()+"\r\n"+equipmentFull.getEquipmentengname()));   
                 cell = row.createCell((short) 4); 
+                cell.setCellStyle(cellStyle);
                 cell.setCellValue(equipmentFull.getEquipserial());
                 cell = row.createCell((short) 5); 
+                cell.setCellStyle(cellStyle);
                 cell.setCellValue(equipmentFull.getStorenumber());
                 cell = row.createCell((short) 6); 
                 cell.setCellValue(1);
                 cell = row.createCell((short) 7); 
+                cell.setCellStyle(style);
                 sumprice += equipmentFull.getWorth()==null?0:equipmentFull.getWorth();
-                cell.setCellValue(df.format(equipmentFull.getWorth()));         	
+                cell.setCellValue(df.format(equipmentFull.getWorth()==null?0:equipmentFull.getWorth()));         	
             }
             
             

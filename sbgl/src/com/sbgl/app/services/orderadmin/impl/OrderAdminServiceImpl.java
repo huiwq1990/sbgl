@@ -201,10 +201,10 @@ public class OrderAdminServiceImpl implements  OrderAdminService{
 			equipmenBorrow.setBorrowid(baseDao.getCode("equipmenborrow"));
 			String date = DateUtil.getBorrowDay(new Date());
 			String tempid = baseDao.getCode("equipmenallborrow"+date).toString();
-			while(tempid.length()<4){
+			while(tempid.length()<5){
 				tempid = "0"+tempid;
 			}
-			equipmenBorrow.setBorrowallid("ET"+date+tempid);
+			equipmenBorrow.setBorrowallid("EC"+date+tempid);
 			equipmenBorrow.setCategory(2);
 			equipmenBorrow.setUserid(Integer.parseInt(str[i]));
 			equipmenBorrow.setTeacherid(loginuser.getId());

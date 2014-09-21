@@ -37,7 +37,7 @@ public interface OrderFinishDao {
 	//根据订单号，查询显示订单号
 	public String queryBorrowallId(Integer borrowId);
 	//根据订单号，查询显示订单号
-	public void updateEquipmenNum(String type,Integer comid)  throws Exception;
+	public void updateEquipmenNum(String type,Integer comid,Integer equipdetailid)  throws Exception;
 	//根据订单号，订单中设备信息(用于下载)
 	public List<EquipmentFull> queryEqumentBorrowallId(Integer borrowId,String lantype);
 }

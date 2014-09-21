@@ -117,7 +117,7 @@ public class OrderExamServiceImpl implements OrderExamService {
 				listequipdetail.setEquipstatus(strs2[1]);					
 				baseDao.updateEntity(listequipdetail);
 				if(strs2[1]!=null&&!"4".equals(strs2[1])){
-					orderFinishDao.updateEquipmenNum(strs2[1], listdetail.getEquipmentid());
+					orderFinishDao.updateEquipmenNum(strs2[1], listdetail.getEquipmentid(),listequipdetail.getEquipdetailid());
 				}
 			}
 		}

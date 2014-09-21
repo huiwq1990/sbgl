@@ -140,7 +140,7 @@ public class OrderMainServiceImpl implements OrderMainService {
 			equipmenborrow.setBorrowid(baseDao.getCode("equipmenborrow"));	
 			String date = DateUtil.getBorrowDay(new Date());
 			String tempid = baseDao.getCode("equipmenallborrow"+date).toString();
-			while(tempid.length()<4){
+			while(tempid.length()<5){
 				tempid = "0"+tempid;
 			}
 			equipmenborrow.setBorrowallid("EP"+date+tempid);
