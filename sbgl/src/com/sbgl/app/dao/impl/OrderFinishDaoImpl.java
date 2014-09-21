@@ -135,7 +135,7 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 						EquipmentFull equipmentFull = list.get(i);
 						String sqltemp = "";
 						if(type==1){
-							sqltemp = "  select a.equipDetailid from EquipmentDetail a where a.equipmentid = '"+equipmentFull.getComId()+"' and  a.equipDetailid not in (select Equipdetailid from Listequipdetail b left outer join EquipmenBorrow c on b.borrowlistid = c.borrowid where c.status !='8') ";
+							sqltemp = "  select a.equipDetailid from EquipmentDetail a where a.equipmentid = '"+equipmentFull.getComId()+"' and status = 0 and  a.equipDetailid not in (select Equipdetailid from Listequipdetail b left outer join EquipmenBorrow c on b.borrowlistid = c.borrowid where c.status !='8') ";
 						}else{
 							sqltemp = " select a.equipDetailid from listequipdetail a where a.equipmentid = '"+equipmentFull.getComId()+"' and  a.borrowlistid='"+borrowId+"' ";
 						}
@@ -294,15 +294,19 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 	}
 
 	@Override
-	public void updateEquipmenNum(String type,Integer comid) throws Exception {
+	public void updateEquipmenNum(String type,Integer comid,Integer equipdetailid) throws Exception {
 		// TODO Auto-generated method stub
 		String str = "";
+		String str2 = "";
 		if("1".equals(type)){
 			str = "recyclingnum";
+			str2 = "5";
 		}else if("2".equals(type)){
 			str = "repairnum";
+			str2 = "3";
 		}else if("3".equals(type)){
 			str = "losednum";
+			str2 = "4";
 		}
 		String sql = "update Equipment set " + str + "=ifnull(" + str + ",0)+1,activenum=ifnull(activenum,0)-1 where comid = "+comid;
 		Query query =  this.getCurrentSession().createSQLQuery(sql);
@@ -310,6 +314,32 @@ public class OrderFinishDaoImpl extends HibernateDaoSupport implements OrderFini
 		if(num<=0){
 			throw new DataError("设备信息修改失败");
 		}
+		String sql2 = "update equipmentdetail set status ='"+str2+"' where equipdetailid = "+equipdetailid;
+		Query query2 =  this.getCurrentSession().createSQLQuery(sql2);
+		num = query2.executeUpdate();
+		if(num<=0){
+			throw new DataError("设备信息修改失败");
+		}
+	}
+
+	//根据订单号，订单中设备信息(用于下载)
+	public List<EquipmentFull> queryEqumentBorrowallId(Integer borrowId,String lantype){
+		final String sql = "select b.worth,b.equipserial,b.storenumber,c.equipmentname,d.equipmentname as equipmentengname from listequipdetail a " +
+				" left join equipmentdetail b on a.equipdetailid=b.equipdetailid " +
+				" inner join Equipment c on a.equipmentid = c.comid and c.lantype='"+CommonConfig.languagechStr+"' " +
+				" inner join Equipment d on a.equipmentid = d.comid and d.lantype='"+CommonConfig.languageenStr+"' where a.borrowlistid = "+borrowId;
+		List<EquipmentFull> list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql);
+				query.setResultTransformer(new EscColumnToBean(EquipmentFull.class));
+				return query.list();
+			}
+		});	
+		if(list!=null&&!list.isEmpty()){
+			return list;
+		}
+		return null;
+		
 	}
 	
 	public  Session getCurrentSession(){

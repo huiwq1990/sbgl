@@ -23,6 +23,14 @@
 	 	<action name="equipOrdIndex" class="OrderMainAction" method="equipOrdIndex">
         	<result name="success">/order/equipOrdIndex.vm</result>
         </action>
+		<!-- 下载文件 -->
+		<action name="downloadOrder" class="OrderFileAction" method="downloadOrder">
+			<param name="inputPath">inputPath</param> 
+			<result name="success" type="stream">
+                <param name="contentDisposition">attachment;filename="${fileName}"</param>	            
+                <param name="inputName">inputStream</param>
+            </result>
+		</action>
     </package>
     <package name="orderAjax" extends="json-default">	
         <!-- 根据商品id刷新页面详情 -->

@@ -110,4 +110,11 @@ public class OrderFinishServiceImpl  implements OrderFinishService  {
 		return orderFinishDao.queryBorrowallId(borrowId); 
 	}
 
+
+	@Override
+	public List<EquipmentFull> queryEqumentBorrowallId(Integer borrowId,String lantype) {
+		// TODO Auto-generated method stub
+		return orderFinishDao.queryEqumentBorrowallId(borrowId,lantype);
+	}
+
 }

@@ -338,7 +338,7 @@ public class DateUtil {
 		return tString;
 	}
 	public static String getBorrowDay(Date date) {
-		String pattern = "yyyyMMdd";
+		String pattern = "yy";
 		SimpleDateFormat df = new SimpleDateFormat(pattern);
 		String tString = df.format(date);
 		return tString;

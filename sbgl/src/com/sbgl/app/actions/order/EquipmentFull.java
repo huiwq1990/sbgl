@@ -40,6 +40,11 @@ public class EquipmentFull extends DaoAbs {
 	private Integer num;
 	private String intoduce;
 	
+	private String equipserial;
+	private String storenumber;
+	private Float worth;
+	private String equipmentengname;
+	
 	
 	public Integer getActivenum() {
 		return activenum;
@@ -234,6 +239,31 @@ public class EquipmentFull extends DaoAbs {
 	public void setIntoduce(String intoduce) {
 		this.intoduce = intoduce;
 	}
+	public String getEquipserial() {
+		return equipserial;
+	}
+	public void setEquipserial(String equipserial) {
+		this.equipserial = equipserial;
+	}
+	public Float getWorth() {
+		return worth;
+	}
+	public void setWorth(Float worth) {
+		this.worth = worth;
+	}
+	public String getStorenumber() {
+		return storenumber;
+	}
+	public void setStorenumber(String storenumber) {
+		this.storenumber = storenumber;
+	}
+	public String getEquipmentengname() {
+		return equipmentengname;
+	}
+	public void setEquipmentengname(String equipmentengname) {
+		this.equipmentengname = equipmentengname;
+	}
+	
 	
 
 	

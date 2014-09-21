@@ -93,7 +93,8 @@
                     <th class="title">标题</th>
                     <th class="status">状态</th>
                     <th class="categories">预约类型</th>                    
-                    <th class="remark">备注</th>
+                    <th class="remark">备注</th>             
+                    <th class="operate">操作</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -127,6 +128,7 @@
                     <td>教学</td>  
         			#end                  
                     <td>$!row.remark</td>
+                    <td>#if($!row.status==8||$!row.status==5||$!row.status==6)<a href="${webbaseurl}/downloadOrder.do?borrowId=$!row.borrowid">下载租赁单</a>#end</td>
                   </tr>
         		#end
                 </tbody>
