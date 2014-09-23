@@ -365,6 +365,9 @@ $(function () {
     			type: 'POST',
     			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate,serach:serach,borrowId:borrowId},
     			dataType: 'html',
+    			beforeSend: function(data) {
+    				noty({text: '${textmap.noty_loading}', timeout: 20000});
+    			},
     			success: function(data){
     				//刷新数据
     			   $("#equip-wrap").html(data);
@@ -379,9 +382,10 @@ $(function () {
     			   }
     			   $("#serachtext").val(serach);
     			},error:function(a, b, c){
-    				
-    				
-    			}	
+
+    			},complete: function(){
+				$("#noty_topCenter_layout_container").fadeOut("slow", function(){$("#noty_topCenter_layout_container").remove();});
+            }	
     		});
         }
     }); 
@@ -403,6 +407,9 @@ $(function () {
 			type: 'POST',
 			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate,borrowId:borrowId},
 			dataType: 'html',
+			beforeSend: function(data) {
+				noty({text: '${textmap.noty_loading}', timeout: 20000});
+			},
 			success: function(data){
 				//刷新数据
 			   $("#equip-wrap").html(data);
@@ -416,9 +423,11 @@ $(function () {
 			   		$("#cl2"+cId).addClass('active');
 			   }
 			},error:function(){
-				var n = noty({text: '$!{textmap.order_notfound}！', timeout: 2500, type: 'error'});	
+				//n = noty({text: '$!{textmap.order_notfound}！', timeout: 2500, type: 'error'});	
 				//alert("$!{textmap.order_notfound}！");
-			}
+			},complete: function(){
+				$("#noty_topCenter_layout_container").fadeOut("slow", function(){$("#noty_topCenter_layout_container").remove();});
+            }
 		});
 	});
 	
@@ -430,6 +439,9 @@ $(function () {
 			type: 'POST',
 			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate,borrowId:borrowId},
 			dataType: 'html',
+			beforeSend: function(data) {
+				noty({text: '${textmap.noty_loading}', timeout: 20000});
+			},
 			success: function(data){
 				//刷新数据
 			   $("#equip-wrap").html(data);
@@ -444,7 +456,9 @@ $(function () {
 			   }
 			},error:function(XMLHttpRequest, textStatus, errorThrown){
 				
-			}	  
+			},complete: function(){
+				$("#noty_topCenter_layout_container").fadeOut("slow", function(){$("#noty_topCenter_layout_container").remove();});
+            }
 		});
 	});
 	
@@ -457,6 +471,9 @@ $(function () {
 			type: 'POST',
 			data: {parentClassId:parentid,classificationId:cId,fromDate:fromDate,endDate:endDate,serach:serach,borrowId:borrowId},
 			dataType: 'html',
+			beforeSend: function(data) {
+				noty({text: '${textmap.noty_loading}', timeout: 20000});
+			},
 			success: function(data){
 				//刷新数据
 			   $("#equip-wrap").html(data);
@@ -473,7 +490,9 @@ $(function () {
 			},error:function(){
 				//alert("$!{textmap.order_notfound}！");
 				var n = noty({text: '$!{textmap.order_notfound}！', timeout: 2500, type: 'error'});	
-			}
+			},complete: function(){
+				$("#noty_topCenter_layout_container").fadeOut("slow", function(){$("#noty_topCenter_layout_container").remove();});
+            }
 		});
 	});
 	

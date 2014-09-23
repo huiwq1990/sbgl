@@ -340,24 +340,22 @@ $(window).load(function(){
 
 //刷新数据
 function refreshModelList(selComputercategory){
-		var n = noty({text: '${textmap.noty_loading}', timeout: 20000});
-		//n.show();
 		jQuery.ajax({  
 		    url: '${webbaseurl}/toComputerIndividualorderPage.action',  
 		    type: "post",
-			async:true,
 		    data:{	
 					callType:'ajaxType',
 					selComputercategory:selComputercategory
 				},
 		    dataType: 'html',
+			beforeSend: function(data) {
+				noty({text: '${textmap.noty_loading}', timeout: 20000});
+			},
 			success: function(data){
 				$("#refreshModelList").html(data);
 			},//end jquery success 
-			complete: function(XMLHttpRequest, textStatus){
-				jQuery.noty.closeAll();    //HideLoading();
-				//$('.custom_container').remove();
-				alert("close");
+			complete: function(){
+				$("#noty_topCenter_layout_container").fadeOut("slow", function(){$("#noty_topCenter_layout_container").remove();});
             }
 		});	
 		
