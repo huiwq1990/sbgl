@@ -109,6 +109,10 @@ public class PrivilegeInterceptor extends AbstractInterceptor {
 				}
 			}
 		}
+		Boolean isFirst = (Boolean) session.getAttribute("isFirst");
+		if(isFirst != null && isFirst) {
+			return "firstSetup";
+		}
 		Boolean isAdmin = managerService.isExistManagerCode( user.getUserid() );
 		if(isAdmin) {
 			user.setPrivilege("1");
