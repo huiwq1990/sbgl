@@ -132,7 +132,8 @@ public class StudentServiceImpl implements StudentService {
 		sb.append("from student as s ");
 		sb.append("left join usergrouprelation as r on s.id = r.userid ");
 		sb.append("left join usergroup as g on r.groupid = g.id ");
-		sb.append("left join clazz as c on c.classid = s.classid");
+		sb.append("left join clazz as c on c.classid = s.classid ");
+		sb.append("order by s.id desc");
 		
 		HibernateTemplate tmpl = baseDao.getHibernateTemplate();  
 		return tmpl.execute(new HibernateCallback<List<Object[]>>() {  

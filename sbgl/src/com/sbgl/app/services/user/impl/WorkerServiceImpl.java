@@ -124,7 +124,8 @@ public class WorkerServiceImpl implements WorkerService {
 		sb.append("g.id as gid, g.name as gname ");
 		sb.append("from worker as w ");
 		sb.append("left join usergrouprelation as r on w.id = r.userid ");
-		sb.append("left join usergroup as g on r.groupid = g.id");
+		sb.append("left join usergroup as g on r.groupid = g.id ");
+		sb.append("order by w.id desc");
 		
 		HibernateTemplate tmpl = baseDao.getHibernateTemplate();  
 		return tmpl.execute(new HibernateCallback<List<Object[]>>() {  

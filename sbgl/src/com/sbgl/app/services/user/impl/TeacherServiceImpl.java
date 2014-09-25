@@ -130,7 +130,8 @@ public class TeacherServiceImpl implements TeacherService {
 		sb.append("g.id as gid, g.name as gname ");
 		sb.append("from teacher as t ");
 		sb.append("left join usergrouprelation as r on t.id = r.userid ");
-		sb.append("left join usergroup as g on r.groupid = g.id");
+		sb.append("left join usergroup as g on r.groupid = g.id ");
+		sb.append("order by t.id desc");
 		
 		HibernateTemplate tmpl = baseDao.getHibernateTemplate();  
 		return tmpl.execute(new HibernateCallback<List<Object[]>>() {  
