@@ -58,7 +58,7 @@ public class PrivilegeInterceptor extends AbstractInterceptor {
 					CookiesUtil.removeCookie("rember");
 					
 					return "login";
-				} else if( !CookiesUtil.getCookie("userpass").equals( user.getPassword() ) ) {
+				} else if( !CookiesUtil.getCookie("userpass").equals( user.getPassword() ) || "0".equals(rember) ) {
 					CookiesUtil.removeCookie("uid");
 					CookiesUtil.removeCookie("userpass");
 					CookiesUtil.removeCookie("userid");
