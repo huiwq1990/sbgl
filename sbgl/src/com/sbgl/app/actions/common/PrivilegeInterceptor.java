@@ -113,6 +113,9 @@ public class PrivilegeInterceptor extends AbstractInterceptor {
 		if(isFirst != null && isFirst) {
 			return "firstSetup";
 		}
+		if(index1 != -1 || index2 != -1 || index3 != -1 || index4 != -1) {
+			return invocation.invoke();
+		}
 		Boolean isAdmin = managerService.isExistManagerCode( user.getUserid() );
 		if(isAdmin) {
 			user.setPrivilege("1");
