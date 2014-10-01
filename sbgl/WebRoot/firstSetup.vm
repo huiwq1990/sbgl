@@ -96,7 +96,7 @@
                   <div class="form-group">
                     <label for="inputEmail" class="col-sm-2 control-label">电子邮箱</label>
                     <div class="col-sm-4">
-                      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                      <input type="text" class="form-control" id="inputEmail" placeholder="Email">
                     </div>
                   </div>
                 </div>
