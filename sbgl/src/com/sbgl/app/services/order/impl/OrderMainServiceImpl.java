@@ -283,6 +283,14 @@ public class OrderMainServiceImpl implements OrderMainService {
 		return orderMainDao.equipmentGroupOrder(equipmentId, fromDate, endDate,lantype); 
 	}
 
+
+	@Override
+	public EquipmentFull findEquipmentGroupById(Integer equipmentId,
+			String lantype) {
+		// TODO Auto-generated method stub
+		return orderMainDao.findEquipmentGroupById(equipmentId, lantype); 
+	}
+
 	
 	
 }

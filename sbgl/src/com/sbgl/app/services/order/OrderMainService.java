@@ -66,4 +66,9 @@ public interface OrderMainService {
 	public List<EquipmentFull> findEquipmentByGroup(String lantype,Integer courseRuleId);
 	//获取设备组中设备信息
 	public List<EquipmentFull> equipmentGroupOrder(Integer equipmentId,String fromDate,String endDate,String lantype);
+	
+
+	//获得设备组详情
+	public EquipmentFull findEquipmentGroupById(Integer equipmentId,String lantype);
+	
 }

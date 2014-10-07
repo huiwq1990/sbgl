@@ -45,6 +45,8 @@ public class EquipmentFull extends DaoAbs {
 	private Float worth;
 	private String equipmentengname;
 	
+	private List<EquGroupDetailFull> equGroupDetailFulllist;
+	
 	
 	public Integer getActivenum() {
 		return activenum;
@@ -263,7 +265,14 @@ public class EquipmentFull extends DaoAbs {
 	public void setEquipmentengname(String equipmentengname) {
 		this.equipmentengname = equipmentengname;
 	}
-	
+	public List<EquGroupDetailFull> getEquGroupDetailFulllist() {
+		return equGroupDetailFulllist;
+	}
+	public void setEquGroupDetailFulllist(
+			List<EquGroupDetailFull> equGroupDetailFulllist) {
+		this.equGroupDetailFulllist = equGroupDetailFulllist;
+	}
+
 	
 
 	

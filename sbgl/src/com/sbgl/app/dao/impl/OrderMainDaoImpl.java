@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sbgl.app.actions.common.CommonConfig;
 import com.sbgl.app.actions.equipment.template.EquipmentgroupFull;
+import com.sbgl.app.actions.order.EquGroupDetailFull;
 import com.sbgl.app.actions.order.EquipmenborrowFull;
 import com.sbgl.app.actions.order.EquipmentFull;
 import com.sbgl.app.actions.orderadmin.OrderCountFull;
@@ -867,6 +868,36 @@ public class OrderMainDaoImpl extends HibernateDaoSupport implements OrderMainDa
 		});	
 		if(list!=null&&!list.isEmpty()){
 			return list.get(0);
+		}
+		return null;
+	}
+
+
+	@Override
+	public EquipmentFull findEquipmentGroupById(Integer equipmentId,
+			String lantype) {
+		// TODO Auto-generated method stub
+		final String sql = "select comid,equipmentgroupid as equipmentid,equipmentname,imgnamesaved,equipmentdetail from equipmentgroup where comid = '"+equipmentId+"' and lanType = '"+lantype+"' ";
+		List<EquipmentFull> list = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+			public Object doInHibernate(Session session) throws HibernateException{
+				Query query = session.createSQLQuery(sql);
+				query.setResultTransformer(new EscColumnToBean(EquipmentFull.class));
+				return query.list();
+			}
+		});	
+		if(list!=null&&!list.isEmpty()){
+			EquipmentFull equipmentFull = list.get(0);
+			final String sql1 = "select a.comid,a.equipmentname,a.equipmentid,b.num from groupofequipment b" +
+					" inner join  equipment a on a.comid = b.equipmentid and a.lanType = '"+lantype+"' where b.equipmentgroupid = '"+equipmentId+"' ";
+			List<EquGroupDetailFull> list2 = this.getHibernateTemplate().executeFind(new HibernateCallback(){
+				public Object doInHibernate(Session session) throws HibernateException{
+					Query query = session.createSQLQuery(sql1);
+					query.setResultTransformer(new EscColumnToBean(EquGroupDetailFull.class));
+					return query.list();
+				}
+			});	
+			equipmentFull.setEquGroupDetailFulllist(list2);
+			return equipmentFull;
 		}
 		return null;
 	}
