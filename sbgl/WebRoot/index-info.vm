@@ -151,7 +151,7 @@
         <div class="form-group">
           <label for="inputEmail" class="col-xs-4 control-label">$!{textmap.baseinfo_email}</label>
           <div class="col-xs-6">
-            <input type="email" class="form-control" id="inputEmail" placeholder="xxx@xxx.xxx">
+            <input type="text" class="form-control" id="inputEmail" placeholder="xxx@xxx.xxx">
           </div>
         </div>
       </form>
@@ -184,7 +184,7 @@
     				$("#female").attr("checked", "");
     			}
 			} else {
-				console.log(oldGender);
+				//console.log(oldGender);
 				if(oldGender == 0) {
 					$("#male").attr("checked", "");
 				} else {
