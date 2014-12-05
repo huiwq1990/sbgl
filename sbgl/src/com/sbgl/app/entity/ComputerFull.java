@@ -32,6 +32,10 @@ public class ComputerFull extends DaoAbs implements java.io.Serializable {
 			private String computerstatusname;
 		
 	
+			private String computerparameter;
+			private String computerpurchasetime;
+			private String 	computermaintainlog;
+			
 			
 			public void setComputerid(Integer computerid){		
 			this.computerid = computerid;
@@ -176,6 +180,26 @@ public class ComputerFull extends DaoAbs implements java.io.Serializable {
 		}
 		public String getComputerstatusname(){		
 			return this.computerstatusname;
+		}
+		public String getComputerparameter() {
+			return computerparameter;
+		}
+		public void setComputerparameter(String computerparameter) {
+			this.computerparameter = computerparameter;
+		}
+
+		
+		public String getComputerpurchasetime() {
+			return computerpurchasetime;
+		}
+		public void setComputerpurchasetime(String computerpurchasetime) {
+			this.computerpurchasetime = computerpurchasetime;
+		}
+		public String getComputermaintainlog() {
+			return computermaintainlog;
+		}
+		public void setComputermaintainlog(String computermaintainlog) {
+			this.computermaintainlog = computermaintainlog;
 		}
 		
 	

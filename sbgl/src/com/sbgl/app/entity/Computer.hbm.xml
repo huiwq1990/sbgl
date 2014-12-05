@@ -37,5 +37,22 @@
         <property name="computerstatusid" type="java.lang.Integer">
             <column name="computerstatusid" />
         </property>
+        
+                <property name="parameter" type="java.lang.String">
+            <column name="parameter" length="2000" />
+        </property>
+        
+                <property name="purchasetime" type="java.lang.String">
+           <column name="purchasetime" length="30" />
+        </property>
+        
+        
+                <property name="maintainlog" type="java.lang.String">
+            <column name="maintainlog" length="2000" />
+        </property>
+        
+        
+        
+        
     </class>
 </hibernate-mapping>

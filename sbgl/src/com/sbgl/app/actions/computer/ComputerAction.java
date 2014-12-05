@@ -320,7 +320,10 @@ public class ComputerAction extends BaseAction implements ModelDriven<Computer>{
 			tempch.setComputerstatusid(computer.getComputerstatusid());
 			tempch.setRemark(computer.getRemark());
 			
-		
+			tempch.setParameter(computer.getParameter());
+			tempch.setMaintainlog(computer.getMaintainlog());
+			tempch.setPurchasetime(computer.getPurchasetime());
+			
 			Computer tempen = new Computer();
 //			en
 //			Computer tempen = computerService.selectComputerById(computerIdEn);

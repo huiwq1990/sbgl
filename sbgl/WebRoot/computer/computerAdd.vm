@@ -91,6 +91,37 @@
                       </select>
                     </div>
                   </div>
+				  
+
+				 
+				 <div class="form-group">
+                    <label for="inputParameter" class="col-lg-2 control-label">机器参数</label>
+                    <div class="col-xs-4">
+                      <textarea class="form-control" id="inputParameter" rows="3" placeholder="机器参数描述"></textarea>
+                    </div>
+                  </div>
+				  
+				  
+				  <div class="form-group">
+                    <label for="inputPurchasetime" class="col-lg-2 control-label">采购时间</label>
+					<div class="input-daterange row">
+                    <div class="col-xs-4">
+                      <input type="text" class="form-control" id="inputPurchasetime" name="start" placeholder="采购时间">
+                    </div>
+					</div>
+                  </div>
+				  
+				  
+				  
+				  <div class="form-group">
+                    <label for="inputMaintainlog" class="col-lg-2 control-label">维修纪录</label>
+                    <div class="col-xs-4">
+                      <textarea class="form-control" id="inputMaintainlog" rows="3" placeholder="机器维护记录"></textarea>
+                    </div>
+                  </div>
+				  
+
+				  
                   <div class="form-group">
                     <label for="inputRemark" class="col-lg-2 control-label">备注</label>
                     <div class="col-lg-4">
@@ -136,8 +167,19 @@
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 <script src="${jsDomain}/jquery.jqpagination.js"></script>
+<script src="${jsDomain}/bootstrap-datepicker.js"></script>
+<script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
 
 <script>	
+
+//设置输入框为时间
+	$('.input-daterange, #inputPurchasetime').datepicker({
+		language: 'zh-CN',
+		format: 'yyyy-mm-dd',
+		todayHighlight: true,
+		autoclose: true
+	});
+
 
 	(function($){
 $("#inputEquipCategory").on("change", function(e) {
@@ -174,6 +216,8 @@ $("#inputEquipCategory").on("change", function(e) {
 	//add computer
 	$("body").on("click", "button[action-type|=addComputerButton]", function() {
 
+		//alert($('#inputPurchasetime').val());
+		//return;
 		var postData = {
 			"serialnumber":$('#inputEquipSN').val(),	
 			"computerSerialnumberEn":$('#inputEquipSNEn').val(),
@@ -182,7 +226,13 @@ $("#inputEquipCategory").on("change", function(e) {
 	 		"computerstatusid":$('#inputEquipStatus').val(),
 	 		"remark":$('#inputRemark').val(),
 			"computerRemarkEn":$('#inputRemarkEn').val(),
-			"status" : 0
+			"status" : 0,
+			
+			"parameter":$('#inputParameter').val(),
+		"purchasetime":$('#inputPurchasetime').val(),
+		"maintainlog":$('#inputMaintainlog').val()
+			
+			
 		};
 		//alert("add computer");
 		jQuery.ajax({  
@@ -219,6 +269,9 @@ $("#inputEquipCategory").on("change", function(e) {
 	 	$('#inputRemark').val("");
 		$('#inputRemarkEn').val("");
 		
+		$('#inputParameter').val("");
+		$('#inputPurchasetime').val("");
+		$('#inputMaintainlog').val("");
 		
 		var html;
 		$("#s2id_inputEquipModelId > a > span").empty();

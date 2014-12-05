@@ -22,6 +22,10 @@ public class Computer extends com.sbgl.app.dao.DaoAbs implements
 	private String remark;
 	private Integer computerstatusid;
 
+	private String parameter;
+	private String purchasetime;
+	private String 	maintainlog;
+	
 	// Constructors
 
 	/** default constructor */
@@ -131,5 +135,30 @@ public class Computer extends com.sbgl.app.dao.DaoAbs implements
 	public void setComputerstatusid(Integer computerstatusid) {
 		this.computerstatusid = computerstatusid;
 	}
+
+	public String getParameter() {
+		return parameter;
+	}
+
+	public void setParameter(String parameter) {
+		this.parameter = parameter;
+	}
+
+	public String getPurchasetime() {
+		return purchasetime;
+	}
+
+	public void setPurchasetime(String purchasetime) {
+		this.purchasetime = purchasetime;
+	}
+
+	public String getMaintainlog() {
+		return maintainlog;
+	}
+
+	public void setMaintainlog(String maintainlog) {
+		this.maintainlog = maintainlog;
+	}
+	
 
 }

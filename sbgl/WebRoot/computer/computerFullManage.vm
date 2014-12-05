@@ -118,6 +118,10 @@
 						
 						data-computercategoryid="$!ch.computermodelcomputercategoryid" 
 						
+						data-parameter="$!ch.computerparameter" 						
+						data-purchasetime="$!ch.computerpurchasetime" 
+						data-maintainlog="$!ch.computermaintainlog" 
+						
 						##data-iden="$!en.computerid" 
 						##data-serialnumberen="$!en.computerserialnumber"						
 						##data-remarken="$!en.computerremark"
@@ -162,7 +166,7 @@
 </section>
 
 
-<!-- Modal -->
+<!-- Modal 修改记录-->
 <div id="modify-status" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; ">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
@@ -224,6 +228,34 @@
                       </select>
                     </div>
                   </div>
+				  
+				 
+				 <div class="form-group">
+                    <label for="inputParameter" class="col-lg-3 control-label">机器参数</label>
+                    <div class="col-xs-7">
+                      <textarea class="form-control" id="inputEditParameter" rows="3" placeholder="机器参数描述"></textarea>
+                    </div>
+                  </div>
+				  
+				  
+				<div class="form-group">
+                    <label for="inputPurchasetime" class="col-lg-3 control-label">采购时间</label>
+					<div class="input-daterange row">
+                    <div class="col-xs-7">
+                      <input type="text" class="form-control" id="inputEditPurchasetime" name="start" placeholder="采购时间">
+                    </div>
+					</div>
+                  </div>
+				  
+				  
+				  <div class="form-group">
+                    <label for="inputMaintainlog" class="col-lg-3 control-label">维护记录</label>
+                    <div class="col-xs-7">
+                      <textarea class="form-control" id="inputEditMaintainlog" rows="3" placeholder="机器维护记录"></textarea>
+                    </div>
+                  </div>
+				  
+				  
                   <div class="form-group">
                     <label for="inputEquipRemark" class="col-lg-3 control-label">备注</label>
                     <div class="col-xs-7">
@@ -273,12 +305,22 @@
 <script src="${jsDomain}/bfa.js"></script>
 <script src="${jsDomain}/jquery.noty.js"></script>
 <script src="${jsDomain}/jquery.jqpagination.js"></script>
-
+<script src="${jsDomain}/bootstrap-datepicker.js"></script>
+<script src="${jsDomain}/locales/bootstrap-datepicker.zh-CN.js"></script>
 
 
 
 <script>
 
+
+//设置购买时间框
+	$('.input-daterange, #inputEditPurchasetime').datepicker({
+		language: 'zh-CN',
+		format: 'yyyy-mm-dd',
+		todayHighlight: true,
+		text:'1990-11-09',
+		autoclose: true
+	});
 
 //更改状态的高亮显示
   $(".status-filter li").click(function () {
@@ -448,12 +490,19 @@ function getComputerByComputermodelId(computermodel){
 		$('#inputEditComputerComputermodelid').select2("val",myData.computermodelid);
 		$('#inputEditComputerStatus').select2("val",myData.computerstatusid);
 		
+				
 		$('#inputEditComputerRemark').val(myData.remark);
 		$('#inputEditComputerRemarkEn').val(myData.remarken);
 
 		$('#inputEditComputerComputercategoryid').select2("val",myData.computercategoryid);
 		
 		
+		$('#inputEditParameter').val(myData.parameter);		
+		
+		
+		$('#inputEditPurchasetime').val(myData.purchasetime);
+		$('#inputEditMaintainlog').val(myData.maintainlog);
+
 		
     	#foreach($categoryfull in ${computercategoryFullList})	       		
     		if (myData.computercategoryid == $!categoryfull.computercategorycomputercategorytype) {
@@ -509,7 +558,7 @@ function getComputerByComputermodelId(computermodel){
         })
     })(jQuery);
 
-//更新分类
+//更新机器信息
 	$("body").on("click", "button[action-type|=updateComputerButton]", function() {
 		var _this = $(this);
 
@@ -524,10 +573,16 @@ function getComputerByComputermodelId(computermodel){
 			serialnumber :  $("#inputEditComputerSerialnumber").val(),
 			//computerSerialnumberEn :  $("#inputEditComputerSerialnumberEn").val(),
 			
-			remark : $('#inputEditComputerRemark').val()
+			remark : $('#inputEditComputerRemark').val(),
 			//computerRemarkEn : $('#inputEditComputerRemarkEn').val()
+				
+					parameter:$('#inputEditParameter').val(),
+					purchasetime:$('#inputEditPurchasetime').val(),
+					maintainlog:$('#inputEditMaintainlog').val()
+					
 		}
-			
+		//alert(postData);
+		
 		jQuery.ajax({  
 		    url:"${webbaseurl}/updateComputerAjax.${strutsaction}",  
 		    type:"post",

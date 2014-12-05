@@ -35,6 +35,9 @@
 						
 						data-computercategoryid="$!ch.computermodelcomputercategoryid" 
 						
+						data-parameter="$!ch.computerparameter" 						
+						data-purchasetime="$!ch.computerpurchasetime" 
+						data-maintainlog="$!ch.computermaintainlog" 
 						##data-iden="$!en.computerid" 
 						##data-serialnumberen="$!en.computerserialnumber"						
 						##data-remarken="$!en.computerremark"
