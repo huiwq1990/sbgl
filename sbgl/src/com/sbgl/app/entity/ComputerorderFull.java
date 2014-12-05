@@ -26,6 +26,8 @@ public class ComputerorderFull extends DaoAbs implements java.io.Serializable {
 			private String createuserroletype;
 			private String createuserprivilege;
 			private String createuserpassword;
+			private String createuserrolename;
+			
 			private Integer audituserid;
 			private String audituseruserid;
 			private String auditusername;

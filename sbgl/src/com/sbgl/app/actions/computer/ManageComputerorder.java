@@ -145,6 +145,7 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 	@Resource	
 	private LoginService loginService;
 	Loginuser auditUser;//审核人信息
+	private Loginuser orderUser;//预约人信息
 	
 	private int ComputerorderStatusAduitAll = ComputerorderInfo.ComputerorderStatusAduitAll;
 	private int ComputerorderStatusAduitPass = ComputerorderInfo.ComputerorderStatusAduitPass;
@@ -188,7 +189,8 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 //	int computerorderid;
 	
 	//用户角色信息
-	private String userRoleName = "";
+	private String userRoleName = "";//废弃
+	private String computerorderUserrole="";
 	private  Map<Integer,String> userRoleMap = new HashMap<Integer,String>();
 	
 	private List<Borrowperiod> periodList = new ArrayList<Borrowperiod>();
@@ -240,11 +242,17 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 		}
 		System.out.println("computerorderdetailFullMapByComputermodelId size:"+computerorderdetailFullMapByComputermodelId.size());
 		
-		Loginuser user = (Loginuser) ServletActionContext.getRequest().getSession().getAttribute("loginUser");
-		userRoleName = CommonActionUtil.getUserRole(this.getCurrentLanguage()).get(Integer.valueOf(user.getRoletype()));
+//		Loginuser user = (Loginuser) ServletActionContext.getRequest().getSession().getAttribute("loginUser");
+		String role = computerorderFull.getCreateuserroletype();
+		userRoleName = CommonActionUtil.getUserRole(this.getCurrentLanguage()).get(Integer.valueOf(role));
+		computerorderUserrole = CommonActionUtil.getUserRole(this.getCurrentLanguage()).get(Integer.valueOf(role));
 		
 		if(computerorderFull.getAudituserid()!=null && computerorderFull.getAudituserid()>0){
 			auditUser = loginService.selById(computerorderFull.getAudituserid());
+		}
+		
+		if(computerorderFull.getComputerordercreateuserid()!=null && computerorderFull.getComputerordercreateuserid()>0){
+			orderUser = loginService.selById(computerorderFull.getComputerordercreateuserid());
 		}
 		
 		return SUCCESS;
@@ -1628,6 +1636,47 @@ public class ManageComputerorder extends BaseAction implements ModelDriven<Compu
 
 	public void setAuditUser(Loginuser auditUser) {
 		this.auditUser = auditUser;
+	}
+
+
+	public Loginuser getOrderUser() {
+		return orderUser;
+	}
+
+
+	public void setOrderUser(Loginuser orderUser) {
+		this.orderUser = orderUser;
+	}
+
+
+	public ComputermodelService getComputermodelService() {
+		return computermodelService;
+	}
+
+
+	public void setComputermodelService(ComputermodelService computermodelService) {
+		this.computermodelService = computermodelService;
+	}
+
+
+	public HashMap<Integer, ArrayList<ComputerorderPreemption>> getComputerorderPreemptionMap() {
+		return computerorderPreemptionMap;
+	}
+
+
+	public void setComputerorderPreemptionMap(
+			HashMap<Integer, ArrayList<ComputerorderPreemption>> computerorderPreemptionMap) {
+		this.computerorderPreemptionMap = computerorderPreemptionMap;
+	}
+
+
+	public String getComputerorderUserrole() {
+		return computerorderUserrole;
+	}
+
+
+	public void setComputerorderUserrole(String computerorderUserrole) {
+		this.computerorderUserrole = computerorderUserrole;
 	}
 
 
