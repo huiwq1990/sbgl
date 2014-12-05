@@ -76,4 +76,7 @@ public interface OrderMainDao {
 	public EquipmentFull findEquipmentById(Integer comid,String lantype);
 	//根据设备组id详情
 	public EquipmentgroupFull findEquipmentgroupById(Integer comid,String lantype);
+
+	//获得设备组详情
+	public EquipmentFull findEquipmentGroupById(Integer equipmentId,String lantype);
 }

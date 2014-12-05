@@ -86,7 +86,7 @@
                         <div class="caption">
                           <div class="title">
 							#if($class1Name!='设备组')<a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.comId" role="button">$!row3.equipmentname</a>
-						  #else <a class="lk" role="button">$!row3.equipmentname</a>
+						  #else <a class="lk" data-toggle="modal" href="#equip-group-detail" data-type="equipGroupDetail" data-id="$!row3.comId" role="button">$!row3.equipmentname</a>
 						  #end</div>
                           <p class="detail">#if($class1Name!='设备组')$!{textmap.order_canborrowupto}：#if($!row3.borrownum) $!row3.borrownum #else 0 #end #else $!row3.intoduce #end</p>
                         </div>
@@ -218,6 +218,43 @@
   <div class="modal-footer">
     <a class="btn btn-white" data-dismiss="modal" aria-hidden="true">$!{textmap.order_cancel}</a>
     <a class="btn btn-primary" data-type="addEquip" data-id="$!equipmentFull.comId" data-name="$!equipmentFull.equipmentname" data-num="$!equipmentFull.borrownum" data-cate="$!parentClassId" href="javascript:;">$!{textmap.order_add}</a>
+  </div>
+</div>
+
+<div id="equip-group-detail" class="modal hide fade" tabindex="-1" role="dialog">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+    <h3 id="equipGroupDetail">$!{textmap.order_groupdetail}</h3>
+  </div>
+  <div class="modal-body">
+    <div class="media">
+      <div class="pull-left">
+        <img data-src="holder.js/140x140" class="img-equip" alt="140x140" style="width: 140px; height: 140px; " src="$!{equipmentImagePath}/$!equipmentFull.imgNameSaved">
+      </div>
+      <div class="media-body">
+        <dl class="dl-horizontal">
+          <dt>$!{textmap.order_model}</dt>
+          <dd>$!equipmentFull.equipmentname</dd>
+          <dt>$!{textmap.order_groupintroduction}</dt>
+          <dd>$!equipmentFull.equipmentdetail</dd>
+          <dt>$!{textmap.order_equipmentlist}</dt>
+          <dd>
+            <ul class="list-group equip-group-contain-list">
+			#foreach($grouprow in $!equipmentFull.equipmentgroupFulllist)
+              <li class="list-group-item">
+                <span>× $grouprow.num</span>
+                $grouprow.equipmentname
+              </li>
+			#end 
+            </ul>
+          </dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="btn btn-white" data-dismiss="modal" aria-hidden="true">$!{textmap.order_cancel}</a>
+	<a class="btn btn-primary" data-type="addEquip" data-id="$!equipmentFull.comId" data-name="$!equipmentFull.equipmentname" data-num="$!equipmentFull.borrownum" data-cate="$!parentClassId" href="javascript:;">$!{textmap.order_add}</a>
   </div>
 </div>
 
@@ -649,7 +686,19 @@ $(function () {
 		});
 	});
 	
-	
+	$("body").on("click", "a[data-type|=equipGroupDetail]", function() {
+		var equipid = $(this).data("id");	
+		$.ajax({
+			url: "equipOrdGroupDetail.do",
+			type: 'POST',
+			data: {equipmentId:equipid},
+			dataType: 'html',
+			success: function(data){
+				//刷新数据
+			   $("#equip-group-detail").html(data);   			   
+			}	  
+		});
+	});
 	
 	
 </script>

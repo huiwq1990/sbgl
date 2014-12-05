@@ -27,7 +27,7 @@
                         <div class="caption">
                           <div class="title">
 							#if($class1Name!='设备组')<a class="lk" data-toggle="modal" href="#equip-detail" data-type="equipDetail" data-id="$!row3.comId" role="button">$!row3.equipmentname</a>
-						  #else <a class="lk" role="button">$!row3.equipmentname</a>
+						  #else <a class="lk" data-toggle="modal" href="#equip-group-detail" data-type="equipGroupDetail" data-id="$!row3.comId" role="button">$!row3.equipmentname</a>
 						  #end</div>
                           <p class="detail">#if($class1Name!='设备组')$!{textmap.order_canborrowupto}：#if($!row3.borrownum) $!row3.borrownum #else 0 #end #else $!row3.intoduce #end</p>
                         </div>

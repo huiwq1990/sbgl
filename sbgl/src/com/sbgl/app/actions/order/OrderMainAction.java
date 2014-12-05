@@ -213,6 +213,17 @@ public class OrderMainAction  extends ActionSupport  implements SessionAware {
 		return SUCCESS;
 	}
 	
+	public String equipOrdGroupDetail(){	
+		String lantype = (String) session.get(CommonConfig.sessionLanguagetype);
+		if(lantype==null||lantype.equals("")){
+			lantype = "0";
+		}
+		equipmentFull = orderMainService.findEquipmentGroupById(equipmentId,lantype);
+		
+		return SUCCESS;
+	}
+	
+	
 	
 	public String equipOrdIndex(){
 		Loginuser Loginuser = (com.sbgl.app.entity.Loginuser) session.get("loginUser");
