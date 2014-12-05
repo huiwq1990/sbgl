@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.tools.view.context.ViewContext;
 
-import com.sbgl.app.actions.common.CommonConfig;
 
 public class ImageUrlTool {
 	
