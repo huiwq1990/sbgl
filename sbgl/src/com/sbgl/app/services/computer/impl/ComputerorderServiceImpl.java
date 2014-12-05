@@ -365,18 +365,6 @@ public class ComputerorderServiceImpl implements ComputerorderService {
 		return computerorderDao.selFinished(userid);
 	}
 
-	// 根据id删除实体
-	@Override
-	public int deleteComputerorder(Integer computerorderId) {
-		computerorderDao.delById(computerorderId);
-		return 1;
-	}
-
-	// 根据实体删除实体
-	@Override
-	public int deleteComputerorder(Computerorder computerorder) {
-		return deleteComputerorder(computerorder.getId());
-	}
 
 	@Override
 	public int deleteComputerorder(List<Integer> orderidList) throws DataError {

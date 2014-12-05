@@ -19,13 +19,7 @@ public interface ComputerorderService{
 //	public void addComputerorderWithId(Computerorder computerorder);
 		
 	public void updateComputerorder(Computerorder computerorder);
-	
-//  根据id删除实体	
-	public int deleteComputerorder(Integer computerorderId);
 
-//  根据实体删除实体
-	public int deleteComputerorder(Computerorder computerorder);
-	
 //	根据id查询实体类		
 	public Computerorder selectComputerorderById(Integer computerorderId);
 
