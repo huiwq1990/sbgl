@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理中心 - 北京电影学院摄影系</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="${cssDomain}/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${cssDomain}/global.css" rel="stylesheet" type="text/css" />
+
+#parse("include/includePageCompatibility.vm")	
+	
+</head>
+
+<body id="admin">
+<header id="header-wrap"><!--header-wrap-->
+
+	#set($currentPageModule="index")
+	#parse("include/includeAdminHeader.vm")
+	
+</header><!--/#header-wrap-->
+<section id="main-wrap" class="clearfix"><!--main-wrap-->
+
+      <!--admin-wrap start-->
+      <div id="admin-wrap">
+        <div id="admin-content" class="clearfix">
+           
+									  
+						  
+			  <div class="panel panel-default">
+				<div class="panel-heading">短信统计信息</div>
+					<div class="panel-body">
+					<dl class="dl-horizontal">
+					#if(${smsOverage.overage}=="Filed")
+					<dt>状态</dt>
+					  <dd>${smsOverage.message}</dd>
+					#else
+				      <dt>剩余条数</dt>
+					  <dd>${smsOverage.overage}</dd>
+					 <dt>总条数</dt>
+					 <dd>${smsOverage.sendTotal}</dd>
+					#end
+				    
+					</dl>
+                  </div>
+            </div>
+			
+         
+        </div>
+
+      </div>
+      <!--equip-wrap end-->
+
+	  
+      <!--sidebar start-->
+      <div id="lside">
+        <ul class="list-group">
+          <a href="${webbaseurl}/adminIndex.action" class="list-group-item">管理中心首页</a>
+		  <a href="${webbaseurl}/smsManage.action" class="list-group-item active" >短信</a>
+		  <!--
+          <a href="#" class="list-group-item">便捷操作链接1</a>
+          <a href="#" class="list-group-item">便捷操作链接2</a>
+          <a href="#" class="list-group-item">便捷操作链接3</a>-->
+        </ul>
+      </div>
+      <!--sidebar end-->
+
+</section>
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="${jsDomain}/jquery.js"></script>
+<script src="${jsDomain}/loader.min.js"></script>
+
+</body>
+</html>

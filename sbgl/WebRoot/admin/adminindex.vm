@@ -107,7 +107,8 @@
       <!--sidebar start-->
       <div id="lside">
         <ul class="list-group">
-          <a href="#" class="list-group-item active">管理中心首页</a>
+          <a href="${webbaseurl}/adminIndex.action" class="list-group-item active">管理中心首页</a>
+		  <a href="${webbaseurl}/smsManage.action" class="list-group-item">短信</a>
 		  <!--
           <a href="#" class="list-group-item">便捷操作链接1</a>
           <a href="#" class="list-group-item">便捷操作链接2</a>
