@@ -1,6 +1,5 @@
 package com.sbgl.app.actions.computer;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,10 +19,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 
-import com.opensymphony.xwork2.ActionSupport;
 import com.sbgl.app.actions.common.BaseAction;
-import com.sbgl.app.actions.common.CommonConfig;
-import com.sbgl.app.actions.util.JsonActionUtil;
 import com.sbgl.app.common.computer.BorrowperiodUtil;
 import com.sbgl.app.common.computer.ComputerConfig;
 import com.sbgl.app.common.computer.ComputerorderInfo;
@@ -32,28 +28,22 @@ import com.sbgl.app.entity.Computer;
 import com.sbgl.app.entity.ComputerFull;
 import com.sbgl.app.entity.Computercategory;
 import com.sbgl.app.entity.ComputercategoryFull;
-import com.sbgl.app.entity.Computerconfig;
 import com.sbgl.app.entity.Computermodel;
 import com.sbgl.app.entity.ComputermodelFull;
 import com.sbgl.app.entity.Computerorder;
 import com.sbgl.app.entity.ComputerorderFull;
-import com.sbgl.app.entity.Computerorderclassrule;
 import com.sbgl.app.entity.Computerorderconfig;
 import com.sbgl.app.entity.Computerorderdetail;
 import com.sbgl.app.entity.ComputerorderdetailFull;
 import com.sbgl.app.services.computer.ComputerService;
 import com.sbgl.app.services.computer.ComputercategoryService;
-import com.sbgl.app.services.computer.ComputerconfigService;
 import com.sbgl.app.services.computer.ComputermodelService;
 import com.sbgl.app.services.computer.ComputerorderService;
 import com.sbgl.app.services.computer.ComputerorderconfigService;
 import com.sbgl.app.services.computer.ComputerorderdetailService;
-import com.sbgl.util.ComputerDirective;
+
 import com.sbgl.util.DateUtil;
-import com.sbgl.util.Page;
-import com.sbgl.util.ReturnJson;
-import com.sbgl.util.SpringUtil;
-import com.sun.xml.internal.stream.Entity;
+
 
 
 @Scope("prototype") 

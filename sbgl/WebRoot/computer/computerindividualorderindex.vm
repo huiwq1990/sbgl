@@ -151,7 +151,7 @@
 						#end
 							
 						#if($user.privilege == 1 && $toalnum==0)
-                            <td></td>
+                            <td>${textmap.computerindividualorderindex_numzero}</td>
 						#end
 						
 						
@@ -163,7 +163,7 @@
 						#end
 						
 						#if($user.privilege != 1 && $availnum==0)
-							 <td></td>
+							<td>${textmap.computerindividualorderindex_numzero}</td>
 						#end
 						
 				       
