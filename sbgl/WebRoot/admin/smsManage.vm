@@ -34,12 +34,12 @@
 				<div class="panel-heading">短信统计信息</div>
 					<div class="panel-body">
 					<dl class="dl-horizontal">
-					#if(${smsOverage.overage}=="Filed")
+					#if(${smsOverage.returnstatus}=='Faild')
 					<dt>状态</dt>
 					  <dd>${smsOverage.message}</dd>
 					#else
 				      <dt>剩余条数</dt>
-					  <dd>${smsOverage.overage}</dd>
+					  <dd>${smsOverage.overage} ${smsOverage.status}</dd>
 					 <dt>总条数</dt>
 					 <dd>${smsOverage.sendTotal}</dd>
 					#end
