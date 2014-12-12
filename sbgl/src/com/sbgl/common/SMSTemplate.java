@@ -80,7 +80,7 @@ public class SMSTemplate {
 	public static void main(String[] args) throws Exception {
 		
 //		卡洛斯模版
-//		convToStandSMSTemplate();
+		convToStandSMSTemplate();
 		System.out.println();
 		
 		String templateStr = SMSTemplate

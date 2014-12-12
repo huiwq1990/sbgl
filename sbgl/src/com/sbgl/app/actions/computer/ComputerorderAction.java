@@ -253,8 +253,7 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 		
 		log.info(logprefix + "deleteComputerorderFullAjax");
 
-		try{
-			
+		try{			
 			Integer uid = this.getCurrentUserId();
 			if(uid < 0){
 				this.returnInfo = "用户未登录";
@@ -279,6 +278,9 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 			computerorderService.deleteComputerorder(delTypeList);
 
 			this.returnInfo = "删除成功";
+			
+			
+			
 			log.info(returnInfo);
 			this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxsuccessreturn, returnInfo);
 			return SUCCESS;
@@ -341,8 +343,7 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 	}
 	
 	
-	//审核表单，修改表单状态
-	
+	//审核表单，修改表单状态	
 	public String auditComputerorderAjax(){
 		log.info(logprefix + "auditComputerorderAjax,id="+computerorder.getId());
 		

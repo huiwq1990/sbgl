@@ -376,7 +376,8 @@ public class ComputerorderServiceImpl implements ComputerorderService {
 			if (tempCo == null) {
 				throw new DataError("获取删除表单出错");
 			}
-
+			
+//			tempCo.
 			tempCo.setStatus(ComputerorderInfo.ComputerorderStatusAduitDel);
 			baseDao.updateEntity(tempCo);
 
