@@ -22,7 +22,7 @@ public class KarlosSmsTest {
 	public static void main(String[] args) throws Exception {
 
 //		keyword();
-//		 overage();
+		 overage();
 //		 test();
 //		sendMsg("18810846401","订单审核通过【北京电影学院摄影系】");
 	}
@@ -31,6 +31,13 @@ public class KarlosSmsTest {
 
 		String keyword = SmsClientKeyword.queryKeyWord(url, userid, account,
 				password, checkWord);
+		System.out.println(keyword);
+	}
+	
+	public static void keyword(String str) {
+
+		String keyword = SmsClientKeyword.queryKeyWord(url, userid, account,
+				password, str);
 		System.out.println(keyword);
 	}
 
