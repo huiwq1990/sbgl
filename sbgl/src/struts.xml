@@ -83,6 +83,31 @@
     </package> -->
     
     
+    
+    
+    <package name="json"  extends="json-default">
+        <!-- 定义一个拦截器 -->  
+        <interceptors>  
+           <interceptor name="myException"  class="com.sbgl.app.actions.common.ExceptionInterceptor"/>
+           	<!-- 拦截器栈  --> 
+           <interceptor-stack name="mydefault">
+           	   <interceptor-ref name="myException" />
+               <interceptor-ref name="defaultStack" />  
+           </interceptor-stack>      
+	    </interceptors>  
+	    <default-interceptor-ref name="mydefault" />
+	    <!-- 定义全局Result -->  
+        <global-results>  
+            <!-- 当返回login视图名时，转入/login.jsp页面 -->  
+            <result name="login">/login.vm</result>
+            <result name="exception-error">/error.vm</result>
+            <result name="noPrivilege">/errorNoPrivilege.vm</result>
+             <result name="firstSetup">/firstSetup.vm</result>
+        </global-results>
+    
+    </package>
+    
+    
     <!-- 根据不同的包引入自己的struts文件 -->
     <include file="com/sbgl/app/actions/*/struts_*.xml"/>
 </struts>    

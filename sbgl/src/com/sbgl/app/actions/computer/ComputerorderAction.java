@@ -1,6 +1,7 @@
 package com.sbgl.app.actions.computer;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -247,6 +248,50 @@ public class ComputerorderAction extends BaseAction implements ModelDriven<Compu
 		}
 	}	
 	
+	
+	/**
+	 * 查看借用清单列表
+	 * @return
+	 */
+//	public String viewMineComputerorderList(){
+//		try{
+//		
+//		Integer userid = this.getCurrentUserId();
+//
+//		if(userid < 0){		
+//			actionMsg = "用户未登录";
+//			return ComputerConfig.usernotloginreturnstr;
+//		}		
+//	
+//		computerorderEntityList = computerorderService.getUnderwayComputerorder(userid);
+//		
+////		预约完成的订单
+////		computerorderFullFinishList = computerorderService.selFullByStatus(userid, ComputerorderInfo.ComputerorderStatusAduitPass);
+//		computerorderFullFinishList = computerorderService.selFinishedComputerorder(userid);
+//		
+//		if(computerorderFullUnderwayList==null){
+//			computerorderFullUnderwayList = new ArrayList<ComputerorderFull>();
+//		}
+//		
+////		对预约排序
+//		if(computerorderEntityList == null){
+//			computerorderEntityList = new ArrayList<ComputerorderEntity>();;
+//		}else{
+//			ComputerorderEntityComparator comparator=new ComputerorderEntityComparator();
+//			Collections.sort(computerorderEntityList, comparator);
+//		}
+//		if(computerorderFullFinishList==null){
+//			computerorderFullFinishList = new ArrayList<ComputerorderFull>();
+//		}
+//		
+//		return SUCCESS;
+//		
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
+//		
+//		return "404";
+//	}
 	
 	//del entityfull Ajax
 	public String deleteComputerorderFullAjax( ){

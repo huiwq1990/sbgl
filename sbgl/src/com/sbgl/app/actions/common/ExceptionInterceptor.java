@@ -97,6 +97,7 @@ public class ExceptionInterceptor extends AbstractInterceptor {
 		try {
 			arg0.invoke();
 		} catch(Exception e) {
+			System.out.println("yichang");
 			e.printStackTrace();
 			
 			if(e instanceof ClassNotFoundException) {

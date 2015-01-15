@@ -1,5 +1,6 @@
 package com.sbgl.app.actions.common;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -39,12 +40,15 @@ public class BaseAction extends ActionSupport implements SessionAware,CookiesAwa
 	protected Page page = new Page();
 	
 	protected String returnStr;//声明一个变量，用来在页面上显示提示信息。只有在Ajax中才用到
+	protected Map returnMap=  new HashMap();
 	protected String returnInfo;
 	protected String actionMsg; // Action间传递的消息参数
 	
 	protected String callType;
 	
 	protected String forwardurl; // 重定向url
+	
+	protected int language; // 语言
 	
 	public void setPageInfo(int totalcount){
 		if(pageNo ==0){
@@ -69,6 +73,10 @@ public class BaseAction extends ActionSupport implements SessionAware,CookiesAwa
 		}
 	}
 	
+
+
+
+
 	public boolean checkUserLogin(){
 //		Cookie[] cookies = ServletActionContext.getRequest().getCookies();
 //		String uidStr = ComputerActionUtil.getUserIdFromCookie(cookies);
@@ -332,6 +340,38 @@ public class BaseAction extends ActionSupport implements SessionAware,CookiesAwa
 	public void setClassOrder(int classOrder) {
 		ClassOrder = classOrder;
 	}
+	
+	
+	public int getLanguage() {
+		return language;
+	}
+
+
+
+	public void setLanguage(int language) {
+		this.language = language;
+	}
+
+
+
+
+
+	public Map getReturnMap() {
+		return returnMap;
+	}
+
+
+
+
+
+	public void setReturnMap(Map returnMap) {
+		this.returnMap = returnMap;
+	}
+
+
+
+
+
 
 	
 

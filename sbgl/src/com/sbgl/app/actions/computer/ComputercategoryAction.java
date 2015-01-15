@@ -1,10 +1,12 @@
 package com.sbgl.app.actions.computer;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 import java.lang.reflect.InvocationTargetException;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 
@@ -272,7 +274,32 @@ public class ComputercategoryAction extends BaseAction implements ModelDriven<Co
 		return SUCCESS;
 	}
 	
+	public String testJson(){
+		
+	System.out.println("ss");
+		return SUCCESS;
+	}
 	
+	public String selAllComputercategoryJson(){
+		try{
+			System.out.println(this.language);
+			List<Computercategory> list = computercategoryService.sel(this.language);
+	
+			returnMap.put("flag",JsonActionUtil.ajaxsuccessreturn);
+			returnMap.put("computercategoryList", list);
+
+			return SUCCESS;
+//			throw new Exception();
+		}catch(Exception e){
+			e.printStackTrace();
+			log.error("类ComputercategoryAction的方法：selAllComputercategoryJson错误"+e);
+		}
+		
+		returnMap.put("flag", JsonActionUtil.ajaxerrorreturn);
+		returnMap.put("reason", "系统错误");
+//		this.returnStr = JsonActionUtil.buildReturnStr(JsonActionUtil.ajaxerrorreturn,"系统错误");
+		return SUCCESS;
+	}
 	
 	@Override
 	public Computercategory getModel() {

@@ -20,6 +20,13 @@
     
     <!-- Ajax方式 -->
     <package name="computercategoryAjax" extends="json-default">
+        
+        <action name="selAllComputercategoryJson" class="ComputercategoryAction" method="selAllComputercategoryJson">
+        	<result type="json">
+				<param name="root">returnMap</param>
+			</result>
+        </action>
+    	
     	<action name="addComputercategoryAjax" class="ComputercategoryAction" method="addComputercategoryAjax">
         	<result type="json">
 				<param name="root">returnStr</param>
@@ -28,7 +35,8 @@
         <action name="deleteComputercategoryAjax" class="ComputercategoryAction" method="deleteComputercategoryAjax">
         	<result type="json"></result>
         </action>
-<!--del entityfull ajax -->		
+		
+		<!--del entityfull ajax -->		
 		<action name="deleteComputercategoryFullAjax" class="ComputercategoryAction" method="deleteComputercategoryFullAjax">
         	<result type="json">
         	<param name="root">returnStr</param>
