@@ -27,11 +27,6 @@ public List<Computerhomework> selectComputerhomeworkByCondition(String condition
 
 
 
-	//根据关联查询实体 
-	public List<Computerhomework> selectComputerhomeworkByComputerorderclassruleId(Integer computerorderclassruleid );
-
-	public List<ComputerhomeworkFull> selectComputerhomeworkFullByComputerorderclassruleId(Integer computerorderclassruleid );
-
 	List<Computerhomework> sel(Integer id);
 
 	List<ComputerhomeworkFull> selFullByList(List<Integer> idList);

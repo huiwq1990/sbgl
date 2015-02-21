@@ -223,19 +223,6 @@ public class ComputerhomeworkDaoImpl extends HibernateDaoSupport implements Comp
 		return null;
 	}
 	
-//  根据关联查询实体full
-
-	//根据关联查询实体 
-	public List<Computerhomework> selectComputerhomeworkByComputerorderclassruleId(Integer computerorderclassruleid ){
-	
-		return null;
-	}
-  
-
-	public List<ComputerhomeworkFull> selectComputerhomeworkFullByComputerorderclassruleId(Integer computerorderclassruleid ){
-	
-		return null;
-	}
 
  
 }

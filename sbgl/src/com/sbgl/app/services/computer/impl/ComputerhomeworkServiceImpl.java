@@ -292,11 +292,7 @@ public class ComputerhomeworkServiceImpl implements ComputerhomeworkService{
 		computerhomeworkList = baseDao.getEntityByProperty("Computerhomework", "computerorderclassruleid ", id);
 		return computerhomeworkList;
 	}
-	//根据computerorderclassruleid 查询实体full
-	@Override
-	public List<ComputerhomeworkFull> selectComputerhomeworkFullByComputerorderclassruleId(Integer computerorderclassruleid ) {
-		return computerhomeworkDao.selectComputerhomeworkFullByComputerorderclassruleId(computerorderclassruleid );
-	}
+
 
 //    @Override
 //    public List<ComputerhomeworkFull>  selectComputerhomeworkFullByUserAndOrder(int uid,int hasorder) {
